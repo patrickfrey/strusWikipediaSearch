@@ -23,5 +23,12 @@ add_library( modstrus_analyzer_wikipedia_search  MODULE  modstrus_analyzer_wikip
 set_target_properties( modstrus_analyzer_wikipedia_search PROPERTIES PREFIX "")
 target_link_libraries( modstrus_analyzer_wikipedia_search strus_module )
 
+# ------------------------------
+# INSTALLATION
+# ------------------------------
+install( TARGETS modstrus_analyzer_wikipedia_search
+           LIBRARY DESTINATION lib/strus/modules
+	   RUNTIME DESTINATION bin )
+
 
 

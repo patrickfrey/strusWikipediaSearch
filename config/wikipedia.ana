@@ -1,0 +1,19 @@
+[Attribute]
+	title = orig content /mediawiki/page/title();
+	date = orig content /mediawiki/page/revision/timestamp();
+	contributor = orig content /mediawiki/page/revision/contributor/username();
+
+[MetaData]
+	contribid = orig word /mediawiki/page/revision/contributor/id();
+
+[SearchIndex]
+	para = orig word /mediawiki/page/revision/text;
+	stem = stem("en") word /mediawiki/page/revision/text();
+
+[ForwardIndex]
+	orig = orig word /mediawiki/page/revision/text();
+
+[Document]
+	doc = /mediawiki/page;
+
+

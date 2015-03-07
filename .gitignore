@@ -1,5 +1,48 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so.0.*
+*.so.0
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Dependency files
+*.d
+
+# Packaging directory
+pkg/
+
+# Valgring suppression files
+*.sup
+
+# Helper scripts
+setenv.sh
+
+# CMake generated files
 CMakeCache.txt
 CMakeFiles
 Makefile
 cmake_install.cmake
 install_manifest.txt
+CTestTestfile.cmake
+CMakeLists.txt.user
+CTestTestfile.cmake.user
+cmake/uninstall.cmake
+DartConfiguration.tcl
+Testing/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+
+# Compiled Programs
+
+# Data
+data/enwiki-20150205-pages-articles-multistream.xml.bz2
+

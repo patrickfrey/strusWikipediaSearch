@@ -24,4 +24,12 @@ set_target_properties( modstrus_storage_wikipedia_search PROPERTIES PREFIX "")
 target_link_libraries( modstrus_storage_wikipedia_search strus_module )
 
 
+# ------------------------------
+# INSTALLATION
+# ------------------------------
+install( TARGETS modstrus_storage_wikipedia_search
+           LIBRARY DESTINATION lib/strus/modules
+	   RUNTIME DESTINATION bin )
+
+
 
