@@ -9,7 +9,7 @@
 [SearchIndex]
 	para = orig mw_text_split /mediawiki/page/revision/text;
 	stem = stem("en") mw_text_word /mediawiki/page/revision/text();
-	stem = stem("en") mw_link_content /mediawiki/page/revision/text();
+	stem = stem("en") mw_link_word /mediawiki/page/revision/text();
 
 [ForwardIndex]
 	category = orig mw_link_content("Category") /mediawiki/page/revision/text();
