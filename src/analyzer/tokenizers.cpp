@@ -218,8 +218,10 @@ class TokenizerWikimediaLink
 	:public TokenizerInterface
 {
 public:
-	explicit TokenizerWikimediaLink( TokenClass tokenClass_)
-		:m_tokenClass(tokenClass_){}
+	enum WhatToExtract {Text,Id};
+
+	explicit TokenizerWikimediaLink( TokenClass tokenClass_, WhatToExtract what_)
+		:m_tokenClass(tokenClass_),m_what(what_){}
 	virtual ~TokenizerWikimediaLink(){}
 
 	class Argument
@@ -312,14 +314,31 @@ public:
 			char const* pe = (const char*)std::memchr( si, ']', se-si);
 			if (pe && pe[1] == ']')
 			{
+				char const* start = si;
 				if (ctx->arg().name().empty())
 				{
-					char const* start = (const char*)std::memchr( si, ':', pe-si);
-					tokenizeTokenClass( m_tokenClass, rt, src, start?start:si, pe);
+					if (0!=std::memchr( si, ':', pe-si))
+					{
+						start = 0;
+					}
 				}
-				else
+				if (start)
 				{
-					tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
+					switch (m_what)
+					{
+						case Text:
+						{
+							const char* end = (const char*)std::memchr( si, '|', pe-si);
+							if (!end) end = pe;
+							tokenizeTokenClass( m_tokenClass, rt, src, si, end);
+						}
+						case Id:
+						{
+							start = (const char*)std::memchr( si, '|', pe-si);
+							if (!start) start = si;
+							tokenizeTokenClass( m_tokenClass, rt, src, start, pe);
+						}
+					}
 				}
 				si = pe+2;
 			}
@@ -329,13 +348,17 @@ public:
 
 private:
 	TokenClass m_tokenClass;
+	WhatToExtract m_what;
 };
 
 class TokenizerWikimediaUrl
 	:public TokenizerInterface
 {
 public:
-	TokenizerWikimediaUrl(){}
+	enum WhatToExtract {Title,Link};
+
+	TokenizerWikimediaUrl( TokenClass tokenClass_, WhatToExtract what_)
+		:m_tokenClass(tokenClass_),m_what(what_){}
 	virtual ~TokenizerWikimediaUrl(){}
 
 	virtual std::vector<analyzer::Token>
@@ -351,7 +374,36 @@ public:
 			char const* pe = skipUrl( si, se, ']');
 			if (pe)
 			{
-				rt.push_back( analyzer::Token( si-src, pe-si));
+				switch (m_what)
+				{
+					case Title:
+					{
+						char const* start = (const char*)std::memchr( si, ' ', pe-si);
+						if (!start) start = (const char*)std::memchr( si, '\t', pe-si);
+						if (start)
+						{
+							++start;
+						}
+						else
+						{
+							start = si;
+						}
+						tokenizeTokenClass( m_tokenClass, rt, src, start, pe);
+					}
+					case Link:
+					{
+						char const* end = (const char*)std::memchr( si, ' ', pe-si);
+						if (!end) end = (const char*)std::memchr( si, '\t', pe-si);
+						if (end)
+						{
+							tokenizeTokenClass( m_tokenClass, rt, src, si, end);
+						}
+						else
+						{
+							tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
+						}
+					}
+				}
 				si = pe + 1;
 			}
 			else if (*si == '[')
@@ -367,6 +419,10 @@ public:
 		}
 		return rt;
 	}
+
+private:
+	TokenClass m_tokenClass;
+	WhatToExtract m_what;
 };
 
 
@@ -661,27 +717,51 @@ private:
 };
 
 
+const TokenizerInterface* strus::tokenizerWikimediaUrlId()
+{
+	static const TokenizerWikimediaUrl rt( TokenClassContent, TokenizerWikimediaUrl::Link);
+	return &rt;
+}
+
 const TokenizerInterface* strus::tokenizerWikimediaUrlContent()
 {
-	static const TokenizerWikimediaUrl rt;
+	static const TokenizerWikimediaUrl rt( TokenClassContent, TokenizerWikimediaUrl::Title);
+	return &rt;
+}
+
+const TokenizerInterface* strus::tokenizerWikimediaUrlWord()
+{
+	static const TokenizerWikimediaUrl rt( TokenClassWordSep, TokenizerWikimediaUrl::Title);
+	return &rt;
+}
+
+const TokenizerInterface* strus::tokenizerWikimediaUrlSplit()
+{
+	static const TokenizerWikimediaUrl rt( TokenClassWhiteSpaceSep, TokenizerWikimediaUrl::Title);
+	return &rt;
+}
+
+const TokenizerInterface* strus::tokenizerWikimediaLinkId()
+{
+	static const TokenizerWikimediaLink rt( TokenClassContent, TokenizerWikimediaLink::Id);
 	return &rt;
 }
 
 const TokenizerInterface* strus::tokenizerWikimediaLinkContent()
 {
-	static const TokenizerWikimediaLink rt( TokenClassContent);
+	static const TokenizerWikimediaLink rt( TokenClassContent, TokenizerWikimediaLink::Text);
 	return &rt;
 }
 
 const TokenizerInterface* strus::tokenizerWikimediaLinkSplit()
 {
-	static const TokenizerWikimediaLink rt( TokenClassWhiteSpaceSep);
+	static const TokenizerWikimediaLink rt( TokenClassWhiteSpaceSep, TokenizerWikimediaLink::Text);
 	return &rt;
 }
 
 const TokenizerInterface* strus::tokenizerWikimediaLinkWord()
 {
-	static const TokenizerWikimediaLink rt( TokenClassWordSep);
+	static const TokenizerWikimediaLink rt( TokenClassWordSep, TokenizerWikimediaLink::Text);
 	return &rt;
 }
 

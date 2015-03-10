@@ -35,7 +35,11 @@ namespace strus
 /// \brief Forward declaration
 class TokenizerInterface;
 
+const TokenizerInterface* tokenizerWikimediaUrlId();
 const TokenizerInterface* tokenizerWikimediaUrlContent();
+const TokenizerInterface* tokenizerWikimediaUrlWord();
+const TokenizerInterface* tokenizerWikimediaUrlSplit();
+const TokenizerInterface* tokenizerWikimediaLinkId();
 const TokenizerInterface* tokenizerWikimediaLinkContent();
 const TokenizerInterface* tokenizerWikimediaLinkSplit();
 const TokenizerInterface* tokenizerWikimediaLinkWord();

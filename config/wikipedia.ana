@@ -4,14 +4,17 @@
 	contributor = orig content /mediawiki/page/revision/contributor/username();
 
 [MetaData]
-	contribid = orig word /mediawiki/page/revision/contributor/id();
+	contribid = orig content /mediawiki/page/revision/contributor/id();
 
 [SearchIndex]
-	para = orig word /mediawiki/page/revision/text;
-	stem = stem("en") word /mediawiki/page/revision/text();
+	para = orig mw_text_split /mediawiki/page/revision/text;
+	stem = stem("en") mw_text_word /mediawiki/page/revision/text();
+	stem = stem("en") mw_link_content /mediawiki/page/revision/text();
 
 [ForwardIndex]
-	orig = orig word /mediawiki/page/revision/text();
+	category = orig mw_link_content("Category") /mediawiki/page/revision/text();
+	link = orig mw_link_content /mediawiki/page/revision/text();
+	orig = orig mw_text_split /mediawiki/page/revision/text();
 
 [Document]
 	doc = /mediawiki/page;

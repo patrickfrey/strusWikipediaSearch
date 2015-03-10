@@ -32,18 +32,22 @@
 
 static const strus::TokenizerConstructor tokenizers[] =
 {
-	{"url_content",&strus::tokenizerWikimediaUrlContent},
-	{"link_content",&strus::tokenizerWikimediaLinkContent},
-	{"link_word",&strus::tokenizerWikimediaLinkWord},
-	{"link_split",&strus::tokenizerWikimediaLinkSplit},
-	{"citation_content",&strus::tokenizerWikimediaCitationContent},
-	{"citation_word",&strus::tokenizerWikimediaCitationWord},
-	{"citation_split",&strus::tokenizerWikimediaCitationSplit},
-	{"reference_content",&strus::tokenizerWikimediaReferenceContent},
-	{"reference_word",&strus::tokenizerWikimediaReferenceWord},
-	{"reference_split",&strus::tokenizerWikimediaReferenceSplit},
-	{"text_word",&strus::tokenizerWikimediaTextWord},
-	{"text_split",&strus::tokenizerWikimediaTextSplit},
+	{"mw_url_id",&strus::tokenizerWikimediaUrlId},
+	{"mw_url_content",&strus::tokenizerWikimediaUrlContent},
+	{"mw_url_word",&strus::tokenizerWikimediaUrlWord},
+	{"mw_url_split",&strus::tokenizerWikimediaUrlSplit},
+	{"mw_link_id",&strus::tokenizerWikimediaLinkId},
+	{"mw_link_content",&strus::tokenizerWikimediaLinkContent},
+	{"mw_link_word",&strus::tokenizerWikimediaLinkWord},
+	{"mw_link_split",&strus::tokenizerWikimediaLinkSplit},
+	{"mw_citation_content",&strus::tokenizerWikimediaCitationContent},
+	{"mw_citation_word",&strus::tokenizerWikimediaCitationWord},
+	{"mw_citation_split",&strus::tokenizerWikimediaCitationSplit},
+	{"mw_reference_content",&strus::tokenizerWikimediaReferenceContent},
+	{"mw_reference_word",&strus::tokenizerWikimediaReferenceWord},
+	{"mw_reference_split",&strus::tokenizerWikimediaReferenceSplit},
+	{"mw_text_word",&strus::tokenizerWikimediaTextWord},
+	{"mw_text_split",&strus::tokenizerWikimediaTextSplit},
 	{0,0}
 };
 
