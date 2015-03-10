@@ -26,36 +26,28 @@
 
 --------------------------------------------------------------------
 */
-#include "strus/private/dll_tags.hpp"
-#include "strus/analyzerModule.hpp"
-#include "tokenizers.hpp"
+#ifndef _STRUS_WIKIPEDIA_SEARCH_TOKENIZERS_HPP_INCLUDED
+#define _STRUS_WIKIPEDIA_SEARCH_TOKENIZERS_HPP_INCLUDED
 
-static const strus::TokenizerConstructor tokenizers[] =
+namespace strus
 {
-	{"url_content",&strus::tokenizerWikimediaUrlContent},
-	{"link_content",&strus::tokenizerWikimediaLinkContent},
-	{"link_word",&strus::tokenizerWikimediaLinkWord},
-	{"link_split",&strus::tokenizerWikimediaLinkSplit},
-	{"citation_content",&strus::tokenizerWikimediaCitationContent},
-	{"citation_word",&strus::tokenizerWikimediaCitationWord},
-	{"citation_split",&strus::tokenizerWikimediaCitationSplit},
-	{"reference_content",&strus::tokenizerWikimediaReferenceContent},
-	{"reference_word",&strus::tokenizerWikimediaReferenceWord},
-	{"reference_split",&strus::tokenizerWikimediaReferenceSplit},
-	{"text_word",&strus::tokenizerWikimediaTextWord},
-	{"text_split",&strus::tokenizerWikimediaTextSplit},
-	{0,0}
-};
 
-static const strus::NormalizerConstructor normalizers[] =
-{
-	{0,0}
-};
+/// \brief Forward declaration
+class TokenizerInterface;
 
-extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+const TokenizerInterface* tokenizerWikimediaUrlContent();
+const TokenizerInterface* tokenizerWikimediaLinkContent();
+const TokenizerInterface* tokenizerWikimediaLinkSplit();
+const TokenizerInterface* tokenizerWikimediaLinkWord();
+const TokenizerInterface* tokenizerWikimediaCitationContent();
+const TokenizerInterface* tokenizerWikimediaCitationSplit();
+const TokenizerInterface* tokenizerWikimediaCitationWord();
+const TokenizerInterface* tokenizerWikimediaReferenceContent();
+const TokenizerInterface* tokenizerWikimediaReferenceSplit();
+const TokenizerInterface* tokenizerWikimediaReferenceWord();
+const TokenizerInterface* tokenizerWikimediaTextWord();
+const TokenizerInterface* tokenizerWikimediaTextSplit();
 
-strus::AnalyzerModule entryPoint( tokenizers, normalizers);
-
-
-
+}//namespace
+#endif
 

@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 # --------------------------------------
 # SOURCES AND INCLUDES
 # --------------------------------------
+set( source_files
+	tokenizers.cpp
+)
 include_directories(
 	"${Boost_INCLUDE_DIRS}"
 	"${strus_INCLUDE_DIRS}"
@@ -19,7 +22,7 @@ link_directories(
 # ------------------------------------
 # LIBRARY
 # ------------------------------------
-add_library( modstrus_analyzer_wikipedia_search  MODULE  modstrus_analyzer_wikipedia_search.cpp )
+add_library( modstrus_analyzer_wikipedia_search  MODULE  modstrus_analyzer_wikipedia_search.cpp ${source_files} )
 set_target_properties( modstrus_analyzer_wikipedia_search PROPERTIES PREFIX "")
 target_link_libraries( modstrus_analyzer_wikipedia_search strus_module )
 
