@@ -11,6 +11,7 @@ include_directories(
 	"${strus_INCLUDE_DIRS}"
 	"${strusanalyzer_INCLUDE_DIRS}"
 	"${strusmodule_INCLUDE_DIRS}"
+	"${PROJECT_SOURCE_DIR}/3rdParty/textwolf/include"
 )
 
 link_directories( 

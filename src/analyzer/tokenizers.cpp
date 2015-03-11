@@ -28,11 +28,11 @@
 */
 #include "tokenizers.hpp"
 #include "strus/tokenizerInterface.hpp"
+#include "textwolf/charset_utf8.hpp"
 #include <string>
 #include <cstring>
 #include <vector>
 #include <stdexcept>
-/*[-]*/#include <iostream>
 
 using namespace strus;
 
@@ -60,34 +60,36 @@ static bool isSpace( char ch)
 	return (ch <= 32);
 }
 
-const char* skipIdentifier( char const* si, const char* se)
+static bool isTag( const char* tagname, char const* si, const char* se)
+{
+	char const* ti = tagname;
+	for (; si < se && *ti == *si; ++ti,++si){}
+	if (*ti) return false;
+	return (*si == '>' || (unsigned char)*si <= 32);
+}
+
+static const char* skipIdentifier( char const* si, const char* se)
 {
 	for (; si != se && isAlphaNum(*si); ++si){}
 	return si;
 }
 
-const char* skipSpace( char const* si, const char* se)
+static const char* skipSpace( char const* si, const char* se)
 {
 	for (; si != se && isSpace(*si); ++si){}
 	return si;
 }
 
-const char* skipValue( char const* si, const char* se)
+static const char* skipValue( char const* si, const char* se)
 {
 	if (si != se)
 	{
-		if (*si == '&')
+		if (*si == '\'' || *si == '\"')
 		{
-			if (0==std::memcmp( si, "&quot;", 6))
-			{
-				si += 6;
-				const char* ni = findPattern( "&quot;", si, se);
-				return ni;
-			}
-			else
-			{
-				return si + 1;
-			}
+			char eb = *si;
+			const char* ni = (const char*)std::memchr( si, eb, se-si);
+			if (ni) si = ni;
+			++si;
 		}
 		else if (isAlphaNum(*si))
 		{
@@ -97,7 +99,7 @@ const char* skipValue( char const* si, const char* se)
 	return si;
 }
 
-const char* skipUrl( char const* si, const char* se, char delim)
+static const char* skipUrl( char const* si, const char* se, char delim)
 {
 	for (; si != se && isAlphaNum(*si); ++si){}
 	if (si[0] == ':' && si[1] == '/')
@@ -107,119 +109,31 @@ const char* skipUrl( char const* si, const char* se, char delim)
 	return 0;
 }
 
-static const char* skipToToken( char const* si, const char* se)
+static textwolf::charset::UTF8::CharLengthTab g_charLengthTab;
+
+static inline const char* skipChar( const char* si)
 {
-	while (si && si != se)
+	return si+g_charLengthTab[*si];
+}
+
+static inline unsigned int utf8decode( char const* si, const char* se)
+{
+	enum {
+		B00111111=0x3F,
+		B00011111=0x1F
+	};
+	unsigned int res = (unsigned char)*si;
+	unsigned char charsize = g_charLengthTab[ *si];
+	if (res > 127)
 	{
-		if (*si == '&')
+		res = ((unsigned char)*si)&(B00011111>>(charsize-2));
+		for (++si,--charsize; si != se && charsize; ++si,--charsize)
 		{
-			if (0==std::memcmp( si, "&quot;", 6))
-			{
-				si += 6;
-			}
-			else if (0==std::memcmp( si, "&amp;", 5))
-			{
-				si += 5;
-			}
-			else if (0==std::memcmp( si, "&lt;", 4))
-			{
-				if (0==std::memcmp( si, "&lt;!--;", 7))
-				{
-					si += 7;
-					si = findPattern( "--&gt;", si, se);
-				}
-				else if (0==std::memcmp( si, "&lt;math&gt;", 12))
-				{
-					si += 12;
-					si = findPattern( "&lt;/math&gt;", si, se);
-				}
-				else if (0==std::memcmp( si, "&lt;span&gt;", 12))
-				{
-					si += 12;
-					si = findPattern( "&lt;/span&gt;", si, se);
-				}
-				else if (0==std::memcmp( si, "&lt;pre&gt;", 11))
-				{
-					si += 11;
-					si = findPattern( "&lt;/pre&gt;", si, se);
-				}
-				else if (0==std::memcmp( si, "&lt;div&gt;", 11))
-				{
-					si += 11;
-					si = findPattern( "&lt;/div&gt;", si, se);
-				}
-				else if (0==std::memcmp( si, "&lt;gallery&gt;", 15))
-				{
-					si += 15;
-					si = findPattern( "&lt;/gallery&gt;", si, se);
-				}
-				else if (0==std::memcmp( si, "&lt;nowiki&gt;", 14))
-				{
-					si += 14;
-					si = findPattern( "&lt;/nowiki&gt;", si, se);
-				}
-				else
-				{
-					si += 4;
-					si = findPattern( "&gt;", si, se);
-				}
-			}
-			else
-			{
-				++si;
-			}
-		}
-		else if (*si == '[')
-		{
-			++si;
-			if (si < se && *si == '[')
-			{
-				si = findPattern( "]]", si+1, se);
-			}
-			char const* ue = skipUrl( si, se, ']');
-			if (ue)
-			{
-				si = ue+1;
-			}
-		}
-		else if (*si == '{')
-		{
-			++si;
-			if (si < se && *si == '{')
-			{
-				si = findPattern( "}}", si+1, se);
-			}
-			else if (si < se && *si == '|')
-			{
-				const char* xi = (const char*)std::memchr( si, '\n', se-si);
-				if (xi) si=xi+1;
-			}
-			else
-			{
-				const char* xi = (const char*)std::memchr( si, '}', se-si);
-				if (xi) si=xi+1;
-			}
-		}
-		else if (*si == '!' || *si == '|')
-		{
-			++si;
-			char const* ai = skipIdentifier( skipSpace( si, se), se);
-			if (ai < se && *ai == '=')
-			{
-				si = skipValue( ai+1, se);
-			}
-			si = skipSpace( si, se);
-		}
-		else if (*si <= 32)
-		{
-			si = skipSpace( si, se);
-		}
-		else
-		{
-			break;
+			res <<= 6;
+			res |= (unsigned char)(*si & B00111111);
 		}
 	}
-	return (si)?si:se;
+	return res;
 }
 
 class CharTable
@@ -235,39 +149,199 @@ public:
 		}
 	}
 
-	bool operator[]( char ch) const		{return m_ar[ (unsigned char)ch];}
+	bool operator[]( char ch) const
+	{
+		return m_ar[ (unsigned char)ch];
+	}
+
 private:
-	bool m_ar[256];
+	bool m_ar[128];
 };
 
-static void tokenizeWordSeparation( std::vector<analyzer::Token>& res, const char* src, char const* si, const char* se)
+typedef bool (*TokenDelimiter)( char const* si, const char* se);
+
+static bool wordBoundaryDelimiter( char const* si, const char* se)
 {
-	static const CharTable delimiter("#|{}[]<>&:.;,!?%/()+-'\"`=");
-	for (si = skipToToken( si, se); si != se; si = skipToToken( si, se))
+	static const CharTable ascii_delimiter("#|{}[]<>&:.;,!?%/()*+-'\"`=");
+	if ((unsigned char)*si <= 32)
 	{
-		for (;si != se && ((unsigned char)*si <= 32 || delimiter[ *si]); ++si){}
-		if (si != se)
-		{
-			char const* start = si;
-			for (;si != se && ((unsigned char)*si > 32 && !delimiter[ *si]); ++si){}
-			res.push_back( analyzer::Token( start - src, si - start));
-		}
+		return true;
+	}
+	else if ((unsigned char)*si >= 128)
+	{
+		unsigned int chr = utf8decode( si, se);
+		if (chr == 133) return true;
+		if (chr >= 0x2000 && chr <= 0x206F) return true;
+		if (chr == 0x3000) return true;
+		if (chr == 0xFEFF) return true;
+		return false;
+	}
+	else if (ascii_delimiter[ *si])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
-static void tokenizeWhiteSpace( std::vector<analyzer::Token>& res, const char* src, char const* si, const char* se)
+static bool whiteSpaceDelimiter( char const* si, const char* se)
 {
-	static const CharTable delimiter("'{}[]&");
-
-	for (si = skipToToken( si, se); si != se; si = skipToToken( si, se))
+	static const CharTable ascii_delimiter("'{}[]<>");
+	if ((unsigned char)*si <= 32)
 	{
-		for (;si != se && ((unsigned char)*si <= 32 || delimiter[ *si]); ++si){}
-		if (si != se)
+		return true;
+	}
+	else if ((unsigned char)*si >= 128)
+	{
+		unsigned int chr = utf8decode( si, se);
+		if (chr == 133) return true;
+		if (chr >= 0x2000 && chr <= 0x200F) return true;
+		if (chr >= 0x2028 && chr <= 0x2029) return true;
+		if (chr == 0x202F) return true;
+		if (chr >= 0x205F && chr <= 0x2060) return true;
+		if (chr == 0x3000) return true;
+		if (chr == 0xFEFF) return true;
+		return false;
+	}
+	else if (ascii_delimiter[ *si])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+static const char* skipToToken( char const* si, const char* se, TokenDelimiter delim)
+{
+	while (si && si != se)
+	{
+		if (*si == '<')
 		{
-			char const* start = si;
-			for (; si != se && ((unsigned char)*si > 32 && !delimiter[ *si]); ++si){}
-			res.push_back( analyzer::Token( start - src, si - start));
+			++si;
+			if (0==std::memcmp( si, "!--", 3))
+			{
+				si += 3;
+				const char* pe = findPattern( "-->", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "ref", si, se))
+			{
+				si += 4;
+				const char* pe = findPattern( "</ref>", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "math", si, se))
+			{
+				si += 5;
+				const char* pe = findPattern( "</math>", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "span", si, se))
+			{
+				si += 5;
+				const char* pe = findPattern( "</span>", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "pre", si, se))
+			{
+				si += 4;
+				const char* pe = findPattern( "</pre>", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "div", si, se))
+			{
+				si += 4;
+				const char* pe = findPattern( "</div>", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "gallery", si, se))
+			{
+				si += 8;
+				const char* pe = findPattern( "</gallery>;", si, se);
+				if (pe) si = pe;
+			}
+			else if (isTag( "nowiki", si, se))
+			{
+				si += 7;
+				const char* pe = findPattern( "</nowiki>", si, se);
+				if (pe) si = pe;
+			}
+			else
+			{
+				const char* pe = (const char*)std::memchr( si, '>', se-si);
+				if (pe) si = pe+1;
+			}
 		}
+		else if (*si == '[')
+		{
+			++si;
+			if (si < se && *si == '[')
+			{
+				const char* pe = findPattern( "]]", si+1, se);
+				if (pe) si = pe;
+			}
+			else
+			{
+				char const* ue = skipUrl( si, se, ']');
+				if (ue) si = ue+1;
+			}
+		}
+		else if (*si == '{')
+		{
+			++si;
+			if (si < se && *si == '{')
+			{
+				const char* pe = findPattern( "}}", si+1, se);
+				if (pe) si = pe;
+			}
+			else if (si < se && *si == '|')
+			{
+				const char* xi = (const char*)std::memchr( si, '\n', se-si);
+				if (xi) si=xi+1;
+			}
+			else
+			{
+				const char* xi = (const char*)std::memchr( si, '}', se-si);
+				if (xi) si=xi+1;
+			}
+		}
+		else if (*si == '!' || *si == '|' || *si == '*')
+		{
+			++si;
+			char const* ai = skipIdentifier( skipSpace( si, se), se);
+			if (ai < se && *ai == '=')
+			{
+				si = skipValue( ai+1, se);
+			}
+			si = skipSpace( si, se);
+		}
+		else if (*si <= 32)
+		{
+			si = skipSpace( si, se);
+		}
+		else if (delim( si, se))
+		{
+			si = skipChar(si);
+		}
+		else
+		{
+			break;
+		}
+	}
+	return (si)?si:se;
+}
+
+static void tokenizeWithDelimiter( std::vector<analyzer::Token>& res, const char* src, char const* si, const char* se, TokenDelimiter delim)
+{
+	for (si = skipToToken( si, se, delim); si != se; si = skipToToken( si, se, delim))
+	{
+		const char* start = si;
+		for (; si != se && !delim( si, se); si = skipChar(si)){}
+		res.push_back( analyzer::Token( start - src, si - start));
 	}
 }
 
@@ -284,7 +358,7 @@ public:
 			tokenize( Context* ctx, const char* src, std::size_t srcsize) const
 	{
 		std::vector<analyzer::Token> rt;
-		tokenizeWordSeparation( rt, src, src, src+srcsize);
+		tokenizeWithDelimiter( rt, src, src, src+srcsize, wordBoundaryDelimiter);
 		return rt;
 	}
 };
@@ -302,7 +376,7 @@ public:
 			tokenize( Context* ctx, const char* src, std::size_t srcsize) const
 	{
 		std::vector<analyzer::Token> rt;
-		tokenizeWhiteSpace( rt, src, src, src+srcsize);
+		tokenizeWithDelimiter( rt, src, src, src+srcsize, whiteSpaceDelimiter);
 		return rt;
 	}
 };
@@ -322,10 +396,10 @@ static void tokenizeTokenClass( TokenClass tokenClass_, std::vector<analyzer::To
 			res.push_back( analyzer::Token( si - src, se-si));
 			break;
 		case TokenClassWhiteSpaceSep:
-			tokenizeWhiteSpace( res, src, si, se);
+			tokenizeWithDelimiter( res, src, si, se, whiteSpaceDelimiter);
 			break;
 		case TokenClassWordSep:
-			tokenizeWordSeparation( res, src, si, se);
+			tokenizeWithDelimiter( res, src, si, se, wordBoundaryDelimiter);
 			break;
 	}
 }
@@ -453,6 +527,7 @@ public:
 							const char* end = (const char*)std::memchr( si, '|', pe-si);
 							if (!end) end = pe;
 							tokenizeTokenClass( m_tokenClass, rt, src, si, end);
+							break;
 						}
 						case Id:
 						{
@@ -466,6 +541,7 @@ public:
 								start = si;
 							}
 							tokenizeTokenClass( m_tokenClass, rt, src, start, pe);
+							break;
 						}
 					}
 				}
@@ -518,6 +594,7 @@ public:
 							start = si;
 						}
 						tokenizeTokenClass( m_tokenClass, rt, src, start, pe);
+						break;
 					}
 					case Link:
 					{
@@ -531,6 +608,7 @@ public:
 						{
 							tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
 						}
+						break;
 					}
 				}
 				si = pe + 1;
@@ -735,7 +813,7 @@ public:
 	private:
 		static std::string getPattern( const std::string& name_)
 		{
-			std::string rt("&lt;");
+			std::string rt("<");
 			if (name_.size())
 			{
 				rt.append( name_);
@@ -801,10 +879,10 @@ public:
 		char const* si = findPattern( ctx->arg().pattern(), src, src + srcsize);
 		char const* se = src + srcsize;
 
-		for (; si; si = findPattern( ctx->arg().pattern(), si, se))
+		for (; si && si != se; si = findPattern( ctx->arg().pattern(), si, se))
 		{
-			if (*si != ' ' && *si != '&') continue;
-			char const* pe = findPattern( "&gt;", si, se);
+			if (*si != ' ' && *si != '>') continue;
+			const char* pe = (const char*)std::memchr( si+1, '>', se-si-1);
 			if (pe)
 			{
 				if (ctx->arg().attribute().size())
@@ -812,10 +890,10 @@ public:
 					char const* ai = findPattern( ctx->arg().attribute(), si, pe);
 					if (ai)
 					{
-						if (ai+6 < pe && 0==std::memcmp( ai, "&quot;", 6))
+						if (ai < pe && *ai == '\'')
 						{
-							ai+=6;
-							char const* ae = findPattern( "&quot;", ai, pe);
+							++ai;
+							const char* ae = (const char*)std::memchr( ai, '\'', pe-ai);
 							if (ae)
 							{
 								tokenizeTokenClass( m_tokenClass, rt, src, ai, ae);
@@ -824,7 +902,7 @@ public:
 						else
 						{
 							char const* ae = (const char*)std::memchr( ai, ' ', pe-ai);
-							if (!ae) ae = (const char*)std::memchr( ai, '&', pe-ai);
+							if (!ae) ae = (const char*)std::memchr( ai, '>', pe-ai);
 							if (ae)
 							{
 								tokenizeTokenClass( m_tokenClass, rt, src, ai, ae);
@@ -836,7 +914,7 @@ public:
 				{
 					tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
 				}
-				si = pe+4;
+				si = pe+1;
 			}
 		}
 		return rt;
