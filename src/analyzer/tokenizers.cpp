@@ -393,7 +393,7 @@ static void tokenizeTokenClass( TokenClass tokenClass_, std::vector<analyzer::To
 	switch (tokenClass_)
 	{
 		case TokenClassContent:
-			res.push_back( analyzer::Token( logicalPosOfs, si - src, se-si));
+			res.push_back( analyzer::Token( (si - src) + logicalPosOfs, si - src, se-si));
 			break;
 		case TokenClassWhiteSpaceSep:
 			tokenizeWithDelimiter( res, logicalPosOfs, src, si, se, whiteSpaceDelimiter);
@@ -523,17 +523,17 @@ public:
 				{
 					switch (m_what)
 					{
-						case Text:
+						case Id:
 						{
 							const char* end = (const char*)std::memchr( si, '|', pe-si);
-							if (!end) end = pe;
+							if (!end || skipSpace( end, pe) == pe) end = pe;
 							tokenizeTokenClass( m_tokenClass, rt, -(si-linkStart), src, si, end);
 							break;
 						}
-						case Id:
+						case Text:
 						{
 							start = (const char*)std::memchr( si, '|', pe-si);
-							if (start)
+							if (start && skipSpace( start, pe) != pe)
 							{
 								++start;
 							}

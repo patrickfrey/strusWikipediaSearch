@@ -12,8 +12,10 @@
 	stem = stem("en") mw_link_word /mediawiki/page/revision/text();
 
 [ForwardIndex]
-	category = orig mw_link_content("Category") /mediawiki/page/revision/text();
-	link = orig mw_link_content /mediawiki/page/revision/text() {position=pred};
+	linkid = orig mw_link_id /mediawiki/page/revision/text();
+	linktxt = orig mw_link_content /mediawiki/page/revision/text();
+	catgid = orig mw_link_id("Category") /mediawiki/page/revision/text();
+	catgtxt = orig mw_link_content("Category") /mediawiki/page/revision/text();
 	orig = orig mw_link_split /mediawiki/page/revision/text();
 	orig = orig mw_text_split /mediawiki/page/revision/text();
 
