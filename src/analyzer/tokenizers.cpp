@@ -335,13 +335,13 @@ static const char* skipToToken( char const* si, const char* se, TokenDelimiter d
 	return (si)?si:se;
 }
 
-static void tokenizeWithDelimiter( std::vector<analyzer::Token>& res, const char* src, char const* si, const char* se, TokenDelimiter delim)
+static void tokenizeWithDelimiter( std::vector<analyzer::Token>& res, int logicalPosOfs, const char* src, char const* si, const char* se, TokenDelimiter delim)
 {
 	for (si = skipToToken( si, se, delim); si != se; si = skipToToken( si, se, delim))
 	{
 		const char* start = si;
 		for (; si != se && !delim( si, se); si = skipChar(si)){}
-		res.push_back( analyzer::Token( start - src, si - start));
+		res.push_back( analyzer::Token( start - src + logicalPosOfs, start - src, si - start));
 	}
 }
 
@@ -358,7 +358,7 @@ public:
 			tokenize( Context* ctx, const char* src, std::size_t srcsize) const
 	{
 		std::vector<analyzer::Token> rt;
-		tokenizeWithDelimiter( rt, src, src, src+srcsize, wordBoundaryDelimiter);
+		tokenizeWithDelimiter( rt, 0, src, src, src+srcsize, wordBoundaryDelimiter);
 		return rt;
 	}
 };
@@ -376,7 +376,7 @@ public:
 			tokenize( Context* ctx, const char* src, std::size_t srcsize) const
 	{
 		std::vector<analyzer::Token> rt;
-		tokenizeWithDelimiter( rt, src, src, src+srcsize, whiteSpaceDelimiter);
+		tokenizeWithDelimiter( rt, 0, src, src, src+srcsize, whiteSpaceDelimiter);
 		return rt;
 	}
 };
@@ -388,18 +388,18 @@ enum TokenClass
 	TokenClassWordSep
 };
 
-static void tokenizeTokenClass( TokenClass tokenClass_, std::vector<analyzer::Token>& res, const char* src, char const* si, const char* se)
+static void tokenizeTokenClass( TokenClass tokenClass_, std::vector<analyzer::Token>& res, int logicalPosOfs, const char* src, char const* si, const char* se)
 {
 	switch (tokenClass_)
 	{
 		case TokenClassContent:
-			res.push_back( analyzer::Token( si - src, se-si));
+			res.push_back( analyzer::Token( logicalPosOfs, si - src, se-si));
 			break;
 		case TokenClassWhiteSpaceSep:
-			tokenizeWithDelimiter( res, src, si, se, whiteSpaceDelimiter);
+			tokenizeWithDelimiter( res, logicalPosOfs, src, si, se, whiteSpaceDelimiter);
 			break;
 		case TokenClassWordSep:
-			tokenizeWithDelimiter( res, src, si, se, wordBoundaryDelimiter);
+			tokenizeWithDelimiter( res, logicalPosOfs, src, si, se, wordBoundaryDelimiter);
 			break;
 	}
 }
@@ -507,6 +507,7 @@ public:
 
 		for (; si; si = findPattern( ctx->arg().pattern(), si, se))
 		{
+			char const* linkStart = si - ctx->arg().pattern().size();
 			char const* pe = (const char*)std::memchr( si, ']', se-si);
 			if (pe && pe[1] == ']')
 			{
@@ -526,7 +527,7 @@ public:
 						{
 							const char* end = (const char*)std::memchr( si, '|', pe-si);
 							if (!end) end = pe;
-							tokenizeTokenClass( m_tokenClass, rt, src, si, end);
+							tokenizeTokenClass( m_tokenClass, rt, -(si-linkStart), src, si, end);
 							break;
 						}
 						case Id:
@@ -540,7 +541,7 @@ public:
 							{
 								start = si;
 							}
-							tokenizeTokenClass( m_tokenClass, rt, src, start, pe);
+							tokenizeTokenClass( m_tokenClass, rt, -(start-linkStart), src, start, pe);
 							break;
 						}
 					}
@@ -575,6 +576,7 @@ public:
 
 		for (; si; si = (const char*)std::memchr( si, '[', se-si))
 		{
+			const char* urlStart = si;
 			++si;
 			char const* pe = skipUrl( si, se, ']');
 			if (pe)
@@ -593,7 +595,7 @@ public:
 						{
 							start = si;
 						}
-						tokenizeTokenClass( m_tokenClass, rt, src, start, pe);
+						tokenizeTokenClass( m_tokenClass, rt, -(start-urlStart), src, start, pe);
 						break;
 					}
 					case Link:
@@ -602,11 +604,11 @@ public:
 						if (!end) end = (const char*)std::memchr( si, '\t', pe-si);
 						if (end)
 						{
-							tokenizeTokenClass( m_tokenClass, rt, src, si, end);
+							tokenizeTokenClass( m_tokenClass, rt, -(si-urlStart), src, si, end);
 						}
 						else
 						{
-							tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
+							tokenizeTokenClass( m_tokenClass, rt, -(si-urlStart), src, si, pe);
 						}
 						break;
 					}
@@ -743,6 +745,7 @@ public:
 
 		for (; si; si = findPattern( ctx->arg().pattern(), si, se))
 		{
+			char const* citationStart = si - ctx->arg().pattern().size();
 			char const* pe = (const char*)std::memchr( si, '}', se-si);
 			if (pe && pe[1] == '}')
 			{
@@ -755,13 +758,13 @@ public:
 						if (!ae) ae = (const char*)std::memchr( ai, '}', pe-ai);
 						if (ae)
 						{
-							tokenizeTokenClass( m_tokenClass, rt, src, ai, ae);
+							tokenizeTokenClass( m_tokenClass, rt, -(ai-citationStart), src, ai, ae);
 						}
 					}
 				}
 				else
 				{
-					tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
+					tokenizeTokenClass( m_tokenClass, rt, -(si-citationStart), src, si, pe);
 				}
 				si = pe+2;
 			}
@@ -881,6 +884,7 @@ public:
 
 		for (; si && si != se; si = findPattern( ctx->arg().pattern(), si, se))
 		{
+			const char* refStart = si - ctx->arg().pattern().size();
 			if (*si != ' ' && *si != '>') continue;
 			const char* pe = (const char*)std::memchr( si+1, '>', se-si-1);
 			if (pe)
@@ -896,7 +900,7 @@ public:
 							const char* ae = (const char*)std::memchr( ai, '\'', pe-ai);
 							if (ae)
 							{
-								tokenizeTokenClass( m_tokenClass, rt, src, ai, ae);
+								tokenizeTokenClass( m_tokenClass, rt, -(ai-refStart), src, ai, ae);
 							}
 						}
 						else
@@ -905,14 +909,14 @@ public:
 							if (!ae) ae = (const char*)std::memchr( ai, '>', pe-ai);
 							if (ae)
 							{
-								tokenizeTokenClass( m_tokenClass, rt, src, ai, ae);
+								tokenizeTokenClass( m_tokenClass, rt, -(ai-refStart), src, ai, ae);
 							}
 						}
 					}
 				}
 				else
 				{
-					tokenizeTokenClass( m_tokenClass, rt, src, si, pe);
+					tokenizeTokenClass( m_tokenClass, rt, -(si-refStart), src, si, pe);
 				}
 				si = pe+1;
 			}

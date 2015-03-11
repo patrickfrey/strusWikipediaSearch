@@ -13,7 +13,7 @@
 
 [ForwardIndex]
 	category = orig mw_link_content("Category") /mediawiki/page/revision/text();
-	link = orig mw_link_content /mediawiki/page/revision/text();
+	link = orig mw_link_content /mediawiki/page/revision/text() {position=pred};
 	orig = orig mw_link_split /mediawiki/page/revision/text();
 	orig = orig mw_text_split /mediawiki/page/revision/text();
 
