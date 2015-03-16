@@ -45,4 +45,5 @@ CPackSourceConfig.cmake
 
 # Data
 data/enwiki-20150205-pages-articles-multistream.xml.bz2
+storage/
 
