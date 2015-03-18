@@ -41,6 +41,7 @@
 #include <fstream>
 #include <iterator>
 #include <cstdlib>
+#include <cstring>
 #include <stdexcept>
 #include <stdint.h>
 

@@ -159,12 +159,16 @@ private:
 
 public:
 	/// \brief Default constructor
-	XMLPrinter()
-		:m_state(Init){}
+	/// \param[in] subDocument do not require an Xml header to be printed if set to true
+	/// \note Uses the default code pages (IsoLatin-1 for IsoLatin) for output
+	explicit XMLPrinter( bool subDocument=false)
+		:m_state(subDocument?Content:Init){}
 
 	/// \brief Constructor
-	explicit XMLPrinter( const IOCharset& output_)
-		:m_state(Init),m_output(output_){}
+	/// \param[in] output_ character set encoding instance (with the code page tables needed) for output
+	/// \param[in] subDocument do not require an Xml header to be printed if set to true
+	explicit XMLPrinter( const IOCharset& output_, bool subDocument=false)
+		:m_state(subDocument?Content:Init),m_output(output_){}
 
 	/// \brief Copy constructor
 	XMLPrinter( const XMLPrinter& o)
@@ -180,7 +184,7 @@ public:
 	{
 		if (m_state != Init)
 		{
-			m_lasterror = "printing document not starting with xml header";
+			m_lasterror = "printing xml header not at the beginning of the document";
 			return false;
 		}
 		std::string enc = encoding?encoding:"UTF-8";

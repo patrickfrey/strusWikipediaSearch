@@ -42,6 +42,7 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 
 # Compiled Programs
+src/wikimediaToXml/strusWikimediaToXml
 
 # Data
 data/enwiki-20150205-pages-articles-multistream.xml.bz2
