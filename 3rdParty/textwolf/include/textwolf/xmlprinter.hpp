@@ -162,17 +162,17 @@ public:
 	/// \param[in] subDocument do not require an Xml header to be printed if set to true
 	/// \note Uses the default code pages (IsoLatin-1 for IsoLatin) for output
 	explicit XMLPrinter( bool subDocument=false)
-		:m_state(subDocument?Content:Init){}
+		:m_state(subDocument?Content:Init),m_lasterror(0){}
 
 	/// \brief Constructor
 	/// \param[in] output_ character set encoding instance (with the code page tables needed) for output
 	/// \param[in] subDocument do not require an Xml header to be printed if set to true
 	explicit XMLPrinter( const IOCharset& output_, bool subDocument=false)
-		:m_state(subDocument?Content:Init),m_output(output_){}
+		:m_state(subDocument?Content:Init),m_output(output_),m_lasterror(0){}
 
 	/// \brief Copy constructor
 	XMLPrinter( const XMLPrinter& o)
-		:m_state(o.m_state),m_buf(o.m_buf),m_tagstack(o.m_tagstack),m_output(o.m_output)
+		:m_state(o.m_state),m_buf(o.m_buf),m_tagstack(o.m_tagstack),m_output(o.m_output),m_lasterror(o.m_lasterror)
 	{}
 
 	/// \brief Prints an XML header (version "1.0")
@@ -376,7 +376,7 @@ public:
 	/// \return the last error string
 	const char* lasterror() const
 	{
-		return m_lasterror.empty()?0:m_lasterror.c_str();
+		return m_lasterror;
 	}
 
 private:
@@ -384,7 +384,7 @@ private:
 	BufferType m_buf;				///< element output buffer
 	TagStack m_tagstack;				///< tag name stack of open tags
 	IOCharset m_output;				///< output character set encoding
-	std::string m_lasterror;			///< the last error occurred
+	const char* m_lasterror;			///< the last error occurred
 };
 
 } //namespace
