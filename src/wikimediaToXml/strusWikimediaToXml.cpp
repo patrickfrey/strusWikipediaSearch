@@ -95,8 +95,9 @@ static const char* findPattern( char const* si, const char* se, const char* patt
 
 static const char* skipTag( char const* si, const char* se)
 {
-	/*[-]*/std::cout << "SKIP TAG '" << outputString( si, se) << "'" << std::endl;
-
+#ifdef STRUS_LOWLEVEL_DEBUG
+	std::cout << "SKIP TAG '" << outputString( si, se) << "'" << std::endl;
+#endif
 	const char* start = si++;
 	if (si < se && si[0] == '!' && si[1] == '-' && si[2] == '-')
 	{
@@ -139,7 +140,9 @@ static const char* skipTag( char const* si, const char* se)
 enum {MaxWWWLinkSize=256,MaxPageLinkSize=4000};
 static const char* skipLink( char const* si, const char* se)
 {
-	/*[-]*/std::cout << "SKIP LNK '" << outputString( si, se) << "'" << std::endl;
+#ifdef STRUS_LOWLEVEL_DEBUG
+	std::cout << "SKIP LNK '" << outputString( si, se) << "'" << std::endl;
+#endif
 	const char* start = si;
 	char sb = *si++;
 	bool dup = false;
@@ -223,7 +226,9 @@ static const char* skipLink( char const* si, const char* se)
 
 static const char* skipTable( char const* si, const char* se)
 {
-	/*[-]*/std::cout << "SKIP TAB '" << outputString( si, se) << "'" << std::endl;
+#ifdef STRUS_LOWLEVEL_DEBUG
+	std::cout << "SKIP TAB '" << outputString( si, se) << "'" << std::endl;
+#endif
 	const char* start = si;
 	char sb = *si++;
 	char eb = 0;
@@ -325,7 +330,9 @@ struct ValueRow
 
 static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, char enddelim, bool dupEnddelim)
 {
-	/*[-]*/std::cout << "PARSE ROW '" << outputString( si, se) << "'" << std::endl;
+#ifdef STRUS_LOWLEVEL_DEBUG
+	std::cout << "PARSE ROW '" << outputString( si, se) << "'" << std::endl;
+#endif
 	ValueRow rt;
 	bool found = false;
 	const char* start = si;
@@ -584,7 +591,9 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 			}
 			else if (*si == '|')
 			{
-				/*[-]*/std::cout << "START TAB '" << outputString( si, se) << "'" << std::endl;
+#ifdef STRUS_LOWLEVEL_DEBUG
+				std::cout << "START TAB '" << outputString( si, se) << "'" << std::endl;
+#endif
 				if (si+1 < se && si[1] == '}')
 				{
 					// ... catch '{|}'
@@ -595,7 +604,9 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 				const char* start = si-1; 
 				const char* tnext = skipTable( start, se);
 				const char* tend = tnext-2;
-				/*[-]*/std::cout << "ENDOF TAB '" << outputString( tend, se) << "'" << std::endl;
+#ifdef STRUS_LOWLEVEL_DEBUG
+				std::cout << "ENDOF TAB '" << outputString( tend, se) << "'" << std::endl;
+#endif
 				++si;
 
 				ValueRow row = parseValueRow( si, tend, '|', '\n', false);
@@ -605,7 +616,9 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 
 				while (si < tend)
 				{
-					/*[-]*/std::cout << "PARSE TAB '" << outputString( si, tend) << "'" << std::endl;
+#ifdef STRUS_LOWLEVEL_DEBUG
+					std::cout << "PARSE TAB '" << outputString( si, tend) << "'" << std::endl;
+#endif
 					const char* tag = 0;
 					if (*si == '*')
 					{
