@@ -46,9 +46,16 @@
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinter;
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
-static bool isDigit( char ch)
+static std::string outputString( const char* si, const char* se)
 {
-	return (ch >= '0' && ch <= '9');
+	if (se - si > 60)
+	{
+		return std::string( si, 30) + "..." + std::string( se-30, 30);
+	}
+	else
+	{
+		return std::string( si, se-si);
+	}
 }
 
 static bool isAlphaNum( char ch)
@@ -84,55 +91,35 @@ static const char* skipTag( char const* si, const char* se)
 		const char* end = findPattern( si+2, se, "-->");
 		if (!end)
 		{
-			std::cerr << "WARNING comment not closed in table:" << std::string( start, 30) << std::endl;
-		}
-		return end;
-	}
-	if (si < se && (si[0]|32) == 'b' && (si[1]|32) == 'r' && (si[2] == ' ' || si[2] == '/' || si[2] == '>'))
-	{
-		const char* end = (const char*)std::memchr( si, '>', se-si);
-		if (!end)
-		{
-			std::cerr << "WARNING BR tag invalid:" << std::string( start, 30) << std::endl;
-			return 0;
+			std::cerr << "WARNING comment not closed:" << outputString( start, se) << std::endl;
+			return si+3;
 		}
 		else
 		{
-			return end+1;
+			return end;
 		}
-	}
-	else if (isAlphaNum(*si))
-	{
-		char const* ti = si+1;
-		for (; ti < se && *ti != '>'; ++ti){}
-		if (ti < se && *(ti-1) == '/')
-		{
-			return ti+1;
-		}
-		const char* tgnam = si;
-		for (++si; si < se && isAlphaNum(*si); ++si){}
-		if (*si == '-')
-		{
-			for (++ti; ti < se && *ti != '>'; ++ti){}
-			if (ti < se) return ti+1;
-		}
-		if (isSpace(*si))
-		{
-			ti = si+1;
-			if (*ti == '#' || isDigit(*ti))
-			{
-				for (++ti; ti < se && *ti != '>'; ++ti){}
-				if (ti < se) return ti+1;
-			}
-		}
-		std::string pattern("</");
-		pattern.append( tgnam, si-tgnam);
-		pattern.push_back( '>');
-		return findPattern( si+2, se, pattern.c_str());
 	}
 	else
 	{
-		return si;
+		const char* tgnam = si;
+		for (; si < se && *si != '>'; ++si){}
+		if (0==std::memcmp( tgnam, "nowiki", si-tgnam))
+		{
+			const char* end = findPattern( si+1, se, "</nowiki>");
+			if (!end)
+			{
+				std::cerr << "WARNING nowiki tag not closed:" << outputString( start, se) << std::endl;
+				return si+1;
+			}
+			else
+			{
+				return end;
+			}
+		}
+		else
+		{
+			return si+1;
+		}
 	}
 }
 
@@ -176,16 +163,7 @@ static const char* skipLink( char const* si, const char* se)
 		}
 		else if (*si == '<')
 		{
-			const char* endtag = skipTag( si, se);
-			if (!endtag)
-			{
-				std::cerr << "WARNING tag not closed in link: " << std::string( si, 30) << std::endl;
-				++si;
-			}
-			else
-			{
-				si = endtag;
-			}
+			si = skipTag( si, se);
 		}
 		else if (*si == '[' || *si == '{')
 		{
@@ -198,11 +176,11 @@ static const char* skipLink( char const* si, const char* se)
 	}
 	if (dup)
 	{
-		std::cerr << "WARNING skip link did not find end: " << std::string(start,20) << std::endl;
+		std::cerr << "WARNING skip link did not find end: " << outputString( start, se) << std::endl;
 	}
 	else
 	{
-		//[+]std::cerr << "WARNING skip link did not find end: " << std::string(start,20) << std::endl;
+		std::cerr << "WARNING skip link did not find end: " << outputString( start, se) << std::endl;
 		si = start;
 		while (si < se && !isSpace(*si))
 		{
@@ -226,9 +204,17 @@ static const char* skipTable( char const* si, const char* se)
 		{
 			return si+2;
 		}
+		else if (si[0] == '[' && si[1] == '[')
+		{
+			si = skipLink( si, se);
+		}
 		else if (*si == '{')
 		{
-			if (si[1] == '|')
+			if (si[1] == '{')
+			{
+				si = skipLink( si, se);
+			}
+			else if (si[1] == '|')
 			{
 				si = skipTable( si, se);
 			}
@@ -239,40 +225,38 @@ static const char* skipTable( char const* si, const char* se)
 		}
 		else if (*si == '<')
 		{
-			const char* endtag = skipTag( si, se);
-			if (!endtag)
+			si = skipTag( si, se);
+		}
+		else if (*si == '\n')
+		{
+			++si;
+			if (si < se && *si == '\r')
 			{
-				std::cerr << "WARNING tag not closed in link: " << std::string( si, 30) << std::endl;
 				++si;
 			}
-			else
+			if (si < se && *si == '\n')
 			{
-				si = endtag;
+				++si;
+				if (si < se && (*si == '!' || *si == '|' || *si == '*'))
+				{}
+				else
+				{
+					std::cerr << "WARNING skip table assuming end of table after two subsequent end of line at: " << outputString( si, se) << std::endl;
+					return si;
+				}
 			}
 		}
 		else
 		{
-			if (*si == '\n')
-			{
-				++si;
-				if (*si == '\r')
-				{
-					++si;
-				}
-				if (*si == '\n')
-				{
-					++si;
-					std::cerr << "WARNING skip table assuming end of table after two subsequent end of line." << std::endl;
-					return si;
-				}
-			}
-			else
-			{
-				++si;
-			}
+			/*[-]*/if (*si == '|')
+			/*[-]*/{
+			/*[-]*/	std::cout << "HALLY GALLY " << outputString( si, se);
+			/*[-]*/	std::cout << std::endl;
+			/*[-]*/}
+			++si;
 		}
 	}
-	std::cerr << "WARNING skip table did not find end: " << std::string(start,20) << std::endl;
+	std::cerr << "WARNING skip table did not find end: " << outputString( start, se) << std::endl;
 	return si;
 }
 
@@ -317,16 +301,19 @@ static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, 
 	ValueRow rt;
 	bool found = false;
 	const char* start = si;
+	const char* end = si;
 	while (si < se && !found)
 	{
 		char const* ti = si;
+		while (isSpace(*ti)) ++ti;
 		std::string name = parseIdent( ti, se);
+		while (isSpace(*ti)) ++ti;
 		if (*ti == '=')
 		{
 			if (name.empty())
 			{
 				std::cerr << "WARNING empty row name:"
-						<< std::string(si,30) << "..." << std::endl;
+						<< outputString( si, se) << "..." << std::endl;
 			}
 			si = ti+1;
 		}
@@ -346,18 +333,11 @@ static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, 
 				}
 				else if (*si == '<')
 				{
-					const char* endtag = skipTag( si, se);
-					if (!endtag)
-					{
-						std::cerr << "WARNING tag not closed in link: " << std::string( si, 30) << std::endl;
-						++si;
-					}
-					else
-					{
-						si = endtag;
-					}
+					si = skipTag( si, se);
+					--si;
 				}
 			}
+			end = si;
 			if (dupEnddelim && si < se && *si == enddelim)
 			{
 				++si;
@@ -365,12 +345,12 @@ static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, 
 			}
 			break;
 		}
-		rt.attributes.push_back( ValueRow::Attribute( name, std::string( start, si-start)));
+		rt.attributes.push_back( ValueRow::Attribute( name, std::string( start, end-start)));
 		found = (*si++ == enddelim);
 	}
 	if (!found)
 	{
-		std::cerr << "WARNING unterminated value row: " << std::string(start,20) << std::endl;
+		std::cerr << "WARNING unterminated value row: " << outputString( start, se) << std::endl;
 	}
 	return rt;
 }
@@ -421,7 +401,12 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 	const char* se = si + size;
 	while (si < se)
 	{
-		if (*si == '[')
+		if (*si == '<')
+		{
+			si = skipTag( si, se);
+			continue;
+		}
+		else if (*si == '[')
 		{
 			++si;
 			if (si != se && *si == '[')
@@ -463,8 +448,9 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 					xmlprinter.printAttribute( "id", 2, buf);
 					const std::string& kk = row.attributes[0].second;
 					const std::string& vv = row.attributes[1].second;
+					std::string vvval = mapText( vv.c_str(), vv.size());
 					xmlprinter.printValue( kk.c_str(), kk.size(), buf);
-					xmlprinter.printValue( vv.c_str(), vv.size(), buf);
+					xmlprinter.printValue( vvval.c_str(), vvval.size(), buf);
 				}
 				else
 				{
@@ -509,10 +495,10 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 					}
 					if (*si != ']')
 					{
-						//[+]std::cerr << "WARNING unterminated WWW link: " << std::string( idstart, si-idstart) << std::endl;
+						std::cerr << "WARNING unterminated WWW link: " << outputString( idstart, si) << std::endl;
 						linktext = 0;
+						si = idend;
 					}
-					++si;
 					std::string buf;
 					xmlprinter.printOpenTag( "wwwlink", 7, buf);
 					xmlprinter.printAttribute( "id", 2, buf);
@@ -524,10 +510,11 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 					}
 					xmlprinter.printCloseTag( buf);
 					out << buf;
+					++si;
 
 					if (xmlprinter.lasterror())
 					{
-						throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
+						std::cerr << "ERROR " << "textwolf xmlprinter: " << xmlprinter.lasterror();
 					}
 				}
 				else
@@ -569,6 +556,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 			}
 			else if (*si == '|')
 			{
+				/*[-]*/std::cout << "START TAB '" << outputString( si, se) << "'" << std::endl;
 				if (si+1 < se && si[1] == '}')
 				{
 					// ... catch '{|}'
@@ -579,6 +567,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 				const char* start = si-1; 
 				const char* tnext = skipTable( start, se);
 				const char* tend = tnext-2;
+				/*[-]*/std::cout << "ENDOF TAB '" << outputString( tend, se) << "'" << std::endl;
 				++si;
 
 				ValueRow row = parseValueRow( si, tend, '|', '\n', false);
@@ -588,6 +577,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 
 				while (si < tend)
 				{
+					/*[-]*/std::cout << "PARSE TAB '" << outputString( si, tend) << "'" << std::endl;
 					const char* tag = 0;
 					if (*si == '*')
 					{
@@ -668,16 +658,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 					}
 					else if (*si == '<')
 					{
-						const char* endtag = skipTag( si, tend);
-						if (!endtag)
-						{
-							std::cerr << "WARNING tag not closed in table: " << std::string( start, 30) << std::endl;
-							++si;
-						}
-						else
-						{
-							si = endtag;
-						}
+						si = skipTag( si, tend);
 						if (si < tend && *si == '\n')
 						{
 							++si;
@@ -697,9 +678,16 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 							++si;
 						}
 					}
+					else if (*si == '\n')
+					{
+						if (si[1] == '{' || si[1] == '|' || si[1] == '*' || si[1] == '!' || si[1] == '<')
+						{
+							++si;
+						}
+					}
 					else
 					{
-						std::cerr << "WARNING unknown tag charater in table: " << std::string(si,30) << std::endl;
+						std::cerr << "WARNING unknown tag charater in table: " << outputString( si, tend) << std::endl;
 						si = skipLine( si, tend);
 					}
 				}
@@ -746,18 +734,20 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 		{
 			char const* ti = si+1;
 			for (; ti != se && *ti == '='; ++ti){}
-			if (ti-si <= 6 && ti-si >= 2)
+			if (ti-si <= 7 && ti-si >= 2)
 			{
-				static const char* tagnam[] = {"h1","h2","h3","h4","h5","h6"};
+				static const char* tagnam[] = {"h1","h2","h3","h4","h5","h6","h7"};
 				std::size_t level = ti - si - 1;
 				char const* te = skipLine( ti, se);
-				if (*(te-1) == '=')
+				char const* le = te-1;
+				for (; *le == '\n' || *le == '\r'; --le){}
+				if (*(le) == '=')
 				{
 					si = te;
-					while (*(te-1) == '=') --te;
+					while (*(le) == '=') --le;
 					std::string buf;
 					xmlprinter.printOpenTag( tagnam[level], 2, buf);
-					xmlprinter.printValue( ti, te-ti, buf);
+					xmlprinter.printValue( ti, le-ti+1, buf);
 					xmlprinter.printCloseTag( buf);
 					out << buf;
 				}
