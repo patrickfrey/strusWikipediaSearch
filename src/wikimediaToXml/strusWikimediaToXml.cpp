@@ -58,9 +58,19 @@ static std::string outputString( const char* si, const char* se)
 	}
 }
 
+static bool isAlpha( char ch)
+{
+	return (ch|32) >= 'a' && (ch|32) <= 'z';
+}
+
+static bool isDigit( char ch)
+{
+	return (ch) >= '0' && (ch) <= '9';
+}
+
 static bool isAlphaNum( char ch)
 {
-	return ((ch|32) >= 'a' && (ch|32) <= 'z') || (ch >= '0' && ch <= '9');
+	return isAlpha(ch) || isDigit(ch);
 }
 
 static bool isSpace( char ch)
@@ -85,6 +95,8 @@ static const char* findPattern( char const* si, const char* se, const char* patt
 
 static const char* skipTag( char const* si, const char* se)
 {
+	/*[-]*/std::cout << "SKIP TAG '" << outputString( si, se) << "'" << std::endl;
+
 	const char* start = si++;
 	if (si < se && si[0] == '!' && si[1] == '-' && si[2] == '-')
 	{
@@ -102,6 +114,7 @@ static const char* skipTag( char const* si, const char* se)
 	else
 	{
 		const char* tgnam = si;
+		if (!isAlpha(*si)) return si;
 		for (; si < se && *si != '>'; ++si){}
 		if (0==std::memcmp( tgnam, "nowiki", si-tgnam))
 		{
@@ -126,6 +139,7 @@ static const char* skipTag( char const* si, const char* se)
 enum {MaxWWWLinkSize=256,MaxPageLinkSize=4000};
 static const char* skipLink( char const* si, const char* se)
 {
+	/*[-]*/std::cout << "SKIP LNK '" << outputString( si, se) << "'" << std::endl;
 	const char* start = si;
 	char sb = *si++;
 	bool dup = false;
@@ -136,6 +150,7 @@ static const char* skipLink( char const* si, const char* se)
 		maxlinksize = MaxPageLinkSize;
 		++si;
 	}
+	const char* first = si;
 	char eb = 0;
 	if (sb == '[') eb = ']';
 	if (sb == '{')
@@ -177,11 +192,27 @@ static const char* skipLink( char const* si, const char* se)
 	if (dup)
 	{
 		std::cerr << "WARNING skip link did not find end: " << outputString( start, se) << std::endl;
+		si = first;
+		while (si < se && *si != '\n' && si - start < maxlinksize)
+		{
+			if (*si == '<')
+			{
+				si = skipTag( si, se);
+			}
+			else if (*si == '[' || *si == '{')
+			{
+				si = skipLink( si, se);
+			}
+			else
+			{
+				++si;
+			}
+		}
 	}
 	else
 	{
 		std::cerr << "WARNING skip link did not find end: " << outputString( start, se) << std::endl;
-		si = start;
+		si = first;
 		while (si < se && !isSpace(*si))
 		{
 			++si;
@@ -192,6 +223,7 @@ static const char* skipLink( char const* si, const char* se)
 
 static const char* skipTable( char const* si, const char* se)
 {
+	/*[-]*/std::cout << "SKIP TAB '" << outputString( si, se) << "'" << std::endl;
 	const char* start = si;
 	char sb = *si++;
 	char eb = 0;
@@ -248,11 +280,6 @@ static const char* skipTable( char const* si, const char* se)
 		}
 		else
 		{
-			/*[-]*/if (*si == '|')
-			/*[-]*/{
-			/*[-]*/	std::cout << "HALLY GALLY " << outputString( si, se);
-			/*[-]*/	std::cout << std::endl;
-			/*[-]*/}
 			++si;
 		}
 	}
@@ -298,6 +325,7 @@ struct ValueRow
 
 static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, char enddelim, bool dupEnddelim)
 {
+	/*[-]*/std::cout << "PARSE ROW '" << outputString( si, se) << "'" << std::endl;
 	ValueRow rt;
 	bool found = false;
 	const char* start = si;
