@@ -43,12 +43,18 @@
 #include <map>
 #include <stdint.h>
 
+#define STRUS_LOWLEVEL_DEBUG
+
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinter;
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
 static std::string outputString( const char* si, const char* se)
 {
-	if (se - si > 60)
+	if (!si || !se)
+	{
+		throw std::runtime_error( "outputString called with NULL argument");
+	}
+	else if (se - si > 60)
 	{
 		return std::string( si, 30) + "..." + std::string( se-30, 30);
 	}
@@ -93,10 +99,25 @@ static const char* findPattern( char const* si, const char* se, const char* patt
 	}
 }
 
+static const char* skipToEndTag( const char* tagname, char const* si, const char* se)
+{
+	std::size_t tagnamelen = std::strlen( tagname);
+	const char* end = findPattern( si+1, se, "</");
+	if (!end || 0!=std::memcmp( tagname, end, tagnamelen))
+	{
+		std::cerr << "WARNING unclosed tag '" << tagname << "': " << outputString( si, se) << std::endl;
+		return si+tagnamelen;
+	}
+	else
+	{
+		return end;
+	}
+}
+
 static const char* skipTag( char const* si, const char* se)
 {
 #ifdef STRUS_LOWLEVEL_DEBUG
-	std::cout << "SKIP TAG '" << outputString( si, se) << "'" << std::endl;
+	std::cerr << "SKIP TAG '" << outputString( si, se) << "'" << std::endl;
 #endif
 	const char* start = si++;
 	if (si < se && si[0] == '!' && si[1] == '-' && si[2] == '-')
@@ -115,20 +136,15 @@ static const char* skipTag( char const* si, const char* se)
 	else
 	{
 		const char* tgnam = si;
-		if (!isAlpha(*si)) return si;
+		if (!isAlpha(*si) && *si != '/') return si;
 		for (; si < se && *si != '>'; ++si){}
 		if (0==std::memcmp( tgnam, "nowiki", si-tgnam))
 		{
-			const char* end = findPattern( si+1, se, "</nowiki>");
-			if (!end)
-			{
-				std::cerr << "WARNING nowiki tag not closed:" << outputString( start, se) << std::endl;
-				return si+1;
-			}
-			else
-			{
-				return end;
-			}
+			return skipToEndTag( "nowiki", si, se);
+		}
+		else if (0==std::memcmp( tgnam, "math", si-tgnam))
+		{
+			return skipToEndTag( "math", si, se);
 		}
 		else
 		{
@@ -141,7 +157,7 @@ enum {MaxWWWLinkSize=256,MaxPageLinkSize=4000};
 static const char* skipLink( char const* si, const char* se)
 {
 #ifdef STRUS_LOWLEVEL_DEBUG
-	std::cout << "SKIP LNK '" << outputString( si, se) << "'" << std::endl;
+	std::cerr << "SKIP LNK '" << outputString( si, se) << "'" << std::endl;
 #endif
 	const char* start = si;
 	char sb = *si++;
@@ -185,7 +201,14 @@ static const char* skipLink( char const* si, const char* se)
 		}
 		else if (*si == '[' || *si == '{')
 		{
-			si = skipLink( si, se);
+			if (dup && si+1 < se && si[1] != si[0])
+			{
+				++si;
+			}
+			else
+			{
+				si = skipLink( si, se);
+			}
 		}
 		else
 		{
@@ -204,7 +227,14 @@ static const char* skipLink( char const* si, const char* se)
 			}
 			else if (*si == '[' || *si == '{')
 			{
-				si = skipLink( si, se);
+				if (si+1 < se && si[1] != si[0])
+				{
+					++si;
+				}
+				else
+				{
+					si = skipLink( si, se);
+				}
 			}
 			else
 			{
@@ -227,7 +257,7 @@ static const char* skipLink( char const* si, const char* se)
 static const char* skipTable( char const* si, const char* se)
 {
 #ifdef STRUS_LOWLEVEL_DEBUG
-	std::cout << "SKIP TAB '" << outputString( si, se) << "'" << std::endl;
+	std::cerr << "SKIP TAB '" << outputString( si, se) << "'" << std::endl;
 #endif
 	const char* start = si;
 	char sb = *si++;
@@ -331,7 +361,7 @@ struct ValueRow
 static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, char enddelim, bool dupEnddelim)
 {
 #ifdef STRUS_LOWLEVEL_DEBUG
-	std::cout << "PARSE ROW '" << outputString( si, se) << "'" << std::endl;
+	std::cerr << "PARSE ROW '" << outputString( si, se) << "'" << std::endl;
 #endif
 	ValueRow rt;
 	bool found = false;
@@ -340,9 +370,9 @@ static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, 
 	while (si < se && !found)
 	{
 		char const* ti = si;
-		while (isSpace(*ti)) ++ti;
+		while (ti < se && isSpace(*ti)) ++ti;
 		std::string name = parseIdent( ti, se);
-		while (isSpace(*ti)) ++ti;
+		while (ti < se && isSpace(*ti)) ++ti;
 		if (*ti == '=')
 		{
 			if (name.empty())
@@ -380,6 +410,9 @@ static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, 
 			}
 			break;
 		}
+#ifdef STRUS_LOWLEVEL_DEBUG
+		std::cerr << "PUSH ROW '" << name << "': '" << std::string( start, end-start) << "'" << std::endl;
+#endif
 		rt.attributes.push_back( ValueRow::Attribute( name, std::string( start, end-start)));
 		found = (*si++ == enddelim);
 	}
@@ -592,7 +625,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 			else if (*si == '|')
 			{
 #ifdef STRUS_LOWLEVEL_DEBUG
-				std::cout << "START TAB '" << outputString( si, se) << "'" << std::endl;
+				std::cerr << "START TAB '" << outputString( si, se) << "'" << std::endl;
 #endif
 				if (si+1 < se && si[1] == '}')
 				{
@@ -605,7 +638,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 				const char* tnext = skipTable( start, se);
 				const char* tend = tnext-2;
 #ifdef STRUS_LOWLEVEL_DEBUG
-				std::cout << "ENDOF TAB '" << outputString( tend, se) << "'" << std::endl;
+				std::cerr << "ENDOF TAB '" << outputString( tend, se) << "'" << std::endl;
 #endif
 				++si;
 
@@ -617,7 +650,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 				while (si < tend)
 				{
 #ifdef STRUS_LOWLEVEL_DEBUG
-					std::cout << "PARSE TAB '" << outputString( si, tend) << "'" << std::endl;
+					std::cerr << "PARSE TAB '" << outputString( si, tend) << "'" << std::endl;
 #endif
 					const char* tag = 0;
 					if (*si == '*')
@@ -719,12 +752,9 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 							++si;
 						}
 					}
-					else if (*si == '\n')
+					else if (*si == '\n' && (si[1] == '{' || si[1] == '|' || si[1] == '*' || si[1] == '!' || si[1] == '<'))
 					{
-						if (si[1] == '{' || si[1] == '|' || si[1] == '*' || si[1] == '!' || si[1] == '<')
-						{
-							++si;
-						}
+						++si;
 					}
 					else
 					{
@@ -804,7 +834,7 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 			}
 			else
 			{
-				out << '=' << *si++;
+				out << *si++;
 			}
 		}
 		else
