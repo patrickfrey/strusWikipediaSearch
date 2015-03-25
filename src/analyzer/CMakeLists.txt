@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 # SOURCES AND INCLUDES
 # --------------------------------------
 set( source_files
-	tokenizers.cpp
 )
 include_directories(
 	"${Boost_INCLUDE_DIRS}"

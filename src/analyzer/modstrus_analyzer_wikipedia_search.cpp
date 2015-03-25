@@ -28,26 +28,9 @@
 */
 #include "strus/private/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
-#include "tokenizers.hpp"
 
 static const strus::TokenizerConstructor tokenizers[] =
 {
-	{"mw_url_id",&strus::tokenizerWikimediaUrlId},
-	{"mw_url_content",&strus::tokenizerWikimediaUrlContent},
-	{"mw_url_word",&strus::tokenizerWikimediaUrlWord},
-	{"mw_url_split",&strus::tokenizerWikimediaUrlSplit},
-	{"mw_link_id",&strus::tokenizerWikimediaLinkId},
-	{"mw_link_content",&strus::tokenizerWikimediaLinkContent},
-	{"mw_link_word",&strus::tokenizerWikimediaLinkWord},
-	{"mw_link_split",&strus::tokenizerWikimediaLinkSplit},
-	{"mw_citation_content",&strus::tokenizerWikimediaCitationContent},
-	{"mw_citation_word",&strus::tokenizerWikimediaCitationWord},
-	{"mw_citation_split",&strus::tokenizerWikimediaCitationSplit},
-	{"mw_reference_content",&strus::tokenizerWikimediaReferenceContent},
-	{"mw_reference_word",&strus::tokenizerWikimediaReferenceWord},
-	{"mw_reference_split",&strus::tokenizerWikimediaReferenceSplit},
-	{"mw_text_word",&strus::tokenizerWikimediaTextWord},
-	{"mw_text_split",&strus::tokenizerWikimediaTextSplit},
 	{0,0}
 };
 

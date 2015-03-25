@@ -84,6 +84,15 @@ static bool isSpace( char ch)
 	return (ch <= 32);
 }
 
+static std::string trim( const std::string& src)
+{
+	char const* si = src.c_str();
+	const char* se = src.c_str() + src.size();
+	while (si < se && isSpace(*si)) ++si;
+	while (si < se && isSpace(*(se-1))) --se;
+	return std::string( si, (std::size_t)(se-si));
+}
+
 static const char* findPattern( char const* si, const char* se, const char* pattern)
 {
 	int plen = std::strlen( pattern);
@@ -153,175 +162,6 @@ static const char* skipTag( char const* si, const char* se)
 	}
 }
 
-enum {MaxWWWLinkSize=256,MaxPageLinkSize=4000};
-static const char* skipLink( char const* si, const char* se)
-{
-#ifdef STRUS_LOWLEVEL_DEBUG
-	std::cerr << "SKIP LNK '" << outputString( si, se) << "'" << std::endl;
-#endif
-	const char* start = si;
-	char sb = *si++;
-	bool dup = false;
-	int maxlinksize = MaxWWWLinkSize;
-	if (si < se && *si == sb)
-	{
-		dup = true;
-		maxlinksize = MaxPageLinkSize;
-		++si;
-	}
-	const char* first = si;
-	char eb = 0;
-	if (sb == '[') eb = ']';
-	if (sb == '{')
-	{
-		eb = '}';
-		if (!dup) return si;
-	}
-	if (!eb)
-	{
-		throw std::logic_error( "illegal call of skipLink");
-	}
-	while (si < se && si - start < maxlinksize)
-	{
-		if (*si == eb)
-		{
-			++si;
-			if (dup)
-			{
-				if (*si == eb) return si+1;
-			}
-			else
-			{
-				return si;
-			}
-		}
-		else if (*si == '<')
-		{
-			si = skipTag( si, se);
-		}
-		else if (*si == '[' || *si == '{')
-		{
-			if (dup && si+1 < se && si[1] != si[0])
-			{
-				++si;
-			}
-			else
-			{
-				si = skipLink( si, se);
-			}
-		}
-		else
-		{
-			++si;
-		}
-	}
-	if (dup)
-	{
-		std::cerr << "WARNING skip link did not find end: " << outputString( start, se) << std::endl;
-		si = first;
-		while (si < se && *si != '\n' && si - start < maxlinksize)
-		{
-			if (*si == '<')
-			{
-				si = skipTag( si, se);
-			}
-			else if (*si == '[' || *si == '{')
-			{
-				if (si+1 < se && si[1] != si[0])
-				{
-					++si;
-				}
-				else
-				{
-					si = skipLink( si, se);
-				}
-			}
-			else
-			{
-				++si;
-			}
-		}
-	}
-	else
-	{
-		std::cerr << "WARNING skip link did not find end: " << outputString( start, se) << std::endl;
-		si = first;
-		while (si < se && !isSpace(*si))
-		{
-			++si;
-		}
-	}
-	return si;
-}
-
-static const char* skipTable( char const* si, const char* se)
-{
-#ifdef STRUS_LOWLEVEL_DEBUG
-	std::cerr << "SKIP TAB '" << outputString( si, se) << "'" << std::endl;
-#endif
-	const char* start = si;
-	char sb = *si++;
-	char eb = 0;
-	if (sb == '{') eb = '}';
-	if (!eb || si > se || *si != '|') throw std::logic_error( "illegal call of skipTable");
-	++si;
-	while (si+1 < se)
-	{
-		if (si[0] == '|' && si[1] == eb)
-		{
-			return si+2;
-		}
-		else if (si[0] == '[' && si[1] == '[')
-		{
-			si = skipLink( si, se);
-		}
-		else if (*si == '{')
-		{
-			if (si[1] == '{')
-			{
-				si = skipLink( si, se);
-			}
-			else if (si[1] == '|')
-			{
-				si = skipTable( si, se);
-			}
-			else
-			{
-				++si;
-			}
-		}
-		else if (*si == '<')
-		{
-			si = skipTag( si, se);
-		}
-		else if (*si == '\n')
-		{
-			++si;
-			if (si < se && *si == '\r')
-			{
-				++si;
-			}
-			if (si < se && *si == '\n')
-			{
-				++si;
-				if (si < se && (*si == '!' || *si == '|' || *si == '*'))
-				{}
-				else
-				{
-					std::cerr << "WARNING skip table assuming end of table after two subsequent end of line at: " << outputString( si, se) << std::endl;
-					return si;
-				}
-			}
-		}
-		else
-		{
-			++si;
-		}
-	}
-	std::cerr << "WARNING skip table did not find end: " << outputString( start, se) << std::endl;
-	return si;
-}
-
 static const char* skipLine( char const* si, const char* se)
 {
 	const char* eoln =(const char*)std::memchr( si, '\n', se-si);
@@ -329,526 +169,886 @@ static const char* skipLine( char const* si, const char* se)
 	return se;
 }
 
-static const char* skipIdent( char const* si, const char* se)
+class Lexer
 {
-	for (; si != se && isAlphaNum(*si); ++si){}
-	return si;
-}
-
-static std::string parseIdent( char const*& si, const char* se)
-{
-	std::string rt;
-	for (; si != se && isAlphaNum(*si); ++si)
+public:
+	enum LexemId
 	{
-		rt.push_back( *si | 32);
+		LexemEOF,
+		LexemText,
+		LexemRedirect,
+		LexemHeading1,
+		LexemHeading2,
+		LexemHeading3,
+		LexemHeading4,
+		LexemHeading5,
+		LexemHeading6,
+		LexemOpenCitation,
+		LexemCloseCitation,
+		LexemOpenWWWLink,
+		LexemCloseSquareBracket,
+		LexemOpenLink,
+		LexemCloseLink,
+		LexemOpenTable,
+		LexemCloseTable,
+		LexemTableRowDelim,
+		LexemTableTitle,
+		LexemTableHeadDelim,
+		LexemColDelim
+	};
+	static const char* lexemIdName( LexemId lexemId)
+	{
+		static const char* ar[] =
+		{
+			"EOF","Text","Redirect","Heading1","Heading2","Heading3",
+			"Heading4","Heading5","Heading6","OpenCitation","CloseCitation",
+			"OpenWWWLink", "CloseSquareBracket","OpenLink","CloseLink",
+			"OpenTable", "CloseTable","TableRowDelim","TableTitle",
+			"TableHeadDelim","ColDelim"
+		};
+		return ar[lexemId];
 	}
-	return rt;
-}
 
-static std::string mapText( char const* si, std::size_t size);
+	struct Lexem
+	{
+		Lexem( LexemId id_, const std::string& value_)
+			:id(id_),value(value_){}
+		Lexem( LexemId id_)
+			:id(id_),value(){}
+		Lexem( const Lexem& o)
+			:id(o.id),value(o.value){}
 
-struct ValueRow
-{
-	ValueRow()
-		:attributes(){}
-	ValueRow( const ValueRow& o)
-		:attributes(o.attributes){}
+		LexemId id;
+		std::string value;
+	};
 
-	typedef std::pair<std::string,std::string> Attribute;
-	std::vector<Attribute> attributes;
+	Lexer( const char* src, std::size_t size)
+		:m_si(src),m_se(src+size){}
+
+	Lexem next();
+	std::string tryParseIdentifier( char assignop);
+	std::string tryParseURL();
+
+private:
+	char const* m_si;
+	const char* m_se;
 };
 
-static ValueRow parseValueRow( char const*& si, const char* se, char elemdelim, char enddelim, bool dupEnddelim)
+
+std::string Lexer::tryParseIdentifier( char assignop)
 {
-#ifdef STRUS_LOWLEVEL_DEBUG
-	std::cerr << "PARSE ROW '" << outputString( si, se) << "'" << std::endl;
-#endif
-	ValueRow rt;
-	bool found = false;
-	const char* start = si;
-	const char* end = si;
-	while (si < se && !found)
+	std::string rt;
+	char const* ti = m_si;
+	while (ti < m_se && isSpace(*ti)) ++ti;
+	if (ti < m_se && isAlpha(*ti))
 	{
-		char const* ti = si;
-		while (ti < se && isSpace(*ti)) ++ti;
-		std::string name = parseIdent( ti, se);
-		while (ti < se && isSpace(*ti)) ++ti;
-		if (*ti == '=')
+		++ti;
+		while (ti < m_se && (isAlphaNum(*ti) || *ti == '-' || isSpace(*ti)))
 		{
-			if (name.empty())
+			char ch = *ti++;
+			if (isAlpha(ch))
 			{
-				std::cerr << "WARNING empty row name:"
-						<< outputString( si, se) << "..." << std::endl;
+				rt.push_back( ch|32);
 			}
-			si = ti+1;
-		}
-		else
-		{
-			name.clear();
-		}
-		start = si;
-		for (;;)
-		{
-			for (; si < se && *si != enddelim && *si != elemdelim; ++si)
+			else if (ch == '-')
 			{
-				if (*si == '{' || *si == '[')
-				{
-					si = skipLink( si, se);
-					--si;
-				}
-				else if (*si == '<')
-				{
-					si = skipTag( si, se);
-					--si;
-				}
+				rt.push_back( '-');
 			}
-			end = si;
-			if (dupEnddelim && si < se && *si == enddelim)
+			else if (rt.size()>0 && rt[ rt.size()-1] != ' ')
 			{
-				++si;
-				if (si == se || *si != enddelim) continue;
+				rt.push_back( ' ');
 			}
-			break;
 		}
-#ifdef STRUS_LOWLEVEL_DEBUG
-		std::cerr << "PUSH ROW '" << name << "': '" << std::string( start, end-start) << "'" << std::endl;
-#endif
-		rt.attributes.push_back( ValueRow::Attribute( name, std::string( start, end-start)));
-		found = (*si++ == enddelim);
 	}
-	if (!found)
+	if (ti < m_se && *ti == assignop)
 	{
-		std::cerr << "WARNING unterminated value row: " << outputString( start, se) << std::endl;
+		while (isSpace( rt[rt.size()-1]))
+		{
+			rt.resize( rt.size()-1);
+		}
+		m_si = ++ti;
+		return rt;
 	}
-	return rt;
+	else
+	{
+		return std::string();
+	}
 }
 
-static void printValueRowAttributes( XmlPrinter& xmlprinter, std::string& buf, const ValueRow& row, const char* valuetag)
+std::string Lexer::tryParseURL()
 {
-	std::vector<ValueRow::Attribute>::const_iterator
-		ai = row.attributes.begin(), ae = row.attributes.end();
-	for (; ai != ae && !ai->first.empty(); ++ai)
+	char const* ti = m_si;
+	while (ti < m_se && isSpace(*ti)) ++ti;
+	while (ti < m_se && isAlpha(*ti)) ++ti;
+	if (ti+2 < m_se && ti[0] == ':' && ti[1] == '/' && ti[2] == '/')
 	{
-		xmlprinter.printAttribute( ai->first.c_str(), ai->first.size(), buf);
-		xmlprinter.printValue( ai->second.c_str(), ai->second.size(), buf);
-	}
-	for (int vidx=0; ai != ae; ++ai,++vidx)
-	{
-		if (!ai->first.empty())
+		ti += 3;
+		while (ti < m_se && (!isSpace(*ti) && *ti != ']')) ++ti;
+		std::string linkid( m_si, ti-m_si);
+		if (ti < m_se && isSpace(*ti))
 		{
-			xmlprinter.printOpenTag( ai->first.c_str(), ai->first.size(), buf);
-			xmlprinter.printValue( "", 0, buf);
-			buf.append( mapText( ai->second.c_str(), ai->second.size()));
-			xmlprinter.printCloseTag( buf);
-		}
-		else if (valuetag)
-		{
-			xmlprinter.printOpenTag( valuetag, std::strlen(valuetag), buf);
-			xmlprinter.printValue( "", 0, buf);
-			buf.append( mapText( ai->second.c_str(), ai->second.size()));
-			xmlprinter.printCloseTag( buf);
+			m_si = ti+1;
 		}
 		else
 		{
-			if (vidx)
+			m_si = ti;
+		}
+		return linkid;
+	}
+	return std::string();
+}
+
+Lexer::Lexem Lexer::next()
+{
+	const char* start = m_si;
+	while (m_si < m_se)
+	{
+		if (*m_si == '<')
+		{
+			m_si = skipTag( m_si, m_se);
+			start = m_si;
+		}
+		else if (*m_si == '#')
+		{
+			if (0==std::memcmp( "#REDIRECT", m_si, 9))
 			{
-				xmlprinter.printValue( "\n", 1, buf);
+				m_si += 9;
+				return Lexem( LexemRedirect);
+			}
+		}
+		else if (*m_si == '[')
+		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
+			++m_si;
+			if (m_si >= m_se) break;
+
+			if (*m_si == '[')
+			{
+				++m_si;
+				std::string name = tryParseIdentifier( ':');
+				return Lexem( LexemOpenLink, name);
+			}
+			else if (isAlpha(*m_si) || isSpace(*m_si))
+			{
+				std::string linkid = tryParseURL();
+				if (linkid.size())
+				return Lexem( LexemOpenWWWLink, linkid);
+			}
+		}
+		else if (*m_si == '{')
+		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
+			++m_si;
+			if (m_si >= m_se) break;
+
+			if (*m_si == '{')
+			{
+				++m_si;
+				std::string name = tryParseIdentifier( '|');
+				return Lexem( LexemOpenCitation, name);
+			}
+			else if (*m_si == '|')
+			{
+				return Lexem( LexemOpenTable);
+			}
+		}
+		else if (*m_si == '|')
+		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
+			++m_si;
+			if (m_si >= m_se) break;
+
+			if (*m_si == '-')
+			{
+				++m_si;
+				return Lexem( LexemTableRowDelim);
+			}
+			else if (*m_si == '+')
+			{
+				++m_si;
+				const char* eoln = skipLine( m_si, m_se);
+				return Lexem( LexemTableTitle, (eoln == m_se)?std::string(m_si,m_se-m_si):std::string(m_si,m_se-m_si-1));
+			}
+			else if (*m_si == '}')
+			{
+				++m_si;
+				return Lexem( LexemCloseTable);
 			}
 			else
 			{
-				xmlprinter.printValue( "", 0, buf);
+				return Lexem( LexemColDelim);
 			}
-			buf.append( mapText( ai->second.c_str(), ai->second.size()));
 		}
+		else if (*m_si == '!' && m_si+1 < m_se && m_si[1] == '!')
+		{
+			m_si += 2;
+			return Lexem( LexemTableHeadDelim);
+		}
+		else if (*m_si == '\n')
+		{
+			while (m_si < m_se && isSpace(*m_si)) ++m_si;
+			if (m_si < m_se)
+			{
+				if (*m_si == '!')
+				{
+					++m_si;
+					return Lexem( LexemTableHeadDelim);
+				}
+				else if (*m_si == '=')
+				{
+					char const* ti = ++m_si;
+					for (; ti != m_se && *ti == '='; ++ti){}
+					if (ti-m_si <= 5 && ti-m_si >= 1)
+					{
+						const char* oldsrc = m_si;
+						m_si = ti;
+						std::string name = tryParseIdentifier('=');
+						if (name.size())
+						{
+							for (; m_si != m_se && *m_si == '='; ++m_si){}
+							return Lexem( (LexemId)(LexemHeading1+(ti-m_si)), name);
+						}
+						else
+						{
+							m_si = oldsrc;
+						}
+					}
+				}
+			}
+		}
+		else if (*m_si == '}' && m_si+1 < m_se && m_si[1] == '}')
+		{
+			m_si += 2;
+			return Lexem( LexemCloseCitation);
+		}
+		else if (*m_si == ']')
+		{
+			++m_si;
+			if (m_si < m_se && *m_si == ']')
+			{
+				return Lexem( LexemCloseLink);
+			}
+			else
+			{
+				return Lexem( LexemCloseSquareBracket);
+			}
+		}
+		++m_si;
+	}
+	if (start != m_si)
+	{
+		return Lexem( LexemText, std::string( start, m_si - start));
+	}
+	else
+	{
+		return Lexem( LexemEOF);
 	}
 }
+
+enum StateId
+{
+	StateText,
+	StateCitation,
+	StateLink,
+	StateWWWLink,
+	StateTable
+};
+enum TableStateId
+{
+	TableStateOpen,
+	TableStateRow,
+	TableStateCol
+};
+static const char* stateIdName( StateId i)
+{
+	static const char* ar[] = {"Text","Citation","Link","WWWLink","Table"};
+	return ar[i];
+}
+struct State
+{
+	State( StateId id_)
+		:id(id_)
+	{
+		substate.table = TableStateOpen;
+	}
+	State( const State& o)
+		:id(o.id),substate(o.substate){}
+	StateId id;
+	union 
+	{
+		TableStateId table;
+	} substate;
+};
+
+static void processDataRowCol( const char* tag, std::string& res, const std::string& data, XmlPrinter& xmlprinter)
+{
+	Lexer lexer( data.c_str(), data.size());
+	std::string id = lexer.tryParseIdentifier('=');
+	std::string val = trim( id);
+	if (id.size())
+	{
+		if (xmlprinter.state() == XmlPrinter::TagElement)
+		{
+			xmlprinter.printAttribute( id.c_str(), id.size(), res);
+			xmlprinter.printValue( val.c_str(), val.size(), res);
+		}
+		else
+		{
+			xmlprinter.printOpenTag( id.c_str(), id.size(), res);
+			xmlprinter.printValue( val.c_str(), val.size(), res);
+			xmlprinter.printCloseTag( res);
+		}
+	}
+	else if (tag && tag[0])
+	{
+		xmlprinter.printOpenTag( tag, std::strlen(tag), res);
+		xmlprinter.printValue( val.c_str(), val.size(), res);
+		xmlprinter.printCloseTag( res);
+	}
+	else
+	{
+		xmlprinter.printValue( "", 0, res);
+		xmlprinter.printValue( val.c_str(), val.size(), res);
+	}
+}
+
+static void processOpenLink( std::string& res, const std::string& tagnam, Lexer& lexer, XmlPrinter& xmlprinter)
+{
+	xmlprinter.printOpenTag( "link", 4, res);
+	if (tagnam.size())
+	{
+		xmlprinter.printAttribute( "type", 4, res);
+		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), res);
+	}
+	std::string databuf;
+	for (Lexer::Lexem lexem = lexer.next(); lexem.id == Lexer::LexemText; lexem = lexer.next())
+	{
+		xmlprinter.printValue( "", 0, databuf);
+		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), databuf);
+	}
+	processDataRowCol( "id", res, databuf, xmlprinter);
+}
+
+static void processOpenCitation( std::string& res, const std::string& tagnam, Lexer& lexer, XmlPrinter& xmlprinter)
+{
+	xmlprinter.printOpenTag( "cit", 3, res);
+	xmlprinter.printAttribute( "type", 4, res);
+	if (tagnam.size())
+	{
+		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), res);
+	}
+	else
+	{
+		xmlprinter.printValue( "page", 4, res);
+	}
+}
+
+static void processOpenWWWLink( std::string& res, const std::string& tagnam, Lexer& lexer, XmlPrinter& xmlprinter)
+{
+	xmlprinter.printOpenTag( "wwwlink", 7, res);
+	if (tagnam.size())
+	{
+		xmlprinter.printAttribute( "id", 2, res);
+		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), res);
+	}
+}
+
+static std::string processWikimediaText( const char* src, std::size_t size, XmlPrinter& xmlprinter)
+{
+	bool done = false;
+	std::vector<State> stack;
+	stack.push_back( StateText);
+	std::string databuf;
+	bool redirectTagOpen = false;
+	static const char* headingTagName[] = {"h1","h2","h3","h4","h5","h6"};
+
+	std::string rt;
+	Lexer lexer(src,size);
+
+	for (Lexer::Lexem lexem = lexer.next(); !done; lexem = lexer.next())
+	{
+AGAIN:
+		if (xmlprinter.lasterror())
+		{
+			throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
+		}
+		switch (stack.back().id)
+		{
+			case StateText:
+				switch (lexem.id)
+				{
+					case Lexer::LexemEOF:
+						if (redirectTagOpen)
+						{
+							xmlprinter.printCloseTag( rt);
+							redirectTagOpen = false;
+						}
+						done = true;
+						break;
+					case Lexer::LexemText:
+						xmlprinter.printValue( "", 0, rt);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), rt);
+						break;
+					case Lexer::LexemRedirect:
+						if (stack.size() > 1 || redirectTagOpen)
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						}
+						else
+						{
+							xmlprinter.printOpenTag( "redirect", 8, rt);
+							redirectTagOpen = true;
+						}
+						break;
+					case Lexer::LexemHeading1:
+					case Lexer::LexemHeading2:
+					case Lexer::LexemHeading3:
+					case Lexer::LexemHeading4:
+					case Lexer::LexemHeading5:
+					case Lexer::LexemHeading6:
+						xmlprinter.printOpenTag( headingTagName[lexem.id-Lexer::LexemHeading1], 2, rt);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), rt);
+						xmlprinter.printCloseTag( rt);
+						break;
+					case Lexer::LexemOpenCitation:
+						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateCitation);
+						break;
+					case Lexer::LexemCloseCitation:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenWWWLink:
+						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateWWWLink);
+						break;
+					case Lexer::LexemCloseSquareBracket:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenLink:
+						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateLink);
+						goto AGAIN;
+					case Lexer::LexemCloseLink:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenTable:
+						xmlprinter.printOpenTag( "table", 5, rt);
+						stack.push_back( StateTable);
+						break;
+					case Lexer::LexemCloseTable:/*no break here!*/
+					case Lexer::LexemTableRowDelim:/*no break here!*/
+					case Lexer::LexemTableTitle:/*no break here!*/
+					case Lexer::LexemTableHeadDelim:/*no break here!*/
+					case Lexer::LexemColDelim:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+				}
+				break;
+			case StateCitation:
+				if (lexem.id != Lexer::LexemText)
+				{
+					processDataRowCol( "", rt, databuf, xmlprinter);
+					databuf.clear();
+				}
+				switch (lexem.id)
+				{
+					case Lexer::LexemEOF:
+						if (redirectTagOpen)
+						{
+							xmlprinter.printCloseTag( rt);
+							redirectTagOpen = false;
+						}
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						done = true;
+						break;
+					case Lexer::LexemText:
+						xmlprinter.printValue( "", 0, databuf);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						break;
+					case Lexer::LexemRedirect:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemHeading1:
+					case Lexer::LexemHeading2:
+					case Lexer::LexemHeading3:
+					case Lexer::LexemHeading4:
+					case Lexer::LexemHeading5:
+					case Lexer::LexemHeading6:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenCitation:
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemCloseCitation:
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						break;
+					case Lexer::LexemOpenWWWLink:
+						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateWWWLink);
+						break;
+					case Lexer::LexemCloseSquareBracket:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenLink:
+						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateLink);
+						goto AGAIN;
+					case Lexer::LexemCloseLink:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenTable:
+						xmlprinter.printOpenTag( "table", 5, rt);
+						stack.push_back( StateTable);
+						break;
+					case Lexer::LexemCloseTable:/*no break here!*/
+					case Lexer::LexemTableRowDelim:/*no break here!*/
+					case Lexer::LexemTableTitle:/*no break here!*/
+					case Lexer::LexemTableHeadDelim:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+						break;
+					case Lexer::LexemColDelim:
+						break;
+				}
+				break;
+			case StateLink:
+				if (lexem.id != Lexer::LexemText)
+				{
+					processDataRowCol( "", rt, databuf, xmlprinter);
+					databuf.clear();
+				}
+				switch (lexem.id)
+				{
+					case Lexer::LexemEOF:
+						if (redirectTagOpen)
+						{
+							xmlprinter.printCloseTag( rt);
+							redirectTagOpen = false;
+						}
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						done = true;
+						break;
+					case Lexer::LexemText:
+						xmlprinter.printValue( "", 0, databuf);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						break;
+					case Lexer::LexemRedirect:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemHeading1:
+					case Lexer::LexemHeading2:
+					case Lexer::LexemHeading3:
+					case Lexer::LexemHeading4:
+					case Lexer::LexemHeading5:
+					case Lexer::LexemHeading6:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenCitation:
+						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateCitation);
+						break;
+					case Lexer::LexemCloseCitation:
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenWWWLink:
+						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateWWWLink);
+						break;
+					case Lexer::LexemCloseSquareBracket:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenLink:
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemCloseLink:
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						break;
+					case Lexer::LexemOpenTable:
+						xmlprinter.printOpenTag( "table", 5, rt);
+						stack.push_back( StateTable);
+						break;
+					case Lexer::LexemCloseTable:/*no break here!*/
+					case Lexer::LexemTableRowDelim:/*no break here!*/
+					case Lexer::LexemTableTitle:/*no break here!*/
+					case Lexer::LexemTableHeadDelim:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+						break;
+					case Lexer::LexemColDelim:
+						break;
+				}
+				break;
+			case StateWWWLink:
+				if (lexem.id != Lexer::LexemText)
+				{
+					processDataRowCol( "", rt, databuf, xmlprinter);
+					databuf.clear();
+				}
+				switch (lexem.id)
+				{
+					case Lexer::LexemEOF:
+						if (redirectTagOpen)
+						{
+							xmlprinter.printCloseTag( rt);
+							redirectTagOpen = false;
+						}
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						done = true;
+						break;
+					case Lexer::LexemText:
+						xmlprinter.printValue( "", 0, databuf);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						break;
+					case Lexer::LexemRedirect:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemHeading1:
+					case Lexer::LexemHeading2:
+					case Lexer::LexemHeading3:
+					case Lexer::LexemHeading4:
+					case Lexer::LexemHeading5:
+					case Lexer::LexemHeading6:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenCitation:
+						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateCitation);
+						break;
+					case Lexer::LexemCloseCitation:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenWWWLink:
+						std::cerr << "WARNING nested links, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemCloseSquareBracket:
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						break;
+					case Lexer::LexemOpenLink:
+						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateLink);
+						break;
+					case Lexer::LexemCloseLink:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenTable:
+						xmlprinter.printOpenTag( "table", 5, rt);
+						stack.push_back( StateTable);
+						break;
+					case Lexer::LexemCloseTable:/*no break here!*/
+					case Lexer::LexemTableRowDelim:/*no break here!*/
+					case Lexer::LexemTableTitle:/*no break here!*/
+					case Lexer::LexemTableHeadDelim:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+						break;
+					case Lexer::LexemColDelim:
+						break;
+				}
+				break;
+			case StateTable:
+				if (lexem.id != Lexer::LexemText)
+				{
+					processDataRowCol( "i", rt, databuf, xmlprinter);
+					databuf.clear();
+				}
+				switch (lexem.id)
+				{
+					case Lexer::LexemEOF:
+						switch (stack.back().substate.table)
+						{
+							case TableStateCol:
+								xmlprinter.printCloseTag( rt);
+								/*no break here!*/
+							case TableStateRow:
+								xmlprinter.printCloseTag( rt);
+								stack.back().substate.table = TableStateOpen;
+								/*no break here!*/
+							case TableStateOpen:
+								break;
+						}
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						if (redirectTagOpen)
+						{
+							xmlprinter.printCloseTag( rt);
+							redirectTagOpen = false;
+						}
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						done = true;
+						break;
+					case Lexer::LexemText:
+						xmlprinter.printValue( "", 0, databuf);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						break;
+					case Lexer::LexemRedirect:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemHeading1:
+					case Lexer::LexemHeading2:
+					case Lexer::LexemHeading3:
+					case Lexer::LexemHeading4:
+					case Lexer::LexemHeading5:
+					case Lexer::LexemHeading6:
+						std::cerr << "WARNING table not closed, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenCitation:
+						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateCitation);
+						break;
+					case Lexer::LexemCloseCitation:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenWWWLink:
+						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateWWWLink);
+						break;
+					case Lexer::LexemCloseSquareBracket:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenLink:
+						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateLink);
+						break;
+					case Lexer::LexemCloseLink:
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						break;
+					case Lexer::LexemOpenTable:
+						xmlprinter.printOpenTag( "table", 5, rt);
+						stack.push_back( StateTable);
+						break;
+					case Lexer::LexemCloseTable:
+						switch (stack.back().substate.table)
+						{
+							case TableStateCol:
+								xmlprinter.printCloseTag( rt);
+								/*no break here!*/
+							case TableStateRow:
+								xmlprinter.printCloseTag( rt);
+								stack.back().substate.table = TableStateOpen;
+								/*no break here!*/
+							case TableStateOpen:
+								break;
+						}
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						break;
+					case Lexer::LexemTableRowDelim:
+						switch (stack.back().substate.table)
+						{
+							case TableStateCol:
+								xmlprinter.printCloseTag( rt);
+								stack.back().substate.table = TableStateRow;
+								/*no break here!*/
+							case TableStateRow:
+								xmlprinter.printCloseTag( rt);
+								xmlprinter.printOpenTag( "tr", 2, rt);
+								break;
+							case TableStateOpen:
+								xmlprinter.printOpenTag( "tr", 2, rt);
+								stack.back().substate.table = TableStateRow;
+								break;
+						}
+						break;
+					case Lexer::LexemTableTitle:
+						xmlprinter.printOpenTag( "title", 5, rt);
+						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), rt);
+						xmlprinter.printCloseTag( rt);
+						break;
+					case Lexer::LexemTableHeadDelim:
+						switch (stack.back().substate.table)
+						{
+							case TableStateCol:
+								xmlprinter.printCloseTag( rt);
+								xmlprinter.printOpenTag( "th", 2, rt);
+								break;
+							case TableStateRow:
+								xmlprinter.printCloseTag( rt);
+								xmlprinter.printOpenTag( "tr", 2, rt);
+								xmlprinter.printOpenTag( "th", 2, rt);
+								stack.back().substate.table = TableStateCol;
+								break;
+							case TableStateOpen:
+								xmlprinter.printOpenTag( "tr", 2, rt);
+								xmlprinter.printOpenTag( "th", 2, rt);
+								stack.back().substate.table = TableStateCol;
+								break;
+						}
+						break;
+					case Lexer::LexemColDelim:
+						switch (stack.back().substate.table)
+						{
+							case TableStateCol:
+								xmlprinter.printCloseTag( rt);
+								xmlprinter.printOpenTag( "td", 2, rt);
+								break;
+							case TableStateRow:
+								xmlprinter.printCloseTag( rt);
+								xmlprinter.printOpenTag( "tr", 2, rt);
+								xmlprinter.printOpenTag( "td", 2, rt);
+								stack.back().substate.table = TableStateCol;
+								break;
+							case TableStateOpen:
+								xmlprinter.printOpenTag( "tr", 2, rt);
+								xmlprinter.printOpenTag( "td", 2, rt);
+								stack.back().substate.table = TableStateCol;
+								break;
+						}
+						break;
+				}
+				break;
+		}
+	}
+	if (stack.size() > 1)
+	{
+		std::cerr << "WARNING unexpected end of data" << std::endl;
+	}
+	return rt;
+}
+
 
 static void processText( std::ostream& out, char const* si, std::size_t size)
 {
 	XmlPrinter xmlprinter( true);
-	const char* se = si + size;
-	while (si < se)
-	{
-		if (*si == '<')
-		{
-			si = skipTag( si, se);
-			continue;
-		}
-		else if (*si == '[')
-		{
-			++si;
-			if (si != se && *si == '[')
-			{
-				//... WikiLink
-				++si;
-				if (si == se)
-				{
-					std::cerr << "WARNING unexpected end of link" << std::endl;
-					break;
-				}
-				const char* ti = si;
-				std::string type = parseIdent( si, se);
-				if (*si == ':')
-				{
-					++si;
-				}
-				else
-				{
-					type = "page";
-					si = ti;
-				}
-				ValueRow row = parseValueRow( si, se, '|', ']', true);
-
-				std::string buf;
-				xmlprinter.printOpenTag( "wikilink", 8, buf);
-				xmlprinter.printAttribute( "type", 4, buf);
-				xmlprinter.printValue( type.c_str(), type.size(), buf);
-
-				if (row.attributes.size() == 1 && row.attributes[0].first.size() == 0)
-				{
-					xmlprinter.printAttribute( "id", 2, buf);
-					const std::string& vv = row.attributes[0].second;
-					xmlprinter.printValue( vv.c_str(), vv.size(), buf);
-					xmlprinter.printValue( vv.c_str(), vv.size(), buf);
-				}
-				else if (row.attributes.size() == 2 && row.attributes[0].first.size() == 0 && row.attributes[1].first.size() == 0)
-				{
-					xmlprinter.printAttribute( "id", 2, buf);
-					const std::string& kk = row.attributes[0].second;
-					const std::string& vv = row.attributes[1].second;
-					std::string vvval = mapText( vv.c_str(), vv.size());
-					xmlprinter.printValue( kk.c_str(), kk.size(), buf);
-					xmlprinter.printValue( vvval.c_str(), vvval.size(), buf);
-				}
-				else
-				{
-					printValueRowAttributes( xmlprinter, buf, row, 0);
-				}
-				xmlprinter.printCloseTag( buf);
-				out << buf;
-
-				if (xmlprinter.lasterror())
-				{
-					throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
-				}
-			}
-			else if (isAlphaNum(*si))
-			{
-				const char* idstart = si;
-				si = skipIdent( si, se);
-				if (*si == ':')
-				{
-					//... WWWLink
-					for (++si;(unsigned char)*si > 32 && *si != ']'; ++si)
-					{
-						if (*si == '[' || *si == '{')
-						{
-							si = skipLink( si, se);
-							--si;
-						}
-					}
-					const char* idend = si;
-					const char* linktext = 0;
-					if (*si == ' ')
-					{
-						linktext = ++si;
-						for (++si;(unsigned char)*si >= 32 && *si != ']'; ++si)
-						{
-							if (*si == '[' || *si == '{')
-							{
-								si = skipLink( si, se);
-								--si;
-							}
-						}
-					}
-					if (*si != ']')
-					{
-						std::cerr << "WARNING unterminated WWW link: " << outputString( idstart, si) << std::endl;
-						linktext = 0;
-						si = idend;
-					}
-					std::string buf;
-					xmlprinter.printOpenTag( "wwwlink", 7, buf);
-					xmlprinter.printAttribute( "id", 2, buf);
-					xmlprinter.printValue( idstart, idend-idstart, buf);
-					if (linktext)
-					{
-						xmlprinter.printValue( "", 0, buf);
-						buf.append( mapText( linktext, si - linktext));
-					}
-					xmlprinter.printCloseTag( buf);
-					out << buf;
-					++si;
-
-					if (xmlprinter.lasterror())
-					{
-						std::cerr << "ERROR " << "textwolf xmlprinter: " << xmlprinter.lasterror();
-					}
-				}
-				else
-				{
-					si = idstart;
-					out << '[' << *si++;
-				}
-			}
-		}
-		else if (*si == '{')
-		{
-			++si;
-			if (si != se && *si == '{')
-			{
-				//... Citation
-				++si;
-				std::string type = parseIdent( si, se);
-				while (si < se && (isSpace(*si) || *si == '-'))
-				{
-					type.push_back( ' ');
-					++si;
-					type.append( parseIdent( si, se));
-				}
-				if (si < se && *si == '|') ++si;
-				ValueRow row = parseValueRow( si, se, '|', '}', true);
-
-				std::string buf;
-				xmlprinter.printOpenTag( "cit", 3, buf);
-				xmlprinter.printAttribute( "type", 4, buf);
-				xmlprinter.printValue( type.c_str(), type.size(), buf);
-
-				printValueRowAttributes( xmlprinter, buf, row, "i");
-				xmlprinter.printCloseTag( buf);
-
-				if (xmlprinter.lasterror())
-				{
-					throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
-				}
-			}
-			else if (*si == '|')
-			{
-#ifdef STRUS_LOWLEVEL_DEBUG
-				std::cerr << "START TAB '" << outputString( si, se) << "'" << std::endl;
-#endif
-				if (si+1 < se && si[1] == '}')
-				{
-					// ... catch '{|}'
-					++si;
-					continue;
-				}
-				//...Embedded table
-				const char* start = si-1; 
-				const char* tnext = skipTable( start, se);
-				const char* tend = tnext-2;
-#ifdef STRUS_LOWLEVEL_DEBUG
-				std::cerr << "ENDOF TAB '" << outputString( tend, se) << "'" << std::endl;
-#endif
-				++si;
-
-				ValueRow row = parseValueRow( si, tend, '|', '\n', false);
-				std::string buf;
-				xmlprinter.printOpenTag( "table", 5, buf);
-				printValueRowAttributes( xmlprinter, buf, row, "i");
-
-				while (si < tend)
-				{
-#ifdef STRUS_LOWLEVEL_DEBUG
-					std::cerr << "PARSE TAB '" << outputString( si, tend) << "'" << std::endl;
-#endif
-					const char* tag = 0;
-					if (*si == '*')
-					{
-						++si;
-						if (si < tend && *si == '\n')
-						{
-							//... heuristic to correct error in table
-							++si;
-						}
-						if (si+1 < tend && si[0] == '{' && si[1] == '|')
-						{
-							continue;
-						}
-						if (si < tend)
-						{
-							tag = "td";
-							row = parseValueRow( si, tend, '*', '\n', false);
-							xmlprinter.printOpenTag( "tr", 2, buf);
-							printValueRowAttributes( xmlprinter, buf, row, tag);
-							xmlprinter.printCloseTag( buf);
-						}
-					}
-					else if (*si == '|')
-					{
-						++si;
-						if (si < tend && *si == '\n')
-						{
-							//... heuristic to correct error in table
-							++si;
-						}
-						if (si+1 < tend && si[0] == '{' && si[1] == '|')
-						{
-							continue;
-						}
-						if (si < tend)
-						{
-							if (*si == '+')
-							{
-								++si;
-								const char* eoln = skipLine( si, tend);
-								xmlprinter.printOpenTag( "title", 5, buf);
-								xmlprinter.printValue( "", 0, buf);
-	
-								buf.append( mapText( si, eoln-si));
-								xmlprinter.printCloseTag( buf);
-								si = eoln;
-							}
-							else
-							{
-								tag = "td";
-								row = parseValueRow( si, tend, '|', '\n', false);
-								xmlprinter.printOpenTag( "tr", 2, buf);
-								printValueRowAttributes( xmlprinter, buf, row, tag);
-								xmlprinter.printCloseTag( buf);
-							}
-						}
-					}
-					else if (*si == '!')
-					{
-						++si;
-						if (si < tend && *si == '\n')
-						{
-							//... heuristic to correct error in table
-							++si;
-						}
-						if (si+1 < tend && si[0] == '{' && si[1] == '|')
-						{
-							continue;
-						}
-						if (si < tend)
-						{
-							tag = "th";
-							row = parseValueRow( si, tend, '!', '\n', false);
-							xmlprinter.printOpenTag( "tr", 2, buf);
-							printValueRowAttributes( xmlprinter, buf, row, tag);
-							xmlprinter.printCloseTag( buf);
-						}
-					}
-					else if (*si == '<')
-					{
-						si = skipTag( si, tend);
-						if (si < tend && *si == '\n')
-						{
-							++si;
-						}
-						if (si+1 < tend && si[0] == '{' && si[1] == '|')
-						{
-							continue;
-						}
-					}
-					else if (si[0] == '{' && si[1] == '|')
-					{
-						const char* endsubtab = skipTable( si, tend);
-						buf.append( mapText( si, endsubtab-si));
-						si = endsubtab;
-						if (si < tend && *si == '\n')
-						{
-							++si;
-						}
-					}
-					else if (*si == '\n' && (si[1] == '{' || si[1] == '|' || si[1] == '*' || si[1] == '!' || si[1] == '<'))
-					{
-						++si;
-					}
-					else
-					{
-						std::cerr << "WARNING unknown tag charater in table: " << outputString( si, tend) << std::endl;
-						si = skipLine( si, tend);
-					}
-				}
-				si = tnext;
-				xmlprinter.printCloseTag( buf);//...close table
-				out << buf;
-
-				if (xmlprinter.lasterror())
-				{
-					throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
-				}
-			}
-			else
-			{
-				out << '{' << *si++;
-			}
-		}
-		else if (*si == '#')
-		{
-			++si;
-			if (si+8 < se && 0==std::memcmp( si,"REDIRECT",8))
-			{
-				std::string buf;
-				xmlprinter.printOpenTag( "label", 5, buf);
-				xmlprinter.printAttribute( "id", 2, buf);
-				xmlprinter.printValue( "redirect", 8, buf);
-				xmlprinter.printValue( "", 0, buf);
-				buf.append( mapText( si, se-si));
-				processText( out, si, se-si);
-				xmlprinter.printCloseTag( buf);
-				si = se;
-
-				if (xmlprinter.lasterror())
-				{
-					throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
-				}
-			}
-			else
-			{
-				out << '#' << *si++;
-			}
-		}
-		else if (*si == '=')
-		{
-			char const* ti = si+1;
-			for (; ti != se && *ti == '='; ++ti){}
-			if (ti-si <= 7 && ti-si >= 2)
-			{
-				static const char* tagnam[] = {"h1","h2","h3","h4","h5","h6","h7"};
-				std::size_t level = ti - si - 1;
-				char const* te = skipLine( ti, se);
-				char const* le = te-1;
-				for (; *le == '\n' || *le == '\r'; --le){}
-				if (*(le) == '=')
-				{
-					si = te;
-					while (*(le) == '=') --le;
-					std::string buf;
-					xmlprinter.printOpenTag( tagnam[level], 2, buf);
-					xmlprinter.printValue( ti, le-ti+1, buf);
-					xmlprinter.printCloseTag( buf);
-					out << buf;
-				}
-				else
-				{
-					out << '=' << *si++;
-				}
-
-				if (xmlprinter.lasterror())
-				{
-					throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
-				}
-			}
-			else
-			{
-				out << *si++;
-			}
-		}
-		else
-		{
-			out << *si++;
-		}
-	}
-}
-
-static std::string mapText( char const* src, std::size_t size)
-{
-	std::ostringstream rt;
-	processText( rt, src, size);
-	return rt.str();
+	out << processWikimediaText( si, size, xmlprinter);
 }
 
 
