@@ -43,7 +43,7 @@
 #include <map>
 #include <stdint.h>
 
-#define STRUS_LOWLEVEL_DEBUG
+#undef STRUS_LOWLEVEL_DEBUG
 
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinter;
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
@@ -82,6 +82,51 @@ static bool isAlphaNum( char ch)
 static bool isSpace( char ch)
 {
 	return (ch <= 32);
+}
+
+static bool isEqual( const char* id, const char* src, std::size_t size)
+{
+	std::size_t ii=0;
+	for (; ii<size && (id[ii]|32)==(src[ii]|32); ++ii){}
+	return ii==size;
+}
+
+static bool isAttributeString( const std::string& src)
+{
+	if (src.size() > 80) return false;
+	std::string::const_iterator si = src.begin(), se = src.end();
+	for (; si != se && (*si == ' ' || *si == '-' || *si == '_' || isAlphaNum(*si)); ++si){}
+	return (si == se);
+}
+
+static std::string makeAttributeName( const std::string& src)
+{
+	std::string rt;
+	std::string::const_iterator si = src.begin(), se = src.end();
+	for (; si != se && (*si == ' ' || *si == '-' || *si == '_' || isAlphaNum(*si)); ++si)
+	{
+		if (isAlpha(*si))
+		{
+			rt.push_back( *si|32);
+		}
+		else if (isDigit(*si))
+		{
+			rt.push_back( *si);
+		}
+		else if (*si == '_' || *si == '-')
+		{
+			rt.push_back( '_');
+		}
+	}
+	return rt;
+}
+
+static bool isEmpty( const std::string& src)
+{
+	if (src.size() > 80) return false;
+	std::string::const_iterator si = src.begin(), se = src.end();
+	for (; si != se && isSpace(*si); ++si){}
+	return (si == se);
 }
 
 static std::string trim( const std::string& src)
@@ -162,13 +207,6 @@ static const char* skipTag( char const* si, const char* se)
 	}
 }
 
-static const char* skipLine( char const* si, const char* se)
-{
-	const char* eoln =(const char*)std::memchr( si, '\n', se-si);
-	if (eoln) return eoln+1;
-	return se;
-}
-
 class Lexer
 {
 public:
@@ -183,9 +221,15 @@ public:
 		LexemHeading4,
 		LexemHeading5,
 		LexemHeading6,
+		LexemListItem1,
+		LexemListItem2,
+		LexemListItem3,
+		LexemListItem4,
+		LexemEndOfLine,
 		LexemOpenCitation,
 		LexemCloseCitation,
 		LexemOpenWWWLink,
+		LexemOpenSquareBracket,
 		LexemCloseSquareBracket,
 		LexemOpenLink,
 		LexemCloseLink,
@@ -200,9 +244,10 @@ public:
 	{
 		static const char* ar[] =
 		{
-			"EOF","Text","Redirect","Heading1","Heading2","Heading3",
-			"Heading4","Heading5","Heading6","OpenCitation","CloseCitation",
-			"OpenWWWLink", "CloseSquareBracket","OpenLink","CloseLink",
+			"EOF","Text","Redirect","Heading1","Heading2","Heading3","Heading4",
+			"Heading5","Heading6","ListItem1","ListItem2","ListItem3","ListItem4",
+			"EndOfLine","OpenCitation","CloseCitation","OpenWWWLink", "OpenSquareBracket",
+			"CloseSquareBracket","OpenLink","CloseLink",
 			"OpenTable", "CloseTable","TableRowDelim","TableTitle",
 			"TableHeadDelim","ColDelim"
 		};
@@ -223,13 +268,25 @@ public:
 	};
 
 	Lexer( const char* src, std::size_t size)
-		:m_si(src),m_se(src+size){}
+		:m_prev_si(src),m_si(src),m_se(src+size){}
 
 	Lexem next();
 	std::string tryParseIdentifier( char assignop);
 	std::string tryParseURL();
+	bool eatFollowChar( char expectChr);
+
+	std::string rest() const
+	{
+		return std::string( m_si, m_se-m_si);
+	}
+
+	std::string currentSourceExtract() const
+	{
+		return outputString( m_prev_si, m_si+20);
+	}
 
 private:
+	char const* m_prev_si;
 	char const* m_si;
 	const char* m_se;
 };
@@ -242,7 +299,6 @@ std::string Lexer::tryParseIdentifier( char assignop)
 	while (ti < m_se && isSpace(*ti)) ++ti;
 	if (ti < m_se && isAlpha(*ti))
 	{
-		++ti;
 		while (ti < m_se && (isAlphaNum(*ti) || *ti == '-' || isSpace(*ti)))
 		{
 			char ch = *ti++;
@@ -262,7 +318,7 @@ std::string Lexer::tryParseIdentifier( char assignop)
 	}
 	if (ti < m_se && *ti == assignop)
 	{
-		while (isSpace( rt[rt.size()-1]))
+		while (rt.size() && isSpace( rt[rt.size()-1]))
 		{
 			rt.resize( rt.size()-1);
 		}
@@ -298,22 +354,45 @@ std::string Lexer::tryParseURL()
 	return std::string();
 }
 
+bool Lexer::eatFollowChar( char expectChr)
+{
+	if (m_si < m_se && *m_si == expectChr)
+	{
+		++m_si;
+		return true;
+	}
+	return false;
+}
+
 Lexer::Lexem Lexer::next()
 {
+	m_prev_si = m_si;
 	const char* start = m_si;
 	while (m_si < m_se)
 	{
 		if (*m_si == '<')
 		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
 			m_si = skipTag( m_si, m_se);
-			start = m_si;
+			return Lexem( LexemText, std::string( " ", 1));
 		}
 		else if (*m_si == '#')
 		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
 			if (0==std::memcmp( "#REDIRECT", m_si, 9))
 			{
 				m_si += 9;
 				return Lexem( LexemRedirect);
+			}
+			else
+			{
+				++m_si;
 			}
 		}
 		else if (*m_si == '[')
@@ -335,7 +414,17 @@ Lexer::Lexem Lexer::next()
 			{
 				std::string linkid = tryParseURL();
 				if (linkid.size())
-				return Lexem( LexemOpenWWWLink, linkid);
+				{
+					return Lexem( LexemOpenWWWLink, linkid);
+				}
+				else
+				{
+					return Lexem( LexemOpenSquareBracket);
+				}
+			}
+			else
+			{
+				return Lexem( LexemOpenSquareBracket);
 			}
 		}
 		else if (*m_si == '{')
@@ -375,8 +464,7 @@ Lexer::Lexem Lexer::next()
 			else if (*m_si == '+')
 			{
 				++m_si;
-				const char* eoln = skipLine( m_si, m_se);
-				return Lexem( LexemTableTitle, (eoln == m_se)?std::string(m_si,m_se-m_si):std::string(m_si,m_se-m_si-1));
+				return Lexem( LexemTableTitle);
 			}
 			else if (*m_si == '}')
 			{
@@ -390,6 +478,10 @@ Lexer::Lexem Lexer::next()
 		}
 		else if (*m_si == '!' && m_si+1 < m_se && m_si[1] == '!')
 		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
 			m_si += 2;
 			return Lexem( LexemTableHeadDelim);
 		}
@@ -400,41 +492,94 @@ Lexer::Lexem Lexer::next()
 			{
 				if (*m_si == '!')
 				{
+					if (start < m_si-1)
+					{
+						--m_si;
+						return Lexem( LexemText, std::string( start, m_si - start));
+					}
 					++m_si;
 					return Lexem( LexemTableHeadDelim);
 				}
+				else if (*m_si == '|')
+				{
+					continue;
+				}
+				else if (*m_si == '*')
+				{
+					if (start < m_si-1)
+					{
+						--m_si;
+						return Lexem( LexemText, std::string( start, m_si - start));
+					}
+					++m_si;
+					int lidx = 0;
+					for (; m_si != m_se && *m_si == '*'; ++lidx,++m_si){}
+					if (lidx >= 4) lidx = 3;
+					return Lexem( (LexemId)(LexemListItem1 + lidx));
+				}
 				else if (*m_si == '=')
 				{
-					char const* ti = ++m_si;
-					for (; ti != m_se && *ti == '='; ++ti){}
-					if (ti-m_si <= 5 && ti-m_si >= 1)
+					if (start < m_si-1)
 					{
-						const char* oldsrc = m_si;
-						m_si = ti;
-						std::string name = tryParseIdentifier('=');
-						if (name.size())
+						--m_si;
+						return Lexem( LexemText, trim( std::string( start, m_si - start)));
+					}
+					char const* ti = ++m_si;
+					int tcnt = 0;
+					for (; ti != m_se && *ti == '='; ++tcnt,++ti){}
+					if (tcnt <= 5 && tcnt >= 1)
+					{
+						start = ti;
+						for (; ti < m_se && *ti != '=' && *ti != '\n'; ++ti){}
+						if (ti < m_se && *ti == '=')
 						{
+							const char* end = m_si = ti;
 							for (; m_si != m_se && *m_si == '='; ++m_si){}
-							return Lexem( (LexemId)(LexemHeading1+(ti-m_si)), name);
-						}
-						else
-						{
-							m_si = oldsrc;
+							return Lexem( (LexemId)(LexemHeading1+(tcnt-1)), std::string( start, end-start));
 						}
 					}
+				}
+				else if (m_si+6 < m_se
+					&& (isEqual("File:",m_si,5) || isEqual("Image:",m_si,6)))
+				{
+					m_si += 6;
+					for (; m_si < m_se && *m_si != '\n' && *m_si != '|'; ++m_si){}
+					if (m_si < m_se && *m_si == '|')
+					{
+						++m_si;
+						return Lexem( LexemListItem1);
+					}
+				}
+				else
+				{
+					if (start < m_si-1)
+					{
+						--m_si;
+						return Lexem( LexemText, std::string( start, m_si - start));
+					}
+					return Lexem( LexemEndOfLine);
 				}
 			}
 		}
 		else if (*m_si == '}' && m_si+1 < m_se && m_si[1] == '}')
 		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
 			m_si += 2;
 			return Lexem( LexemCloseCitation);
 		}
 		else if (*m_si == ']')
 		{
+			if (start != m_si)
+			{
+				return Lexem( LexemText, std::string( start, m_si - start));
+			}
 			++m_si;
 			if (m_si < m_se && *m_si == ']')
 			{
+				++m_si;
 				return Lexem( LexemCloseLink);
 			}
 			else
@@ -442,7 +587,10 @@ Lexer::Lexem Lexer::next()
 				return Lexem( LexemCloseSquareBracket);
 			}
 		}
-		++m_si;
+		else
+		{
+			++m_si;
+		}
 	}
 	if (start != m_si)
 	{
@@ -457,6 +605,7 @@ Lexer::Lexem Lexer::next()
 enum StateId
 {
 	StateText,
+	StateListItem,
 	StateCitation,
 	StateLink,
 	StateWWWLink,
@@ -468,9 +617,15 @@ enum TableStateId
 	TableStateRow,
 	TableStateCol
 };
+enum TextStateId
+{
+	TextContent,
+	TextSquareBrackets
+};
+
 static const char* stateIdName( StateId i)
 {
-	static const char* ar[] = {"Text","Citation","Link","WWWLink","Table"};
+	static const char* ar[] = {"Text","ListItem","Citation","Link","WWWLink","Table"};
 	return ar[i];
 }
 struct State
@@ -486,61 +641,77 @@ struct State
 	union 
 	{
 		TableStateId table;
+		TextStateId text;
 	} substate;
 };
+
+#ifdef STRUS_LOWLEVEL_DEBUG
+static void printStack( std::ostream& out, const std::vector<State>& stack)
+{
+	std::vector<State>::const_iterator si = stack.begin(), se = stack.end();
+	for (int sidx=0; si != se; ++sidx,++si)
+	{
+		if (sidx) out << " ";
+		out << stateIdName(si->id);
+	}
+}
+#endif
 
 static void processDataRowCol( const char* tag, std::string& res, const std::string& data, XmlPrinter& xmlprinter)
 {
 	Lexer lexer( data.c_str(), data.size());
-	std::string id = lexer.tryParseIdentifier('=');
-	std::string val = trim( id);
+	std::string id = makeAttributeName( lexer.tryParseIdentifier('='));
 	if (id.size())
 	{
-		if (xmlprinter.state() == XmlPrinter::TagElement)
+		std::string rest( trim( lexer.rest()));
+		if (xmlprinter.state() == XmlPrinter::TagElement && isAttributeString(rest))
 		{
 			xmlprinter.printAttribute( id.c_str(), id.size(), res);
-			xmlprinter.printValue( val.c_str(), val.size(), res);
+			xmlprinter.printValue( rest.c_str(), rest.size(), res);
 		}
 		else
 		{
 			xmlprinter.printOpenTag( id.c_str(), id.size(), res);
-			xmlprinter.printValue( val.c_str(), val.size(), res);
+			xmlprinter.printValue( rest.c_str(), rest.size(), res);
 			xmlprinter.printCloseTag( res);
 		}
 	}
-	else if (tag && tag[0])
+	else if (!isEmpty(data))
 	{
-		xmlprinter.printOpenTag( tag, std::strlen(tag), res);
-		xmlprinter.printValue( val.c_str(), val.size(), res);
-		xmlprinter.printCloseTag( res);
-	}
-	else
-	{
-		xmlprinter.printValue( "", 0, res);
-		xmlprinter.printValue( val.c_str(), val.size(), res);
+		if (tag && tag[0])
+		{
+			if (tag[0] == '@')
+			{
+				if (xmlprinter.state() == XmlPrinter::TagElement)
+				{
+					xmlprinter.printAttribute( tag+1, std::strlen(tag+1), res);
+					xmlprinter.printValue( data.c_str(), data.size(), res);
+				}
+				else
+				{
+					xmlprinter.printOpenTag( tag+1, std::strlen(tag+1), res);
+					xmlprinter.printValue( data.c_str(), data.size(), res);
+					xmlprinter.printCloseTag( res);
+				}
+			}
+			else
+			{
+				xmlprinter.printOpenTag( tag, std::strlen(tag), res);
+				xmlprinter.printValue( data.c_str(), data.size(), res);
+				xmlprinter.printCloseTag( res);
+			}
+		}
+		else
+		{
+			xmlprinter.printValue( "", 0, res);
+			xmlprinter.printValue( data.c_str(), data.size(), res);
+		}
 	}
 }
 
-static void processOpenLink( std::string& res, const std::string& tagnam, Lexer& lexer, XmlPrinter& xmlprinter)
+static void processOpenLink( std::string& res, const std::string& tagnam, Lexer& lexer, Lexer::Lexem& lexem, XmlPrinter& xmlprinter)
 {
 	xmlprinter.printOpenTag( "link", 4, res);
-	if (tagnam.size())
-	{
-		xmlprinter.printAttribute( "type", 4, res);
-		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), res);
-	}
-	std::string databuf;
-	for (Lexer::Lexem lexem = lexer.next(); lexem.id == Lexer::LexemText; lexem = lexer.next())
-	{
-		xmlprinter.printValue( "", 0, databuf);
-		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), databuf);
-	}
-	processDataRowCol( "id", res, databuf, xmlprinter);
-}
-
-static void processOpenCitation( std::string& res, const std::string& tagnam, Lexer& lexer, XmlPrinter& xmlprinter)
-{
-	xmlprinter.printOpenTag( "cit", 3, res);
 	xmlprinter.printAttribute( "type", 4, res);
 	if (tagnam.size())
 	{
@@ -549,6 +720,38 @@ static void processOpenCitation( std::string& res, const std::string& tagnam, Le
 	else
 	{
 		xmlprinter.printValue( "page", 4, res);
+	}
+	std::string databuf;
+	int lidx = 0;
+	for (lexem = lexer.next(); lexem.id == Lexer::LexemText; ++lidx,lexem = lexer.next())
+	{
+#ifdef STRUS_LOWLEVEL_DEBUG
+		std::cerr << "LEXEM " << Lexer::lexemIdName( lexem.id) << " '" << outputString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << "'" << std::endl;
+#endif
+		if (lidx)
+		{
+			databuf.push_back( ' ');
+		}
+		databuf.append( lexem.value);
+	}
+	processDataRowCol( "@id", res, databuf, xmlprinter);
+	if (lexem.id == Lexer::LexemCloseLink)
+	{
+		processDataRowCol( "", res, databuf, xmlprinter);
+	}
+	else if (lexem.id == Lexer::LexemColDelim)
+	{
+		lexem = lexer.next();
+	}
+}
+
+static void processOpenCitation( std::string& res, const std::string& tagnam, Lexer& lexer, XmlPrinter& xmlprinter)
+{
+	xmlprinter.printOpenTag( "cit", 3, res);
+	if (tagnam.size())
+	{
+		xmlprinter.printAttribute( "type", 4, res);
+		xmlprinter.printValue( tagnam.c_str(), tagnam.size(), res);
 	}
 }
 
@@ -570,23 +773,39 @@ static std::string processWikimediaText( const char* src, std::size_t size, XmlP
 	std::string databuf;
 	bool redirectTagOpen = false;
 	static const char* headingTagName[] = {"h1","h2","h3","h4","h5","h6"};
+	static const char* listitemTagName[] = {"l1","l2","l3","l4"};
 
 	std::string rt;
 	Lexer lexer(src,size);
 
 	for (Lexer::Lexem lexem = lexer.next(); !done; lexem = lexer.next())
 	{
+#ifdef STRUS_LOWLEVEL_DEBUG
+		std::cerr << "LEXEM " << Lexer::lexemIdName( lexem.id) << " '" << outputString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << "'" << std::endl;
+#endif
 AGAIN:
+#ifdef STRUS_LOWLEVEL_DEBUG
+		std::cerr << "STACK ";
+		printStack( std::cerr, stack);
+		std::cerr << std::endl;
+#endif
 		if (xmlprinter.lasterror())
 		{
 			throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
 		}
 		switch (stack.back().id)
 		{
-			case StateText:
+			case StateText:/*no break here!*/
+			case StateListItem:
 				switch (lexem.id)
 				{
 					case Lexer::LexemEOF:
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
 						if (redirectTagOpen)
 						{
 							xmlprinter.printCloseTag( rt);
@@ -601,7 +820,7 @@ AGAIN:
 					case Lexer::LexemRedirect:
 						if (stack.size() > 1 || redirectTagOpen)
 						{
-							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						}
 						else
 						{
@@ -609,12 +828,41 @@ AGAIN:
 							redirectTagOpen = true;
 						}
 						break;
+					case Lexer::LexemListItem1:
+					case Lexer::LexemListItem2:
+					case Lexer::LexemListItem3:
+					case Lexer::LexemListItem4:
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						xmlprinter.printOpenTag( listitemTagName[lexem.id-Lexer::LexemListItem1], 2, rt);
+						xmlprinter.printValue( "", 0, rt);
+						stack.push_back( StateListItem);
+						break;
+					case Lexer::LexemEndOfLine:
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
 					case Lexer::LexemHeading1:
 					case Lexer::LexemHeading2:
 					case Lexer::LexemHeading3:
 					case Lexer::LexemHeading4:
 					case Lexer::LexemHeading5:
 					case Lexer::LexemHeading6:
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
 						xmlprinter.printOpenTag( headingTagName[lexem.id-Lexer::LexemHeading1], 2, rt);
 						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), rt);
 						xmlprinter.printCloseTag( rt);
@@ -624,21 +872,56 @@ AGAIN:
 						stack.push_back( StateCitation);
 						break;
 					case Lexer::LexemCloseCitation:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
 					case Lexer::LexemOpenWWWLink:
 						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
 						stack.push_back( StateWWWLink);
 						break;
+					case Lexer::LexemOpenSquareBracket:
+						if (stack.back().substate.text == TextContent)
+						{
+							xmlprinter.printValue( " [", 1, rt);
+							stack.back().substate.text = TextSquareBrackets;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						}
+						break;
 					case Lexer::LexemCloseSquareBracket:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						if (stack.back().substate.text == TextSquareBrackets)
+						{
+							xmlprinter.printValue( "] ", 1, rt);
+							stack.back().substate.text = TextContent;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						}
 						break;
 					case Lexer::LexemOpenLink:
-						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						processOpenLink( rt, lexem.value, lexer, lexem, xmlprinter);
 						stack.push_back( StateLink);
 						goto AGAIN;
 					case Lexer::LexemCloseLink:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
 					case Lexer::LexemOpenTable:
 						xmlprinter.printOpenTag( "table", 5, rt);
@@ -647,14 +930,29 @@ AGAIN:
 					case Lexer::LexemCloseTable:/*no break here!*/
 					case Lexer::LexemTableRowDelim:/*no break here!*/
 					case Lexer::LexemTableTitle:/*no break here!*/
-					case Lexer::LexemTableHeadDelim:/*no break here!*/
+					case Lexer::LexemTableHeadDelim:
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						break;
 					case Lexer::LexemColDelim:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						if (stack.back().id == StateListItem)
+						{
+							xmlprinter.printValue( "\n", 0, rt);
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						}
 						break;
 				}
 				break;
 			case StateCitation:
-				if (lexem.id != Lexer::LexemText)
+				if (lexem.id != Lexer::LexemText && !databuf.empty())
 				{
 					processDataRowCol( "", rt, databuf, xmlprinter);
 					databuf.clear();
@@ -667,15 +965,25 @@ AGAIN:
 							xmlprinter.printCloseTag( rt);
 							redirectTagOpen = false;
 						}
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						done = true;
 						break;
 					case Lexer::LexemText:
-						xmlprinter.printValue( "", 0, databuf);
-						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						databuf.append( lexem.value);
 						break;
 					case Lexer::LexemRedirect:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						break;
+					case Lexer::LexemEndOfLine:
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
+					case Lexer::LexemListItem1:
+					case Lexer::LexemListItem2:
+					case Lexer::LexemListItem3:
+					case Lexer::LexemListItem4:
+						xmlprinter.printOpenTag( listitemTagName[lexem.id-Lexer::LexemListItem1], 2, rt);
+						xmlprinter.printValue( "", 0, rt);
+						stack.push_back( StateListItem);
 						break;
 					case Lexer::LexemHeading1:
 					case Lexer::LexemHeading2:
@@ -683,14 +991,14 @@ AGAIN:
 					case Lexer::LexemHeading4:
 					case Lexer::LexemHeading5:
 					case Lexer::LexemHeading6:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
 					case Lexer::LexemOpenCitation:
-						xmlprinter.printCloseTag( rt);
-						stack.pop_back();
-						goto AGAIN;
+						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
+						stack.push_back( StateCitation);
+						break;
 					case Lexer::LexemCloseCitation:
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
@@ -699,15 +1007,34 @@ AGAIN:
 						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
 						stack.push_back( StateWWWLink);
 						break;
+					case Lexer::LexemOpenSquareBracket:
+						if (stack.back().substate.text == TextContent)
+						{
+							xmlprinter.printValue( " [", 1, rt);
+							stack.back().substate.text = TextSquareBrackets;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						}
+						break;
 					case Lexer::LexemCloseSquareBracket:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						if (stack.back().substate.text == TextSquareBrackets)
+						{
+							xmlprinter.printValue( "] ", 1, rt);
+							stack.back().substate.text = TextContent;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						}
 						break;
 					case Lexer::LexemOpenLink:
-						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						processOpenLink( rt, lexem.value, lexer, lexem, xmlprinter);
 						stack.push_back( StateLink);
 						goto AGAIN;
 					case Lexer::LexemCloseLink:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
@@ -715,21 +1042,39 @@ AGAIN:
 						xmlprinter.printOpenTag( "table", 5, rt);
 						stack.push_back( StateTable);
 						break;
-					case Lexer::LexemCloseTable:/*no break here!*/
-					case Lexer::LexemTableRowDelim:/*no break here!*/
-					case Lexer::LexemTableTitle:/*no break here!*/
+					case Lexer::LexemCloseTable:
+						if (lexer.eatFollowChar( '}'))
+						{
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							break;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+					case Lexer::LexemTableRowDelim:
+						xmlprinter.printValue( "-", 0, rt);
+						break;
+					case Lexer::LexemTableTitle:
+						xmlprinter.printValue( "+", 0, rt);
+						break;
 					case Lexer::LexemTableHeadDelim:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
-						xmlprinter.printCloseTag( rt);
-						stack.pop_back();
-						goto AGAIN;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
 					case Lexer::LexemColDelim:
+						if (databuf.size())
+						{
+							databuf.append( ", ");
+						}
 						break;
 				}
 				break;
 			case StateLink:
-				if (lexem.id != Lexer::LexemText)
+				if (lexem.id != Lexer::LexemText && !databuf.empty())
 				{
 					processDataRowCol( "", rt, databuf, xmlprinter);
 					databuf.clear();
@@ -742,23 +1087,29 @@ AGAIN:
 							xmlprinter.printCloseTag( rt);
 							redirectTagOpen = false;
 						}
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						done = true;
 						break;
 					case Lexer::LexemText:
-						xmlprinter.printValue( "", 0, databuf);
-						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						databuf.append( lexem.value);
 						break;
 					case Lexer::LexemRedirect:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
+					case Lexer::LexemEndOfLine:
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
+					case Lexer::LexemListItem1:
+					case Lexer::LexemListItem2:
+					case Lexer::LexemListItem3:
+					case Lexer::LexemListItem4:
 					case Lexer::LexemHeading1:
 					case Lexer::LexemHeading2:
 					case Lexer::LexemHeading3:
 					case Lexer::LexemHeading4:
 					case Lexer::LexemHeading5:
 					case Lexer::LexemHeading6:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
@@ -774,14 +1125,37 @@ AGAIN:
 						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
 						stack.push_back( StateWWWLink);
 						break;
+					case Lexer::LexemOpenSquareBracket:
+						if (stack.back().substate.text == TextContent)
+						{
+							xmlprinter.printValue( " [", 1, rt);
+							stack.back().substate.text = TextSquareBrackets;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						break;
 					case Lexer::LexemCloseSquareBracket:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
-						xmlprinter.printCloseTag( rt);
-						stack.pop_back();
-						goto AGAIN;
+						if (stack.back().substate.text == TextSquareBrackets)
+						{
+							xmlprinter.printValue( "] ", 1, rt);
+							stack.back().substate.text = TextContent;
+						}
+						else
+						{
+							std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+							xmlprinter.printCloseTag( rt);
+							stack.pop_back();
+							goto AGAIN;
+						}
+						break;
 					case Lexer::LexemOpenLink:
-						xmlprinter.printCloseTag( rt);
-						stack.pop_back();
+						processOpenLink( rt, lexem.value, lexer, lexem, xmlprinter);
+						stack.push_back( StateLink);
 						goto AGAIN;
 					case Lexer::LexemCloseLink:
 						xmlprinter.printCloseTag( rt);
@@ -791,21 +1165,29 @@ AGAIN:
 						xmlprinter.printOpenTag( "table", 5, rt);
 						stack.push_back( StateTable);
 						break;
+					case Lexer::LexemTableRowDelim:
+						xmlprinter.printValue( "-", 0, rt);
+						break;
+					case Lexer::LexemTableTitle:
+						xmlprinter.printValue( "+", 0, rt);
+						break;
 					case Lexer::LexemCloseTable:/*no break here!*/
-					case Lexer::LexemTableRowDelim:/*no break here!*/
-					case Lexer::LexemTableTitle:/*no break here!*/
 					case Lexer::LexemTableHeadDelim:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
 						break;
 					case Lexer::LexemColDelim:
+						if (databuf.size())
+						{
+							databuf.append( ", ");
+						}
 						break;
 				}
 				break;
 			case StateWWWLink:
-				if (lexem.id != Lexer::LexemText)
+				if (lexem.id != Lexer::LexemText && !databuf.empty())
 				{
 					processDataRowCol( "", rt, databuf, xmlprinter);
 					databuf.clear();
@@ -818,23 +1200,29 @@ AGAIN:
 							xmlprinter.printCloseTag( rt);
 							redirectTagOpen = false;
 						}
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						done = true;
 						break;
 					case Lexer::LexemText:
-						xmlprinter.printValue( "", 0, databuf);
-						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						databuf.append( lexem.value);
 						break;
 					case Lexer::LexemRedirect:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
+					case Lexer::LexemEndOfLine:
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
+					case Lexer::LexemListItem1:
+					case Lexer::LexemListItem2:
+					case Lexer::LexemListItem3:
+					case Lexer::LexemListItem4:
 					case Lexer::LexemHeading1:
 					case Lexer::LexemHeading2:
 					case Lexer::LexemHeading3:
 					case Lexer::LexemHeading4:
 					case Lexer::LexemHeading5:
 					case Lexer::LexemHeading6:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
@@ -843,12 +1231,17 @@ AGAIN:
 						stack.push_back( StateCitation);
 						break;
 					case Lexer::LexemCloseCitation:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
 					case Lexer::LexemOpenWWWLink:
-						std::cerr << "WARNING nested links, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING nested links, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						xmlprinter.printCloseTag( rt);
+						stack.pop_back();
+						goto AGAIN;
+					case Lexer::LexemOpenSquareBracket:
+						std::cerr << "WARNING nested links, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
@@ -857,11 +1250,11 @@ AGAIN:
 						stack.pop_back();
 						break;
 					case Lexer::LexemOpenLink:
-						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						processOpenLink( rt, lexem.value, lexer, lexem, xmlprinter);
 						stack.push_back( StateLink);
-						break;
+						goto AGAIN;
 					case Lexer::LexemCloseLink:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
@@ -873,17 +1266,21 @@ AGAIN:
 					case Lexer::LexemTableRowDelim:/*no break here!*/
 					case Lexer::LexemTableTitle:/*no break here!*/
 					case Lexer::LexemTableHeadDelim:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
 						break;
 					case Lexer::LexemColDelim:
+						if (databuf.size())
+						{
+							databuf.append( ", ");
+						}
 						break;
 				}
 				break;
 			case StateTable:
-				if (lexem.id != Lexer::LexemText)
+				if (lexem.id != Lexer::LexemText && !databuf.empty())
 				{
 					processDataRowCol( "i", rt, databuf, xmlprinter);
 					databuf.clear();
@@ -910,15 +1307,25 @@ AGAIN:
 							xmlprinter.printCloseTag( rt);
 							redirectTagOpen = false;
 						}
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						done = true;
 						break;
 					case Lexer::LexemText:
-						xmlprinter.printValue( "", 0, databuf);
-						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), databuf);
+						databuf.append( lexem.value);
 						break;
 					case Lexer::LexemRedirect:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
+						break;
+					case Lexer::LexemEndOfLine:
+						xmlprinter.printValue( "\n", 0, rt);
+						break;
+					case Lexer::LexemListItem1:
+					case Lexer::LexemListItem2:
+					case Lexer::LexemListItem3:
+					case Lexer::LexemListItem4:
+						xmlprinter.printOpenTag( listitemTagName[lexem.id-Lexer::LexemListItem1], 2, rt);
+						xmlprinter.printValue( "", 0, rt);
+						stack.push_back( StateListItem);
 						break;
 					case Lexer::LexemHeading1:
 					case Lexer::LexemHeading2:
@@ -926,7 +1333,7 @@ AGAIN:
 					case Lexer::LexemHeading4:
 					case Lexer::LexemHeading5:
 					case Lexer::LexemHeading6:
-						std::cerr << "WARNING table not closed, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING table not closed, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
 						goto AGAIN;
@@ -935,21 +1342,22 @@ AGAIN:
 						stack.push_back( StateCitation);
 						break;
 					case Lexer::LexemCloseCitation:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
 					case Lexer::LexemOpenWWWLink:
 						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
 						stack.push_back( StateWWWLink);
 						break;
+					case Lexer::LexemOpenSquareBracket:/*no break here!*/
 					case Lexer::LexemCloseSquareBracket:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
 					case Lexer::LexemOpenLink:
-						processOpenLink( rt, lexem.value, lexer, xmlprinter);
+						processOpenLink( rt, lexem.value, lexer, lexem, xmlprinter);
 						stack.push_back( StateLink);
-						break;
+						goto AGAIN;
 					case Lexer::LexemCloseLink:
-						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << std::endl;
+						std::cerr << "WARNING unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						break;
 					case Lexer::LexemOpenTable:
 						xmlprinter.printOpenTag( "table", 5, rt);
@@ -990,8 +1398,8 @@ AGAIN:
 						break;
 					case Lexer::LexemTableTitle:
 						xmlprinter.printOpenTag( "title", 5, rt);
-						xmlprinter.printValue( lexem.value.c_str(), lexem.value.size(), rt);
-						xmlprinter.printCloseTag( rt);
+						xmlprinter.printValue( "", 0, rt);
+						stack.push_back( StateListItem);
 						break;
 					case Lexer::LexemTableHeadDelim:
 						switch (stack.back().substate.table)
@@ -1051,7 +1459,6 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 	out << processWikimediaText( si, size, xmlprinter);
 }
 
-
 int main( int argc, const char* argv[])
 {
 	int rt = 0;
@@ -1065,6 +1472,7 @@ int main( int argc, const char* argv[])
 			return 0;
 		}
 		strus::InputStream input( argv[1]);
+		bool inText = false;
 
 		XmlScanner xs( input.stream());
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
@@ -1093,6 +1501,7 @@ int main( int argc, const char* argv[])
 					buf.clear();
 					xmlprinter.printAttribute( itr->content(), itr->size(), buf);
 					std::cout << buf;
+					buf.clear();
 					break;
 				}
 				case XmlScanner::TagAttribValue:
@@ -1100,6 +1509,7 @@ int main( int argc, const char* argv[])
 					buf.clear();
 					xmlprinter.printValue( itr->content(), itr->size(), buf);
 					std::cout << buf;
+					buf.clear();
 					break;
 				}
 				case XmlScanner::OpenTag: 
@@ -1107,14 +1517,21 @@ int main( int argc, const char* argv[])
 					buf.clear();
 					xmlprinter.printOpenTag( itr->content(), itr->size(), buf);
 					std::cout << buf;
+					buf.clear();
+					if (itr->size() == 4 && 0==std::memcmp( itr->content(), "text", itr->size()))
+					{
+						inText = true;
+					}
 					break;
 				}
 				case XmlScanner::CloseTagIm:
 				case XmlScanner::CloseTag:
 				{
+					inText = false;
 					buf.clear();
 					xmlprinter.printCloseTag( buf);
 					std::cout << buf;
+					buf.clear();
 					break;
 				}
 				case XmlScanner::Content:
@@ -1122,7 +1539,19 @@ int main( int argc, const char* argv[])
 					buf.clear();
 					xmlprinter.printValue( "", 0, buf);
 					std::cout << buf;
-					processText( std::cout, itr->content(), itr->size());
+					buf.clear();
+					if (inText)
+					{
+#ifdef STRUS_LOWLEVEL_DEBUG
+						std::cerr << std::endl << "PROCESS CONTENT:" << std::endl << std::string( itr->content(), itr->size()) << std::endl << "." << std::endl;
+#endif
+						processText( std::cout, itr->content(), itr->size());
+					}
+					else
+					{
+						xmlprinter.printValue( itr->content(), itr->size(), buf);
+						std::cout << buf;
+					}
 					break;
 				}
 				case XmlScanner::Exit: break;

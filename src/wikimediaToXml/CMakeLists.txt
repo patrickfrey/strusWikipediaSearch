@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 
 # --------------------------------------
 # SOURCES AND INCLUDES
@@ -18,7 +18,7 @@ link_directories(
 # ------------------------------
 add_executable( strusWikimediaToXml strusWikimediaToXml.cpp ${source_files} )
 target_link_libraries( strusWikimediaToXml  )
-
+add_executable( validateXml validateXml.cpp ${source_files} )
 
 # ------------------------------
 # INSTALLATION

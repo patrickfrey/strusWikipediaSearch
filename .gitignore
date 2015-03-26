@@ -43,8 +43,20 @@ CPackSourceConfig.cmake
 
 # Compiled Programs
 src/wikimediaToXml/strusWikimediaToXml
+src/wikimediaToXml/validateXml
 
 # Data
 data/enwiki-20150205-pages-articles-multistream.xml.bz2
-storage/
+storage/*.ldb
+storage/*.log
+storage/LOCK
+storage/LOG
+storage/LOG.old
+storage/MANIFEST-*
+storage/CURRENT
+
+
+
+
+
 
