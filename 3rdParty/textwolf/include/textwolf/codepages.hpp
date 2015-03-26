@@ -37,6 +37,7 @@
 
 #ifndef __TEXTWOLF_CODE_PAGES_HPP__
 #define __TEXTWOLF_CODE_PAGES_HPP__
+#include "textwolf/exception.hpp"
 #include "textwolf/char.hpp"
 #include <map>
 
@@ -46,6 +47,7 @@ namespace charset {
 /// \class IsoLatinCodePage
 /// \brief IsoLatin code page
 class IsoLatinCodePage
+	:public throws_exception
 {
 private:
 	struct InvOvlCodeMap
@@ -132,7 +134,7 @@ public:
 		};
 		static const InvOvlCodeMap invOvlCodeMap;
 
-		if (idx > NofCodePages || idx == 0) throw std::logic_error( "code page index not supported");
+		if (idx > NofCodePages || idx == 0) throw exception( CodePageIndexNotSupported);
 		m_cd = &codePage[ idx-1].ar[0];
 		m_invcd = &invcodePage[ idx-1].ar[0];
 		m_invovlcd = invOvlCodeMap.get( idx-1);

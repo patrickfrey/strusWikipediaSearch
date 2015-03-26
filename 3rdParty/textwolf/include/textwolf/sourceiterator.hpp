@@ -37,6 +37,7 @@
 
 #ifndef __TEXTWOLF_SOURCE_ITERATOR_HPP__
 #define __TEXTWOLF_SOURCE_ITERATOR_HPP__
+#include "textwolf/exception.hpp"
 #include <cstdlib>
 #include <stdexcept>
 #include <setjmp.h>
@@ -48,6 +49,7 @@ namespace textwolf {
 /// \class SrcIterator
 /// \brief Input iterator as source for the XML scanner with the possibility of being fed chunk by chunk
 class SrcIterator
+	:public throws_exception 
 {
 public:
 	/// \brief Empty constructor
@@ -102,7 +104,7 @@ public:
 	/// \brief Get the iterator difference in bytes
 	inline std::size_t operator-( const SrcIterator& b) const
 	{
-		if (b.m_end != m_end || m_itr < b.m_itr) throw std::logic_error( "illegal operation");
+		if (b.m_end != m_end || m_itr < b.m_itr) throw exception( IllegalParam);
 		return m_itr - b.m_itr;
 	}
 

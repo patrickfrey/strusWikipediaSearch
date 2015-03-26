@@ -37,6 +37,7 @@
 
 #ifndef __TEXTWOLF_XML_TAG_STACK_HPP__
 #define __TEXTWOLF_XML_TAG_STACK_HPP__
+#include "textwolf/exception.hpp"
 #include <cstring>
 #include <cstdlib>
 
@@ -47,6 +48,7 @@ namespace textwolf {
 /// \class TagStack
 /// \brief stack of tag names
 class TagStack
+	:public throws_exception
 {
 public:
 	/// \brief Destructor
@@ -80,7 +82,7 @@ public:
 		{
 			while (m_pos + ofs > m_size) m_size *= 2;
 			if (m_pos + ofs > m_size) throw std::bad_alloc();
-			if (nn > ofs) throw std::logic_error( "invalid tag offset");
+			if (nn > ofs) throw exception( InvalidTagOffset);
 			char* xx = (char*)std::realloc( m_ptr, m_size);
 			if (!xx) throw std::bad_alloc();
 			m_ptr = xx;
@@ -108,7 +110,7 @@ public:
 	{
 		std::size_t elementsize=0;
 		std::size_t ofs = topofs(elementsize);
-		if (m_pos < ofs) throw std::runtime_error( "corrupt tag stack");
+		if (m_pos < ofs) throw exception( CorruptTagStack);
 		m_pos -= ofs;
 	}
 

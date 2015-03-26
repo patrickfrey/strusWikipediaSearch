@@ -37,8 +37,9 @@
 
 #ifndef __TEXTWOLF_XML_HEADER_PARSER_HPP__
 #define __TEXTWOLF_XML_HEADER_PARSER_HPP__
-#include <cstdlib>
+#include "textwolf/exception.hpp"
 #include "textwolf/sourceiterator.hpp"
+#include <cstdlib>
 
 /// \namespace textwolf
 /// \brief Toplevel namespace of the library
@@ -48,6 +49,7 @@ namespace textwolf {
 /// \brief Class for parsing the header to get the character set encoding
 /// \remark Works with all single byte or multibyte character sets with ASCII as base
 class XmlHdrParser
+	:public throws_exception
 {
 public:
 	/// \brief Constructor
@@ -365,7 +367,7 @@ private:
 				return ch;
 			}
 		}
-		throw std::runtime_error( "illegal XML header (more than 4 null bytes in a row)");
+		throw exception( IllegalXmlHeader);
 	}
 
 	enum State

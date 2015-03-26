@@ -51,17 +51,22 @@ struct throws_exception
 	enum Cause
 	{
 		Unknown,			///< uknown error
-		DimOutOfRange,			///< memory reserved for statically allocated table or memory block is too small. Increase the size of memory block passed to the XML path select automaton. Usage error !
-		StateNumbersNotAscending,	///< XML scanner automaton definition check failed. Labels of states must be equal to their indices. Internal textwold error !
-		InvalidParamState,		///< parameter check (for state) in automaton definition failed. Internal textwold error !
-		InvalidParamChar,		///< parameter check (for control character) in automaton definition failed. Internal textwold error !
-		DuplicateStateTransition,	///< duplicate transition definition in automaton. Internal textwold error !
-		InvalidState,			///< invalid state definition in automaton. Internal textwold error !
-		IllegalParam,			///< parameter check in automaton definition failed. Internal textwold error !
-		IllegalAttributeName,		///< invalid string for a tag or attribute in the automaton definition. Usage error !
-		OutOfMem,			///< out of memory in the automaton definition. System error (std::bad_alloc) !
-		ArrayBoundsReadWrite,		///< invalid array access. Internal textwold error !
-		NotAllowedOperation		///< defining an operation in an automaton definition that is not allowed there. Usage error !
+		DimOutOfRange,			///< memory reserved for statically allocated table or memory block is too small. Increase the size of memory block passed to the XML path select automaton. Usage error
+		StateNumbersNotAscending,	///< XML scanner automaton definition check failed. Labels of states must be equal to their indices. Internal textwolf error
+		InvalidParamState,		///< parameter check (for state) in automaton definition failed. Internal textwolf error
+		InvalidParamChar,		///< parameter check (for control character) in automaton definition failed. Internal textwolf error
+		DuplicateStateTransition,	///< duplicate transition definition in automaton. Internal textwolf error
+		InvalidState,			///< invalid state definition in automaton. Internal textwolf error
+		IllegalParam,			///< parameter check in automaton definition failed. Internal textwolf error
+		IllegalAttributeName,		///< invalid string for a tag or attribute in the automaton definition. Usage error
+		OutOfMem,			///< out of memory in the automaton definition. System error (std::bad_alloc)
+		ArrayBoundsReadWrite,		///< invalid array access. Internal textwolf error
+		NotAllowedOperation,		///< defining an operation in an automaton definition that is not allowed there. Usage error
+		FileReadError,			///< error reading a file. System error
+		IllegalXmlHeader,		///< illegal XML header (more than 4 null bytes in a row). Usage error
+		InvalidTagOffset,		///< internal error in the tag stack. Internal textwolf error
+		CorruptTagStack,		///< currupted tag stack. Internal textwolf error
+		CodePageIndexNotSupported	///< the index of the code page specified for a character set encoding is unknown to textwolf. Usage error
 	};
 };
 
@@ -93,10 +98,12 @@ struct exception	:public std::runtime_error
 	virtual const char* what() const throw()
 	{
 		// enumeration of exception causes as strings
-		static const char* nameCause[ 12] = {
+		static const char* nameCause[ 17] = {
 			"Unknown","DimOutOfRange","StateNumbersNotAscending","InvalidParamState",
 			"InvalidParamChar","DuplicateStateTransition","InvalidState","IllegalParam",
 			"IllegalAttributeName","OutOfMem","ArrayBoundsReadWrite","NotAllowedOperation"
+			"FileReadError","IllegalXmlHeader","InvalidTagOffset","CorruptTagStack",
+			"CodePageIndexNotSupported"
 		};
 		return nameCause[ (unsigned int) cause];
 	}

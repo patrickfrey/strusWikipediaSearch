@@ -37,6 +37,7 @@
 
 #ifndef __TEXTWOLF_ISTREAM_ITERATOR_HPP__
 #define __TEXTWOLF_ISTREAM_ITERATOR_HPP__
+#include "textwolf/exception.hpp"
 #include <iostream>
 #include <fstream>
 #include <iterator>
@@ -52,6 +53,7 @@ namespace textwolf {
 /// \class IStreamIterator
 /// \brief Input iterator on an STL input stream
 class IStreamIterator
+	:public throws_exception
 {
 public:
 	/// \brief Default constructor
@@ -131,15 +133,15 @@ private:
 				m_readpos = 0;
 				return (m_readsize > 0);
 			}
-			throw std::runtime_error( std::string( "file read error: ") + err.what());
+			throw exception( FileReadError);
 		}
 		catch (const std::exception& err)
 		{
-			throw std::runtime_error( std::string( "file read error: ") + err.what());
+			throw exception( FileReadError);
 		}
 		catch (...)
 		{
-			throw std::runtime_error( std::string( "file read error"));
+			throw exception( FileReadError);
 		}
 	}
 
