@@ -40,8 +40,9 @@
 #include <stdexcept>
 #include <memory>
 #include <vector>
+#include <cstdio>
 
-#undef STRUS_LOWLEVEL_DEBUG
+#define STRUS_LOWLEVEL_DEBUG
 
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinter;
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
@@ -101,16 +102,24 @@ int main( int argc, const char* argv[])
 						if (nofmb > nofmb_printed)
 						{
 							nofmb_printed = nofmb;
-							std::cout << "processed " << nofmb << " MB of data" << std::endl;
+							printf( "\rprocessed %d MB of data", nofmb);
 						}
 					}
 					break;
 				}
 				case XmlScanner::CloseTagIm:
+					if (tagstack.empty())
+					{
+						throw std::runtime_error( "tags not balanced");
+					}
 					tagstack.pop_back();
 					break;
 				case XmlScanner::CloseTag:
 				{
+					if (tagstack.empty())
+					{
+						throw std::runtime_error( "tags not balanced");
+					}
 					if (tagstack.back().size() != itr->size()
 					||  0!=std::memcmp( itr->content(), tagstack.back().c_str(), itr->size()))
 					{

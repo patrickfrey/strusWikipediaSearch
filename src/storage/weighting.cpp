@@ -29,6 +29,7 @@
 #include "weighting.hpp"
 #include "strus/constants.hpp"
 #include <cmath>
+#include <stdexcept>
 #include <ctime>
 
 using namespace strus;
