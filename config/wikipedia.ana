@@ -7,17 +7,81 @@
 	contribid = orig content /mediawiki/page/revision/contributor/id();
 
 [SearchIndex]
-	para = orig mw_text_split /mediawiki/page/revision/text;
-	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc mw_text_word /mediawiki/page/revision/text();
-	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc mw_link_word /mediawiki/page/revision/text();
+	start = empty content /mediawiki/page/revision/text;
+
+	para = empty content /mediawiki/page/revision/text;
+	para = empty content /mediawiki/page/revision/h1;
+	para = empty content /mediawiki/page/revision/h2;
+
+	tist = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/title();
+
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/title();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/link[@type='page']();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h1();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h2();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h3();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h4();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h5();
+	stem = convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h6();
 
 [ForwardIndex]
-	linkid = orig mw_link_id /mediawiki/page/revision/text();
-	linktxt = orig mw_link_content /mediawiki/page/revision/text();
-	catgid = orig mw_link_id("Category") /mediawiki/page/revision/text();
-	catgtxt = orig mw_link_content("Category") /mediawiki/page/revision/text();
-	orig = orig mw_link_split /mediawiki/page/revision/text();
-	orig = orig mw_text_split /mediawiki/page/revision/text();
+	linkid = orig content /mediawiki/page/revision/text//link[@type='page']@id	{position=succ};
+	catgid = orig content /mediawiki/page/revision/text//link[@type='category']@id	{position=pred};
+
+	orig = orig split /mediawiki/page/title();
+	orig = orig split /mediawiki/page/revision/text();
+	orig = orig split /mediawiki/page/revision/text/link();
+	orig = orig split /mediawiki/page/revision/text/h1();
+	orig = orig split /mediawiki/page/revision/text/h2();
+	orig = orig split /mediawiki/page/revision/text/h3();
+	orig = orig split /mediawiki/page/revision/text/h4();
+	orig = orig split /mediawiki/page/revision/text/h5();
+	orig = orig split /mediawiki/page/revision/text/h6();
+
+	wwwlnk = orig content /mediawiki/page/revision/text//wwwlink@id		{position=pred};
+	wwwtxt = orig content /mediawiki/page/revision/text//wwwlink()		{position=pred};
+
+	citanc = orig content /mediawiki/page/revision/text//cit;
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite web']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite web']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite book']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite book']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite journal']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite journal']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite news']/title() {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite news']/title() {position=pred};
+
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite web']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite web']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite book']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite book']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite journal']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite journal']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='vcite news']@title {position=pred};
+	cittxt = orig content /mediawiki/page/revision/text//cit[@type='cite news']@title {position=pred};
+
+	citid = orig content /mediawiki/page/revision/text//cit[@type='cite web']/url() {position=pred};
+	citid = orig content /mediawiki/page/revision/text//cit[@type='vcite web']/url() {position=pred};
+
+	citid = orig content /mediawiki/page/revision/text//cit[@type='cite book']/isbn() {position=pred};
+	citid = orig content /mediawiki/page/revision/text//cit[@type='vcite book']/isbn() {position=pred};
+	cityr = orig content /mediawiki/page/revision/text//cit[@type='cite book']/year() {position=pred};
+	cityr = orig content /mediawiki/page/revision/text//cit[@type='vcite book']/year() {position=pred};
+	citau = orig content /mediawiki/page/revision/text//cit[@type='cite book']/author() {position=pred};
+	citau = orig content /mediawiki/page/revision/text//cit[@type='vcite book']/author() {position=pred};
+	citln = orig content /mediawiki/page/revision/text//cit[@type='cite book']/link() {position=pred};
+	citln = orig content /mediawiki/page/revision/text//cit[@type='vcite book']/link() {position=pred};
+
+	citid = orig content /mediawiki/page/revision/text//cit[@type='cite journal']/journal() {position=pred};
+	citid = orig content /mediawiki/page/revision/text//cit[@type='vcite journal']/journal() {position=pred};
+	citvo = orig content /mediawiki/page/revision/text//cit[@type='cite journal']/volume() {position=pred};
+	citvo = orig content /mediawiki/page/revision/text//cit[@type='vcite journal']/volume() {position=pred};
+	cityr = orig content /mediawiki/page/revision/text//cit[@type='cite journal']/jear() {position=pred};
+	cityr = orig content /mediawiki/page/revision/text//cit[@type='vcite journal']/jear() {position=pred};
+
+	citid = orig content /mediawiki/page/revision/text//cit[@type='cite news']/url() {position=pred};
+	citid = orig content /mediawiki/page/revision/text//cit[@type='vcite news']/url() {position=pred};
 
 [Document]
 	doc = /mediawiki/page;
