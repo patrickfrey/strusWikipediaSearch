@@ -59,30 +59,10 @@ template <class CharSet_=charset::UTF8>
 class XMLPathSelectAutomaton :public throws_exception
 {
 public:
-	enum
-	{
-		defaultMemUsage=3*1024,		//< default memory usage of the XML path select process, if not specified else
-		defaultMaxDepth=32		//< default max tag stack depth, if not specified else
-	};
-	std::size_t memUsage;			//< total memory usage
-	unsigned int maxDepth;			//< max tag stack depth
-	std::size_t maxScopeStackSize;		//< max scope stack depth
-	unsigned int maxFollows;		//< maximum number of tokens searched in depth
-	unsigned int maxTriggers;		//< maximum number of open triggers
-	unsigned int maxTokens;			//< maximum number of open tokens
-
-public:
 	///\brief Constructor
 	XMLPathSelectAutomaton()
-		:memUsage(defaultMemUsage)
-		,maxDepth(defaultMaxDepth)
-		,maxScopeStackSize(0)
-		,maxFollows(0)
-		,maxTriggers(0)
-		,maxTokens(0)
-	{
-		if (!setMemUsage( memUsage, maxDepth)) throw exception( DimOutOfRange);
-	}
+	{}
+
 	typedef CharSet_ CharSet;
 	typedef int Hash;
 	typedef XMLPathSelectAutomaton<CharSet> ThisXMLPathSelectAutomaton;
@@ -476,30 +456,6 @@ public:
 		///\brief Constructor
 		Scope()					{}
 	};
-
-	///\brief Defines the usage of memory
-	///\param [in] p_memUsage size of the memory block in bytes
-	///\param [in] p_maxDepth maximum depht of the scope stack
-	///\return true, if everything is OK
-	bool setMemUsage( std::size_t p_memUsage, unsigned int p_maxDepth)
-	{
-		memUsage = p_memUsage;
-		maxDepth = p_maxDepth;
-		maxScopeStackSize = maxDepth;
-		if (p_memUsage < maxScopeStackSize * sizeof(Scope))
-		{
-			maxScopeStackSize = 0;
-		}
-		else
-		{
-			p_memUsage -= maxScopeStackSize * sizeof(Scope);
-		}
-		maxFollows = (p_memUsage / sizeof(std::size_t)) / 32 + 2;
-		maxTriggers = (p_memUsage / sizeof(std::size_t)) / 32 + 3;
-		p_memUsage -= sizeof(std::size_t) * maxFollows + sizeof(std::size_t) * maxTriggers;
-		maxTokens = p_memUsage / sizeof(Token);
-		return (maxScopeStackSize != 0 && maxTokens != 0 && maxFollows != 0 && maxTriggers != 0);
-	}
 
 private:
 	///\brief Defines a state transition

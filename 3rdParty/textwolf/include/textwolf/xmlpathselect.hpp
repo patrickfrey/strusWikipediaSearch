@@ -51,14 +51,25 @@
 
 namespace textwolf {
 
+template <typename Element>
+class DefaultStackType
+	:public std::vector<Element>
+{
+public:
+	DefaultStackType(){}
+	DefaultStackType( const DefaultStackType& o)
+		:std::vector<Element>(o){}
+};
+
 /// \brief XML path select template
 /// \tparam CharSet_ character set encoding of the automaton elements
-template <class CharSet_>
+/// \tparam StackType_ stack type used for tokens,triggers and scopes (as back insertion sequence with random access by index)
+template <class CharSet_, template <typename> class StackType_=DefaultStackType>
 class XMLPathSelect :public throws_exception
 {
 public:
 	typedef XMLPathSelectAutomaton<CharSet_> ThisXMLPathSelectAutomaton;
-	typedef XMLPathSelect<CharSet_> ThisXMLPathSelect;
+	typedef XMLPathSelect<CharSet_,StackType_> ThisXMLPathSelect;
 
 private:
 	const ThisXMLPathSelectAutomaton* atm;		//< XML select automaton
@@ -67,94 +78,6 @@ private:
 	typedef typename ThisXMLPathSelectAutomaton::Hash Hash;
 	typedef typename ThisXMLPathSelectAutomaton::State State;
 	typedef typename ThisXMLPathSelectAutomaton::Scope Scope;
-
-	/// \class Array
-	/// \brief static array of POD types. I decided to implement it on my own though using boost::array would maybe be better.
-	/// \tparam Element element type of the array
-	template <typename Element>
-	class Array :public throws_exception
-	{
-		Element* m_ar;				//< pointer to elements
-		std::size_t m_size;			//< fill size (number of elements inserted)
-		std::size_t m_maxSize;			//< allocation size (space reserved for this number of elements)
-	public:
-		/// \brief Constructor
-		/// \param [in] p_maxSize allocation size (number of elements) to reserve
-		Array( std::size_t p_maxSize) :m_size(0),m_maxSize(p_maxSize)
-		{
-			m_ar = new (std::nothrow) Element[ m_maxSize];
-			if (m_ar == 0) throw exception( OutOfMem);
-		}
-
-		/// \brief Destructor
-		~Array()
-		{
-			if (m_ar) delete [] m_ar;
-		}
-
-		/// \brief Append one element
-		/// \param [in] elem element to append
-		void push_back( const Element& elem)
-		{
-			if (m_size == m_maxSize) throw exception( OutOfMem);
-			m_ar[ m_size++] = elem;
-		}
-
-		/// \brief Remove one element from the end
-		void pop_back()
-		{
-			if (m_size == 0) throw exception( NotAllowedOperation);
-			m_size--;
-		}
-
-		/// \brief Access element by index
-		/// \param [in] idx index of the element starting with 0
-		/// \return element reference
-		Element& operator[]( std::size_t idx)
-		{
-			if (idx >= m_size) throw exception( ArrayBoundsReadWrite);
-			return m_ar[ idx];
-		}
-
-		/// \brief Access element by index
-		/// \param [in] idx index of the element starting with 0
-		/// \return element reference
-		const Element& operator[]( std::size_t idx) const
-		{
-			if (idx >= m_size) throw exception( ArrayBoundsReadWrite);
-			return m_ar[ idx];
-		}
-
-		/// \brief Get a reference of the element at the end of the array
-		/// \return element reference
-		Element& back()
-		{
-			if (m_size == 0) throw exception( ArrayBoundsReadWrite);
-			return m_ar[ m_size-1];
-		}
-
-		/// \brief Get a reference of the element at the end of the array
-		/// \return element reference
-		const Element& back() const
-		{
-			if (m_size == 0) throw exception( ArrayBoundsReadWrite);
-			return m_ar[ m_size-1];
-		}
-
-		/// \brief Resize of the array
-		/// \param [in] p_size new array size
-		void resize( std::size_t p_size)
-		{
-			if (p_size > m_size) throw exception( ArrayBoundsReadWrite);
-			m_size = p_size;
-		}
-
-		/// \brief Get the number of elements in the array
-		std::size_t size() const  {return m_size;}
-
-		/// \brief Check if the array is empty
-		bool empty() const			{return m_size==0;}
-	};
 
 	/// \class Context
 	/// \brief State variables without stacks of the automaton
@@ -182,11 +105,11 @@ private:
 		}
 	};
 
-	Array<Scope> scopestk;		//< stack of scopes opened
-	Array<unsigned int> follows;	//< indices of tokens active in all descendant scopes
-	Array<int> triggers;		//< triggered elements
-	Array<Token> tokens;		//< list of waiting tokens
-	Context context;		//< state variables without stacks of the automaton
+	StackType_<Scope> scopestk;		//< stack of scopes opened
+	StackType_<unsigned int> follows;	//< indices of tokens active in all descendant scopes
+	StackType_<int> triggers;		//< triggered elements
+	StackType_<Token> tokens;		//< list of waiting tokens
+	Context context;			//< state variables without stacks of the automaton
 
 	/// \brief Activate a state by index
 	/// \param stateidx index of the state to activate
@@ -426,7 +349,7 @@ public:
 	/// \brief Constructor
 	/// \param[in] p_atm read only ML path select automaton reference
 	XMLPathSelect( const ThisXMLPathSelectAutomaton* p_atm)
-		:atm(p_atm),scopestk(p_atm->maxScopeStackSize),follows(p_atm->maxFollows),triggers(p_atm->maxTriggers),tokens(p_atm->maxTokens)
+		:atm(p_atm),scopestk(),follows(),triggers(),tokens()
 	{
 		if (atm->states.size() > 0) expand(0);
 	}

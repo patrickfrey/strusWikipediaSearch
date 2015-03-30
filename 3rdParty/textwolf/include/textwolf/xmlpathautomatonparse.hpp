@@ -73,6 +73,7 @@ public:
 		CStringIterator pitr( esrc, esrcsize);
 		SrcScanner pp( m_srccharset, pitr);
 		std::vector<std::size_t> idref;
+		std::size_t id;
 
 		for (; *pp; skipSpaces( pp))
 		{
@@ -82,12 +83,16 @@ public:
 				case '*':
 				case '@':
 				case '~':
+				case '=':
+				case '[':
+				case ']':
+				case ',':
 					++pp;
 					continue;
-				case '[':
-					while (*pp != 0 && *pp != ']') pp++;
-					if (*pp == 0) return pp.getPosition()+1;
-					++pp;
+				case '"':
+				case '\'':
+					id = parseValue( pp, idstrings);
+					idref.push_back( id);
 					continue;
 				case '(':
 					while (*pp != 0 && *pp != ')') pp++;
@@ -97,7 +102,7 @@ public:
 				default:
 					if (pp.control() == Undef || pp.control() == Any)
 					{
-						std::size_t id = parseIdentifier( pp, idstrings);
+						id = parseIdentifier( pp, idstrings);
 						idref.push_back( id);
 					}
 					else
@@ -202,41 +207,65 @@ public:
 				}
 				case '[':
 				{
-					// Range
-					int range_start = -1;
-					int range_end = -1;
 					++src; skipSpaces( src);
-					range_start = parseNum( src);
-					if (range_start < 0) return src.getPosition()+1;
-					skipSpaces( src);
-
-					if (*src == ',')
+					if (*src == '@')
 					{
 						++src; skipSpaces( src);
-						if (*src == ']')
-						{
-							expr.FROM( range_start);
-							++src;
-						}
-						else
-						{
-							range_end = parseNum( src);
-							if (range_end < 0) return src.getPosition()+1;
-							++src; skipSpaces( src);
-							if (*src != ']') return src.getPosition()+1;
-							expr.RANGE( range_start, range_end);
-							++src;
-						}
-					}
-					else if (*src == ']')
-					{
-						range_start = range_end;
-						expr.INDEX( range_start);
+						// Attribute condition:
+						skipIdentifier( src);
+						skipSpaces( src);
+						if (di == de) return src.getPosition()+1;
+						const char* attrname = getIdentifier( *di++, idstrings);
+						if (*src != '=') return src.getPosition()+1;
+						++src; skipSpaces( src);
+						skipValue( src);
+						skipSpaces( src);
+						const char* attrval = getIdentifier( *di++, idstrings);
+						if (*src != ']') return src.getPosition()+1;
+						expr.ifAttribute( attrname, attrval);
 						++src;
 					}
 					else
 					{
-						return src.getPosition()+1;
+						// Range
+						skipIdentifier( src);
+						skipSpaces( src);
+						if (di == de) return src.getPosition()+1;
+						const char* range_start_str = getIdentifier( *di++, idstrings);
+						int range_start = parseNum( range_start_str);
+						if (range_start < 0 || range_start_str[0]) return src.getPosition()+1;
+
+						if (*src == ',')
+						{
+							++src; skipSpaces( src);
+							if (*src == ']')
+							{
+								expr.FROM( range_start);
+								++src;
+							}
+							else
+							{
+								skipIdentifier( src);
+								skipSpaces( src);
+								if (di == de) return src.getPosition()+1;
+								const char* range_end_str = getIdentifier( *di++, idstrings);
+								int range_end = parseNum( range_end_str);
+								if (range_end < 0 || range_end_str[0]) return src.getPosition()+1;
+								++src; skipSpaces( src);
+								if (*src != ']') return src.getPosition()+1;
+								expr.RANGE( range_start, range_end);
+								++src;
+							}
+						}
+						else if (*src == ']')
+						{
+							expr.INDEX( range_start);
+							++src;
+						}
+						else
+						{
+							return src.getPosition()+1;
+						}
 					}
 					continue;
 				}
@@ -264,7 +293,7 @@ private:
 		for (; src.control() == Space; ++src);
 	}
 
-	static int parseNum( SrcScanner& src)
+	static int parseNum( char const*& src)
 	{
 		std::string num;
 		for (; *src>='0' && *src<='9';++src) num.push_back( *src);
@@ -298,9 +327,46 @@ private:
 		return rt;
 	}
 
+	std::size_t parseValue( SrcScanner& src, std::string& idstrings)
+	{
+		std::size_t rt = idstrings.size();
+		if (*src == '"' || *src == '\'')
+		{
+			char eb = *src;
+			for (++src; *src && *src != eb; ++src)
+			{
+				m_atmcharset.print( *src, idstrings);
+			}
+			if (*src) ++src;
+		}
+		else
+		{
+			for (; isIdentifierChar(src); ++src)
+			{
+				m_atmcharset.print( *src, idstrings);
+			}
+		}
+		m_atmcharset.print( 0, idstrings);
+		return rt;
+	}
+
 	static void skipIdentifier( SrcScanner& src)
 	{
-		for (; isIdentifierChar(src); ++src);
+		for (; isIdentifierChar(src); ++src){}
+	}
+
+	static void skipValue( SrcScanner& src)
+	{
+		if (*src == '"' || *src == '\'')
+		{
+			char eb = *src;
+			for (++src; *src && *src != eb; ++src){}
+			if (*src) ++src;
+		}
+		else
+		{
+			for (; isIdentifierChar(src); ++src){}
+		}
 	}
 
 	const char* getIdentifier( std::size_t idx, const std::string& idstrings) const

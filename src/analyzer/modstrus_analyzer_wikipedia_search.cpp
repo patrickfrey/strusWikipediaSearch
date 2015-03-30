@@ -26,11 +26,111 @@
 
 --------------------------------------------------------------------
 */
+#include "strus/tokenizerInterface.hpp"
 #include "strus/private/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
+#include "textwolf/charset_utf8.hpp"
+
+static textwolf::charset::UTF8::CharLengthTab g_charLengthTab;
+
+static inline const char* skipChar( const char* si)
+{
+	return si+g_charLengthTab[*si];
+}
+
+static inline unsigned int utf8decode( char const* si, const char* se)
+{
+	enum {
+		B00111111=0x3F,
+		B00011111=0x1F
+	};
+	unsigned int res = (unsigned char)*si;
+	unsigned char charsize = g_charLengthTab[ *si];
+	if (res > 127)
+	{
+		res = ((unsigned char)*si)&(B00011111>>(charsize-2));
+		for (++si,--charsize; si != se && charsize; ++si,--charsize)
+		{
+			res <<= 6;
+			res |= (unsigned char)(*si & B00111111);
+		}
+	}
+	return res;
+}
+
+typedef bool (*TokenDelimiter)( char const* si, const char* se);
+
+static bool wordBoundaryDelimiter_european( char const* si, const char* se)
+{
+	if ((unsigned char)*si <= 32)
+	{
+		return true;
+	}
+	else if ((unsigned char)*si >= 128)
+	{
+		unsigned int chr = utf8decode( si, se);
+		if (chr == 133) return true;
+		if (chr >= 0x180) return true;
+		return false;
+	}
+	else if (*si >= '0' && *si <= '9')
+	{
+		return false;
+	}
+	else if ((*si|32) >= 'a' && (*si|32) <= 'z')
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+class SeparationTokenizer
+	:public strus::TokenizerInterface
+{
+public:
+	SeparationTokenizer( TokenDelimiter delim)
+		:m_delim(delim){}
+
+	const char* skipToToken( char const* si, const char* se) const
+	{
+		for (; si < se && m_delim( si, se); si = skipChar( si)){}
+		return si;
+	}
+
+	virtual std::vector<strus::analyzer::Token> tokenize( Context*, const char* src, std::size_t srcsize) const
+	{
+		std::vector<strus::analyzer::Token> rt;
+		char const* si = skipToToken( src, src+srcsize);
+		const char* se = src+srcsize;
+
+		for (;si < se; si = skipToToken(si,se))
+		{
+			const char* start = si;
+			while (si < se && !m_delim( si, se))
+			{
+				si = skipChar( si);
+			}
+			rt.push_back( strus::analyzer::Token( start-src, start-src, si-start));
+		}
+		return rt;
+	}
+private:
+	TokenDelimiter m_delim;
+};
+
+static const SeparationTokenizer wordSeparationTokenizer_european( wordBoundaryDelimiter_european);
+
+const strus::TokenizerInterface* getWordSeparationTokenizer_european()
+{
+	return &wordSeparationTokenizer_european;
+}
 
 static const strus::TokenizerConstructor tokenizers[] =
 {
+	{"content_europe", getWordSeparationTokenizer_european},
 	{0,0}
 };
 
