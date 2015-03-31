@@ -30,7 +30,7 @@ target_link_libraries( modstrus_analyzer_wikipedia_search strus_module )
 # INSTALLATION
 # ------------------------------
 install( TARGETS modstrus_analyzer_wikipedia_search
-           LIBRARY DESTINATION lib/strus/modules
+           LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus/modules
 	   RUNTIME DESTINATION bin )
 
 

@@ -1,0 +1,9 @@
+Linux:
+-------
+Build the software with cmake
+Define "extension strus_php.so" in your php.ini.
+Copy the shared object file strus_php.so into the php extension directory (`php-config5 --extension-dir`)
+
+
+
+
