@@ -215,10 +215,10 @@ private:
 		{
 			if (tokenidx >= context.scope.range.tokenidx_to) return 0;
 
-			const Token& tk = tokens[ tokenidx];
-			if (tk.core.mask.matches( context.type))
+			Token* tk = &tokens[ tokenidx];
+			if (tk->core.mask.matches( context.type))
 			{
-				const State& st = atm->states[ tk.stateidx];
+				const State& st = atm->states[ tk->stateidx];
 				if (st.key)
 				{
 					if (st.keysize == context.keysize)
@@ -228,40 +228,42 @@ private:
 						if (ii==context.keysize)
 						{
 							produce( tokenidx, st);
+							tk = &tokens[ tokenidx];
 						}
 					}
 				}
 				else
 				{
 					produce( tokenidx, st);
+					tk = &tokens[ tokenidx];
 				}
-				if (tk.core.typeidx != 0)
+				if (tk->core.typeidx != 0)
 				{
-					if (tk.core.cnt_end == -1)
+					if (tk->core.cnt_end == -1)
 					{
-						rt = tk.core.typeidx;
+						rt = tk->core.typeidx;
 					}
-					else if (tk.core.cnt_end > 0)
+					else if (tk->core.cnt_end > 0)
 					{
-						if (--tokens[ tokenidx].core.cnt_end == 0)
+						if (--tk->core.cnt_end == 0)
 						{
-							tokens[ tokenidx].core.mask.reset();
+							tk->core.mask.reset();
 						}
-						if (tk.core.cnt_start <= 0)
+						if (tk->core.cnt_start <= 0)
 						{
-							rt = tk.core.typeidx;
+							rt = tk->core.typeidx;
 						}
 						else
 						{
-							--tokens[ tokenidx].core.cnt_start;
+							--tk->core.cnt_start;
 						}
 					}
 				}
 			}
-			if (tk.core.mask.rejects( context.type))
+			if (tk->core.mask.rejects( context.type))
 			{
 				//The token must not match anymore after encountering a reject item
-				tokens[ tokenidx].core.mask.reset();
+				tk->core.mask.reset();
 			}
 		}
 		return rt;
