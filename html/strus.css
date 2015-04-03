@@ -1,0 +1,45 @@
+body {
+	background:#fff
+	top center no-repeat;
+	color:#303030;
+	font:84% Arial,Helvetica,sans-serif; line-height:1.6em;
+}
+
+h1 {
+	color:#888;
+	font-size:1.2em;
+	line-height:1.1em;
+	margin:20px 0 0 0;
+}
+
+#search_form  {
+	display: table;
+}
+
+#search_elements {
+	display: table-row;
+}
+
+#search_logo {
+	display: table-cell;
+	align: center;
+	width: 3%;
+}
+
+#strus_logo {
+	display:block;
+}
+
+#search_input {
+	display: table-cell;
+	align: top;
+	width: 55%;
+}
+
+#search_button {
+	display: table-cell;
+	align: center;
+	width: 3%;
+}
+
+
