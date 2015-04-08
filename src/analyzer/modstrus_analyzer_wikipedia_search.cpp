@@ -27,9 +27,12 @@
 --------------------------------------------------------------------
 */
 #include "strus/tokenizerInterface.hpp"
+#include "strus/tokenizerInstanceInterface.hpp"
+#include "strus/tokenizerConstructorInterface.hpp"
 #include "strus/private/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
 #include "textwolf/charset_utf8.hpp"
+#include <vector>
 
 static textwolf::charset::UTF8::CharLengthTab g_charLengthTab;
 
@@ -87,11 +90,11 @@ static bool wordBoundaryDelimiter_european( char const* si, const char* se)
 	}
 }
 
-class SeparationTokenizer
-	:public strus::TokenizerInterface
+class SeparationTokenizerInstance
+	:public strus::TokenizerInstanceInterface
 {
 public:
-	SeparationTokenizer( TokenDelimiter delim)
+	SeparationTokenizerInstance( TokenDelimiter delim)
 		:m_delim(delim){}
 
 	const char* skipToToken( char const* si, const char* se) const
@@ -100,7 +103,7 @@ public:
 		return si;
 	}
 
-	virtual std::vector<strus::analyzer::Token> tokenize( Context*, const char* src, std::size_t srcsize) const
+	virtual std::vector<strus::analyzer::Token> tokenize( const char* src, std::size_t srcsize)
 	{
 		std::vector<strus::analyzer::Token> rt;
 		char const* si = skipToToken( src, src+srcsize);
@@ -121,9 +124,43 @@ private:
 	TokenDelimiter m_delim;
 };
 
-static const SeparationTokenizer wordSeparationTokenizer_european( wordBoundaryDelimiter_european);
+class SeparationTokenizer
+	:public strus::TokenizerInterface
+{
+public:
+	SeparationTokenizer( TokenDelimiter delim)
+		:m_delim(delim){}
 
-const strus::TokenizerInterface* getWordSeparationTokenizer_european()
+	strus::TokenizerInstanceInterface* createInstance() const
+	{
+		return new SeparationTokenizerInstance( m_delim);
+	}
+
+private:
+	TokenDelimiter m_delim;
+};
+
+class SeparationTokenizerConstructor
+	:public strus::TokenizerConstructorInterface
+{
+public:
+	SeparationTokenizerConstructor( TokenDelimiter delim)
+		:m_delim(delim){}
+
+	strus::TokenizerInterface* create( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
+	{
+		if (args.size()) throw std::runtime_error( "no arguments expected for word separation tokenizer");
+		return new SeparationTokenizer( m_delim);
+	}
+
+private:
+	TokenDelimiter m_delim;
+};
+
+
+static const SeparationTokenizerConstructor wordSeparationTokenizer_european( wordBoundaryDelimiter_european);
+
+const strus::TokenizerConstructorInterface* getWordSeparationTokenizer_european()
 {
 	return &wordSeparationTokenizer_european;
 }
