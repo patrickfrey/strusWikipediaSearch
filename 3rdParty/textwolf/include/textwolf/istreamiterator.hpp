@@ -38,6 +38,7 @@
 #ifndef __TEXTWOLF_ISTREAM_ITERATOR_HPP__
 #define __TEXTWOLF_ISTREAM_ITERATOR_HPP__
 #include "textwolf/exception.hpp"
+#include "textwolf/position.hpp"
 #include <iostream>
 #include <fstream>
 #include <iterator>
@@ -108,7 +109,7 @@ public:
 		return (int)m_readpos - o.m_readpos;
 	}
 
-	uint64_t position() const
+	PositionIndex position() const
 	{
 		return m_abspos + m_readpos;
 	}
@@ -151,7 +152,7 @@ private:
 	std::size_t m_bufsize;
 	std::size_t m_readsize;
 	std::size_t m_readpos;
-	uint64_t m_abspos;
+	PositionIndex m_abspos;
 };
 
 }//namespace

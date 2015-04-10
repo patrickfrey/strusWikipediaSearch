@@ -1104,6 +1104,12 @@ public:
 		return m_src.getIterator();
 	}
 
+	/// \brief Get the iterator pointing to the current source position
+	InputIterator& getIterator()
+	{
+		return m_src.getIterator();
+	}
+
 	/// \brief Scan the next XML element
 	/// \param [in] mask element types that should be printed to the output buffer (1 -> print, 0 -> mask out, just return the element as event)
 	/// \return the type of the XML element
