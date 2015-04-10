@@ -41,6 +41,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <limits>
 #include <stdint.h>
 
 #undef STRUS_LOWLEVEL_DEBUG
@@ -111,7 +112,8 @@ public:
 	{
 		if (!XmlPrinterBase::printValue( val.c_str(), val.size(), buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing: " + outputString(val.c_str(),val.c_str()+val.size()));
+			const char* err = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (err?err:"") + " when printing: " + outputString(val.c_str(),val.c_str()+val.size()));
 		}
 	}
 
@@ -119,7 +121,8 @@ public:
 	{
 		if (!XmlPrinterBase::printValue( si, se-si, buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing: " + outputString(si,se));
+			const char* err = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (err?err:"") + " when printing: " + outputString(si,se));
 		}
 	}
 
@@ -127,7 +130,8 @@ public:
 	{
 		if (!XmlPrinterBase::printValue( "", 0, buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when switching to content");
+			const char* err = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (err?err:"") + " when switching to content");
 		}
 	}
 
@@ -135,7 +139,8 @@ public:
 	{
 		if (!XmlPrinterBase::printCloseTag( buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing close tag");
+			const char* err = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (err?err:"") + " when printing close tag");
 		}
 	}
 };
@@ -1591,11 +1596,41 @@ static void processText( std::ostream& out, char const* si, std::size_t size)
 	out << processWikimediaText( si, size, xmlprinter);
 }
 
+static textwolf::PositionIndex parseRangeNumber( char const*& ci)
+{
+	if (*ci < '0' || *ci > '9') throw std::runtime_error("number expected in range definition (option -r)");
+	for (; *ci == '0'; ++ci){}
+	textwolf::PositionIndex rt = 0;
+	for (; *ci >= '0' && *ci <= '9'; ++ci)
+	{
+		rt = rt * 10 + (*ci -'0');
+	}
+	if ((*ci|32) == 'k')
+	{
+		rt *= 1000;
+		++ci;
+	}
+	else if ((*ci|32) == 'm')
+	{
+		rt *= 1000 * 1000;
+		++ci;
+	}
+	else if ((*ci|32) == 'g')
+	{
+		rt *= 1000 * 1000 * 1000;
+		++ci;
+	}
+	return rt;
+}
+
+
 int main( int argc, const char* argv[])
 {
 	int rt = 0;
 	try
 	{
+		textwolf::PositionIndex rangeStart = 0;
+		textwolf::PositionIndex rangeEnd = std::numeric_limits<textwolf::PositionIndex>::max();
 		int minarg = 1;
 		bool printusage = false;
 		while (argc > minarg)
@@ -1608,6 +1643,33 @@ int main( int argc, const char* argv[])
 			else if (0==std::strcmp(argv[minarg],"-h"))
 			{
 				printusage = true;
+				++minarg;
+			}
+			else if (0==std::memcmp(argv[minarg],"-r",2))
+			{
+				std::string rangestring;
+				if (argv[minarg][2])
+				{
+					rangestring.append( argv[minarg]+2);
+				}
+				else
+				{
+					++minarg;
+					if (argc == minarg)
+					{
+						throw std::runtime_error( "no argument given for option -r (range)");
+					}
+					rangestring.append( argv[minarg]);
+				}
+				char const* ci = rangestring.c_str();
+				rangeStart = parseRangeNumber( ci);
+				if (*ci == ':' || *ci == ',')
+				{
+					++ci;
+					rangeEnd = parseRangeNumber( ci);
+					if (rangeEnd < rangeStart) throw std::runtime_error( "start value of range bigger than end value (option -r)");
+					if (*ci) throw std::runtime_error( "unexpected character at end of range definition (option -r)");
+				}
 				++minarg;
 			}
 			else if (argv[minarg][0] == '-' && argv[minarg][1])
@@ -1632,12 +1694,19 @@ int main( int argc, const char* argv[])
 			std::cerr << "Usage: strusWikimediaToXml [options] <inputfile>" << std::endl;
 			std::cerr << "<inputfile>   :File to process or '-' for stdin" << std::endl;
 			std::cerr << "options:" << std::endl;
-			std::cerr << "    -h  :print this usage" << std::endl;
-			std::cerr << "    -s  :silent mode (suppress warnings)" << std::endl;
+			std::cerr << "    -h         :print this usage" << std::endl;
+			std::cerr << "    -s         :silent mode (suppress warnings)" << std::endl;
+			std::cerr << "    -r <range> :define range <from>,<to> of bytes" << std::endl;
+			std::cerr << "                to output, e.g. 1G,3G for the documents" << std::endl;
+			std::cerr << "                starting after the 1st gigabyte to the " << std::endl;
+			std::cerr << "                first document ending after the 3rd gigabyte." << std::endl;
 			return 0;
 		}
 		strus::InputStream input( argv[minarg]);
 		bool inText = false;
+		bool skipDoc = false;
+		bool terminated = false;
+		int taglevel = 0;
 
 		XmlScanner xs( input.stream());
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
@@ -1646,9 +1715,25 @@ int main( int argc, const char* argv[])
 		std::string buf;
 		xmlprinter.printHeader( 0, 0, buf);
 		std::cout << buf;
-		for (; itr!=end; itr++)
+		for (; itr!=end && !terminated; ++itr)
 		{
-			switch (itr->type())
+			if (skipDoc)
+			{
+				if (itr->type() == XmlScanner::OpenTag)
+				{
+					++taglevel;
+				}
+				else if (itr->type() == XmlScanner::CloseTag
+					|| itr->type() == XmlScanner::CloseTagIm)
+				{
+					--taglevel;
+					if (taglevel == 1)
+					{
+						skipDoc = false;
+					}
+				}
+			}
+			else switch (itr->type())
 			{
 				case XmlScanner::None: break;
 				case XmlScanner::ErrorOccurred: throw std::runtime_error( itr->content());
@@ -1679,7 +1764,25 @@ int main( int argc, const char* argv[])
 				}
 				case XmlScanner::OpenTag: 
 				{
+					++taglevel;
 					buf.clear();
+					if (taglevel == 2 && itr->size() == 4 && 0==std::memcmp( itr->content(), "page", itr->size()))
+					{
+						textwolf::PositionIndex pos = xs.getIterator().position();
+						if (pos < rangeStart)
+						{
+							skipDoc = true;
+							break;
+						}
+						else if (pos > rangeEnd)
+						{
+							xmlprinter.printCloseTag( buf);
+							std::cout << buf;
+							buf.clear();
+							terminated = true;
+							break;
+						}
+					}
 					xmlprinter.printOpenTag( std::string(itr->content(), itr->size()), buf);
 					std::cout << buf;
 					buf.clear();
@@ -1692,6 +1795,7 @@ int main( int argc, const char* argv[])
 				case XmlScanner::CloseTagIm:
 				case XmlScanner::CloseTag:
 				{
+					--taglevel;
 					inText = false;
 					buf.clear();
 					xmlprinter.printCloseTag( buf);
