@@ -33,6 +33,7 @@
 #include "strus/analyzerModule.hpp"
 #include "textwolf/charset_utf8.hpp"
 #include <vector>
+#include <cstring>
 
 static textwolf::charset::UTF8::CharLengthTab g_charLengthTab;
 
@@ -62,8 +63,9 @@ static inline unsigned int utf8decode( char const* si, const char* se)
 }
 
 typedef bool (*TokenDelimiter)( char const* si, const char* se);
+typedef bool (*TokenFilter)( char const* si, const char* se);
 
-static bool wordBoundaryDelimiter_european( char const* si, const char* se)
+static bool wordBoundaryDelimiter_european_inv( char const* si, const char* se)
 {
 	if ((unsigned char)*si <= 32)
 	{
@@ -80,6 +82,10 @@ static bool wordBoundaryDelimiter_european( char const* si, const char* se)
 	{
 		return false;
 	}
+	else if (*si == '&' || *si == '=')
+	{
+		return false;
+	}
 	else if ((*si|32) >= 'a' && (*si|32) <= 'z')
 	{
 		return false;
@@ -90,12 +96,78 @@ static bool wordBoundaryDelimiter_european( char const* si, const char* se)
 	}
 }
 
+static bool wordBoundaryDelimiter_european_fwd( char const* si, const char* se)
+{
+	static const char punct[] = ";.:?!)(";
+	if (wordBoundaryDelimiter_european_inv( si, se))
+	{
+		if (std::strchr( punct, *si) == 0) return false;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+static bool wordFilter_inv( char const* si, const char* se)
+{
+	bool onlyDigits = true;
+	bool hasDigits = false;
+	bool startsWithAlpha = false;
+	for (; si != se; ++si)
+	{
+		if ((*si|32) >= 'a' && (*si|32) >= 'z')
+		{
+			startsWithAlpha = true;
+		}
+		break;
+	}
+	const char* start = si;
+	for (; si != se; ++si)
+	{
+		if (*si == '&' || *si == '=') return false;
+		if (*si >= '0' && *si <= '9')
+		{
+			hasDigits = true;
+		}
+		else
+		{
+			if (*si == 's' && si+1 == se)
+			{}
+			else if (0==std::memcmp(start,"3rd",3) && si+2 == se)
+			{}
+			else if (0==std::memcmp(si,"th",3) && si+2 == se)
+			{}
+			else
+			{
+				onlyDigits = false;
+			}
+		}
+	}
+	if (hasDigits)
+	{
+		if (!onlyDigits) return false;
+		if (startsWithAlpha)
+		{
+			return (si - start <= 2);
+		}
+		return (*start != '0' && (si - start <= 3 || *start == '1' || *start == '2'));
+	}
+	return true;
+}
+
+static bool wordFilter_fwd( char const*, const char*)
+{
+	return true;
+}
+
 class SeparationTokenizerInstance
 	:public strus::TokenizerInstanceInterface
 {
 public:
-	SeparationTokenizerInstance( TokenDelimiter delim)
-		:m_delim(delim){}
+	SeparationTokenizerInstance( TokenDelimiter delim_, TokenFilter filter_)
+		:m_delim(delim_),m_filter(filter_){}
 
 	const char* skipToToken( char const* si, const char* se) const
 	{
@@ -116,58 +188,70 @@ public:
 			{
 				si = skipChar( si);
 			}
-			rt.push_back( strus::analyzer::Token( start-src, start-src, si-start));
+			if (m_filter( start, si))
+			{
+				rt.push_back( strus::analyzer::Token( start-src, start-src, si-start));
+			}
 		}
 		return rt;
 	}
 private:
 	TokenDelimiter m_delim;
+	TokenFilter m_filter;
 };
 
 class SeparationTokenizer
 	:public strus::TokenizerInterface
 {
 public:
-	SeparationTokenizer( TokenDelimiter delim)
-		:m_delim(delim){}
+	SeparationTokenizer( TokenDelimiter delim_, TokenFilter filter_)
+		:m_delim(delim_),m_filter(filter_){}
 
 	strus::TokenizerInstanceInterface* createInstance() const
 	{
-		return new SeparationTokenizerInstance( m_delim);
+		return new SeparationTokenizerInstance( m_delim, m_filter);
 	}
 
 private:
 	TokenDelimiter m_delim;
+	TokenFilter m_filter;
 };
 
 class SeparationTokenizerConstructor
 	:public strus::TokenizerConstructorInterface
 {
 public:
-	SeparationTokenizerConstructor( TokenDelimiter delim)
-		:m_delim(delim){}
+	SeparationTokenizerConstructor( TokenDelimiter delim_, TokenFilter filter_)
+		:m_delim(delim_),m_filter(filter_){}
 
 	strus::TokenizerInterface* create( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
 	{
 		if (args.size()) throw std::runtime_error( "no arguments expected for word separation tokenizer");
-		return new SeparationTokenizer( m_delim);
+		return new SeparationTokenizer( m_delim, m_filter);
 	}
 
 private:
 	TokenDelimiter m_delim;
+	TokenFilter m_filter;
 };
 
 
-static const SeparationTokenizerConstructor wordSeparationTokenizer_european( wordBoundaryDelimiter_european);
+static const SeparationTokenizerConstructor wordSeparationTokenizer_european_inv( wordBoundaryDelimiter_european_inv, wordFilter_inv);
+static const SeparationTokenizerConstructor wordSeparationTokenizer_european_fwd( wordBoundaryDelimiter_european_fwd, wordFilter_fwd);
 
-const strus::TokenizerConstructorInterface* getWordSeparationTokenizer_european()
+const strus::TokenizerConstructorInterface* getWordSeparationTokenizer_european_inv()
 {
-	return &wordSeparationTokenizer_european;
+	return &wordSeparationTokenizer_european_inv;
+}
+const strus::TokenizerConstructorInterface* getWordSeparationTokenizer_european_fwd()
+{
+	return &wordSeparationTokenizer_european_fwd;
 }
 
 static const strus::TokenizerConstructor tokenizers[] =
 {
-	{"content_europe", getWordSeparationTokenizer_european},
+	{"content_europe_inv", getWordSeparationTokenizer_european_inv},
+	{"content_europe_fwd", getWordSeparationTokenizer_european_fwd},
 	{0,0}
 };
 

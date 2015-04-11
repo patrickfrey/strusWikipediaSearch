@@ -13,25 +13,25 @@
 	para = empty content /mediawiki/page/revision/h1;
 	para = empty content /mediawiki/page/revision/h2;
 
-	tist = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/title();
+	tist = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
 
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/title();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/link[@type='page']();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/h1();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/h2();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/h3();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/h4();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/h5();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc  content_europe /mediawiki/page/revision/text/h6();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h1();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h2();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h3();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h4();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h5();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h6();
 
 [ForwardIndex]
 	linkid = orig content /mediawiki/page/revision/text//link[@type='page']@id	{position=succ};
 	catgid = orig content /mediawiki/page/revision/text//link[@type='category']@id	{position=pred};
 
 	orig = orig split /mediawiki/page/title();
-	orig = orig split /mediawiki/page/revision/text();
-	orig = orig split /mediawiki/page/revision/text/link();
+	orig = orig content_europe_fwd /mediawiki/page/revision/text();
+	orig = orig content_europe_fwd /mediawiki/page/revision/text/link();
 	orig = orig split /mediawiki/page/revision/text/h1();
 	orig = orig split /mediawiki/page/revision/text/h2();
 	orig = orig split /mediawiki/page/revision/text/h3();
