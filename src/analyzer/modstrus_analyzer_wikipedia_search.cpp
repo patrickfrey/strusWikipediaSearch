@@ -73,9 +73,11 @@ static bool wordBoundaryDelimiter_european_inv( char const* si, const char* se)
 	}
 	else if ((unsigned char)*si >= 128)
 	{
+		// See https://vazor.com/unicode/index.html
 		unsigned int chr = utf8decode( si, se);
 		if (chr == 133) return true;
-		if (chr >= 0x180) return true;
+		if (chr >= 0x1E00 && chr <= 0x1EFF) return false;
+		if (chr >= 0x250) return true;
 		return false;
 	}
 	else if (*si >= '0' && *si <= '9')
@@ -84,6 +86,10 @@ static bool wordBoundaryDelimiter_european_inv( char const* si, const char* se)
 	}
 	else if (*si == '&' || *si == '=')
 	{
+		if (si+5 < se && 0==std::memcmp( si, "&nbsp;", 6))
+		{
+			return true;
+		}
 		return false;
 	}
 	else if ((*si|32) >= 'a' && (*si|32) <= 'z')
@@ -101,7 +107,7 @@ static bool wordBoundaryDelimiter_european_fwd( char const* si, const char* se)
 	static const char punct[] = ";.:?!)(";
 	if (wordBoundaryDelimiter_european_inv( si, se))
 	{
-		if (std::strchr( punct, *si) == 0) return false;
+		if (0!=std::strchr( punct, *si)) return false;
 		return true;
 	}
 	else
@@ -110,49 +116,88 @@ static bool wordBoundaryDelimiter_european_fwd( char const* si, const char* se)
 	}
 }
 
-static bool wordFilter_inv( char const* si, const char* se)
+static bool wordFilter_inv( const char* src, const char* end)
 {
-	bool onlyDigits = true;
-	bool hasDigits = false;
-	bool startsWithAlpha = false;
-	for (; si != se; ++si)
+	unsigned int headDigits = 0;
+	unsigned int midAlpha = 0;
+	unsigned int tailDigits = 0;
+	char const* si = src;
+	char const* se = end;
+
+	for (;si != se; ++si)
 	{
-		if ((*si|32) >= 'a' && (*si|32) >= 'z')
-		{
-			startsWithAlpha = true;
-		}
-		break;
-	}
-	const char* start = si;
-	for (; si != se; ++si)
-	{
-		if (*si == '&' || *si == '=') return false;
 		if (*si >= '0' && *si <= '9')
 		{
-			hasDigits = true;
+			++headDigits;
 		}
 		else
 		{
-			if (*si == 's' && si+1 == se)
-			{}
-			else if (0==std::memcmp(start,"3rd",3) && si+2 == se)
-			{}
-			else if (0==std::memcmp(si,"th",3) && si+2 == se)
-			{}
-			else
-			{
-				onlyDigits = false;
-			}
+			break;
 		}
 	}
-	if (hasDigits)
+	while (si != se)
 	{
-		if (!onlyDigits) return false;
-		if (startsWithAlpha)
+		if ((unsigned char)*si >= 128)
 		{
-			return (si - start <= 2);
+			unsigned int chr = utf8decode( si, se);
+			if (chr >= 0x1E00 && chr <= 0x1EFF)
+			{
+			}
+			else if (chr >= 0x22A)
+			{
+				return false;
+			}
+			++midAlpha;
+			++si;
 		}
-		return (*start != '0' && (si - start <= 3 || *start == '1' || *start == '2'));
+		if (((*si|32) >= 'a' && (*si|32) <= 'z') || *si == '_')
+		{
+			++midAlpha;
+			++si;
+		}
+		else
+		{
+			break;
+		}
+	}
+	const char* digitsStart = si;
+	for (; si != se; ++si)
+	{
+		if (*si >= '0' && *si <= '9')
+		{
+			++tailDigits;
+			
+		}
+		else
+		{
+			break;
+		}
+	}
+	if (si != se)
+	{
+		if (headDigits == 0 && tailDigits != 0)
+		{
+			if (*si == '.' && si+1 == se) return true;
+		}
+		return false;
+	}
+	if (headDigits != 0 && midAlpha != 0 && tailDigits == 0)
+	{
+		if (se-si==1 && 0==std::memcmp(si,"s",1))
+		{
+			if (headDigits > 4) return false;
+			return (headDigits <= 3 || *digitsStart == '1' || *digitsStart == '2');
+		}
+		return (headDigits <= 2 && midAlpha <= 3);
+	}
+	if (headDigits != 0 && midAlpha == 0)
+	{
+		if (headDigits > 4) return false;
+		return (headDigits <= 3 || *digitsStart == '1' || *digitsStart == '2');
+	}
+	if (headDigits && midAlpha && tailDigits)
+	{
+		return false;
 	}
 	return true;
 }

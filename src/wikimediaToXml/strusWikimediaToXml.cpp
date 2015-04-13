@@ -738,17 +738,9 @@ static void printStack( std::ostream& out, const std::vector<State>& stack)
 	}
 }
 #endif
-//[+]static std::string getStack( const std::vector<State>& stack)
-//[+]{
-//[+]	std::ostringstream out;
-//[+]	out << "@@";
-//[+]	printStack( out, stack);
-//[+]	out << "@@";
-//[+]	return out.str();
-//[+]}
 
 
-static void processDataRowCol( const char* tag, std::string& res, const std::string& data, XmlPrinter& xmlprinter /*[-], const std::string& addDbg*/)
+static void processDataRowCol( const char* tag, std::string& res, const std::string& data, XmlPrinter& xmlprinter)
 {
 	Lexer lexer( data.c_str(), data.size());
 	std::string id = makeAttributeName( lexer.tryParseIdentifier('='));
@@ -764,7 +756,6 @@ static void processDataRowCol( const char* tag, std::string& res, const std::str
 		{
 			xmlprinter.printOpenTag( id, res);
 			xmlprinter.printValue( rest, res);
-			//[-]xmlprinter.printValue( addDbg, res);
 			xmlprinter.printCloseTag( res);
 		}
 	}
@@ -783,7 +774,6 @@ static void processDataRowCol( const char* tag, std::string& res, const std::str
 				{
 					xmlprinter.printOpenTag( tag+1, res);
 					xmlprinter.printValue( data, res);
-					//[-]xmlprinter.printValue( addDbg, res);
 					xmlprinter.printCloseTag( res);
 				}
 			}
@@ -791,7 +781,6 @@ static void processDataRowCol( const char* tag, std::string& res, const std::str
 			{
 				xmlprinter.printOpenTag( tag, res);
 				xmlprinter.printValue( data, res);
-				//[-]xmlprinter.printValue( addDbg, res);
 				xmlprinter.printCloseTag( res);
 			}
 		}
@@ -799,7 +788,6 @@ static void processDataRowCol( const char* tag, std::string& res, const std::str
 		{
 			xmlprinter.printValue( "", res);
 			xmlprinter.printValue( data, res);
-			//[-]xmlprinter.printValue( addDbg, res);
 		}
 	}
 }
@@ -829,10 +817,10 @@ static void processOpenLink( std::string& res, const std::string& tagnam, Lexer&
 		}
 		databuf.append( lexem.value);
 	}
-	processDataRowCol( "@id", res, databuf, xmlprinter /*[-],""*/);
+	processDataRowCol( "@id", res, databuf, xmlprinter);
 	if (lexem.id == Lexer::LexemCloseLink)
 	{
-		processDataRowCol( "", res, databuf, xmlprinter /*[-],""*/);
+		processDataRowCol( "", res, databuf, xmlprinter);
 	}
 	else if (lexem.id == Lexer::LexemColDelim)
 	{
@@ -918,7 +906,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						done = true;
@@ -926,14 +913,12 @@ AGAIN:
 					case Lexer::LexemText:
 						xmlprinter.printValue( "", rt);
 						xmlprinter.printValue( lexem.value, rt);
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						break;
 					case Lexer::LexemRedirect:
 						if (stack.back().id == StateListItem)
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printOpenTag( "redirect", rt);
@@ -948,7 +933,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printOpenTag( listitemTagName[lexem.id-Lexer::LexemListItem1], rt);
@@ -960,7 +944,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printValue( "\n", rt);
@@ -975,13 +958,11 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printOpenTag( headingTagName[lexem.id-Lexer::LexemHeading1], rt);
 						xmlprinter.printValue( lexem.value, rt);
 						xmlprinter.printCloseTag( rt);
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						break;
 					case Lexer::LexemOpenCitation:
 						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
@@ -992,7 +973,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printValue( "\n", rt);
@@ -1033,7 +1013,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printValue( "\n", rt);
@@ -1051,7 +1030,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
@@ -1072,7 +1050,7 @@ AGAIN:
 				if (lexem.id != Lexer::LexemEndOfLine
 					&& lexem.id != Lexer::LexemText && !databuf.empty())
 				{
-					processDataRowCol( "", rt, databuf, xmlprinter /*[-],getStack( stack)*/);
+					processDataRowCol( "", rt, databuf, xmlprinter);
 					databuf.clear();
 				}
 				switch (lexem.id)
@@ -1098,12 +1076,10 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printOpenTag( listitemTagName[lexem.id-Lexer::LexemListItem1], rt);
 						xmlprinter.printValue( "", rt);
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						stack.push_back( StateListItem);
 						break;
 					case Lexer::LexemHeading1:
@@ -1115,7 +1091,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenCitation:
 						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
@@ -1124,7 +1099,6 @@ AGAIN:
 					case Lexer::LexemCloseCitation:
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						break;
 					case Lexer::LexemOpenWWWLink:
 						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
@@ -1162,7 +1136,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenTable:
 						xmlprinter.printOpenTag( "table", rt);
@@ -1173,7 +1146,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							break;
 						}
 						else
@@ -1181,7 +1153,6 @@ AGAIN:
 							OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 					case Lexer::LexemTableRowDelim:
@@ -1205,7 +1176,7 @@ AGAIN:
 				if (lexem.id != Lexer::LexemEndOfLine
 					&& lexem.id != Lexer::LexemText && !databuf.empty())
 				{
-					processDataRowCol( "", rt, databuf, xmlprinter /*[-],getStack( stack)*/);
+					processDataRowCol( "", rt, databuf, xmlprinter);
 					databuf.clear();
 				}
 				switch (lexem.id)
@@ -1236,7 +1207,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenCitation:
 						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
@@ -1245,7 +1215,6 @@ AGAIN:
 					case Lexer::LexemCloseCitation:
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenWWWLink:
 						processOpenWWWLink( rt, lexem.value, lexer, xmlprinter);
@@ -1262,7 +1231,6 @@ AGAIN:
 							OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						break;
@@ -1277,7 +1245,6 @@ AGAIN:
 							OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						break;
@@ -1288,7 +1255,6 @@ AGAIN:
 					case Lexer::LexemCloseLink:
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						break;
 					case Lexer::LexemOpenTable:
 						xmlprinter.printOpenTag( "table", rt);
@@ -1301,7 +1267,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemColDelim:
 						if (databuf.size())
@@ -1315,7 +1280,7 @@ AGAIN:
 				if (lexem.id != Lexer::LexemEndOfLine
 					&& lexem.id != Lexer::LexemText && !databuf.empty())
 				{
-					processDataRowCol( "", rt, databuf, xmlprinter /*[-],getStack( stack)*/);
+					processDataRowCol( "", rt, databuf, xmlprinter);
 					databuf.clear();
 				}
 				switch (lexem.id)
@@ -1346,7 +1311,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenCitation:
 						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
@@ -1356,24 +1320,20 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenWWWLink:
 						OUT_WARNING << "nested links, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenSquareBracket:
 						OUT_WARNING << "nested links, unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemCloseSquareBracket:
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						break;
 					case Lexer::LexemOpenLink:
 						processOpenLink( rt, lexem.value, lexer, lexem, xmlprinter);
@@ -1383,7 +1343,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenTable:
 						xmlprinter.printOpenTag( "table", rt);
@@ -1396,7 +1355,6 @@ AGAIN:
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 						break;
 					case Lexer::LexemColDelim:
@@ -1411,7 +1369,7 @@ AGAIN:
 				if (lexem.id != Lexer::LexemEndOfLine
 					&& lexem.id != Lexer::LexemText && !databuf.empty())
 				{
-					processDataRowCol( "i", rt, databuf, xmlprinter /*[-],getStack( stack)*/);
+					processDataRowCol( "i", rt, databuf, xmlprinter);
 					databuf.clear();
 				}
 				switch (lexem.id)
@@ -1420,7 +1378,6 @@ AGAIN:
 						leaveTableState( stack.back().substate.table, rt, xmlprinter);
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 
 						OUT_WARNING << "unexpected lexem " << Lexer::lexemIdName(lexem.id) << " in " << stateIdName(stack.back().id) << " at: " << lexer.currentSourceExtract() << std::endl;
 						done = true;
@@ -1442,7 +1399,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printOpenTag( listitemTagName[lexem.id-Lexer::LexemListItem1], rt);
@@ -1459,7 +1415,6 @@ AGAIN:
 						leaveTableState( stack.back().substate.table, rt, xmlprinter);
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						goto AGAIN;
 					case Lexer::LexemOpenCitation:
 						processOpenCitation( rt, lexem.value, lexer, xmlprinter);
@@ -1491,7 +1446,6 @@ AGAIN:
 						leaveTableState( stack.back().substate.table, rt, xmlprinter);
 						xmlprinter.printCloseTag( rt);
 						stack.pop_back();
-						//[-]xmlprinter.printValue( getStack( stack), rt);
 						break;
 					case Lexer::LexemTableRowDelim:
 						leaveTableState( stack.back().substate.table, rt, xmlprinter);
@@ -1499,12 +1453,10 @@ AGAIN:
 						{
 							case TableStateCol:
 								xmlprinter.printCloseTag( rt);
-								//[-]xmlprinter.printValue( getStack( stack), rt);
 								stack.back().substate.table = TableStateRow;
 								/*no break here!*/
 							case TableStateRow:
 								xmlprinter.printCloseTag( rt);
-								//[-]xmlprinter.printValue( getStack( stack), rt);
 								xmlprinter.printOpenTag( "tr", rt);
 								break;
 							case TableStateOpen:
@@ -1518,7 +1470,6 @@ AGAIN:
 						{
 							xmlprinter.printCloseTag( rt);
 							stack.pop_back();
-							//[-]xmlprinter.printValue( getStack( stack), rt);
 							goto AGAIN;
 						}
 						xmlprinter.printOpenTag( "title", rt);
@@ -1530,12 +1481,10 @@ AGAIN:
 						{
 							case TableStateCol:
 								xmlprinter.printCloseTag( rt);
-								//[-]xmlprinter.printValue( getStack( stack), rt);
 								xmlprinter.printOpenTag( "th", rt);
 								break;
 							case TableStateRow:
 								xmlprinter.printCloseTag( rt);
-								//[-]xmlprinter.printValue( getStack( stack), rt);
 								xmlprinter.printOpenTag( "tr", rt);
 								xmlprinter.printOpenTag( "th", rt);
 								stack.back().substate.table = TableStateCol;
@@ -1552,12 +1501,10 @@ AGAIN:
 						{
 							case TableStateCol:
 								xmlprinter.printCloseTag( rt);
-								//[-]xmlprinter.printValue( getStack( stack), rt);
 								xmlprinter.printOpenTag( "td", rt);
 								break;
 							case TableStateRow:
 								xmlprinter.printCloseTag( rt);
-								//[-]xmlprinter.printValue( getStack( stack), rt);
 								xmlprinter.printOpenTag( "tr", rt);
 								xmlprinter.printOpenTag( "td", rt);
 								stack.back().substate.table = TableStateCol;
@@ -1573,8 +1520,6 @@ AGAIN:
 				break;
 		}
 	}
-	//[-]xmlprinter.printValue( "", rt);
-	//[-]xmlprinter.printValue( getStack( stack), rt);
 	if (stack.size() > 1)
 	{
 		OUT_WARNING << "unexpected end of data, not all tags closed" << std::endl;
@@ -1583,7 +1528,6 @@ AGAIN:
 			leaveState( stack.back(), rt, xmlprinter);
 			stack.pop_back();
 			xmlprinter.printCloseTag( rt);
-			//[-]xmlprinter.printValue( getStack( stack), rt);
 		}
 	}
 	return rt;
