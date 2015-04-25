@@ -29,18 +29,23 @@
 #ifndef _STRUS_WIKIPEDIA_SEARCH_WEIGHTING_HPP_INCLUDED
 #define _STRUS_WIKIPEDIA_SEARCH_WEIGHTING_HPP_INCLUDED
 #include "strus/weightingFunctionInterface.hpp"
+#include "strus/weightingFunctionInstanceInterface.hpp"
 #include "strus/weightingClosureInterface.hpp"
 #include "strus/metaDataReaderInterface.hpp"
 #include "strus/storageClientInterface.hpp"
 #include "strus/index.hpp"
 #include "strus/postingIteratorInterface.hpp"
 #include <vector>
+#include <string>
+#include <stdexcept>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <stdlib.h>
+#include <strings.h>
 
 namespace strus
 {
-
-/// \brief Forward declaration
-class WeightingFunction;
 
 /// \note The weighting function introduced here was inspired by [1] http://research.microsoft.com/pubs/144542/ppm.pdf
 ///	I am using the reverse function (PPM-R) introduced there incremented with a document measure
@@ -90,6 +95,85 @@ private:
 	int m_metadata_docweight;
 };
 
+
+/// \class WeightingFunctionInstance
+/// \brief Weighting function instance 
+class WeightingFunctionInstance
+	:public WeightingFunctionInstanceInterface
+{
+public:
+	explicit WeightingFunctionInstance()
+		:m_a(0.5),m_b(0.75),m_k1(1.5),m_avgdoclen(1000){}
+
+	virtual ~WeightingFunctionInstance(){}
+
+	static float getFloatValue( const std::string& val)
+	{
+		std::string::const_iterator vi = val.begin(), ve = val.end();
+		if (vi != ve && *vi == '-') ++vi;
+		for (; vi != ve && (*vi >= '0' && *vi <= '9'); ++vi){}
+		if (vi != ve && *vi == '.') ++vi;
+		for (; vi != ve && (*vi >= '0' && *vi <= '9'); ++vi){}
+		if (vi != ve) throw std::runtime_error( "floating point argument expected");
+		return (float)atof(val.c_str());
+	}
+	static bool caseInsensitiveEquals( const std::string& aa, const std::string& bb)
+	{
+		return (strcasecmp(aa.c_str(), bb.c_str()) == 0);
+	}
+
+	virtual void addStringParameter( const std::string& name, const std::string& value)
+	{
+		addNumericParameter( name, getFloatValue( value));
+	}
+
+	virtual void addNumericParameter( const std::string& name, const ArithmeticVariant& value)
+	{
+		if (caseInsensitiveEquals( name, "k1"))
+		{
+			m_k1 = (float)value;
+		}
+		else if (caseInsensitiveEquals( name, "a"))
+		{
+			m_a = (float)value;
+		}
+		else if (caseInsensitiveEquals( name, "b"))
+		{
+			m_b = (float)value;
+		}
+		else if (caseInsensitiveEquals( name, "avgdoclen"))
+		{
+			m_avgdoclen = (unsigned int)value;
+		}
+		else
+		{
+			throw std::runtime_error( "unknown weighting function parameter name");
+		}
+	}
+
+	virtual WeightingClosureInterface* createClosure(
+			const StorageClientInterface* storage_,
+			PostingIteratorInterface* itr,
+			MetaDataReaderInterface* metadata) const
+	{
+		return new WeightingClosure( storage_, itr, metadata, m_a, m_b, m_k1, m_avgdoclen);
+	}
+
+	virtual std::string tostring() const
+	{
+		std::ostringstream rt;
+		rt << std::setw(2) << std::setprecision(5)
+			<< "a=" << m_a << "b=" << m_a << ", k1=" << m_k1 << ", avgdoclen=" << m_avgdoclen;
+		return rt.str();
+	}
+
+private:
+	float m_a;
+	float m_b;
+	float m_k1;
+	unsigned int m_avgdoclen;
+};
+
 /// \class WeightingFunction
 /// \brief Weighting function
 class WeightingFunction
@@ -100,24 +184,9 @@ public:
 
 	virtual ~WeightingFunction(){}
 
-	virtual const char** numericParameterNames() const
+	virtual WeightingFunctionInstanceInterface* createInstance() const
 	{
-		static const char* ar[] = {"k1","b","a","avgdoclen",0};
-		return ar;
-	}
-
-	virtual WeightingClosureInterface* createClosure(
-			const StorageClientInterface* storage_,
-			PostingIteratorInterface* itr,
-			MetaDataReaderInterface* metadata,
-			const std::vector<ArithmeticVariant>& parameters) const
-	{
-		float k1	= parameters[0].defined()?(float)parameters[0]:1.5;
-		float b		= parameters[1].defined()?(float)parameters[1]:0.75;
-		float a		= parameters[2].defined()?(float)parameters[2]:0.5;
-		float avgdoclen = parameters[3].defined()?(float)parameters[3]:1000;
-
-		return new WeightingClosure( storage_, itr, metadata, b, a, k1, avgdoclen);
+		return new WeightingFunctionInstance();
 	}
 
 	static WeightingFunctionInterface* create()

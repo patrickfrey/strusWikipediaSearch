@@ -1,0 +1,2 @@
+[default]
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word;
