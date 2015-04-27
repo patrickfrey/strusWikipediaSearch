@@ -26,9 +26,9 @@
 
 --------------------------------------------------------------------
 */
-#include "strus/tokenizerInterface.hpp"
-#include "strus/tokenizerInstanceInterface.hpp"
-#include "strus/tokenizerConstructorInterface.hpp"
+#include "strus/tokenizerFunctionInterface.hpp"
+#include "strus/tokenizerFunctionInstanceInterface.hpp"
+#include "strus/tokenizerExecutionContextInterface.hpp"
 #include "strus/private/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
 #include "textwolf/charset_utf8.hpp"
@@ -207,11 +207,11 @@ static bool wordFilter_fwd( char const*, const char*)
 	return true;
 }
 
-class SeparationTokenizerInstance
-	:public strus::TokenizerInstanceInterface
+class SeparationTokenizerExecutionContext
+	:public strus::TokenizerExecutionContextInterface
 {
 public:
-	SeparationTokenizerInstance( TokenDelimiter delim_, TokenFilter filter_)
+	SeparationTokenizerExecutionContext( TokenDelimiter delim_, TokenFilter filter_)
 		:m_delim(delim_),m_filter(filter_){}
 
 	const char* skipToToken( char const* si, const char* se) const
@@ -245,16 +245,16 @@ private:
 	TokenFilter m_filter;
 };
 
-class SeparationTokenizer
-	:public strus::TokenizerInterface
+class SeparationTokenizerFunctionInstance
+	:public strus::TokenizerFunctionInstanceInterface
 {
 public:
-	SeparationTokenizer( TokenDelimiter delim_, TokenFilter filter_)
-		:m_delim(delim_),m_filter(filter_){}
+	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter)
+		:m_delim(delim),m_filter(filter){}
 
-	strus::TokenizerInstanceInterface* createInstance() const
+	strus::TokenizerExecutionContextInterface* createExecutionContext() const
 	{
-		return new SeparationTokenizerInstance( m_delim, m_filter);
+		return new SeparationTokenizerExecutionContext( m_delim, m_filter);
 	}
 
 private:
@@ -262,17 +262,17 @@ private:
 	TokenFilter m_filter;
 };
 
-class SeparationTokenizerConstructor
-	:public strus::TokenizerConstructorInterface
+class SeparationTokenizerFunction
+	:public strus::TokenizerFunctionInterface
 {
 public:
-	SeparationTokenizerConstructor( TokenDelimiter delim_, TokenFilter filter_)
+	SeparationTokenizerFunction( TokenDelimiter delim_, TokenFilter filter_)
 		:m_delim(delim_),m_filter(filter_){}
 
-	strus::TokenizerInterface* create( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
+	virtual strus::TokenizerFunctionInstanceInterface* createInstance( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
 	{
 		if (args.size()) throw std::runtime_error( "no arguments expected for word separation tokenizer");
-		return new SeparationTokenizer( m_delim, m_filter);
+		return new SeparationTokenizerFunctionInstance( m_delim, m_filter);
 	}
 
 private:
@@ -281,14 +281,14 @@ private:
 };
 
 
-static const SeparationTokenizerConstructor wordSeparationTokenizer_european_inv( wordBoundaryDelimiter_european_inv, wordFilter_inv);
-static const SeparationTokenizerConstructor wordSeparationTokenizer_european_fwd( wordBoundaryDelimiter_european_fwd, wordFilter_fwd);
+static const SeparationTokenizerFunction wordSeparationTokenizer_european_inv( wordBoundaryDelimiter_european_inv, wordFilter_inv);
+static const SeparationTokenizerFunction wordSeparationTokenizer_european_fwd( wordBoundaryDelimiter_european_fwd, wordFilter_fwd);
 
-const strus::TokenizerConstructorInterface* getWordSeparationTokenizer_european_inv()
+const strus::TokenizerFunctionInterface* getWordSeparationTokenizer_european_inv()
 {
 	return &wordSeparationTokenizer_european_inv;
 }
-const strus::TokenizerConstructorInterface* getWordSeparationTokenizer_european_fwd()
+const strus::TokenizerFunctionInterface* getWordSeparationTokenizer_european_fwd()
 {
 	return &wordSeparationTokenizer_european_fwd;
 }

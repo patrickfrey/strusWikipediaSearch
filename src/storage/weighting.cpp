@@ -34,7 +34,7 @@
 
 using namespace strus;
 
-float WeightingClosure::calc_idf( float nofCollectionDocuments, float nofMatches)
+float WeightingExecutionContext::calc_idf( float nofCollectionDocuments, float nofMatches)
 {
 	if (nofCollectionDocuments > nofMatches * 2)
 	{
@@ -52,7 +52,7 @@ float WeightingClosure::calc_idf( float nofCollectionDocuments, float nofMatches
 	}
 }
 
-WeightingClosure::WeightingClosure(
+WeightingExecutionContext::WeightingExecutionContext(
 		const StorageClientInterface* storage,
 		PostingIteratorInterface* itr_,
 		MetaDataReaderInterface* metadata_,
@@ -84,7 +84,7 @@ WeightingClosure::WeightingClosure(
 }
 
 
-float WeightingClosure::call( const Index& docno)
+float WeightingExecutionContext::call( const Index& docno)
 {
 	if (m_itr->skipDoc( docno) != docno) return 0.0;
 	m_metadata->skipDoc( docno);

@@ -30,7 +30,7 @@
 #define _STRUS_WIKIPEDIA_SEARCH_WEIGHTING_HPP_INCLUDED
 #include "strus/weightingFunctionInterface.hpp"
 #include "strus/weightingFunctionInstanceInterface.hpp"
-#include "strus/weightingClosureInterface.hpp"
+#include "strus/weightingExecutionContextInterface.hpp"
 #include "strus/metaDataReaderInterface.hpp"
 #include "strus/storageClientInterface.hpp"
 #include "strus/index.hpp"
@@ -51,13 +51,13 @@ namespace strus
 ///	I am using the reverse function (PPM-R) introduced there incremented with a document measure
 ///	calculated a the logarithm of relative number of citations a document has.
 
-/// \class WeightingClosure
+/// \class WeightingExecutionContext
 /// \brief Weighting function context
-class WeightingClosure
-	:public WeightingClosureInterface
+class WeightingExecutionContext
+	:public WeightingExecutionContextInterface
 {
 public:
-	WeightingClosure(
+	WeightingExecutionContext(
 		const StorageClientInterface* storage,
 		PostingIteratorInterface* itr_,
 		MetaDataReaderInterface* metadata_,
@@ -151,12 +151,12 @@ public:
 		}
 	}
 
-	virtual WeightingClosureInterface* createClosure(
+	virtual WeightingExecutionContextInterface* createExecutionContext(
 			const StorageClientInterface* storage_,
 			PostingIteratorInterface* itr,
 			MetaDataReaderInterface* metadata) const
 	{
-		return new WeightingClosure( storage_, itr, metadata, m_a, m_b, m_k1, m_avgdoclen);
+		return new WeightingExecutionContext( storage_, itr, metadata, m_a, m_b, m_k1, m_avgdoclen);
 	}
 
 	virtual std::string tostring() const

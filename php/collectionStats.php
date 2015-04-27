@@ -6,8 +6,8 @@
 require "strus.php";
 
 try {
-	$context = new StrusContext();
-	$storage = $context->createStorageClient( "path=/home/patrick/Projects/github/strusWikipediaSearch/storage");
+	$context = new StrusContext( "localhost:7181" );
+	$storage = $context->createStorageClient( "" );
 
 	echo "Number of documents inserted: " . $storage->nofDocumentsInserted() . "!";
 }
