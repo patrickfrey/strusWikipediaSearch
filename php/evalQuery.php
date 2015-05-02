@@ -3,6 +3,7 @@
 <head>
 <title>Search Wikipedia with Strus</title>
 <link href="strus.css" rel="stylesheet" type="text/css">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
 
@@ -47,7 +48,6 @@ function evalQuery( $context, $queryString)
 	$terms = $analyzer->analyzePhrase( "text", $queryString);
 	foreach ($terms as &$term)
 	{
-		print( "PUSH TERM " . $term->type . " '" . $term->value . "'\n");
 		$query->pushTerm( $term->type, $term->value);
 		$query->defineFeature( "weighted");
 	}
@@ -59,9 +59,8 @@ function evalQuery( $context, $queryString)
 }
 
 try {
-	$_GET=parse_str(getenv('QUERY_STRING'));
-	# $querystring=$_GET['q'];
-	$queryString="agriculture";
+	parse_str( getenv('QUERY_STRING'), $_GET);
+	$queryString = $_GET['q'];
 
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );

@@ -14,7 +14,7 @@ try {
 	echo '</p>';
 }
 catch ( Exception $e) {
-	echo '<p><font color="red">Caught exception: ',  $e->getMessage()</font></p>, "\n";
+	echo '<p><font color="red">Caught exception: ' . "$e->getMessage()</font></p>";
 }
 ?>
 

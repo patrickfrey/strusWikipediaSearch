@@ -51,13 +51,12 @@ h1 {
 }
 
 #rank_docno {
-	display: table-cell;
-	align: center;
-	width: 3%;
+	display: none;
 }
 
 #rank_weight {
 	display: table-cell;
+	font-size:0.7em;
 	align: center;
 	width: 5%;
 }
@@ -69,15 +68,15 @@ h1 {
 }
 
 #rank_title {
-	color:#1888;
-	font-size:0.4em;
-	line-height:1.1em;
+	color:#3888;
+	font-size:1.2em;
+	line-height:1.3em;
+	margin:10px 0 0 0;
 }
 
 #rank_summary {
 	color:#888;
-	font-size:0.3em;
-	line-height:0.4em;
-	margin:20px 0 0 0;
+	font-size:1.1em;
+	line-height:1.2em;
 }
 
