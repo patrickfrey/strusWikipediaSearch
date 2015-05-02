@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title>Search Wikipedia with Strus</title>
+<link href="strus.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 
 <?php
@@ -16,7 +20,7 @@ function evalQuery( $context, $queryString)
 	$weightingBM25->defineParameter( "b", 2.1);
 	$weightingBM25->defineParameter( "avgdoclen", 10000);
 
-	$sumTitle = new Summarizer( "title");
+	$sumTitle = new Summarizer( "attribute");
 	$sumTitle->defineParameter( "name", "title");
 
 	$sumMatch = new Summarizer( "matchphrase");
@@ -30,21 +34,22 @@ function evalQuery( $context, $queryString)
 	$queryeval->addSummarizer( "TITLE", $sumTitle);
 	$queryeval->addSummarizer( "CONTENT", $sumMatch);
 
-	$query = new Query( $queryEval, $storage);
-	$analyzer->definePhraseType(
-			"text", "stem", Tokenizer( "word"), 
-			array(
-				Normalizer( "lc"),
-				Normalizer( "dictmap", "irregular_verbs_en.txt"),
-				Normalizer( "stem", "en"),
-				Normalizer( "convdia", "en"),
-				Normalizer( "lc")));
+	$queryeval->addSelectionFeature( "weighted");
+
+	$query = $queryeval->createQuery( $storage);
+	$analyzer->definePhraseType( "text", "stem", "word", 
+			["lc",
+			["dictmap", "irregular_verbs_en.txt"],
+			["stem", "en"],
+			["convdia", "en"],
+			"lc"]);
 
 	$terms = $analyzer->analyzePhrase( "text", $queryString);
 	foreach ($terms as &$term)
 	{
-		$query->pushTerm( $term->type(), $term->value());
-		$query->defineFeature( "stem");
+		print( "PUSH TERM " . $term->type . " '" . $term->value . "'\n");
+		$query->pushTerm( $term->type, $term->value);
+		$query->defineFeature( "weighted");
 	}
 
 	$query->setMaxNofRanks( 10);
@@ -56,41 +61,31 @@ function evalQuery( $context, $queryString)
 try {
 	$_GET=parse_str(getenv('QUERY_STRING'));
 	# $querystring=$_GET['q'];
-	$queryString="q=agriculture";
+	$queryString="agriculture";
 
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );
 
 	$results = evalQuery( $context, $queryString);
 
-	echo '<ol>';
+	echo '<div id="search_ranklist">';
 	foreach ($results as &$result)
 	{
-		$title = "";
 		$content = "";
-		foreach ($result->attributes() as &$attribute)
+		foreach ($result->CONTENT as &$sum)
 		{
-			if ($attribute->name() == "TITLE")
-			{
-				$title .= $attribute->value();
-			}
-			if ($attribute->name() == "CONTENT")
-			{
-				if ($content != "")
-				{
-					$content .= " // ";
-				}
-				$content .= $attribute->value();
-			}
+			$content .= "..." . $sum;
 		}
-		echo '<li>';
-		echo '<p>docno=' . $rank->docno()
-			. ', weight=' . $rank->weight()
-			. ', title=' . $title
-			. ', content=' . $content . '</p>' ."\n";
-		echo '<li>';
+		echo '<div id="search_rank">';
+			echo '<div id="rank_docno">' . "$result->docno</div>";
+			echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
+			echo '<div id="rank_content">';
+				echo '<div id="rank_title">' . "$result->TITLE</div>";
+				echo '<div id="rank_summary">' . "$content</div>";
+			echo '</div>';
+		echo '</div>';
 	}
-	echo '</ol>';
+	echo '</div>';
 }
 catch ( LogicException $e) {
 	echo '<p>';

@@ -42,4 +42,42 @@ h1 {
 	width: 3%;
 }
 
+#search_ranklist {
+	display: table;
+}
+
+#search_rank {
+	display: table-row;
+}
+
+#rank_docno {
+	display: table-cell;
+	align: center;
+	width: 3%;
+}
+
+#rank_weight {
+	display: table-cell;
+	align: center;
+	width: 5%;
+}
+
+#rank_content {
+	display: table-cell;
+	align: center;
+	width: 80%;
+}
+
+#rank_title {
+	color:#1888;
+	font-size:0.4em;
+	line-height:1.1em;
+}
+
+#rank_summary {
+	color:#888;
+	font-size:0.3em;
+	line-height:0.4em;
+	margin:20px 0 0 0;
+}
 
