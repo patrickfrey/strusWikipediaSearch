@@ -36,20 +36,18 @@ using namespace strus;
 
 float WeightingExecutionContext::calc_idf( float nofCollectionDocuments, float nofMatches)
 {
+	float idf = 0.0;
 	if (nofCollectionDocuments > nofMatches * 2)
 	{
-		return logf(
+		idf = logf(
 			(nofCollectionDocuments - nofMatches + 0.5)
 			/ (nofMatches + 0.5));
 	}
-	else if (nofCollectionDocuments > 100)
+	if (idf < 0.00001)
 	{
-		return 0.0;
+		idf = 0.00001;
 	}
-	else
-	{
-		return 0.01;
-	}
+	return idf;
 }
 
 WeightingExecutionContext::WeightingExecutionContext(
@@ -63,7 +61,6 @@ WeightingExecutionContext::WeightingExecutionContext(
 	:m_k1(k1_),m_b(b_),m_a(a_),m_avgDocLength(avgDocLength_)
 	,m_idf(0.0f),m_itr(itr_),m_metadata(metadata_)
 	,m_metadata_doclen(metadata_->elementHandle( Constants::metadata_doclen()))
-	,m_metadata_docweight(metadata_->elementHandle( "weight"))
 {
 	float nofCollectionDocuments = storage->globalNofDocumentsInserted();
 
@@ -90,7 +87,6 @@ float WeightingExecutionContext::call( const Index& docno)
 	m_metadata->skipDoc( docno);
 	float doclen = m_metadata->getValue( m_metadata_doclen);
 	float rel_doclen = (doclen+1) / m_avgDocLength;
-	float docweight = m_metadata->getValue( m_metadata_docweight);
 
 	if (m_subexpressions.empty())
 	{
@@ -99,7 +95,7 @@ float WeightingExecutionContext::call( const Index& docno)
 		float weight = m_idf
 				* (ff * (m_k1 + 1.0))
 				/ (ff + m_k1 * (1.0 - m_b + m_b * rel_doclen));
-		return weight * docweight;
+		return weight;
 	}
 	else
 	{
@@ -149,7 +145,7 @@ float WeightingExecutionContext::call( const Index& docno)
 				* (ff[sidx] * (m_k1 + 1.0))
 				/ (ff[sidx] + m_k1 * (1.0 - m_b + m_b * rel_doclen));
 		}
-		return weight * docweight;
+		return weight;
 	}
 }
 

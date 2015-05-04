@@ -92,7 +92,6 @@ private:
 	std::vector<SubExpressionData> m_subexpressions;
 	MetaDataReaderInterface* m_metadata;
 	int m_metadata_doclen;
-	int m_metadata_docweight;
 };
 
 
