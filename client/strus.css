@@ -75,8 +75,9 @@ h1 {
 }
 
 #rank_summary {
-	color:#888;
+	color:#668888;
 	font-size:1.1em;
 	line-height:1.2em;
+	width: 80%;
 }
 

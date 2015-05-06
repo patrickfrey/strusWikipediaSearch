@@ -6,6 +6,16 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<h1>Project Strus: A demo search engine for Wikipedia (english)</h1>
+<div id="search_form">
+<div id="search_logo">
+ <a target="_blank" href="http://project-strus.net">
+  <img style="display:block;" width="100%" height="100%" src="strus_logo.jpg" alt="strus logo">
+<!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
+-->
+ </a>
+</div>
+<form name="search" class method="GET" action="evalQuery.php">
 
 <?php
 require "strus.php";
@@ -26,8 +36,9 @@ function evalQuery( $context, $queryString)
 
 	$sumMatch = new Summarizer( "matchphrase");
 	$sumMatch->defineParameter( "type", "orig");
-	$sumMatch->defineParameter( "phraselen", 10);
-	$sumMatch->defineParameter( "sumlen", 30);
+	$sumMatch->defineParameter( "len", 90);
+	$sumMatch->defineParameter( "nof", 3);
+	$sumMatch->defineParameter( "structseek", 40);
 	$sumMatch->defineFeature( "struct", "sentence");
 	$sumMatch->defineFeature( "match", "weighted");
 
@@ -59,8 +70,30 @@ function evalQuery( $context, $queryString)
 }
 
 try {
-	parse_str( getenv('QUERY_STRING'), $_GET);
-	$queryString = $_GET['q'];
+	$queryString = "";
+	if (PHP_SAPI == 'cli')
+	{
+		# ... called from command line (CLI)
+		foreach ($argv as $arg)
+		{
+			if ($queryString != "")
+			{
+				$queryString .= ' ';
+			}
+			$queryString .= $arg;
+		}
+	}
+	else
+	{
+		# ... called from web server
+		parse_str( getenv('QUERY_STRING'), $_GET);
+		$queryString = $_GET['q'];
+	}
+
+	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\">";
+	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
+	echo '</form>';
+	echo '</div>';
 
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );
@@ -71,9 +104,16 @@ try {
 	foreach ($results as &$result)
 	{
 		$content = "";
-		foreach ($result->CONTENT as &$sum)
+		if (property_exists( $result, 'CONTENT'))
 		{
-			$content .= "..." . $sum;
+			foreach ($result->CONTENT as &$sum)
+			{
+				if ($content != '') 
+				{
+					$content .= " --- ";
+				}
+				$content .= $sum;
+			}
 		}
 		echo '<div id="search_rank">';
 			echo '<div id="rank_docno">' . "$result->docno</div>";
@@ -86,17 +126,10 @@ try {
 	}
 	echo '</div>';
 }
-catch ( LogicException $e) {
+catch( Exception $e ) {
 	echo '<p>';
 	echo '<font color="red">';
-	echo 'Caught exception: ',  $e->getMessage(), "\n";
-	echo '</font>';
-	echo '</p>';
-}
-catch ( Exception $e) {
-	echo '<p>';
-	echo '<font color="red">';
-	echo 'Caught exception: ',  $e->getMessage(), "\n";
+	echo 'Error: ',  $e->getMessage(), "\n";
 	echo '</font>';
 	echo '</p>';
 }
