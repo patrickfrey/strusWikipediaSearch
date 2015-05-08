@@ -1,0 +1,5 @@
+doclen UInt16
+pagerefs UInt32
+contribid UInt32
+titlen UInt8
+

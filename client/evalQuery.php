@@ -106,13 +106,20 @@ try {
 		$content = "";
 		if (property_exists( $result, 'CONTENT'))
 		{
-			foreach ($result->CONTENT as &$sum)
+			if (is_array( $result->CONTENT))
 			{
-				if ($content != '') 
+				foreach ($result->CONTENT as &$sum)
 				{
-					$content .= " --- ";
+					if ($content != '') 
+					{
+						$content .= " --- ";
+					}
+					$content .= $sum;
 				}
-				$content .= $sum;
+			}
+			else
+			{
+				$content = $result->CONTENT;
 			}
 		}
 		echo '<div id="search_rank">';
