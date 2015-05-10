@@ -78,22 +78,27 @@ sub fetchDocidLine
 
 sub fetchLinkLine
 {
-	my ($file) = @_;
-	my $ln = readline ($file);
-	while ($ln && $ln =~ m/^\s*$/)
+	my ($linkid,$cnt);
+	do
 	{
-		$ln = readline ($file);
+		my ($file) = @_;
+		my $ln = readline ($file);
+		while ($ln && $ln =~ m/^\s*$/)
+		{
+			$ln = readline ($file);
+		}
+		if ($ln)
+		{
+			($linkid,$cnt) = parseLinkLine( $ln);
+		}
+		else
+		{
+			return (undef,undef);
+		}
 	}
-	if ($ln)
-	{
-		return parseLinkLine( $ln);
-	}
-	else
-	{
-		return (undef,undef,0);
-	}
+	while (!$linkid);
+	return ($linkid,$cnt);
 }
-
 
 open my $docidfile, "<$ARGV[0]" or die "failed to open file $ARGV[0] for reading ($!)\n";
 open my $linkfile, "<$ARGV[1]" or die "failed to open file $ARGV[1] for reading ($!)\n";
