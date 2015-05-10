@@ -36,7 +36,7 @@ function evalQuery( $context, $queryString)
 	$weightingBM25_content = new WeightingFunction( "wps");
 	$weightingBM25_content->defineParameter( "k1", 0.75);
 	$weightingBM25_content->defineParameter( "b", 2.1);
-	$weightingBM25_content->defineParameter( "avgdoclen", 10000);
+	$weightingBM25_content->defineParameter( "avgdoclen", 500);
 
 	$sumTitle = new Summarizer( "attribute");
 	$sumTitle->defineParameter( "name", "title");

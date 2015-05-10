@@ -70,8 +70,6 @@ if ($#ARGV == 2)
 }
 $evalFormula =~ s/$var/\$$var/g;
 
-print "FORMULA $evalFormula\n";
-
 my ($id,$weight,$hasQuot) = fetchLine( $file);
 
 while ($id)

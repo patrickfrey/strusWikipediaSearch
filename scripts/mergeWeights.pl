@@ -7,6 +7,7 @@ use 5.014;
 if ($#ARGV <= 0)
 {
 	print STDERR "usage: mergeWeights.pl <file1> <file2>\n";
+	print STDERR "descr: Merges two files with lines <docid> <nofrefs>\n";
 	exit;
 }
 elsif ($#ARGV > 1)

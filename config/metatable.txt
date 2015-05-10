@@ -1,5 +1,5 @@
+doclen_tist UInt8
 doclen UInt16
-pagerefs UInt32
+pageweight Float32
 contribid UInt32
-titlen UInt8
 

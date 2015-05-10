@@ -1,7 +1,7 @@
 TERM sentence ".":punctuation;
 
 SELECT docfeat;
-EVAL 1.0 * wps( k1=0.75, b=2.1, avgdoclen=10000 ) [ docfeat ];
+EVAL 1.0 * wps( k1=0.75, b=2.1, avgdoclen=500 ) [ docfeat ];
 EVAL 0.1 * bm25( k1=0.75, b=2.1, avgdoclen=5, doclen=doclen_tist ) [ titlefeat ];
 
 SUMMARIZE title = attribute( name=title );
