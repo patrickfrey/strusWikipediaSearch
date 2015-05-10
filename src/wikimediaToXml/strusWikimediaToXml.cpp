@@ -400,12 +400,8 @@ std::string Lexer::tryParseIdentifier( char assignop)
 	}
 	if (ti < m_se && *ti == assignop)
 	{
-		while (rt.size() && isSpace( rt[rt.size()-1]))
-		{
-			rt.resize( rt.size()-1);
-		}
 		m_si = ++ti;
-		return rt;
+		return trim(rt);
 	}
 	else
 	{
@@ -489,6 +485,7 @@ Lexer::Lexem Lexer::next()
 			if (*m_si == '[')
 			{
 				++m_si;
+				if (m_si < m_se && *m_si == '#')++m_si;
 				std::string name = tryParseIdentifier( ':');
 				return Lexem( LexemOpenLink, name);
 			}

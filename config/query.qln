@@ -1,4 +1,4 @@
-[Feature weighted]
-  england war
+[Feature docfeat :stem]
+  within( eino, penttilä | 100000 )
 .
 

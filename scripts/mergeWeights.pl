@@ -16,9 +16,6 @@ elsif ($#ARGV > 1)
 	exit;
 }
 
-open my $file1, "<$ARGV[0]" or die "failed to open file $ARGV[0] for reading ($!)\n";
-open my $file2, "<$ARGV[1]" or die "failed to open file $ARGV[1] for reading ($!)\n";
-
 sub parseLine
 {
 	my ($ln) = @_;
@@ -64,6 +61,9 @@ sub fetchLine
 		return (undef,undef,0);
 	}
 }
+
+open my $file1, "<$ARGV[0]" or die "failed to open file $ARGV[0] for reading ($!)\n";
+open my $file2, "<$ARGV[1]" or die "failed to open file $ARGV[1] for reading ($!)\n";
 
 my ($id1,$weight1,$hasQuot1) = fetchLine( $file1);
 my ($id2,$weight2,$hasQuot2) = fetchLine( $file2);

@@ -7,5 +7,6 @@
 #
 
 strusInspect -s "path=storage.old" ttc tist > resources/metadata_tist_doclen.txt
+strusUpdateStorage -s "path=storage.old" -m doclen_tist resources/metadata_tist_doclen.txt
 
 

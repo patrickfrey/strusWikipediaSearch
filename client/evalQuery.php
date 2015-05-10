@@ -26,29 +26,6 @@ function evalQuery( $context, $queryString)
 	$analyzer = $context->createQueryAnalyzer();
 	$queryeval = $context->createQueryEval();
 
-	$weightingBM25 = new WeightingFunction( "BM25");
-	$weightingBM25->defineParameter( "k1", 0.75);
-	$weightingBM25->defineParameter( "b", 2.1);
-	$weightingBM25->defineParameter( "avgdoclen", 10000);
-
-	$sumTitle = new Summarizer( "attribute");
-	$sumTitle->defineParameter( "name", "title");
-
-	$sumMatch = new Summarizer( "matchphrase");
-	$sumMatch->defineParameter( "type", "orig");
-	$sumMatch->defineParameter( "len", 90);
-	$sumMatch->defineParameter( "nof", 3);
-	$sumMatch->defineParameter( "structseek", 40);
-	$sumMatch->defineFeature( "struct", "sentence");
-	$sumMatch->defineFeature( "match", "weighted");
-
-	$queryeval->addWeightingFunction( $weightingBM25, array( "weighted"));
-	$queryeval->addSummarizer( "TITLE", $sumTitle);
-	$queryeval->addSummarizer( "CONTENT", $sumMatch);
-
-	$queryeval->addSelectionFeature( "weighted");
-
-	$query = $queryeval->createQuery( $storage);
 	$analyzer->definePhraseType( "text", "stem", "word", 
 			["lc",
 			["dictmap", "irregular_verbs_en.txt"],
@@ -56,14 +33,43 @@ function evalQuery( $context, $queryString)
 			["convdia", "en"],
 			"lc"]);
 
+	$weightingBM25_content = new WeightingFunction( "wps");
+	$weightingBM25_content->defineParameter( "k1", 0.75);
+	$weightingBM25_content->defineParameter( "b", 2.1);
+	$weightingBM25_content->defineParameter( "avgdoclen", 10000);
+
+	$sumTitle = new Summarizer( "attribute");
+	$sumTitle->defineParameter( "name", "title");
+
+	$sumMatch = new Summarizer( "matchphrase");
+	$sumMatch->defineParameter( "type", "orig");
+	$sumMatch->defineParameter( "len", 80);
+	$sumMatch->defineParameter( "nof", 3);
+	$sumMatch->defineParameter( "structseek", 30);
+	$sumMatch->defineFeature( "struct", "sentence");
+	$sumMatch->defineFeature( "match", "sumfeat");
+
+	$queryeval->addWeightingFunction( $weightingBM25_content, array( "docfeat"), 1.0);
+	$queryeval->addSummarizer( "TITLE", $sumTitle);
+	$queryeval->addSummarizer( "CONTENT", $sumMatch);
+
+	$queryeval->addSelectionFeature( "docfeat");
+	$queryeval->addSelectionFeature( "titlefeat");
+
+	$query = $queryeval->createQuery( $storage);
+
 	$terms = $analyzer->analyzePhrase( "text", $queryString);
 	foreach ($terms as &$term)
 	{
-		$query->pushTerm( $term->type, $term->value);
-		$query->defineFeature( "weighted");
+		$query->pushTerm( "stem", $term->value);
+		$query->pushDuplicate( "stem", $term->value);
+		$query->defineFeature( "sumfeat");
 	}
+	$query->pushTerm( "start", "");
+	$query->pushExpression( "within", count($terms)+1, 100000);
+	$query->defineFeature( "docfeat");
 
-	$query->setMaxNofRanks( 10);
+	$query->setMaxNofRanks( 20);
 	$query->setMinRank( 0);
 
 	return $query->evaluate();
@@ -103,6 +109,8 @@ try {
 	echo '<div id="search_ranklist">';
 	foreach ($results as &$result)
 	{
+		$title = $result->TITLE;
+		$link = strtr ($title, array (' ' => '_'));
 		$content = "";
 		if (property_exists( $result, 'CONTENT'))
 		{
@@ -126,7 +134,7 @@ try {
 			echo '<div id="rank_docno">' . "$result->docno</div>";
 			echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
 			echo '<div id="rank_content">';
-				echo '<div id="rank_title">' . "$result->TITLE</div>";
+				echo '<div id="rank_title">' . "<a href=\"http://en.wikipedia.org/wiki/$link\">$title</a></div>";
 				echo '<div id="rank_summary">' . "$content</div>";
 			echo '</div>';
 		echo '</div>';
