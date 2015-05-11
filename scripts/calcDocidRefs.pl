@@ -46,9 +46,15 @@ sub parseLinkLine
 		my $cnt = $2;
 		return ($docid,$cnt);
 	}
+	elsif ($ln =~ m/^([\'\"].+)[ ]([0-9]*[\.]{0,1}[0-9]+)$/)
+	{
+		my $cnt = $2;
+		my $docid = normalizeLinkDocid(substr($1,1,-1));
+		return ($docid,$cnt);
+	}
 	else
 	{
-		die "failed to parse line '$ln'";
+		die "failed to parse link line '$ln'";
 	}
 }
 
