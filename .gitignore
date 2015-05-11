@@ -58,11 +58,11 @@ storage/MANIFEST-*
 storage/CURRENT
 
 # Generated files for building the collection metadata for weighting
-resources/metadata_tist_doclen.txt
-resources/linkid_list.txt
-resources/docid_list.txt
-resources/docnoref_map.txt
-resources/pageweight_map.txt
+resources/metadata_tist_doclen*.txt
+resources/linkid_list*.txt
+resources/docid_list*.txt
+resources/docnoref_map*.txt
+resources/pageweight_map*.txt
 
 # Test storage
 storage.old
