@@ -10,13 +10,13 @@
 echo "Initializing the document title length attribute ..."
 # [1] Initialize the document title length attribute (for weighting schema BM15 on title):
 # [1.1] create a map docno -> length of title (number of terms)
-strusInspect -s "path=/data/wikipedia/storage1" ttc tist >  resources/metadata_tist_doclen.txt
-strusInspect -s "path=/data/wikipedia/storage2" ttc tist >> resources/metadata_tist_doclen.txt
+for ii in 1 2; do
+echo "... in storage $ii"
+strusInspect -s "path=/data/wikipedia/storage$ii" ttc tist >  resources/metadata_tist_doclen$ii.txt
 # [1.2] update the meta data table element doclen_tist with the title lengths calculated
-strusUpdateStorage -s "path=/data/wikipedia/storage1" -m doclen_tist resources/metadata_tist_doclen.txt
-strusUpdateStorage -s "path=/data/wikipedia/storage2" -m doclen_tist resources/metadata_tist_doclen.txt
+strusUpdateStorage -s "path=/data/wikipedia/storage$ii" -m doclen_tist resources/metadata_tist_doclen$ii.txt
 echo "... done"
-
+done
 
 echo "Initializing the link popularity weight in meta data ..."
 # [2] Initialize the link popularity weight in document meta data (element pageweight):
