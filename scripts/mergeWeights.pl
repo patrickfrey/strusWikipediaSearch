@@ -28,6 +28,10 @@ sub parseLine
 	{
 		return ($1,$2,0);
 	}
+	elsif ($ln =~ m/^([\'\"].+)[ ]([0-9]*[\.]{0,1}[0-9]+)$/)
+	{
+		return (substr($1,1,-1),$2,1);
+	}
 	else
 	{
 		die "failed to parse line '$ln'";
