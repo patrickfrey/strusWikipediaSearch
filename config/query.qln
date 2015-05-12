@@ -1,4 +1,6 @@
+[Feature selfeat :stem]
+  within( david, byrne | 100000 )
 [Feature docfeat :stem]
-  within( eino, penttilä | 100000 )
+  david byrne
 .
 

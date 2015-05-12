@@ -33,10 +33,16 @@ function evalQuery( $context, $queryString)
 			["convdia", "en"],
 			"lc"]);
 
-	$weightingBM25_content = new WeightingFunction( "wps");
-	$weightingBM25_content->defineParameter( "k1", 0.75);
-	$weightingBM25_content->defineParameter( "b", 2.1);
-	$weightingBM25_content->defineParameter( "avgdoclen", 500);
+	$weighting_content = new WeightingFunction( "BM25_dpfc");
+	$weighting_content->defineParameter( "k1", 0.75);
+	$weighting_content->defineParameter( "b", 2.1);
+	$weighting_content->defineParameter( "avgdoclen", 500);
+	$weighting_content->defineParameter( "doclen_title", "doclen_tist");
+	$weighting_content->defineParameter( "titleinc", 2.0);
+	$weighting_content->defineFeature( "match", "docfeat");
+	$weighting_content->defineFeature( "title", "title");
+	$weighting_popularity = new WeightingFunction( "metadata");
+	$weighting_popularity->defineParameter( "name", "pageweight");
 
 	$sumTitle = new Summarizer( "attribute");
 	$sumTitle->defineParameter( "name", "title");
@@ -47,14 +53,14 @@ function evalQuery( $context, $queryString)
 	$sumMatch->defineParameter( "nof", 3);
 	$sumMatch->defineParameter( "structseek", 30);
 	$sumMatch->defineFeature( "struct", "sentence");
-	$sumMatch->defineFeature( "match", "sumfeat");
+	$sumMatch->defineFeature( "match", "docfeat");
 
-	$queryeval->addWeightingFunction( $weightingBM25_content, array( "docfeat"), 1.0);
+	$queryeval->addWeightingFunction( $weighting_content, 1.0);
+	$queryeval->addWeightingFunction( $weighting_popularity, 1.0);
 	$queryeval->addSummarizer( "TITLE", $sumTitle);
 	$queryeval->addSummarizer( "CONTENT", $sumMatch);
 
-	$queryeval->addSelectionFeature( "docfeat");
-	$queryeval->addSelectionFeature( "titlefeat");
+	$queryeval->addSelectionFeature( "selfeat");
 
 	$query = $queryeval->createQuery( $storage);
 
@@ -63,11 +69,10 @@ function evalQuery( $context, $queryString)
 	{
 		$query->pushTerm( "stem", $term->value);
 		$query->pushDuplicate( "stem", $term->value);
-		$query->defineFeature( "sumfeat");
+		$query->defineFeature( "docfeat");
 	}
-	$query->pushTerm( "start", "");
-	$query->pushExpression( "within", count($terms)+1, 100000);
-	$query->defineFeature( "docfeat");
+	$query->pushExpression( "within", count($terms), 100000);
+	$query->defineFeature( "selfeat");
 
 	$query->setMaxNofRanks( 20);
 	$query->setMinRank( 0);
@@ -80,13 +85,18 @@ try {
 	if (PHP_SAPI == 'cli')
 	{
 		# ... called from command line (CLI)
+		$ai = 0;
 		foreach ($argv as $arg)
 		{
-			if ($queryString != "")
+			if ($ai > 0)
 			{
-				$queryString .= ' ';
+				if ($queryString != "")
+				{
+					$queryString .= ' ';
+				}
+				$queryString .= $arg;
 			}
-			$queryString .= $arg;
+			++$ai;
 		}
 	}
 	else

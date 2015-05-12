@@ -28,11 +28,9 @@
 */
 #include "strus/private/dll_tags.hpp"
 #include "strus/storageModule.hpp"
-#include "weighting.hpp"
 
 static const strus::WeightingFunctionConstructor weightingFunctions[] =
 {
-	{"wps", &strus::WeightingFunction::create},
 	{0,0}
 };
 
