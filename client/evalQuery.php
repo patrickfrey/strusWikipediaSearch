@@ -114,9 +114,12 @@ try {
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );
 
+	$time_start = microtime(true);
 	$results = evalQuery( $context, $queryString);
+	$time_end = microtime(true);
+	$query_answer_time = number_format( $time_end - $time_start, 3);
 
-	echo '<div id="search_ranklist">';
+	echo "<p>query answering time: $query_answer_time seconds</p>";
 	foreach ($results as &$result)
 	{
 		$title = $result->TITLE;
