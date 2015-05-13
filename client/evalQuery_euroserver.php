@@ -129,11 +129,12 @@ function mergeResults( $nofranks, $list1, $list2)
 	return $results;
 }
 
-class WorkerThreads extends Thread
+class QueryThread extends Thread
 {
 	private $rpcport;
 	private $context;
 	private $results;
+	private $errormsg;
 
 	public function __construct( $rpcport)
 	{
@@ -142,13 +143,25 @@ class WorkerThreads extends Thread
  
 	public function run()
 	{
-		this->$context = new StrusContext( "localhost:7181" );
-		this->$results = evalQuery( $context, $queryString);
+		try
+		{
+			this->$context = new StrusContext( "localhost:7181" );
+			this->$results = evalQuery( $context, $queryString);
+		}
+		catch( Exception $e)
+		{
+			this->$errormsg = $e->getMessage();
+		}
 	}
 
 	public function getResults()
 	{
 		return this->$results;
+	}
+
+	public function getLastError()
+	{
+		return this->$errormsg;
 	}
 }
 
@@ -185,7 +198,7 @@ try {
 	$time_start = microtime(true);
 	$qrythread = [];
 	foreach (range(0, 1) as $ii) {
-		$qrythread[ $ii] = new WorkerThreads($i);
+		$qrythread[ $ii] = new QueryThread($i);
 		$qrythread[ $ii]->start();
 	}
 	// Wait for all to finish:
@@ -193,7 +206,19 @@ try {
 		$qrythread[ $ii]->join();
 	}
 	// Merge query results:
-	$results = mergeResults( $nofRanks, qrythread[ 0]->getResults(), qrythread[ 1]->getResults());
+	$results1 = qrythread[ 0]->getResults();
+	if (is_null( $results1))
+	{
+		$results1 = array();
+		echo '<p><font color="red">Error in query to server 1: ',  qrythread[ 0]->getLastError(), '</font></p>';
+	}
+	$results2 = qrythread[ 1]->getResults();
+	if (is_null( $results2))
+	{
+		$results2 = array();
+		echo '<p><font color="red">Error in query to server 1: ',  qrythread[ 0]->getLastError(), '</font></p>';
+	}
+	$results = mergeResults( $nofRanks, $results1, $results2);
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
 
