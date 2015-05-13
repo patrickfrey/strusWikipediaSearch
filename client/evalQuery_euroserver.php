@@ -206,17 +206,17 @@ try {
 		$qrythread[ $ii]->join();
 	}
 	// Merge query results:
-	$results1 = qrythread[ 0]->getResults();
+	$results1 = $qrythread[ 0]->getResults();
 	if (is_null( $results1))
 	{
 		$results1 = array();
-		echo '<p><font color="red">Error in query to server 1: ',  qrythread[ 0]->getLastError(), '</font></p>';
+		echo '<p><font color="red">Error in query to server 1: ',  $qrythread[ 0]->getLastError(), '</font></p>';
 	}
-	$results2 = qrythread[ 1]->getResults();
+	$results2 = $qrythread[ 1]->getResults();
 	if (is_null( $results2))
 	{
 		$results2 = array();
-		echo '<p><font color="red">Error in query to server 1: ',  qrythread[ 0]->getLastError(), '</font></p>';
+		echo '<p><font color="red">Error in query to server 1: ',  $qrythread[ 0]->getLastError(), '</font></p>';
 	}
 	$results = mergeResults( $nofRanks, $results1, $results2);
 	$time_end = microtime(true);
