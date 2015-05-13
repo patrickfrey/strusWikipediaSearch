@@ -145,23 +145,23 @@ class QueryThread extends Thread
 	{
 		try
 		{
-			this->$context = new StrusContext( "localhost:7181" );
-			this->$results = evalQuery( $context, $queryString);
+			$this->context = new StrusContext( "localhost:7181" );
+			$this->results = evalQuery( $context, $queryString);
 		}
 		catch( Exception $e)
 		{
-			this->$errormsg = $e->getMessage();
+			$this->errormsg = $e->getMessage();
 		}
 	}
 
 	public function getResults()
 	{
-		return this->$results;
+		return $this->results;
 	}
 
 	public function getLastError()
 	{
-		return this->$errormsg;
+		return $this->errormsg;
 	}
 }
 
