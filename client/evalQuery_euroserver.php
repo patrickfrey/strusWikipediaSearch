@@ -131,21 +131,21 @@ function mergeResults( $nofranks, $list1, $list2)
 
 class QueryThread extends Thread
 {
-	private $rpcport;
+	private $service;
 	private $context;
 	private $results;
 	private $errormsg;
 
-	public function __construct( $rpcport)
+	public function __construct( $service)
 	{
-		$this->rpcport = $rpcport;
+		$this->service = $service;
 	}
  
 	public function run()
 	{
 		try
 		{
-			$this->context = new StrusContext( "localhost:7181" );
+			$this->context = new StrusContext( $service );
 			$this->results = evalQuery( $context, $queryString);
 		}
 		catch( Exception $e)
@@ -197,8 +197,9 @@ try {
 	// Initialize and start the threads and evaluate the query:
 	$time_start = microtime(true);
 	$qrythread = [];
+	$server = array( "localhost:7181", "localhost:7182");
 	foreach (range(0, 1) as $ii) {
-		$qrythread[ $ii] = new QueryThread($i);
+		$qrythread[ $ii] = new QueryThread( $server[ $ii]);
 		$qrythread[ $ii]->start();
 	}
 	// Wait for all to finish:
@@ -207,7 +208,6 @@ try {
 	}
 	// Merge query results:
 	$results1 = $qrythread[ 0]->getResults();
-	echo '<pre>' . var_dump( $results1) . '</pre>';
 	if (is_null( $results1))
 	{
 		$results1 = array();
