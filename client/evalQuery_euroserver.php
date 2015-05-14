@@ -134,10 +134,11 @@ class QueryThread extends Thread
 	private $step;
 	private $service;
 	private $context;
+	private $querystring;
 	private $results;
 	private $errormsg;
 
-	public function __construct( $service)
+	public function __construct( $service, $querystring)
 	{
 		$this->service = $service;
 		$this->step = 1;
@@ -150,7 +151,7 @@ class QueryThread extends Thread
 			$this->step = 2;
 			$this->context = new StrusContext( $this->service );
 			$this->step = 3;
-			$this->results = evalQuery( $this->context, $queryString);
+			$this->results = evalQuery( $this->context, $this->querystring);
 			$this->step = 4;
 		}
 		catch( Exception $e)
