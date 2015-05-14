@@ -151,7 +151,14 @@ class QueryThread extends Thread
 		try
 		{
 			$this->context = new StrusContext( $this->service );
-			$this->contexttype = gettype( $this->context);
+			if (is_a( $this->contexttype , 'StrusContext'))
+			{
+				$this->contexttype = 'StrusContext';
+			}
+			else
+			{
+				$this->contexttype = gettype( $this->context);
+			}
 			$this->results = evalQuery( $this->context, $this->querystring, $this->nofranks);
 		}
 		catch( Exception $e)
