@@ -239,8 +239,7 @@ try {
 	*/
 	$context1 = new StrusContext( $server[ 0] );
 	$results1 = evalQuery( $context1, $queryString, $nofRanks);
-	$context2 = new StrusContext( $server[ 1] );
-	$results2 = evalQuery( $context2, $queryString, $nofRanks);
+	$results2 = array();
 
 	$results = mergeResults( $nofRanks, $results1, $results2);
 	$time_end = microtime(true);
