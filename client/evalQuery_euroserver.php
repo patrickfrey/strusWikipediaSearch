@@ -118,7 +118,7 @@ function mergeResults( $nofranks, $list1, $list2)
 	{
 		while ($nn < $nofranks)
 		{
-			$results[] = $list1[ $ii[ 0]]);
+			$results[] = $list1[ $ii[ 0]];
 			$ii[ 0] += 1;
 			$nn += 1;
 		}
@@ -127,7 +127,7 @@ function mergeResults( $nofranks, $list1, $list2)
 	{
 		while ($nn < $nofranks)
 		{
-			$results[] = $list2[ $ii[ 1]]);
+			$results[] = $list2[ $ii[ 1]];
 			$ii[ 1] += 1;
 			$nn += 1;
 		}
