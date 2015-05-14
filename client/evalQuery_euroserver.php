@@ -205,7 +205,7 @@ try {
 	$qrythread = [];
 	$server = array( "localhost:7181", "localhost:7182");
 	foreach (range(0, 1) as $ii) {
-		$qrythread[ $ii] = new QueryThread( $server[ $ii]);
+		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString);
 		$qrythread[ $ii]->start();
 	}
 	// Wait for all to finish:
