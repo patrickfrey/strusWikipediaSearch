@@ -195,7 +195,10 @@ try {
 		# ... called from web server
 		parse_str( getenv('QUERY_STRING'), $_GET);
 		$queryString = $_GET['q'];
-		$nofRanks = intval( $_GET['n']);
+		if (array_key_exists( $_GET, 'n'))
+		{
+			$nofRanks = intval( $_GET['n']);
+		}
 	}
 
 	// Initialize and start the threads and evaluate the query:
