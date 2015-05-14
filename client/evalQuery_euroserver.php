@@ -91,22 +91,26 @@ function mergeResults( $nofranks, $list1, $list2)
 		while ($nn < $nofranks)
 		{
 			$w1 = $list1[ $ii[ 0]]->weight;
-			$w2 = $list1[ $ii[ 1]]->weight;
+			$w2 = $list2[ $ii[ 1]]->weight;
 			if ($w1 < $w2)
 			{
-				$nn = array_push( $results, $list1[ $ii[ 0]]);
+				$results[] = $list1[ $ii[ 0]];
 				$ii[ 0] += 1;
+				$nn += 1;
 			}
 			elseif ($w1 > $w2)
 			{
-				$nn = array_push( $results, $list2[ $ii[ 1]]);
+				$results[] = $list2[ $ii[ 1]];
 				$ii[ 1] += 1;
+				$nn += 1;
 			}
 			else
 			{
-				$nn = array_push( $results, $list1[ $ii[ 0]], $list2[ $ii[ 1]]);
+				$results[] = $list1[ $ii[ 0]];
+				$results[] = $list2[ $ii[ 1]];
 				$ii[ 0] += 1;
 				$ii[ 1] += 1;
+				$nn += 2;
 			}
 		}
 	}
@@ -114,16 +118,18 @@ function mergeResults( $nofranks, $list1, $list2)
 	{
 		while ($nn < $nofranks)
 		{
-			$nn = array_push( $results, $list1[ $ii[ 0]]);
+			$results[] = $list1[ $ii[ 0]]);
 			$ii[ 0] += 1;
+			$nn += 1;
 		}
 	}
 	elseif ($ii[1] < $ie[1])
 	{
 		while ($nn < $nofranks)
 		{
-			$nn = array_push( $results, $list2[ $ii[ 1]]);
+			$results[] = $list2[ $ii[ 1]]);
 			$ii[ 1] += 1;
+			$nn += 1;
 		}
 	}
 	return $results;
