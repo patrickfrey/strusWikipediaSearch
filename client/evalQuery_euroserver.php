@@ -141,6 +141,7 @@ class QueryThread extends Thread
 	public function __construct( $service, $querystring)
 	{
 		$this->service = $service;
+		$this->querystring = $querystring;
 		$this->step = 1;
 	}
  
