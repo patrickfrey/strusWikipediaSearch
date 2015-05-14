@@ -214,6 +214,7 @@ try {
 	$time_start = microtime(true);
 	$qrythread = [];
 	$server = array( "localhost:7181", "localhost:7182");
+	/*
 	foreach (range(0, 1) as $ii) {
 		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString, $nofRanks);
 		$qrythread[ $ii]->start();
@@ -235,6 +236,12 @@ try {
 		$results2 = array();
 		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
+	*/
+	$context1 = new StrusContext( $server[ 0] );
+	$results1 = evalQuery( $context1, $queryString, $nofRanks);
+	$context2 = new StrusContext( $server[ 1] );
+	$results2 = evalQuery( $context2, $queryString, $nofRanks);
+
 	$results = mergeResults( $nofRanks, $results1, $results2);
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
