@@ -171,6 +171,11 @@ class QueryThread extends Thread
 		return $this->results;
 	}
 
+	public function getLog()
+	{
+		return $this->logger;
+	}
+
 	public function getLastError()
 	{
 		return "ERR " . $this->step . " " . $this->errormsg;
@@ -223,14 +228,14 @@ try {
 	if (is_null( $results1))
 	{
 		$results1 = array();
-		echo '<pre>' . var_dump( $qrythread[ 0]->getLastError()) . '</pre>';
+		echo '<pre>' . var_dump( $qrythread[ 0]->getLog()) . '</pre>';
 		echo '<p><font color="red">Error in query to server 1: ',  $qrythread[ 0]->getLastError(), '</font></p>';
 	}
 	$results2 = $qrythread[ 1]->getResults();
 	if (is_null( $results2))
 	{
 		$results2 = array();
-		echo '<pre>' . var_dump( $qrythread[ 1]->getLastError()) . '</pre>';
+		echo '<pre>' . var_dump( $qrythread[ 1]->getLog()) . '</pre>';
 		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
 	$results = mergeResults( $nofRanks, $results1, $results2);
