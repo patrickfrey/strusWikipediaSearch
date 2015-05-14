@@ -131,38 +131,30 @@ function mergeResults( $nofranks, $list1, $list2)
 
 class QueryThread extends Thread
 {
-	private $step;
-	private $logger;
 	private $service;
 	private $context;
 	private $querystring;
+	private $nofranks;
 	private $results;
 	private $errormsg;
 
-	public function __construct( $service, $querystring)
+	public function __construct( $service, $querystring, $nofranks)
 	{
 		$this->service = $service;
 		$this->querystring = $querystring;
-		$this->step = 1;
-		$this->logger = "";
+		$this->nofranks = $nofranks;
 	}
  
 	public function run()
 	{
 		try
 		{
-			$this->step = 2;
-			$this->logger = $this->logger . "LOG " . var_dump( $this->service);
 			$this->context = new StrusContext( $this->service );
-			$this->step = 3;
-			$this->logger = $this->logger . "LOG " . var_dump( $this->context);
-			$this->results = evalQuery( $this->context, $this->querystring);
-			$this->logger = $this->logger . "LOG " . var_dump( $this->results);
-			$this->step = 4;
+			$this->results = evalQuery( $this->context, $this->querystring, $this->nofranks);
 		}
 		catch( Exception $e)
 		{
-			$this->errormsg = "BLA " . $e->getMessage();
+			$this->errormsg = $e->getMessage();
 		}
 	}
 
@@ -171,14 +163,9 @@ class QueryThread extends Thread
 		return $this->results;
 	}
 
-	public function getLog()
-	{
-		return $this->logger;
-	}
-
 	public function getLastError()
 	{
-		return "ERR " . $this->step . " " . $this->errormsg;
+		return $this->errormsg;
 	}
 }
 
@@ -216,7 +203,7 @@ try {
 	$qrythread = [];
 	$server = array( "localhost:7181", "localhost:7182");
 	foreach (range(0, 1) as $ii) {
-		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString);
+		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString, $nofRanks);
 		$qrythread[ $ii]->start();
 	}
 	// Wait for all to finish:
@@ -228,14 +215,12 @@ try {
 	if (is_null( $results1))
 	{
 		$results1 = array();
-		echo '<pre>' . var_dump( $qrythread[ 0]->getLog()) . '</pre>';
 		echo '<p><font color="red">Error in query to server 1: ',  $qrythread[ 0]->getLastError(), '</font></p>';
 	}
 	$results2 = $qrythread[ 1]->getResults();
 	if (is_null( $results2))
 	{
 		$results2 = array();
-		echo '<pre>' . var_dump( $qrythread[ 1]->getLog()) . '</pre>';
 		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
 	$results = mergeResults( $nofRanks, $results1, $results2);
