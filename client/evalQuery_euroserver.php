@@ -195,7 +195,7 @@ try {
 		# ... called from web server
 		parse_str( getenv('QUERY_STRING'), $_GET);
 		$queryString = $_GET['q'];
-		if (array_key_exists( $_GET, 'n'))
+		if (array_key_exists( 'n', $_GET))
 		{
 			$nofRanks = intval( $_GET['n']);
 		}
