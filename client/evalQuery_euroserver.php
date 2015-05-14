@@ -207,6 +207,7 @@ try {
 	}
 	// Merge query results:
 	$results1 = $qrythread[ 0]->getResults();
+	echo '<pre>' . var_dump( $results1) . '</pre>';
 	if (is_null( $results1))
 	{
 		$results1 = array();
@@ -216,7 +217,7 @@ try {
 	if (is_null( $results2))
 	{
 		$results2 = array();
-		echo '<p><font color="red">Error in query to server 1: ',  $qrythread[ 0]->getLastError(), '</font></p>';
+		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
 	$results = mergeResults( $nofRanks, $results1, $results2);
 	$time_end = microtime(true);
