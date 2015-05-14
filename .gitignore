@@ -63,6 +63,7 @@ resources/linkid_list*.txt
 resources/docid_list*.txt
 resources/docnoref_map*.txt
 resources/pageweight_map*.txt
+resources/storage_stats*.txt
 
 # Test storage
 storage.old
