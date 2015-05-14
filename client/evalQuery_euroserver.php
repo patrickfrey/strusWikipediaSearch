@@ -150,7 +150,7 @@ class QueryThread extends Thread
 		}
 		catch( Exception $e)
 		{
-			$this->errormsg = $e->getMessage();
+			$this->errormsg = 'BLA ' . $e->getMessage();
 		}
 	}
 
