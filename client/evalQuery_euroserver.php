@@ -131,6 +131,7 @@ function mergeResults( $nofranks, $list1, $list2)
 
 class QueryThread extends Thread
 {
+	private $step;
 	private $service;
 	private $context;
 	private $results;
@@ -139,14 +140,18 @@ class QueryThread extends Thread
 	public function __construct( $service)
 	{
 		$this->service = $service;
+		$this->step = 1;
 	}
  
 	public function run()
 	{
 		try
 		{
+			$this->step = 2;
 			$this->context = new StrusContext( $this->service );
+			$this->step = 3;
 			$this->results = evalQuery( $this->context, $queryString);
+			$this->step = 4;
 		}
 		catch( Exception $e)
 		{
@@ -161,7 +166,7 @@ class QueryThread extends Thread
 
 	public function getLastError()
 	{
-		return $this->errormsg;
+		return "ERR " . $this->step . " " . $this->errormsg;
 	}
 }
 
