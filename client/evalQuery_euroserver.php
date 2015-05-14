@@ -151,7 +151,7 @@ class QueryThread extends Thread
 		{
 			$this->step = 2;
 			$this->context = new StrusContext( $this->service );
-			$this->step = 3;
+			$this->step = var_dump( $this->context);
 			$this->results = evalQuery( $this->context, $this->querystring);
 			$this->step = 4;
 		}
