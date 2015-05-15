@@ -235,8 +235,6 @@ try {
 		$results2 = array();
 		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
-	echo '<p><font color="gree">Nof results 1: ',  count($results1), '</font></p>';
-	echo '<p><font color="gree">Nof results 2: ',  count($results2), '</font></p>';
 	/*
 	$context1 = new StrusContext( $server[ 0] );
 	$results1 = evalQuery( $context1, $queryString, $nofRanks);
@@ -244,6 +242,9 @@ try {
 	*/
 
 	$results = mergeResults( $nofRanks, $results1, $results2);
+	echo '<p><font color="gree">Nof results 1: ',  count($results1), '</font></p>';
+	echo '<p><font color="gree">Nof results 2: ',  count($results2), '</font></p>';
+	echo '<p><font color="gree">Nof results tot: ',  count($results), '</font></p>';
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
 
