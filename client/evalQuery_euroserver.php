@@ -141,7 +141,6 @@ class QueryThread extends Thread
 	private $context;
 	private $querystring;
 	private $nofranks;
-	private $contexttype;
 	private $results;
 	private $errormsg;
 
@@ -157,14 +156,6 @@ class QueryThread extends Thread
 		try
 		{
 			$this->context = new StrusContext( $this->service );
-			if (is_a( $this->contexttype , 'StrusContext'))
-			{
-				$this->contexttype = 'StrusContext';
-			}
-			else
-			{
-				$this->contexttype = gettype( $this->context);
-			}
 			$this->results = evalQuery( $this->context, $this->querystring, $this->nofranks);
 		}
 		catch( Exception $e)
@@ -180,7 +171,7 @@ class QueryThread extends Thread
 
 	public function getLastError()
 	{
-		return $this->contexttype . $this->errormsg;
+		return $this->errormsg;
 	}
 }
 
