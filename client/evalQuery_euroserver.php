@@ -155,8 +155,8 @@ class QueryThread extends Thread
 	{
 		try
 		{
-			$this->context = new StrusContext( $this->service );
-			$this->results = evalQuery( $this->context, $this->querystring, $this->nofranks);
+			$context = new StrusContext( $this->service);
+			$this->results = evalQuery( $context, $this->querystring, $this->nofranks);
 		}
 		catch( Exception $e)
 		{
