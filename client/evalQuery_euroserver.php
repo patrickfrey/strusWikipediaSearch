@@ -235,6 +235,8 @@ try {
 		$results2 = array();
 		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
+	echo '<p><font color="gree">Nof results 1: ',  count($results1), '</font></p>';
+	echo '<p><font color="gree">Nof results 2: ',  count($results2), '</font></p>';
 	/*
 	$context1 = new StrusContext( $server[ 0] );
 	$results1 = evalQuery( $context1, $queryString, $nofRanks);
@@ -252,7 +254,7 @@ try {
 	echo '</div>';
 	echo "<p>query answering time: $query_answer_time seconds</p>";
 
-	foreach ($results as &$result1)
+	foreach ($results as &$result)
 	{
 		$title = $result->TITLE;
 		$link = strtr ($title, array (' ' => '_'));
