@@ -212,14 +212,16 @@ try {
 	$qrythread = [];
 	$server = array( "localhost:7181", "localhost:7182");
 
-	foreach (range(0, 1) as $ii) {
+	foreach (range(0, 1) as $ii)
+	{
 		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString, $nofRanks);
-		$qrythread[ $ii]->run();
+		$qrythread[ $ii]->start();
 	}
 	// Wait for all to finish:
-//[+]	foreach (range(0, 1) as $ii) {
-//[+]		$qrythread[ $ii]->join();
-//[+]	}
+	foreach (range(0, 1) as $ii)
+	{
+		$qrythread[ $ii]->join();
+	}
 	// Merge query results:
 	$results1 = $qrythread[ 0]->getResults();
 	if (is_null( $results1))
