@@ -20,7 +20,7 @@
 <?php
 require "strus.php";
 
-function evalQuery( $context, $queryString, $nofRanks)
+function evalQuery( $context, $queryString, $nofRanks, $minRank)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -33,32 +33,17 @@ function evalQuery( $context, $queryString, $nofRanks)
 			["convdia", "en"],
 			"lc"]);
 
-	$weighting_content = new WeightingFunction( "BM25_dpfc");
-	$weighting_content->defineParameter( "k1", 0.75);
-	$weighting_content->defineParameter( "b", 2.1);
-	$weighting_content->defineParameter( "avgdoclen", 500);
-	$weighting_content->defineParameter( "doclen_title", "doclen_tist");
-	$weighting_content->defineParameter( "titleinc", 2.0);
-	$weighting_content->defineFeature( "match", "docfeat");
-	$weighting_content->defineFeature( "title", "title");
-	$weighting_popularity = new WeightingFunction( "metadata");
-	$weighting_popularity->defineParameter( "name", "pageweight");
+	$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
+			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+			"doclen_title" => "doclen_tist", "titleinc" => 2.0,
+			".match" => "docfeat", ".title" => "title" ]);
 
-	$sumTitle = new Summarizer( "attribute");
-	$sumTitle->defineParameter( "name", "title");
+	$queryeval->addWeightingFunction( 1.0, "metadata", [ "name" => "pageweight" ] );
 
-	$sumMatch = new Summarizer( "matchphrase");
-	$sumMatch->defineParameter( "type", "orig");
-	$sumMatch->defineParameter( "len", 80);
-	$sumMatch->defineParameter( "nof", 3);
-	$sumMatch->defineParameter( "structseek", 30);
-	$sumMatch->defineFeature( "struct", "sentence");
-	$sumMatch->defineFeature( "match", "docfeat");
-
-	$queryeval->addWeightingFunction( $weighting_content, 1.0);
-	$queryeval->addWeightingFunction( $weighting_popularity, 1.0);
-	$queryeval->addSummarizer( "TITLE", $sumTitle);
-	$queryeval->addSummarizer( "CONTENT", $sumMatch);
+	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
+	$queryeval->addSummarizer( "CONTENT", "matchphrase", [
+			"type" => "orig", "len" => 80, "nof" => 3, "structseek" => 30,
+			".struct" => "sentence", ".match" => "docfeat" ] );
 
 	$queryeval->addSelectionFeature( "selfeat");
 
@@ -75,7 +60,7 @@ function evalQuery( $context, $queryString, $nofRanks)
 	$query->defineFeature( "selfeat");
 
 	$query->setMaxNofRanks( $nofRanks);
-	$query->setMinRank( 0);
+	$query->setMinRank( $minRank);
 
 	return $query->evaluate();
 }
@@ -160,15 +145,17 @@ class QueryThread extends Thread
 	private $service;
 	private $context;
 	private $querystring;
+	private $minrank
 	private $nofranks;
 	private $results;
 	private $errormsg;
 
-	public function __construct( $service, $querystring, $nofranks)
+	public function __construct( $service, $querystring, $minrank, $nofranks)
 	{
 		$this->service = $service;
 		$this->querystring = $querystring;
 		$this->nofranks = $nofranks;
+		$this->minrank = $minrank;
 	}
  
 	public function run()
@@ -176,7 +163,7 @@ class QueryThread extends Thread
 		try
 		{
 			$context = new StrusContext( $this->service);
-			$this->results = evalQuery( $context, $this->querystring, $this->nofranks);
+			$this->results = evalQuery( $context, $this->querystring, $this->minrank, $this->nofranks);
 		}
 		catch( Exception $e)
 		{
@@ -199,6 +186,7 @@ try {
 	// Initialize query string:
 	$queryString = "";
 	$nofRanks = 20;
+	$minRank = 0;
 	if (PHP_SAPI == 'cli')
 	{
 		# ... called from command line (CLI)
@@ -225,6 +213,10 @@ try {
 		{
 			$nofRanks = intval( $_GET['n']);
 		}
+		if (array_key_exists( 'i', $_GET))
+		{
+			$minRank = intval( $_GET['i']);
+		}
 	}
 
 	// Initialize and start the threads and evaluate the query:
@@ -234,7 +226,7 @@ try {
 
 	foreach (range(0, 1) as $ii)
 	{
-		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString, $nofRanks);
+		$qrythread[ $ii] = new QueryThread( $server[ $ii], $queryString, $minRank, $nofRanks);
 		$qrythread[ $ii]->start();
 	}
 	// Wait for all to finish:
@@ -255,11 +247,6 @@ try {
 		$results2 = array();
 		echo '<p><font color="red">Error in query to server 2: ',  $qrythread[ 1]->getLastError(), '</font></p>';
 	}
-	/*
-	$context1 = new StrusContext( $server[ 0] );
-	$results1 = evalQuery( $context1, $queryString, $nofRanks);
-	$results2 = array();
-	*/
 
 	$results = mergeResults( $nofRanks, $results1, $results2);
 	$time_end = microtime(true);

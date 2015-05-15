@@ -20,7 +20,7 @@
 <?php
 require "strus.php";
 
-function evalQuery( $context, $queryString)
+function evalQuery( $context, $queryString, $minRank, $maxNofRanks)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -33,32 +33,17 @@ function evalQuery( $context, $queryString)
 			["convdia", "en"],
 			"lc"]);
 
-	$weighting_content = new WeightingFunction( "BM25_dpfc");
-	$weighting_content->defineParameter( "k1", 0.75);
-	$weighting_content->defineParameter( "b", 2.1);
-	$weighting_content->defineParameter( "avgdoclen", 500);
-	$weighting_content->defineParameter( "doclen_title", "doclen_tist");
-	$weighting_content->defineParameter( "titleinc", 2.0);
-	$weighting_content->defineFeature( "match", "docfeat");
-	$weighting_content->defineFeature( "title", "title");
-	$weighting_popularity = new WeightingFunction( "metadata");
-	$weighting_popularity->defineParameter( "name", "pageweight");
+	$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
+			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+			"doclen_title" => "doclen_tist", "titleinc" => 2.0,
+			".match" => "docfeat", ".title" => "title" ]);
 
-	$sumTitle = new Summarizer( "attribute");
-	$sumTitle->defineParameter( "name", "title");
+	$queryeval->addWeightingFunction( 1.0, "metadata", [ "name" => "pageweight" ] );
 
-	$sumMatch = new Summarizer( "matchphrase");
-	$sumMatch->defineParameter( "type", "orig");
-	$sumMatch->defineParameter( "len", 80);
-	$sumMatch->defineParameter( "nof", 3);
-	$sumMatch->defineParameter( "structseek", 30);
-	$sumMatch->defineFeature( "struct", "sentence");
-	$sumMatch->defineFeature( "match", "docfeat");
-
-	$queryeval->addWeightingFunction( $weighting_content, 1.0);
-	$queryeval->addWeightingFunction( $weighting_popularity, 1.0);
-	$queryeval->addSummarizer( "TITLE", $sumTitle);
-	$queryeval->addSummarizer( "CONTENT", $sumMatch);
+	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
+	$queryeval->addSummarizer( "CONTENT", "matchphrase", [
+			"type" => "orig", "len" => 80, "nof" => 3, "structseek" => 30,
+			".struct" => "sentence", ".match" => "docfeat" ] );
 
 	$queryeval->addSelectionFeature( "selfeat");
 
@@ -74,14 +59,16 @@ function evalQuery( $context, $queryString)
 	$query->pushExpression( "within", count($terms), 100000);
 	$query->defineFeature( "selfeat");
 
-	$query->setMaxNofRanks( 20);
-	$query->setMinRank( 0);
+	$query->setMaxNofRanks( $maxNofRanks);
+	$query->setMinRank( $minRank);
 
 	return $query->evaluate();
 }
 
 try {
 	$queryString = "";
+	$minRank = 0;
+	$nofRanks = 20;
 	if (PHP_SAPI == 'cli')
 	{
 		# ... called from command line (CLI)
@@ -104,6 +91,15 @@ try {
 		# ... called from web server
 		parse_str( getenv('QUERY_STRING'), $_GET);
 		$queryString = $_GET['q'];
+		if (array_key_exists( 'n', $_GET))
+		{
+			$nofRanks = intval( $_GET['n']);
+		}
+		if (array_key_exists( 'i', $_GET))
+		{
+			$minRank = intval( $_GET['i']);
+		}
+		$queryString = $_GET['q'];
 	}
 
 	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\">";
@@ -115,7 +111,7 @@ try {
 	$storage = $context->createStorageClient( "" );
 
 	$time_start = microtime(true);
-	$results = evalQuery( $context, $queryString);
+	$results = evalQuery( $context, $queryString, $minRank, $nofRanks);
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
 
