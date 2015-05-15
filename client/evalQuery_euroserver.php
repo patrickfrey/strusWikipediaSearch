@@ -262,9 +262,6 @@ try {
 	*/
 
 	$results = mergeResults( $nofRanks, $results1, $results2);
-	echo '<p><font color="gree">Nof results 1: ',  count($results1), '</font></p>';
-	echo '<p><font color="gree">Nof results 2: ',  count($results2), '</font></p>';
-	echo '<p><font color="gree">Nof results tot: ',  count($results), '</font></p>';
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
 
