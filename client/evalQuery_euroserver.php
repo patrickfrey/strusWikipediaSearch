@@ -96,12 +96,14 @@ function mergeResults( $nofranks, $list1, $list2)
 			{
 				$results[] = $list1[ $ii[ 0]];
 				$ii[ 0] += 1;
+				if ($ii[0] >= $ie[0]): break;
 				$nn += 1;
 			}
 			elseif ($w1 > $w2)
 			{
 				$results[] = $list2[ $ii[ 1]];
 				$ii[ 1] += 1;
+				if ($ii[1] >= $ie[1]): break;
 				$nn += 1;
 			}
 			else
@@ -110,6 +112,8 @@ function mergeResults( $nofranks, $list1, $list2)
 				$results[] = $list2[ $ii[ 1]];
 				$ii[ 0] += 1;
 				$ii[ 1] += 1;
+				if ($ii[0] >= $ie[0]): break;
+				if ($ii[1] >= $ie[1]): break;
 				$nn += 2;
 			}
 		}
@@ -120,6 +124,7 @@ function mergeResults( $nofranks, $list1, $list2)
 		{
 			$results[] = $list1[ $ii[ 0]];
 			$ii[ 0] += 1;
+			if ($ii[0] >= $ie[0]): break;
 			$nn += 1;
 		}
 	}
@@ -129,6 +134,7 @@ function mergeResults( $nofranks, $list1, $list2)
 		{
 			$results[] = $list2[ $ii[ 1]];
 			$ii[ 1] += 1;
+			if ($ii[1] >= $ie[1]): break;
 			$nn += 1;
 		}
 	}
