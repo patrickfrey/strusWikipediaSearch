@@ -252,7 +252,7 @@ try {
 	echo '</div>';
 	echo "<p>query answering time: $query_answer_time seconds</p>";
 
-	foreach ($results as &$result)
+	foreach ($results as &$result1)
 	{
 		$title = $result->TITLE;
 		$link = strtr ($title, array (' ' => '_'));
