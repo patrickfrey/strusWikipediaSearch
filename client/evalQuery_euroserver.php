@@ -145,7 +145,7 @@ class QueryThread extends Thread
 	private $service;
 	private $context;
 	private $querystring;
-	private $minrank
+	private $minrank;
 	private $nofranks;
 	private $results;
 	private $errormsg;
