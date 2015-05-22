@@ -1,5 +1,6 @@
 [Attribute]
 	title = orig content /mediawiki/page/title();
+	docid = orig content /mediawiki/page/title();
 	date = orig content /mediawiki/page/revision/timestamp();
 	contributor = orig content /mediawiki/page/revision/contributor/username();
 

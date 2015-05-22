@@ -8,33 +8,20 @@
 #
 
 echo "Initializing the document title length attribute ..."
-# [1] Initialize the document title length attribute (for weighting schema BM15 on title):
-# [1.1] create a map docno -> length of title (number of terms)
-for ii in 1 2; do
-echo "... in storage $ii"
-strusInspect -s "path=/data/wikipedia/storage$ii" ttc tist >  resources/metadata_tist_doclen$ii.txt
-# [1.2] update the meta data table element doclen_tist with the title lengths calculated
-strusUpdateStorage -s "path=/data/wikipedia/storage$ii" -m doclen_tist resources/metadata_tist_doclen$ii.txt
+strusInspect -s "path=/data/wikipedia/storage" ttc tist >  resources/metadata_tist_doclen.txt
+strusUpdateStorage -s "path=/data/wikipedia/storage" -m doclen_tist resources/metadata_tist_doclen.txt
 echo "... done"
-done
 
 echo "Initializing the link popularity weight in meta data ..."
-# [2] Initialize the link popularity weight in document meta data (element pageweight):
-# [2.1] get the link reference statistics
-strusInspect -s "path=/data/wikipedia/storage1" fwstats linkid > resources/linkid_list1.txt
-strusInspect -s "path=/data/wikipedia/storage2" fwstats linkid > resources/linkid_list2.txt
-scripts/mergeWeights.pl resources/linkid_list1.txt resources/linkid_list2.txt > resources/linkid_list.txt
-for ii in 1 2; do
-echo "... in storage $ii"
-# [2.2] get the docno -> docid map
-strusInspect -s "path=/data/wikipedia/storage$ii" attribute title > resources/docid_list$ii.txt
-# [2.3] calculate a map docno -> number of references to this page
-scripts/calcDocidRefs.pl resources/docid_list$ii.txt resources/linkid_list.txt > resources/docnoref_map$ii.txt
-# [2.4] calculate a map docno -> link popularity weight
-scripts/calcWeights.pl resources/docnoref_map$ii.txt 'tanh(x/50)' > resources/pageweight_map$ii.txt
-# [2.5] update the meta data table element pageweight with the link popularity weight
-strusUpdateStorage -s "path=/data/wikipedia/storage$ii" -m pageweight resources/pageweight_map$ii.txt
-done
+strusInspect -s "path=/data/wikipedia/storage" fwstats linkid > resources/linkid_list.txt
+echo "... get the document id's"
+strusInspect -s "path=/data/wikipedia/storage" attribute title > resources/docid_list.txt
+echo "... calculate a map docno -> number of references to this page"
+scripts/calcDocidRefs.pl resources/docid_list.txt resources/linkid_list.txt > resources/docnoref_map.txt
+echo "... calculate a map docno -> link popularity weight"
+scripts/calcWeights.pl resources/docnoref_map.txt 'tanh(x/50)' > resources/pageweight_map.txt
+echo "... update the meta data table element pageweight with the link popularity weight"
+strusUpdateStorage -s "path=/data/wikipedia/storage" -m pageweight resources/pageweight_map.txt
 echo "... done"
 
 
