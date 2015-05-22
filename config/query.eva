@@ -1,4 +1,4 @@
-TERM sentence ".":punctuation;
+TERM sentence "":sent;
 
 SELECT selfeat;
 EVAL bm25_dpfc( k1=0.75, b=2.1, avgdoclen=500, .match=docfeat, .title=title, doclen_title=doclen_tist);
