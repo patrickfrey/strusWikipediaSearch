@@ -43,6 +43,7 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks)
 	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", [
 			"type" => "orig", "len" => 80, "nof" => 3, "structseek" => 30,
+			"mark" => '<b>$</b>',
 			".struct" => "sentence", ".match" => "docfeat" ] );
 
 	$queryeval->addSelectionFeature( "selfeat");
