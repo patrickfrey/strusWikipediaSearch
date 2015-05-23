@@ -1,11 +1,11 @@
 TERM sentence "":sent;
 
 SELECT selfeat;
-EVAL bm25_dpfc( k1=0.75, b=2.1, avgdoclen=500, .match=docfeat, .title=title, doclen_title=doclen_tist);
-EVAL metadata( name=pageweight);
+EVAL 1 * bm25_dpfc( k1=0.75, b=2.1, avgdoclen=1000, .match=docfeat, .title=title, doclen_title=doclen_tist, .struct=sentence);
+EVAL 2 * metadata( name=pageweight);
 
 SUMMARIZE title = attribute( name=title );
 SUMMARIZE date = attribute( name=date );
 SUMMARIZE contributor = attribute( name=contributor );
-SUMMARIZE summary = matchphrase( type=orig, nof=4, len=60, structseek=30, .struct=sentence, .match=docfeat );
+SUMMARIZE summary = matchphrase( type=orig, nof=4, len=60, structseek=40, .struct=sentence, .match=docfeat );
 

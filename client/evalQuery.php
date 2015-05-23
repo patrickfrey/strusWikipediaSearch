@@ -33,16 +33,18 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks)
 			["convdia", "en"],
 			"lc"]);
 
+	$queryeval->addTerm( "sentence", "sent", "");
 	$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
 			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-			"doclen_title" => "doclen_tist", "titleinc" => 2.0,
-			".match" => "docfeat", ".title" => "title" ]);
+			"doclen_title" => "doclen_tist", "titleinc" => 3.0,
+			"seqinc" => 3.0, "strinc" => 0.5,
+			".struct" => "sentence", ".match" => "docfeat" ]);
 
 	$queryeval->addWeightingFunction( 1.0, "metadata", [ "name" => "pageweight" ] );
 
 	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", [
-			"type" => "orig", "len" => 80, "nof" => 3, "structseek" => 30,
+			"type" => "orig", "len" => 40, "nof" => 3, "structseek" => 30,
 			"mark" => '<b>$</b>',
 			".struct" => "sentence", ".match" => "docfeat" ] );
 
@@ -104,6 +106,7 @@ try {
 	}
 
 	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\">";
+	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\">";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
