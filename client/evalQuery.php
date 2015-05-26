@@ -36,11 +36,11 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks)
 	$queryeval->addTerm( "sentence", "sent", "");
 	$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
 			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-			"doclen_title" => "doclen_tist", "titleinc" => 3.0,
+			"doclen_title" => "doclen_tist", "titleinc" => 4.0,
 			"seqinc" => 3.0, "strinc" => 0.5,
 			".struct" => "sentence", ".match" => "docfeat" ]);
 
-	$queryeval->addWeightingFunction( 1.0, "metadata", [ "name" => "pageweight" ] );
+	$queryeval->addWeightingFunction( 2.0, "metadata", [ "name" => "pageweight" ] );
 
 	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", [
