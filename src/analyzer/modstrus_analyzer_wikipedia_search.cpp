@@ -124,6 +124,7 @@ static bool wordFilter_inv( const char* src, const char* end)
 	char const* si = src;
 	char const* se = end;
 
+	const char* digitsStart = si;
 	for (;si != se; ++si)
 	{
 		if (*si >= '0' && *si <= '9')
@@ -160,7 +161,6 @@ static bool wordFilter_inv( const char* src, const char* end)
 			break;
 		}
 	}
-	const char* digitsStart = si;
 	for (; si != se; ++si)
 	{
 		if (*si >= '0' && *si <= '9')
