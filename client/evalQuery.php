@@ -118,8 +118,20 @@ try {
 		$queryString = $_GET['q'];
 	}
 
+	$BM25_checked = "";
+	$BM25_dpfc_checked = "";
+	if (!$scheme || $scheme == 'BM25_dpfc')
+	{
+		$BM25_dpfc_checked = "checked";
+	}
+	elseif ($scheme == 'BM25')
+	{
+		$BM25_checked = "checked";
+	}
 	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\">";
 	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\">";
+	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25_dpfc\" $BM25_dpfc_checked>BM25_dpfc";
+	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25\" $BM25_checked>BM25";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
