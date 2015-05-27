@@ -50,7 +50,6 @@ This demo tries to address a public that is aware of what is happening here.</li
 <ol>
 <li>BM25: classical BM25 with k1=0.75, b=2.1, avgdoclen=500</li>
 <li>BM25_dpfc: BM25 (k1=0.75, b=2.1, avgdoclen=500) with accumulated increments added to the ff for discrete proximity conditions fulfilled.</li>
-</ol>
 <ol>
 <li>Increment of 4.0 for appearance in title</li>
 <li>Increment of 3.0 if followed by the subsequent term in the query</li>
@@ -60,8 +59,13 @@ This demo tries to address a public that is aware of what is happening here.</li
 <li>Increment of 0.125 if another term in the query appears in the sentence after next</li>
 </ol>
 </li>
+</ol>
 </p>
 <p>In both schemas there is an extra weight added for popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references)</p>
+<p>In strus <b>what</b> you weight and <b>how</b> you weight is distinguished. The what you
+weight is an expression that matches if <b>all query terms match</b> somewhere in the 
+document. Documents were one feature of the query does not match, are not appearing 
+in the result.</p>
 <h4>Problems/Bugs:</h4>
 <ol>
 <li>Due to a bug in a filter that was implemented to remove features not supposed to be searched like for example "abababab12121212ababa", years with 4 digits were accidentally removed from the index.
