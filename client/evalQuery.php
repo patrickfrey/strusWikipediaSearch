@@ -20,7 +20,7 @@
 <?php
 require "strus.php";
 
-function evalQuery( $context, $queryString, $minRank, $maxNofRanks)
+function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -34,12 +34,20 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks)
 			"lc"]);
 
 	$queryeval->addTerm( "sentence", "sent", "");
-	$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
-			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-			"doclen_title" => "doclen_tist", "titleinc" => 4.0,
-			"seqinc" => 3.0, "strinc" => 0.5,
-			".struct" => "sentence", ".match" => "docfeat" ]);
-
+	if (!$scheme || $scheme == 'BM25_dpfc')
+	{
+		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
+				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+				"doclen_title" => "doclen_tist", "titleinc" => 4.0,
+				"seqinc" => 3.0, "strinc" => 0.5, "relevant" => 0.25,
+				".struct" => "sentence", ".match" => "docfeat" ]);
+	}
+	elseif ($scheme == 'BM25')
+	{
+		$queryeval->addWeightingFunction( 1.0, "BM25", [
+				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+				".match" => "docfeat" ]);
+	}
 	$queryeval->addWeightingFunction( 2.0, "metadata", [ "name" => "pageweight" ] );
 
 	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
@@ -72,6 +80,7 @@ try {
 	$queryString = "";
 	$minRank = 0;
 	$nofRanks = 20;
+	$scheme = NULL;
 	if (PHP_SAPI == 'cli')
 	{
 		# ... called from command line (CLI)
@@ -102,6 +111,10 @@ try {
 		{
 			$minRank = intval( $_GET['i']);
 		}
+		if (array_key_exists( 'scheme', $_GET))
+		{
+			$scheme = $_GET['scheme'];
+		}
 		$queryString = $_GET['q'];
 	}
 
@@ -115,7 +128,7 @@ try {
 	$storage = $context->createStorageClient( "" );
 
 	$time_start = microtime(true);
-	$results = evalQuery( $context, $queryString, $minRank, $nofRanks);
+	$results = evalQuery( $context, $queryString, $minRank, $nofRanks, $scheme);
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
 
