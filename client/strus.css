@@ -33,13 +33,33 @@ h1 {
 #search_input {
 	display: table-cell;
 	align: top;
-	width: 55%;
+	width: 45%;
 }
 
 #search_button {
 	display: table-cell;
 	align: center;
 	width: 3%;
+}
+
+#navigation_form  {
+	display: table;
+}
+
+#navigation_elements {
+	display: table-row;
+}
+
+#navigation_next {
+	display: table-cell;
+	align: center;
+	width: 20%;
+}
+
+#navigation_prev {
+	display: table-cell;
+	align: center;
+	width: 20%;
 }
 
 #search_ranklist {
@@ -83,6 +103,11 @@ h1 {
 
 span.match {
 	font-weight: bold;
+}
+
+#footer {
+	display: table;
+	width: 80%;
 }
 
 

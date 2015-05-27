@@ -8,6 +8,7 @@
 <body>
 <h1>Project Strus: A demo search engine for Wikipedia (english)</h1>
 <div id="search_form">
+<div id="search_elements">
 <div id="search_logo">
  <a target="_blank" href="http://project-strus.net">
   <img style="display:block;" width="100%" src="strus_logo.jpg" alt="strus logo">
@@ -15,7 +16,6 @@
 -->
  </a>
 </div>
-<form name="search" class method="GET" action="evalQuery.php">
 
 <?php
 require "strus.php";
@@ -118,6 +118,14 @@ try {
 		$queryString = $_GET['q'];
 	}
 
+	$context = new StrusContext( "localhost:7181" );
+	$storage = $context->createStorageClient( "" );
+
+	$time_start = microtime(true);
+	$results = evalQuery( $context, $queryString, $minRank, $nofRanks, $scheme);
+	$time_end = microtime(true);
+	$query_answer_time = number_format( $time_end - $time_start, 3);
+
 	$BM25_checked = "";
 	$BM25_dpfc_checked = "";
 	if (!$scheme || $scheme == 'BM25_dpfc')
@@ -128,22 +136,15 @@ try {
 	{
 		$BM25_checked = "checked";
 	}
-	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\">";
-	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\">";
-	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25_dpfc\" $BM25_dpfc_checked>BM25_dpfc";
-	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25\" $BM25_checked>BM25";
+	echo '<form name="search" class method="GET" action="evalQuery.php">';
+	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\"/>";
+	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
+	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25_dpfc\" $BM25_dpfc_checked/>BM25_dpfc";
+	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25\" $BM25_checked/>BM25";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
-
-	$context = new StrusContext( "localhost:7181" );
-	$storage = $context->createStorageClient( "" );
-
-	$time_start = microtime(true);
-	$results = evalQuery( $context, $queryString, $minRank, $nofRanks, $scheme);
-	$time_end = microtime(true);
-	$query_answer_time = number_format( $time_end - $time_start, 3);
-
+	echo '</div>';
 	echo "<p>query answering time: $query_answer_time seconds</p>";
 	foreach ($results as &$result)
 	{
@@ -177,6 +178,32 @@ try {
 			echo '</div>';
 		echo '</div>';
 	}
+	echo '</div>';
+	echo '<div id="navigation_form">';
+	echo '<div id="navigation_elements">';
+	$nextMinRank = $minRank + $nofRanks;
+	$prevMinRank = $minRank - $nofRanks;
+	if ($prevMinRank >= 0)
+	{
+		echo '<form name="nav_prev" class method="GET" action="evalQuery.php">';
+		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\"/>";
+		echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
+		echo "<input type=\"hidden\" name=\"i\" value=\"$prevMinRank\"/>";
+		echo "<input type=\"hidden\" name=\"scheme\" value=\"$scheme\"/>";
+		echo '<input id="navigation_prev" type="image" src="arrow-up.png" tabindex="2"/>';
+		echo '</form>';
+	}
+	if (count( $results) >= $nofRanks)
+	{
+		echo '<form name="nav_next" class method="GET" action="evalQuery.php">';
+		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\">";
+		echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\">";
+		echo "<input type=\"hidden\" name=\"i\" value=\"$nextMinRank\">";
+		echo "<input type=\"hidden\" name=\"scheme\" value=\"$scheme\">";
+		echo '<input id="navigation_next" type="image" src="arrow-down.png" tabindex="2"/>';
+		echo '</form>';
+	}
+	echo '</div>';
 	echo '</div>';
 }
 catch( Exception $e ) {

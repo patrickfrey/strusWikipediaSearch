@@ -1,6 +1,6 @@
 [Feature selfeat :stem]
-  within( david, byrne | 100000 )
+  within( world | 100000 )
 [Feature docfeat :stem]
-  david byrne
+  world
 .
 
