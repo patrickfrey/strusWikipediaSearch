@@ -71,9 +71,9 @@ in the result.</p>
 <li>Due to a bug in a filter that was implemented to remove features not supposed to be searched like for example "abababab12121212ababa", years with 4 digits were accidentally removed from the index.
 You cannot search for years like "1970". The bug will be fixed with the next build end of June.
 </li>
-<li>The BM25_dpfc weighting scheme is currently very vulnerable to searches including very frequent words.
+<li><font color="red">The BM25_dpfc weighting scheme is currently very vulnerable to searches including very frequent words</font>.
 For queries containing such words, answering times will not be acceptable. You have to choose
-BM25 to jugde the preformance of the search engine. I'll try to fix this as soon as possible.</li>
+BM25 to jugde the performance of the search engine in this case. I'll try to fix this as soon as possible.</li>
 </ol>
 <h4>PHP source code of the client</h4>
 <p>The PHP client code for this demo search is very simple. Have a look <a href="show_evalQuery.php">here</a></p>
