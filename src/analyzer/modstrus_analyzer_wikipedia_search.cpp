@@ -28,7 +28,7 @@
 */
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/tokenizerFunctionInstanceInterface.hpp"
-#include "strus/tokenizerExecutionContextInterface.hpp"
+#include "strus/tokenizerFunctionContextInterface.hpp"
 #include "strus/private/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
 #include "textwolf/charset_utf8.hpp"
@@ -207,11 +207,11 @@ static bool wordFilter_fwd( char const*, const char*)
 	return true;
 }
 
-class SeparationTokenizerExecutionContext
-	:public strus::TokenizerExecutionContextInterface
+class SeparationTokenizerFunctionContext
+	:public strus::TokenizerFunctionContextInterface
 {
 public:
-	SeparationTokenizerExecutionContext( TokenDelimiter delim_, TokenFilter filter_)
+	SeparationTokenizerFunctionContext( TokenDelimiter delim_, TokenFilter filter_)
 		:m_delim(delim_),m_filter(filter_){}
 
 	const char* skipToToken( char const* si, const char* se) const
@@ -252,9 +252,9 @@ public:
 	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter)
 		:m_delim(delim),m_filter(filter){}
 
-	strus::TokenizerExecutionContextInterface* createExecutionContext() const
+	strus::TokenizerFunctionContextInterface* createFunctionContext() const
 	{
-		return new SeparationTokenizerExecutionContext( m_delim, m_filter);
+		return new SeparationTokenizerFunctionContext( m_delim, m_filter);
 	}
 
 private:
