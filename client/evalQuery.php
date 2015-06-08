@@ -39,7 +39,7 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
 				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
 				"doclen_title" => "doclen_tist", "titleinc" => 4.0,
-				"seqinc" => 3.0, "strinc" => 0.5, "relevant" => 0.25,
+				"seqinc" => 3.0, "strinc" => 0.5, "relevant" => 0.1,
 				".struct" => "sentence", ".match" => "docfeat" ]);
 	}
 	elseif ($scheme == 'BM25')
