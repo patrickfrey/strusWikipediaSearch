@@ -61,15 +61,17 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 	$query = $queryeval->createQuery( $storage);
 
 	$terms = $analyzer->analyzePhrase( "text", $queryString);
-	foreach ($terms as &$term)
+	if (count( $terms) > 0)
 	{
-		$query->pushTerm( "stem", $term->value);
-		$query->pushDuplicate( "stem", $term->value);
-		$query->defineFeature( "docfeat");
+		foreach ($terms as &$term)
+		{
+			$query->pushTerm( "stem", $term->value);
+			$query->pushDuplicate( "stem", $term->value);
+			$query->defineFeature( "docfeat");
+		}
+		$query->pushExpression( "within", count($terms), 100000);
+		$query->defineFeature( "selfeat");
 	}
-	$query->pushExpression( "within", count($terms), 100000);
-	$query->defineFeature( "selfeat");
-
 	$query->setMaxNofRanks( $maxNofRanks);
 	$query->setMinRank( $minRank);
 
