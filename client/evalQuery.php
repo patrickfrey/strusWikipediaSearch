@@ -121,7 +121,6 @@ try {
 	}
 
 	$context = new StrusContext( "localhost:7181" );
-	$storage = $context->createStorageClient( "" );
 
 	$time_start = microtime(true);
 	$results = evalQuery( $context, $queryString, $minRank, $nofRanks, $scheme);
