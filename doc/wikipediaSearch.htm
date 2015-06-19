@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 2.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<link rel="icon" type="image/ico" href="images/strus.ico" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Documentation of the strus wikipedia search demo, a collection of C++ libraries for building a full-text search engine." />
+	<meta name="keywords" content="wikipedia demo fulltext search engine C++" />
+	<meta name="author" content="Patrick Frey &lt;patrickpfrey (a) yahoo (dt) com&gt;" />
+	<link rel="stylesheet" type="text/css" href="text-profile.css" title="Text Profile" media="all" />
+	<title>Strus documentation</title>
+</head>
+
+<body>
+<script type="text/javascript">
+</script><div id="wrap">
+	<div id="content">
+		<h1>The wikipedia search demo with strus</h1>
+		<h2>Problems to solve</h2>
+		<p class="description">This wikipedia demo search engine has been implemented
+		to show the capabilities of <i>strus</i> to handle a non trivial document collection.
+		The wikipedia colletion has some awkward problems to solve:
+		<ol>
+		<li><b>The collection size: </b>
+		<p class="description">
+		Wikipedia contains about 15 Million documents of which about 5 million documents are
+		articles. The rest are redirects due to renaming and reorganization of the collecion,
+		link collections and documents that did not get approval.
+		</p></li>
+		<li><b>The variety of index features: </b>
+		<p class="description">The wikipedia collection contains not only English words,
+		but also a lot of foreigh words, names, numbers and identifiers wihtout
+		semantical meaning. I had to write a filter to reduce the number of features 
+		that are not important for search (like for example "abb1ab1abbbabb1").</p></li>
+		<li><b>The document format: </b>
+		<p class="description">The Wikipedia documents can be downloaded as XML
+		(https://dumps.wikimedia.org/enwiki/20141106/enwiki-20141106-pages-articles-multistream.xml.bz2).
+		Unfortunately the content (XPath /page/revision/text) of these documents
+		is not in XML but in the proprietry Wikimedia text format. With strus only XML can be
+		handled till now. So a converter had to be written
+		(I searched for a free one, but did not find one).
+		</p></li>
+		</ol>
+		</p>
+		<h2>Converting the Wikipedia data</h2>
+		<p class="description"> For the conversion of the Wikimedia format in the dump XML,
+		I wrote the program <i>strusWikimediaToXml</i>. The program is written
+		in C++ as part of the <a href="https://github.com/patrickfrey/strusWikipediaSearch">strusWikipediaSearch project</a>.
+		It takes a file or stdin as input and writes the pure XML content transformation
+		to stdout. The following excerpt shows the transformation of some content 
+		in /page/revision/text of the Wikipedia dump:</p>
+		<pre>
+Like early programming languages such as [[Fortran]], [[ALGOL|Algol]],
+[[Cobol]] and [[Lisp (programming language)|Lisp]], assemblers have 
+been available since the 1950s and the first generations of 
+text based [[computer interface]]s.
+		</pre>
+		<p class="description">is converted to</p>
+		<pre>
+Like early programming languages such as &lt;link type="page" id="Fortran"&gt;Fortran&lt;/link&gt;
+, &lt;link type="page" id="ALGOL"&gt;Algol&lt;/link&gt;
+, &lt;link type="page" id="Cobol"&gt;Cobol&lt;/link&gt;
+ and &lt;link type="page" id="Lisp (programming language)"&gt;Lisp&lt;/link&gt;
+, assemblers have been available since the 1950s and the first generations
+of text based &lt;link type="page" id="computer interface"&gt;computer interface&lt;/link&gt;
+		</pre>
+		<h2>Creating the storage</h2>
+		<p class="description">The storage has to be created with the following
+		elements in the meta data table:</p>
+		<pre>
+doclen_tist UInt8      (number of distinct term positions in the document title)
+doclen UInt16          (number of distinct term positions in the document)
+pageweight Float32     (tanh(x/100) of the number of references to that document)
+contribid UInt32       (id of the author or the article)
+		</pre>
+		<p class="description">The storage is created with the program
+		<a href="utilities.htm#strusCreate">strusCreate</a>. The command
+		line call is the following:</p>
+		<pre>
+strusCreate "path=/data/strus/wikipedia/storage; metadata=doclen_tist UInt8,doclen UInt16,pageweight Float32,contribid UInt32"
+		</pre>
+		<h2>Inserting the documents</h2>
+		<p class="description">For feeding the Wikipedia collection I chose the command
+		line tools of strus. They are from the performance point of view, currently
+		the only option to handle this collection size in reasonable amount of time
+		(one day with a modern machine). For inserting the Wikipedia collection was unzipped
+		to stdout and piped to <i>strusWikimediaToXml</i> to stout and piped to 
+		the program <a href="utilities.htm#strusInsert">strusInsert</a>.
+		The following command line call does the insert of the Wikipedia dump into the index:
+		</p>
+		<pre>
+bzip2 -c -d /data/*.xml.bz2 \
+| strusWikimediaToXml -s - \
+| strusInsert -c2000 -f1 -n -m analyzer_wikipedia_search \
+       -R resources/ \
+       -s "path=/data/strus/wikipedia/storage; max_open_files=256; write_buffer_size=2M" \
+       config/wikipedia.ana -
+		</pre>
+		<h2>The analyzer configuration</h2>
+		<p class="description">
+		The file config/wikipedia.ana is the configuration of the analyzer as required by
+		the program strusInsert. You can find the grammar of the analyzer
+		configuration language <a href="grammar_analyzerprg_doc.htm">here (analyzer configuration language)</a>.
+		</p>
+		<pre>
+[Attribute]
+	title = orig content /mediawiki/page/title();
+	docid = orig content /mediawiki/page/title();
+	date = orig content /mediawiki/page/revision/timestamp();
+	contributor = orig content /mediawiki/page/revision/contributor/username();
+
+[MetaData]
+	contribid = orig content /mediawiki/page/revision/contributor/id();
+
+[SearchIndex]
+	start = empty content /mediawiki/page/revision/text;
+
+	para = empty content /mediawiki/page/revision/text;
+	para = empty content /mediawiki/page/revision/h1;
+	para = empty content /mediawiki/page/revision/h2;
+	para = empty content /mediawiki/page/revision/h3;
+
+	tist = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
+
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h1();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h2();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h3();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h4();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h5();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h6();
+
+	sent = empty punctuation(en,".") /mediawiki/page/revision/text();
+
+[ForwardIndex]
+	linkid = orig content /mediawiki/page/revision/text//link[@type='page']@id	{position=succ};
+	catgid = orig content /mediawiki/page/revision/text//link[@type='category']@id	{position=pred};
+
+	orig = orig split /mediawiki/page/title();
+	orig = orig content_europe_fwd /mediawiki/page/revision/text();
+	orig = orig content_europe_fwd /mediawiki/page/revision/text/link();
+	orig = orig split /mediawiki/page/revision/text/h1();
+	orig = orig split /mediawiki/page/revision/text/h2();
+	orig = orig split /mediawiki/page/revision/text/h3();
+	orig = orig split /mediawiki/page/revision/text/h4();
+	orig = orig split /mediawiki/page/revision/text/h5();
+	orig = orig split /mediawiki/page/revision/text/h6();
+
+[Document]
+	doc = /mediawiki/page;
+		</pre>
+	</div>
+	<h2>Initializing meta data after insert</h2>
+	<p class="description">
+	After insert you have to initialize some meta data table elements, that
+	could not be defined by the analyzer configuration. (It is an important issue
+	for strus to define the data in the storage only by configuring the analyzer.
+	Unfortunately <i>strus</i> is not there yet. But we work on this issue)
+	The following list of command line calls have to be executed after the
+	insertion of all content. The perl scripts used can be
+	found <a href="https://github.com/patrickfrey/strusWikipediaSearch/tree/master/scripts">
+	here (wikipedia search helper scripts)</a>:
+	</p>
+	<pre>
+echo "Initializing the document title length attribute ..."
+<a href="utilities.htm#strusInspect"> -s "path=/data/strus/wikipedia/storage" ttc tist >  resources/metadata_tist_doclen.txt
+<a href="utilities.htm#strusUpdateStorage">strusUpdateStorage</a> -s "path=/strus/wikipedia/data/storage" -m doclen_tist resources/metadata_tist_doclen.txt
+echo "... done"
+
+echo "Initializing the link popularity weight in meta data ..."
+<a href="utilities.htm#strusInspect">strusInspect</a> -s "path=/strus/wikipedia/data/storage" fwstats linkid > resources/linkid_list.txt
+echo "... get the document id's"
+<a href="utilities.htm#strusInspect">strusInspect</a> -s "path=/strus/wikipedia/data/storage" attribute title > resources/docid_list.txt
+echo "... calculate a map docno -> number of references to this page"
+<a href="https://github.com/patrickfrey/strusWikipediaSearch/blob/master/scripts/calcDocidRefs.pl">scripts/calcDocidRefs.pl</a> resources/docid_list.txt resources/linkid_list.txt > resources/docnoref_map.txt
+echo "... calculate a map docno -> link popularity weight"
+<a href="https://github.com/patrickfrey/strusWikipediaSearch/blob/master/scripts/calcWeights.pl">scripts/calcWeights.pl</a> resources/docnoref_map.txt 'tanh(x/50)' > resources/pageweight_map.txt
+echo "... update the meta data table element pageweight with the link popularity weight"
+<a href="utilities.htm#strusUpdateStorage">strusUpdateStorage</a> -s "path=/strus/wikipedia/data/storage" -m pageweight resources/pageweight_map.txt
+echo "... done"
+	</pre>
+	<h2>Hardware used</h2>
+	<p class="description">The Wikipedia demo search project is hosted on an older machine.
+	For inserting the collection as described here in a reasonable amount of time, 
+	you have to use stronger hardware. With the machine where the search is hosted you cannot
+	get beyond 30 documents a second and the insert would run for many days.
+	To have acceptable build time of the index (say 24 hours) you should get to 
+	200 documents a second.</p>
+</div>
+</body>
+</html>
+
