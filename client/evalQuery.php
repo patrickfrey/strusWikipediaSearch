@@ -66,7 +66,7 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 		foreach ($terms as &$term)
 		{
 			$query->pushTerm( "stem", $term->value);
-			$query->pushDuplicate( "stem", $term->value);
+			$query->pushDuplicate();
 			$query->defineFeature( "docfeat");
 		}
 		$query->pushExpression( "within", count($terms), 100000);
@@ -104,7 +104,6 @@ try {
 	{
 		# ... called from web server
 		parse_str( getenv('QUERY_STRING'), $_GET);
-		$queryString = $_GET['q'];
 		if (array_key_exists( 'n', $_GET))
 		{
 			$nofRanks = intval( $_GET['n']);
