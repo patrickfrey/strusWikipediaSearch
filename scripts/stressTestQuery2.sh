@@ -19,10 +19,7 @@ export -f query
 
 dowork()
 {
-	for kk in 1 2 3 4 5 6 7 8 9 0
-	do
-		for ii in 1 2 3 4 5 6 7 8 9 0; do query; done
-	done
+	for ii in 1 2 3 4 5; do query; done
 }
 export -f dowork
 

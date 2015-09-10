@@ -1,0 +1,8 @@
+[Feature selfeat :stem]
+  within_struct( "":sent discover electricity | 100 )
+[Feature docfeat :stem]
+  within_struct( "":sent discover electricity | 100 )
+[Feature sumfeat :stem]
+  within( within_struct( "":sent discover electricity | 100 ) linkid | 200 )
+.
+

@@ -203,6 +203,7 @@ try {
 		echo '<input id="navigation_next" type="image" src="arrow-down.png" tabindex="2"/>';
 		echo '</form>';
 	}
+	$context->close();
 	echo '</div>';
 	echo '</div>';
 }

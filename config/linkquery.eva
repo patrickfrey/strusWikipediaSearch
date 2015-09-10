@@ -1,0 +1,8 @@
+TERM sentence "":sent;
+
+SELECT selfeat;
+EVAL 1 * bm25_dpfc( k1=0.75, b=2.1, avgdoclen=1000, relevant=0.1, .match=docfeat, .title=title, doclen_title=doclen_tist, .struct=sentence);
+EVAL 2 * metadata( name=pageweight);
+
+SUMMARIZE summary = matchvariables( type=orig, .match=sumfeat );
+
