@@ -30,9 +30,10 @@
 	sent = empty punctuation(en,".") /mediawiki/page/revision/text();
 
 [ForwardIndex]
-	linkid = orig content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
-	link = empty content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
-	catgid = orig content {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
+	linkid  = orig content  {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
+	linkvar = empty content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
+	catgid  = orig content  {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
+	catgvar = empty content {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
 
 	orig = orig split /mediawiki/page/title();
 	orig = orig content_europe_fwd /mediawiki/page/revision/text();
@@ -44,8 +45,9 @@
 	orig = orig split /mediawiki/page/revision/text/h5();
 	orig = orig split /mediawiki/page/revision/text/h6();
 
-#	wwwlnk = orig content {position=pred} /mediawiki/page/revision/text//wwwlink@id;
-#	wwwtxt = orig content {position=pred} /mediawiki/page/revision/text//wwwlink();
+	wwwlnk = orig content  {position=pred} /mediawiki/page/revision/text//wwwlink@id;
+	wwwtxt = orig content  {position=pred} /mediawiki/page/revision/text//wwwlink();
+	wwwvar = empty content {position=pred} /mediawiki/page/revision/text//wwwlink();
 
 #	citanc = orig content /mediawiki/page/revision/text//cit;
 #	cittxt = orig content {position=pred} /mediawiki/page/revision/text//cit[@type='vcite web']/title();
