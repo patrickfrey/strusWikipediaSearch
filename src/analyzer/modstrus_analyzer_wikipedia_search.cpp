@@ -31,9 +31,23 @@
 #include "strus/tokenizerFunctionContextInterface.hpp"
 #include "strus/private/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
+#include "strus/analyzerErrorBufferInterface.hpp"
 #include "textwolf/charset_utf8.hpp"
 #include <vector>
 #include <cstring>
+#include <stdexcept>
+
+#define CATCH_ERROR_MAP_RETURN( MSG, HND, VALUE)\
+	catch( const std::bad_alloc&)\
+	{\
+		(HND).report( "out of memory in wikipedia tokenizer");\
+		return VALUE;\
+	}\
+	catch( const std::runtime_error& err)\
+	{\
+		(HND).report( "error in wikipedia tokenizer: %s", err.what());\
+		return VALUE;\
+	}\
 
 static textwolf::charset::UTF8::CharLengthTab g_charLengthTab;
 
@@ -211,8 +225,8 @@ class SeparationTokenizerFunctionContext
 	:public strus::TokenizerFunctionContextInterface
 {
 public:
-	SeparationTokenizerFunctionContext( TokenDelimiter delim_, TokenFilter filter_)
-		:m_delim(delim_),m_filter(filter_){}
+	SeparationTokenizerFunctionContext( TokenDelimiter delim_, TokenFilter filter_, strus::AnalyzerErrorBufferInterface* errorhnd_)
+		:m_delim(delim_),m_filter(filter_),m_errorhnd(errorhnd_){}
 
 	const char* skipToToken( char const* si, const char* se) const
 	{
@@ -222,81 +236,94 @@ public:
 
 	virtual std::vector<strus::analyzer::Token> tokenize( const char* src, std::size_t srcsize)
 	{
-		std::vector<strus::analyzer::Token> rt;
-		char const* si = skipToToken( src, src+srcsize);
-		const char* se = src+srcsize;
-
-		for (;si < se; si = skipToToken(si,se))
+		try
 		{
-			const char* start = si;
-			while (si < se && !m_delim( si, se))
+			std::vector<strus::analyzer::Token> rt;
+			char const* si = skipToToken( src, src+srcsize);
+			const char* se = src+srcsize;
+	
+			for (;si < se; si = skipToToken(si,se))
 			{
-				si = skipChar( si);
+				const char* start = si;
+				while (si < se && !m_delim( si, se))
+				{
+					si = skipChar( si);
+				}
+				if (m_filter( start, si))
+				{
+					rt.push_back( strus::analyzer::Token( start-src, start-src, si-start));
+				}
 			}
-			if (m_filter( start, si))
-			{
-				rt.push_back( strus::analyzer::Token( start-src, start-src, si-start));
-			}
+			return rt;
 		}
-		return rt;
+		CATCH_ERROR_MAP_RETURN( _TXT("error in word separation tokenizer: %s"), *m_errorhnd, std::vector<strus::analyzer::Token>());
 	}
 private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
+	strus::AnalyzerErrorBufferInterface* m_errorhnd;
 };
 
 class SeparationTokenizerFunctionInstance
 	:public strus::TokenizerFunctionInstanceInterface
 {
 public:
-	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter)
-		:m_delim(delim),m_filter(filter){}
+	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter, strus::AnalyzerErrorBufferInterface* errorhnd_)
+		:m_delim(delim),m_filter(filter),m_errorhnd(errorhnd_){}
 
 	strus::TokenizerFunctionContextInterface* createFunctionContext() const
 	{
-		return new SeparationTokenizerFunctionContext( m_delim, m_filter);
+		try
+		{
+			return new SeparationTokenizerFunctionContext( m_delim, m_filter, m_errorhnd);
+		}
+		CATCH_ERROR_MAP_RETURN( _TXT("failed to create context of word separation tokenizer: %s"), *m_errorhnd, 0);
 	}
 
 private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
+	strus::AnalyzerErrorBufferInterface* m_errorhnd;
 };
 
 class SeparationTokenizerFunction
 	:public strus::TokenizerFunctionInterface
 {
 public:
-	SeparationTokenizerFunction( TokenDelimiter delim_, TokenFilter filter_)
-		:m_delim(delim_),m_filter(filter_){}
+	SeparationTokenizerFunction( TokenDelimiter delim_, TokenFilter filter_, strus::AnalyzerErrorBufferInterface* errorhnd_)
+		:m_delim(delim_),m_filter(filter_),m_errorhnd(errorhnd_){}
 
 	virtual strus::TokenizerFunctionInstanceInterface* createInstance( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
 	{
-		if (args.size()) throw std::runtime_error( "no arguments expected for word separation tokenizer");
-		return new SeparationTokenizerFunctionInstance( m_delim, m_filter);
+		try
+		{
+			if (args.size()) throw std::runtime_error( "no arguments expected for word separation tokenizer");
+			return new SeparationTokenizerFunctionInstance( m_delim, m_filter, m_errorhnd);
+		}
+		CATCH_ERROR_MAP_RETURN( _TXT("failed to create context of word separation tokenizer: %s"), *m_errorhnd, 0);
 	}
 
 private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
+	strus::AnalyzerErrorBufferInterface* m_errorhnd;
 };
 
 
-static const SeparationTokenizerFunction wordSeparationTokenizer_european_inv( wordBoundaryDelimiter_european_inv, wordFilter_inv);
-static const SeparationTokenizerFunction wordSeparationTokenizer_european_fwd( wordBoundaryDelimiter_european_fwd, wordFilter_fwd);
-
-const strus::TokenizerFunctionInterface* getWordSeparationTokenizer_european_inv()
+strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_inv( strus::AnalyzerErrorBufferInterface* errorhnd)
 {
-	return &wordSeparationTokenizer_european_inv;
+	return new SeparationTokenizerFunction( wordBoundaryDelimiter_european_inv, wordFilter_inv, errorhnd);
 }
-const strus::TokenizerFunctionInterface* getWordSeparationTokenizer_european_fwd()
+
+strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_fwd( strus::AnalyzerErrorBufferInterface* errorhnd)
 {
-	return &wordSeparationTokenizer_european_fwd;
+	return new SeparationTokenizerFunction( wordBoundaryDelimiter_european_fwd, wordFilter_fwd, errorhnd);
 }
 
 static const strus::TokenizerConstructor tokenizers[] =
 {
-	{"content_europe_inv", getWordSeparationTokenizer_european_inv},
-	{"content_europe_fwd", getWordSeparationTokenizer_european_fwd},
+	{"content_europe_inv", createWordSeparationTokenizer_european_inv},
+	{"content_europe_fwd", createWordSeparationTokenizer_european_fwd},
 	{0,0}
 };
 
