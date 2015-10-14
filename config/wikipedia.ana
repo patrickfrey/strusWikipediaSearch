@@ -28,10 +28,10 @@
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h6();
 
 	sent = empty punctuation(en,".") /mediawiki/page/revision/text();
+	linkvar = empty content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
 
 [ForwardIndex]
 	linkid  = orig content  {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
-	linkvar = empty content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
 	catgid  = orig content  {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
 	catgvar = empty content {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
 

@@ -1,6 +1,6 @@
 [Feature selfeat :stem]
-  within( world | 100000 )
+  contains( tennis )
 [Feature docfeat :stem]
-  world
+  tennis
 .
 
