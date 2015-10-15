@@ -1,2 +1,4 @@
 stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word;
 tist = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word;
+sentence = empty content;
+linkvar = empty content;

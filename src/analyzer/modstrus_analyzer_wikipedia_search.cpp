@@ -290,8 +290,8 @@ class SeparationTokenizerFunction
 	:public strus::TokenizerFunctionInterface
 {
 public:
-	SeparationTokenizerFunction( TokenDelimiter delim_, TokenFilter filter_, strus::AnalyzerErrorBufferInterface* errorhnd_)
-		:m_delim(delim_),m_filter(filter_),m_errorhnd(errorhnd_){}
+	SeparationTokenizerFunction( const char* description_, TokenDelimiter delim_, TokenFilter filter_, strus::AnalyzerErrorBufferInterface* errorhnd_)
+		:m_delim(delim_),m_filter(filter_),m_description(description_),m_errorhnd(errorhnd_){}
 
 	virtual strus::TokenizerFunctionInstanceInterface* createInstance( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
 	{
@@ -303,21 +303,27 @@ public:
 		CATCH_ERROR_MAP_RETURN( _TXT("failed to create context of word separation tokenizer: %s"), *m_errorhnd, 0);
 	}
 
+	const char* getDescription() const
+	{
+		return m_description;
+	}
+
 private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
+	const char* m_description;
 	strus::AnalyzerErrorBufferInterface* m_errorhnd;
 };
 
 
 strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_inv( strus::AnalyzerErrorBufferInterface* errorhnd)
 {
-	return new SeparationTokenizerFunction( wordBoundaryDelimiter_european_inv, wordFilter_inv, errorhnd);
+	return new SeparationTokenizerFunction( "Word boundary tokenizer for the Wikipedia collection", wordBoundaryDelimiter_european_inv, wordFilter_inv, errorhnd);
 }
 
 strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_fwd( strus::AnalyzerErrorBufferInterface* errorhnd)
 {
-	return new SeparationTokenizerFunction( wordBoundaryDelimiter_european_fwd, wordFilter_fwd, errorhnd);
+	return new SeparationTokenizerFunction( "Word boundary tokenizer for the Wikipedia collection", wordBoundaryDelimiter_european_fwd, wordFilter_fwd, errorhnd);
 }
 
 static const strus::TokenizerConstructor tokenizers[] =

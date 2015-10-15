@@ -530,7 +530,7 @@ Lexer::Lexem Lexer::next()
 		{
 			if (start != m_si)
 			{
-				return Lexem( LexemText, std::string( start, m_si - start));
+				return Lexem( LexemText, std::string( start, m_si - start) + " ");
 			}
 			++m_si;
 			if (m_si >= m_se) break;

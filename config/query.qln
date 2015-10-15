@@ -1,6 +1,8 @@
 [Feature selfeat :stem]
-  contains( tennis )
+    contains( tennis )
 [Feature docfeat :stem]
-  tennis
+    tennis
+[Feature sumfeat :stem]
+    within_struct( :sentence, tennis, :linkvar=link | 100 )
 .
 
