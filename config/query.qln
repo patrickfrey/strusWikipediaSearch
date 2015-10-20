@@ -2,7 +2,9 @@
     contains( tennis )
 [Feature docfeat :stem]
     tennis
-[Feature sumfeat :stem]
-    within_struct( :sentence, tennis, :linkvar=link | 100 )
+[Feature sumfeat :stem 0.3]
+	sequence_struct( :sent, :linkvar=link, tennis | +100 )
+[Feature sumfeat :stem 0.4]
+	sequence_struct( :sent, tennis, :linkvar=link | -100 )
 .
 

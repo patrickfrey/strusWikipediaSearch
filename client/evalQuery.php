@@ -148,27 +148,21 @@ try {
 	echo "<p>query answering time: $query_answer_time seconds</p>";
 	foreach ($results as &$result)
 	{
-		$title = $result->TITLE;
-		$link = strtr ($title, array (' ' => '_'));
+		$title = "";
 		$content = "";
-		if (property_exists( $result, 'CONTENT'))
+		foreach ($result->attributes as &$attrib)
 		{
-			if (is_array( $result->CONTENT))
+			if ($attrib->name == 'summary')
 			{
-				foreach ($result->CONTENT as &$sum)
-				{
-					if ($content != '') 
-					{
-						$content .= " --- ";
-					}
-					$content .= $sum;
-				}
+				if ($content ne "") $content .= ' ... ';
+				$content .= $attrib->value;
 			}
-			else
+			if ($attrib->name == 'title')
 			{
-				$content = $result->CONTENT;
+				$title .= $attrib->value;
 			}
 		}
+		$link = strtr ($title, array (' ' => '_'));
 		echo '<div id="search_rank">';
 			echo '<div id="rank_docno">' . "$result->docno</div>";
 			echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
@@ -217,6 +211,6 @@ catch( Exception $e ) {
 ?>
 
 </body>
-</html> 
+</html>
 
 

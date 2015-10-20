@@ -5,7 +5,7 @@ EVAL 1 * bm25( k1=0.75, b=2.1, avgdoclen=1000, .match=docfeat );
 
 SUMMARIZE title = attribute( name=title );
 SUMMARIZE date = attribute( name=date );
-SUMMARIZE positions = matchpos( .match=sumfeat, N=10 );
-SUMMARIZE summary = matchvariables( type=linkid, .match=sumfeat );
+SUMMARIZE link = matchvariables( assign='', type=linkid, .match=sumfeat );
+# SUMMARIZE positions = matchpos( .match=sumfeat, N=10 );
 # SUMMARIZE summary = matchphrase( type=orig, nof=4, len=60, structseek=40, .struct=sentence, .match=docfeat );
 
