@@ -93,4 +93,6 @@
 [Document]
 	doc = /mediawiki/page;
 
+[Aggregator]
+	doclen_tist = count( tist);
 
