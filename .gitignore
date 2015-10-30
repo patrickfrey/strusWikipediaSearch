@@ -17,6 +17,9 @@
 # Dependency files
 *.d
 
+# Compiled scripts
+*.pyc
+
 # Packaging directory
 pkg/
 
