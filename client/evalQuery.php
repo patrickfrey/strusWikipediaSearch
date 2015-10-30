@@ -27,34 +27,34 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 	$queryeval = $context->createQueryEval();
 
 	$analyzer->definePhraseType( "text", "stem", "word", 
-			["lc",
-			["dictmap", "irregular_verbs_en.txt"],
-			["stem", "en"],
-			["convdia", "en"],
-			"lc"]);
+			array( "lc",
+			array( "dictmap", "irregular_verbs_en.txt" ),
+			array( "stem", "en" ),
+			array("convdia", "en" ),
+			"lc"));
 
 	$queryeval->addTerm( "sentence", "sent", "");
 	if (!$scheme || $scheme == 'BM25_dpfc')
 	{
-		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", [
+		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", array(
 				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-				"doclen_title" => "doclen_tist", "titleinc" => 40.0,
+				"doclen_title" => "doclen_tist", "titleinc" => 4.0,
 				"seqinc" => 3.0, "strinc" => 0.5, "relevant" => 0.1,
-				".struct" => "sentence", ".match" => "docfeat" ]);
+				".struct" => "sentence", ".match" => "docfeat" ));
 	}
 	elseif ($scheme == 'BM25')
 	{
-		$queryeval->addWeightingFunction( 1.0, "BM25", [
+		$queryeval->addWeightingFunction( 1.0, "BM25", array(
 				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-				".match" => "docfeat" ]);
+				".match" => "docfeat" ));
 	}
-	$queryeval->addWeightingFunction( 2.0, "metadata", [ "name" => "pageweight" ] );
+	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
 
-	$queryeval->addSummarizer( "TITLE", "attribute", [ "name" => "title" ] );
-	$queryeval->addSummarizer( "CONTENT", "matchphrase", [
+	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
+	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
 			"type" => "orig", "len" => 40, "nof" => 3, "structseek" => 30,
 			"mark" => '<b>$</b>',
-			".struct" => "sentence", ".match" => "docfeat" ] );
+			".struct" => "sentence", ".match" => "docfeat" ) );
 
 	$queryeval->addSelectionFeature( "selfeat");
 
@@ -66,7 +66,7 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 		foreach ($terms as &$term)
 		{
 			$query->pushTerm( "stem", $term->value);
-			$query->pushDuplicate();
+			$query->pushDuplicate( "stem", $term->value);
 			$query->defineFeature( "docfeat");
 		}
 		$query->pushExpression( "within", count($terms), 100000);
@@ -104,6 +104,7 @@ try {
 	{
 		# ... called from web server
 		parse_str( getenv('QUERY_STRING'), $_GET);
+		$queryString = $_GET['q'];
 		if (array_key_exists( 'n', $_GET))
 		{
 			$nofRanks = intval( $_GET['n']);
@@ -120,6 +121,7 @@ try {
 	}
 
 	$context = new StrusContext( "localhost:7181" );
+	$storage = $context->createStorageClient( "" );
 
 	$time_start = microtime(true);
 	$results = evalQuery( $context, $queryString, $minRank, $nofRanks, $scheme);
@@ -148,21 +150,19 @@ try {
 	echo "<p>query answering time: $query_answer_time seconds</p>";
 	foreach ($results as &$result)
 	{
-		$title = "";
-		$content = "";
-		foreach ($result->attributes as &$attrib)
-		{
-			if ($attrib->name == 'CONTENT')
-			{
-				if ($content != "") $content .= ' ... ';
+		$content = '';
+		foreach( $result->attributes as &$attrib ) {
+			if( strcmp( $attrib->name, 'TITLE' ) == 0 ) {
+				$title = $attrib->value;
+			}
+			if( strcmp( $attrib->name, 'CONTENT' ) == 0 ) {
+				if( strcmp( $content, "" ) != 0 ) {
+					$content .= " --- ";
+				}
 				$content .= $attrib->value;
 			}
-			if ($attrib->name == 'TITLE')
-			{
-				$title .= $attrib->value;
-			}
+			$link = strtr ($title, array (' ' => '_'));
 		}
-		$link = strtr ($title, array (' ' => '_'));
 		echo '<div id="search_rank">';
 			echo '<div id="rank_docno">' . "$result->docno</div>";
 			echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
@@ -211,6 +211,6 @@ catch( Exception $e ) {
 ?>
 
 </body>
-</html>
+</html> 
 
 
