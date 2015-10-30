@@ -27,29 +27,35 @@ ga('send', 'pageview');
 </div>
 <form name="search" class method="GET" action="evalQuery.php">
 <input id="search_input" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="">
-<input type="radio" name="scheme" value="BM25_dpfc">BM25_dpfc
-<input type="radio" name="scheme" value="BM25" checked>BM25
+<input type="radio" name="scheme" value="BM25_dpfc" checked>BM25_dpfc
+<input type="radio" name="scheme" value="BM25">BM25
 <input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>
 </form>
 </div>
 
 <div>
 <h4>Description of this demo search</h4>
-A documentation of how the search index was configured and built can be found
-<a href="http://www.project-strus.net/wikipediaSearch.htm">here (building the strus Wikipedia demo search)</a>.
-
+<li>A documentation of how the search index was configured and built can be found
+<a href="http://www.project-strus.net/wikipediaSearch.htm">here (building the strus Wikipedia demo search)</a>.</li>
+<li>This is a demo system that has been built to show the performance of strus under conditions
+of limited resources. <b>Older hardware</b> has been used, because a system pushed to its limits
+is <b>better to judge</b>. Because the queries will not be very frequent on this system, the
+chance that the engine has to access disk to retrieve the result, is very high. The size
+of the index is 6 times bigger than the memory available.
+Be aware of the size of the index (15'347'649 documents).
+Normally a search index of this size would be split into smaller units.
+If somebody thinks strus is slow, so be it. 
+This demo tries to address a public that is aware of what is happening here.</li>
 <h4>Hardware description</h4>
 <p>
 <ol>
-<li>Motherboard: <a href="http://downloadmirror.intel.com/24100/eng/Intel_Server_Board_SE7501WV2.zip">Server Board SE7501WV2</a></li>
-<li>Processor: <a href="http://ark.intel.com/de/products/27278/Intel-Xeon-Processor-3_06-GHz-512K-Cache-533-MHz-FSB">4 CPUs Intel Xeon Processor 3.06 GHz, 512K Cache, 533 MHz FSB</a></li>
-<li>Memory: 12 GB DDR RAM, 266 MHz</li>
-<li>Raid controller: Intel SRCZCR RAID Controller (ICP Vortex gdth), Ultra-320 SAS connector</li>
-<li>Hard disc: 3 x ST3300007LC in RAID 5 (/data/pfrey, storage v.a.) 3 x 300 GB</li>
+<li>Motherboard: <a href="http://www.intel.com/cd/channel/reseller/apac/eng/products/server/boards/up/s3000ah/feature/index.htm">Intel S3000AHV</a></li>
+<li>Processor: <a href="http://ark.intel.com/de/products/27203/Intel-Xeon-Processor-3040-2M-Cache-1_86-GHz-1066-MHz-FSB">1 Intel Xeon Processor 3040, 1.86 GHz</a></li>
+<li>Memory: 8 GB DDR2 RAM, 533 MHz</li>
+<li>Hard disc: Western Digial 2TB SATA, product number: WDC WD2002FYPS-0</li>
 <li>Index size on disc: ~50G</li>
 </ol>
 </p>
-
 <h4>Weighting schemas:</h4>
 <p>
 <ol>
@@ -85,5 +91,4 @@ BM25 to jugde the performance of the search engine in this case. I'll try to fix
 </div>
 </body>
 </html>
-
 
