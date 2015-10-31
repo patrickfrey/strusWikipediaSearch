@@ -23,9 +23,9 @@ class QueryHandler(tornado.web.RequestHandler):
 			starttime = time.clock()
 			results = backend.evaluateQuery( querystr, firstrank, nofranks)
 			endtime = time.clock()
-			self.render("search.html.tpl", scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks, results=results, exectime=(endtime-starttime))
+			self.render("search_html.tpl", scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks, results=results, exectime=(endtime-starttime))
 		except Exception as e:
-			self.render("search_error.html.tpl", message=e, scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks)
+			self.render("search_error_html.tpl", message=e, scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks)
 
 application = tornado.web.Application([
 	(r"/", MainHandler),
