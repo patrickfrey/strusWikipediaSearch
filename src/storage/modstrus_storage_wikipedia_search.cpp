@@ -28,9 +28,36 @@
 */
 #include "strus/private/dll_tags.hpp"
 #include "strus/storageModule.hpp"
+#include "weightingBM25_dpfc.hpp"
+
+#define CATCH_ERROR_MAP_RETURN( MSG, HND, VALUE)\
+	catch( const std::bad_alloc&)\
+	{\
+		(HND).report( "out of memory in wikipedia tokenizer");\
+		return VALUE;\
+	}\
+	catch( const std::runtime_error& err)\
+	{\
+		(HND).report( "error in wikipedia tokenizer: %s", err.what());\
+		return VALUE;\
+	}\
+
+strus::WeightingFunctionInterface* createWeightingFunction_BM25_dpfc( strus::ErrorBufferInterface* errorhnd)
+{
+	return new strus::WeightingFunctionBM25_dpfc( errorhnd);
+}
+
+
+struct WeightingFunctionConstructor
+{
+	typedef strus::WeightingFunctionInterface* (*Create)( strus::ErrorBufferInterface* errorhnd);
+	const char* name;				///< name of the weighting function
+	Create create;					///< constructor of the function
+};
 
 static const strus::WeightingFunctionConstructor weightingFunctions[] =
 {
+	{"BM25_dpfc"},
 	{0,0}
 };
 

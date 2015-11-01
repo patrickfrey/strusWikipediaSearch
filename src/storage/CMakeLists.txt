@@ -19,7 +19,7 @@ link_directories(
 # ------------------------------------
 # LIBRARY
 # ------------------------------------
-add_library( modstrus_storage_wikipedia_search  MODULE  modstrus_storage_wikipedia_search.cpp )
+add_library( modstrus_storage_wikipedia_search  MODULE  modstrus_storage_wikipedia_search.cpp weightingBM25_dpfc.cpp )
 set_target_properties( modstrus_storage_wikipedia_search PROPERTIES PREFIX "")
 target_link_libraries( modstrus_storage_wikipedia_search strus_module )
 
