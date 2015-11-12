@@ -57,7 +57,7 @@ struct WeightingFunctionConstructor
 
 static const strus::WeightingFunctionConstructor weightingFunctions[] =
 {
-	{"BM25_dpfc"},
+	{"BM25_dpfc", createWeightingFunction_BM25_dpfc},
 	{0,0}
 };
 
