@@ -59,18 +59,18 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 	$queryeval->addSelectionFeature( "selfeat");
 
 	$query = $queryeval->createQuery( $storage);
+	$selexpr = new StrusQueryExpression();
 
 	$terms = $analyzer->analyzePhrase( "text", $queryString);
 	if (count( $terms) > 0)
 	{
+		$selexpr = array( "contains");
 		foreach ($terms as &$term)
 		{
-			$query->pushTerm( "stem", $term->value);
-			$query->pushDuplicate( "stem", $term->value);
-			$query->defineFeature( "docfeat");
+			$query->defineFeature( "docfeat", array( $term->type, $term->value), 1.0);
+			$selexpr[] = array( $term->type, $term->value);
 		}
-		$query->pushExpression( "within", count($terms), 100000);
-		$query->defineFeature( "selfeat");
+		$query->defineFeature( "selfeat", $selexpr, 1.0);
 	}
 	$query->setMaxNofRanks( $maxNofRanks);
 	$query->setMinRank( $minRank);
@@ -151,6 +151,7 @@ try {
 	foreach ($results as &$result)
 	{
 		$content = '';
+		$title = '';
 		foreach( $result->attributes as &$attrib ) {
 			if( strcmp( $attrib->name, 'TITLE' ) == 0 ) {
 				$title = $attrib->value;
