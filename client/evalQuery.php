@@ -11,7 +11,7 @@
 <div id="search_elements">
 <div id="search_logo">
  <a target="_blank" href="http://project-strus.net">
-  <img style="display:block;" width="100%" src="strus_logo.jpg" alt="strus logo">
+  <img style="display:block;" width="100%" src="strus_logo.jpg" alt="strus logo"/>
 <!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
 -->
  </a>
@@ -59,16 +59,14 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 	$queryeval->addSelectionFeature( "selfeat");
 
 	$query = $queryeval->createQuery( $storage);
-	$selexpr = new StrusQueryExpression();
-
 	$terms = $analyzer->analyzePhrase( "text", $queryString);
 	if (count( $terms) > 0)
 	{
 		$selexpr = array( "contains");
 		foreach ($terms as &$term)
 		{
-			$query->defineFeature( "docfeat", array( $term->type, $term->value), 1.0);
-			$selexpr[] = array( $term->type, $term->value);
+			$query->defineFeature( "docfeat", array( $term->type, $term->value ), 1.0);
+			$selexpr[] = array( $term->type, $term->value );
 		}
 		$query->defineFeature( "selfeat", $selexpr, 1.0);
 	}
