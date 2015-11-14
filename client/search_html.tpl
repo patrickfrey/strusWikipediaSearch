@@ -20,8 +20,8 @@
   <input type="hidden" name="i" value="{{firstrank}}"/>
   <input type="hidden" name="n" value="{{nofranks}}"/>
   <input type="hidden" name="s" value="{{scheme}}"/>
-  <input type="radio" name="scheme" value="BM25_dpfc" {% if scheme == "BM25_dpfc" %}checked{% end %}/>BM25_dpfc
-  <input type="radio" name="scheme" value="BM25"      {% if scheme == "BM25" %}checked{% end %}/>BM25
+  <input type="radio" name="s" value="NBLNK" {% if scheme == "NBLNK" %}checked{% end %}/>NBLNK
+  <input type="radio" name="s" value="BM25"      {% if scheme == "BM25" %}checked{% end %}/>BM25
   <input id="search_button" type="image" src="static/search_button.jpg" tabindex="2"/>
   </form>
   </div>

@@ -20,12 +20,21 @@ class QueryHandler(tornado.web.RequestHandler):
 			firstrank = int( self.get_argument("i", 0))
 			nofranks = int( self.get_argument("n", 20))
 			scheme = self.get_argument("s", "BM25")
-			starttime = time.clock()
-			results = backend.evaluateQuery( querystr, firstrank, nofranks)
-			endtime = time.clock()
-			self.render("search_html.tpl", scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks, results=results, exectime=(endtime-starttime))
+			if scheme == "BM25":
+				starttime = time.clock()
+				results = backend.evaluateQueryText( querystr, firstrank, nofranks)
+				endtime = time.clock()
+				self.render("search_html.tpl", scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks, results=results, exectime=(endtime-starttime))
+			elif scheme == "NBLNK":
+				starttime = time.clock()
+				results = backend.evaluateQueryLinks( querystr, firstrank, nofranks)
+				endtime = time.clock()
+				self.render("searchlink_html.tpl", scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks, results=results, exectime=(endtime-starttime))
+			else:
+				raise Exception( "unknown query evaluation scheme", scheme)
 		except Exception as e:
 			self.render("search_error_html.tpl", message=e, scheme=scheme, querystr=querystr, firstrank=firstrank, nofranks=nofranks)
+
 
 application = tornado.web.Application([
 	(r"/", MainHandler),

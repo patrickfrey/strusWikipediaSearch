@@ -1,204 +1,254 @@
 import strus
 import itertools
+import heapq
 
 class Backend:
+	def createQueryEvalBM25(self):
+		# Create a simple BM25 query evaluation scheme with fixed 
+		# a,b,k1 and avg document lenght and title with abstract 
+		# as summarization attributes:
+		rt = self.context.createQueryEval()
+		rt.addTerm( "sentence", "sent", "")
+		rt.addSelectionFeature( "selfeat")
+
+		# Query evaluation scheme:
+		rt.addWeightingFunction(
+			1.0, "BM25", {
+				"k1": 0.75, "b": 2.1, "avgdoclen": 500,
+				".match": "docfeat"
+			})
+		# Summarizer for getting the document title:
+		rt.addSummarizer(
+			"TITLE", "attribute", {
+				"name": "title"
+			})
+		# Summarizer for abstracting:
+		rt.addSummarizer(
+			"CONTENT", "matchphrase", {
+				"type": "orig", "len": 40, "nof": 3,
+				"structseek": 30, "mark": '<b>$</b>',
+				".struct": "sentence", ".match": "docfeat"
+			})
+		return rt
+
+	def createQueryEvalNBLNK(self):
+		# Create a simple BM25 query evaluation scheme with fixed
+		# a,b,k1 and avg document lenght and the weighted extracted
+		# links close to matches as query evaluation result:
+		rt = self.context.createQueryEval()
+		rt.addTerm( "sentence", "sent", "")
+		rt.addSelectionFeature( "selfeat")
+		
+		# Query evaluation scheme for link extraction candidate selection:
+		rt.addWeightingFunction(
+			1.0, "BM25", {
+				"k1": 0.75, "b": 2.1, "avgdoclen": 500,
+				".match": "docfeat"
+			})
+		# Summarizer to extract the weighted links:
+		rt.addSummarizer(
+			"LINK", "accuvariable", {
+				".match": "sumfeat",
+				"var": "LINK",
+				"type": "linkid"
+			})
+		return rt
+
 	def __init__(self, storageconfig):
-		self.context = strus.Context()
-		self.context.addResourcePath("./resources")
-		self.storage = self.context.createStorageClient( storageconfig )
+		# self.context = strus.Context()
+		self.context = strus.Context("localhost:7181")
+		# self.context.addResourcePath("./resources")
+		# self.storage = self.context.createStorageClient( storageconfig )
+		self.storage = self.context.createStorageClient()
 		self.analyzer = self.context.createQueryAnalyzer()
-		self.queryeval = self.context.createQueryEval()
+		# Query phrase type definition according to document analyzer
+		# configuration:
 		self.analyzer.definePhraseType(
 			"text", "stem", "word", 
-			["lc", ["dictmap", "irregular_verbs_en.txt"], ["stem", "en"], ["convdia", "en"], "lc"]
+			["lc", ["dictmap", "irregular_verbs_en.txt"],
+				["stem", "en"], ["convdia", "en"], "lc"]
 		)
-		self.queryeval.addTerm( "sentence", "sent", "")
-		self.queryeval.addSelectionFeature( "selfeat")
+		self.queryeval = {}
+		self.queryeval["BM25"] = self.createQueryEvalBM25()
+		self.queryeval["NBLNK"] = self.createQueryEvalNBLNK()
 
-		self.queryeval.addWeightingFunction(
-				1.0, "BM25", {
-					"k1": 0.75, "b": 2.1, "avgdoclen": 500,
-					".match": "docfeat"
-				})
-		self.queryeval.addSummarizer(
-				"LINK", "matchvariables", {
-					".match": "sumfeat",
-					"assign": "",
-					"type": "linkid"
-				})
-		self.queryeval.addSummarizer(
-				"TITLE", "attribute", {
-					"name": "title"
-				})
-		self.queryeval.addSummarizer(
-				"CONTENT", "matchphrase", {
-					"type": "orig", "len": 40, "nof": 3, "structseek": 30, "mark": '<b>$</b>',
-					".struct": "sentence", ".match": "sumfeat"
-				})
-
+	# Query evaluation method for a classical information retrieval query with BM25:
 	def evaluateQueryText( self, querystr, firstrank, nofranks):
-		query = self.queryeval.createQuery( self.storage)
+		queryeval = self.queryeval[ "BM25"]
+		query = queryeval.createQuery( self.storage)
 		terms = self.analyzer.analyzePhrase( "text", querystr)
 
 		if len( terms) > 0:
+			selexpr = ["contains"]
 			for term in terms:
-				query.pushTerm( term.type(), term.value())
-				query.pushDuplicate()
-				query.defineFeature( "docfeat")
+				selexpr.append( [term.type(), term.value()] )
+				query.defineFeature( "docfeat", [term.type(), term.value()], 1.0)
 
-			query.pushExpression( "contains", len(terms))
-			query.defineFeature( "selfeat")
+			query.defineFeature( "selfeat", selexpr, 1.0 )
 
 		query.setMaxNofRanks( nofranks)
 		query.setMinRank( firstrank)
 		return query.evaluate()
 
-	def evaluateQueryExtractLinks( self, querystr, firstrank, nofranks):
-		query = self.queryeval.createQuery( self.storage)
+	# Helper method to define the query features created from terms 
+	# of the query string, that are neighbours in the query:
+	def __defineSubsequentQueryTermFeatures( self, query, term1, term2, order):
+		# Pairs of terms appearing subsequently in the query are 
+		# translated into 3 query expressions:
+		#	1) search for sequence inside a sentence in documents,
+		#		weight 5.5 (reverse order) or 7.0 (same order).
+		#		The summarizer extracts links within 
+		#		a distance of 50 in the same sentence
+		#	2) search for the terms in a distance <= 5 inside
+		#		a sentence, weight 4.0.
+		#		The summarizer extracts links within a distance
+		#		of 50 in the same sentence
+		#	3) search for the terms in a distance <= 20 inside 
+		#		a sentence, weight 2.0.
+		#		The summarizer extracts links within
+		#		a distance of 50 in the same sentence
+		expr = [
+				[ "sequence_struct", 3,
+					["sent"],
+					[term1.type(), term1.value()],
+					[term2.type(), term2.value()]
+				], 
+				[ "within_struct", 5,
+					["sent"],
+					[term1.type(), term1.value()],
+					[term2.type(), term2.value()]
+				],
+				[ "within_struct", 20,
+					["sent"],
+					[term1.type(), term1.value()],
+					[term2.type(), term2.value()]
+				]
+		]
+		if order == 1:
+			weight = [ 3.0, 2.0, 1.5 ]
+		else:
+			weight = [ 2.7, 1.8, 1.2 ]
+
+		ii = 0
+		while ii < 3:
+			# The summarization expression attaches a variable 
+			# LINK ("=LINK") to links (terms of type 'linkvar'):
+			sumexpr = [ "within_struct", 50, ["sent"],
+					["=LINK", "linkvar"], expr[ ii] ]
+			query.defineFeature( "docfeat", expr[ ii], weight[ ii] )
+			query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
+			ii += 1
+
+	# Helper method to define the query features created from terms 
+	# of the query string, that are not neighbours in the query:
+	def __defineNonSubsequentQueryTermFeatures( self, query, term1, term2):
+		# Pairs of terms not appearing subsequently in the query are 
+		# translated into two query expressions:
+		#	1) search for the terms in a distance <= 5 inside
+		#		a sentence, weight 2.5,
+		#		where d ist the distance of the terms in the query.
+		#		The summarizer extracts links within a distance
+		#		of 50 in the same sentence
+		#	2) search for the terms in a distance <= 100 inside
+		#		a sentence, weight 1.0,
+		#		where d ist the distance of the terms in the query.
+		#		The summarizer extracts links within a distance
+		#		of 50 in the same sentence
+		expr = [
+				[ "within_struct", 5,
+					["sent"],
+					[term1.type(), term1.value()],
+					[term2.type(), term2.value()]
+				],
+				[ "within_struct", 20,
+					["sent"],
+					[term1.type(), term1.value()],
+					[term2.type(), term2.value()]
+				]
+		]
+		weight = [ 1.6, 1.2 ]
+		ii = 0
+		while ii < 2:
+			# The summarization expression attaches a variable 
+			# LINK ("=LINK") to links (terms of type 'linkvar'):
+			sumexpr = [ "within_struct", 50, ["sent"],
+					["=LINK", "linkvar"], expr[ ii] ]
+			query.defineFeature( "docfeat", expr[ ii], weight[ ii] )
+			query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
+			ii += 1
+
+	# Helper method to define the query features created from a single
+	# term query:
+	def __defineSingleTermQueryFeatures( self, query, term):
+		# Single term query:
+		expr = [ term.type(), term.value() ]
+		# The summarization expression attaches a variable 
+		# LINK ("=LINK") to links (terms of type 'linkvar'):
+		sumexpr = [ "within_struct", 50, ["sent"],
+				["=LINK", "linkvar"], expr ]
+		query.defineFeature( "docfeat", expr, 1.0 )
+		query.defineFeature( "sumfeat", sumexpr, 1.0 )
+
+	def evaluateQueryLinks( self, querystr, firstrank, nofranks):
+		queryeval = self.queryeval[ "NBLNK"]
+		query = queryeval.createQuery( self.storage)
 		terms = self.analyzer.analyzePhrase( "text", querystr)
 
-		if len( terms) > 0:
-			if len( terms) == 0:
-				return []
+		if len( terms) == 0:
+			# Return empty result for empty query:
+			return []
 
-			elif len( terms) > 1:
-				# Iterate on all permutation pairs of query features and create
-				# combined features for retrieval and summarization:
-				# Note: The comments with prefix [STK]: show the expected state of the stack
-				#	(V=term value,T=sentence delimiter,E=expression,L=link matcher)
-				for pair in itertools.permutations(
-						itertools.takewhile(
-							lambda x: x<terms.size(), itertools.count()), 2):
-					if pair[0] + 1 == pair[1]:
-						# ... A sequence of terms is translated into three query expressions:
-						#	a) search for sequence inside a sentence in documents, weight 6.0.
-						#		The summarizer extracts links within a distance of 10 in the same sentence
-						#	b) search for the terms in a distance <= 5 inside a sentence, weight 4.0.
-						#		The summarizer extracts links within a distance of 20 in the same sentence
-						#	c) search for the terms in a distance <= 100 inside a sentence, weight 2.0.
-						#		The summarizer extracts links within a distance of 100 in the same sentence
-						query.pushTerm( "sent", "");
-						# [STK]: T 
-						query.pushTerm( terms[pair[0]].type(), terms[pair[0]].value())
-						# [STK]: T V
-						query.pushTerm( terms[pair[1]].type(), terms[pair[1]].value())
-						# [STK]: T V V
-						query.pushDuplicate( 3)
-						# [STK]: T V V T V V
-						query.pushDuplicate( 3)
-						# [STK]: T V V T V V T V V
-						query.pushExpression( "sequence_struct", 3, 3)
-						# [STK]: T V V T V V T V V E
-						query.swapElement( 6)
-						# [STK]: E T V V T V V
-						query.pushExpression( "within_struct", 3, 5)
-						# [STK]: E T V V E
-						query.swapElement( 3)
-						# [STK]: E E T V V 
-						query.pushExpression( "within_struct", 3, 100)
-						# [STK]: Es Ew Ew
-						weight   = [ 6.0, 4.0, 2.0 ]
-						linkdist = [  10,  20, 100 ]
-						ii = 0
-						while ii < 3:
-							query.swapElements( 3 - ii)
-							# [STK]: ~ E
-							query.pushTerm( "sent", "")
-							# [STK]: ~ E T
-							query.swapElements( 1)
-							# [STK]: ~ T E
-							query.pushDuplicate()
-							# [STK]: ~ T E E
-							query.defineFeature( "docfeat", weight[ ii])
-							# [STK]: ~ T E
-							query.pushTerm( "linkvar", "");
-							# [STK]: ~ T E L
-							query.attachVariable( "LINK");
-							query.swapElements( 1)
-							# [STK]: ~ T L E
-							query.pushExpression( "within_struct", 3, linkdist[ ii])
-							# [STK]: ~ E
-							query.defineFeature( "sumfeat", weight[ ii])
-							# [STK]: ~ E
-							++ii
-					else:
-						# ... An arbitrary combination of terms is translated into two query expressions:
-						#	b) search for the terms in a distance <= 5 inside a sentence, weight 1.0+2.0/d^2,
-						#		where d ist the distance of the terms in the query.
-						#		The summarizer extracts links within a distance of 20 in the same sentence
-						#	c) search for the terms in a distance <= 100 inside a sentence, weight 0.5+1.0/d^2,
-						#		where d ist the distance of the terms in the query.
-						#		The summarizer extracts links within a distance of 100 in the same sentence
-						query.pushTerm( "sent", "");
-						# [STK]: T
-						query.pushTerm( terms[pair[0]].type(), terms[pair[0]].value())
-						# [STK]: T V
-						query.pushTerm( terms[pair[1]].type(), terms[pair[1]].value())
-						# [STK]: T V V
-						dist = pair[1] - pair[0];
-						query.pushDuplicate( 3)
-						# [STK]: T V V T V V
-				 		query.pushExpression( "within_struct", 3, 5)
-						# [STK]: T V V E
-						query.swapElement( 3)
-						# [STK]: E T V V
-						query.pushExpression( "within_struct", 3, 100)
-						# [STK]: E E
-						# [STK]: E E
-						weight   = [ 2.0, 1.0 ]
-						linkdist = [  20, 100 ]
-						ii = 0
-						while ii < 2:
-							query.swapElements( 1 - ii)
-							# [STK]: ~ E
-							query.pushTerm( "sent", "")
-							# [STK]: ~ E T
-							query.swapElements( 1)
-							# [STK]: ~ T E
-							query.pushDuplicate()
-							# [STK]: ~ T E E
-							proxweight = weight[ii]/2 + weight[ii]/(dist*dist)
-							query.defineFeature( "docfeat", proxweight)
-							# [STK]: ~ T E
-							query.pushTerm( "linkvar", "")
-							# [STK]: ~ T E L
-							query.attachVariable( "LINK") # => link to extract
-							query.swapElements( 1)
-							# [STK]: ~ T L E
-							query.pushExpression( "within_struct", 3, linkdist[ ii])
-							# [STK]: ~ E
-							query.defineFeature( "sumfeat", proxweight)
-							# [STK]: ~
-							++ii
-			else:
-				# Only a single term in the query, weight 1.0
-				#	The summarizer extracts links within a distance of 100 in the same sentence
-				query.pushTerm( "sent", "")
-				# [STK]: T
-				query.pushTerm( term[0].type(), term[0].value())
-				# [STK]: T V
-				query.pushDuplicate()
-				# [STK]: T V V
-				query.defineFeature( "docfeat", 1.0)
-				# [STK]: T V
-				query.pushTerm( "linkvar", "")
-				query.attachVariable( "LINK")
-				# [STK]: T V L
-				query.swapElements( 1)
-				# [STK]: T L V
-				query.pushExpression( "within_struct", 3, 100)
-				# [STK]: E
-				query.defineFeature( "sumfeat", 1.0)
-				# [STK]:
+		# Build the weighting features. Queries with more than one term are building
+		# the query features from pairs of terms:
+		if len( terms) > 1:
+			# Iterate on all permutation pairs of query features and create
+			# combined features for retrieval and summarization:
+			for pair in itertools.permutations(
+					itertools.takewhile(
+						lambda x: x<len(terms), itertools.count()), 2):
+				if pair[0] + 1 == pair[1]:
+					self.__defineSubsequentQueryTermFeatures(
+						query, terms[pair[0]], terms[pair[1]], +1 )
+				elif pair[1] + 1 == pair[0]:
+					self.__defineSubsequentQueryTermFeatures(
+						query, terms[pair[0]], terms[pair[1]], -1 )
+				else:
+					self.__defineNonSubsequentQueryTermFeatures(
+						query, terms[pair[0]], terms[pair[1]] )
+		else:
+			self.__defineSingleTermQueryFeatures( query, terms[0] )
 
-			# Define the selector as all fetures must be in a candidate document:
-			for term in terms:
-				query.pushTerm( term.type(), term.value())
-			query.pushExpression( "contains", len(terms))
-			query.defineFeature( "selfeat")
+		# Define the selector as the set of documents that contain all query terms:
+		selexpr = ["contains"]
+		for term in terms:
+			selexpr.append( [term.type(), term.value()] )
+		query.defineFeature( "selfeat", selexpr, 1.0 )
 
-		query.setMaxNofRanks( nofranks)
-		query.setMinRank( firstrank)
-		return query.evaluate()
-	
+		# Evaluate the ranked list for getting the documents to inspect for links close to matches:
+		query.setMaxNofRanks( (firstrank + nofranks) * 50 + 50)
+		query.setMinRank( 0)
+		results = query.evaluate()
+
+		# Build the table of all links with weight of the top ranked documents:
+		linktab = {}
+		for result in results:
+			for attribute in result.attributes():
+				if attribute.name() == 'LINK':
+					weight = 0.0
+					if attribute.value() in linktab:
+						weight = linktab[ attribute.value()]
+					linktab[ attribute.value()] = weight + attribute.weight()
+
+		# Extract the topmost weighted documents in the linktable as result:
+		heap = []
+		for key, value in linktab.iteritems():
+			heapq.heappush( heap, {'link':key, 'weight':value})
+		toplinks = heapq.nlargest( firstrank + nofranks, heap, lambda k: k['weight'])
+		rt = []
+		idx = 0
+		maxrank = firstrank + nofranks
+		for elem in toplinks[firstrank:maxrank]:
+			rt.append( {'title':elem['link'], 'weight':elem['weight']})
+		return rt
+
 
