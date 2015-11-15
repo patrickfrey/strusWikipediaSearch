@@ -65,7 +65,7 @@ function evalQueryBM25( $context, $queryString, $minRank, $maxNofRanks)
 	return $query->evaluate();
 }
 
-function getPemutations( $nn)
+function getPermutations( $nn)
 {
 	$rt = array();
 	$ii=0;
@@ -76,7 +76,7 @@ function getPemutations( $nn)
 		{
 			if ($ii != $kk)
 			{
-				$rt->array_push( array( $ii, $kk));
+				array_push( $rt, array( $ii, $kk));
 			}
 			++$kk;
 		}
@@ -109,8 +109,8 @@ class Link
 	public $weight;
 
 	public function __construct( $title, $weight) {
-		$this->title = title;
-		$this->weight = weight;
+		$this->title = $title;
+		$this->weight = $weight;
 	}
 }
 
@@ -130,35 +130,47 @@ class LinkSet
 	public function isEmpty() {
 		return $this->root === null;
 	}
+	public function size() {
+		if ($this->root === null)
+		{
+			return 0;
+		}
+		else
+		{
+			return $this->root->children;
+		}
+	}
 	public function getBestLinks()
 	{
 		$rt = array();
 		if ($this->root)
 		{
-			getBestLinksNode( $rt, $this->root);
+			$this->getBestLinksNode( $rt, $this->root);
 		}
 		$nn = count( $rt) - $this->minRank;
 		if ($nn <= 0)
 		{
 			return array();
 		}
-		if ($nn > $this->maxsize)
+		if ($nn > $this->nofRanks)
 		{
-			$nn = $this->maxsize - $this->minRank;
+			$nn = $this->nofRanks;
 		}
 		return array_slice( $rt, $this->minRank, $nn);
 	}
 	public function insert( $link, $weight) {
 		$node = new BinaryNode( $link, $weight);
-		if ($this->isEmpty()) {
+		if ($this->isEmpty())
+		{
 			$this->root = $node;
 		}
-		else {
+		else
+		{
 			$this->insertNode( $node, $this->root);
 		}
-		if ($this->left && $this->left->children > $maxsize)
+		if ($this->root->left && $this->root->left->children > $this->maxsize)
 		{
-			$this->root = $this->left;
+			$this->root = $this->root->left;
 		}
 	}
 
@@ -166,9 +178,12 @@ class LinkSet
 	{
 		if ($subtree->left)
 		{
-			getBestNode( $ar, $subtree->left);
-			array_push( $ar, new Link( $subtree->link, $subtree->weight));
-			getBestNode( $ar, $subtree->right);
+			$this->getBestLinksNode( $ar, $subtree->left);
+		}
+		array_push( $ar, new Link( $subtree->link, $subtree->weight));
+		if ($subtree->right)
+		{
+			$this->getBestLinksNode( $ar, $subtree->right);
 		}
 	}
 	private function insertNode($node, &$subtree) {
@@ -221,7 +236,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	{
 		if (count( $terms) > 1)
 		{
-			$pairs = getPemutations( count( $terms));
+			$pairs = getPermutations( count( $terms));
 			foreach( $pairs as &$pair)
 			{
 				$term1 = $terms[ $pair[0]];
@@ -232,18 +247,18 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 					$expr = array(
 							array( "sequence_struct", 3,
 								array( "sent"),
-								array( $term1->type(), $term1->value()),
-								array( $term2->type(), $term2->value())
+								array( $term1->type, $term1->value),
+								array( $term2->type, $term2->value)
 							), 
 							array( "within_struct", 5,
 								array( "sent"),
-								array( $term1->type(), $term1->value()),
-								array( $term2->type(), $term2->value())
+								array( $term1->type, $term1->value),
+								array( $term2->type, $term2->value)
 							),
 							array( "within_struct", 20,
 								array( "sent"),
-								array( $term1->type(), $term1->value()),
-								array( $term2->type(), $term2->value())
+								array( $term1->type, $term1->value),
+								array( $term2->type, $term2->value)
 							)
 					);
 					$weight = array();
@@ -253,32 +268,32 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						$weight = array( 2.7, 1.8, 1.2 );
 					}
 
-					$ii = 0
-					while (ii < 3)
+					$ii = 0;
+					while ($ii < 3)
 					{
 						$sumexpr = array( "inrange_struct", 50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "docfeat", $expr[ $ii], $weight[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
-				
+					}
 				}
 				else
 				{
 					$expr = array(
 							array( "within_struct", 5,
 								array( "sent"),
-								array( $term1->type(), $term1->value()),
-								array( $term2->type(), $term2->value())
+								array( $term1->type, $term1->value),
+								array( $term2->type, $term2->value)
 							),
 							array( "within_struct", 20,
 								array( "sent"),
-								array( $term1->type(), $term1->value()),
-								array( $term2->type(), $term2->value())
+								array( $term1->type, $term1->value),
+								array( $term2->type, $term2->value)
 							)
 					);
 					$weight = array( 1.6, 1.2 );
-					$ii = 0
+					$ii = 0;
 					while ($ii < 2)
 					{
 						# The summarization expression attaches a variable 
@@ -289,20 +304,18 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
 					}
-				
 				}
 			}
 		}
 		else
 		{
-			$expr = array( $terms[0]->type(), $terms[0]->value() );
+			$expr = array( $terms[0]->type, $terms[0]->value);
 			# The summarization expression attaches a variable 
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
 			$sumexpr = array( "inrange_struct", 50, array( "sent"),
 					array( "=LINK", "linkvar"), $expr );
 			$query->defineFeature( "docfeat", $expr, 1.0 );
 			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
-		
 		}
 		$selexpr = array( "contains");
 		foreach ($terms as &$term)
@@ -317,20 +330,20 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	$candidates = $query->evaluate();
 
 	$linktab = array();
-	foreach ($cadidates as &$cadidate)
+	foreach ($candidates as &$candidate)
 	{
-		foreach( $cadidate->attributes as &$attrib)
+		foreach( $candidate->attributes as &$attrib)
 		{
-			if( strcmp( $attrib->name, 'LINK' ) == 0 ) {
-				$weight = 0.0;
+			if( strcmp( $attrib->name, 'LINK' ) == 0 )
+			{
 				$lnkid = trim( $attrib->value);
-				if (in_array( $lnkid, $linktab))
+				if (array_key_exists( $lnkid, $linktab))
 				{
-					$linktab[ $lnkid] = $linktab[ $lnkid] + $attrib->weight;
+					$linktab[ $lnkid] = 0.0 + $linktab[ $lnkid] + $attrib->weight;
 				}
 				else
 				{
-					$linktab[ $lnkid] = $attrib->weight;
+					$linktab[ $lnkid] = 0.0 + $attrib->weight;
 				}
 			}
 		}
@@ -338,7 +351,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 
 	# Extract the top weighted documents in the linktable as result:
 	$bestn = new LinkSet( $minRank, $maxNofRanks);
-	if ($linktab->empty())
+	if (empty( $linktab))
 	{
 		return array();
 	}
@@ -346,55 +359,28 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	{
 		$bestn->insert( $link, $weight);
 	}
-	$toplinks = $bestn->getBestLinks();
-	$rt = array();
-	foreach ($toplinks as $elem)
-	{
-		array_push( $rt, array( "title" => $elem->title, "weight" => $elem->weight));
-	}
-	return $rt
+
+	$rt = $bestn->getBestLinks();
+	return $rt;
 }
 
 try {
-	$queryString = "";
 	$minRank = 0;
 	$nofRanks = 20;
 	$scheme = NULL;
-	if (PHP_SAPI == 'cli')
+	parse_str( getenv('QUERY_STRING'), $_GET);
+	$queryString = $_GET['q'];
+	if (array_key_exists( 'n', $_GET))
 	{
-		# ... called from command line (CLI)
-		$ai = 0;
-		foreach ($argv as $arg)
-		{
-			if ($ai > 0)
-			{
-				if ($queryString != "")
-				{
-					$queryString .= ' ';
-				}
-				$queryString .= $arg;
-			}
-			++$ai;
-		}
+		$nofRanks = intval( $_GET['n']);
 	}
-	else
+	if (array_key_exists( 'i', $_GET))
 	{
-		# ... called from web server
-		parse_str( getenv('QUERY_STRING'), $_GET);
-		$queryString = $_GET['q'];
-		if (array_key_exists( 'n', $_GET))
-		{
-			$nofRanks = intval( $_GET['n']);
-		}
-		if (array_key_exists( 'i', $_GET))
-		{
-			$minRank = intval( $_GET['i']);
-		}
-		if (array_key_exists( 'scheme', $_GET))
-		{
-			$scheme = $_GET['scheme'];
-		}
-		$queryString = $_GET['q'];
+		$minRank = intval( $_GET['i']);
+	}
+	if (array_key_exists( 's', $_GET))
+	{
+		$scheme = $_GET['s'];
 	}
 
 	$context = new StrusContext( "localhost:7181" );
@@ -425,8 +411,8 @@ try {
 	echo '<form name="search" class method="GET" action="evalQuery.php">';
 	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\"/>";
 	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
-	echo "<input type=\"radio\" name=\"scheme\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
-	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25\" $BM25_checked/>BM25";
+	echo "<input type=\"radio\" name=\"s\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
+	echo "<input type=\"radio\" name=\"s\" value=\"BM25\" $BM25_checked/>BM25";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
@@ -484,7 +470,7 @@ try {
 		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\"/>";
 		echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
 		echo "<input type=\"hidden\" name=\"i\" value=\"$prevMinRank\"/>";
-		echo "<input type=\"hidden\" name=\"scheme\" value=\"$scheme\"/>";
+		echo "<input type=\"hidden\" name=\"s\" value=\"$scheme\"/>";
 		echo '<input id="navigation_prev" type="image" src="arrow-up.png" tabindex="2"/>';
 		echo '</form>';
 	}
@@ -494,7 +480,7 @@ try {
 		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\">";
 		echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\">";
 		echo "<input type=\"hidden\" name=\"i\" value=\"$nextMinRank\">";
-		echo "<input type=\"hidden\" name=\"scheme\" value=\"$scheme\">";
+		echo "<input type=\"hidden\" name=\"s\" value=\"$scheme\">";
 		echo '<input id="navigation_next" type="image" src="arrow-down.png" tabindex="2"/>';
 		echo '</form>';
 	}

@@ -27,8 +27,8 @@ ga('send', 'pageview');
 </div>
 <form name="search" class method="GET" action="evalQuery.php">
 <input id="search_input" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="">
-<input type="radio" name="scheme" value="BM25_dpfc" checked>BM25_dpfc
-<input type="radio" name="scheme" value="BM25">BM25
+<input type="radio" name="s" value="BM25" checked>BM25
+<input type="radio" name="s" value="NBLNK">NBLNK
 <input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>
 </form>
 </div>
@@ -42,9 +42,9 @@ of limited resources. <b>Older hardware</b> has been used, because a system push
 is <b>better to judge</b>. Because the queries will not be very frequent on this system, the
 chance that the engine has to access disk to retrieve the result, is very high. The size
 of the index is 6 times bigger than the memory available.
-Be aware of the size of the index (15'347'649 documents).
+Be aware of the size of the index (more than 15 million documents).
 Normally a search index of this size would be split into smaller units.
-If somebody thinks strus is slow, so be it. 
+If somebody thinks strus is slow, so be it.
 This demo tries to address a public that is aware of what is happening here.</li>
 <h4>Hardware description</h4>
 <p>
@@ -57,35 +57,12 @@ This demo tries to address a public that is aware of what is happening here.</li
 </ol>
 </p>
 <h4>Weighting schemas:</h4>
-<p>
 <ol>
-<li>BM25: classical BM25 with k1=0.75, b=2.1, avgdoclen=500</li>
-<li>BM25_dpfc: BM25 (k1=0.75, b=2.1, avgdoclen=500) with accumulated increments added to the ff for discrete proximity conditions fulfilled.</li>
-<ol>
-<li>Increment of 4.0 for appearance in title</li>
-<li>Increment of 3.0 if followed by the subsequent term in the query</li>
-<li>Increment of 1.5 if followed by the previous term in the query</li>
-<li>Increment of 0.5 if another term in the query appears in the same sentence</li>
-<li>Increment of 0.25 if another term in the query appears in the following sentence</li>
-<li>Increment of 0.125 if another term in the query appears in the sentence after next</li>
+<li><b>BM25</b>: <p>classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
+</p></li>
+<li><b>NBLNK</b>: <p>extract links weighted according their appearance in sentences that contain query terms. The documents inspected are the best 1000 documents evaluated with BM25.</p></li>
 </ol>
-</li>
-</ol>
-</p>
-<p>In both schemas there is an extra weight added for popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references)</p>
-<p>In strus <b>what</b> you weight and <b>how</b> you weight is distinguished. The what you
-weight is an expression that matches if <b>all query terms match</b> somewhere in the 
-document. Documents were one feature of the query does not match, are not appearing 
-in the result.</p>
-<h4>Problems/Bugs:</h4>
-<ol>
-<li>Due to a bug in a filter that was implemented to remove features not supposed to be searched like for example "abababab12121212ababa", years with 4 digits were accidentally removed from the index.
-You cannot search for years like "1970". The bug will be fixed with the next build end of June.
-</li>
-<li><font color="red">The BM25_dpfc weighting scheme is currently very vulnerable to searches including very frequent words</font>.
-For queries containing such words, answering times will not be acceptable. You have to choose
-BM25 to jugde the performance of the search engine in this case. I'll try to fix this as soon as possible.</li>
-</ol>
+<p></p>
 <h4>PHP source code of the client</h4>
 <p>The PHP client code for this demo search is very simple. Have a look <a href="show_evalQuery.php">here</a></p>
 </div>
