@@ -136,7 +136,7 @@ class Backend:
 		while ii < 3:
 			# The summarization expression attaches a variable 
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
-			sumexpr = [ "within_struct", 50, ["sent"],
+			sumexpr = [ "inrange_struct", 50, ["sent"],
 					["=LINK", "linkvar"], expr[ ii] ]
 			query.defineFeature( "docfeat", expr[ ii], weight[ ii] )
 			query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
@@ -174,7 +174,7 @@ class Backend:
 		while ii < 2:
 			# The summarization expression attaches a variable 
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
-			sumexpr = [ "within_struct", 50, ["sent"],
+			sumexpr = [ "inrange_struct", 50, ["sent"],
 					["=LINK", "linkvar"], expr[ ii] ]
 			query.defineFeature( "docfeat", expr[ ii], weight[ ii] )
 			query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
@@ -187,7 +187,7 @@ class Backend:
 		expr = [ term.type(), term.value() ]
 		# The summarization expression attaches a variable 
 		# LINK ("=LINK") to links (terms of type 'linkvar'):
-		sumexpr = [ "within_struct", 50, ["sent"],
+		sumexpr = [ "inrange_struct", 50, ["sent"],
 				["=LINK", "linkvar"], expr ]
 		query.defineFeature( "docfeat", expr, 1.0 )
 		query.defineFeature( "sumfeat", sumexpr, 1.0 )

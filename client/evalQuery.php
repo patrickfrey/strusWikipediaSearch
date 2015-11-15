@@ -20,7 +20,7 @@
 <?php
 require "strus.php";
 
-function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
+function evalQueryBM25( $context, $queryString, $minRank, $maxNofRanks)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -34,20 +34,9 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 			"lc"));
 
 	$queryeval->addTerm( "sentence", "sent", "");
-	if (!$scheme || $scheme == 'BM25_dpfc')
-	{
-		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", array(
-				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-				"doclen_title" => "doclen_tist", "titleinc" => 4.0,
-				"seqinc" => 3.0, "strinc" => 0.5, "relevant" => 0.1,
-				".struct" => "sentence", ".match" => "docfeat" ));
-	}
-	elseif ($scheme == 'BM25')
-	{
-		$queryeval->addWeightingFunction( 1.0, "BM25", array(
-				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-				".match" => "docfeat" ));
-	}
+	$queryeval->addWeightingFunction( 1.0, "BM25", array(
+			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+			".match" => "docfeat" ));
 	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
 
 	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
@@ -74,6 +63,296 @@ function evalQuery( $context, $queryString, $minRank, $maxNofRanks, $scheme)
 	$query->setMinRank( $minRank);
 
 	return $query->evaluate();
+}
+
+function getPemutations( $nn)
+{
+	$rt = array();
+	$ii=0;
+	while ($ii<$nn)
+	{
+		$kk=0;
+		while ($kk<$nn)
+		{
+			if ($ii != $kk)
+			{
+				$rt->array_push( array( $ii, $kk));
+			}
+			++$kk;
+		}
+		++$ii;
+	}
+	return $rt;
+}
+
+// The binary node class implementation has been inspired by 'http://www.sitepoint.com/data-structures-2'
+class BinaryNode
+{
+	public $link;		// Id of the link
+	public $weight;		// weight of the link
+	public $children;	// number of children
+	public $left;		// the left child BinaryNode
+	public $right;		// the right child BinaryNode
+
+	public function __construct( $link, $weight) {
+		$this->link = $link;
+		$this->weight = $weight;
+		$this->left = null;
+		$this->right = null;
+		$this->children = 0;
+	}
+}
+
+class Link
+{
+	public $title;
+	public $weight;
+
+	public function __construct( $title, $weight) {
+		$this->title = title;
+		$this->weight = weight;
+	}
+}
+
+class LinkSet
+{
+	private $root;		// the root node of our tree
+	private $maxsize;	// maximum number of elements
+	private $minRank;	// start of ranklist
+	private $nofRanks;	// size of ranklist
+
+	public function __construct( $minRank, $nofRanks) {
+		$this->root = null;
+		$this->maxsize = $minRank + $nofRanks;
+		$this->minRank = $minRank;
+		$this->nofRanks = $nofRanks;
+	}
+	public function isEmpty() {
+		return $this->root === null;
+	}
+	public function getBestLinks()
+	{
+		$rt = array();
+		if ($this->root)
+		{
+			getBestLinksNode( $rt, $this->root);
+		}
+		$nn = count( $rt) - $this->minRank;
+		if ($nn <= 0)
+		{
+			return array();
+		}
+		if ($nn > $this->maxsize)
+		{
+			$nn = $this->maxsize - $this->minRank;
+		}
+		return array_slice( $rt, $this->minRank, $nn);
+	}
+	public function insert( $link, $weight) {
+		$node = new BinaryNode( $link, $weight);
+		if ($this->isEmpty()) {
+			$this->root = $node;
+		}
+		else {
+			$this->insertNode( $node, $this->root);
+		}
+		if ($this->left && $this->left->children > $maxsize)
+		{
+			$this->root = $this->left;
+		}
+	}
+
+	private function getBestLinksNode( &$ar, $subtree)
+	{
+		if ($subtree->left)
+		{
+			getBestNode( $ar, $subtree->left);
+			array_push( $ar, new Link( $subtree->link, $subtree->weight));
+			getBestNode( $ar, $subtree->right);
+		}
+	}
+	private function insertNode($node, &$subtree) {
+		if ($subtree === null) {
+			$subtree = $node;
+			$subtree->children = 1;
+		}
+		else {
+			if ($node->weight <= $subtree->weight) {
+				$this->insertNode( $node, $subtree->right);
+			}
+			else
+			{
+				$this->insertNode( $node, $subtree->left);
+			}
+			$subtree->children += 1;
+		}
+	}
+}
+
+function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
+{
+	$storage = $context->createStorageClient( "" );
+	$analyzer = $context->createQueryAnalyzer();
+	$queryeval = $context->createQueryEval();
+	
+	$analyzer->definePhraseType( "text", "stem", "word", 
+			array( "lc",
+			array( "dictmap", "irregular_verbs_en.txt" ),
+			array( "stem", "en" ),
+			array("convdia", "en" ),
+			"lc"));
+	
+	$queryeval->addWeightingFunction( 1.0, "BM25", array(
+			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+			".match" => "docfeat" ));
+	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
+
+	$queryeval->addSummarizer(
+			"LINK", "accuvariable", array(
+				".match" => "sumfeat",
+				"var" => "LINK",
+				"type" => "linkid"
+			) );
+	$queryeval->addSelectionFeature( "selfeat");
+	
+	$query = $queryeval->createQuery( $storage);
+	$terms = $analyzer->analyzePhrase( "text", $queryString);
+	if (count( $terms) > 0)
+	{
+		if (count( $terms) > 1)
+		{
+			$pairs = getPemutations( count( $terms));
+			foreach( $pairs as &$pair)
+			{
+				$term1 = $terms[ $pair[0]];
+				$term2 = $terms[ $pair[1]];
+
+				if ($pair[0]+1 == $pair[1] || $pair[1]+1 == $pair[0])
+				{
+					$expr = array(
+							array( "sequence_struct", 3,
+								array( "sent"),
+								array( $term1->type(), $term1->value()),
+								array( $term2->type(), $term2->value())
+							), 
+							array( "within_struct", 5,
+								array( "sent"),
+								array( $term1->type(), $term1->value()),
+								array( $term2->type(), $term2->value())
+							),
+							array( "within_struct", 20,
+								array( "sent"),
+								array( $term1->type(), $term1->value()),
+								array( $term2->type(), $term2->value())
+							)
+					);
+					$weight = array();
+					if ($pair[0]+1 == $pair[1]) {
+						$weight = array( 3.0, 2.0, 1.5 );
+					} else {
+						$weight = array( 2.7, 1.8, 1.2 );
+					}
+
+					$ii = 0
+					while (ii < 3)
+					{
+						$sumexpr = array( "inrange_struct", 50, array( "sent"),
+								array( "=LINK", "linkvar"), $expr[ $ii] );
+						$query->defineFeature( "docfeat", $expr[ $ii], $weight[ $ii] );
+						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
+						++$ii;
+				
+				}
+				else
+				{
+					$expr = array(
+							array( "within_struct", 5,
+								array( "sent"),
+								array( $term1->type(), $term1->value()),
+								array( $term2->type(), $term2->value())
+							),
+							array( "within_struct", 20,
+								array( "sent"),
+								array( $term1->type(), $term1->value()),
+								array( $term2->type(), $term2->value())
+							)
+					);
+					$weight = array( 1.6, 1.2 );
+					$ii = 0
+					while ($ii < 2)
+					{
+						# The summarization expression attaches a variable 
+						# LINK ("=LINK") to links (terms of type 'linkvar'):
+						$sumexpr = array( "inrange_struct", 50, array( "sent"),
+								array( "=LINK", "linkvar"), $expr[ $ii] );
+						$query->defineFeature( "docfeat", $expr[ $ii], $weight[ $ii] );
+						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
+						++$ii;
+					}
+				
+				}
+			}
+		}
+		else
+		{
+			$expr = array( $terms[0]->type(), $terms[0]->value() );
+			# The summarization expression attaches a variable 
+			# LINK ("=LINK") to links (terms of type 'linkvar'):
+			$sumexpr = array( "inrange_struct", 50, array( "sent"),
+					array( "=LINK", "linkvar"), $expr );
+			$query->defineFeature( "docfeat", $expr, 1.0 );
+			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
+		
+		}
+		$selexpr = array( "contains");
+		foreach ($terms as &$term)
+		{
+			$selexpr[] = array( $term->type, $term->value );
+		}
+		$query->defineFeature( "selfeat", $selexpr, 1.0);
+	}
+	$query->setMaxNofRanks( ($minRank + $maxNofRanks) * 50 + 50);
+	$query->setMinRank( $minRank);
+	
+	$candidates = $query->evaluate();
+
+	$linktab = array();
+	foreach ($cadidates as &$cadidate)
+	{
+		foreach( $cadidate->attributes as &$attrib)
+		{
+			if( strcmp( $attrib->name, 'LINK' ) == 0 ) {
+				$weight = 0.0;
+				$lnkid = trim( $attrib->value);
+				if (in_array( $lnkid, $linktab))
+				{
+					$linktab[ $lnkid] = $linktab[ $lnkid] + $attrib->weight;
+				}
+				else
+				{
+					$linktab[ $lnkid] = $attrib->weight;
+				}
+			}
+		}
+	}
+
+	# Extract the top weighted documents in the linktable as result:
+	$bestn = new LinkSet( $minRank, $maxNofRanks);
+	if ($linktab->empty())
+	{
+		return array();
+	}
+	foreach ($linktab as $link => $weight)
+	{
+		$bestn->insert( $link, $weight);
+	}
+	$toplinks = $bestn->getBestLinks();
+	$rt = array();
+	foreach ($toplinks as $elem)
+	{
+		array_push( $rt, array( "title" => $elem->title, "weight" => $elem->weight));
+	}
+	return $rt
 }
 
 try {
@@ -121,55 +400,78 @@ try {
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );
 
-	$time_start = microtime(true);
-	$results = evalQuery( $context, $queryString, $minRank, $nofRanks, $scheme);
-	$time_end = microtime(true);
-	$query_answer_time = number_format( $time_end - $time_start, 3);
-
 	$BM25_checked = "";
-	$BM25_dpfc_checked = "";
-	if (!$scheme || $scheme == 'BM25_dpfc')
-	{
-		$BM25_dpfc_checked = "checked";
-	}
-	elseif ($scheme == 'BM25')
+	$NBLNK_checked = "";
+	if (!$scheme || $scheme == 'BM25')
 	{
 		$BM25_checked = "checked";
 	}
+	else if ($scheme == 'NBLNK')
+	{
+		$NBLNK_checked = "checked";
+	}
+	$time_start = microtime(true);
+	if (!$scheme || $scheme == 'BM25')
+	{
+		$results = evalQueryBM25( $context, $queryString, $minRank, $nofRanks);
+	}
+	else
+	{
+		$results = evalQueryNBLNK( $context, $queryString, $minRank, $nofRanks);
+	}
+	$time_end = microtime(true);
+	$query_answer_time = number_format( $time_end - $time_start, 3);
+
 	echo '<form name="search" class method="GET" action="evalQuery.php">';
 	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\"/>";
 	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
-	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25_dpfc\" $BM25_dpfc_checked/>BM25_dpfc";
+	echo "<input type=\"radio\" name=\"scheme\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
 	echo "<input type=\"radio\" name=\"scheme\" value=\"BM25\" $BM25_checked/>BM25";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
 	echo '</div>';
 	echo "<p>query answering time: $query_answer_time seconds</p>";
-	foreach ($results as &$result)
+	if (!$scheme || $scheme == 'BM25')
 	{
-		$content = '';
-		$title = '';
-		foreach( $result->attributes as &$attrib ) {
-			if( strcmp( $attrib->name, 'TITLE' ) == 0 ) {
-				$title = $attrib->value;
-			}
-			if( strcmp( $attrib->name, 'CONTENT' ) == 0 ) {
-				if( strcmp( $content, "" ) != 0 ) {
-					$content .= " --- ";
+		foreach ($results as &$result)
+		{
+			$content = '';
+			$title = '';
+			foreach( $result->attributes as &$attrib ) {
+				if( strcmp( $attrib->name, 'TITLE' ) == 0 ) {
+					$title = $attrib->value;
 				}
-				$content .= $attrib->value;
+				if( strcmp( $attrib->name, 'CONTENT' ) == 0 ) {
+					if( strcmp( $content, "" ) != 0 ) {
+						$content .= " --- ";
+					}
+					$content .= $attrib->value;
+				}
+				$link = strtr ($title, array (' ' => '_'));
 			}
-			$link = strtr ($title, array (' ' => '_'));
-		}
-		echo '<div id="search_rank">';
-			echo '<div id="rank_docno">' . "$result->docno</div>";
-			echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
-			echo '<div id="rank_content">';
-				echo '<div id="rank_title">' . "<a href=\"http://en.wikipedia.org/wiki/$link\">$title</a></div>";
-				echo '<div id="rank_summary">' . "$content</div>";
+			echo '<div id="search_rank">';
+				echo '<div id="rank_docno">' . "$result->docno</div>";
+				echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
+				echo '<div id="rank_content">';
+					echo '<div id="rank_title">' . "<a href=\"http://en.wikipedia.org/wiki/$link\">$title</a></div>";
+					echo '<div id="rank_summary">' . "$content</div>";
+				echo '</div>';
 			echo '</div>';
-		echo '</div>';
+		}
+	}
+	else
+	{
+		foreach ($results as &$result)
+		{
+			$link = strtr ($result->title, array (' ' => '_'));
+			echo '<div id="search_rank">';
+				echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
+				echo '<div id="rank_content">';
+					echo '<div id="rank_title">' . "<a href=\"http://en.wikipedia.org/wiki/$link\">$result->title</a></div>";
+				echo '</div>';
+			echo '</div>';
+		}
 	}
 	echo '</div>';
 	echo '<div id="navigation_form">';
