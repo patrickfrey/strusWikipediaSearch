@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use 5.014;
+use 5.010;
 
 if ($#ARGV <= 0 || $#ARGV > 2)
 {
