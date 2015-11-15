@@ -3,12 +3,14 @@ import itertools
 import heapq
 
 class Backend:
+	# Create a simple BM25 query evaluation scheme with fixed 
+	# a,b,k1 and avg document lenght and title with abstract 
+	# as summarization attributes:
 	def createQueryEvalBM25(self):
-		# Create a simple BM25 query evaluation scheme with fixed 
-		# a,b,k1 and avg document lenght and title with abstract 
-		# as summarization attributes:
 		rt = self.context.createQueryEval()
+		# Declare sentence marker feature needed for abstracting:
 		rt.addTerm( "sentence", "sent", "")
+		# Declare the feature used for selecting result candidates:
 		rt.addSelectionFeature( "selfeat")
 
 		# Query evaluation scheme:
@@ -31,12 +33,12 @@ class Backend:
 			})
 		return rt
 
+	# Create a simple BM25 query evaluation scheme with fixed
+	# a,b,k1 and avg document lenght and the weighted extracted
+	# links close to matches as query evaluation result:
 	def createQueryEvalNBLNK(self):
-		# Create a simple BM25 query evaluation scheme with fixed
-		# a,b,k1 and avg document lenght and the weighted extracted
-		# links close to matches as query evaluation result:
 		rt = self.context.createQueryEval()
-		rt.addTerm( "sentence", "sent", "")
+		# Declare the feature used for selecting result candidates:
 		rt.addSelectionFeature( "selfeat")
 		
 		# Query evaluation scheme for link extraction candidate selection:
@@ -54,6 +56,7 @@ class Backend:
 			})
 		return rt
 
+	# Constructor. Initializes the query evaluation schemes and the query analyzer:
 	def __init__(self, storageconfig):
 		# self.context = strus.Context()
 		self.context = strus.Context("localhost:7181")
@@ -72,7 +75,7 @@ class Backend:
 		self.queryeval["BM25"] = self.createQueryEvalBM25()
 		self.queryeval["NBLNK"] = self.createQueryEvalNBLNK()
 
-	# Query evaluation method for a classical information retrieval query with BM25:
+	# Query evaluation scheme for a classical information retrieval query with BM25:
 	def evaluateQueryText( self, querystr, firstrank, nofranks):
 		queryeval = self.queryeval[ "BM25"]
 		query = queryeval.createQuery( self.storage)
@@ -189,6 +192,8 @@ class Backend:
 		query.defineFeature( "docfeat", expr, 1.0 )
 		query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
+	# Query evaluation method that builds a ranked list from the best weighted links
+	# extracted from sentences with matches:
 	def evaluateQueryLinks( self, querystr, firstrank, nofranks):
 		queryeval = self.queryeval[ "NBLNK"]
 		query = queryeval.createQuery( self.storage)
@@ -239,7 +244,7 @@ class Backend:
 						weight = linktab[ attribute.value()]
 					linktab[ attribute.value()] = weight + attribute.weight()
 
-		# Extract the topmost weighted documents in the linktable as result:
+		# Extract the top weighted documents in the linktable as result:
 		heap = []
 		for key, value in linktab.iteritems():
 			heapq.heappush( heap, {'link':key, 'weight':value})
