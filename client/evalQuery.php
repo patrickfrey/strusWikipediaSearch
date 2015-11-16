@@ -329,7 +329,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 		}
 		$query->defineFeature( "selfeat", $selexpr, 1.0);
 	}
-	$query->setMaxNofRanks( ($minRank + $maxNofRanks) * 3 + 25);
+	$query->setMaxNofRanks( ($minRank + $maxNofRanks) * 4 + 25);
 	$query->setMinRank( $minRank);
 	
 	$candidates = $query->evaluate();
