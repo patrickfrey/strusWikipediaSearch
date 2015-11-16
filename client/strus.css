@@ -110,4 +110,10 @@ span.match {
 	width: 80%;
 }
 
+#error {
+	color:#D30000;
+	font-size:1.5em;
+	line-height:1.4em;
+	margin:20px 0 0 0;
+}
 
