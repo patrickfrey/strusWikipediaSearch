@@ -277,7 +277,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						++$ii;
 					}
 				}
-				elif ($pair[0]+2 < $pair[1] || $pair[1]+2 < $pair[0])
+				elseif ($pair[0]+2 < $pair[1] || $pair[1]+2 < $pair[0])
 				{
 					$expr = array( "within_struct", 20,
 							array( "sent"),
