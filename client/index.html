@@ -61,10 +61,12 @@ This demo tries to address a public that is aware of what is happening here.</li
 <ol>
 <li><b>BM25</b>: <p>Classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
 </p></li>
-<li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain query terms. The documents inspected are the best 100 documents evaluated with BM25 on documents containing all query terms.
-The weighting of the links is done by accumulating weights of feature expressions build from pairs of query terms.
-For a query with 4 terms, there are 14 query expressions built. For example for the query "Roger Federer", the
-links are weighted as follows:
+<li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain configurations of query terms. 
+The documents inspected are the best 100 documents evaluated with BM25 on documents containing all query terms.
+The weighting of the links is done by accumulating weights of feature expressions build from pairs of query terms
+(or one term in case of a single term query).
+For a query with 4 terms, there are 14 query expressions built. 
+For example for the query "Roger Federer", the links are weighted as follows:
 <ol>
 <li>Links appearing in a sentence where the sequence "Roger Federer" ("Roger" followed immediately by "Federer") occurrs with weight 3.0</li>
 <li>Links appearing in a sentence where "Roger" appears near "Federer" ins distance of maximum 5 with weight 2.0</li>
