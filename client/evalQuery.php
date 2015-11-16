@@ -277,6 +277,19 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						++$ii;
 					}
 				}
+				elif ($pair[0]+2 < $pair[1] || $pair[1]+2 < $pair[0])
+				{
+					$expr = array( "within_struct", 20,
+							array( "sent"),
+							array( $term1->type, $term1->value),
+							array( $term2->type, $term2->value)
+						);
+					$weight = 1.1;
+
+					$sumexpr = array( "inrange_struct", 50, array( "sent"),
+							array( "=LINK", "linkvar"), $expr );
+					$query->defineFeature( "sumfeat", $sumexpr, $weight );
+				}
 				else
 				{
 					$expr = array(
@@ -322,7 +335,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 		}
 		$query->defineFeature( "selfeat", $selexpr, 1.0);
 	}
-	$query->setMaxNofRanks( ($minRank + $maxNofRanks) * 50 + 50);
+	$query->setMaxNofRanks( ($minRank + $maxNofRanks) * 3 + 25);
 	$query->setMinRank( $minRank);
 	
 	$candidates = $query->evaluate();
