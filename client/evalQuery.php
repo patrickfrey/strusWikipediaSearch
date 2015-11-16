@@ -273,7 +273,6 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 					{
 						$sumexpr = array( "inrange_struct", 50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
-						$query->defineFeature( "docfeat", $expr[ $ii], $weight[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
 					}
@@ -300,7 +299,6 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						# LINK ("=LINK") to links (terms of type 'linkvar'):
 						$sumexpr = array( "inrange_struct", 50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
-						$query->defineFeature( "docfeat", $expr[ $ii], $weight[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
 					}
@@ -314,13 +312,13 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
 			$sumexpr = array( "inrange_struct", 50, array( "sent"),
 					array( "=LINK", "linkvar"), $expr );
-			$query->defineFeature( "docfeat", $expr, 1.0 );
 			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
 		}
 		$selexpr = array( "contains");
 		foreach ($terms as &$term)
 		{
 			$selexpr[] = array( $term->type, $term->value );
+			$query->defineFeature( "docfeat", array( $term->type, $term->value), 1.0 );
 		}
 		$query->defineFeature( "selfeat", $selexpr, 1.0);
 	}
