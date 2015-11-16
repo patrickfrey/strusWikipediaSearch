@@ -63,7 +63,16 @@ This demo tries to address a public that is aware of what is happening here.</li
 </p></li>
 <li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain query terms. The documents inspected are the best 100 documents evaluated with BM25 on documents containing all query terms.
 The weighting of the links is done by accumulating weights of feature expressions build from pairs of query terms.
-For a query with 4 terms, there are 14 query expressions built.</p></li>
+For a query with 4 terms, there are 14 query expressions built. For example for the query "Roger Federer", the
+links are weighted as follows:
+<ol>
+<li>Links appearing in a sentence where the sequence "Roger Federer" ("Roger" followed immediately by "Federer") occurrs with weight 3.0</li>
+<li>Links appearing in a sentence where "Roger" appears near "Federer" ins distance of maximum 5 with weight 2.0</li>
+<li>Links appearing in a sentence where "Roger" appears near "Federer" ins distance of maximum 20 with weight 1.5</li>
+</ol>
+Weights of a specific link in a document are multiplied. The resulting weights are accumulated by summation for each link target found.
+The links with the highest weight are returned as result.
+</p></li>
 </ol>
 <p></p>
 <h4>PHP source code of the client</h4>
