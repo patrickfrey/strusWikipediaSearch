@@ -59,13 +59,15 @@ This demo tries to address a public that is aware of what is happening here.</li
 </p>
 <h4>Weighting schemas:</h4>
 <ol>
-<li><b>BM25</b>: <p>classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
+<li><b>BM25</b>: <p>Classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
 </p></li>
-<li><b>NBLNK</b>: <p>extract links weighted according their appearance in sentences that contain query terms. The documents inspected are the best 1000 documents evaluated with BM25.</p></li>
+<li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain query terms. The documents inspected are the best 100 documents evaluated with BM25 on documents containing all query terms.
+The weighting of the links is done by accumulating weights of feature expressions build from pairs of query terms.
+For a query with 4 terms, there are 14 query expressions built.</p></li>
 </ol>
 <p></p>
 <h4>PHP source code of the client</h4>
-<p>The PHP client code for this demo search is very simple. Have a look <a href="show_evalQuery.php">here</a></p>
+<p>The PHP client code for this demo search can be found <a href="show_evalQuery.php">here</a></p>
 </div>
 </body>
 </html>

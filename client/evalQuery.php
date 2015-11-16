@@ -242,32 +242,26 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 				$term1 = $terms[ $pair[0]];
 				$term2 = $terms[ $pair[1]];
 
-				if ($pair[0]+1 == $pair[1] || $pair[1]+1 == $pair[0])
+				if ($pair[0]+1 == $pair[1])
 				{
 					$expr = array(
-							array( "sequence_struct", 3,
-								array( "sent"),
-								array( $term1->type, $term1->value),
-								array( $term2->type, $term2->value)
-							), 
-							array( "within_struct", 5,
-								array( "sent"),
-								array( $term1->type, $term1->value),
-								array( $term2->type, $term2->value)
-							),
-							array( "within_struct", 20,
-								array( "sent"),
-								array( $term1->type, $term1->value),
-								array( $term2->type, $term2->value)
-							)
+						array( "sequence_struct", 3,
+							array( "sent"),
+							array( $term1->type, $term1->value),
+							array( $term2->type, $term2->value)
+						),
+						array( "within_struct", 5,
+							array( "sent"),
+							array( $term1->type, $term1->value),
+							array( $term2->type, $term2->value)
+						),
+						array( "within_struct", 20,
+							array( "sent"),
+							array( $term1->type, $term1->value),
+							array( $term2->type, $term2->value)
+						)
 					);
-					$weight = array();
-					if ($pair[0]+1 == $pair[1]) {
-						$weight = array( 3.0, 2.0, 1.5 );
-					} else {
-						$weight = array( 2.7, 1.8, 1.2 );
-					}
-
+					$weight = array( 3.0, 2.0, 1.5 );
 					$ii = 0;
 					while ($ii < 3)
 					{
@@ -277,7 +271,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						++$ii;
 					}
 				}
-				elseif ($pair[0]+2 < $pair[1] || $pair[1]+2 < $pair[0])
+				elseif ($pair[0]+2 < $pair[1])
 				{
 					$expr = array( "within_struct", 20,
 							array( "sent"),
@@ -290,7 +284,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 							array( "=LINK", "linkvar"), $expr );
 					$query->defineFeature( "sumfeat", $sumexpr, $weight );
 				}
-				else
+				elseif ($pair[0] < $pair[1])
 				{
 					$expr = array(
 							array( "within_struct", 5,
