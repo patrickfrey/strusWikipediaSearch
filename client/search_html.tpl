@@ -17,7 +17,7 @@
   </div>
   <form name="search" class method="GET" action="query">
   <input id="search_input" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="{{querystr}}"/>
-  <input type="hidden" name="i" value="{{firstrank}}"/>
+  <input type="hidden" name="i" value="0"/>
   <input type="hidden" name="n" value="{{nofranks}}"/>
   <input type="hidden" name="s" value="{{scheme}}"/>
   <input type="radio" name="s" value="NBLNK" {% if scheme == "NBLNK" %}checked{% end %}/>NBLNK

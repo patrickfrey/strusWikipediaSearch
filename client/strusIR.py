@@ -230,6 +230,7 @@ class Backend:
 		# Build the table of all links with weight of the top ranked documents:
 		linktab = {}
 		for result in results:
+			print "CANDIDATE %u\n" % (result.docno());
 			for attribute in result.attributes():
 				if attribute.name() == 'LINK':
 					weight = 0.0
