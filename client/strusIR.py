@@ -95,19 +95,16 @@ class Backend:
 
 	# Helper method to define the query features created from terms 
 	# of the query string, that are neighbours in the query:
-	def __defineSubsequentQueryTermFeatures( self, query, term1, term2, order):
+	def __defineSubsequentQueryTermFeatures( self, query, term1, term2):
 		# Pairs of terms appearing subsequently in the query are 
 		# translated into 3 query expressions:
-		#	1) search for sequence inside a sentence in documents,
-		#		weight 5.5 (reverse order) or 7.0 (same order).
+		#	1+2) search for sequence inside a sentence in documents,
 		#		The summarizer extracts links within 
 		#		a distance of 50 in the same sentence
-		#	2) search for the terms in a distance <= 5 inside
-		#		a sentence, weight 4.0.
+		#	3) search for the terms in a distance <= 5 inside a sentence,
 		#		The summarizer extracts links within a distance
 		#		of 50 in the same sentence
-		#	3) search for the terms in a distance <= 20 inside 
-		#		a sentence, weight 2.0.
+		#	4) search for the terms in a distance <= 20 inside 
 		#		The summarizer extracts links within
 		#		a distance of 50 in the same sentence
 		expr = [
@@ -115,7 +112,12 @@ class Backend:
 					["sent"],
 					[term1.type(), term1.value()],
 					[term2.type(), term2.value()]
-				], 
+				],
+				[ "sequence_struct", 3,
+					["sent"],
+					[term2.type(), term2.value()],
+					[term1.type(), term1.value()]
+				],
 				[ "within_struct", 5,
 					["sent"],
 					[term1.type(), term1.value()],
@@ -127,18 +129,13 @@ class Backend:
 					[term2.type(), term2.value()]
 				]
 		]
-		if order == 1:
-			weight = [ 3.0, 2.0, 1.5 ]
-		else:
-			weight = [ 2.7, 1.8, 1.2 ]
-
+		weight = [ 3.0, 2.0, 2.0, 1.5 ]
 		ii = 0
-		while ii < 3:
+		while ii < 4:
 			# The summarization expression attaches a variable 
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
 			sumexpr = [ "inrange_struct", 50, ["sent"],
 					["=LINK", "linkvar"], expr[ ii] ]
-			query.defineFeature( "docfeat", expr[ ii], weight[ ii] )
 			query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
 			ii += 1
 
@@ -176,7 +173,6 @@ class Backend:
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
 			sumexpr = [ "inrange_struct", 50, ["sent"],
 					["=LINK", "linkvar"], expr[ ii] ]
-			query.defineFeature( "docfeat", expr[ ii], weight[ ii] )
 			query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
 			ii += 1
 
@@ -189,7 +185,6 @@ class Backend:
 		# LINK ("=LINK") to links (terms of type 'linkvar'):
 		sumexpr = [ "inrange_struct", 50, ["sent"],
 				["=LINK", "linkvar"], expr ]
-		query.defineFeature( "docfeat", expr, 1.0 )
 		query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
 	# Query evaluation method that builds a ranked list from the best weighted links
@@ -213,11 +208,8 @@ class Backend:
 						lambda x: x<len(terms), itertools.count()), 2):
 				if pair[0] + 1 == pair[1]:
 					self.__defineSubsequentQueryTermFeatures(
-						query, terms[pair[0]], terms[pair[1]], +1 )
-				elif pair[1] + 1 == pair[0]:
-					self.__defineSubsequentQueryTermFeatures(
-						query, terms[pair[0]], terms[pair[1]], -1 )
-				else:
+						query, terms[pair[0]], terms[pair[1]])
+				elif pair[0] < pair[0]:
 					self.__defineNonSubsequentQueryTermFeatures(
 						query, terms[pair[0]], terms[pair[1]] )
 		else:
@@ -227,6 +219,7 @@ class Backend:
 		selexpr = ["contains"]
 		for term in terms:
 			selexpr.append( [term.type(), term.value()] )
+			query.defineFeature( "docfeat", [term.type(), term.value()], 1.0 )
 		query.defineFeature( "selfeat", selexpr, 1.0 )
 
 		# Evaluate the ranked list for getting the documents to inspect for links close to matches:

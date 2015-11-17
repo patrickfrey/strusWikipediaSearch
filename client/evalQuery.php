@@ -250,6 +250,11 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 							array( $term1->type, $term1->value),
 							array( $term2->type, $term2->value)
 						),
+						array( "sequence_struct", 3,
+							array( "sent"),
+							array( $term2->type, $term2->value),
+							array( $term1->type, $term1->value)
+						),
 						array( "within_struct", 5,
 							array( "sent"),
 							array( $term1->type, $term1->value),
@@ -261,9 +266,9 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 							array( $term2->type, $term2->value)
 						)
 					);
-					$weight = array( 3.0, 2.0, 1.5 );
+					$weight = array( 3.0, 2.0, 2.0, 1.5 );
 					$ii = 0;
-					while ($ii < 3)
+					while ($ii < 4)
 					{
 						$sumexpr = array( "inrange_struct", 50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
@@ -329,9 +334,9 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 		}
 		$query->defineFeature( "selfeat", $selexpr, 1.0);
 	}
-	$query->setMaxNofRanks( ($minRank + $maxNofRanks) * 4 + 25);
-	$query->setMinRank( $minRank);
-	
+	$query->setMaxNofRanks( 300);
+	$query->setMinRank( 0);
+
 	$candidates = $query->evaluate();
 
 	$linktab = array();
@@ -344,11 +349,11 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 				$lnkid = trim( $attrib->value);
 				if (array_key_exists( $lnkid, $linktab))
 				{
-					$linktab[ $lnkid] = 0.0 + $linktab[ $lnkid] + $attrib->weight;
+					$linktab[ $lnkid] = 0.0 + $linktab[ $lnkid] + $attrib->weight * $candidate->weight;
 				}
 				else
 				{
-					$linktab[ $lnkid] = 0.0 + $attrib->weight;
+					$linktab[ $lnkid] = 0.0 + $attrib->weight * $candidate->weight;
 				}
 			}
 		}
