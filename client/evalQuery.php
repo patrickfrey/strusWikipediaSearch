@@ -42,9 +42,8 @@ function evalQueryBM25( $context, $queryString, $minRank, $maxNofRanks)
 	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
 			"type" => "orig", "len" => 40, "nof" => 3, "structseek" => 30,
-			"mark" => '<b>$</b>',
+			"mark" => '#HL#$#/HL#',
 			".struct" => "sentence", ".match" => "docfeat" ) );
-
 	$queryeval->addSelectionFeature( "selfeat");
 
 	$query = $queryeval->createQuery( $storage);
@@ -432,6 +431,8 @@ try {
 	{
 		foreach ($results as &$result)
 		{
+			$highlight = array( "#HL#", "#/HL#");
+			$hlmarkup  = array( "<b>", "</b>");
 			$content = '';
 			$title = '';
 			foreach( $result->attributes as &$attrib ) {
@@ -442,7 +443,7 @@ try {
 					if( strcmp( $content, "" ) != 0 ) {
 						$content .= " --- ";
 					}
-					$content .= $attrib->value;
+					$content .= str_replace( $highlight, $hlmarkup, htmlspecialchars( $attrib->value));
 				}
 				$link = strtr ($title, array (' ' => '_'));
 			}
