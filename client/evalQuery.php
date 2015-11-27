@@ -272,7 +272,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						$sumexpr = array( "chain_struct", 50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
-						$sumexpr = array( "chain_struct", -50, array( "sent"),
+						$sumexpr = array( "sequence_struct", -50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
@@ -314,7 +314,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 						$sumexpr = array( "chain_struct", 50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
-						$sumexpr = array( "chain_struct", -50, array( "sent"),
+						$sumexpr = array( "sequence_struct", -50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
@@ -330,7 +330,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 			$sumexpr = array( "chain_struct", 50, array( "sent"),
 					array( "=LINK", "linkvar"), $expr );
 			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
-			$sumexpr = array( "chain_struct", -50, array( "sent"),
+			$sumexpr = array( "sequence_struct", -50, array( "sent"),
 					array( "=LINK", "linkvar"), $expr );
 			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
 		}
