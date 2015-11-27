@@ -45,6 +45,7 @@ CPackConfig.cmake
 CPackConfig.cmake.user
 CPackSourceConfig.cmake
 CPackSourceConfig.cmake.user
+cmake/build_rules.cmake.user
 
 # Compiled Programs
 src/wikimediaToXml/strusWikimediaToXml

@@ -269,7 +269,10 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 					$ii = 0;
 					while ($ii < 4)
 					{
-						$sumexpr = array( "inrange_struct", 50, array( "sent"),
+						$sumexpr = array( "chain_struct", 50, array( "sent"),
+								array( "=LINK", "linkvar"), $expr[ $ii] );
+						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
+						$sumexpr = array( "chain_struct", -50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
@@ -308,7 +311,10 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 					{
 						# The summarization expression attaches a variable 
 						# LINK ("=LINK") to links (terms of type 'linkvar'):
-						$sumexpr = array( "inrange_struct", 50, array( "sent"),
+						$sumexpr = array( "chain_struct", 50, array( "sent"),
+								array( "=LINK", "linkvar"), $expr[ $ii] );
+						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
+						$sumexpr = array( "chain_struct", -50, array( "sent"),
 								array( "=LINK", "linkvar"), $expr[ $ii] );
 						$query->defineFeature( "sumfeat", $sumexpr, $weight[ $ii] );
 						++$ii;
@@ -321,7 +327,10 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 			$expr = array( $terms[0]->type, $terms[0]->value);
 			# The summarization expression attaches a variable 
 			# LINK ("=LINK") to links (terms of type 'linkvar'):
-			$sumexpr = array( "inrange_struct", 50, array( "sent"),
+			$sumexpr = array( "chain_struct", 50, array( "sent"),
+					array( "=LINK", "linkvar"), $expr );
+			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
+			$sumexpr = array( "chain_struct", -50, array( "sent"),
 					array( "=LINK", "linkvar"), $expr );
 			$query->defineFeature( "sumfeat", $sumexpr, 1.0 );
 		}
