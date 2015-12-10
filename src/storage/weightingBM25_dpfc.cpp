@@ -85,6 +85,7 @@ WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 		float k1_,
 		float b_,
 		float avgDocLength_,
+		float nofCollectionDocuments_,
 		const std::string& attribute_content_doclen_,
 		const std::string& attribute_title_doclen_,
 		unsigned int proximityMinDist_,
@@ -94,7 +95,7 @@ WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 		float relevant_df_factor_,
 		ErrorBufferInterface* errorhnd_)
 	:m_k1(k1_),m_b(b_),m_avgDocLength(avgDocLength_)
-	,m_nofCollectionDocuments(storage->globalNofDocumentsInserted())
+	,m_nofCollectionDocuments(nofCollectionDocuments_)
 	,m_weight_featar()
 	,m_struct_featar()
 	,m_title_itr(0),m_metadata(metadata_)
@@ -111,13 +112,14 @@ WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 void WeightingFunctionContextBM25_dpfc::addWeightingFeature(
 		const std::string& name_,
 		PostingIteratorInterface* itr_,
-		float weight_)
+		float weight_,
+		const TermStatistics& stats_)
 {
 	try
 	{
 		if (boost::algorithm::iequals( name_, "match"))
 		{
-			float nofMatches = itr_->documentFrequency();
+			float nofMatches = stats_.documentFrequency()>=0?stats_.documentFrequency():(GlobalCounter)itr_->documentFrequency();
 			float idf = 0.0;
 			bool relevant = (m_nofCollectionDocuments * m_relevant_df_factor > nofMatches);
 	
@@ -454,11 +456,13 @@ void WeightingFunctionInstanceBM25_dpfc::addNumericParameter( const std::string&
 
 WeightingFunctionContextInterface* WeightingFunctionInstanceBM25_dpfc::createFunctionContext(
 		const StorageClientInterface* storage_,
-		MetaDataReaderInterface* metadata) const
+		MetaDataReaderInterface* metadata,
+		const GlobalStatistics& stats) const
 {
 	try
 	{
-		return new WeightingFunctionContextBM25_dpfc( storage_, metadata, m_b, m_k1, m_avgdoclen, m_attribute_content_doclen, m_attribute_title_doclen, m_proximityMinDist, m_title_ff_incr, m_sequence_ff_incr, m_sentence_ff_incr, m_relevant_df_factor, m_errorhnd);
+		GlobalCounter nofdocs = stats.nofDocumentsInserted()>=0?stats.nofDocumentsInserted():(GlobalCounter)storage_->nofDocumentsInserted();
+		return new WeightingFunctionContextBM25_dpfc( storage_, metadata, m_b, m_k1, m_avgdoclen, nofdocs, m_attribute_content_doclen, m_attribute_title_doclen, m_proximityMinDist, m_title_ff_incr, m_sequence_ff_incr, m_sentence_ff_incr, m_relevant_df_factor, m_errorhnd);
 	}
 	CATCH_ERROR_ARG1_MAP_RETURN( _TXT("error creating '%s' function context: %s"), "BM25_dpfc", *m_errorhnd, 0);
 }
