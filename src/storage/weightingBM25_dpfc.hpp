@@ -157,7 +157,7 @@ public:
 
 	virtual WeightingFunctionInstanceInterface* createInstance() const;
 
-	virtual const char* getDescription() const;
+	virtual Description getDescription() const;
 
 private:
 	ErrorBufferInterface* m_errorhnd;				///< buffer for error messages

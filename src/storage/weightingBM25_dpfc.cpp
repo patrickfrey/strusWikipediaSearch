@@ -489,9 +489,25 @@ WeightingFunctionInstanceInterface* WeightingFunctionBM25_dpfc::createInstance()
 	CATCH_ERROR_ARG1_MAP_RETURN( _TXT("error creating instance of '%s' function: %s"), "BM25_dpfc", *m_errorhnd, 0);
 }
 
-const char* WeightingFunctionBM25_dpfc::getDescription() const
+WeightingFunctionInterface::Description WeightingFunctionBM25_dpfc::getDescription() const
 {
-	return _TXT("Calculate the document weight of the features specified with the feature parameter 'match' with a modified weighting scheme based on \"BM25\". The parameters 'k1','b' can be specified. The average document lenght is specified with the parameter 'avgdoclen'. The ff of the features used in the formula is not the original frequency, but an increment of it based on some properties: An increment specified with the parameter 'titleinc' applied if a feature occurs in the title, 'strinc' applied if two features occurr in the same phrase specified with the structural element, 'seqinc' applied if two features occurr in a row that are also in a sequence in the query. With the parameter 'proxmindist' you can specify a minimum distance two features must have to be weighted for calculating the ff increment. With the parameter 'relevant' you specify a minimum fraction of the local df a feature must have to be weighted for the calculation of the 'df' increment.");
+	try
+	{
+		Description rt(_TXT("Calculate the document weight with with a modified weighting scheme based on \"BM25\" taking proximity of features into account. It uses a modified value of the ff in the formula. The ff is incremented with some discrete values specified in the configuration. This 'bonifications' are given' for appearance in the title, for appearance in the same structure (e.g. sentence) as another query term and for near proximity to another query term"));
+		rt( Description::Param::Feature, "match", _TXT( "defines the query features to weight"));
+		rt( Description::Param::Feature, "struct", _TXT( "defines the structure delimiting features"));
+		rt( Description::Param::Feature, "title", _TXT( "defines the title features"));
+		rt( Description::Param::Numeric, "k1", _TXT("parameter of the BM25 weighting scheme"));
+		rt( Description::Param::Numeric, "b", _TXT("parameter of the BM25 weighting scheme"));
+		rt( Description::Param::Numeric, "avgdoclen", _TXT("the average document lenght"));
+		rt( Description::Param::String, "doclen", _TXT("the meta data element name referencing the document lenght for each document weighted"));
+		rt( Description::Param::String, "proxmindist", _TXT("a minimum distance two features must have so that proximity is taken into account"));
+		rt( Description::Param::String, "titleinc", _TXT("the ff increment for features appearing in the title"));
+		rt( Description::Param::String, "seqinc", _TXT("the ff increment for features followed imeadiately by another query term"));
+		rt( Description::Param::String, "strinc", _TXT("the ff increment for features appearing in the same structure as another feature"));
+		rt( Description::Param::String, "relevant", _TXT("the maximum df relative to the number of documents in a collection a feature must have in order to be considered as relevant for ff increments"));
+		return rt;
+	}
+	CATCH_ERROR_ARG1_MAP_RETURN( _TXT("error creating weighting function description for '%s': %s"), "BM25", *m_errorhnd, WeightingFunctionInterface::Description());
 }
-
 
