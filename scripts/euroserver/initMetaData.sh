@@ -9,21 +9,26 @@
 
 STORAGEPATH="/data/storage_xs09"
 
-echo "Initializing the document title length attribute ..."
-strusInspect -s "path=$STORAGEPATH" ttc tist >  resources/metadata_tist_doclen.txt
+# [1] Initialize the document title length attribute (for weighting schema BM15 on title):
+echo "[1.1] create a map docno -> length of document (number of stems)"
+strusInspect -s "path=$STORAGEPATH" ttc stem > resources/metadata_doclen.txt
+echo "[1.1] create a map docno -> length of title (number of title terms)"
+strusInspect -s "path=$STORAGEPATH" ttc tist > resources/metadata_tist_doclen.txt
+echo "[1.2] update the meta data table element doclen with the document lengths calculated"
+strusUpdateStorage -s "path=$STORAGEPATH" -m doclen resources/metadata_doclen.txt
+echo "[1.2] update the meta data table element doclen_tist with the title lengths calculated"
 strusUpdateStorage -s "path=$STORAGEPATH" -m doclen_tist resources/metadata_tist_doclen.txt
-echo "... done"
 
-echo "Initializing the link popularity weight in meta data ..."
+
+# [2] Initialize the link popularity weight in document meta data (element pageweight):
+echo "[2.1] get the link reference statistics"
 strusInspect -s "path=$STORAGEPATH" fwstats linkid > resources/linkid_list.txt
-echo "... get the document id's"
+echo "[2.2] get the docno -> docid map"
 strusInspect -s "path=$STORAGEPATH" attribute title > resources/docid_list.txt
-echo "... calculate a map docno -> number of references to this page"
+echo "[2.3] calculate a map docno -> number of references to this page"
 scripts/calcDocidRefs.pl resources/docid_list.txt resources/linkid_list.txt > resources/docnoref_map.txt
-echo "... calculate a map docno -> link popularity weight"
+echo "[2.4] calculate a map docno -> link popularity weight"
 scripts/calcWeights.pl resources/docnoref_map.txt 'tanh(x/50)' > resources/pageweight_map.txt
-echo "... update the meta data table element pageweight with the link popularity weight"
+echo "[2.5] update the meta data table element pageweight with the link popularity weight"
 strusUpdateStorage -s "path=$STORAGEPATH" -m pageweight resources/pageweight_map.txt
-echo "... done"
-
 

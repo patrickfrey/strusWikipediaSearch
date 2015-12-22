@@ -68,6 +68,7 @@ resources/docid_list*.txt
 resources/docnoref_map*.txt
 resources/pageweight_map*.txt
 resources/storage_stats*.txt
+resources/metadata_doclen*.txt
 
 # Test storage
 storage.old
