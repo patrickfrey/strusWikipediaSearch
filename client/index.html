@@ -62,7 +62,7 @@ This demo tries to address a public that is aware of what is happening here.</li
 <li><b>BM25</b>: <p>Classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
 </p></li>
 <li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain configurations of query terms. 
-The documents inspected are the best 100 documents evaluated with BM25 on documents containing all query terms.
+The documents inspected are the best 300 documents evaluated with BM25 on documents containing all query terms.
 The weighting of the links is done by accumulating weights of feature expressions build from pairs of query terms
 (or one term in case of a single term query).
 For a query with 4 terms, there are 14 query expressions built. 
