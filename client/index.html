@@ -29,6 +29,7 @@ ga('send', 'pageview');
 <form name="search" class method="GET" action="evalQuery.php">
 <input id="search_input" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="">
 <input type="radio" name="s" value="BM25" checked>BM25
+<input type="radio" name="s" value="BM25_dpfc">BM25(with proximity)
 <input type="radio" name="s" value="NBLNK">NBLNK
 <input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>
 </form>
@@ -60,6 +61,8 @@ This demo tries to address a public that is aware of what is happening here.</li
 <h4>Weighting schemas:</h4>
 <ol>
 <li><b>BM25</b>: <p>Classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
+</p></li>
+<li><b>BM25(with proximity)</b>: <p>BM25 with some ff increments for proximity (sequence and appearance in same sentence) plus appearance in title.</p>
 </p></li>
 <li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain configurations of query terms. 
 The documents inspected are the best 300 documents evaluated with BM25 on documents containing all query terms.

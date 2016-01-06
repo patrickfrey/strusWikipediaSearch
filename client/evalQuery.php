@@ -20,7 +20,7 @@
 <?php
 require "strus.php";
 
-function evalQueryBM25( $context, $queryString, $minRank, $maxNofRanks)
+function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -34,9 +34,20 @@ function evalQueryBM25( $context, $queryString, $minRank, $maxNofRanks)
 			"lc"));
 
 	$queryeval->addTerm( "sentence", "sent", "");
-	$queryeval->addWeightingFunction( 1.0, "BM25", array(
-			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-			".match" => "docfeat" ));
+	if (!$scheme || $scheme == 'BM25')
+	{
+		$queryeval->addWeightingFunction( 1.0, "BM25", array(
+				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+				".match" => "docfeat" ));
+	}
+	elseif ($scheme == 'BM25_dpfc')
+	{
+		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", array(
+				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+				"doclen_title" => "doclen_tist", "titleinc" => 5.0,
+				"seqinc" => 2.0, "relevant" => 0.1,
+				".match" => "docfeat" ));
+	}
 	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
 
 	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
@@ -405,19 +416,24 @@ try {
 	$storage = $context->createStorageClient( "" );
 
 	$BM25_checked = "";
+	$BM25_dpfc_checked = "";
 	$NBLNK_checked = "";
 	if (!$scheme || $scheme == 'BM25')
 	{
 		$BM25_checked = "checked";
+	}
+	else if ($scheme == 'BM25_dpfc')
+	{
+		$BM25_dpfc_checked = "checked";
 	}
 	else if ($scheme == 'NBLNK')
 	{
 		$NBLNK_checked = "checked";
 	}
 	$time_start = microtime(true);
-	if (!$scheme || $scheme == 'BM25')
+	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25_dpfc')
 	{
-		$results = evalQueryBM25( $context, $queryString, $minRank, $nofRanks);
+		$results = evalQueryText( $context, $scheme, $queryString, $minRank, $nofRanks);
 	}
 	else
 	{
@@ -431,12 +447,13 @@ try {
 	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
 	echo "<input type=\"radio\" name=\"s\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
 	echo "<input type=\"radio\" name=\"s\" value=\"BM25\" $BM25_checked/>BM25";
+	echo "<input type=\"radio\" name=\"s\" value=\"BM25_dpfc\" $BM25_dpfc_checked/>BM25(with proximity)";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
 	echo '</div>';
 	echo "<p>query answering time: $query_answer_time seconds</p>";
-	if (!$scheme || $scheme == 'BM25')
+	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25_dpfc')
 	{
 		foreach ($results as &$result)
 		{

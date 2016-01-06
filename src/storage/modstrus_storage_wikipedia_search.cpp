@@ -47,14 +47,6 @@ strus::WeightingFunctionInterface* createWeightingFunction_BM25_dpfc( strus::Err
 	return new strus::WeightingFunctionBM25_dpfc( errorhnd);
 }
 
-
-struct WeightingFunctionConstructor
-{
-	typedef strus::WeightingFunctionInterface* (*Create)( strus::ErrorBufferInterface* errorhnd);
-	const char* name;				///< name of the weighting function
-	Create create;					///< constructor of the function
-};
-
 static const strus::WeightingFunctionConstructor weightingFunctions[] =
 {
 	{"BM25_dpfc", createWeightingFunction_BM25_dpfc},

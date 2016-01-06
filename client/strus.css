@@ -71,7 +71,10 @@ h1 {
 }
 
 #rank_docno {
-	display: none;
+	display: table-cell;
+	font-size:0.7em;
+	align: center;
+	width: 5%;
 }
 
 #rank_weight {

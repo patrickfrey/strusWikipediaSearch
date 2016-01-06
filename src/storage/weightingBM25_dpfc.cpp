@@ -262,7 +262,7 @@ float WeightingFunctionContextBM25_dpfc::call( const Index& docno)
 			{
 				wset.insert( FeatStruct( fidx, firstpos));
 			}
-			if (firstpos >= title_start && firstpos < title_end)
+			if (firstpos >= title_start && firstpos <= title_end)
 			{
 				accu[ fidx] += m_title_ff_incr/m_metadata_title_doclen;
 			}
