@@ -33,7 +33,7 @@
 --------------------------------------------------------------------
 */
 /// \file textwolf/istreamiterator.hpp
-/// \brief Definition of iterators for textwolf on STL input streams (std::istream)
+/// \brief Definition of iterators for textwolf on an input stream class
 
 #ifndef __TEXTWOLF_ISTREAM_ITERATOR_HPP__
 #define __TEXTWOLF_ISTREAM_ITERATOR_HPP__
@@ -43,6 +43,7 @@
 #include <fstream>
 #include <iterator>
 #include <cstdlib>
+#include <cerrno>
 #include <cstring>
 #include <stdexcept>
 #include <stdint.h>
@@ -50,6 +51,71 @@
 /// \namespace textwolf
 /// \brief Toplevel namespace of the library
 namespace textwolf {
+
+/// \class IStream
+/// \brief Input stream interface
+class IStream
+{
+public:
+	virtual ~IStream(){}
+	virtual std::size_t read( void* buf, std::size_t bufsize)=0;
+	virtual int errorcode() const=0;
+};
+
+/// \class StdInputStream
+/// \brief Input stream implementation based on std::istream
+class StdInputStream
+	:public IStream
+{
+public:
+	StdInputStream( std::istream& input_)
+		:m_input(&input_),m_errno(0)
+	{
+		m_input->unsetf( std::ios::skipws);
+		m_input->exceptions ( std::ifstream::failbit | std::ifstream::badbit | std::ifstream::eofbit );
+	}
+	StdInputStream( const StdInputStream& o)
+		:m_input(o.m_input),m_errno(o.m_errno){}
+
+	virtual ~StdInputStream(){}
+	virtual std::size_t read( void* buf, std::size_t bufsize)
+	{
+		try
+		{
+			m_errno = 0;
+			m_input->read( (char*)buf, bufsize);
+			return m_input->gcount();
+		}
+		catch (const std::istream::failure& err)
+		{
+			if (m_input->eof())
+			{
+				m_errno = 0;
+				return m_input->gcount();
+			}
+			else
+			{
+				m_errno = errno;
+				return 0;
+			}
+		}
+		catch (...)
+		{
+			m_errno = errno;
+			return 0;
+		}
+	}
+
+	virtual int errorcode() const
+	{
+		return m_errno;
+	}
+
+private:
+	std::istream* m_input;
+	int m_errno;
+};
+
 
 /// \class IStreamIterator
 /// \brief Input iterator on an STL input stream
@@ -67,11 +133,10 @@ public:
 
 	/// \brief Constructor
 	/// \param [in] input input to iterate on
-	IStreamIterator( std::istream& input, std::size_t bufsize=8192)
-		:m_input(&input),m_buf((char*)std::malloc(bufsize)),m_bufsize(bufsize),m_readsize(0),m_readpos(0),m_abspos(0)
+	IStreamIterator( IStream* input, std::size_t bufsize=8192)
+		:m_input(input),m_buf((char*)std::malloc(bufsize)),m_bufsize(bufsize),m_readsize(0),m_readpos(0),m_abspos(0)
 	{
-		input.unsetf( std::ios::skipws);
-		input.exceptions ( std::ifstream::failbit | std::ifstream::badbit | std::ifstream::eofbit );
+		if (!m_buf) throw std::bad_alloc();
 		fillbuf();
 	}
 
@@ -80,6 +145,7 @@ public:
 	IStreamIterator( const IStreamIterator& o)
 		:m_input(o.m_input),m_buf((char*)std::malloc(o.m_bufsize)),m_bufsize(o.m_bufsize),m_readsize(o.m_readsize),m_readpos(o.m_readpos),m_abspos(o.m_abspos)
 	{
+		if (!m_buf) throw std::bad_alloc();
 		std::memcpy( m_buf, o.m_buf, o.m_readsize);
 	}
 
@@ -117,37 +183,15 @@ public:
 private:
 	bool fillbuf()
 	{
-		try
-		{
-			m_input->read( m_buf, m_bufsize);
-			m_abspos += m_readsize;
-			m_readsize = m_input->gcount();
-			m_readpos = 0;
-			return true;
-		}
-		catch (const std::istream::failure& err)
-		{
-			if (m_input->eof())
-			{
-				m_abspos += m_readsize;
-				m_readsize = m_input->gcount();
-				m_readpos = 0;
-				return (m_readsize > 0);
-			}
-			throw exception( FileReadError);
-		}
-		catch (const std::exception& err)
-		{
-			throw exception( FileReadError);
-		}
-		catch (...)
-		{
-			throw exception( FileReadError);
-		}
+		m_abspos += m_readsize;
+		m_readsize = m_input->read( m_buf, m_bufsize);
+		m_readpos = 0;
+		if (m_input->errorcode()) throw exception( FileReadError);
+		return true;
 	}
 
 private:
-	std::istream* m_input;
+	IStream* m_input;
 	char* m_buf;
 	std::size_t m_bufsize;
 	std::size_t m_readsize;

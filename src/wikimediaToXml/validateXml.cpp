@@ -60,8 +60,10 @@ int main( int argc, const char* argv[])
 			return 0;
 		}
 		strus::InputStream input( argv[1]);
+		textwolf::StdInputStream inputreader( input.stream());
+		textwolf::IStreamIterator inputiterator( &inputreader);
 
-		XmlScanner xs( input.stream());
+		XmlScanner xs( inputiterator);
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
 
 		unsigned int nofmb_printed = 0;

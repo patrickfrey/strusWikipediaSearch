@@ -228,7 +228,7 @@ static Index handleSameSentence( std::vector<WeightingFunctionContextBM25_dpfc::
 }
 
 
-float WeightingFunctionContextBM25_dpfc::call( const Index& docno)
+double WeightingFunctionContextBM25_dpfc::call( const Index& docno)
 {
 	double rt = 0.0;
 	FeatStructSet wset;

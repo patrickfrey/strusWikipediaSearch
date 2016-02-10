@@ -1644,12 +1644,14 @@ int main( int argc, const char* argv[])
 			return 0;
 		}
 		strus::InputStream input( argv[minarg]);
+		textwolf::StdInputStream inputreader( input.stream());
+		textwolf::IStreamIterator inputiterator( &inputreader);
 		bool inText = false;
 		bool skipDoc = false;
 		bool terminated = false;
 		int taglevel = 0;
 
-		XmlScanner xs( input.stream());
+		XmlScanner xs( inputiterator);
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
 		XmlPrinter xmlprinter;
 
