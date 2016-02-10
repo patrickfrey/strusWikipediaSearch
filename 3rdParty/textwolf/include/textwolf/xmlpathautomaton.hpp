@@ -466,7 +466,7 @@ private:
 	///\param [in] srckey the ASCII encoded representation in the source
 	///\param [in] follow true, uf the state transition is active for all sub scopes of the activation state
 	///\return the target state of the transition defined
-	int defineNext( int stateidx, Operation op, unsigned int keysize, const char* key, const char* srckey, bool follow=false) throw(exception)
+	int defineNext( int stateidx, Operation op, unsigned int keysize, const char* key, const char* srckey, bool follow=false) throw(exception,std::bad_alloc)
 	{
 		try
 		{
@@ -521,7 +521,7 @@ private:
 	///\param [in] start start of index range where this state transition fires
 	///\param [in] end end of index range where this state transition fires
 	///\return index of the state where this output action was defined
-	int defineOutput( int stateidx, const Mask& printOpMask, int typeidx, bool follow, int start, int end) throw(exception)
+	int defineOutput( int stateidx, const Mask& printOpMask, int typeidx, bool follow, int start, int end) throw(exception,std::bad_alloc)
 	{
 		try
 		{
@@ -607,7 +607,7 @@ public:
 		///\param [in] op XML operation type of this state transition
 		///\param [in] value key value as ASCII with encoded entities for higher unicode characters of this state transition
 		///\return *this
-		PathElement& doSelect( Operation op, const char* value) throw(exception)
+		PathElement& doSelect( Operation op, const char* value) throw(exception,std::bad_alloc)
 		{
 			static XMLScannerBase::IsTagCharMap isTagCharMap;
 			if (xs != 0)
@@ -680,7 +680,7 @@ public:
 		///\brief Define the output of the current element
 		///\param [in] typeidx type of the element produced
 		///\return *this
-		PathElement& push( int typeidx) throw(exception)
+		PathElement& push( int typeidx) throw(exception,std::bad_alloc)
 		{
 			if (xs != 0) stateidx = xs->defineOutput( stateidx, printOpMask, typeidx, follow, range.start, range.end);
 			return *this;
@@ -704,73 +704,73 @@ public:
 		///\param [in] name name of the tag
 		///\return *this
 		///\remark same as selectTag(const char*)
-		PathElement& operator []( const char* name) throw(exception)			{return doSelect( OpenTag, name);}
+		PathElement& operator []( const char* name) throw(exception,std::bad_alloc)	{return doSelect( OpenTag, name);}
 		///\brief Find tag by name
 		///\param [in] name name of the tag
 		///\return *this
-		PathElement& selectTag( const char* name) throw(exception)			{return doSelect( OpenTag, name);}
+		PathElement& selectTag( const char* name) throw(exception,std::bad_alloc)	{return doSelect( OpenTag, name);}
 		///\brief Find close tag of current tag selected
 		///\return *this
-		PathElement& selectCloseTag() throw(exception)					{return doSelect( CloseTag, 0);}
+		PathElement& selectCloseTag() throw(exception,std::bad_alloc)			{return doSelect( CloseTag, 0);}
 
 		///\brief Find tag with one attribute
 		///\param [in] name name of the attribute
 		///\return *this
 		///\remark same as selectAttribute(const char*)
-		PathElement& operator ()( const char* name) throw(exception)			{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
+		PathElement& operator ()( const char* name) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
 		///\brief Find tag with one attribute
 		///\param [in] name name of the attribute
 		///\return *this
-		PathElement& selectAttribute( const char* name) throw(exception)		{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
+		PathElement& selectAttribute( const char* name) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
 
 		///\brief Find tag with one attribute,value condition
 		///\remark same as ifAttribute(const char*,const char*)
 		///\param [in] name name of the attribute
 		///\param [in] value value of the attribute
 		///\return *this
-		PathElement& operator ()( const char* name, const char* value) throw(exception)	{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
+		PathElement& operator ()( const char* name, const char* value) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
 
 		///\brief Find tag with one attribute,value condition
 		///\param [in] name name of the attribute
 		///\param [in] value value of the attribute
 		///\return *this
-		PathElement& ifAttribute( const char* name, const char* value) throw(exception)	{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
+		PathElement& ifAttribute( const char* name, const char* value) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
 
 		///\brief Define maximum element index to push
 		///\param [in] idx maximum element index
 		///\return *this
-		PathElement& TO(int idx) throw(exception)					{return doCount((idx>=0)?(idx+1):-1);}
+		PathElement& TO(int idx) throw(exception,std::bad_alloc)			{return doCount((idx>=0)?(idx+1):-1);}
 		///\brief Define minimum element index to push
 		///\param [in] idx minimum element index
 		///\return *this
-		PathElement& FROM(int idx) throw(exception)					{return doStart(idx); return *this;}
+		PathElement& FROM(int idx) throw(exception,std::bad_alloc)			{return doStart(idx); return *this;}
 		///\brief Define minimum and maximum element index to push
 		///\param [in] idx1 minimum element index
 		///\param [in] idx2 maximum element index
 		///\return *this
-		PathElement& RANGE(int idx1, int idx2) throw(exception)				{return doRange(idx1,(idx2>=0)?(idx2+1):-1); return *this;}
+		PathElement& RANGE(int idx1, int idx2) throw(exception,std::bad_alloc)		{return doRange(idx1,(idx2>=0)?(idx2+1):-1); return *this;}
 		///\brief Define index of the element index to push
 		///\param [in] idx element index
 		///\return *this
-		PathElement& INDEX(int idx) throw(exception)					{return doRange(idx,idx+1); return *this;}
+		PathElement& INDEX(int idx) throw(exception,std::bad_alloc)			{return doRange(idx,idx+1); return *this;}
 
 		///\brief Define element type to push
 		///\param [in] type element type
 		///\return *this
 		///\remark same as assignType(int)
-		PathElement& operator =(int type) throw(exception)				{return push( type);}
+		PathElement& operator =(int type) throw(exception,std::bad_alloc)		{return push( type);}
 		///\brief Define element type to push
 		///\param [in] type element type
 		///\return *this
-		PathElement& assignType(int type) throw(exception)				{return push( type);}
+		PathElement& assignType(int type) throw(exception,std::bad_alloc)		{return push( type);}
 
 		///\brief Define grab content
 		///\remark same as selectContent()
 		///\return *this
-		PathElement& operator ()()  throw(exception)					{return defineOutput(Content);}
+		PathElement& operator ()()  throw(exception,std::bad_alloc)			{return defineOutput(Content);}
 		///\brief Define grab content
 		///\return *this
-		PathElement& selectContent()  throw(exception)					{return defineOutput(Content);}
+		PathElement& selectContent()  throw(exception,std::bad_alloc)			{return defineOutput(Content);}
 	};
 
 	///\brief Get automaton root element to start an XML path definition

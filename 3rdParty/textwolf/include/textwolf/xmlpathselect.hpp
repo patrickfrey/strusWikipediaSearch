@@ -378,7 +378,7 @@ public:
 
 		/// \brief Skip to next element
 		/// \return *this
-		iterator& skip() throw(exception)
+		iterator& skip() throw(exception,std::bad_alloc)
 		{
 			if (input != 0)
 			{
