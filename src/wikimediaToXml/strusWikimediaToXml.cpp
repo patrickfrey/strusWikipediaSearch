@@ -36,11 +36,12 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
+#include <cerrno>
 #include <string>
 #include <stdexcept>
 #include <memory>
 #include <vector>
-#include <map>
+#include <set>
 #include <limits>
 #include <stdint.h>
 
@@ -1564,15 +1565,120 @@ static textwolf::PositionIndex parseRangeNumber( char const*& ci)
 	return rt;
 }
 
+class FileOutput
+{
+public:
+	FileOutput( const std::string& filenamefmt_, std::size_t maxprintsize_, const std::string& header_, const std::string& tail_)
+		:m_filenamefmt(filenamefmt_),m_header(header_),m_tail(tail_)
+		,m_curprintsize(0),m_maxprintsize(maxprintsize_),m_filecnt(0),m_outfile(0)
+	{
+		openNextFile();
+	}
+
+	~FileOutput()
+	{
+		if (m_outfile) ::fclose( m_outfile);
+	}
+
+	void print( const std::string& buf)
+	{
+		m_curprintsize += buf.size();
+		if (!m_outfile) throw std::runtime_error("failed to write to file closed");
+		std::size_t written = ::fwrite( buf.c_str(), 1, buf.size(), m_outfile);
+		if (written != buf.size())
+		{
+			throw std::runtime_error( std::string("failed to write to output file: ") + ::strerror( ::ferror(m_outfile)));
+		}
+	}
+
+	bool synchronize()
+	{
+		if (m_curprintsize > m_maxprintsize)
+		{
+			openNextFile();
+			return true;
+		}
+		return false;
+	}
+
+	void close()
+	{
+		if (m_outfile)
+		{
+			print( m_tail);
+			::fclose( m_outfile);
+			m_outfile = 0;
+		}
+	}
+
+private:
+	void openNextFile()
+	{
+		close();
+		char filenamebuf[ 256];
+		::snprintf( filenamebuf, sizeof(filenamebuf), m_filenamefmt.c_str(), ++m_filecnt);
+		m_outfile = ::fopen( filenamebuf, "wb");
+		if (!m_outfile)
+		{
+			char msgbuf[ 512];
+			::snprintf( msgbuf, sizeof(msgbuf), "failed to open file %s for writing (%u)", filenamebuf, errno);
+			throw std::runtime_error( msgbuf);
+		}
+		print( m_header);
+		m_curprintsize = m_header.size();
+	}
+
+private:
+	std::string m_filenamefmt;
+	std::string m_header;
+	std::string m_tail;
+	std::size_t m_curprintsize;
+	std::size_t m_maxprintsize;
+	unsigned int m_filecnt;
+	FILE* m_outfile;
+};
+
+static int toInteger( const char* val, int minval, int maxval, const char* exceptionstr)
+{
+	int rt = 0;
+	bool sign = false;
+	char const* vi = val;
+	if (*vi == '-')
+	{
+		sign = true;
+		++vi;
+		if (!*vi) throw std::runtime_error( exceptionstr);
+	}
+	for(; *vi; ++vi)
+	{
+		if (*vi >= '0' && *vi <= '9')
+		{
+			rt = rt * 10 + (*vi - '0');
+		}
+		else
+		{
+			throw std::runtime_error( exceptionstr);
+		}
+	}
+	if (sign) rt = -rt;
+	if (rt < minval || rt > maxval)
+	{
+		throw std::runtime_error( exceptionstr);
+	}
+	return rt;
+}
 
 int main( int argc, const char* argv[])
 {
 	int rt = 0;
 	try
 	{
+		std::auto_ptr<FileOutput> fileOutput;
 		textwolf::PositionIndex rangeStart = 0;
 		textwolf::PositionIndex rangeEnd = std::numeric_limits<textwolf::PositionIndex>::max();
 		int minarg = 1;
+		std::set<int> namespacemap;
+		bool namespaceset = false;
 		bool printusage = false;
 		while (argc > minarg)
 		{
@@ -1613,6 +1719,71 @@ int main( int argc, const char* argv[])
 				}
 				++minarg;
 			}
+			else if (0==std::memcmp(argv[minarg],"-n",2))
+			{
+				namespaceset = true;
+				int nsidx;
+				if (argv[minarg][2])
+				{
+					nsidx = toInteger( argv[minarg]+2, -2, 3000, "integer between -2 and 3000 expected for option -n");
+				}
+				else
+				{
+					++minarg;
+					if (argc == minarg)
+					{
+						throw std::runtime_error( "no argument given for option -n (namespace)");
+					}
+					nsidx = toInteger( argv[minarg], -2, 3000, "integer between -2 and 3000 expected for option -n");
+				}
+				namespacemap.insert( nsidx);
+				++minarg;
+			}
+			else if (0==std::memcmp(argv[minarg],"-f",2))
+			{
+				std::string filenamefmt;
+				std::size_t maxprintsize = 1024*1024*1024;
+				std::string header;
+				std::string tail;
+				
+				std::string fileoutputstring;
+				if (argv[minarg][2])
+				{
+					fileoutputstring.append( argv[minarg]+2);
+				}
+				else
+				{
+					++minarg;
+					if (argc == minarg)
+					{
+						throw std::runtime_error( "no argument given for option -f (file output)");
+					}
+					fileoutputstring.append( argv[minarg]);
+				}
+				char const* ci = fileoutputstring.c_str();
+				char const* sizeptr = std::strchr( ci, ',');
+				if (sizeptr)
+				{
+					fileoutputstring[ sizeptr-ci] = '\0';
+					++sizeptr;
+					maxprintsize = parseRangeNumber( sizeptr);
+					if (std::strchr( fileoutputstring.c_str(), '%') == 0)
+					{
+						fileoutputstring.append( "%u");
+					}
+					if (*sizeptr)
+					{
+						throw std::runtime_error( "illegal chunk size spezifier after format string in option -f (file output)");
+					}
+				}
+				++minarg;
+				XmlPrinter xmlprinter;
+				xmlprinter.printHeader( 0, 0, header);
+				xmlprinter.printOpenTag( "mediawiki", header);
+				xmlprinter.exitTagContext( header);
+				xmlprinter.printCloseTag( tail);
+				fileOutput.reset( new FileOutput( fileoutputstring, maxprintsize, header, tail));
+			}
 			else if (argv[minarg][0] == '-' && argv[minarg][1])
 			{
 				std::cerr << "unknown option '" << argv[minarg] << "'" << std::endl;
@@ -1641,6 +1812,9 @@ int main( int argc, const char* argv[])
 			std::cerr << "                to output, e.g. 1G,3G for the documents" << std::endl;
 			std::cerr << "                starting after the 1st gigabyte to the " << std::endl;
 			std::cerr << "                first document ending after the 3rd gigabyte." << std::endl;
+			std::cerr << "    -n <ns>    :reduce output to namespace <ns> (0=article)" << std::endl;
+			std::cerr << "    -f <format>:split output to files" << std::endl;
+			std::cerr << "                  <format> => <filename format string>,<chunk size>" << std::endl;
 			return 0;
 		}
 		strus::InputStream input( argv[minarg]);
@@ -1654,10 +1828,14 @@ int main( int argc, const char* argv[])
 		XmlScanner xs( inputiterator);
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
 		XmlPrinter xmlprinter;
-
 		std::string buf;
+		std::size_t pagestart = 0;
+
 		xmlprinter.printHeader( 0, 0, buf);
-		std::cout << buf;
+		if (fileOutput.get())
+		{
+			buf.clear();
+		}
 		for (; itr!=end && !terminated; ++itr)
 		{
 			if (skipDoc)
@@ -1691,26 +1869,55 @@ int main( int argc, const char* argv[])
 				}
 				case XmlScanner::TagAttribName:
 				{
-					buf.clear();
-					xmlprinter.printAttribute( std::string(itr->content(), itr->size()), buf);
-					std::cout << buf;
-					buf.clear();
+					if (taglevel >= 2 || !fileOutput.get())
+					{
+						xmlprinter.printAttribute( std::string(itr->content(), itr->size()), buf);
+					}
 					break;
 				}
 				case XmlScanner::TagAttribValue:
 				{
-					buf.clear();
-					xmlprinter.printValue( std::string(itr->content(), itr->size()), buf);
-					std::cout << buf;
-					buf.clear();
+					if (taglevel >= 2 || !fileOutput.get())
+					{
+						xmlprinter.printValue( std::string(itr->content(), itr->size()), buf);
+					}
 					break;
 				}
 				case XmlScanner::OpenTag: 
 				{
 					++taglevel;
-					buf.clear();
+					if (namespaceset && taglevel == 3 && itr->size() == 2  && 0==std::memcmp( itr->content(), "ns", itr->size()))
+					{
+						xmlprinter.printOpenTag( std::string(itr->content(), itr->size()), buf);
+						++itr;
+						if (itr == end)
+						{
+							terminated = true;
+							break;
+						}
+						if (itr->type() == XmlScanner::Content)
+						{
+							std::string val( itr->content(), itr->size());
+							xmlprinter.printValue( val, buf);
+							try
+							{
+								int nsidx = toInteger( val.c_str(), -2, 3000, "integer between -2 and 3000 expected for tag value of ns");
+								if (namespacemap.find( nsidx) == namespacemap.end())
+								{
+									buf.resize( pagestart);
+									skipDoc = true;
+								}
+							}
+							catch (const std::exception& err)
+							{
+								std::cerr << "error mapping document namespace: " << err.what() << std::endl;
+							}
+						}
+						break;
+					}
 					if (taglevel == 2 && itr->size() == 4 && 0==std::memcmp( itr->content(), "page", itr->size()))
 					{
+						pagestart = buf.size();
 						textwolf::PositionIndex pos = xs.getIterator().position();
 						if (pos < rangeStart)
 						{
@@ -1720,15 +1927,14 @@ int main( int argc, const char* argv[])
 						else if (pos > rangeEnd)
 						{
 							xmlprinter.printCloseTag( buf);
-							std::cout << buf;
-							buf.clear();
 							terminated = true;
 							break;
 						}
 					}
-					xmlprinter.printOpenTag( std::string(itr->content(), itr->size()), buf);
-					std::cout << buf;
-					buf.clear();
+					if (taglevel >= 2 || !fileOutput.get())
+					{
+						xmlprinter.printOpenTag( std::string(itr->content(), itr->size()), buf);
+					}
 					if (itr->size() == 4 && 0==std::memcmp( itr->content(), "text", itr->size()))
 					{
 						inText = true;
@@ -1740,38 +1946,66 @@ int main( int argc, const char* argv[])
 				{
 					--taglevel;
 					inText = false;
-					buf.clear();
-					xmlprinter.printCloseTag( buf);
-					std::cout << buf;
-					buf.clear();
+					if (taglevel >= 1 || !fileOutput.get())
+					{
+						xmlprinter.printCloseTag( buf);
+					}
+					if (taglevel == 1)
+					{
+						if (fileOutput.get())
+						{
+							fileOutput->print( buf);
+							if (fileOutput->synchronize())
+							{
+								std::string tmpbuf;
+								xmlprinter.printHeader( 0, 0, tmpbuf);
+								xmlprinter.printOpenTag( "mediawiki", tmpbuf);
+							}
+						}
+						else
+						{
+							std::cout << buf;
+						}
+						buf.clear();
+						pagestart = 0;
+					}
 					break;
 				}
 				case XmlScanner::Content:
 				{
-					buf.clear();
 					xmlprinter.printValue( "", buf);
-					std::cout << buf;
-					buf.clear();
 					if (inText)
 					{
 #ifdef STRUS_LOWLEVEL_DEBUG
 						std::cerr << std::endl << "PROCESS CONTENT:" << std::endl << std::string( itr->content(), itr->size()) << std::endl << "." << std::endl;
 #endif
-						processText( std::cout, itr->content(), itr->size());
+						std::ostringstream textout;
+						processText( textout, itr->content(), itr->size());
+						buf.append( textout.str());
 					}
 					else
 					{
 						xmlprinter.printValue( std::string(itr->content(), itr->size()), buf);
-						std::cout << buf;
 					}
 					break;
 				}
 				case XmlScanner::Exit: break;
 			}
-			if (xmlprinter.lasterror())
-			{
-				throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
-			}
+		}
+		if (fileOutput.get())
+		{
+			fileOutput->print( buf);
+			fileOutput->close();
+		}
+		else
+		{
+			std::cout << buf;
+		}
+		buf.clear();
+		pagestart = 0;
+		if (xmlprinter.lasterror())
+		{
+			throw std::runtime_error( std::string( "textwolf xmlprinter: ") + xmlprinter.lasterror());
 		}
 		return rt;
 	}

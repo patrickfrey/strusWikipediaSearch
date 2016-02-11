@@ -4,9 +4,6 @@
 	date = text content /mediawiki/page/revision/timestamp();
 	contributor = text content /mediawiki/page/revision/contributor/username();
 
-[MetaData]
-	contribid = text content /mediawiki/page/revision/contributor/id();
-
 [SearchIndex]
 	start = empty content /mediawiki/page/revision/text;
 
@@ -53,6 +50,7 @@
 	doc = /mediawiki/page;
 
 [Aggregator]
-	doclen_tist = count( tist);
+	minpos_title = minpos( tist);
+	maxpos_title = maxpos( tist);
 	doclen = count( stem);
 

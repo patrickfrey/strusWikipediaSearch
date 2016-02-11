@@ -121,10 +121,15 @@ public:
 		return (m_pos == 0);
 	}
 
+	void clear()
+	{
+		m_pos = 0;
+	}
+
 private:
 	std::size_t topofs( std::size_t& elementsize)
 	{
-		if (m_pos < sizeof( std::size_t)) return false;
+		if (m_pos < sizeof( std::size_t)) return 0;
 		void* tt = m_ptr + (m_pos - sizeof( std::size_t));
 		elementsize = *(std::size_t*)(tt);
 		std::size_t align = getAlign( elementsize);
@@ -134,9 +139,9 @@ private:
 	}
 private:
 	enum {InitSize=256};
-	char* m_ptr;
+	char* m_ptr;		///< pointer to the tag hierarchy stack buffer
 	std::size_t m_pos;	///< current position in the tag hierarchy stack buffer
-	std::size_t m_size;	///< current position in the tag hierarchy stack buffer
+	std::size_t m_size;	///< current size of the tag hierarchy stack buffer
 
 	static std::size_t getAlign( std::size_t n)
 	{

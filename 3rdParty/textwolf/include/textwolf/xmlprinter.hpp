@@ -172,8 +172,17 @@ public:
 
 	/// \brief Copy constructor
 	XMLPrinter( const XMLPrinter& o)
-		:m_state(o.m_state),m_buf(o.m_buf),m_tagstack(o.m_tagstack),m_output(o.m_output),m_lasterror(o.m_lasterror)
+		:m_state(o.m_state),m_tagstack(o.m_tagstack),m_output(o.m_output),m_lasterror(o.m_lasterror)
 	{}
+
+	/// \brief Reset the state
+	/// \param[in] subDocument do not require an Xml header to be printed if set to true
+	void reset( bool subDocument=false)
+	{
+		m_state = subDocument?Content:Init;
+		m_tagstack.clear();
+		m_lasterror = 0;
+	}
 
 	/// \brief Prints an XML header (version "1.0")
 	/// \param [in] encoding character set encoding name
@@ -381,7 +390,6 @@ public:
 
 private:
 	State m_state;					///< internal state
-	BufferType m_buf;				///< element output buffer
 	TagStack m_tagstack;				///< tag name stack of open tags
 	IOCharset m_output;				///< output character set encoding
 	const char* m_lasterror;			///< the last error occurred
