@@ -57,7 +57,8 @@ public:
 		float k1_,
 		float b_,
 		float avgDocLength_,
-		float nofCollectionDocuments_,
+		float ffpart_,
+		double nofCollectionDocuments_,
 		const std::string& attribute_content_doclen_,
 		const std::string& attribute_title_doclen_,
 		unsigned int proximityMinDist_,
@@ -71,10 +72,10 @@ public:
 	{
 		PostingIteratorInterface* itr;
 		float weight;
-		float idf;
+		double idf;
 		bool relevant;
 
-		Feature( PostingIteratorInterface* itr_, float weight_, float idf_, bool relevant_)
+		Feature( PostingIteratorInterface* itr_, float weight_, double idf_, bool relevant_)
 			:itr(itr_),weight(weight_),idf(idf_),relevant(relevant_){}
 		Feature( const Feature& o)
 			:itr(o.itr),weight(o.weight),idf(o.idf),relevant(o.relevant){}
@@ -92,7 +93,8 @@ private:
 	float m_k1;
 	float m_b;
 	float m_avgDocLength;
-	float m_nofCollectionDocuments;
+	float m_ffpart;
+	double m_nofCollectionDocuments;
 	std::vector<Feature> m_weight_featar;
 	std::vector<Feature> m_struct_featar;
 	PostingIteratorInterface* m_title_itr;
@@ -114,7 +116,7 @@ class WeightingFunctionInstanceBM25_dpfc
 {
 public:
 	explicit WeightingFunctionInstanceBM25_dpfc( ErrorBufferInterface* errorhnd_)
-		:m_b(0.75),m_k1(1.5),m_avgdoclen(1000),m_proximityMinDist(150),m_title_ff_incr(1.5),m_sequence_ff_incr(1.5),m_sentence_ff_incr(0.5),m_relevant_df_factor(0.5),m_errorhnd(errorhnd_)
+		:m_b(0.75),m_k1(1.5),m_avgdoclen(1000),m_ffpart(0.5),m_proximityMinDist(150),m_title_ff_incr(1.5),m_sequence_ff_incr(1.5),m_sentence_ff_incr(0.5),m_relevant_df_factor(0.5),m_errorhnd(errorhnd_)
 	{}
 
 	virtual ~WeightingFunctionInstanceBM25_dpfc(){}
@@ -133,6 +135,7 @@ private:
 	float m_b;
 	float m_k1;
 	float m_avgdoclen;
+	float m_ffpart;
 	std::string m_attribute_content_doclen;
 	std::string m_attribute_title_doclen;
 	unsigned int m_proximityMinDist;

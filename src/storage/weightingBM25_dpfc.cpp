@@ -85,7 +85,8 @@ WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 		float k1_,
 		float b_,
 		float avgDocLength_,
-		float nofCollectionDocuments_,
+		float ffpart_,
+		double nofCollectionDocuments_,
 		const std::string& attribute_content_doclen_,
 		const std::string& attribute_title_doclen_,
 		unsigned int proximityMinDist_,
@@ -94,7 +95,7 @@ WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 		float sentence_ff_incr_,
 		float relevant_df_factor_,
 		ErrorBufferInterface* errorhnd_)
-	:m_k1(k1_),m_b(b_),m_avgDocLength(avgDocLength_)
+	:m_k1(k1_),m_b(b_),m_avgDocLength(avgDocLength_),m_ffpart(ffpart_)
 	,m_nofCollectionDocuments(nofCollectionDocuments_)
 	,m_weight_featar()
 	,m_struct_featar()
@@ -120,12 +121,12 @@ void WeightingFunctionContextBM25_dpfc::addWeightingFeature(
 		if (boost::algorithm::iequals( name_, "match"))
 		{
 			float nofMatches = stats_.documentFrequency()>=0?stats_.documentFrequency():(GlobalCounter)itr_->documentFrequency();
-			float idf = 0.0;
+			double idf = 0.0;
 			bool relevant = (m_nofCollectionDocuments * m_relevant_df_factor > nofMatches);
 	
 			if (m_nofCollectionDocuments > nofMatches * 2)
 			{
-				idf = logf(
+				idf = logl(
 						(m_nofCollectionDocuments - nofMatches + 0.5)
 						/ (nofMatches + 0.5));
 			}
@@ -333,7 +334,7 @@ double WeightingFunctionContextBM25_dpfc::call( const Index& docno)
 		{
 			m_metadata->skipDoc( docno);
 
-			double ff = fi->itr->frequency() + accu[ fidx];
+			double ff = (fi->itr->frequency() * m_ffpart) + accu[ fidx];
 			if (ff == 0.0)
 			{
 			}
@@ -393,6 +394,7 @@ void WeightingFunctionInstanceBM25_dpfc::addStringParameter( const std::string& 
 		else if (boost::algorithm::iequals( name, "k1")
 		||  boost::algorithm::iequals( name, "b")
 		||  boost::algorithm::iequals( name, "avgdoclen")
+		||  boost::algorithm::iequals( name, "ffpart")
 		||  boost::algorithm::iequals( name, "proxmindist")
 		||  boost::algorithm::iequals( name, "titleinc")
 		||  boost::algorithm::iequals( name, "seqinc")
@@ -428,6 +430,10 @@ void WeightingFunctionInstanceBM25_dpfc::addNumericParameter( const std::string&
 	{
 		m_avgdoclen = (double)value;
 	}
+	else if (boost::algorithm::iequals( name, "ffpart"))
+	{
+		m_ffpart = (double)value;
+	}
 	else if (boost::algorithm::iequals( name, "proxmindist"))
 	{
 		m_proximityMinDist = (unsigned int)value;
@@ -462,7 +468,7 @@ WeightingFunctionContextInterface* WeightingFunctionInstanceBM25_dpfc::createFun
 	try
 	{
 		GlobalCounter nofdocs = stats.nofDocumentsInserted()>=0?stats.nofDocumentsInserted():(GlobalCounter)storage_->nofDocumentsInserted();
-		return new WeightingFunctionContextBM25_dpfc( storage_, metadata, m_b, m_k1, m_avgdoclen, nofdocs, m_attribute_content_doclen, m_attribute_title_doclen, m_proximityMinDist, m_title_ff_incr, m_sequence_ff_incr, m_sentence_ff_incr, m_relevant_df_factor, m_errorhnd);
+		return new WeightingFunctionContextBM25_dpfc( storage_, metadata, m_b, m_k1, m_avgdoclen, m_ffpart, nofdocs, m_attribute_content_doclen, m_attribute_title_doclen, m_proximityMinDist, m_title_ff_incr, m_sequence_ff_incr, m_sentence_ff_incr, m_relevant_df_factor, m_errorhnd);
 	}
 	CATCH_ERROR_ARG1_MAP_RETURN( _TXT("error creating '%s' function context: %s"), "BM25_dpfc", *m_errorhnd, 0);
 }
@@ -500,7 +506,8 @@ WeightingFunctionInterface::Description WeightingFunctionBM25_dpfc::getDescripti
 		rt( Description::Param::Numeric, "k1", _TXT("parameter of the BM25 weighting scheme"), "0:1000");
 		rt( Description::Param::Numeric, "b", _TXT("parameter of the BM25 weighting scheme"), "0.0001:1000");
 		rt( Description::Param::Numeric, "avgdoclen", _TXT("the average document lenght"), "0:");
-		rt( Description::Param::String, "doclen", _TXT("the meta data element name referencing the document lenght for each document weighted"), "");
+		rt( Description::Param::Numeric, "ffpart", _TXT("fraction of the real ff that is used in the formula. Should be smaller than 1.0, because ff's growing high do not contribute anymore to the weight"), "0.0:1.0");
+		rt( Description::Param::Metadata, "doclen", _TXT("the meta data element name referencing the document lenght for each document weighted"), "");
 		rt( Description::Param::String, "proxmindist", _TXT("a minimum distance two features must have so that proximity is taken into account"), "0:");
 		rt( Description::Param::String, "titleinc", _TXT("the ff increment for features appearing in the title"), "0:");
 		rt( Description::Param::String, "seqinc", _TXT("the ff increment for features followed imeadiately by another query term"), "0:");

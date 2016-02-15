@@ -20,7 +20,7 @@
 <?php
 require "strus.php";
 
-function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks)
+function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks, $restrictdoc)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -34,6 +34,7 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks)
 			"lc"));
 
 	$queryeval->addTerm( "sentence", "sent", "");
+	$queryeval->addTerm( "para", "para", "");
 	if (!$scheme || $scheme == 'BM25')
 	{
 		$queryeval->addWeightingFunction( 1.0, "BM25", array(
@@ -52,9 +53,10 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks)
 
 	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
-			"type" => "orig", "len" => 40, "nof" => 3, "structseek" => 30,
-			"mark" => '#HL#$#/HL#',
-			".struct" => "sentence", ".match" => "docfeat" ) );
+			"type" => "orig", "attribute_title_maxpos" => "maxpos_title",
+			"windowsize" => 10, "sentencesize" => 100,
+			"mark" => '$#HL#$#/HL#',
+			".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ) );
 	$queryeval->addSelectionFeature( "selfeat");
 
 	$query = $queryeval->createQuery( $storage);
@@ -71,7 +73,10 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks)
 	}
 	$query->setMaxNofRanks( $maxNofRanks);
 	$query->setMinRank( $minRank);
-
+	if ($restrictdoc)
+	{
+		$query->addDocumentEvaluationSet( [ $restrictdoc ] );
+	}
 	return $query->evaluate();
 }
 
@@ -397,6 +402,7 @@ try {
 	$minRank = 0;
 	$nofRanks = 20;
 	$scheme = NULL;
+	$restrictdoc = NULL;
 	parse_str( getenv('QUERY_STRING'), $_GET);
 	$queryString = $_GET['q'];
 	if (array_key_exists( 'n', $_GET))
@@ -411,7 +417,10 @@ try {
 	{
 		$scheme = $_GET['s'];
 	}
-
+	if (array_key_exists( 'd', $_GET))
+	{
+		$restrictdoc = intval( $_GET['d']);
+	}
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );
 
@@ -433,7 +442,7 @@ try {
 	$time_start = microtime(true);
 	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25_dpfc')
 	{
-		$results = evalQueryText( $context, $scheme, $queryString, $minRank, $nofRanks);
+		$results = evalQueryText( $context, $scheme, $queryString, $minRank, $nofRanks, $restrictdoc);
 	}
 	else
 	{
@@ -445,6 +454,7 @@ try {
 	echo '<form name="search" class method="GET" action="evalQuery.php">';
 	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\"/>";
 	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
+	echo "<input type=\"hidden\" name=\"d\" value=\"$restrictdoc\"/>";
 	echo "<input type=\"radio\" name=\"s\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
 	echo "<input type=\"radio\" name=\"s\" value=\"BM25\" $BM25_checked/>BM25";
 	echo "<input type=\"radio\" name=\"s\" value=\"BM25_dpfc\" $BM25_dpfc_checked/>BM25(with proximity)";

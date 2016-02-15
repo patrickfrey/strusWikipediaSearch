@@ -8,9 +8,9 @@
 	start = empty content /mediawiki/page/revision/text;
 
 	para = empty content /mediawiki/page/revision/text;
-	para = empty content /mediawiki/page/revision/h1;
-	para = empty content /mediawiki/page/revision/h2;
-	para = empty content /mediawiki/page/revision/h3;
+	para = empty content /mediawiki/page/revision/text/h1;
+	para = empty content /mediawiki/page/revision/text/h2;
+	para = empty content /mediawiki/page/revision/text/h3;
 
 	tist = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
 
@@ -25,6 +25,10 @@
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h6();
 
 	sent = empty punctuation(en,".") /mediawiki/page/revision/text();
+	sent = empty punctuation(en,".") /mediawiki/page/revision/text/h1~;
+	sent = empty punctuation(en,".") /mediawiki/page/revision/text/h2~;
+	sent = empty punctuation(en,".") /mediawiki/page/revision/text/h3~;
+
 	linkvar = empty content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
 	catgvar = empty content {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
 	wwwvar = empty content {position=pred} /mediawiki/page/revision/text//wwwlink();

@@ -1960,6 +1960,7 @@ int main( int argc, const char* argv[])
 								std::string tmpbuf;
 								xmlprinter.printHeader( 0, 0, tmpbuf);
 								xmlprinter.printOpenTag( "mediawiki", tmpbuf);
+								xmlprinter.exitTagContext( tmpbuf);
 							}
 						}
 						else
