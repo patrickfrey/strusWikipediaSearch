@@ -54,28 +54,28 @@ public:
 	WeightingFunctionContextBM25_dpfc(
 		const StorageClientInterface* storage,
 		MetaDataReaderInterface* metadata_,
-		float k1_,
-		float b_,
-		float avgDocLength_,
-		float ffpart_,
+		double k1_,
+		double b_,
+		double avgDocLength_,
+		double ffpart_,
 		double nofCollectionDocuments_,
 		const std::string& attribute_content_doclen_,
 		const std::string& attribute_title_doclen_,
 		unsigned int proximityMinDist_,
-		float title_ff_incr,
-		float sequence_ff_incr,
-		float sentence_ff_incr,
-		float relevant_df_factor,
+		double title_ff_incr,
+		double sequence_ff_incr,
+		double sentence_ff_incr,
+		double relevant_df_factor,
 		ErrorBufferInterface* errorhnd);
 
 	struct Feature
 	{
 		PostingIteratorInterface* itr;
-		float weight;
+		double weight;
 		double idf;
 		bool relevant;
 
-		Feature( PostingIteratorInterface* itr_, float weight_, double idf_, bool relevant_)
+		Feature( PostingIteratorInterface* itr_, double weight_, double idf_, bool relevant_)
 			:itr(itr_),weight(weight_),idf(idf_),relevant(relevant_){}
 		Feature( const Feature& o)
 			:itr(o.itr),weight(o.weight),idf(o.idf),relevant(o.relevant){}
@@ -90,10 +90,10 @@ public:
 	virtual double call( const Index& docno);
 
 private:
-	float m_k1;
-	float m_b;
-	float m_avgDocLength;
-	float m_ffpart;
+	double m_k1;
+	double m_b;
+	double m_avgDocLength;
+	double m_ffpart;
 	double m_nofCollectionDocuments;
 	std::vector<Feature> m_weight_featar;
 	std::vector<Feature> m_struct_featar;
@@ -102,10 +102,10 @@ private:
 	int m_metadata_content_doclen;
 	int m_metadata_title_doclen;
 	unsigned int m_proximityMinDist;
-	float m_title_ff_incr;
-	float m_sequence_ff_incr;
-	float m_sentence_ff_incr;
-	float m_relevant_df_factor;
+	double m_title_ff_incr;
+	double m_sequence_ff_incr;
+	double m_sentence_ff_incr;
+	double m_relevant_df_factor;
 	ErrorBufferInterface* m_errorhnd;				///< buffer for error messages
 };
 
@@ -116,7 +116,7 @@ class WeightingFunctionInstanceBM25_dpfc
 {
 public:
 	explicit WeightingFunctionInstanceBM25_dpfc( ErrorBufferInterface* errorhnd_)
-		:m_b(0.75),m_k1(1.5),m_avgdoclen(1000),m_ffpart(0.5),m_proximityMinDist(150),m_title_ff_incr(1.5),m_sequence_ff_incr(1.5),m_sentence_ff_incr(0.5),m_relevant_df_factor(0.5),m_errorhnd(errorhnd_)
+		:m_k1(1.5),m_b(0.75),m_avgdoclen(1000),m_ffpart(0.5),m_proximityMinDist(150),m_title_ff_incr(1.5),m_sequence_ff_incr(1.5),m_sentence_ff_incr(0.5),m_relevant_df_factor(0.5),m_errorhnd(errorhnd_)
 	{}
 
 	virtual ~WeightingFunctionInstanceBM25_dpfc(){}
@@ -132,17 +132,17 @@ public:
 	virtual std::string tostring() const;
 
 private:
-	float m_b;
-	float m_k1;
-	float m_avgdoclen;
-	float m_ffpart;
+	double m_k1;
+	double m_b;
+	double m_avgdoclen;
+	double m_ffpart;
 	std::string m_attribute_content_doclen;
 	std::string m_attribute_title_doclen;
 	unsigned int m_proximityMinDist;
-	float m_title_ff_incr;
-	float m_sequence_ff_incr;
-	float m_sentence_ff_incr;
-	float m_relevant_df_factor;
+	double m_title_ff_incr;
+	double m_sequence_ff_incr;
+	double m_sentence_ff_incr;
+	double m_relevant_df_factor;
 	ErrorBufferInterface* m_errorhnd;				///< buffer for error messages
 };
 

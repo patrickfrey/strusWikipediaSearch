@@ -163,7 +163,7 @@ static bool wordFilter_inv( const char* src, const char* end)
 				return false;
 			}
 			++midAlpha;
-			++si;
+			si = skipChar( si);
 		}
 		if (((*si|32) >= 'a' && (*si|32) <= 'z') || *si == '_')
 		{

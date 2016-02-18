@@ -41,20 +41,21 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
 				".match" => "docfeat" ));
 	}
-	elseif ($scheme == 'BM25_dpfc')
+	elseif ($scheme == 'BM25pff')
 	{
-		$queryeval->addWeightingFunction( 1.0, "BM25_dpfc", array(
-				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
-				"doclen_title" => "doclen_tist", "titleinc" => 5.0,
-				"seqinc" => 2.0, "relevant" => 0.1,
-				".match" => "docfeat" ));
+		$queryeval->addWeightingFunction( 1.0, "BM25pff", array(
+				"k1" => 1.5, "b" => 0.75, "avgdoclen" => 500,
+				"metadata_title_maxpos" => "maxpos_title", "metadata_doclen" => "doclen",
+				"titleinc" => 2.4, "windowsize" => 40, cardinality => 3, "ffbase" => 0.4,
+				"maxdf" => 0.4,
+				".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ));
 	}
 	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
 
 	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
-			"type" => "orig", "attribute_title_maxpos" => "maxpos_title",
-			"windowsize" => 10, "sentencesize" => 100,
+			"type" => "orig", "metadata_title_maxpos" => "maxpos_title",
+			"windowsize" => 40, "sentencesize" => 100, cardinality => 3,
 			"mark" => '$#HL#$#/HL#',
 			".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ) );
 	$queryeval->addSelectionFeature( "selfeat");
@@ -425,22 +426,22 @@ try {
 	$storage = $context->createStorageClient( "" );
 
 	$BM25_checked = "";
-	$BM25_dpfc_checked = "";
+	$BM25pff_checked = "";
 	$NBLNK_checked = "";
 	if (!$scheme || $scheme == 'BM25')
 	{
 		$BM25_checked = "checked";
 	}
-	else if ($scheme == 'BM25_dpfc')
+	else if ($scheme == 'BM25pff')
 	{
-		$BM25_dpfc_checked = "checked";
+		$BM25pff_checked = "checked";
 	}
 	else if ($scheme == 'NBLNK')
 	{
 		$NBLNK_checked = "checked";
 	}
 	$time_start = microtime(true);
-	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25_dpfc')
+	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25pff')
 	{
 		$results = evalQueryText( $context, $scheme, $queryString, $minRank, $nofRanks, $restrictdoc);
 	}
@@ -457,13 +458,13 @@ try {
 	echo "<input type=\"hidden\" name=\"d\" value=\"$restrictdoc\"/>";
 	echo "<input type=\"radio\" name=\"s\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
 	echo "<input type=\"radio\" name=\"s\" value=\"BM25\" $BM25_checked/>BM25";
-	echo "<input type=\"radio\" name=\"s\" value=\"BM25_dpfc\" $BM25_dpfc_checked/>BM25(with proximity)";
+	echo "<input type=\"radio\" name=\"s\" value=\"BM25pff\" $BM25pff_checked/>BM25(proximity weighted ff)";
 	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
 	echo '</form>';
 	echo '</div>';
 	echo '</div>';
 	echo "<p>query answering time: $query_answer_time seconds</p>";
-	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25_dpfc')
+	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25pff')
 	{
 		foreach ($results as &$result)
 		{

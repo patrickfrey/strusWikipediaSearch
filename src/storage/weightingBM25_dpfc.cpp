@@ -82,18 +82,18 @@ std::runtime_error runtime_error( const char* format, ...)
 WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 		const StorageClientInterface* storage,
 		MetaDataReaderInterface* metadata_,
-		float k1_,
-		float b_,
-		float avgDocLength_,
-		float ffpart_,
+		double k1_,
+		double b_,
+		double avgDocLength_,
+		double ffpart_,
 		double nofCollectionDocuments_,
 		const std::string& attribute_content_doclen_,
 		const std::string& attribute_title_doclen_,
 		unsigned int proximityMinDist_,
-		float title_ff_incr_,
-		float sequence_ff_incr_,
-		float sentence_ff_incr_,
-		float relevant_df_factor_,
+		double title_ff_incr_,
+		double sequence_ff_incr_,
+		double sentence_ff_incr_,
+		double relevant_df_factor_,
 		ErrorBufferInterface* errorhnd_)
 	:m_k1(k1_),m_b(b_),m_avgDocLength(avgDocLength_),m_ffpart(ffpart_)
 	,m_nofCollectionDocuments(nofCollectionDocuments_)
@@ -120,7 +120,7 @@ void WeightingFunctionContextBM25_dpfc::addWeightingFeature(
 	{
 		if (boost::algorithm::iequals( name_, "match"))
 		{
-			float nofMatches = stats_.documentFrequency()>=0?stats_.documentFrequency():(GlobalCounter)itr_->documentFrequency();
+			double nofMatches = stats_.documentFrequency()>=0?stats_.documentFrequency():(GlobalCounter)itr_->documentFrequency();
 			double idf = 0.0;
 			bool relevant = (m_nofCollectionDocuments * m_relevant_df_factor > nofMatches);
 	
@@ -468,7 +468,7 @@ WeightingFunctionContextInterface* WeightingFunctionInstanceBM25_dpfc::createFun
 	try
 	{
 		GlobalCounter nofdocs = stats.nofDocumentsInserted()>=0?stats.nofDocumentsInserted():(GlobalCounter)storage_->nofDocumentsInserted();
-		return new WeightingFunctionContextBM25_dpfc( storage_, metadata, m_b, m_k1, m_avgdoclen, m_ffpart, nofdocs, m_attribute_content_doclen, m_attribute_title_doclen, m_proximityMinDist, m_title_ff_incr, m_sequence_ff_incr, m_sentence_ff_incr, m_relevant_df_factor, m_errorhnd);
+		return new WeightingFunctionContextBM25_dpfc( storage_, metadata, m_k1, m_b, m_avgdoclen, m_ffpart, nofdocs, m_attribute_content_doclen, m_attribute_title_doclen, m_proximityMinDist, m_title_ff_incr, m_sequence_ff_incr, m_sentence_ff_incr, m_relevant_df_factor, m_errorhnd);
 	}
 	CATCH_ERROR_ARG1_MAP_RETURN( _TXT("error creating '%s' function context: %s"), "BM25_dpfc", *m_errorhnd, 0);
 }

@@ -1,26 +1,10 @@
 #!/bin/sh
 
-# This script assumes that the meta data table schema is initialized as
-# doclen UInt16
-# doclen_tist UInt8
-# contribid UInt32
-# pageweight Float32
-#
+# This script assumes that the meta data table schema has an element "pageweight Float32" defined
 
 STORAGEPATH=storage
 
-# [1] Initialize the document title length attribute (for weighting schema BM15 on title):
-echo "[1.1] create a map docno -> length of document (number of stems)"
-strusInspect -s "path=$STORAGEPATH" ttc stem > resources/metadata_doclen.txt
-echo "[1.1] create a map docno -> length of title (number of title terms)"
-strusInspect -s "path=$STORAGEPATH" ttc tist > resources/metadata_tist_doclen.txt
-echo "[1.2] update the meta data table element doclen with the document lengths calculated"
-strusUpdateStorage -s "path=$STORAGEPATH" -m doclen resources/metadata_doclen.txt
-echo "[1.2] update the meta data table element doclen_tist with the title lengths calculated"
-strusUpdateStorage -s "path=$STORAGEPATH" -m doclen_tist resources/metadata_tist_doclen.txt
-
-
-# [2] Initialize the link popularity weight in document meta data (element pageweight):
+# Initialize the link popularity weight in document meta data (element pageweight):
 echo "[2.1] get the link reference statistics"
 strusInspect -s "path=$STORAGEPATH" fwstats linkid > resources/linkid_list.txt
 echo "[2.2] get the docno -> docid map"
