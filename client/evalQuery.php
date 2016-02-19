@@ -46,7 +46,7 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 		$queryeval->addWeightingFunction( 1.0, "BM25pff", array(
 				"k1" => 1.5, "b" => 0.75, "avgdoclen" => 500,
 				"metadata_title_maxpos" => "maxpos_title", "metadata_doclen" => "doclen",
-				"titleinc" => 2.4, "windowsize" => 40, cardinality => 3, "ffbase" => 0.4,
+				"titleinc" => 2.4, "windowsize" => 40, cardinality => 0, "ffbase" => 0.4,
 				"maxdf" => 0.4,
 				".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ));
 	}
@@ -56,7 +56,7 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
 			"type" => "orig", "metadata_title_maxpos" => "maxpos_title",
 			"windowsize" => 40, "sentencesize" => 100, cardinality => 3,
-			"mark" => '$#HL#$#/HL#',
+			"matchmark" => '$#HL#$#/HL#',
 			".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ) );
 	$queryeval->addSelectionFeature( "selfeat");
 
