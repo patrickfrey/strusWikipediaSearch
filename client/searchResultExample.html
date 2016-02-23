@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Search Wikipedia with Strus</title>
+<link href="strus.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="favicon.ico?v=2" type="image/x-icon" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div id="navigation">
+<div id="logo">
+ <a target="_blank" href="http://project-strus.net">
+  <img width="100%" src="strus_logo.jpg" alt="strus logo"/>
+<!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
+-->
+ </a>
+</div>
+
+<div id="toolbar">
+<form id="searchbox" name="search" class method="GET" action="evalQuery.php">
+<select name="s" id="scheme">
+ <option>NBLNK</option>
+ <option>BM25</option>
+ <option selected>BM25pff</option>
+</select> 
+<input id="search" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="search engine software library "/>
+<input id="submit" type="submit" value="Search" />
+<input type="hidden" name="i" value="0"/>
+<input type="hidden" name="n" value="20"/>
+</form>
+
+<form id="navprev" name="prev" class method="GET" action="evalQuery.php">
+<input type="hidden" name="s" value="BM25"/>
+<input type="hidden" name="q" value="search engine software library "/>
+<input id="submit" type="submit" value="<<" />
+<input type="hidden" name="i" value="0"/>
+<input type="hidden" name="n" value="20"/>
+</form>
+
+<form id="navnext" name="next" class method="GET" action="evalQuery.php">
+<input type="hidden" name="s" value="BM25"/>
+<input type="hidden" name="q" value="search engine software library "/>
+<input id="submit" type="submit" value=">>" />
+<input type="hidden" name="i" value="0"/>
+<input type="hidden" name="n" value="20"/>
+</form>
+</div>
+</div>
+
+<div id="searchinfo">
+<p>Query answering time: 0.072 seconds</p>
+</div>
+
+<div id="searchresult">
+  <ul>
+    <li>
+      <h3>The Grasslands</h3>
+      <div id="rank">
+      <div id="rank_docno">1428928</div>
+      <div id="rank_weight">21.9839</div>
+      <div id="rank_abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b>Praesent</b> euismod ultrices ante, ac <b>laoreet</b> nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</div>
+      </div>
+    </li>
+      
+    <li>
+      <h3>Paradise Found</h3>
+      <div id="rank_docno">1428928</div>
+      <div id="rank_weight">21.9839</div>
+      <div id="rank_abstract">Lorem ipsum dolor sit amet, <b>consectetur</b> adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</div>
+    </li>
+
+    <li>
+      <h3>Smoke On The Water</h3>
+      <div id="rank_docno">1428928</div>
+      <div id="rank_weight">21.9839</div>
+      <div id="rank_abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</div>
+    </li>
+
+    <li>
+      <h3>Headline</h3>
+      <div id="rank_docno">1428928</div>
+      <div id="rank_weight">21.9839</div>
+      <div id="rank_abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</div>
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>
+
+

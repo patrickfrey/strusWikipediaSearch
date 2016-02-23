@@ -1,122 +1,166 @@
-body {
-	background:#fff
-	top center no-repeat;
-	color:#303030;
-	font:84% Arial,Helvetica,sans-serif; line-height:1.6em;
-}
+* {margin: 0; padding: 0;}
 
 h1 {
-	color:#888;
-	font-size:1.2em;
-	line-height:1.1em;
-	margin:20px 0 0 0;
+    color:#888;
+    margin: 10px 10px;
+    font: bold 20px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-#search_form  {
-	display: table;
+h2 {
+    margin: 0px 5px;
+    font: bold 17px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-#search_elements {
-	display: table-row;
+#navigation  {
+    margin: 10px;
 }
 
-#search_logo {
-	display: table-cell;
-	align: center;
-	width: 3%;
+#logo {
+    margin: 10px;
+    height: 75px;
+    width: 75px;
 }
 
-#strus_logo {
-	display:block;
+#toolbar
+{
+    border-width: 0px;
+    border-style: solid;
+    border-color: #988;
 }
 
-#search_input {
-	display: table-cell;
-	align: top;
-	width: 45%;
+#searchbox
+{
+    background-color: #1111;
+    width: 508px;
+    height: 55px;
+    padding: 10px 10px;
 }
 
-#search_button {
-	display: table-cell;
-	align: center;
-	width: 3%;
+#navprev,
+#navnext
+{
+    padding: 31px 3px;
 }
 
-#navigation_form  {
-	display: table;
+#logo,
+#toolbar
+{
+    float: left;
 }
 
-#navigation_elements {
-	display: table-row;
+#searchbox,
+#navprev,
+#navnext
+{
+    float: left;
 }
 
-#navigation_next {
-	display: table-cell;
-	align: center;
-	width: 20%;
+#search, 
+#submit,
+{
+    float: left;
 }
 
-#navigation_prev {
-	display: table-cell;
-	align: center;
-	width: 20%;
+#search {
+    padding: 5px 9px;
+    height: 23px;
+    width: 392px;
+    border: 1px solid #988;
+    font: normal 13px 'Open Sans', Arial, sans-serif;
+    background: #11888;
 }
 
-#search_ranklist {
-	display: table;
+#submit
+{
+    border-width: 1px;
+    border-style: solid;
+    border-color: #988;
+    height: 35px;
+    margin: 2px 0 0 0;
+    padding: 0;
+    width: 90px;
+    cursor: pointer;
+    font: bold 14px 'Open Sans', Arial, sans-serif;
+    color: #303030;
 }
 
-#search_rank {
-	display: table-row;
+#submit:active {       
+    background: #988;
+    outline: none;
 }
 
-#rank_docno {
-	display: table-cell;
-	font-size:0.7em;
-	align: center;
-	width: 5%;
+#submit::-moz-focus-inner {
+    border: 0;
 }
 
-#rank_weight {
-	display: table-cell;
-	font-size:0.7em;
-	align: center;
-	width: 5%;
+#scheme
+{
+    width: 505px;
 }
 
-#rank_content {
-	display: table-cell;
-	align: center;
-	width: 80%;
+#searchinfo
+{
+    clear: left;
+    margin: 0px 115px;
+    font: normal 13px 'Open Sans', Arial, sans-serif;
 }
 
-#rank_title {
-	color:#3888;
-	font-size:1.2em;
-	line-height:1.3em;
-	margin:10px 0 0 0;
+#searcherror
+{
+    clear: left;
+    margin: 0px 115px;
+    font: bold 16px 'Open Sans', Arial, sans-serif;
+    color: red;
 }
 
-#rank_summary {
-	color:#668888;
-	font-size:1.1em;
-	line-height:1.2em;
-	width: 80%;
+#searchresult {
+    margin: 20px 10px;
 }
 
-span.match {
-	font-weight: bold;
+ul {
+    list-style-type: none;
+    width: 80%;
 }
 
-#footer {
-	display: table;
-	width: 80%;
+h3 {
+    font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-#error {
-	color:#D30000;
-	font-size:1.5em;
-	line-height:1.4em;
-	margin:20px 0 0 0;
+li #rank_docno {
+    margin: 0px 5px;
+    width: 45px;
+    float:left;
+    color: #388;
+    font: 200 12px/1.5 'Open Sans', Arial, sans-serif;
+}
+
+li #rank_weight {
+    margin: 0px 5px;
+    width: 45px;
+    float:left;
+    color: #388;
+    font: 200 12px/1.5 'Open Sans', Arial, sans-serif;
+}
+
+li #rank_abstract {
+    margin: 0px 5px;
+    float:left;
+    color: #133;
+    font: normal 12px/1.5 'Open Sans', Arial, sans-serif;
+}
+
+li b {
+    font: 12px/1.5 'Open Sans', Arial, sans-serif;
+    color: blue;
+}
+
+li {
+    padding: 5px;
+    overflow: auto;
+}
+
+li:hover {
+    background: #eee;
+    cursor: pointer;
 }
 

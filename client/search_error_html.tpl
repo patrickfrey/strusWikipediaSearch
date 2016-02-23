@@ -1,5 +1,6 @@
-{% extends "search_html.tpl" %}
+{% extends "search_base_html.tpl" %}
 
-{% block ranklist %}
-<p><font color="red">Error: {{message}}</font></p>
+{% block resultblock %}
+<div id="searcherror"><p>Error: {{message}}</p></div>
 {% end %}
+

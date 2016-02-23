@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Search Wikipedia with Strus</title>
+<title>Wikipedia search with Strus</title>
 <link href="strus.css" rel="stylesheet" type="text/css">
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 <body>
-<h1>Project Strus: A demo search engine for Wikipedia (english)</h1>
-<div id="search_form">
-<div id="search_elements">
-<div id="search_logo">
+<div id="navigation">
+<div id="logo">
  <a target="_blank" href="http://project-strus.net">
-  <img style="display:block;" width="100%" src="strus_logo.jpg" alt="strus logo"/>
+  <img width="100%" src="strus_logo.jpg" alt="strus logo"/>
 <!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
 -->
  </a>
@@ -46,7 +45,7 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 		$queryeval->addWeightingFunction( 1.0, "BM25pff", array(
 				"k1" => 1.5, "b" => 0.75, "avgdoclen" => 500,
 				"metadata_title_maxpos" => "maxpos_title", "metadata_doclen" => "doclen",
-				"titleinc" => 2.4, "windowsize" => 40, cardinality => 0, "ffbase" => 0.4,
+				"titleinc" => 2.4, "windowsize" => 40, 'cardinality' => 0, "ffbase" => 0.4,
 				"maxdf" => 0.4,
 				".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ));
 	}
@@ -55,7 +54,7 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
 	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
 			"type" => "orig", "metadata_title_maxpos" => "maxpos_title",
-			"windowsize" => 40, "sentencesize" => 100, cardinality => 3,
+			"windowsize" => 40, "sentencesize" => 60, 'cardinality' => 3,
 			"matchmark" => '$#HL#$#/HL#',
 			".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ) );
 	$queryeval->addSelectionFeature( "selfeat");
@@ -232,7 +231,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 			array( "stem", "en" ),
 			array("convdia", "en" ),
 			"lc"));
-	
+
 	$queryeval->addWeightingFunction( 1.0, "BM25", array(
 			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
 			".match" => "docfeat" ));
@@ -241,6 +240,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	$queryeval->addSummarizer(
 			"LINK", "accuvariable", array(
 				".match" => "sumfeat",
+				"norm" => 0.001,
 				"var" => "LINK",
 				"type" => "linkid"
 			) );
@@ -365,7 +365,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	$candidates = $query->evaluate();
 
 	$linktab = array();
-	foreach ($candidates as &$candidate)
+	foreach ($candidates->ranks as &$candidate)
 	{
 		foreach( $candidate->attributes as &$attrib)
 		{
@@ -399,16 +399,79 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	return $rt;
 }
 
+function mapResultHeader( $queryString, $duration, $scheme, $docno, $minRank, $maxNofRanks, $hasNext)
+{
+	if ($docno != 0)
+	{
+		$minRank = 0;
+	}
+	$selected_scheme = array("","","");
+	if ($scheme == "NBLNK")
+	{
+		$selected_scheme[0] = " selected";
+	}
+	elseif ($scheme == "BM25")
+	{
+		$selected_scheme[1] = " selected";
+	}
+	elseif ($scheme == "BM25pff")
+	{
+		$selected_scheme[2] = " selected";
+	}
+	echo "<div id=\"toolbar\">";
+	echo "<form id=\"searchbox\" name=\"search\" class method=\"GET\" action=\"evalQuery.php\">";
+	echo "<select name=\"s\" id=\"scheme\">";
+	echo " <option$selected_scheme[0]>NBLNK</option>";
+	echo " <option$selected_scheme[1]>BM25</option>";
+	echo " <option$selected_scheme[2]>BM25pff</option>";
+	echo "</select>";
+	echo "<input id=\"search\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\"/>";
+	echo "<input id=\"submit\" type=\"submit\" value=\"Search\" />";
+	echo "<input type=\"hidden\" name=\"n\" value=\"$maxNofRanks\"/>";
+	echo "</form>";
+	if ($minRank > 0 && $docno == 0)
+	{
+		$prevRank = $minRank - $maxNofRanks;
+		if ($prevRank < 0)
+		{
+			$prevRank = 0;
+		}
+		echo "<form id=\"navprev\" name=\"prev\" class method=\"GET\" action=\"evalQuery.php\">";
+		echo "<input type=\"hidden\" name=\"s\" value=\"$scheme\"/>";
+		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\"/>";
+		echo "<input id=\"submit\" type=\"submit\" value=\"<<\" />";
+		echo "<input type=\"hidden\" name=\"i\" value=\"$prevRank\"/>";
+		echo "<input type=\"hidden\" name=\"n\" value=\"$maxNofRanks\"/>";
+		echo "</form>";
+	}
+	if ($hasNext != 0 && $docno == 0)
+	{
+		$nextRank = $minRank + $maxNofRanks;
+		echo "<form id=\"navnext\" name=\"next\" class method=\"GET\" action=\"evalQuery.php\">";
+		echo "<input type=\"hidden\" name=\"s\" value=\"$scheme\"/>";
+		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\"/>";
+		echo "<input id=\"submit\" type=\"submit\" value=\">>\" />";
+		echo "<input type=\"hidden\" name=\"i\" value=\"$nextRank\"/>";
+		echo "<input type=\"hidden\" name=\"n\" value=\"$maxNofRanks\"/>";
+		echo "</form>";
+	}
+	echo "</div>";
+	echo "</div>";
+	echo "<div id=\"searchinfo\">";
+	echo "<p>Query answering time: $duration seconds</p>";
+	echo "</div>";
+}
+
 try {
 	$minRank = 0;
-	$nofRanks = 20;
+	$maxNofRanks = 10;
 	$scheme = NULL;
 	$restrictdoc = NULL;
 	parse_str( getenv('QUERY_STRING'), $_GET);
 	$queryString = $_GET['q'];
 	if (array_key_exists( 'n', $_GET))
 	{
-		$nofRanks = intval( $_GET['n']);
+		$maxNofRanks = intval( $_GET['n']);
 	}
 	if (array_key_exists( 'i', $_GET))
 	{
@@ -425,54 +488,34 @@ try {
 	$context = new StrusContext( "localhost:7181" );
 	$storage = $context->createStorageClient( "" );
 
-	$BM25_checked = "";
-	$BM25pff_checked = "";
-	$NBLNK_checked = "";
-	if (!$scheme || $scheme == 'BM25')
-	{
-		$BM25_checked = "checked";
-	}
-	else if ($scheme == 'BM25pff')
-	{
-		$BM25pff_checked = "checked";
-	}
-	else if ($scheme == 'NBLNK')
-	{
-		$NBLNK_checked = "checked";
-	}
 	$time_start = microtime(true);
 	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25pff')
 	{
-		$results = evalQueryText( $context, $scheme, $queryString, $minRank, $nofRanks, $restrictdoc);
+		$result = evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks, $restrictdoc);
+		$nof_results = count( $result->ranks );
 	}
 	else
 	{
-		$results = evalQueryNBLNK( $context, $queryString, $minRank, $nofRanks);
+		$result = evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks);
+		$nof_results = count( $result );
 	}
+	$hasNext = ($nof_results == $maxNofRanks);
 	$time_end = microtime(true);
 	$query_answer_time = number_format( $time_end - $time_start, 3);
 
-	echo '<form name="search" class method="GET" action="evalQuery.php">';
-	echo "<input id=\"search_input\" class=\"textinput\" type=\"text\" maxlength=\"256\" size=\"32\" name=\"q\" tabindex=\"1\" value=\"$queryString\"/>";
-	echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
-	echo "<input type=\"hidden\" name=\"d\" value=\"$restrictdoc\"/>";
-	echo "<input type=\"radio\" name=\"s\" value=\"NBLNK\" $NBLNK_checked/>NBLNK";
-	echo "<input type=\"radio\" name=\"s\" value=\"BM25\" $BM25_checked/>BM25";
-	echo "<input type=\"radio\" name=\"s\" value=\"BM25pff\" $BM25pff_checked/>BM25(proximity weighted ff)";
-	echo '<input id="search_button" type="image" src="search_button.jpg" tabindex="2"/>';
-	echo '</form>';
-	echo '</div>';
-	echo '</div>';
-	echo "<p>query answering time: $query_answer_time seconds</p>";
+	mapResultHeader( $queryString, $query_answer_time, $scheme, $restrictdoc, $minRank, $maxNofRanks, $hasNext);
+
+	echo '<div id="searchresult"><ul>';
+
 	if (!$scheme || $scheme == 'BM25' || $scheme == 'BM25pff')
 	{
-		foreach ($results as &$result)
+		foreach ($result->ranks as &$rank)
 		{
 			$highlight = array( "#HL#", "#/HL#");
 			$hlmarkup  = array( "<b>", "</b>");
 			$content = '';
 			$title = '';
-			foreach( $result->attributes as &$attrib ) {
+			foreach( $rank->attributes as &$attrib ) {
 				if( strcmp( $attrib->name, 'TITLE' ) == 0 ) {
 					$title = $attrib->value;
 				}
@@ -484,64 +527,36 @@ try {
 				}
 				$link = strtr ($title, array (' ' => '_'));
 			}
-			echo '<div id="search_rank">';
-				echo '<div id="rank_docno">' . "$result->docno</div>";
-				echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
-				echo '<div id="rank_content">';
-					echo '<div id="rank_title">' . "<a href=\"http://en.wikipedia.org/wiki/$link\">$title</a></div>";
-					echo '<div id="rank_summary">' . "$content</div>";
-				echo '</div>';
+			echo '<li onclick="parent.location=' . "'https://en.wikipedia.org/wiki/" . $link . "'" . '">';
+			echo '<h3>' . $title . '</h3>';
+			echo '<div id="rank">';
+				echo '<div id="rank_docno">' . "$rank->docno</div>";
+				echo '<div id="rank_weight">' . number_format( $rank->weight, 4) . "</div>";
+				echo '<div id="rank_abstract">' . "$content</div>";
 			echo '</div>';
+			echo '</li>';
 		}
 	}
 	else
 	{
-		foreach ($results as &$result)
+		foreach ($result as &$rank)
 		{
-			$link = strtr ($result->title, array (' ' => '_'));
+			$link = strtr ($rank->title, array (' ' => '_'));
+			echo '<li onclick="parent.location=' . "'https://en.wikipedia.org/wiki/" . $link . "'" . '">';
+			echo '<h3>' . $rank->title . '</h3>';
 			echo '<div id="search_rank">';
-				echo '<div id="rank_weight">' . number_format( $result->weight, 4) . "</div>";
-				echo '<div id="rank_content">';
-					echo '<div id="rank_title">' . "<a href=\"http://en.wikipedia.org/wiki/$link\">$result->title</a></div>";
-				echo '</div>';
+				echo '<div id="rank_weight">' . number_format( $rank->weight, 4) . "</div>";
 			echo '</div>';
+			echo '</li>';
 		}
 	}
-	echo '</div>';
-	echo '<div id="navigation_form">';
-	echo '<div id="navigation_elements">';
-	$nextMinRank = $minRank + $nofRanks;
-	$prevMinRank = $minRank - $nofRanks;
-	if ($prevMinRank >= 0)
-	{
-		echo '<form name="nav_prev" class method="GET" action="evalQuery.php">';
-		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\"/>";
-		echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\"/>";
-		echo "<input type=\"hidden\" name=\"i\" value=\"$prevMinRank\"/>";
-		echo "<input type=\"hidden\" name=\"s\" value=\"$scheme\"/>";
-		echo '<input id="navigation_prev" type="image" src="arrow-up.png" tabindex="2"/>';
-		echo '</form>';
-	}
-	if (count( $results) >= $nofRanks)
-	{
-		echo '<form name="nav_next" class method="GET" action="evalQuery.php">';
-		echo "<input type=\"hidden\" name=\"q\" value=\"$queryString\">";
-		echo "<input type=\"hidden\" name=\"n\" value=\"$nofRanks\">";
-		echo "<input type=\"hidden\" name=\"i\" value=\"$nextMinRank\">";
-		echo "<input type=\"hidden\" name=\"s\" value=\"$scheme\">";
-		echo '<input id="navigation_next" type="image" src="arrow-down.png" tabindex="2"/>';
-		echo '</form>';
-	}
+	echo '</ul></div>';
 	$context->close();
-	echo '</div>';
-	echo '</div>';
 }
 catch( Exception $e ) {
-	echo '<p>';
-	echo '<font color="red">';
+	echo '<div id="searcherror"><p>';
 	echo 'Error: ',  $e->getMessage(), "\n";
-	echo '</font>';
-	echo '</p>';
+	echo '</p></div>';
 }
 ?>
 
