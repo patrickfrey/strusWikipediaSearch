@@ -33,7 +33,9 @@ analyzer.definePhraseType(
     )
 
 # Query evaluation structures:
-ResultRow = collections.namedtuple('ResultRow', ['docno', 'docid', 'weight', 'title', 'abstract'])
+ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'abstract'])
+NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
+LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 
 # [1] HTTP handlers:
 # Answer a query (issue a query to all storage servers and merge it to one result):
@@ -79,8 +81,76 @@ class QueryHandler( tornado.web.RequestHandler ):
             rt = ([],0,"query statistic server failed: %s" % e)
         raise tornado.gen.Return( rt)
 
+    def unpackAnswerTextQuery( self, answer, answerofs, answersize):
+        result = []
+        row_docno = 0
+        row_weight = 0.0
+        row_title = None
+        row_abstract = ""
+        while (answerofs < answersize):
+            if (answer[ answerofs] == '_'):
+                if (row_title != None):
+                    result.append( ResultRow( row_docno, row_weight, row_title, row_abstract))
+                row_docno = 0
+                row_weight = 0.0
+                row_title = None
+                row_abstract = ""
+                answerofs += 1
+            elif (answer[ answerofs] == 'D'):
+                (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
+                answerofs += struct.calcsize( ">I") + 1
+            elif (answer[ answerofs] == 'W'):
+                (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
+                answerofs += struct.calcsize( ">f") + 1
+            elif (answer[ answerofs] == 'T'):
+                (titlelen,) = struct.unpack_from( ">H", answer, answerofs+1)
+                answerofs += struct.calcsize( ">H") + 1
+                (row_title,) = struct.unpack_from( "%us" % titlelen, answer, answerofs)
+                answerofs += titlelen
+            elif (answer[ answerofs] == 'A'):
+                (abstractlen,) = struct.unpack_from( ">H", answer, answerofs+1)
+                answerofs += struct.calcsize( ">H") + 1
+                (row_abstract,) = struct.unpack_from( "%us" % abstractlen, answer, answerofs)
+                answerofs += abstractlen
+            else:
+                raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
+        if (row_title != None):
+            result.append( ResultRow( row_docno, row_weight, row_title, row_abstract))
+        return result
+
+    def unpackAnswerLinkQuery( self, answer, answerofs, answersize):
+        result = []
+        row_docno = 0
+        row_weight = 0.0
+        row_links = []
+        while (answerofs < answersize):
+            if (answer[ answerofs] == '_'):
+                if (row_docno != 0):
+                    result.append( NblnkRow( row_docno, row_weight, row_links))
+                row_docno = 0
+                row_weight = 0.0
+                row_links = []
+                answerofs += 1
+            elif (answer[ answerofs] == 'D'):
+                (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
+                answerofs += struct.calcsize( ">I") + 1
+            elif (answer[ answerofs] == 'W'):
+                (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
+                answerofs += struct.calcsize( ">f") + 1
+            elif (answer[ answerofs] == 'L'):
+                (linkidlen,) = struct.unpack_from( ">H", answer, answerofs+1)
+                answerofs += struct.calcsize( ">H") + 1
+                (linkidstr,weight) = struct.unpack_from( ">%dsf" % linkidlen, answer, answerofs)
+                answerofs += linkidlen + struct.calcsize( ">f")
+                row_links.append([linkidstr,weight])
+            else:
+                raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
+        if (row_docno != 0):
+            result.append( NblnkRow( row_docno, row_weight, row_links))
+        return result
+
     @tornado.gen.coroutine
-    def issueQuery( self, serveraddr, qryblob):
+    def issueQuery( self, serveraddr, scheme, qryblob):
         rt = (None,None)
         ri = serveraddr.rindex(':')
         host,port = serveraddr[:ri],int( serveraddr[ri+1:])
@@ -92,63 +162,22 @@ class QueryHandler( tornado.web.RequestHandler ):
             if (reply[0] == 'E'):
                 rt = (None, "storage server %s:%d returned error: %s" % (host, port, reply[1:]))
             elif (reply[0] == 'Y'):
-                result = []
-                row_docno = 0
-                row_docid = None
-                row_weight = 0.0
-                row_title = ""
-                row_abstract = ""
-                replyofs = 1
-                replysize = len(reply)-1
-                while (replyofs < replysize):
-                    if (reply[ replyofs] == '_'):
-                        if (row_docid != None):
-                            result.append( ResultRow( row_docno, row_docid, row_weight, row_title, row_abstract))
-                        row_docno = 0
-                        row_docid = None
-                        row_weight = 0.0
-                        row_title = ""
-                        row_abstract = ""
-                        replyofs += 1
-                    elif (reply[ replyofs] == 'D'):
-                        (row_docno,) = struct.unpack_from( ">I", reply, replyofs+1)
-                        replyofs += struct.calcsize( ">I") + 1
-                    elif (reply[ replyofs] == 'W'):
-                        (row_weight,) = struct.unpack_from( ">f", reply, replyofs+1)
-                        replyofs += struct.calcsize( ">f") + 1
-                    elif (reply[ replyofs] == 'I'):
-                        (docidlen,) = struct.unpack_from( ">H", reply, replyofs+1)
-                        replyofs += struct.calcsize( ">H") + 1
-                        (row_docid,) = struct.unpack_from( "%us" % docidlen, reply, replyofs)
-                        replyofs += docidlen
-                    elif (reply[ replyofs] == 'T'):
-                        (titlelen,) = struct.unpack_from( ">H", reply, replyofs+1)
-                        replyofs += struct.calcsize( ">H") + 1
-                        (row_title,) = struct.unpack_from( "%us" % titlelen, reply, replyofs)
-                        replyofs += titlelen
-                    elif (reply[ replyofs] == 'A'):
-                        (abstractlen,) = struct.unpack_from( ">H", reply, replyofs+1)
-                        replyofs += struct.calcsize( ">H") + 1
-                        (row_abstract,) = struct.unpack_from( "%us" % abstractlen, reply, replyofs)
-                        replyofs += abstractlen
-                    else:
-                        rt = (None, "storage server %s:%u protocol error: unknown result column name" % (host,port))
-                        row_docid = None
-                        break;
-                if (row_docid != None):
-                    result.append( ResultRow( row_docno, row_docid, row_weight, row_title, row_abstract))
+                if scheme == "NBLNK":
+                    result = self.unpackAnswerLinkQuery( reply, 1, len(reply)-1)
+                else:
+                    result = self.unpackAnswerTextQuery( reply, 1, len(reply)-1)
                 rt = (result, None)
             else:
                 rt = (None, "protocol error storage %s:%u query: unknown header %s" % (host,port,reply[0]))
         except Exception as e:
-            rt = (None, "storage server %s:%u connection error: %s" % (host, port, str(e)))
+            rt = (None, "call of storage server %s:%u failed: %s" % (host, port, str(e)))
         raise tornado.gen.Return( rt)
 
     @tornado.gen.coroutine
-    def issueQueries( self, servers, qryblob):
+    def issueQueries( self, servers, scheme, qryblob):
         results = None
         try:
-            results = yield [ self.issueQuery( addr, qryblob) for addr in servers ]
+            results = yield [ self.issueQuery( addr, scheme, qryblob) for addr in servers ]
         except Exception as e:
             raise tornado.gen.Return( [], ["error issueing query: %s" % str(e)])
         raise tornado.gen.Return( results)
@@ -157,7 +186,7 @@ class QueryHandler( tornado.web.RequestHandler ):
     # referenced in from http://wordaligned.org/articles/merging-sorted-streams-in-python:
     def mergeResultIter( self, resultlists):
         # prepare a priority queue whose items are pairs of the form (-weight, resultlistiter):
-        heap = [  ]
+        heap = [ ]
         for resultlist in resultlists:
             resultlistiter = iter(resultlist)
             for result in resultlistiter:
@@ -197,6 +226,28 @@ class QueryHandler( tornado.web.RequestHandler ):
             ri += 1
         return (merged[ firstrank:maxnofresults], errors)
 
+    def getLinkQueryResults( self, ranks, firstlink, noflinks):
+        results = []
+        linktab = {}
+        for rank in ranks:
+            for link in rank.links:
+                if link[0] in linktab:
+                    linktab[ link[0]] = 0.0 + linktab[ link[0]] + link[1] * rank.weight
+                else:
+                    linktab[ link[0]] = 0.0 + link[1] * rank.weight
+        heap = [ ]
+        heapq.heapify(heap)
+        for (link,weight) in linktab.iteritems():
+            heap.append([-weight, link])
+        li = 0
+        le = firstlink + noflinks
+        while li<le and heap:
+            negweight,title = heapq.heappop( heap)
+            if li >= firstlink:
+                results.append( LinkRow( title, -negweight))
+            li = li + 1
+        return results
+
     @tornado.gen.coroutine
     def evaluateQueryText( self, scheme, querystr, firstrank, nofranks):
         rt = None
@@ -211,9 +262,12 @@ class QueryHandler( tornado.web.RequestHandler ):
             if (error != None):
                 raise Exception( error)
             # Assemble the query:
-            qry = bytearray(b"Q")
-            print( "+++ PASS SCHEME %s\n" % (scheme));
-            qry += bytearray( b"M") + struct.pack( "%ds" % len(scheme), scheme))
+            qry = bytearray()
+            if scheme == "NBLNK":
+                qry += bytearray( b"L")
+            else:
+                qry += bytearray( b"Q")
+            qry += bytearray( b"M") + struct.pack( ">H%ds" % (len(scheme)), len(scheme), scheme)
             qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
             qry += bytearray( b"I") + struct.pack( ">H", 0)
             qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
@@ -224,7 +278,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 qry += struct.pack( ">qHH", dflist[ii], typesize, valuesize)
                 qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
             # Query all storage servers:
-            results = yield self.issueQueries( storageservers, qry)
+            results = yield self.issueQueries( storageservers, scheme, qry)
             rt = self.mergeQueryResults( results, firstrank, nofranks)
         except Exception as e:
             rt = ([], ["error evaluation query: %s" % str(e)])
@@ -240,10 +294,14 @@ class QueryHandler( tornado.web.RequestHandler ):
             # n = nofranks:
             nofranks = int( self.get_argument( "n", 20))
             # s = query evaluation scheme:
-            scheme = self.get_argument( "s", "BM25pff")
+            scheme = self.get_argument( "s", "BM25pff").encode('utf-8')
             # Evaluate query:
             start_time = time.time()
-            result = yield self.evaluateQueryText( querystr, scheme, firstrank, nofranks)
+            if (scheme == "NBLNK"):
+                selectresult = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks)
+                result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
+            else:
+                result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks)
             time_elapsed = time.time() - start_time
             # Render the results:
             if (scheme == "NBLNK"):

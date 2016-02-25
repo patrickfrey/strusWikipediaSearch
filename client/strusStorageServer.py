@@ -17,6 +17,7 @@ backend = None
 # Port of the global statistics server:
 statserver = "localhost:7183"
 # IO loop:
+global pubstats
 pubstats = False
 # Strus client connection factory:
 msgclient = strusMessage.RequestClient()
@@ -55,7 +56,7 @@ def processCommand( message):
     try:
         messagesize = len(message)
         messageofs = 1
-        if (message[0] == 'Q'):
+        if (message[0] == 'Q') or (message[0] == 'L'):
             # QUERY:
             Term = collections.namedtuple('Term', ['type', 'value', 'df'])
             nofranks = 20
@@ -65,7 +66,6 @@ def processCommand( message):
             terms = []
             # Build query to evaluate from the request:
             messagesize = len(message)
-            messageofs = 1
             while (messageofs < messagesize):
                 if (message[ messageofs] == 'I'):
                     (firstrank,) = struct.unpack_from( ">H", message, messageofs+1)
@@ -77,8 +77,7 @@ def processCommand( message):
                     (schemesize,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
                     (scheme,) = struct.unpack_from( "%ds" % (schemesize), message, messageofs)
-                    messageofs += shemesize
-		    print( "+++ PARAM SCHEME %s\n" % (scheme));
+                    messageofs += schemesize
                 elif (message[ messageofs] == 'S'):
                     (collectionsize,) = struct.unpack_from( ">q", message, messageofs+1)
                     messageofs += struct.calcsize( ">q") + 1
@@ -90,32 +89,41 @@ def processCommand( message):
                     terms.append( Term( type, value, df))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
-	    print( "+++ SCHEME %s\n" % (scheme));
-            # Evaluate query with BM25 (Okapi):
+            # Evaluate query with scheme:
             results = backend.evaluateQuery( scheme, terms, collectionsize, firstrank, nofranks)
             # Build the result and pack it into the reply message for the client:
-            for result in results:
-                rt.append( '_')
-                rt.append( 'D')
-                rt += struct.pack( ">I", result['docno'])
-                rt.append( 'W')
-                rt += struct.pack( ">f", result['weight'])
-                rt.append( 'I')
-                rt += packedMessage( result['docid'])
-                rt.append( 'T')
-                rt += packedMessage( result['title'])
-                rt.append( 'A')
-                rt += packedMessage( result['abstract'])
-		print( "+++ WEIGHT %f\n" % (result['weight']));
+            if scheme == "NBLNK":
+                for result in results:
+                    rt.append( '_')
+                    rt.append( 'D')
+                    rt += struct.pack( ">I", result['docno'])
+                    rt.append( 'W')
+                    rt += struct.pack( ">f", result['weight'])
+                    for linkid,weight in result['links']:
+                        rt.append( 'L')
+                        rt += packedMessage( linkid) + struct.pack( ">f", weight)
+            else:
+                for result in results:
+                    rt.append( '_')
+                    rt.append( 'D')
+                    rt += struct.pack( ">I", result['docno'])
+                    rt.append( 'W')
+                    rt += struct.pack( ">f", result['weight'])
+                    rt.append( 'T')
+                    rt += packedMessage( result['title'])
+                    rt.append( 'A')
+                    rt += packedMessage( result['abstract'])
         else:
-            raise Exception( "unknown command")
+            raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:
         raise tornado.gen.Return( bytearray( b"E" + str(e)) )
     raise tornado.gen.Return( rt)
 
 # Shutdown function that sends the negative statistics to the statistics server (unsubscribe):
 def processShutdown():
+    global pubstats
     if (pubstats):
+        pubstats = False
         publishStatistics( backend.getDoneStatisticsIterator())
 
 # Server main:

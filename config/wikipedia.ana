@@ -1,5 +1,4 @@
 [Attribute]
-	title = text content /mediawiki/page/title();
 	docid = text content /mediawiki/page/title();
 	date = text content /mediawiki/page/revision/timestamp();
 	contributor = text content /mediawiki/page/revision/contributor/username();

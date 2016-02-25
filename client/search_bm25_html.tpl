@@ -4,7 +4,7 @@
 <div id="searchresult">
 <ul>
 {% for result in results %}
-{% set link = result.docid.replace(' ','_') %}
+{% set link = result.title.replace(' ','_') %}
 <li onclick="parent.location='https://en.wikipedia.org/wiki/{{ link }}'">
 <h3>{{ result.title }}</h3>
 <div id="rank">

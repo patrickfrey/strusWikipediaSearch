@@ -36,6 +36,12 @@ h2 {
     padding: 10px 10px;
 }
 
+#navbox
+{
+    padding: 25px 0px;
+    margin: 20px 105px;
+}
+
 #navprev,
 #navnext
 {
@@ -70,7 +76,8 @@ h2 {
     background: #11888;
 }
 
-#submit
+#submit,
+#back
 {
     border-width: 1px;
     border-style: solid;
@@ -84,18 +91,20 @@ h2 {
     color: #303030;
 }
 
-#submit:active {       
+#submit:active,
+#back:active{
     background: #988;
     outline: none;
 }
 
-#submit::-moz-focus-inner {
+#submit::-moz-focus-inner,
+#back::-moz-focus-inner {
     border: 0;
 }
 
 #scheme
 {
-    width: 505px;
+    width: 508px;
 }
 
 #searchinfo
@@ -108,9 +117,8 @@ h2 {
 #searcherror
 {
     clear: left;
-    margin: 0px 115px;
-    font: bold 16px 'Open Sans', Arial, sans-serif;
-    color: red;
+    margin: 0px 105px;
+    font: italic 16px 'Open Sans', Arial, sans-serif;
 }
 
 #searchresult {
@@ -147,6 +155,12 @@ li #rank_abstract {
     float:left;
     color: #133;
     font: normal 12px/1.5 'Open Sans', Arial, sans-serif;
+}
+
+li #rank_linkid {
+    margin: 0px 5px;
+    float:left;
+    font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li b {

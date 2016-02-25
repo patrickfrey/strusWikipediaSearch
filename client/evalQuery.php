@@ -38,6 +38,7 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 	{
 		$queryeval->addWeightingFunction( 1.0, "BM25", array(
 				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+				"metadata_doclen" => "doclen",
 				".match" => "docfeat" ));
 	}
 	elseif ($scheme == 'BM25pff')
@@ -49,10 +50,10 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 				"maxdf" => 0.4,
 				".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ));
 	}
-	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
+	$queryeval->addWeightingFunction( 1.0, "metadata", array( "name" => "pageweight" ) );
 
-	$queryeval->addSummarizer( "TITLE", "attribute", array( "name" => "title" ) );
-	$queryeval->addSummarizer( "CONTENT", "matchphrase", array(
+	$queryeval->addSummarizer( "attribute", array( "name" => "title" ) );
+	$queryeval->addSummarizer( "matchphrase", array(
 			"type" => "orig", "metadata_title_maxpos" => "maxpos_title",
 			"windowsize" => 40, "sentencesize" => 60, 'cardinality' => 3,
 			"matchmark" => '$#HL#$#/HL#',
@@ -238,7 +239,7 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
 
 	$queryeval->addSummarizer(
-			"LINK", "accuvariable", array(
+			"accuvariable", array(
 				".match" => "sumfeat",
 				"norm" => 0.001,
 				"var" => "LINK",
@@ -367,18 +368,18 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	$linktab = array();
 	foreach ($candidates->ranks as &$candidate)
 	{
-		foreach( $candidate->attributes as &$attrib)
+		foreach( $candidate->summaryElements as &$sumelem)
 		{
-			if( strcmp( $attrib->name, 'LINK' ) == 0 )
+			if( strcmp( $sumelem->name, 'LINK' ) == 0 )
 			{
-				$lnkid = trim( $attrib->value);
+				$lnkid = trim( $sumelem->value);
 				if (array_key_exists( $lnkid, $linktab))
 				{
-					$linktab[ $lnkid] = 0.0 + $linktab[ $lnkid] + $attrib->weight * $candidate->weight;
+					$linktab[ $lnkid] = 0.0 + $linktab[ $lnkid] + $sumelem->weight * $candidate->weight;
 				}
 				else
 				{
-					$linktab[ $lnkid] = 0.0 + $attrib->weight * $candidate->weight;
+					$linktab[ $lnkid] = 0.0 + $sumelem->weight * $candidate->weight;
 				}
 			}
 		}
@@ -515,15 +516,16 @@ try {
 			$hlmarkup  = array( "<b>", "</b>");
 			$content = '';
 			$title = '';
-			foreach( $rank->attributes as &$attrib ) {
-				if( strcmp( $attrib->name, 'TITLE' ) == 0 ) {
-					$title = $attrib->value;
+			foreach( $rank->summaryElements as &$sumelem ) {
+				if( strcmp( $sumelem->name, 'title' ) == 0 ) {
+					$title = $sumelem->value;
 				}
-				if( strcmp( $attrib->name, 'CONTENT' ) == 0 ) {
+				if( strcmp( $sumelem->name, 'phrase' ) == 0
+				|| strcmp( $sumelem->name, 'docstart' ) == 0) {
 					if( strcmp( $content, "" ) != 0 ) {
 						$content .= " --- ";
 					}
-					$content .= str_replace( $highlight, $hlmarkup, htmlspecialchars( $attrib->value));
+					$content .= str_replace( $highlight, $hlmarkup, htmlspecialchars( $sumelem->value));
 				}
 				$link = strtr ($title, array (' ' => '_'));
 			}

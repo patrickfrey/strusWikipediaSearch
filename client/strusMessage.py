@@ -22,7 +22,7 @@ class TcpConnection( object):
                 (msgsize,) = struct.unpack( ">I", msgsizemsg)
                 msg = yield self.stream.read_bytes( msgsize)
                 reply = yield self.command_callback( msg)
-                yield self.stream.write( struct.pack( ">I", len(reply)) + bytes(reply));
+                yield self.stream.write( struct.pack( ">I", len(reply)) + bytes(reply))
         except tornado.iostream.StreamClosedError:
             pass
 
@@ -55,7 +55,7 @@ class RequestClient( tornado.tcpclient.TCPClient):
     @tornado.gen.coroutine
     def issueRequest( self, stream, msg):
         blob = struct.pack( ">I", len(msg)) + bytes(msg)
-        stream.write( blob);
+        stream.write( blob)
         replysizemsg = yield stream.read_bytes( struct.calcsize(">I"))
         (replysize,) = struct.unpack( ">I", replysizemsg)
         reply = yield stream.read_bytes( replysize)
