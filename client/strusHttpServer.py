@@ -33,7 +33,7 @@ analyzer.definePhraseType(
     )
 
 # Query evaluation structures:
-ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'abstract'])
+ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract'])
 NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 
@@ -86,14 +86,16 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_docno = 0
         row_weight = 0.0
         row_title = None
+        row_paratitle = ""
         row_abstract = ""
         while (answerofs < answersize):
             if (answer[ answerofs] == '_'):
                 if (row_title != None):
-                    result.append( ResultRow( row_docno, row_weight, row_title, row_abstract))
+                    result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract))
                 row_docno = 0
                 row_weight = 0.0
                 row_title = None
+                row_paratitle = ""
                 row_abstract = ""
                 answerofs += 1
             elif (answer[ answerofs] == 'D'):
@@ -107,6 +109,11 @@ class QueryHandler( tornado.web.RequestHandler ):
                 answerofs += struct.calcsize( ">H") + 1
                 (row_title,) = struct.unpack_from( "%us" % titlelen, answer, answerofs)
                 answerofs += titlelen
+            elif (answer[ answerofs] == 'P'):
+                (paratitlelen,) = struct.unpack_from( ">H", answer, answerofs+1)
+                answerofs += struct.calcsize( ">H") + 1
+                (row_paratitle,) = struct.unpack_from( "%us" % paratitlelen, answer, answerofs)
+                answerofs += paratitlelen
             elif (answer[ answerofs] == 'A'):
                 (abstractlen,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
@@ -115,7 +122,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
         if (row_title != None):
-            result.append( ResultRow( row_docno, row_weight, row_title, row_abstract))
+            result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract))
         return result
 
     def unpackAnswerLinkQuery( self, answer, answerofs, answersize):
@@ -236,9 +243,9 @@ class QueryHandler( tornado.web.RequestHandler ):
                 else:
                     linktab[ link[0]] = 0.0 + link[1] * rank.weight
         heap = [ ]
-        heapq.heapify(heap)
         for (link,weight) in linktab.iteritems():
             heap.append([-weight, link])
+        heapq.heapify(heap)
         li = 0
         le = firstlink + noflinks
         while li<le and heap:
@@ -249,7 +256,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         return results
 
     @tornado.gen.coroutine
-    def evaluateQueryText( self, scheme, querystr, firstrank, nofranks):
+    def evaluateQueryText( self, scheme, querystr, firstrank, nofranks, restrictdn):
         rt = None
         try:
             maxnofresults = firstrank + nofranks
@@ -271,6 +278,8 @@ class QueryHandler( tornado.web.RequestHandler ):
             qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
             qry += bytearray( b"I") + struct.pack( ">H", 0)
             qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
+            if (restrictdn != 0):
+                qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
             for ii in range( 0, len( terms)):
                 qry += bytearray( b"T")
                 typesize = len(terms[ii].type())
@@ -292,16 +301,20 @@ class QueryHandler( tornado.web.RequestHandler ):
             # i = firstrank:
             firstrank = int( self.get_argument( "i", 0))
             # n = nofranks:
-            nofranks = int( self.get_argument( "n", 20))
+            nofranks = int( self.get_argument( "n", 6))
             # s = query evaluation scheme:
             scheme = self.get_argument( "s", "BM25pff").encode('utf-8')
+            # d = document number to restrict to:
+            restrictdn = int( self.get_argument( "d", 0))
+            # m = mode {"debug"}:
+            mode = self.get_argument( "m", None)
             # Evaluate query:
             start_time = time.time()
             if (scheme == "NBLNK"):
-                selectresult = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks)
+                selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 300, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
             else:
-                result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks)
+                result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks, restrictdn)
             time_elapsed = time.time() - start_time
             # Render the results:
             if (scheme == "NBLNK"):
@@ -309,7 +322,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                template = "search_bm25_html.tpl"
             self.render( template, results=result[0], messages=result[1],
-                         time_elapsed=time_elapsed, firstrank=firstrank, maxnofranks=nofranks,
+                         time_elapsed=time_elapsed, firstrank=firstrank, maxnofranks=nofranks, mode=mode,
                          scheme=scheme, querystr=querystr)
         except Exception as e:
             self.render( "search_error_html.tpl", message=e)

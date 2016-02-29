@@ -37,25 +37,25 @@ function evalQueryText( $context, $scheme, $queryString, $minRank, $maxNofRanks,
 	if (!$scheme || $scheme == 'BM25')
 	{
 		$queryeval->addWeightingFunction( 1.0, "BM25", array(
-				"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+				"k1" => 1.2, "b" => 0.75, "avgdoclen" => 500,
 				"metadata_doclen" => "doclen",
 				".match" => "docfeat" ));
 	}
 	elseif ($scheme == 'BM25pff')
 	{
 		$queryeval->addWeightingFunction( 1.0, "BM25pff", array(
-				"k1" => 1.5, "b" => 0.75, "avgdoclen" => 500,
+				"k1" => 1.2, "b" => 0.75, "avgdoclen" => 500,
 				"metadata_title_maxpos" => "maxpos_title", "metadata_doclen" => "doclen",
-				"titleinc" => 2.4, "windowsize" => 40, 'cardinality' => 0, "ffbase" => 0.4,
+				"titleinc" => 2.4, "windowsize" => 40, 'cardinality' => 0, "ffbase" => 0.25,
 				"maxdf" => 0.4,
 				".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ));
 	}
 	$queryeval->addWeightingFunction( 1.0, "metadata", array( "name" => "pageweight" ) );
 
-	$queryeval->addSummarizer( "attribute", array( "name" => "title" ) );
+	$queryeval->addSummarizer( "attribute", array( "name" => "docid" ) );
 	$queryeval->addSummarizer( "matchphrase", array(
 			"type" => "orig", "metadata_title_maxpos" => "maxpos_title",
-			"windowsize" => 40, "sentencesize" => 60, 'cardinality' => 3,
+			"windowsize" => 40, "sentencesize" => 100, 'cardinality' => 2,
 			"matchmark" => '$#HL#$#/HL#',
 			".para" => "para", ".struct" => "sentence", ".match" => "docfeat" ) );
 	$queryeval->addSelectionFeature( "selfeat");
@@ -220,7 +220,7 @@ class LinkSet
 	}
 }
 
-function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
+function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks, $restrictdoc)
 {
 	$storage = $context->createStorageClient( "" );
 	$analyzer = $context->createQueryAnalyzer();
@@ -234,9 +234,9 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 			"lc"));
 
 	$queryeval->addWeightingFunction( 1.0, "BM25", array(
-			"k1" => 0.75, "b" => 2.1, "avgdoclen" => 500,
+			"k1" => 1.2, "b" => 0.75, "avgdoclen" => 500,
 			".match" => "docfeat" ));
-	$queryeval->addWeightingFunction( 2.0, "metadata", array( "name" => "pageweight" ) );
+	$queryeval->addWeightingFunction( 1.0, "metadata", array( "name" => "pageweight" ) );
 
 	$queryeval->addSummarizer(
 			"accuvariable", array(
@@ -362,7 +362,10 @@ function evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks)
 	}
 	$query->setMaxNofRanks( 300);
 	$query->setMinRank( 0);
-
+	if ($restrictdoc)
+	{
+		$query->addDocumentEvaluationSet( [ $restrictdoc ] );
+	}
 	$candidates = $query->evaluate();
 
 	$linktab = array();
@@ -465,7 +468,7 @@ function mapResultHeader( $queryString, $duration, $scheme, $docno, $minRank, $m
 
 try {
 	$minRank = 0;
-	$maxNofRanks = 10;
+	$maxNofRanks = 6;
 	$scheme = NULL;
 	$restrictdoc = NULL;
 	parse_str( getenv('QUERY_STRING'), $_GET);
@@ -497,7 +500,7 @@ try {
 	}
 	else
 	{
-		$result = evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks);
+		$result = evalQueryNBLNK( $context, $queryString, $minRank, $maxNofRanks, $restrictdoc);
 		$nof_results = count( $result );
 	}
 	$hasNext = ($nof_results == $maxNofRanks);
@@ -517,7 +520,7 @@ try {
 			$content = '';
 			$title = '';
 			foreach( $rank->summaryElements as &$sumelem ) {
-				if( strcmp( $sumelem->name, 'title' ) == 0 ) {
+				if( strcmp( $sumelem->name, 'docid' ) == 0 ) {
 					$title = $sumelem->value;
 				}
 				if( strcmp( $sumelem->name, 'phrase' ) == 0

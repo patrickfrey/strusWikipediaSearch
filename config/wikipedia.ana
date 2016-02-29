@@ -6,7 +6,6 @@
 [SearchIndex]
 	start = empty content /mediawiki/page/revision/text;
 
-	para = empty content /mediawiki/page/revision/text;
 	para = empty content /mediawiki/page/revision/text/h1;
 	para = empty content /mediawiki/page/revision/text/h2;
 	para = empty content /mediawiki/page/revision/text/h3;
@@ -15,6 +14,7 @@
 
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/wwwlink();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/link[@type='page']();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h1();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h2();
@@ -24,21 +24,24 @@
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h6();
 
 	sent = empty punctuation(en,".") /mediawiki/page/revision/text();
-	sent = empty punctuation(en,".") /mediawiki/page/revision/text/h1~;
-	sent = empty punctuation(en,".") /mediawiki/page/revision/text/h2~;
-	sent = empty punctuation(en,".") /mediawiki/page/revision/text/h3~;
+	sent = empty content /mediawiki/page/revision/text/h1~;
+	sent = empty content /mediawiki/page/revision/text/h2~;
+	sent = empty content /mediawiki/page/revision/text/h3~;
+	sent = empty content /mediawiki/page/revision/text//link[@type='file']~;
+	sent = empty content /mediawiki/page/revision/text//link[@type='image']~;
 
-	linkvar = empty content {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
-	catgvar = empty content {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
-	wwwvar = empty content {position=pred} /mediawiki/page/revision/text//wwwlink();
+	linkvar = empty content /mediawiki/page/revision/text//link[@type='page']@id;
+	catgvar = empty content /mediawiki/page/revision/text//link[@type='category']@id;
+	wwwvar = empty content /mediawiki/page/revision/text//wwwlink@id;
 
 [ForwardIndex]
-	linkid  = lc:text content  {position=succ} /mediawiki/page/revision/text//link[@type='page']@id;
-	catgid  = lc:text content  {position=pred} /mediawiki/page/revision/text//link[@type='category']@id;
+	linkid  = lc:text content /mediawiki/page/revision/text//link[@type='page']@id;
+	catgid  = lc:text content /mediawiki/page/revision/text//link[@type='category']@id;
 
 	orig = text split /mediawiki/page/title();
 	orig = text content_europe_fwd /mediawiki/page/revision/text();
 	orig = text content_europe_fwd /mediawiki/page/revision/text/link();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/wwwlink();
 	orig = text split /mediawiki/page/revision/text/h1();
 	orig = text split /mediawiki/page/revision/text/h2();
 	orig = text split /mediawiki/page/revision/text/h3();
@@ -46,8 +49,7 @@
 	orig = text split /mediawiki/page/revision/text/h5();
 	orig = text split /mediawiki/page/revision/text/h6();
 
-	wwwlnk = text content  {position=pred} /mediawiki/page/revision/text//wwwlink@id;
-	wwwtxt = text content  {position=pred} /mediawiki/page/revision/text//wwwlink();
+	wwwlnk = text content /mediawiki/page/revision/text//wwwlink@id;
 
 [Document]
 	doc = /mediawiki/page;

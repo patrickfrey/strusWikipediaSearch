@@ -36,7 +36,11 @@ def processCommand( message):
 
         if (message[0] == 'P'):
             # PUBLISH:
-            msg = strustat.decode( bytearray(message[1:]))
+            messagesize = len(message)
+            messageofs = 1
+            serverno = struct.unpack_from( ">H", message, messageofs)
+            messageofs += struct.calcsize( ">H")
+            msg = strustat.decode( bytearray( message[ messageofs:]))
             collectionSize += msg.nofDocumentsInsertedChange()
             dfchglist = msg.documentFrequencyChangeList()
             for dfchg in dfchglist:

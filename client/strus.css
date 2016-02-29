@@ -137,29 +137,40 @@ h3 {
 li #rank_docno {
     margin: 0px 5px;
     width: 45px;
-    float:left;
+    float: left;
     color: #388;
-    font: 200 12px/1.5 'Open Sans', Arial, sans-serif;
+    font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_weight {
     margin: 0px 5px;
     width: 45px;
-    float:left;
+    float: left;
     color: #388;
-    font: 200 12px/1.5 'Open Sans', Arial, sans-serif;
+    font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
+}
+
+li #rank_paratitle {
+    margin: 0px 5px;
+    float: left;
+    display: block;
+    white-space: pre-line;
+    color: #133;
+    font: italic 11px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_abstract {
     margin: 0px 5px;
-    float:left;
+    float: left;
+    display: block;
+    white-space: pre-line;
     color: #133;
-    font: normal 12px/1.5 'Open Sans', Arial, sans-serif;
+    font: normal 13px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_linkid {
     margin: 0px 5px;
-    float:left;
+    float: left;
     font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 

@@ -19,6 +19,10 @@ statserver = "localhost:7183"
 # IO loop:
 global pubstats
 pubstats = False
+global serverno
+serverno = 1
+global highrefdocs
+highrefdocs = [] 
 # Strus client connection factory:
 msgclient = strusMessage.RequestClient()
 
@@ -36,7 +40,7 @@ def publishStatistics( itr):
     msg = itr.getNext()
     while (len(msg) > 0):
         try:
-            reply = yield msgclient.issueRequest( conn, b"P" + bytearray(msg) )
+            reply = yield msgclient.issueRequest( conn, b"P" + struct.pack(">H",serverno) + bytearray(msg) )
             if (reply[0] == 'E'):
                 raise Exception( "error in statistics server: %s" % reply[ 1:])
             elif (reply[0] != 'Y'):
@@ -60,6 +64,7 @@ def processCommand( message):
             # QUERY:
             Term = collections.namedtuple('Term', ['type', 'value', 'df'])
             nofranks = 20
+            restrictdn = 0
             collectionsize = 0
             firstrank = 0
             scheme = "BM25"
@@ -73,6 +78,9 @@ def processCommand( message):
                 elif (message[ messageofs] == 'N'):
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
+                elif (message[ messageofs] == 'D'):
+                    (restrictdn,) = struct.unpack_from( ">I", message, messageofs+1)
+                    messageofs += struct.calcsize( ">I") + 1
                 elif (message[ messageofs] == 'M'):
                     (schemesize,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
@@ -90,7 +98,7 @@ def processCommand( message):
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
             # Evaluate query with scheme:
-            results = backend.evaluateQuery( scheme, terms, collectionsize, firstrank, nofranks)
+            results = backend.evaluateQuery( scheme, terms, collectionsize, firstrank, nofranks, restrictdn)
             # Build the result and pack it into the reply message for the client:
             if scheme == "NBLNK":
                 for result in results:
@@ -111,6 +119,10 @@ def processCommand( message):
                     rt += struct.pack( ">f", result['weight'])
                     rt.append( 'T')
                     rt += packedMessage( result['title'])
+                    paratitle = result['paratitle']
+                    if (len( paratitle) > 0):
+                        rt.append( 'P')
+                        rt += packedMessage( paratitle)
                     rt.append( 'A')
                     rt += packedMessage( result['abstract'])
         else:
@@ -119,12 +131,14 @@ def processCommand( message):
         raise tornado.gen.Return( bytearray( b"E" + str(e)) )
     raise tornado.gen.Return( rt)
 
+
 # Shutdown function that sends the negative statistics to the statistics server (unsubscribe):
 def processShutdown():
     global pubstats
     if (pubstats):
         pubstats = False
-        publishStatistics( backend.getDoneStatisticsIterator())
+# !--- The following code does not work because the server shuts down before publishing the df decrements:
+#        publishStatistics( backend.getDoneStatisticsIterator())
 
 # Server main:
 if __name__ == "__main__":
@@ -138,6 +152,9 @@ if __name__ == "__main__":
         parser.add_option("-c", "--config", dest="config", default=defaultconfig,
                           help="Specify the storage path as CONF (default '%s')" % defaultconfig,
                           metavar="CONF")
+        parser.add_option("-i", "--serverno", dest="serverno", default=serverno,
+                          help="Specify the number of the storage node as NO (default %s)" % serverno,
+                          metavar="NO")
         parser.add_option("-s", "--statserver", dest="statserver", default=statserver,
                           help="Specify the address of the statistics server as ADDR (default %s)" % statserver,
                           metavar="ADDR")
@@ -152,6 +169,7 @@ if __name__ == "__main__":
         myport = int(options.port)
         pubstats = options.do_publish_stats
         statserver = options.statserver
+        serverno = int( options.serverno)
         backend = strusIR.Backend( options.config)
 
         if (statserver[0:].isdigit()):
@@ -159,9 +177,11 @@ if __name__ == "__main__":
 
         if (pubstats):
             # Start publish local statistics:
-            print( "Load local statistics to publish ...\n")
+            print( "Load local statistics to publish (serverno %u) ...\n" % serverno)
             publishStatistics( backend.getInitStatisticsIterator())
 
+        highrefdocs = backend.getMinimumPageweightDocnos( 0.1)
+        print( "Number of high referenced document loaded: %u" % len(highrefdocs))
         # Start server:
         print( "Starting server ...")
         server = strusMessage.RequestServer( processCommand, processShutdown)

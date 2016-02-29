@@ -20,6 +20,9 @@
 <input id="search" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="{{ querystr }}"/>
 <input id="submit" type="submit" value="Search" />
 <input type="hidden" name="n" value="{{ maxnofranks }}"/>
+{% if mode != None %}
+ <input type="hidden" name="m" value="{{ mode }}"/>
+{% end %}
 </form>
 
 {% set prevrank = firstrank - maxnofranks %}
@@ -33,6 +36,9 @@
  <input id="submit" type="submit" value="<<" />
  <input type="hidden" name="i" value="{{ prevrank }}"/>
  <input type="hidden" name="n" value="{{ maxnofranks }}"/>
+{% if mode != None %}
+ <input type="hidden" name="m" value="{{ mode }}"/>
+{% end %}
 </form>
 {% end %}
 {% if len(results) == maxnofranks %}
@@ -43,6 +49,9 @@
  <input id="submit" type="submit" value=">>" />
  <input type="hidden" name="i" value="{{ nextrank }}"/>
  <input type="hidden" name="n" value="{{ maxnofranks }}"/>
+{% if mode != None %}
+ <input type="hidden" name="m" value="{{ mode }}"/>
+{% end %}
  </form>
 {% end %}
 </div>
@@ -55,7 +64,7 @@
 {% end %}
 
 <div id="searchinfo">
-<p>Time elapsed: {{ "%.3f" % time_elapsed}}</p>
+<p>Query answer time: {{ "%.3f" % time_elapsed}}</p>
 </div>
 {% end %}
 

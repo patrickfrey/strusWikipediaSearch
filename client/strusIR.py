@@ -12,12 +12,13 @@ class Backend:
         rt.addTerm( "para", "para", "")
         # Declare the feature used for selecting result candidates:
         rt.addSelectionFeature( "selfeat")
+
         # Query evaluation scheme:
         if scheme == "BM25pff":
             rt.addWeightingFunction( 1.0, "BM25pff", {
-                     "k1": 1.5, "b": 0.75, "avgdoclen": 500,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_title_maxpos": "maxpos_title", "metadata_doclen": "doclen",
-                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 0, "ffbase": 0.4,
+                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 3, "ffbase": 0.25,
                      "maxdf": 0.4,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat"
             })
@@ -25,18 +26,19 @@ class Backend:
 
         elif scheme == "BM25":
             rt.addWeightingFunction( 1.0, "BM25", {
-                     "k1": 1.5, "b": 0.75, "avgdoclen": 500,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
             rt.addWeightingFunction( 1.0, "metadata", {"name": "pageweight" } )
 
         elif scheme == "NBLNK":
-                rt.addWeightingFunction( 1.0, "BM25", {
-                         "k1": 1.5, "b": 0.75, "avgdoclen": 500,
-                         "metadata_doclen": "doclen",
-                         ".match": "docfeat"
-                })
+            rt.addWeightingFunction( 1.0, "BM25", {
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
+                     "metadata_doclen": "doclen",
+                     ".match": "docfeat"
+            })
+            rt.addWeightingFunction( 1.0, "metadata", {"name": "pageweight" } )
         else:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
@@ -51,7 +53,7 @@ class Backend:
             # Summarizer for abstracting:
             rt.addSummarizer( "matchphrase", {
                   "type": "orig", "metadata_title_maxpos": "maxpos_title",
-                  "windowsize": 40, "sentencesize": 100, "cardinality": 2,
+                  "windowsize": 40, "sentencesize": 100, "cardinality": 3,
                   "matchmark": '$<b>$</b>',
                   ".struct": "sentence", ".match": "docfeat", ".para": "para"
             })
@@ -105,7 +107,7 @@ class Backend:
 
                     elif pair[0]+2 < pair[1]:
                         # ... far away terms in query:
-                        expr = [ "within_struct", 20, ["sent"], [term1.type,term1.value] [term2.type,term2.value]]
+                        expr = [ "within_struct", 20, ["sent"], [term1.type,term1.value], [term2.type,term2.value]]
                         weight = 1.1
                         sumexpr = [ "inrange_struct", 50, ["sent"], ["=LINK", "linkvar"], expr ]
                         query.defineFeature( "sumfeat", sumexpr, weight )
@@ -129,7 +131,7 @@ class Backend:
                 query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
-    def evaluateQuery( self, scheme, terms, collectionsize, firstrank, nofranks):
+    def evaluateQuery( self, scheme, terms, collectionsize, firstrank, nofranks, restrictdn):
         if not scheme in self.queryeval:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
         queryeval = self.queryeval[ scheme]
@@ -142,7 +144,8 @@ class Backend:
         query.setMaxNofRanks( nofranks)
         query.setMinRank( firstrank)
         query.defineGlobalStatistics( {'nofdocs' : int(collectionsize)} )
-
+        if (restrictdn > 0):
+            query.addDocumentEvaluationSet( [ restrictdn ] )
         # Evaluate the query:
         result = query.evaluate()
         rt = []
@@ -159,15 +162,18 @@ class Backend:
             for rank in result.ranks():
                 content = ""
                 title = ""
+                paratitle = ""
                 for sumelem in rank.summaryElements():
                     if sumelem.name() == 'phrase' or sumelem.name() == 'docstart':
                         if content != "":
                             content += ' --- '
                         content += sumelem.value()
+                    elif sumelem.name() == 'para':
+                        paratitle = sumelem.value()
                     elif sumelem.name() == 'docid':
                         title = sumelem.value()
                 rt.append( {
-                       'docno':rank.docno(), 'title':title,
+                       'docno':rank.docno(), 'title':title, 'paratitle':paratitle,
                        'weight':rank.weight(), 'abstract':content
                 })
         return rt
@@ -184,4 +190,14 @@ class Backend:
     def getUpdateStatisticsIterator( self):
         return self.storage.createUpdateStatisticsIterator()
 
+    # Load the list of docno of documents with a pageweight higher than specified
+    def getMinimumPageweightDocnos( self, minpageweight):
+        rt = []
+        browse = self.storage.createDocumentBrowser()
+        browse.addMetaDataRestrictionCondition( ">=", "pageweight", minpageweight, True)
+        docno = browse.skipDoc( 0)
+        while (docno > 0):
+            rt.append( docno)
+            docno = browse.skipDoc( docno+1)
+        return rt
 
