@@ -10,6 +10,7 @@ class Backend:
         # Declare the sentence marker feature needed for abstracting:
         rt.addTerm( "sentence", "sent", "")
         rt.addTerm( "para", "para", "")
+
         # Declare the feature used for selecting result candidates:
         rt.addSelectionFeature( "selfeat")
 
@@ -18,7 +19,7 @@ class Backend:
             rt.addWeightingFunction( 1.0, "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_title_maxpos": "maxpos_title", "metadata_doclen": "doclen",
-                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 3, "ffbase": 0.25,
+                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 3, "ffbase": 0.1, "maxdf": 0.2,
                      "maxdf": 0.4,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat"
             })
@@ -53,7 +54,7 @@ class Backend:
             # Summarizer for abstracting:
             rt.addSummarizer( "matchphrase", {
                   "type": "orig", "metadata_title_maxpos": "maxpos_title",
-                  "windowsize": 40, "sentencesize": 100, "cardinality": 3,
+                  "windowsize": 40, "sentencesize": 100, "cardinality": 3, "maxdf": 0.2,
                   "matchmark": '$<b>$</b>',
                   ".struct": "sentence", ".match": "docfeat", ".para": "para"
             })
@@ -77,10 +78,24 @@ class Backend:
                 yield [i,k]
 
     # Define features for weighting and summarization:
-    def defineFeatures( self, scheme, query, terms):
-        selexpr = ["contains"]
+    def defineFeatures( self, scheme, query, seltitle, terms, collectionsize):
+        if seltitle == True:
+            cardinality = 0
+            if (len( terms) >= 3):
+                if (len( terms) == 3):
+                    cardinality = 2
+                else:
+                    cardinality = 3
+            selexpr = ["contains",0,cardinality]
+            for term in terms:
+                selexpr.append( ["tist", term.value] )
+
+        else:
+            selexpr = ["contains"]
+            for term in terms:
+                selexpr.append( [term.type, term.value] )
+
         for term in terms:
-            selexpr.append( [term.type, term.value] )
             query.defineFeature( "docfeat", [term.type, term.value], 1.0)
             query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 
@@ -131,7 +146,7 @@ class Backend:
                 query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
-    def evaluateQuery( self, scheme, terms, collectionsize, firstrank, nofranks, restrictdn):
+    def evaluateQuery( self, scheme, seltitle, terms, collectionsize, firstrank, nofranks, restrictset):
         if not scheme in self.queryeval:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
         queryeval = self.queryeval[ scheme]
@@ -140,12 +155,12 @@ class Backend:
             # Return empty result for empty query:
             return []
 
-        self.defineFeatures( scheme, query, terms)
+        self.defineFeatures( scheme, query, seltitle, terms, collectionsize)
         query.setMaxNofRanks( nofranks)
         query.setMinRank( firstrank)
-        query.defineGlobalStatistics( {'nofdocs' : int(collectionsize)} )
-        if (restrictdn > 0):
-            query.addDocumentEvaluationSet( [ restrictdn ] )
+        query.defineGlobalStatistics( {'nofdocs' : collectionsize} )
+        if (len(restrictset) > 0):
+            query.addDocumentEvaluationSet( restrictset )
         # Evaluate the query:
         result = query.evaluate()
         rt = []

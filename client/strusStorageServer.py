@@ -10,6 +10,7 @@ import collections
 import optparse
 import strusMessage
 import binascii
+import time
 import strusIR
 
 # Information retrieval engine:
@@ -21,8 +22,6 @@ global pubstats
 pubstats = False
 global serverno
 serverno = 1
-global highrefdocs
-highrefdocs = [] 
 # Strus client connection factory:
 msgclient = strusMessage.RequestClient()
 
@@ -52,6 +51,13 @@ def publishStatistics( itr):
 # Pack a message with its length (processCommand protocol)
 def packedMessage( msg):
     return struct.pack( ">H%ds" % len(msg), len(msg), msg)
+
+# Determine if the query is only containing high frequency terms. In this case we change the retrieval scheme:
+def isStopWordsOnlyQuery( terms, collectionsize):
+    for term in terms:
+        if term.df < collectionsize/6:
+            return False
+    return True
 
 # Server callback function that intepretes the client message sent, executes the command and packs the result for the client
 @tornado.gen.coroutine
@@ -97,8 +103,18 @@ def processCommand( message):
                     terms.append( Term( type, value, df))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
-            # Evaluate query with scheme:
-            results = backend.evaluateQuery( scheme, terms, collectionsize, firstrank, nofranks, restrictdn)
+
+            doTitleSelect = isStopWordsOnlyQuery( terms, collectionsize)
+            # ... if we have a query containing only stopwords, we reduce our search space to 
+            # the documents containing some query terms in the title and the most referenced
+            # documents in the collection.
+
+            # Evaluate query:
+            if restrictdn == 0:
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [])
+            else:
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [restrictdn])
+
             # Build the result and pack it into the reply message for the client:
             if scheme == "NBLNK":
                 for result in results:
@@ -180,8 +196,6 @@ if __name__ == "__main__":
             print( "Load local statistics to publish (serverno %u) ...\n" % serverno)
             publishStatistics( backend.getInitStatisticsIterator())
 
-        highrefdocs = backend.getMinimumPageweightDocnos( 0.1)
-        print( "Number of high referenced document loaded: %u" % len(highrefdocs))
         # Start server:
         print( "Starting server ...")
         server = strusMessage.RequestServer( processCommand, processShutdown)

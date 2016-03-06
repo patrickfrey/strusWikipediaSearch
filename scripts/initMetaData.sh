@@ -8,7 +8,7 @@ STORAGEPATH=storage
 echo "[2.1] get the link reference statistics"
 strusInspect -s "path=$STORAGEPATH" fwstats linkid > resources/linkid_list.txt
 echo "[2.2] get the docno -> docid map"
-strusInspect -s "path=$STORAGEPATH" attribute title > resources/docid_list.txt
+strusInspect -s "path=$STORAGEPATH" attribute docid > resources/docid_list.txt
 echo "[2.3] calculate a map docno -> number of references to this page"
 scripts/calcDocidRefs.pl resources/docid_list.txt resources/linkid_list.txt > resources/docnoref_map.txt
 echo "[2.4] calculate a map docno -> link popularity weight"

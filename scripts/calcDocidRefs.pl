@@ -8,7 +8,7 @@ if ($#ARGV <= 0 || $#ARGV > 2)
 {
 	print STDERR "usage: calcDocidRefs.pl <docid_list> <linkid_list>\n";
 	print STDERR "       <docid_list>   :file with list of tuples <docno> <docid>\n";
-	print STDERR "                       created with strusInspect -s <storage> attribute title\n";
+	print STDERR "                       created with strusInspect -s <storage> attribute docid\n";
 	print STDERR "       <linkid_list>  :file with list of tuples <docid> <nofrefs>\n";
 	print STDERR "                       created with strusInspect -s <storage> fwstats linkid\n";
 	exit;
