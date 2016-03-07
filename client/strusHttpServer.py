@@ -311,7 +311,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             # Evaluate query:
             start_time = time.time()
             if (scheme == "NBLNK"):
-                selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 300, restrictdn)
+                selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 100, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
             else:
                 result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks, restrictdn)

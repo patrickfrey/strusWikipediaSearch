@@ -11,11 +11,21 @@
 	para = empty content /mediawiki/page/revision/text/h3;
 
 	tist = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
-
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/title();
+
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text();
-	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/wwwlink();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/link/link[@type='page']();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/ol/li();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/ol/li/link/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/ol/li/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/ul/li();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/ul/li/link/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/ul/li/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/table/tr/td();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/table/tr/td/link/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
+	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/wwwlink();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h1();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h2();
 	stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc content_europe_inv /mediawiki/page/revision/text/h3();
@@ -27,8 +37,14 @@
 	sent = empty content /mediawiki/page/revision/text/h1~;
 	sent = empty content /mediawiki/page/revision/text/h2~;
 	sent = empty content /mediawiki/page/revision/text/h3~;
+	sent = empty content /mediawiki/page/revision/text/h4~;
+	sent = empty content /mediawiki/page/revision/text/h5~;
+	sent = empty content /mediawiki/page/revision/text/h6~;
 	sent = empty content /mediawiki/page/revision/text//link[@type='file']~;
 	sent = empty content /mediawiki/page/revision/text//link[@type='image']~;
+	sent = empty content /mediawiki/page/revision/text//link[@type='category']~;
+	sent = empty content /mediawiki/page/revision/text//li~;
+	sent = empty content /mediawiki/page/revision/text//td~;
 
 	linkvar = empty content /mediawiki/page/revision/text//link[@type='page']@id;
 	catgvar = empty content /mediawiki/page/revision/text//link[@type='category']@id;
@@ -39,15 +55,26 @@
 	catgid  = lc:text content /mediawiki/page/revision/text//link[@type='category']@id;
 
 	orig = text split /mediawiki/page/title();
-	orig = text content_europe_fwd /mediawiki/page/revision/text();
-	orig = text content_europe_fwd /mediawiki/page/revision/text/link();
-	orig = text content_europe_fwd /mediawiki/page/revision/text/wwwlink();
 	orig = text split /mediawiki/page/revision/text/h1();
 	orig = text split /mediawiki/page/revision/text/h2();
 	orig = text split /mediawiki/page/revision/text/h3();
 	orig = text split /mediawiki/page/revision/text/h4();
 	orig = text split /mediawiki/page/revision/text/h5();
 	orig = text split /mediawiki/page/revision/text/h6();
+
+	orig = text content_europe_fwd /mediawiki/page/revision/text();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/link/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/ol/li();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/ol/li/link/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/ol/li/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/ul/li();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/ul/li/link/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/ul/li/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/link/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
+	orig = text content_europe_fwd /mediawiki/page/revision/text/wwwlink();
 
 	wwwlnk = text content /mediawiki/page/revision/text//wwwlink@id;
 
