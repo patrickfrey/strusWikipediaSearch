@@ -290,8 +290,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                 # Query all storage servers:
                 results = yield self.issueQueries( storageservers, scheme, qry)
                 rt = self.mergeQueryResults( results, firstrank, nofranks)
-            except Exception as e:
-                rt = ([], ["error evaluation query: %s" % str(e)])
+        except Exception as e:
+            rt = ([], ["error evaluation query: %s" % str(e)])
         raise tornado.gen.Return( rt)
 
     @tornado.gen.coroutine
