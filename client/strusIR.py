@@ -146,7 +146,7 @@ class Backend:
                 query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
-    def evaluateQuery( self, scheme, seltitle, terms, collectionsize, firstrank, nofranks, restrictset):
+    def evaluateQuery( self, scheme, seltitle, terms, collectionsize, firstrank, nofranks, restrictset, debugtrace):
         if not scheme in self.queryeval:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
         queryeval = self.queryeval[ scheme]
@@ -174,6 +174,8 @@ class Backend:
                 rt.append( {
                        'docno':rank.docno(), 'weight':rank.weight(), 'links':links})
         else:
+            if (debugtrace):
+                print( "pass %u, nof matches %u\n" %(result.evaluationPass(), result.nofDocumentsRanked()))
             for rank in result.ranks():
                 content = ""
                 title = ""

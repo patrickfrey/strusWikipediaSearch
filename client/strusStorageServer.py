@@ -22,6 +22,8 @@ global pubstats
 pubstats = False
 global serverno
 serverno = 1
+global debugtrace
+debugtrace = False
 # Strus client connection factory:
 msgclient = strusMessage.RequestClient()
 
@@ -111,9 +113,9 @@ def processCommand( message):
 
             # Evaluate query:
             if restrictdn == 0:
-                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [])
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [], debugtrace)
             else:
-                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [restrictdn])
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [restrictdn], debugtrace)
 
             # Build the result and pack it into the reply message for the client:
             if scheme == "NBLNK":
@@ -176,7 +178,8 @@ if __name__ == "__main__":
                           metavar="ADDR")
         parser.add_option("-P", "--publish-stats", action="store_true", dest="do_publish_stats", default=False,
                           help="Tell the node to publish the own storage statistics to the statistics server at startup")
-
+        parser.add_option("-G", "--debug", action="store_true", dest="do_debugtrace", default=False,
+                          help="Tell the node to print some messages for tracing what it does")
         (options, args) = parser.parse_args()
         if len(args) > 0:
             parser.error("no arguments expected")
@@ -184,6 +187,7 @@ if __name__ == "__main__":
 
         myport = int(options.port)
         pubstats = options.do_publish_stats
+        debugtrace = options.do_debugtrace
         statserver = options.statserver
         serverno = int( options.serverno)
         backend = strusIR.Backend( options.config)
