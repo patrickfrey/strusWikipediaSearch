@@ -223,12 +223,18 @@ done
     doclen = count( stem);
 
 		</div>
-		<h2>Initializing meta data after insert</h2>
+		<h2>Initializing document weights from number of page references</h2>
 		<p class="description">
-		After insert you have to initialize some meta data table elements, that
-		could not be defined by the analyzer configuration, because they are statistical
-		data that require an analysis of the total collection. We are talking about
-		a weight calculated from the number of links a document is referenced with.
+		After insert we initialize a document weight in the metadata table,
+		calculated from the number of page references to that document.
+		We do not calculate a transitive page rank, but just use the number
+		of links pointing to that document. From this value we calculate a
+		pageweight between 0.0 and 1.0.
+		<br/>
+		For a setup with more than one storage node, we have to calculate
+		a link reference list (resources/linkid_list.txt) that is a cat of all
+		link reference lists of the storages and use this one for calculating the
+		number of references for each document number in a storage.
 		</p>
 		<h4>scripts/initMetaData.sh</h4>
 		<pre>
@@ -251,8 +257,9 @@ echo "[2.5] update the meta data table element pageweight with the link populari
 strusUpdateStorage -s "path=$STORAGEPATH" -m pageweight resources/pageweight_map.txt
 		</pre>
 		<h2>Hardware used</h2>
-		<p class="description">The Wikipedia demo search project is hosted on an Intel NUC.
-</p>
+		<p class="description">The Wikipedia demo search project is hosted on an Intel NUC6i3SYK
+		with 16GB Ram and a 256GB SSD.
+		</p>
 </div>
 </body>
 </html>

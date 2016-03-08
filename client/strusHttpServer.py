@@ -263,34 +263,35 @@ class QueryHandler( tornado.web.RequestHandler ):
             terms = analyzer.analyzePhrase( "text", querystr)
             if len( terms) == 0:
                 # Return empty result for empty query:
-                raise tornado.gen.Return( [] )
-            # Get the global statistics:
-            dflist,collectionsize,error = yield self.queryStats( terms)
-            if (error != None):
-                raise Exception( error)
-            # Assemble the query:
-            qry = bytearray()
-            if scheme == "NBLNK":
-                qry += bytearray( b"L")
+                rt = [[],[]]
             else:
-                qry += bytearray( b"Q")
-            qry += bytearray( b"M") + struct.pack( ">H%ds" % (len(scheme)), len(scheme), scheme)
-            qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
-            qry += bytearray( b"I") + struct.pack( ">H", 0)
-            qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
-            if (restrictdn != 0):
-                qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
-            for ii in range( 0, len( terms)):
-                qry += bytearray( b"T")
-                typesize = len(terms[ii].type())
-                valuesize = len(terms[ii].value())
-                qry += struct.pack( ">qHH", dflist[ii], typesize, valuesize)
-                qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
-            # Query all storage servers:
-            results = yield self.issueQueries( storageservers, scheme, qry)
-            rt = self.mergeQueryResults( results, firstrank, nofranks)
-        except Exception as e:
-            rt = ([], ["error evaluation query: %s" % str(e)])
+                # Get the global statistics:
+                dflist,collectionsize,error = yield self.queryStats( terms)
+                if (error != None):
+                    raise Exception( error)
+                # Assemble the query:
+                qry = bytearray()
+                if scheme == "NBLNK":
+                    qry += bytearray( b"L")
+                else:
+                    qry += bytearray( b"Q")
+                qry += bytearray( b"M") + struct.pack( ">H%ds" % (len(scheme)), len(scheme), scheme)
+                qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
+                qry += bytearray( b"I") + struct.pack( ">H", 0)
+                qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
+                if (restrictdn != 0):
+                    qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
+                for ii in range( 0, len( terms)):
+                    qry += bytearray( b"T")
+                    typesize = len(terms[ii].type())
+                    valuesize = len(terms[ii].value())
+                    qry += struct.pack( ">qHH", dflist[ii], typesize, valuesize)
+                    qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
+                # Query all storage servers:
+                results = yield self.issueQueries( storageservers, scheme, qry)
+                rt = self.mergeQueryResults( results, firstrank, nofranks)
+            except Exception as e:
+                rt = ([], ["error evaluation query: %s" % str(e)])
         raise tornado.gen.Return( rt)
 
     @tornado.gen.coroutine

@@ -18,7 +18,11 @@ if ($#ARGV <= 0 || $#ARGV > 2)
 sub parseLine
 {
 	my ($ln) = @_;
-	if ($ln =~ m/^[\"]([^\"]*)[\"][ ]([0-9]*[\.]{0,1}[0-9]+)$/)
+	if ($ln =~ m/^[\"](.*)[\"][ ]([0-9]*[\.]{0,1}[0-9]+)$/)
+	{
+		return ($1,$2,2);
+	}
+	elsif ($ln =~ m/^[\'](.*)[\'][ ]([0-9]*[\.]{0,1}[0-9]+)$/)
 	{
 		return ($1,$2,1);
 	}
@@ -36,9 +40,13 @@ sub printLine
 {
 	my ($id,$weight,$hasQuot) = @_;
 	my $qt = '';
-	if ($hasQuot)
+	if ($hasQuot == 2)
 	{
 		$qt = '"';
+	}
+	elsif ($hasQuot == 1)
+	{
+		$qt = '\'';
 	}
 	print "$qt$id$qt $weight\n";
 }

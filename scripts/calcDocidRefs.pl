@@ -113,7 +113,14 @@ my %docidtab = ();
 my ($docid,$docno) = fetchDocidLine( $docidfile);
 while ($docid)
 {
-	$docidtab{ $docid} = $docno;
+	if ($docidtab{ $docid})
+	{
+		$docidtab{ $docid} = "$docidtab{$docid} $docno";
+	}
+	else
+	{
+		$docidtab{ $docid} = $docno;
+	}
 	($docid,$docno) = fetchDocidLine( $docidfile);
 }
 
@@ -121,16 +128,22 @@ my %linktab = (); # map docno -> refcnt
 my ($linkid,$linkcnt) = fetchLinkLine( $linkfile);
 while ($linkid)
 {
-	$docno = $docidtab{ $linkid};
-	if ($docno)
+	$mainlinkid = $linkid;
+	$mainlinkid ~= s/[#].*$//;
+	$docnostr = $docidtab{ $mainlinkid};
+	if ($docnostr)
 	{
-		if ($linktab{ $docno})
+		@docnoar = split / /, $docnostr;
+		foreach $docno @docnoar
 		{
-			$linktab{ $docno} += $linkcnt;
-		}
-		else
-		{
-			$linktab{ $docno} = $linkcnt;
+			if ($linktab{ $docno})
+			{
+				$linktab{ $docno} += $linkcnt;
+			}
+			else
+			{
+				$linktab{ $docno} = $linkcnt;
+			}
 		}
 	}
 	($linkid,$linkcnt) = fetchLinkLine( $linkfile);
