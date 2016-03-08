@@ -197,14 +197,14 @@ if __name__ == "__main__":
 
         if (pubstats):
             # Start publish local statistics:
-            print( "Load local statistics to publish (serverno %u) ...\n" % serverno)
+            print( "Load local statistics to publish (serverno %u) ..." % serverno)
             publishStatistics( backend.getInitStatisticsIterator())
 
         # Start server:
         print( "Starting server ...")
         server = strusMessage.RequestServer( processCommand, processShutdown)
         server.start( myport)
-        print( "Terminated\n")
+        print( "Terminated")
     except Exception as e:
         print( e)
 

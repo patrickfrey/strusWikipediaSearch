@@ -175,7 +175,7 @@ class Backend:
                        'docno':rank.docno(), 'weight':rank.weight(), 'links':links})
         else:
             if (debugtrace):
-                print( "pass %u, nof matches %u\n" %(result.evaluationPass(), result.nofDocumentsRanked()))
+                print( "pass %u, nof matches %u" %(result.evaluationPass(), result.nofDocumentsRanked()))
             for rank in result.ranks():
                 content = ""
                 title = ""

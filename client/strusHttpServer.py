@@ -370,13 +370,13 @@ if __name__ == "__main__":
             storageservers.append( "localhost:7184")
 
         # Start server:
-        print( "Starting server ...\n")
+        print( "Starting server ...")
         application.listen( myport )
-        print( "Listening on port %u\n" % myport )
+        print( "Listening on port %u" % myport )
         ioloop = tornado.ioloop.IOLoop.current()
         signal.signal( signal.SIGINT, lambda sig, frame: ioloop.add_callback_from_signal(on_shutdown))
         ioloop.start()
-        print( "Terminated\n")
+        print( "Terminated")
     except Exception as e:
         print( e)
 
