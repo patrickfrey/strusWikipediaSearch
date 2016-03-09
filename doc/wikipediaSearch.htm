@@ -7,14 +7,19 @@
 	<meta name="keywords" content="wikipedia demo fulltext search engine C++" />
 	<meta name="author" content="Patrick Frey &lt;patrickpfrey (a) yahoo (dt) com&gt;" />
 	<link rel="stylesheet" type="text/css" href="text-profile.css" title="Text Profile" media="all" />
-	<title>Strus documentation</title>
+	<title>Strus Wikipedia search config</title>
 </head>
 
 <body>
 <script type="text/javascript">
 </script><div id="wrap">
 	<div id="content">
-		<h1>The wikipedia search demo with strus</h1>
+		<h1>Formal aspects of the Wikipedia search project</h1>
+		<p class="description"> This document describes the configuration of the Strus Wikipedia 
+		demo search. It discusses the formal aspects of the project rather than describing
+		the installation and running of the application. For a guide through the installation 
+		and build up of this Wikipedia demo search please read <a href="./wikipediaSearchNuc.htm">Provide Wikipedia search on a NUC with Strus</a>.
+		</p>
 		<h2>Problems to solve</h2>
 		<p class="description">This wikipedia demo search engine has been implemented
 		to show the capabilities of <i>strus</i> to handle a non trivial document collection.
@@ -31,7 +36,8 @@
 		but also a lot of foreigh words, names, numbers and identifiers without
 		semantical meaning. Collections with a big variety of index terms are difficult
 		to handle for an IR system, especially the insert performance tends to degrade.
-		So Wikipedia turns out to be a good example collection when building a search engine.
+		So Wikipedia turns out to be a good example collection when building a search engine,
+		because real world problems have in general the nasty property of not beeing nice.
 		</p></li>
 		<li><b>The document format: </b>
 		<p class="description">The Wikipedia documents can be downloaded as XML
@@ -65,74 +71,33 @@ Like early programming languages such as &lt;link type="page" id="Fortran"&gt;Fo
 , assemblers have been available since the 1950s and the first generations
 of text based &lt;link type="page" id="computer interface"&gt;computer interface&lt;/link&gt;
 		</pre>
-		<h2>Creating the storage</h2>
-		<p class="description">The storage has to be created with the following
+		<h2>The storage configuration</h2>
+		<p class="description">The storage has the following
 		elements in the meta data table:</p>
 		<pre>
-pageweight Float32     (tanh(x/100) of the number of references to that document)
+pageweight Float32     (tanh(x/50) where x are the number of references to that document)
 doclen UInt16          (number of distinct term positions in the document)
 minpos_title UInt8     (first position of the title)
 maxpos_title UInt8     (last position of the title)
 		</pre>
-		<p class="description">The storage is created with the program
-		<a href="utilities.htm#strusCreate">strusCreate</a>. The command
-		line call is the following:</p>
-		<pre>
-strusCreate "path=/data/strus/wikipedia/storage; metadata=doclen UInt16,pageweight Float32,minpos_title UInt8,maxpos_title UInt8"
-		</pre>
-		<h2>Inserting the documents</h2>
-		<p class="description">For feeding the Wikipedia collection I chose the command
-		line tools of strus. 
+		<p class="description">The storage has been created with the program
+		<a href="utilities.htm#strusCreate">strusCreate</a> and filled with
+		the program <a href="utilities.htm#strusInsert">strusInsert</a>.
+		It is important to know that these command line utilities are all
+		implementing their functionality with <a href="http://patrickfrey.github.io/strus/doc/doxygen/html/index.html">
+		the Strus core API</a> and the <a href="http://patrickfrey.github.io/strusAnalyzer/doc/doxygen/html/index.html">
+		Strus analyzer API</a>. There is no parallel universe involved and you are not dependent
+		on the command line tools in anyways. They are handy though.
 		</p>
-		<h3>Download and conversion</h3>
-		<p class="description">The following scripts are excuted in a data directory of your choice.</p>
-		<h4>scripts/download.sh</h4>
-		<pre>
-#!/bin/bash
 
-wget -q -O - http://dumps.wikimedia.your.org/enwiki/20160204/enwiki-20160204-pages-articles.xml.bz2 \
-| bzip2 -d -c \
-| strusWikimediaToXml -f "wikipedia%04u.xml,20M" -n0 -s -
-		</pre>
-		<br/>
-		<h4>scripts/packfiles.sh</h4>
-		<pre>
-#!/bin/bash
-
-for dd in 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
-    fnam="wikipedia$dd"'00.xml'
-    while [ ! -f  $fnam ]; echo waiting for $fnam; do sleep 3; done
-    tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
-done
-		</pre>
-		<h3>Insert</h3>
-		<p class="description">The following helper script is used for inserting one tared and zipped
-		document chunk we packed before in the download phase.
-		</p>
-		<h4>scripts/insert.sh</h4>
-		<pre>
-#!/bin/sh
-
-mkdir -p tmp
-tar -C tmp/ -xvzf $1
-time strusInsert -L error_insert.log -s "path=storage;max_open_files=256;write_buffer_size=256K;block_size=4K" -R resources -m analyzer_wikipedia_search -f 1 -c 25000 -t 2 -x "xml" config/wikipedia.ana tmp/
-rm -Rf tmp/
-		</pre>
-		<p class="description">The following shell code is used to insert some chunks of data into a storage.
-		</p>
-		<pre>
-time \
-for dd in 00 02 04 06 08 10 12 14 16 18 20 
-    do echo "-------- $dd";
-    scripts/insert.sh data/wikipedia$dd.tar.gz
-done
-		</pre>
 		<h2>The analyzer configuration</h2>
 		<p class="description">
 		The file config/wikipedia.ana is the configuration of the analyzer as required by
 		the program strusInsert. You can find the grammar of the analyzer
 		configuration language <a href="grammar_analyzerprg_doc.htm">here (analyzer configuration language)</a>.
 		</p>
+		<input class="toggle-box" id="analyzercfg" type="checkbox" >
+		<label for="analyzercfg">config/wikipedia.ana</label>
 		<pre>
 [Attribute]
     docid = text content /mediawiki/page/title();
@@ -221,44 +186,29 @@ done
     minpos_title = minpos( tist);
     maxpos_title = maxpos( tist);
     doclen = count( stem);
-
-		</div>
-		<h2>Initializing document weights from number of page references</h2>
-		<p class="description">
-		After insert we initialize a document weight in the metadata table,
-		calculated from the number of page references to that document.
-		We do not calculate a transitive page rank, but just use the number
-		of links pointing to that document. From this value we calculate a
-		pageweight between 0.0 and 1.0.
-		<br/>
-		For a setup with more than one storage node, we have to calculate
-		a link reference list (resources/linkid_list.txt) that is a cat of all
-		link reference lists of the storages and use this one for calculating the
-		number of references for each document number in a storage.
-		</p>
-		<h4>scripts/initMetaData.sh</h4>
-		<pre>
-#!/bin/sh
-
-# This script assumes that the meta data table schema has an element "pageweight Float32" defined
-
-STORAGEPATH=storage
-
-# Initialize the link popularity weight in document meta data (element pageweight):
-echo "[2.1] get the link reference statistics"
-strusInspect -s "path=$STORAGEPATH" fwstats linkid > resources/linkid_list.txt
-echo "[2.2] get the docno -> docid map"
-strusInspect -s "path=$STORAGEPATH" attribute docid > resources/docid_list.txt
-echo "[2.3] calculate a map docno -> number of references to this page"
-scripts/calcDocidRefs.pl resources/docid_list.txt resources/linkid_list.txt > resources/docnoref_map.txt
-echo "[2.4] calculate a map docno -> link popularity weight"
-scripts/calcWeights.pl resources/docnoref_map.txt 'tanh(x/50)' > resources/pageweight_map.txt
-echo "[2.5] update the meta data table element pageweight with the link popularity weight"
-strusUpdateStorage -s "path=$STORAGEPATH" -m pageweight resources/pageweight_map.txt
 		</pre>
-		<h2>Hardware used</h2>
-		<p class="description">The Wikipedia demo search project is hosted on an Intel NUC6i3SYK
-		with 16GB Ram and a 256GB SSD.
+
+		<h2>Weighting schemas implemented</h2>
+		<p class="description"><b>BM25</b>: Classical BM25 with k1=1.2, b=0.75, avgdoclen=500
+		</p>
+		<p class="description"><b>BM25pff (BM25 with proximity)</b>: BM25 with some ff penalties for missing proximity requirements.
+		<br/>I know that implementing an retrieval scheme on my own like with BM25pff
+		is a shaky ground. There are a lot of attempts to combine BM25 with aspects of proximity.
+		I have read some of the papers. I would like to decide for a standard retrieval scheme of 
+		this kind that has more evidence to work than my rule of thumb scheme <i>BM25pff</i>.
+		Suggestions are welcome.
+		</p>
+		<p class="description"><b>NBLNK</b>: Extract links weighted according their appearance in sentences that contain configurations of query terms. 
+		The documents inspected are the best 100 documents of each storage node evaluated with BM25
+		on documents containing all query terms. The weighting of the links is done by accumulating 
+		weights of feature expressions build from pairs of query terms
+		(or one term in case of a single term query).
+		</p>
+		<p class="description">
+		For both BM25 and BM25pff there is an extra weight added representing link popularity: w=tanh(n/50), 
+		where n is the number of links pointing to the page (df of references). 
+		All query evaluation schemes rank only documents that contain all query terms.
+		There is no spelling correction mechanism implemented.
 		</p>
 </div>
 </body>

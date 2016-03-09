@@ -14,21 +14,294 @@
 <script type="text/javascript">
 </script><div id="wrap">
 	<div id="content">
-		<h1>Running a search engine on the Wikipedia collection (English) on a NUC</h1>
+		<h1>Provide Wikipedia search on a NUC with Strus</h1>
 		<p class="description">Modern machines got damn powerful. We show how you can run
-		a fulltext search engine with sophisticated retrieval schemes without any problem
-		on an Intel NUK (i3). Running means that we can build the search index in a reasonable
-		amount of time (5 hours if we use only one machine to build the index) and serve 
-		queries with a response time expected nowadays from a search engine.
+		a fulltext search engine on the complete Wikipedia collection English with 
+		sophisticated retrieval schemes on an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
+		(<i>NUC6i3SYK</i>).
+		Running means that reacting problems in the project is withing our reach,
+		because it is possible to rebuild the search index within an office day
+		(in less than 6 hours, if we use only one machine to build the index,
+		less than 2 hours if we have 3 of them available). It also means serving
+		queries with response times expected nowadays from a search engine.
 		Numbers about how far the engine can be stressed and how many simultaneus queries
-		can be handled can not be provided yet.
+		can be handled are not provided yet.
 		<br/>
-		May I first introduce our machine, an Intel NUC (i3):
+		May I first introduce the machine, an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
+		(<i>NUC6i3SYK with 16GB Ram and a 256GB SSD</i>):
 		</p>
 		<h2>The machine</h2>
-	<img src="images/logotype.jpg" width="280" height="280" alt="Strus logo" /></a>
-	
+		<img src="images/NUC_6i3SYK_lores.JPG" height="640" alt="Intel NUC (NUC6i3SYK with 16GB Ram and a 256GB SSD)" /></a>
+		<p class="description"><i>This is it, the beast :-)</i></p>
+		<h2>Installing the software</h2
+		<p class="description">
+		<ol>
+			<li>Install an Ubuntu 14.04 as OS on our NUC. You may chose another distribution.
+			See the <a href="installation.htm#packages">Strus package list</a> for that.
+			</li>
+			<li>Install developper software needed for the Wikipedia project:
+			<input class="toggle-box" id="pkginst" type="checkbox" >
+			<label for="pkginst">Shell commands (Ubuntu + Aptitude)</label>
+			<pre>
+apt-get install git-core
+apt-get install cmake
+apt-get install libboost-dev
+apt-get install libboost-thread-dev
+apt-get install gcc
+apt-get install g++
+apt-get install python
+apt-get install python-tornado
+apt-get install python-pip
+pip install tornado.tcpclient
+
+wget https://pypi.python.org/packages/source/t/tornado/tornado-4.3.tar.gz#md5=d13a99dc0b60ba69f5f8ec1235e5b232
+tar xvzf tornado-4.3.tar.gz
+cd tornado-4.3
+python setup.py build
+python setup.py install
+			</pre>
+			</li>
+
+			<li>Install the Strus packages for development on it:
+			<input class="toggle-box" id="struspkginst" type="checkbox" >
+			<label for="struspkginst">Shell commands for installing the Strus packages</label>
+			<pre>
+apt-get update
+wget http://download.opensuse.org/repositories/home:PatrickFrey/xUbuntu_14.04/Release.key
+sudo apt-key add - < Release.key
+apt-get update
+apt-get upgrade
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strus_0.5.2-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strus-dev_0.5.2-0_amd64.deb
+dpkg -i strus_0.5.2-0_amd64.deb
+dpkg -i strus-dev_0.5.2-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusanalyzer_0.5.1-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusanalyzer-dev_0.5.1-0_amd64.deb
+dpkg -i strusanalyzer_0.5.1-0_amd64.deb
+dpkg -i strusanalyzer-dev_0.5.1-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusmodule_0.5.0-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusmodule-dev_0.5.0-0_amd64.deb
+dpkg -i strusmodule_0.5.0-0_amd64.deb
+dpkg -i strusmodule-dev_0.5.0-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusrpc_0.5.0-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusrpc-dev_0.5.0-0_amd64.deb
+dpkg -i strusrpc_0.5.0-0_amd64.deb
+dpkg -i strusrpc-dev_0.5.0-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusutilities_0.5.0-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusutilities-dev_0.5.0-0_amd64.deb
+apt-get install libboost-thread1.54.0
+dpkg -i strusutilities_0.5.0-0_amd64.deb
+dpkg -i strusutilities-dev_0.5.0-0_amd64.deb
+wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusbindings-python_0.5.0-0_amd64.deb
+dpkg -i strusbindings-python_0.5.0-0_amd64.deb
+apt-get install libboost-python1.54.0
+dpkg -i strusbindings-python_0.5.0-0_amd64.deb
+			</pre>
+			</li>
+
+			<li>Clone the Wikipedia github project and build it:
+			<input class="toggle-box" id="wpinst" type="checkbox" >
+			<label for="wpinst">Shell commands for building the Wikipedia search project</label>
+			<pre>
+git clone git@github.com:patrickfrey/strusWikipediaSearch.git
+cd strusWikipediaSearch
+cmake -DLIB_INSTALL_DIR=lib/x86_64-linux-gnu/ -DCMAKE_INSTALL_PREFIX=/usr/
+make
+make install
+			</pre>
+			</li>
+		</ol>
+		</p>
+		<h2>Build the search index</h2>
+		<ol>
+		<li>Download a wikipedia chunk, split and convert it to XML chunks.
+		We compress the XML chunk for not wasting disk space we will eventually need, when
+		building indexes for other languages than English.
+		<input class="toggle-box" id="datadownload" type="checkbox" >
+		<label for="datadownload">Shell commands for download</label>
+		<pre>
+mkdir data
+cd data
+wget -q -O - http://dumps.wikimedia.your.org/enwiki/20160204/enwiki-20160204-pages-articles.xml.bz2 \
+| bzip2 -d -c \
+| strusWikimediaToXml -f "wikipedia%04u.xml,20M" -n0 -s -
+cd ..
+		</pre>
+		<input class="toggle-box" id="datapacking" type="checkbox" >
+		<label for="datapacking">Shell commands for packing the downloaded data (to run in parallel with download)</label>
+		<pre>
+cd data
+for dd in 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+	fnam="wikipedia$dd"'00.xml'
+	while [ ! -f  $fnam ]; echo waiting for $fnam; do sleep 3; done
+	echo tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
+done
+cd ..
+		</pre>
+		<input class="toggle-box" id="datachunks" type="checkbox" >
+		<label for="datachunks">Content of the <i>data</i> directory after download and packing the data</label>
+		<pre>
+wikipedia00.tar.gz
+wikipedia01.tar.gz
+wikipedia02.tar.gz
+wikipedia03.tar.gz
+wikipedia04.tar.gz
+wikipedia05.tar.gz
+wikipedia06.tar.gz
+wikipedia07.tar.gz
+wikipedia08.tar.gz
+wikipedia09.tar.gz
+wikipedia10.tar.gz
+wikipedia11.tar.gz
+wikipedia12.tar.gz
+wikipedia13.tar.gz
+wikipedia14.tar.gz
+wikipedia15.tar.gz
+wikipedia16.tar.gz
+wikipedia17.tar.gz
+wikipedia18.tar.gz
+wikipedia19.tar.gz
+wikipedia20.tar.gz
+wikipedia21.tar.gz
+wikipedia22.tar.gz
+wikipedia23.tar.gz
+wikipedia24.tar.gz
+wikipedia25.tar.gz
+wikipedia26.tar.gz
+		</pre>
+		</li>
+		<li>We build the storages for 3 storage nodes and insert the dowloaded
+		and converted XML chunks. I measured a runtime of 5 hours and 12 minutes
+		for this on my NUC.
+		<input class="toggle-box" id="insertstorage" type="checkbox" >
+		<label for="insertstorage">Helper script scripts/insert.sh</label>
+		<pre>
+#!/bin/sh
+
+mkdir -p tmp
+tar -C tmp/ -xvzf $1
+time strusInsert -L error_insert.log -s "path=storage;max_open_files=256;write_buffer_size=512K;block_size=4K" -R resources -m analyzer_wikipedia_search -f 1 -c 50000 -t 3 -x "xml" config/wikipedia.ana tmp/
+rm -Rf tmp/
+		</pre>
+		<input class="toggle-box" id="buildindex" type="checkbox" >
+		<label for="buildindex">Shell commands for building the document index</label>
+		<pre>
+strusCreate -S config/storage.conf
+for dd in 00 03 06 09 12 15 18 21 24 ; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
+mv storage storage1
+strusCreate -S config/storage.conf
+for dd in 01 04 07 10 13 16 19 22 25; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
+mv storage storage2
+strusCreate -S config/storage.conf
+for dd in 02 05 08 11 14 17 20 23 26; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
+mv storage storage3
+		</pre>
+		</li>
+		<li>Whatch the insert program at work
+		<img src="images/top_insert.jpg" width="800" alt="strusInsert at work" /></a>
+		<p class="description"><i>The strusInsert program at work. The high CPU usage
+		has periodically some short breaks in the commit phase. For tuning the 
+		system to other hardware you have to change the settings in scripts/insert.sh.
+		Without the ideal settings the insert performace may degrade heavily.
+		But I must state here, that strus is able to deal with conventional disks.
+		I used a 32bit maschine with a SATA disk for a long time as demo to investigate
+		and improve the behaviour of Strus. It is by now playing fairly well with
+		decent settings. You just have to expect insertion times about 24 hours or 
+		even beyond on a setup with conventional hard disks.
+		</i></p>
+		</li>
+		<li>After insert we initialize the document weight in the metadata table,
+		calculated from the number of page references to that document.
+		We do not calculate a transitive page rank, but just use the number
+		of links pointing to that document. From this value we calculate a
+		pageweight between 0.0 and 1.0. We have a shell script prepared for that.
+		<input class="toggle-box" id="initmeta" type="checkbox" >
+		<label for="initmeta">Script scripts/initMetaData_3.sh for calculating the <i>pageweight</i></label>
+		<pre>
+#!/bin/sh
+
+# This script assumes that the meta data table schema has an element "pageweight Float32" defined
+
+STORAGEPATH=storage
+
+# Initialize the link popularity weight in document meta data (element pageweight):
+echo "[2.1] get the link reference statistics"
+truncate -s 0 resources/linkid_list.txt
+for ii in 1 2 3
+do
+	strusInspect -s "path=$STORAGEPATH$ii" fwstats linkid >> resources/linkid_list.txt
+	echo "[2.2] get the docno -> docid map"
+	strusInspect -s "path=$STORAGEPATH$ii" attribute docid | strusAnalyzePhrase -n "lc:text" -q '' - > resources/docid_list$ii.txt
+done
+for ii in 1 2 3
+do
+	echo "[2.3] calculate a map docno -> number of references to this page"
+	scripts/calcDocidRefs.pl resources/docid_list$ii.txt resources/linkid_list.txt > resources/docnoref_map$ii.txt
+	echo "[2.4] calculate a map docno -> link popularity weight"
+	scripts/calcWeights.pl resources/docnoref_map$ii.txt 'tanh(x/50)' > resources/pageweight_map$ii.txt
+	echo "[2.5] update the meta data table element pageweight with the link popularity weight"
+	strusUpdateStorage -s "path=$STORAGEPATH$ii" -m pageweight resources/pageweight_map$ii.txt
+done
+		</pre>
+		</li>
+		</ol>
+		<h2>Starting up the system</h2>
+		<p class="description">The setup of the system is similar to the one described in the code project article
+		<a href="http://www.codeproject.com/Articles/1066960/Distributing-a-search-engine-index-with-Strus">Distributing a search engine index with Strus</a>.
+		We have 3 storage servers (each one serving one storage built before) and one statistics server plus one web server.
+		For simplicity we start each of the different servers in a screen. You may know how to configure
+		them as a service on your system.
+		</p>
+		<ol>
+		<li><b>Statistics server</b>
+		<br/>The statistics server is holding the global statistics of the collection.
+		The statistic server holds the data that make query results from different storage nodes comparable
+		and thus a split of the search index according our needs possible.
+		<input class="toggle-box" id="statserver" type="checkbox" >
+		<label for="statserver">Shell command for starting up the statistics server in a screen</label>
+		<pre>
+screen -dmS statserver client/strusStatisticsServer.py
+		</pre>
+		</li>
+		<li><b>Storage servers</b>
+		<br/>Each storage server node serves queries on one storage index built.
+		<input class="toggle-box" id="storageserver" type="checkbox" >
+		<label for="storageserver">Shell command for starting up the storage servers in a screen</label>
+		<pre>
+for ii in 1 2 3
+do
+screen -dmS storageserver$ii client/strusStorageServer.py -i $ii -c "path=storage$ii; cache=2G" -p 719$ii -P
+done
+		</pre>
+		</li>
+		<li><b>Http server</b>
+		<br/>Our HTTP server based on <a href="http://www.tornadoweb.org/en/stable">Tornado</a>
+		answers the queries comming in as HTTP GET requests and returns the result as rendered HTML pages.
+		<input class="toggle-box" id="httpserver" type="checkbox" >
+		<label for="httpserver">Shell command for starting up the webserver in a screen</label>
+		<pre>
+screen -dmS httpserver client/strusHttpServer.py -p 80 7191 7192 7193
+		</pre>
+		</li>
+		<ol>
+		<h2>Searching</h2>
+		<img src="images/Query.jpg" height="480" alt="Query results" /></a>
+		<p class="description"><i>We got results, now we can start to improve our weighting scheme.
+		There is still a long way to go, but I think it can be seen as a decent start. :-)</i></p>
+
+		<h2>More about the project</h2>
+		<p class="description">There exists a description of the formal aspects of this project like
+		the configuration and query evaluation schemes used. If you want to dig deeper, you'll
+		find some anchors <a href="./wikipediaSearch.htm">here</a>.
+		</p>
+
+		<h2>Online</h2>
+		<p class="description">You might not want to build up a Wikipedia search or another
+		search project on your own, but maybe you got curious. There is a NUC out there
+		running a <a href="http://demo.project-strus.net">Wikipedia search for you</a>.
+		I am currently hosting it from my flat, so service availability is best effort. :-)
+		</p>
+	</div>
 </div>
 </body>
 </html>
-

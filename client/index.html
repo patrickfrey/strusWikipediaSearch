@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Search Wikipedia with Strus</title>
+<title>Search Wikipedia with Strus on an Intel NUC</title>
 <link href="strus.css" rel="stylesheet" type="text/css">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
@@ -16,7 +16,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-63809026-2', 'auto');
 ga('send', 'pageview');
 </script>
-<h1>Project Strus: A demo search engine for Wikipedia (english)</h1>
+<h1>Project Strus: A demo search engine for Wikipedia (English)</h1>
 <p>Please enter your query here (and be aware that there is no spelling correction or spelling assistance implemented):</p>
 <div id="search_form">
 <div id="search_logo">
@@ -35,54 +35,6 @@ ga('send', 'pageview');
 </form>
 </div>
 
-<div>
-<h4>Description of this demo search</h4>
-<li>A documentation of how the search index was configured and built can be found
-<a href="http://www.project-strus.net/wikipediaSearch.htm">here (building the strus Wikipedia demo search)</a>.</li>
-<li>This is a demo system that has been built to show the performance of strus under conditions
-of limited resources. <b>Older hardware</b> has been used, because a system pushed to its limits
-is <b>better to judge</b>. Because the queries will not be very frequent on this system, the
-chance that the engine has to access disk to retrieve the result, is very high. The size
-of the index is 6 times bigger than the memory available.
-Be aware of the size of the index (more than 15 million documents).
-Normally a search index of this size would be split into smaller units.
-If somebody thinks strus is slow, so be it.
-This demo tries to address a public that is aware of what is happening here.</li>
-<h4>Hardware description</h4>
-<p>
-<ol>
-<li>Motherboard: <a href="http://www.intel.com/cd/channel/reseller/apac/eng/products/server/boards/up/s3000ah/feature/index.htm">Intel S3000AHV</a></li>
-<li>Processor: <a href="http://ark.intel.com/de/products/27203/Intel-Xeon-Processor-3040-2M-Cache-1_86-GHz-1066-MHz-FSB">1 Intel Xeon Processor 3040, 1.86 GHz</a></li>
-<li>Memory: 8 GB DDR2 RAM, 533 MHz</li>
-<li>Hard disc: Western Digial 2TB SATA, product number: WDC WD2002FYPS-0</li>
-<li>Index size on disc: ~50G</li>
-</ol>
-</p>
-<h4>Weighting schemas:</h4>
-<ol>
-<li><b>BM25</b>: <p>Classical BM25 with k1=0.75, b=2.1, avgdoclen=500 plus an extra weight added for link popularity: w=tanh(n/100), where n is the number of links pointing to the page (df of references). Return only documents that contain all query terms.</p>
-</p></li>
-<li><b>BM25(with proximity)</b>: <p>BM25 with some ff increments for proximity (sequence and appearance in same sentence) plus appearance in title.</p>
-</p></li>
-<li><b>NBLNK</b>: <p>Extract links weighted according their appearance in sentences that contain configurations of query terms. 
-The documents inspected are the best 300 documents evaluated with BM25 on documents containing all query terms.
-The weighting of the links is done by accumulating weights of feature expressions build from pairs of query terms
-(or one term in case of a single term query).
-For a query with 4 terms, there are 14 query expressions built. 
-For example for the query "Roger Federer", the links are weighted as follows:
-<ol>
-<li>Links appearing in a sentence where the sequence "Roger Federer" ("Roger" followed immediately by "Federer") occurrs with weight 3.0</li>
-<li>Links appearing in a sentence where "Roger" appears near "Federer" ins distance of maximum 5 with weight 2.0</li>
-<li>Links appearing in a sentence where "Roger" appears near "Federer" ins distance of maximum 20 with weight 1.5</li>
-</ol>
-Weights of a specific link in a document are multiplied. The resulting weights are accumulated by summation for each link target found.
-The links with the highest weight are returned as result.
-</p></li>
-</ol>
-<p></p>
-<h4>PHP source code of the client</h4>
-<p>The PHP client code for this demo search can be found <a href="show_evalQuery.php">here</a></p>
-</div>
 </body>
 </html>
 
