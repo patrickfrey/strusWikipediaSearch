@@ -15,19 +15,20 @@
 </script><div id="wrap">
 	<div id="content">
 		<h1>Provide Wikipedia search on a NUC with Strus</h1>
-		<p class="description">Modern machines got damn powerful. We show how you can run
-		a fulltext search engine on the complete Wikipedia collection English with 
+		<p class="description">Modern machines got damn powerful. I can show you how
+		you can run a fulltext search engine on the complete Wikipedia collection English with 
 		sophisticated retrieval schemes on an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
 		(<i>NUC6i3SYK</i>).
-		Running means that reacting problems in the project is withing our reach,
+		"Running" means that reacting on problems in the project is within your reach,
 		because it is possible to rebuild the search index within an office day
 		(in less than 6 hours, if we use only one machine to build the index,
 		less than 2 hours if we have 3 of them available). It also means serving
 		queries with response times expected nowadays from a search engine.
-		Numbers about how far the engine can be stressed and how many simultaneus queries
-		can be handled are not provided yet.
-		<br/>
-		May I first introduce the machine, an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
+		Reliable numbers about how far the engine can be stressed and how many 
+		simultaneus queries can be handled are not provided yet.
+		</p>
+		<p class="description">But may I first introduce the machine?
+		<br/>It is an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
 		(<i>NUC6i3SYK with 16GB Ram and a 256GB SSD</i>):
 		</p>
 		<h2>The machine</h2>
@@ -47,6 +48,7 @@ apt-get install git-core
 apt-get install cmake
 apt-get install libboost-dev
 apt-get install libboost-thread-dev
+apt-get install libboost-python1.54.0
 apt-get install gcc
 apt-get install g++
 apt-get install python
@@ -71,31 +73,12 @@ wget http://download.opensuse.org/repositories/home:PatrickFrey/xUbuntu_14.04/Re
 sudo apt-key add - < Release.key
 apt-get update
 apt-get upgrade
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strus_0.5.2-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strus-dev_0.5.2-0_amd64.deb
-dpkg -i strus_0.5.2-0_amd64.deb
-dpkg -i strus-dev_0.5.2-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusanalyzer_0.5.1-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusanalyzer-dev_0.5.1-0_amd64.deb
-dpkg -i strusanalyzer_0.5.1-0_amd64.deb
-dpkg -i strusanalyzer-dev_0.5.1-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusmodule_0.5.0-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusmodule-dev_0.5.0-0_amd64.deb
-dpkg -i strusmodule_0.5.0-0_amd64.deb
-dpkg -i strusmodule-dev_0.5.0-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusrpc_0.5.0-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusrpc-dev_0.5.0-0_amd64.deb
-dpkg -i strusrpc_0.5.0-0_amd64.deb
-dpkg -i strusrpc-dev_0.5.0-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusutilities_0.5.0-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusutilities-dev_0.5.0-0_amd64.deb
-apt-get install libboost-thread1.54.0
-dpkg -i strusutilities_0.5.0-0_amd64.deb
-dpkg -i strusutilities-dev_0.5.0-0_amd64.deb
-wget http://download.opensuse.org/repositories/home:/PatrickFrey/xUbuntu_14.04/amd64/strusbindings-python_0.5.0-0_amd64.deb
-dpkg -i strusbindings-python_0.5.0-0_amd64.deb
-apt-get install libboost-python1.54.0
-dpkg -i strusbindings-python_0.5.0-0_amd64.deb
+apt-get install strus strus-dev
+apt-get install strusanalyzer strusanalyzer-dev
+apt-get install strusmodule strusmodule-dev
+apt-get install strusrpc strusrpc-dev
+apt-get install strusutilities strusutilities-dev
+apt-get install strusbindings-python
 			</pre>
 			</li>
 
@@ -131,9 +114,10 @@ cd ..
 		<label for="datapacking">Shell commands for packing the downloaded data (to run in parallel with download)</label>
 		<pre>
 cd data
-for dd in 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
-	fnam="wikipedia$dd"'00.xml'
+for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+	fnam="wikipedia$dd"'99.xml'
 	while [ ! -f  $fnam ]; echo waiting for $fnam; do sleep 3; done
+	sleep 5
 	echo tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
 done
 cd ..
@@ -184,7 +168,7 @@ time strusInsert -L error_insert.log -s "path=storage;max_open_files=256;write_b
 rm -Rf tmp/
 		</pre>
 		<input class="toggle-box" id="buildindex" type="checkbox" >
-		<label for="buildindex">Shell commands for building the document index</label>
+		<label for="buildindex">Shell commands for building the document indices</label>
 		<pre>
 strusCreate -S config/storage.conf
 for dd in 00 03 06 09 12 15 18 21 24 ; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
@@ -197,7 +181,7 @@ for dd in 02 05 08 11 14 17 20 23 26; do echo "-------- $dd"; scripts/insert.sh 
 mv storage storage3
 		</pre>
 		</li>
-		<li>Whatch the insert program at work
+		<li>Whatch the strusInsert program at work
 		<img src="images/top_insert.jpg" width="800" alt="strusInsert at work" /></a>
 		<p class="description"><i>The strusInsert program at work. The high CPU usage
 		has periodically some short breaks in the commit phase. For tuning the 
