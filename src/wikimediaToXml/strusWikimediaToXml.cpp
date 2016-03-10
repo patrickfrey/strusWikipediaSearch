@@ -443,6 +443,28 @@ bool Lexer::eatFollowChar( char expectChr)
 	return false;
 }
 
+static char const* skipStyle( char const* si, char const* se)
+{
+	int sidx=0;
+	char const* start = si;
+	for (;si < se && *si > 0 && *si <= 32;++si){}
+	for (;si < se && isAlpha(*si);++si,++sidx){}
+	if (si < se && sidx > 0 && *si == '=')
+	{
+		++si;
+		if (si+5 < se && *si == '&' && std::memcmp( si, "&quot;", 5) == 0)
+		{
+			si += 5;
+			for (; si < se && *si != '\n' && *si != '&'; ++si){}
+			if (si+5 < se && std::memcmp( si, "&quot;", 5) == 0)
+			{
+				return skipStyle( si+5, se);
+			}
+		}
+	}
+	return start;
+}
+
 Lexer::Lexem Lexer::next()
 {
 	m_prev_si = m_si;
@@ -524,6 +546,7 @@ Lexer::Lexem Lexer::next()
 			}
 			else if (*m_si == '|')
 			{
+				m_si = skipStyle( m_si, m_se);
 				return Lexem( LexemOpenTable);
 			}
 		}
@@ -539,11 +562,13 @@ Lexer::Lexem Lexer::next()
 			if (*m_si == '-')
 			{
 				++m_si;
+				m_si = skipStyle( m_si, m_se);
 				return Lexem( LexemTableRowDelim);
 			}
 			else if (*m_si == '+')
 			{
 				++m_si;
+				m_si = skipStyle( m_si, m_se);
 				return Lexem( LexemTableTitle);
 			}
 			else if (*m_si == '}')
@@ -553,6 +578,7 @@ Lexer::Lexem Lexer::next()
 			}
 			else
 			{
+				m_si = skipStyle( m_si, m_se);
 				return Lexem( LexemColDelim);
 			}
 		}
