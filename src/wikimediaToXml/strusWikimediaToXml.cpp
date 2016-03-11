@@ -461,6 +461,11 @@ static char const* skipStyle( char const* si, char const* se)
 				return skipStyle( si+6, se);
 			}
 		}
+		else if (si < se && isAlpha(*si))
+		{
+			for (;si < se && isAlpha(*si);++si){}
+			return skipStyle( si, se);
+		}
 	}
 	return start;
 }
