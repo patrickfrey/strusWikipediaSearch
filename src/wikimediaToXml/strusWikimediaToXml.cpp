@@ -452,13 +452,13 @@ static char const* skipStyle( char const* si, char const* se)
 	if (si < se && sidx > 0 && *si == '=')
 	{
 		++si;
-		if (si+5 < se && *si == '&' && std::memcmp( si, "&quot;", 5) == 0)
+		if (si+6 < se && *si == '&' && std::memcmp( si, "&quot;", 6) == 0)
 		{
-			si += 5;
+			si += 6;
 			for (; si < se && *si != '\n' && *si != '&'; ++si){}
-			if (si+5 < se && std::memcmp( si, "&quot;", 5) == 0)
+			if (si+6 < se && std::memcmp( si, "&quot;", 6) == 0)
 			{
-				return skipStyle( si+5, se);
+				return skipStyle( si+6, se);
 			}
 		}
 	}
