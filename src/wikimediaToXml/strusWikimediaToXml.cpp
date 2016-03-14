@@ -81,7 +81,8 @@ public:
 	{
 		if (!XmlPrinterBase::printOpenTag( tag.c_str(), tag.size(), buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing open tag: " + outputString(tag.c_str(),tag.c_str()+tag.size()));
+			const char* errstr = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (errstr?errstr:"") + " when printing open tag: " + outputString(tag.c_str(),tag.c_str()+tag.size()));
 		}
 	}
 
@@ -89,7 +90,8 @@ public:
 	{
 		if (!XmlPrinterBase::printOpenTag( name, std::strlen(name), buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing open tag: " + outputString(name,name+std::strlen(name)));
+			const char* errstr = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (errstr?errstr:"") + " when printing open tag: " + outputString(name,name+std::strlen(name)));
 		}
 	}
 
@@ -97,7 +99,8 @@ public:
 	{
 		if (!XmlPrinterBase::printAttribute( name.c_str(), name.size(), buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing attribute: " + outputString(name.c_str(),name.c_str()+name.size()));
+			const char* errstr = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (errstr?errstr:"") + " when printing attribute: " + outputString(name.c_str(),name.c_str()+name.size()));
 		}
 	}
 
@@ -105,7 +108,8 @@ public:
 	{
 		if (!XmlPrinterBase::printAttribute( name, std::strlen(name), buf))
 		{
-			throw std::runtime_error( std::string( "xml print error: ") + XmlPrinterBase::lasterror() + " when printing attribute: " + outputString(name,name+std::strlen(name)));
+			const char* errstr = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (errstr?errstr:"") + " when printing attribute: " + outputString(name,name+std::strlen(name)));
 		}
 	}
 
@@ -452,19 +456,23 @@ static char const* skipStyle( char const* si, char const* se)
 	if (si < se && sidx > 0 && *si == '=')
 	{
 		++si;
-		if (si+6 < se && *si == '&' && std::memcmp( si, "&quot;", 6) == 0)
+		if (si < se && (*si == '"' || *si == '\''))
 		{
-			si += 6;
-			for (; si < se && *si != '\n' && *si != '&'; ++si){}
-			if (si+6 < se && std::memcmp( si, "&quot;", 6) == 0)
+			char eb = *si;
+			++si;
+			for (; si < se && *si != '\n' && *si != eb; ++si){}
+			if (si < se && *si == eb)
 			{
-				return skipStyle( si+6, se);
+				return skipStyle( si+1, se);
 			}
 		}
 		else if (si < se && isAlphaNum(*si))
 		{
 			for (;si < se && isAlphaNum(*si);++si){}
-			return skipStyle( si, se);
+			if (si < se)
+			{
+				return skipStyle( si, se);
+			}
 		}
 	}
 	return start;
@@ -1869,6 +1877,9 @@ int main( int argc, const char* argv[])
 		}
 		for (; itr!=end && !terminated; ++itr)
 		{
+#ifdef STRUS_LOWLEVEL_DEBUG
+			std::cerr << "element " << itr->name() << " '" << std::string( itr->content(), itr->size()) << "'" << std::endl;
+#endif
 			if (skipDoc)
 			{
 				if (itr->type() == XmlScanner::OpenTag)
