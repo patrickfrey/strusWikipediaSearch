@@ -453,7 +453,7 @@ static char const* skipStyle( char const* si, char const* se)
 	char const* start = si;
 	for (;si < se && *si > 0 && *si <= 32;++si){}
 	for (;si < se && isAlpha(*si);++si,++sidx){}
-	if (si < se && sidx > 0 && *si == '=')
+	if (si < se && sidx > 0 && (*si == '=' || *si == ':'))
 	{
 		++si;
 		if (si < se && (*si == '"' || *si == '\''))

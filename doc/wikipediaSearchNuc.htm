@@ -16,15 +16,16 @@
 	<div id="content">
 		<h1>Provide Wikipedia search on a NUC with Strus</h1>
 		<p class="description">Modern machines got damn powerful. We can show you how
-		to run a fulltext search engine on the complete Wikipedia collection English with 
+		to run a fulltext search engine on the complete Wikipedia collection English
+		(without citations, but with contents of tables) with 
 		sophisticated retrieval schemes on an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
 		(<i>NUC6i3SYK</i>) using <a href="index.htm">Strus</a>.
 		"Running" means that reacting on problems in the project is within your reach,
 		because it is possible to rebuild the search index within an office day:
 		<ul>
-		<li>using one machine: in about 6 hours = less than 1 hour upacking and conversion to XML, 5 hours and 12 minutes for building the document search index
+		<li>using one machine: less than 8 hours = less than 1 hour upacking and conversion to XML, 6:45 for building the document search index
 		</li>
-		<li>using three machines: in about 3 hours = less than 1 hour unpacking and conversion, and 1:50 hours for building the document search index and some minutes for copying the data.
+		<li>using three machines: 3 1/2 hours = less than 1 hour unpacking and conversion, 2:15 for building the document search index and some minutes for copying the data.
 		</li>
 		</ul>
 		It also means serving queries with response times expected nowadays from a search engine.
@@ -191,12 +192,13 @@ for dd in 02 05 08 11 14 17 20 23 26; do echo "-------- $dd"; scripts/insert.sh 
 mv storage storage3
 		</pre>
 		</li>
-		<li>Whatch the strusInsert program at work
+		<li>Watch the strusInsert program at work
 		<img src="images/top_insert.jpg" width="800" alt="strusInsert at work" /></a>
 		<p class="description"><i>The strusInsert program at work. The high CPU usage
-		has periodically some short breaks in the commit phase. For tuning the 
-		system to other hardware you have to change the settings in scripts/insert.sh.
-		Without the ideal settings the insert performace may degrade heavily.
+		has periodically some breaks in the commit phase.
+		For tuning the system to other hardware you have to change the settings in
+		scripts/insert.sh. Without the ideal settings the insert performace may degrade heavily.
+		With a growing index the CPU usage may also drop significantly in average.
 		But I must state here, that strus is able to deal with conventional disks.
 		I used a 32bit maschine with a SATA disk for a long time as demo to investigate
 		and improve the behaviour of Strus. It is by now playing fairly well with

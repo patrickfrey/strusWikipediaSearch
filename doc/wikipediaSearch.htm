@@ -260,6 +260,12 @@ maxpos_title UInt8     (last position of the title)
 		All query evaluation schemes rank only documents that contain all query terms.
 		There is no spelling correction mechanism implemented.
 		</p>
+		<p class="description">
+		For any query that consists only of very high frequent words (so called stop words in IR),
+		a restriction is made on documents that contain a subset of the query term in the title.
+		This is done to avoid big scans on documents that raise query answering time by factors
+		compared with an ordinary query.
+		</p>
 </div>
 </body>
 </html>

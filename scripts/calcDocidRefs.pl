@@ -128,17 +128,17 @@ my %linktab = (); # map docno -> refcnt
 my ($linkid,$linkcnt) = fetchLinkLine( $linkfile);
 while ($linkid)
 {
-	$mainlinkid = $linkid;
-	$mainlinkid ~= s/[#].*$//;
-	$docnostr = $docidtab{ $mainlinkid};
+	my $mainlinkid = $linkid;
+	$mainlinkid =~ s/[#].*$//;
+	my $docnostr = $docidtab{ $mainlinkid};
 	if ($docnostr)
 	{
-		@docnoar = split / /, $docnostr;
-		foreach $docno @docnoar
+		my @docnoar = split / /, $docnostr;
+		foreach my $docno(@docnoar)
 		{
 			if ($linktab{ $docno})
 			{
-				$linktab{ $docno} += $linkcnt;
+				$linktab{ $docno} = $linktab{ $docno} + $linkcnt;
 			}
 			else
 			{
