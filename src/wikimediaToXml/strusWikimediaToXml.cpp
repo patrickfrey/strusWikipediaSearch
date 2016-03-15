@@ -602,6 +602,7 @@ Lexer::Lexem Lexer::next()
 				return Lexem( LexemText, std::string( start, m_si - start));
 			}
 			m_si += 2;
+			m_si = skipStyle( m_si, m_se);
 			return Lexem( LexemTableHeadDelim);
 		}
 		else if (*m_si == '\n')
@@ -617,6 +618,7 @@ Lexer::Lexem Lexer::next()
 						return Lexem( LexemText, std::string( start, m_si - start));
 					}
 					++m_si;
+					m_si = skipStyle( m_si, m_se);
 					return Lexem( LexemTableHeadDelim);
 				}
 				else if (*m_si == '|')

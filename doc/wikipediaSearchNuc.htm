@@ -20,10 +20,14 @@
 		sophisticated retrieval schemes on an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
 		(<i>NUC6i3SYK</i>) using <a href="index.htm">Strus</a>.
 		"Running" means that reacting on problems in the project is within your reach,
-		because it is possible to rebuild the search index within an office day
-		(in less than 6 hours, if we use only one machine to build the index,
-		less than 2 hours if we have 3 of them available). It also means serving
-		queries with response times expected nowadays from a search engine.
+		because it is possible to rebuild the search index within an office day:
+		<ul>
+		<li>using one machine: in about 8 hours = 3 hours upacking and conversion to XML, 5 hours and 12 minutes for building the document search index
+		</li>
+		<li>using three machines: in about 5 hours = 3 hours unpacking, and 1:50 hours for building the document search index and some minutes for copying data.
+		</li>
+		</ul>
+		It also means serving queries with response times expected nowadays from a search engine.
 		Reliable numbers about how far the engine can be stressed and how many 
 		simultaneus queries can be handled are not provided yet.
 		</p>
@@ -103,24 +107,27 @@ make install
 		<input class="toggle-box" id="datadownload" type="checkbox" >
 		<label for="datadownload">Shell commands for download (<b>scripts/download.sh</b>)</label>
 		<pre>
-mkdir data
-cd data
+mkdir -p data
 wget -q -O - http://dumps.wikimedia.your.org/enwiki/20160204/enwiki-20160204-pages-articles.xml.bz2 \
 | bzip2 -d -c \
-| strusWikimediaToXml -f "wikipedia%04u.xml,20M" -n0 -s -
-cd ..
+| strusWikimediaToXml -f "data/wikipedia%04u.xml,20M" -n0 -s -
 		</pre>
 		<input class="toggle-box" id="datapacking" type="checkbox" >
-		<label for="datapacking">Shell commands for packing the downloaded data (<b>scripts/packfiles.sh</b> to run in parallel with download)</label>
+		<label for="datapacking">Shell commands for packing the downloaded data (<b>scripts/packfiles.sh</b> to run in parallel with download.
+		The script is debatable and hacky. Maybe you have a better solution.)</label>
 		<pre>
 cd data
-for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
     fnam="wikipedia$dd"'99.xml'
     while [ ! -f  "$fnam" ]
         do echo waiting for $fnam
         sleep 3
     done
     sleep 5 
+    tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
+done
+sleep 600
+for dd in 25; do
     tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
 done
 cd ..
