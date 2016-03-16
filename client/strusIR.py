@@ -19,8 +19,8 @@ class Backend:
             rt.addWeightingFunction( 1.0, "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_title_maxpos": "maxpos_title", "metadata_doclen": "doclen",
-                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 3, "ffbase": 0.1, "maxdf": 0.2,
-                     "maxdf": 0.4,
+                     "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 3,
+                     "ffbase": 0.1, "fftie": 50, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat"
             })
             rt.addWeightingFunction( 1.0, "metadata", {"name": "pageweight" } )
