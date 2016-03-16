@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Wikipedia search with Strus</title>
+  <link href="static/strus.css" rel="stylesheet" type="text/css">
+  <link rel="icon" href="static/favicon.ico?v=2" type="image/x-icon">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+
+<div id="navigation">
+<div id="logo">
+ <a target="_blank" href="http://project-strus.net">
+  <img width="100%" src="static/strus_logo.jpg" alt="strus logo"/>
+<!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
+-->
+</a>
+</div>
+<div id="toolbar">
+<form id="searchbox" name="search" class method="GET" action="query">
+<select name="s" id="scheme">
+ <option>NBLNK</option>
+ <option>BM25</option>
+ <option selected>BM25pff</option>
+</select>
+<input id="search" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value=""/>
+<input id="submit" type="submit" value="Search" />
+<input type="hidden" name="n" value="6"/>
+</form>
+</div>
+</div>
+</body>
+</html>
+
