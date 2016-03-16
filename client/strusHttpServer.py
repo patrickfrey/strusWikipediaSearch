@@ -43,6 +43,7 @@ class QueryHandler( tornado.web.RequestHandler ):
     @tornado.gen.coroutine
     def queryStats( self, terms):
         rt = ([],0,None)
+        conn = None
         try:
             statquery = bytearray("Q")
             for term in terms:
@@ -77,7 +78,10 @@ class QueryHandler( tornado.web.RequestHandler ):
             if (statsofs != statslen):
                 raise Exception("result does not match query")
             rt = (dflist, collsize, None)
+            conn.close()
         except Exception as e:
+            if (conn):
+                conn.close()
             rt = ([],0,"query statistic server failed: %s" % e)
         raise tornado.gen.Return( rt)
 
@@ -176,7 +180,10 @@ class QueryHandler( tornado.web.RequestHandler ):
                 rt = (result, None)
             else:
                 rt = (None, "protocol error storage %s:%u query: unknown header %s" % (host,port,reply[0]))
+            conn.close()
         except Exception as e:
+            if (conn):
+                conn.close()
             rt = (None, "call of storage server %s:%u failed: %s" % (host, port, str(e)))
         raise tornado.gen.Return( rt)
 
