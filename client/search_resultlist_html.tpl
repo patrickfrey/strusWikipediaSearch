@@ -63,9 +63,13 @@
 <div id="searcherror"><p>Error: {{message}}</p></div>
 {% end %}
 
+{% if len(results) >= 1 %}
+{% set rank1 = firstrank + 1 %}
+{% set rankN = firstrank + len(results) %}
 <div id="searchinfo">
-<p>Query answer time: {{ "%.3f" % time_elapsed}}</p>
+<p>Results {{rank1}} .. {{rankN}}&nbsp;&nbsp;&nbsp; Answer time: {{ "%.3f" % time_elapsed}} seconds</p>
 </div>
+{% end %}
 {% end %}
 
 {% block resultblock %}
