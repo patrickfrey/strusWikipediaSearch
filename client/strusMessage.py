@@ -55,7 +55,7 @@ class RequestClient( tornado.tcpclient.TCPClient):
     @tornado.gen.coroutine
     def issueRequest( self, stream, msg):
         blob = struct.pack( ">I", len(msg)) + bytes(msg)
-        stream.write( blob)
+        yield stream.write( blob)
         replysizemsg = yield stream.read_bytes( struct.calcsize(">I"))
         (replysize,) = struct.unpack( ">I", replysizemsg)
         reply = yield stream.read_bytes( replysize)
