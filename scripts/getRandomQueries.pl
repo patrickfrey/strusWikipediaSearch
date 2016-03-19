@@ -4,6 +4,7 @@ use warnings;
 
 my $nofTerms = $ARGV[0];
 my $scheme = $ARGV[1];
+my $outputprefix = $ARGV[2];
 my $range = 1000;
 my $ii = 0;
 
@@ -25,6 +26,6 @@ for (; $ii<$nofTerms; ++$ii)
 			last;
 		}
 	}
-	print "wget -O tmp/output.$ii.htm http://127.0.0.1:8080/query?s=$scheme&q=$term1\+$term2\n";
+	print "wget -O tmp/output.$outputprefix.$ii.htm 'http://127.0.0.1:8080/query?s=$scheme&q=$term1\+$term2'\n";
 }
 
