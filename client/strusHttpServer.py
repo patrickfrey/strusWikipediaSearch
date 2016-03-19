@@ -80,9 +80,10 @@ class QueryHandler( tornado.web.RequestHandler ):
             rt = (dflist, collsize, None)
             conn.close()
         except Exception as e:
+            errmsg = "query statistic server failed: %s" % e;
             if (conn):
                 conn.close()
-            rt = ([],0,"query statistic server failed: %s" % e)
+            rt = ([],0,errmsg)
         raise tornado.gen.Return( rt)
 
     def unpackAnswerTextQuery( self, answer, answerofs, answersize):
