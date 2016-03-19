@@ -5,6 +5,11 @@ use warnings;
 my $nofTerms = $ARGV[0];
 my $scheme = $ARGV[1];
 my $outputprefix = $ARGV[2];
+my $dim = $ARGV[3];
+if (!$dim || $dim > 2)
+{
+	$dim = 2;
+}
 my $range = 1000;
 my $ii = 0;
 
@@ -26,6 +31,13 @@ for (; $ii<$nofTerms; ++$ii)
 			last;
 		}
 	}
-	print "wget --quiet -O tmp/output.$outputprefix.$ii.htm 'http://demo.project-strus.net/query?s=$scheme&q=$term1\+$term2'\n";
+	if ($dim == 1)
+	{
+		print "wget --quiet -O tmp/output.$outputprefix.$ii.htm 'http://demo.project-strus.net/query?s=$scheme&q=$term1'\n";
+	}
+	else
+	{
+		print "wget --quiet -O tmp/output.$outputprefix.$ii.htm 'http://demo.project-strus.net/query?s=$scheme&q=$term1\+$term2'\n";
+	}
 }
 

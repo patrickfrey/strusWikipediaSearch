@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for pp in A B
+for pp in A B C D
 do
 	strusDumpStorage -P r -s path=storage | scripts/getRandomQueries.pl 200 BM25pff $pp > ./stress$pp.sh
 	chmod +x ./stress$pp.sh
