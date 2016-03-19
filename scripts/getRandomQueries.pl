@@ -26,6 +26,6 @@ for (; $ii<$nofTerms; ++$ii)
 			last;
 		}
 	}
-	print "wget -O tmp/output.$outputprefix.$ii.htm 'http://127.0.0.1:8080/query?s=$scheme&q=$term1\+$term2'\n";
+	print "wget --quiet -O tmp/output.$outputprefix.$ii.htm 'http://demo.project-strus.net/query?s=$scheme&q=$term1\+$term2'\n";
 }
 
