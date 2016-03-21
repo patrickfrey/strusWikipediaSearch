@@ -9,7 +9,7 @@
   <div id="search_form">
   <div id="search_elements">
   <div id="search_logo">
-   <a target="_blank" href="http://project-strus.net">
+   <a href="http://project-strus.net">
     <img style="display:block;" width="100%" src="static/strus_logo.jpg" alt="strus logo">
   <!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
   -->
