@@ -1,0 +1,3347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 2.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<link rel="icon" type="image/ico" href="images/strus.ico" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Documentation of the strus wikipedia search demo, a collection of C++ libraries for building a full-text search engine." />
+	<meta name="keywords" content="query benchmark strus wikipedia demo fulltext search engine C++" />
+	<meta name="author" content="Patrick Frey &lt;patrickpfrey (a) yahoo (dt) com&gt;" />
+	<link rel="stylesheet" type="text/css" href="text-profile.css" title="Text Profile" media="all" />
+	<title>Strus Wikipedia on an Intel NUC (query benchmark)</title>
+</head>
+
+<body>
+<script type="text/javascript">
+</script><div id="wrap">
+	<div id="content">
+		<h1>Measuring query throughput</h1>
+		<p class="description">
+		Measuring the query preformance is a delicate thing with a big danger of producing biased results.
+		We provide here some numbers without intending to compare <i>Strus</i> with other systems.
+		The test just gives you a hint about the quantity structure you can handle with
+		a search index of the size of Wikipedia English with <i>Strus</i> on an Intel NUC.
+		Nothing more. The main intention is to convince people to give it a change rather than giving
+		a base for a business desicion. For a desicion you need a fair comparison.
+		This is not provided here.
+		<br/>Nevertheless this test shows more than a statement like: 
+		<i>This engine processes bla bla gigabites of (unspecified) data per second on hardware
+		you can rent or buy</i>.
+		<br/>We will run two small tests (each of them with only 1600 queries)
+		on the <i>Wikipedia</i> demo search solution with all
+		involved services written in <i>Python</i> with all the involved weighting 
+		and summarization functions used.
+		<br/>
+		The system was not at all optimized for this case.
+		Before running the test the storage servers were restarted.
+		<br/>
+		You have to take into account here that the <i>Strus</i> Wikipedia demo system, makes
+		a preselection on title features only if your query consists of only high frequent 
+		terms (stopwords) like for example "to be".
+		</p>
+
+		<h1>Test with BM25</h1>
+		<p class="description">
+		The first test runs 1600 random generated BM25 queries, 800 of them single term, 800 of them
+		with two query terms. The queries were built from randomly selected words starting with a
+		capital letter from the forward index of the index dump. The two term queries are built from
+		words appearing at least once as a sequence in the index.
+		</p>
+		<input class="toggle-box" id="queriesBM25" type="checkbox" >
+		<label for="queriesBM25">The list of BM25 queries</label>
+		<pre>
+David Lean
+Background When
+Feature Integration
+Window System
+Century Fox
+Significance Significance
+Ancient Egyptians
+Russian Constitution
+Mini The
+White House
+Nevertheless Ventura
+Video Electronics
+Gongga Shan
+Bridgestone Michelin
+Bartholomew Jay
+The Globe
+Steven Peter
+References External
+Cylindrical Langmuir
+Biology Feeding
+Confederate Army
+Engineering Summer
+Great Basin
+Italy In
+Victoria Wood
+Illyricum Illyricum
+When George
+Vaultless Tokenization
+Chico Chico
+Keeneland July
+Oakland California
+Future History
+General Richard
+Motor Cycle
+Availability Dial
+Pange Lingua
+The New
+History The
+Childrens Hospital
+The Department
+Steam Greenlight
+Sir Edward
+In North
+Golden Fleece
+Boerhaave Museum
+Tay Street
+Function Connections
+The Egbas
+On April
+Tabak Toyok
+Black Death
+Corpus Christi
+Piero Ottone
+George Basevi
+The Qurum
+John Poole
+Mai Nefhi
+Francaviglia Richard
+Index Catalogues
+Smith Quersin
+Wallkill River
+United States
+Biochemistry Citric
+Drug Administration
+Scientific American
+In Buddhism
+French Royal
+Forestry Places
+San Antonio
+Rio Grande
+North America
+Rose Cameron
+Short History
+Second World
+Index Search
+Lou Macari
+Robert Cavelier
+New Zealand
+Therefore Taylor
+Plant Book
+Mohandas Gandhi
+Maurice Roatin
+Kenneth Arrow
+Alfred Ander
+But Christian
+The Pygopodidae
+The Shield
+Eric Berne
+United States
+United States
+Events By
+The Danish
+Spanish Riding
+Sharon Penman
+North Western
+Gaius Atilius
+The Potassium
+Supreme Governor
+Similarly Agaricus
+See Yeates
+Holy Roman
+The Latin
+Napoleonic Code
+Abrahamian Tortured
+Royal Academy
+Anne Heche
+The Solaris
+Pat Hayes
+Notre Dame
+Strange Cargo
+Old Castile
+British Ecological
+West Slavic
+Empress Elizabeth
+Philip Longworth
+Sahotra Sarkar
+World Ozone
+And You
+Brief Encounter
+Communist Party
+Monterey Bay
+In Africa
+Etymology In
+Career After
+Helmut Maier
+The Court
+Manuel Castells
+Oliver Heaviside
+Notes References
+Chasses La
+Ammi Ditana
+John Betjeman
+Uses Shaft
+Dumoulin Froment
+Social Security
+Paolo Coletta
+The Theater
+References Additional
+Harvey Graham
+Gaming Act
+Physics Chemistry
+Marvin Swartz
+Rowan Atkinson
+Wigner Seitz
+Xinjiang Uyghur
+Coleridge Biographia
+Instant Messenger
+Isotope Separator
+Europe Japan
+Carry On
+Upper Paleolithic
+The Jockey
+Events By
+Moore Walter
+Zeotropy Combinations
+Social Science
+Northern Army
+References External
+Three Five
+The Hamiltonian
+Tactics Narses
+Telcordia Technologies
+References Noise
+The Nymphs
+Academy Award
+Emilia Ferreiro
+Systematic Phonics
+The Komitato
+Anno Domini
+History Beginning
+Baja California
+Southern Africa
+United States
+On April
+Pancho Villa
+From January
+Under Secretary
+Standesamt Wien
+Panzer Corps
+John Pilkington
+The Kojiki
+The Khlong
+Dudley Castle
+Orthodox Church
+Health Office
+President Emilio
+Ghost Dance
+New York
+Merriam Webster
+Farmer Jim
+George Sisler
+The Tengwar
+Judi Dench
+The Straight
+Belgian Comic
+Great Dying
+Bolshevik Revolution
+Teletype Model
+Production Currently
+The Lord
+Black Encyclopedia
+Thirteenth Amendment
+Steve Williams
+Texas Rangers
+Log Loader
+The Tsar
+Victor Talking
+Raven Peter
+Beaux Arts
+France France
+Captive Insurance
+The Star
+The Austrian
+Industrial The
+Monte Verde
+Hamburg Stadttheater
+Grant Morrison
+Iran Argham
+Commandancy General
+Ros Gilpatric
+Publications Novels
+Ngai Province
+Southern Sting
+Robert Ho
+Los Escuadrones
+Programming Language
+Jovan Vladimir
+Louis Art
+Hittorf Crookes
+Filming The
+Reproduction Rheas
+On May
+Chrysler Crown
+Properties Related
+Orthodox Christian
+San Francisco
+Johann Rahn
+African American
+Sciences Washington
+The Leblanc
+Czech Republic
+Basketball The
+Knuth The
+United Kingdom
+Structure The
+Formula One
+In Manipur
+History Falconry
+In April
+Vocational Education
+Tom Stoppard
+History When
+Administration Committee
+General Stores
+Vietnam War
+References Further
+Graham Knuth
+The Gold
+New York
+Foods Raw
+College Chapel
+Coppersmith Winograd
+Jeremy Lim
+Six Flags
+Taiwan Aboriginal
+Examples The
+Will Fear
+Derivatives The
+Manhattan Project
+Halloween Theme
+Audrey Hepburn
+Haute Vienne
+Steinway Schools
+St Catherine
+Fleet Air
+United States
+Hill States
+British Empire
+Insurance Institute
+District Court
+Modern European
+In December
+The Times
+Dan Aykroyd
+Row Number
+Fidan Ana
+Mauretania Restaurant
+Montgomery Bus
+New York
+United Kingdom
+Southern Democrats
+Royal Society
+Retrieved March
+Functional Package
+Princess Ark
+Brooklyn Dodgers
+In December
+The Sorcerer
+Basque Aquitanians
+Long Leaper
+Ayrums Qarapapaqs
+The British
+The Indian
+The Dark
+Eastman Kodak
+Hart Martin
+Douglas Street
+In Mono
+Jan Assmann
+The United
+My Beautiful
+Emanuel Epstein
+Solar System
+In Poland
+Venice Boulevard
+William Ruckelshaus
+Great Northern
+The Iranian
+East India
+Voyage Round
+North America
+Old Father
+Cost Accounting
+Lawrence Diamond
+Vagliano Brothers
+Congress Parkway
+Palo Alto
+Emile Boutroux
+China Quarterly
+Baja California
+Ancient Iran
+March Gossler
+Mount Everest
+Rongbuk Monastery
+Pension Schemes
+The Cult
+Paul Schmidt
+Petrus Peregrinus
+Church Wellesley
+Teller Ulam
+Meanwhile Saint
+Demographics The
+Roman Senate
+Technology Service
+Night In
+Civil Service
+United States
+New York
+The Perse
+Conservation The
+Hawting The
+Pinball Wizard
+Events Births
+The Type
+International Decade
+Boy Special
+Minoan Snake
+Ordnance Survey
+Christopher Tower
+Isadora Duncan
+References Citations
+Deaths January
+Eastern Hemisphere
+Jardine He
+Blue Ridge
+January February
+Winter Olympics
+Oxford Blythburgh
+United Nations
+Columbia Games
+David Toback
+In April
+Central Time
+Voyager Golden
+Bangkok Port
+Public Law
+Chief Justice
+Train Operating
+Equal Rights
+Thorpe Constitutional
+Fair Trade
+The United
+Mutara Nebula
+The Smashing
+Coromandel Coast
+United Nations
+Library Journal
+German Navy
+Don Rosa
+African Renaissance
+Proto Slavic
+Danish West
+Biosynthesis Theobromine
+The Antwerp
+College Quiz
+The Annulment
+Chick Hearn
+Catholic Church
+Isotopes Tin
+The Rhubarb
+Waldman Baritone
+Damnonii Ptolemy
+Shay Duncan
+Mr Slim
+Sport Asturias
+Warren Oates
+The Massacre
+Alfred Gusenbauer
+Gerhard Brazutus
+Nuthanger Farm
+Rutgers University
+Navypedia All
+Arawak The
+Lydia Asia
+Balochistan Geographic
+Bald Mountain
+Sanctions And
+Green Party
+Penn Central
+Originally Miller
+Alta California
+In Wakame
+Sphynx Cat
+Maxwell Boltzmann
+Speex Speex
+Charles Louis
+Ground Control
+New Zealand
+Cop Rock
+Southern Oscillation
+James Prescott
+Harris Stephen
+United Kingdom
+United States
+Although Tarleton
+Vietnamese Fatherland
+United States
+Technical Paper
+Rossotti The
+Sir Douglas
+Observer Group
+Time Warp
+British Central
+Software Pioneer
+John Lennon
+New York
+Normanni Palermo
+Beit Alfa
+Justice William
+Kleiner Liebau
+Education Public
+Indian White
+The Medical
+Commercial Code
+Pamelyn Ferdin
+Sri Lanka
+Famous Scots
+Giants Sign
+American Diabetes
+Upper Secondary
+South America
+Jana Gana
+The Red
+The Eocene
+National Identity
+Bristol Bristol
+French Revolution
+Development Points
+Pompidou Centre
+Exponent Bias
+Traditional Chinese
+Its Trus
+However Cayley
+Jefferson Levy
+Gold Medal
+American Institute
+United States
+New England
+The Romans
+Orana Park
+Hague Conventions
+New York
+References Further
+Delhi Durbar
+Vipiteno Sterzing
+The Imaginary
+Rotations Quaternions
+Riemannian Geometric
+In Poverty
+Nicholas Horthy
+Rio Rancho
+Hindi Khilikaati
+Tonghui River
+California Los
+Metro Goldwyn
+Modern Art
+Other Bayes
+Diabetic Ketoacidosis
+President Roosevelt
+Quotes See
+Name Form
+Alfred North
+Fearful Memories
+The Third
+The Clash
+Wolf Rayet
+Harry Potter
+Like Ida
+Planet Mercury
+Anglo Saxon
+Langue Copte
+Cassius Dio
+The Fairy
+The Martin
+In January
+King Henry
+Bourtzes Damian
+King Edward
+North America
+Midtown Omaha
+Democrat Dick
+On Japanese
+United States
+Maine Portland
+Seven Demands
+In February
+Legacy Keyboard
+Seven Years
+Adams Street
+Ordnance Survey
+Dow Jones
+Voyage Round
+The Zwaanendael
+Upper Manhattan
+The Chiron
+Stephen Clark
+As Mercury
+Palo Alto
+Climate Along
+Polish Royal
+Link Layer
+Unlike Windows
+Intel Samsung
+Shelbyville Indiana
+Trivial File
+Base Camp
+Sovereign States
+The Ministry
+Franklin Roosevelt
+Warren Commission
+External Memory
+Selected Tandy
+Qian Xian
+Eva Heller
+Vineyard Up
+Potemra As
+Orion Nebula
+Coffin Credit
+Paris France
+Uses Cannabis
+Microsoft Windows
+Marseille Provence
+Life Variations
+Le Monde
+Ayrton Senna
+Caucasian Iberia
+United States
+Federal Reserve
+Extra Sensory
+Fastening Originally
+Friedrich Ludwig
+Multiplex Section
+German Nazis
+Marc Gagnon
+Engineer Brigade
+Holy Piby
+Temperature Physics
+Jin Yi
+King June
+In British
+Systems Integration
+Extractives Aside
+William Thomas
+Robert Penn
+Grand Anse
+Yehotam King
+Wi Fi
+Naomi Watts
+Walt Disney
+President Lyndon
+On September
+Sources External
+Rice Krispie
+In Grant
+British Airways
+Federal University
+Metro Recife
+Third Party
+On March
+Endless Love
+Robert Bianco
+World War
+Release Universal
+Richard Griswold
+Chasez Joshua
+General Relativity
+Space Tourism
+News Middle
+Bahamas The
+Hofmannsthal Hugo
+Argentina The
+European Championships
+Delgado Samuel
+Riley Elfs
+Argentine Patagonia
+Severn Bridge
+Meiningen Court
+Star Wars
+Thomas Carnacki
+Films See
+Glenn Miller
+Spanish Succession
+Joe Namath
+Mexico Street
+American Atrocity
+The Silmarillion
+In Jackson
+Howard Hawks
+Rodionov Volkov
+Maurice Beaubourg
+Pascual Jordan
+Manazuru Point
+Jean Muir
+Education Braille
+Applications Boy
+Sicilian Expedition
+Thus Internet
+United States
+Foreign Affairs
+Alicia Keys
+San Carlos
+Rome Honorius
+Historic District
+Catholic Church
+Rote Armee
+Plot Set
+Major League
+Deanna Durbin
+The Ed
+Angeles Galaxy
+In May
+Etymology Antler
+North Carolina
+Richard Brent
+Antoine Voisin
+Florence Converse
+Fifth Century
+New Policies
+City There
+Rav Ashi
+British Guiana
+Botswana Stock
+Staining Staining
+Louis Duke
+Late Cretaceous
+Armstrong Siddeley
+Euphrates River
+Jane Cheney
+This Tower
+Noa Noa
+Thomas Dewey
+Creek Eighteen
+Xavier Mertz
+United States
+Notes References
+Gulf Intracoastal
+House Drappier
+Rick Du
+Charles Rolls
+Chamberlin Hall
+Reed Browning
+The European
+Le Mans
+The New
+In April
+Research Section
+Kris Kelvin
+Cook Islands
+The Taylor
+Brenner Pass
+Fort Lupton
+Literature History
+Cricket Club
+Needham Volume
+Bickerton See
+Nilo Saharan
+Latin America
+Windows Explorer
+Row Number
+The Ten
+Young James
+Johnny Young
+Queen Mary
+Muddy Waters
+Agriculture Farming
+Ford Models
+Jan Marie
+October Manifesto
+Wilfred Trotter
+The Manchester
+Noveck Jocelyn
+United Kingdom
+American Pit
+Glen Shiel
+August Weismann
+Michael Halloran
+The Russian
+The Duke
+The Anti
+Poitiers Tours
+Dominican Friars
+John Stuart
+Princess Mary
+Genoa Paste
+Simplified Corinthian
+In Ireland
+Causal Bayesian
+Daimler Airway
+Notes References
+Lawson Battle
+Crossley Motors
+World War
+Etymology Herbivore
+The New
+Bishop Bruno
+Raymond Slate
+Henry Purcell
+Civil War
+Non Line
+Tran Hanh
+Le Chatelier
+Edwin Warley
+Golden Lion
+Oviparity Some
+Microsoft Bob
+Georgius Agricola
+Sir Cecil
+John Dawson
+Notes Further
+Field Officer
+Health Effects
+References Book
+Classification Every
+Palazzo Rucellai
+Sources Radio
+The Christian
+References Computing
+References External
+Transmission Rates
+Long Distance
+Upper Saddle
+Access Control
+The Heartbreakers
+Branchia Branchia
+In France
+Bikini Atoll
+Atomic Energy
+Tuesday February
+Platforms Although
+Good Home
+When Gilman
+Investigatory Powers
+Pol Pot
+Paris Venice
+Theodore Roosevelt
+The Price
+The American
+California Coast
+Arthur Keith
+Composition Members
+Types Positive
+Daniel Kirkwood
+References Geometrical
+Anno Domini
+United States
+Communist Party
+First Heart
+Replacing Franny
+Franco Amurri
+Tahera Qutbuddin
+Cicada Most
+Democratic National
+Welfare State
+Conscription Crisis
+Sonam Rinchen
+Four States
+George Sand
+Wearable Computer
+New York
+United Baltic
+Charles
+Torah
+Clyde
+Clyde
+Apocalypse
+Nick
+Late
+Perth
+French
+Left
+The
+Augstin
+South
+Government
+The
+World
+Brighton
+Arawak
+American
+Wheaton
+Alice
+Belgium
+United
+Spanish
+Algis
+My
+Israeli
+International
+Modena
+Hundred
+North
+Thus
+Gertrude
+Lundstrom
+Governor
+Alveolar
+Galois
+References
+Castile
+Nissan
+Organic
+Thomas
+Aeronautical
+Marx
+Big
+Herbs
+The
+Zosterops
+In
+Lol
+Blackwell
+Frank
+The
+United
+Again
+Gilbert
+San
+Botswana
+Iran
+Rosario
+Occupational
+Producers
+Otsego
+Captain
+Early
+Dizzy
+Baltic
+Tahiti
+The
+Dawson
+Gabriel
+Lynn
+English
+National
+Chief
+The
+Jay
+Mathias
+Footnotes
+United
+Audrey
+East
+References
+Vienna
+The
+American
+The
+Edwin
+Kashmir
+French
+The
+Flash
+Microsoft
+Bigger
+Ralph
+Tangran
+El
+The
+Third
+The
+West
+Arthur
+Jim
+The
+The
+As
+The
+New
+Britton
+Builders
+Sun
+Malagasy
+Michael
+Papal
+Appellants
+Codex
+Don
+United
+References
+The
+Overthrow
+Schutzpolizei
+Epidemiology
+Herberger
+Antonio
+Events
+Avalon
+Cape
+Hubble
+Our
+Seven
+In
+Jackson
+Civil
+Avro
+Dennis
+Israeli
+Denmark
+In
+Red
+South
+Facilities
+Father
+Best
+Buick
+The
+The
+The
+Notes
+World
+Steve
+History
+Hunter
+Strategic
+The
+Historia
+The
+Operation
+The
+Robert
+Count
+King
+The
+Physics
+Madras
+Lathrop
+Santo
+Jewish
+Robert
+Wigner
+History
+References
+Where
+Stroke
+Michael
+Sullivan
+Austrian
+Crusades
+Medieval
+Alan
+Caledonian
+Summer
+Recent
+Schwartz
+Town
+Manjula
+Transport
+Births
+Missouri
+Lorenz
+Fortress
+Psychedelics
+Kramers
+Implementation
+For
+Martinus
+Mixed
+Panzer
+Panzer
+Anno
+Dahlia
+International
+Archibald
+Trillo
+Permian
+Pyotr
+Romano
+Saint
+Professor
+Discovery
+Masahiro
+Machinery
+Pechersky
+Hong
+Probiotics
+Neverwhere
+Bertel
+European
+King
+Glenn
+New
+References
+Johnson
+Robert
+American
+Chemical
+Miss
+Lenin
+Hungarian
+Thus
+Java
+This
+In
+Properties
+United
+Hardware
+Pedro
+Stirling
+References
+Graham
+La
+William
+Sotho
+Fairmont
+Christ
+United
+Variable
+Triple
+Judge
+Indiana
+Old
+The
+Agriculture
+Mind
+Bandar
+The
+Tacana
+Southern
+Laeken
+The
+Niagara
+Persian
+Whatever
+References
+After
+Molecular
+The
+Henrik
+Versailles
+Stuntman
+Motion
+Fault
+Nikolaus
+In
+De
+Galveston
+New
+Sultan
+Hartford
+Guilhermina
+Britannica
+James
+Aitutaki
+Peter
+The
+Rutland
+Launching
+Abdel
+Britain
+North
+Escort
+Water
+Hebrew
+Etruscan
+United
+Fort
+Formal
+Western
+Septimus
+New
+Swedish
+United
+The
+King
+Republican
+Non
+Drug
+World
+In
+Japanese
+Cambridge
+Prediction
+Stanford
+Reception
+Governor
+The
+Commissioner
+Shah
+Francesco
+Western
+American
+Christopher
+Anna
+Prince
+Solar
+Also
+Ecclesiastes
+Montreal
+Axel
+William
+Pisago
+Dow
+Most
+Roman
+United
+Architecture
+Bohemian
+His
+World
+North
+Fat
+De
+New
+Link
+Develop
+Republican
+Conservative
+Excess
+Jim
+Maryland
+From
+Santa
+The
+The
+Norman
+Philip
+By
+Displeasure
+Israel
+Debye
+Carry
+Melissa
+References
+Growth
+Jacob
+Haiti
+Warsaw
+Properties
+International
+Anno
+Albert
+Agalega
+Western
+Europe
+Steam
+Select
+Cicadinae
+Circus
+The
+Lord
+Saudi
+Operation
+Anne
+Visual
+The
+British
+The
+United
+Associate
+Immunities
+In
+The
+David
+Ben
+Rochester
+Juneau
+Jonathan
+Nearest
+Problem
+White
+The
+The
+Reza
+Business
+European
+District
+King
+San
+Chilean
+In
+Roosevelt
+Abbey
+The
+Margaret
+Inverted
+Singleton
+Grant
+United
+Lewes
+Re
+New
+God
+In
+History
+Baltimore
+Looking
+Charles
+Antoine
+Random
+Coral
+Advance
+The
+Louis
+American
+Binding
+Agoraphobia
+Kiel
+Dunlop
+Object
+Entomologists
+London
+History
+Holy
+Royal
+Summer
+Tottenham
+Robert
+North
+Lucius
+In
+Shoreham
+Muscat
+Iron
+Te
+Brief
+When
+Native
+Hebrew
+Netherlands
+Mananchira
+Symmetrical
+Favre
+African
+General
+On
+Full
+Yakir
+Black
+Since
+Galveston
+State
+French
+Bombay
+Isaac
+Northern
+Blessed
+Austrian
+Why
+Ancient
+Also
+Steve
+Crown
+Lower
+The
+Geography
+Bolzano
+Somaliland
+Julian
+Origin
+Three
+Francisco
+Digital
+From
+Lenn
+The
+Huyghues
+Supreme
+Andreae
+Nonetheless
+Wolf
+Cock
+Harry
+Georg
+National
+Marine
+Felix
+Die
+Raymond
+Byzantine
+Noise
+Core
+Network
+Hart
+Union
+English
+Fugitive
+United
+Hong
+Cape
+Shri
+Zhang
+On
+Career
+Remember
+New
+Darling
+Stephen
+Google
+Subsequently
+Nationality
+Cat
+Joseph
+The
+Financial
+References
+Electronics
+Victoria
+Verdun
+Advantages
+North
+Role
+Impact
+Vice
+Consequences
+Gulf
+Glorious
+Access
+Centennial
+Variation
+Nuclear
+Eugenio
+Fernando
+References
+Zwiep
+Austrian
+Michael
+In
+Ernst
+Personal
+Tone
+In
+The
+Nikola
+Larkin
+Weimar
+Anno
+Networking
+See
+United
+Sammy
+Frozen
+Burne
+Academy
+Sand
+United
+West
+Marianne
+Army
+Taft
+Supreme
+Sega
+Eastern
+United
+Wasatch
+Nord
+Liberty
+Muuga
+Writings
+Inaccessible
+Century
+Herat
+Guy
+Smith
+Cardinal
+Mike
+London
+Gallery
+The
+Robert
+Guided
+Dutch
+Mexican
+New
+Big
+Heat
+David
+Clitorolabial
+National
+The
+Walker
+Zhonghua
+United
+Josella
+The
+Fictional
+Bart
+Retrieved
+Bo
+Army
+Lewes
+Rockport
+Pohakuloa
+Piazza
+Convexo
+Follow
+Etymology
+Theodore
+Education
+Honolulu
+Meadowbrook
+In
+The
+Koman
+References
+Government
+Daily
+United
+British
+Spanish
+Han
+Al
+Structure
+The
+Single
+Anims
+Administrative
+Dagomba
+Toronto
+John
+References
+Harald
+The
+New
+Wish
+United
+Treatment
+Yuko
+Marion
+Reinhard
+John
+New
+Gaspard
+Frog
+Norway
+Harold
+Stone
+Eric
+Treatments
+Navier
+Oswestry
+Swiss
+Whitney
+Mary
+Gladys
+Southern
+After
+Rio
+An
+Usage
+Academy
+In
+Norman
+Sowell
+Musical
+Gunnar
+Portuguese
+Peak
+Paul
+Friedwardt
+Chief
+The
+Chautauqua
+World
+Albert
+West
+Minoru
+Glass
+Artiodactyla
+Zacharius
+The
+The
+Saint
+Ralph
+Shikuoka
+Medium
+Edward
+National
+Retrieved
+Planned
+Anthony
+United
+Causes
+Hamilton
+Lutheran
+The
+Retrieved
+Liquid
+Captain
+Commissariat
+West
+Tony
+Example
+East
+The
+Patton
+Werra
+Chris
+Inaba
+Birkhoff
+Jacob
+Nielsen
+Units
+The
+Li
+The
+History
+Princess
+References
+International
+Endorsements
+Shergold
+Battery
+The
+Introduction
+Television
+Tlingit
+Shooting
+Lathrop
+North
+Jean
+Robert
+Cameron
+Metro
+National
+Jonathan
+Fame
+Awards
+The
+Ville
+High
+Europe
+Tone
+Super
+Isherwood
+Telcordia
+World
+Linear
+Georgian
+Blake
+British
+Ancient
+Births
+Events
+Events
+Events
+Burroughs
+Burci
+One
+Notes
+Old
+Sahrawi
+United
+The
+Film
+Credentials
+In
+Sega
+Morton
+Hobart
+The
+The
+Tadeusz
+Paul
+Reggie
+Buenos
+John
+The
+Russian
+References
+References
+		</pre>
+		<p class="description">
+		The query terms have the following distribution of document frequencies:
+		</p>
+		<img src="images/benchmark_df_histogram_BM25.png" width="560" alt="distribution of query term document frequencies" /></a>
+
+		<h1>Test with BM25ppf</h1>
+		<p class="description">
+		The second test runs 1600 random generated BM25pff queries, 800 of them single term, 800 of them
+		with two query terms. The queries were built from randomly selected words starting with a
+		capital letter from the forward index of the index dump. The two term queries are built from
+		words appearing at least once as a sequence in the index.
+		</p>
+		<input class="toggle-box" id="queriesBM25pff" type="checkbox" >
+		<label for="queriesBM25pff">The list of BM25pff queries</label>
+		<pre>
+Berne
+February
+United
+Nicolaus
+Ann
+Since
+Mason
+Life
+World
+Wydawnictwo
+Batu
+National
+On
+Boser
+Greek
+England
+The
+Swamp
+Eight
+Petroleum
+Qeshm
+Wall
+War
+World
+Catholic
+West
+Emperor
+Nova
+In
+New
+Tupolev
+Common
+Sir
+Score
+Deeds
+Properties
+United
+College
+Extra
+August
+North
+Sports
+In
+Yuan
+Holy
+Milza
+In
+Joseph
+Thirty
+The
+New
+Beer
+Gold
+Scottish
+John
+Special
+Regina
+Nanumea
+Guinness
+References
+Gendering
+Quantum
+Working
+National
+Monday
+Paul
+United
+The
+The
+Lost
+Cameron
+The
+The
+Old
+Mannie
+Agatha
+Cheyenne
+The
+The
+Beginnings
+Southern
+Smith
+Jean
+Alfred
+Northeast
+Senior
+New
+References
+Bolzano
+However
+In
+Italian
+France
+Penny
+Security
+Example
+Met
+Fiona
+References
+Lesser
+Elba
+Buchenwald
+Stenton
+Construction
+Builders
+Japanese
+Oceania
+International
+Karl
+Gengis
+Commissioner
+King
+Richard
+Russo
+Sun
+Deseret
+United
+The
+Henri
+Sweet
+Enjiro
+Andrew
+Late
+When
+After
+Berlin
+Peter
+The
+Glass
+Decathlon
+Spam
+History
+On
+Ancient
+Nyquist
+Birkhoff
+William
+Iron
+The
+Distortion
+References
+Registered
+The
+Villa
+The
+The
+Lists
+Mattachine
+Ernest
+Vita
+Huffington
+Raymond
+Kulcinski
+John
+Pope
+Bickley
+Feeble
+Communist
+La
+Roman
+Banu
+During
+Andy
+Physics
+Events
+Dorothy
+Saint
+On
+Anno
+The
+Births
+Bandleader
+Communication
+On
+Paris
+External
+In
+Comics
+Reference
+Golden
+Chief
+In
+Reine
+Van
+London
+Richard
+Fiske
+Sixteenth
+Fourteenth
+James
+Ty
+Hybrid
+Seoul
+Ivey
+Watson
+North
+Wars
+Annales
+Pauline
+Supreme
+Savoy
+Tibor
+Catholicism
+Some
+New
+Hendrik
+California
+Between
+Gelderen
+Perfil
+Pseudoephedrine
+Repertoire
+Strawberry
+The
+Naval
+Pope
+Homogenization
+The
+The
+In
+Archbishop
+Army
+Pittsburgh
+Marca
+Upon
+Adam
+Anglo
+John
+Trotsky
+Early
+Le
+The
+Colorado
+Bea
+Mission
+Fidel
+Since
+Standard
+Sir
+Old
+Media
+Organisations
+Roman
+Italo
+Delmas
+High
+Orange
+The
+Eritrean
+Bujumbura
+Hull
+Snorri
+Steven
+Orange
+Intel
+Senator
+Notes
+Wayland
+The
+Education
+Data
+Electric
+Gallo
+Orion
+Background
+Finance
+Reception
+Wiki
+Royal
+Prime
+Australia
+Cake
+Al
+Gianni
+Reports
+Filmography
+Grunge
+Ferghana
+Bolzano
+Latin
+The
+Areca
+Output
+Sussex
+The
+Peter
+The
+Derek
+Classic
+Miller
+Early
+Freedom
+Steve
+Plate
+Notes
+Simon
+Topaz
+In
+In
+Parry
+Transaction
+Italy
+Radiating
+Chris
+Comprehensive
+References
+Cold
+First
+Canadian
+Portuguese
+Hong
+Orbit
+Vancouver
+The
+The
+Bob
+Definition
+In
+Edition
+Western
+In
+Sonoma
+Classification
+The
+The
+Layout
+Monte
+On
+Digital
+Electronics
+Maxwell
+The
+New
+Toktar
+Sifaka
+World
+Moldavian
+Cape
+Sex
+Johns
+Bibliography
+Redirect
+Beaten
+One
+Congressional
+United
+World
+Anton
+The
+Public
+In
+George
+Linear
+Cirrus
+Greek
+Similarly
+Soomro
+German
+Sveriges
+Fourteen
+History
+Carnot
+Fort
+The
+Moss
+Salary
+Bell
+Comet
+Priests
+Patents
+Music
+United
+Charlotte
+Apostle
+Supreme
+However
+Buzzcocks
+Norwegian
+Social
+Match
+Shibata
+Skanderbeg
+Toyota
+Tom
+Augustine
+Bernard
+Ben
+Charles
+Bruce
+Mark
+Disorders
+Special
+Bill
+Monocular
+Privateers
+The
+Cold
+The
+Adventist
+Great
+Sweden
+References
+Screening
+Europa
+Karen
+Yoder
+History
+United
+Belkh
+Morning
+Dongcheng
+At
+Extensions
+Kidnapping
+On
+Fourth
+Wilkes
+Entertainment
+Theory
+Prague
+First
+Poverty
+Programming
+Lundstrom
+Catholic
+Smithsonian
+Judaism
+Non
+Classification
+Cambridge
+Brake
+Padula
+The
+Norman
+Chicago
+Java
+John
+Single
+Bible
+Conflict
+Angeles
+Scientific
+Southeast
+Politics
+Because
+Accidents
+Sohar
+The
+Coral
+Kandyan
+Vladimir
+Writings
+Consumption
+In
+Prince
+Taxonomy
+The
+Saturdays
+Pacific
+Lorraine
+Bishop
+Dead
+Mississippi
+American
+Action
+Gallery
+James
+Grand
+Lowell
+Uses
+History
+North
+Noam
+John
+Audrey
+Axis
+Teddy
+Jimmy
+Annulled
+Upper
+Eukaryotic
+Consequences
+Somalia
+The
+First
+New
+Bayes
+Africa
+Privy
+Johanna
+Earth
+Gummel
+An
+Marathon
+Definitions
+President
+San
+Iwo
+Push
+Blanche
+Nouns
+Avian
+Fiend
+Nise
+Germ
+Hot
+Brings
+Machaeridian
+On
+Industry
+Texas
+Ireland
+In
+Omaha
+East
+Deseret
+If
+Both
+Sarah
+Congress
+The
+Ottoman
+North
+The
+Robert
+Therefore
+Physical
+Notes
+John
+Zermelo
+Notes
+Century
+The
+References
+Hackney
+Northanger
+In
+Hewlett
+Roman
+Cumberland
+Examples
+North
+The
+Lee
+Constructions
+Emancipation
+United
+Durga
+Saint
+The
+Georg
+Police
+John
+Erik
+Anjou
+Otto
+Oxford
+South
+Northern
+The
+Definition
+Senate
+Fire
+References
+Late
+Kramers
+While
+Jeff
+Henry
+Births
+Typically
+Czech
+Christian
+Notes
+The
+West
+Land
+Kursk
+Interstate
+Adolf
+European
+The
+Van
+United
+Western
+Soifer
+Southeast
+Terrible
+Millington
+Bob
+The
+Scrooge
+The
+Anno
+David
+Niwa
+Amelia
+East
+Triads
+Where
+Plymouth
+Hemochromatosis
+United
+Chasez
+American
+Rappaport
+Muharraq
+Josephus
+Archives
+The
+The
+New
+Roosevelt
+Punta
+Civic
+References
+Wildlife
+And
+Birmingham
+God
+Richard
+Bruce
+Piazza
+Ownership
+London
+Rodionov
+The
+Zoe
+Broad
+The
+The
+France
+Hawthorne
+Anakim
+Lead
+World
+The
+Compromise
+British
+Poor
+White
+Veterinary
+Second
+Notes
+The
+Safety
+Drug
+Governors
+Greatest
+References
+Structure
+Shoreham
+Labour
+African
+Municipal
+Moldovan
+The
+Ashkenazi
+Lords
+Janet
+Bavarian
+Nevertheless
+North
+Endurance
+Westminster
+Croton
+Bernard
+New
+Latine
+Gujarat
+Golden
+Jules
+Great
+Tony
+Debra
+Basset
+Global
+Economy
+Ukrainian
+Mississippi
+References
+Several
+Russia
+Royal
+Thrissur
+Clarinet
+Ossietzky
+Robert
+Itineris
+Maurice
+Chief
+Marathon
+Salmonella
+In
+Says
+Oregon
+National
+Notes
+Big
+See
+New
+Communist
+Kennely
+Monsieur
+In
+East
+The
+Crimean
+Yellow
+Freud
+Enrico
+Geoffrey
+Frumenty
+King
+Round
+Prime
+Types
+Long
+Deep
+Native
+Save
+Sun
+Select
+The
+Shaker
+Feofan
+Systems
+In
+Mary
+Alan
+Elizabeth
+Document
+Western
+References
+Rickover
+International
+Vyborg
+Ancient
+As
+Terry
+Greatest
+Distributed
+Old
+References
+Senate
+Consuelo
+Latin
+Brain
+Molecular
+Rhodes
+The
+Economy
+No
+Again
+Pacific
+Yenisei
+United
+United
+Montevideo
+Redirect
+Shape
+Continental
+Sun
+Origins
+For
+Inklings
+In
+Chesapeake
+Continental
+When
+Births
+After
+Spanish
+Anno
+Unbearable
+Anglo
+Sunday
+Mission
+Ancient
+Events
+Lochmaben
+Openness
+Hindman
+United
+United
+William
+Business
+Mixed
+California
+Elias
+Dorothea
+Idiap
+Snorri
+Vincent
+Twentieth
+Anti
+On
+Ukrainian
+Color
+Negative
+Norman French
+Outstanding Supporting
+Psychologist John
+Roman Catholicism
+Third Book
+Republican National
+Elaine May
+Even Francis
+Fri Jul
+Western Europe
+Lucius Cornelius
+Ladies Companion
+As Janet
+Dramatic Irony
+North American
+Skin Cancer
+The Guardian
+Canadian Disasters
+The Washington
+Los Angeles
+Dinner Party
+Robert Goerman
+East Sussex
+Left Opposition
+Rear Admiral
+New York
+Severin County
+Osaka Nagoya
+Deeds Goes
+Stubbings Ithaca
+Brian Walker
+English Civil
+Viet Cong
+Pipe Major
+Vladimir Zworykin
+Sun Yat
+Korea Strait
+Good Award
+Clinton Clinton
+Johan Ludvig
+London Bridge
+North Central
+Harford County
+Nicosia District
+Finance The
+Song Chinese
+Temenai Paradizo
+Tamaliki Fafine
+Kaieteur Plateau
+Turkmen State
+Nervous Affliction
+Rafael Correa
+Native Americans
+Indian Olympian
+References Further
+Time Life
+Charlie Parker
+Dreams The
+Roman Empire
+Project Blueprint
+St John
+History Ubiquity
+News Studio
+Stephanie Dalley
+Yasutaka Tsutsui
+Little Clarendon
+Retrieved August
+The American
+Marcel Proust
+Leading Actress
+Franz Liszt
+Mozambique Treaties
+The Hurrian
+Holt Rhinehart
+New Garden
+Northern Benaadir
+References Sources
+Coconut Tree
+The Polished
+Watubela Islands
+Halifax Gibbet
+The Turbo
+Sir John
+Types Domain
+Grotius De
+Stigant Archieps
+Overview Grid
+Willy Brandt
+Future When
+Utopia During
+Sister Cities
+Fernando Poo
+After Tsar
+British Society
+Paul Morphy
+Weimar Weimar
+British Empire
+Nevertheless Internet
+The Advanced
+West Coast
+Walras Law
+Thomas Cole
+John Bagnell
+The Savoyards
+April Hugh
+Mount Fuji
+Weaponry Although
+World Port
+Acanthopterygii Fish
+The Bell
+Mander Slive
+Genetics In
+The Best
+Copley Medal
+Hermetic Magic
+News July
+Rudolf Hell
+The Persian
+Champions League
+Around Christmas
+Elder Pater
+Public Transport
+Symphony Cantata
+United States
+The Chiricahua
+England People
+Great Mass
+Although Wilder
+Peter Minuit
+Norway These
+Emancipation Prince
+Sino Japanese
+Compact Discs
+Seismology Reflection
+Project Orion
+Trigger Points
+Promessi Sposi
+However Merodach
+Tummala Eugene
+In Kendall
+References External
+Federal Standard
+United Kingdom
+The Elephant
+Islamic Republic
+Brighton Pavilion
+Robert Marshak
+Sussex Street
+Males Females
+Swabian League
+Abingdon Dictionary
+The Tester
+Plotinus Plotinus
+Comedian Rich
+Abelian In
+King Louis
+Otto Benedict
+However Louis
+Emissions Reduction
+Bruce Bagemihl
+Republican Party
+Spickard Paul
+Mobile Bay
+Ben Gurion
+Mobile Country
+Hugh Baillie
+References External
+Peter Debye
+Post Megadeth
+Constitution River
+Theoretical Physics
+Mission San
+Anno Domini
+Nile Tigris
+Supreme Court
+Norway While
+Modern Wicca
+Kasper Elyan
+Hindman Child
+Franco Spanish
+Politically Morris
+East Germany
+When Herzog
+Spokane Washington
+Mickey Mouse
+Lord Chamberlain
+In Venus
+Bell Boeing
+See Pickvance
+In Chapter
+Meanwhile Gould
+Union Army
+North America
+Irish American
+United States
+Roger Roger
+South Africa
+The Attack
+United States
+University Medical
+Thomas English
+The Court
+Ted Hinton
+Winter Olympic
+Arturo Toscanini
+Scholastica Scholastica
+South Korean
+Christophe Bertossi
+Uruguay Rosas
+Tokushi Kasahara
+United States
+Voting Rights
+Arawak The
+The Harrises
+Singapore Politics
+Seymour Skinner
+City Hall
+The South
+North America
+General Joan
+Our Cause
+Kikunae Ikeda
+Australian Institute
+Possible Dreams
+Port Chalmers
+Stepanek Park
+The Stairs
+Real World
+Public Men
+Clements Library
+Modules The
+Completions If
+The Balrog
+General Cao
+History Free
+Risorgimento Art
+Lisa Kreutz
+Examples In
+Parthian Empire
+During Yuan
+Rote Armee
+American Hockey
+Inlet Port
+Snake Girl
+Chemical Manufacturing
+Americas Crops
+The Counter
+Northeast India
+When Ngata
+Ohio Putnam
+Revolt The
+International Monetary
+Los Angeles
+Superior Courts
+Martinique Climate
+Africa Cities
+Hanna Barbera
+Reflex Sympathetic
+Description Grasses
+Steven Seagal
+De Broglie
+Working Against
+Waylon Smithers
+Although Louis
+England Eadwig
+California Press
+Alperin Brauer
+Lynn Nadel
+Old Chisholm
+United States
+Fourteen Bit
+Brazilian Amazon
+Henry Herdson
+Harden House
+Japan South
+Freedom House
+Argentina Australia
+General Electric
+North West
+Hipparcos Index
+United States
+New York
+Robert Moon
+Testing Blood
+Low Density
+Gladys Aylward
+Luxembourg City
+The Jammu
+Emperor Quang
+Acanthodrilidae Octochaetidae
+Jizhou Canal
+Behind Pool
+Wadham College
+Maria Bonita
+Upton Maritime
+Larynx The
+Thus White
+Heraclides Ponticus
+Watson Crick
+Joseph Cotten
+The United
+Climate Tashkent
+Gamma Ray
+The Suppliants
+Ivor Novello
+Internet Exchange
+Marine Corps
+When Kent
+Contemporary Arab
+Western Union
+Television In
+Prince Frederick
+Cher Comedy
+Amarro Fiamberti
+Adam Gourmand
+When Hitler
+Pigment Violet
+Way Act
+Large Microphones
+Antananarivo Renivohitra
+Denis Pagan
+World War
+Aftermath Upon
+Sharp Pioneer
+Hal Willner
+United States
+In February
+Russian Enlightenment
+Haute Cour
+Victorian Farm
+Vyborg King
+Robert Moses
+French Revolutionary
+Scanning Images
+Pilot Pilot
+Tim Ashley
+The Benedictine
+England Influence
+World Health
+Sources External
+Procedure The
+Eastern Roman
+Anthony Pryer
+Total Eclipse
+Hope Richardson
+Intermediate System
+David Perkins
+Eric Hehner
+Rapid Rupture
+Their Music
+Overseas Chinese
+Young Berkman
+Cockney Estuary
+Oscar Wilde
+Margalit Fox
+As Spoletta
+Ostiarius Lector
+Allegany State
+Federal Election
+Notes References
+Australia In
+Masrah Mawlid
+References Fiber
+Admiral Francis
+Ethicorum Aristotelis
+Federal Targeted
+In Europe
+References External
+Federal Bureau
+Summer Olympics
+Anno Domini
+Cooling There
+Discography Official
+Joshua Owen
+Anno Domini
+Anno Domini
+Hessischer Landtag
+Births Deaths
+Events Undated
+To Abu
+Music Dance
+Jim Haslett
+World Hunger
+Caelian Hill
+In December
+Mackenzie King
+James Baker
+Up Light
+Big Bang
+Germany Rupert
+Thomas Thorpe
+Queen Victoria
+Scientific Investigation
+Major General
+References Further
+Did Vikings
+Transportation Volgograd
+Economic Realities
+The Saraswati
+Pertuan Agong
+Pioneer Washington
+Alt Clut
+In Mahayana
+Unbihexium The
+Huesca Huesca
+Neutral Camera
+Bundeswehr Federal
+Planned Ulaanbaatar
+After Fiver
+Al Jazeera
+Howard Street
+United States
+Utva Aviation
+Jimi Hendrix
+Punta Arenas
+Carib Canoe
+Emperor Antony
+Federigo Barbarossa
+Economic Development
+The Waterfront
+Wilkes Barre
+Viceroy Don
+First Lady
+Master Sergeant
+Dario Argento
+Count Basie
+Queen Jezebel
+Fortress Alcatraz
+Via Popilia
+Comb Jelly
+In Python
+Ancient Middle
+Race Course
+Julian Roman
+The Gay
+De Havilland
+Louis Braille
+San Francisco
+Thus Internet
+Rhea Rhea
+In Dick
+The Palau
+General Chemistry
+American Robert
+Gold Coast
+Jessie Bedford
+Washington University
+History Corporate
+Patrick Gray
+Gigabit Ethernet
+Bausch Lomb
+Great Britain
+Players Spanish
+Eastern England
+The Romans
+Japanese American
+By June
+The Sierra
+European Centre
+After Stradivari
+Harald Harfager
+Diwan Peshkar
+Green Slime
+Sivakumar Solving
+Staff Mayo
+The Netherlands
+The Delicious
+History Toponymy
+Seventh Amendment
+Galveston Historical
+Erich Fromm
+Sevilla Fair
+Melody Top
+New York
+Cinnabar Cinnabar
+Freedom House
+Beirut Damour
+Lifecycle In
+Techniques Some
+North American
+Examples Human
+United States
+Emotional Aspects
+Wood Science
+Sam Perlis
+Golden Age
+The New
+Indian Pueblo
+Charlotte Corday
+Rosetta Rosetta
+New Testament
+What Do
+Wight Castles
+John Bargrave
+Notes References
+Mechanisms All
+Johnny Young
+Swiss Federal
+Allan Franklin
+Rolex Kentucky
+Saint Sulpice
+Cal Carries
+Polyvinylpyrrolidone Polyvinylpyrrolidone
+National Tempus
+The Magic
+Grote Broer
+Free World
+These Native
+Mantophasmatidae Mantophasmatidae
+Egyptian Phonology
+Media Should
+Counterfactual Reasoning
+Oyly Carte
+Angela Richards
+The Simpsons
+Napoleonic Code
+Nagorno Karabakh
+The Other
+Most Wanted
+During World
+The Living
+Cardinal Masci
+Scottsdale Road
+Van Dyke
+The Stoic
+Alessandro Scarlatti
+Lord Northcliffe
+Tank Man
+By Mathew
+United States
+Roman Catholic
+When Harry
+Military Base
+Elisabeth Hasselbeck
+The Satellite
+Ku Klux
+Vietnam War
+New York
+Interstate Highway
+Ambitransitivity In
+Georgian Bay
+Andreas Vesalius
+Because King
+The Warm
+Edith Stein
+Melody Maker
+The Advocate
+Previn World
+Upper Ubangi
+Spanish Succession
+Moral Philosophy
+Gaussian Function
+Federal Standard
+New York
+References Atoms
+Soviet Union
+The Haganah
+Israeli Turkish
+References External
+Relativistic Theory
+Solar System
+Supreme Court
+Anno Domini
+Le Croisic
+The Carnival
+Bikram Yoga
+Cockney Estuary
+Old Christians
+Knaresborough Castle
+Gallery Modern
+South Texas
+Patrick Jake
+World Bank
+Birt Hogg
+The Kids
+The Davis
+Munich Germany
+The Volkswagen
+Anglo Saxon
+Ricardo Wall
+Linear Time
+Notes References
+Hesse Hesse
+Sydney Morning
+United States
+Union Pacific
+On December
+Treasury William
+Butler Lampson
+Wake Island
+In August
+Soviet Union
+National Theatre
+Missouri Warren
+Virginia Payload
+References Further
+The Yakovlev
+Senator Hubert
+White University
+Precious Stones
+Michael Posner
+Best Visual
+Emma Parker
+North American
+Resistor Color
+Native Americans
+West Africa
+Retail Sales
+National Socialist
+Bobby Breen
+Meyer Leisch
+Modena Italy
+Angiopoietins The
+Wing Commander
+Kaldellis The
+Stewart My
+New York
+World War
+Julian Roman
+Construction Essex
+American Societies
+United States
+Colonel Bogey
+Fourth Assessment
+This Window
+New York
+Ross Baker
+On June
+Iowa Illinois
+Jennifer Doyle
+The Palau
+Source Book
+Pan American
+Meteorological Service
+Supervision Organization
+Generalized Markup
+Persian Province
+Church Holding
+Inspector Calls
+German Pre
+Gaulle Televised
+Bausch Lomb
+Scottish Parliament
+Eighth Century
+Gabriel Aghion
+Traditional Boats
+The Juno
+Pacific Ocean
+Potassium Potassium
+Philip Glass
+Us Art
+References External
+Martlesham Heath
+Joseph Conrad
+Moebius Strip
+Ratu Josefa
+Lover Man
+United States
+Sandown Bathurst
+Ragtime Band
+Forms The
+American Heart
+World War
+San Antonio
+Salt Lake
+Harbor Siraya
+In English
+Latah County
+Aitutaki Airport
+Iron Cross
+Caridea The
+Popular Mechanics
+Mancini Arts
+Game Boy
+Threats Juvenile
+Lake Homs
+Properties Octonionic
+Pir Panjal
+Socratic Circles
+Example Consider
+Fort Churchill
+Chamberlain Churchill
+United States
+Renny Cunnack
+Labour Party
+World War
+Historian Marjorie
+The Dalles
+Gameplay The
+Titan Biologic
+Fouquieria Ericales
+Observation Toutatis
+Dame Hannah
+Czech Latin
+United Kingdom
+Nanki Poo
+Friedrich Gymnasium
+Sherman Anti
+Nancy Cartwright
+San Francisco
+In June
+Seder Moroccan
+Chicken Plank
+Great Dorset
+Ken Ross
+Psion Enterprise
+Civil Rights
+Whit Monday
+Karplus Strong
+Lawson Battle
+Italian Transcription
+Name The
+Nag Hammadi
+Solar System
+Chesapeake Bay
+Big Deal
+Claude Combes
+Spanish National
+In March
+First International
+Chaka Khan
+Tikkurila Oyj
+Indian Light
+The Evaluation
+The Major
+Open For
+Theory Amplifier
+Cameron Williams
+Media Access
+National Theatre
+References External
+Environment In
+Pope Paul
+United Kingdom
+The Duchess
+Green Party
+Colorado Springs
+In England
+New York
+The Sun
+Southeast Asia
+Miami Ink
+When Florestan
+United Kingdom
+Commander Keen
+Wigner Seitz
+Sources Network
+World War
+Confederation Congress
+Julian Roman
+Cambridge Rules
+Carbon Dioxide
+Princely Academy
+Ford Handbook
+Florence Cathedral
+Jesus Christ
+Chemical Engineer
+Births Deaths
+Romano British
+Births Deaths
+Joseph Hooker
+The Gold
+In Investing
+Music Academy
+In Europe
+Walker Ultimate
+Kasper Elyan
+World Meteorological
+Explanatory Supplement
+Kramers Kronig
+Kappa Alpha
+Ecumenical Patriarch
+Prokhorovka Cathedral
+Africa Hispania
+The Uranian
+Rus Vikings
+In Shinto
+Sir Thomas
+Harrison Lawfulness
+Cobb Memorial
+Best Production
+The Earth
+World War
+South African
+Metropolitanos The
+Dynamic Delegation
+Discography Band
+Desmond Lee
+The Daily
+Van Atta
+Shannon Hartley
+References Literature
+United States
+Municipal Court
+United Artists
+National Merit
+Adam Vinateri
+Building Livable
+Ensino Fundamental
+In English
+		</pre>
+
+		<p class="description">
+		The query terms have the following distribution of document frequencies:
+		</p>
+		<img src="images/benchmark_df_histogram_BM25pff.png" width="560" alt="distribution of query term document frequencies" /></a>
+		<p class="description">
+		</p>
+
+		<h1>Setting</h1>
+		<p class="description">
+		Each test was splitted into 8 scripts, each script running 200 queries of the form:
+		<pre>
+		wget --quiet -O tmp/output.P.1.htm 'http://demo.project-strus.net/query?s=BM25&q=Mexican'
+		</pre>
+		where 'Mexican' is the query in this example. I run these 8 scripts in parallel from my
+		laptop. The test scripts are part of the strusWikipedia project in the subdirectory <i>benchmarks/parallelQueries</i>.
+		Each test run produces 8 real time measurements from which we take the highest one as the total
+		running time to get the number of queries executed per second.
+		</p>
+
+		<h1>Results</h1>
+		<h2>BM25</h2>
+		<p class="description">The test with the BM25 query evaluation scheme produced the following numbers:
+		</p>
+		<input class="toggle-box" id="timeBM25" type="checkbox" >
+		<label for="timeBM25">Time series for the BM25 tests</label>
+		<pre>
+		real 41.68
+		real 42.14
+		real 42.45
+		real 42.65
+		real 42.86
+		real 42.88
+		real 43.09
+		real 44.62
+		</pre>
+		<p class="description">The longest time for a set of 200 queries was 44.62 seconds.
+		So we get
+		<pre>
+		1600 / 44.62 = 35.8
+		44.620 / 1600 = 27.8 E-3
+		</pre>
+		meaning 35 queries per second or 27.8 ms per query
+		</p>
+
+		<h2>BM25pff</h2>
+		<p class="description">The test with the BM25pff (with proximity) 
+		query evaluation scheme produced the following numbers:
+		</p>
+		<input class="toggle-box" id="timeBM25pff" type="checkbox" >
+		<label for="timeBM25pff">Time series for the BM25pff tests</label>
+		<pre>
+		real 128.92
+		real 130.53
+		real 130.65
+		real 131.89
+		real 132.22
+		real 132.23
+		real 132.48
+		real 132.60
+		</pre>
+		<p class="description">The longest time for a set of 200 queries was 132.60 seconds.
+		So we get
+		<pre>
+		1600 / 132.60 = 12.1
+		132.60 / 1600 = 82.8 E-3
+		</pre>
+		meaning 12 queries per second or 82.8 ms per query. This reflects the intuitive impression,
+		that the BM25 with proximity in <i>Strus</i> is about 3 times slower than the native BM25.
+		</p>
+
+		<h2>Query processing top</h2>
+		<p class="description">We also can have a look at the query engine at work:
+		<img src="images/top_insert.jpg" width="560" alt="query evaluation processing (top)" /></a>
+		</p>
+</div>
+</body>
+</html>
+
