@@ -45,7 +45,7 @@ class Backend:
 
         if scheme == "NBLNK":
             rt.addSummarizer( "accuvariable", {
-                  "norm": 0.001, "var": "LINK", "type": "linkid",
+                  "norm": 0.0001, "var": "LINK", "type": "linkid",
                   ".match": "sumfeat"
             })
         else:
@@ -113,7 +113,7 @@ class Backend:
                             [ "within_struct",  5,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]],
                             [ "within_struct", 20,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]]
                         ]
-                        weight = [ 3.0, 2.0, 2.0, 1.5 ]
+                        weight = [ 4.0, 2.5, 2.0, 1.5 ]
                         for ii in range(4):
                             sumexpr = [ "chain_struct", 50, ["sent"], ["=LINK", "linkvar"], expr[ ii] ]
                             query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
@@ -131,7 +131,7 @@ class Backend:
                             [ "within_struct",  5,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]],
                             [ "within_struct", 20,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]]
                         ]
-                        weight = [ 1.6, 1.2 ]
+                        weight = [ 1.9, 1.4 ]
                         for ii in range(2):
                             sumexpr = [ "chain_struct", 50, ["sent"], ["=LINK", "linkvar"], expr[ ii] ]
                             query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
