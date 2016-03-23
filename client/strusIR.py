@@ -20,8 +20,8 @@ class Backend:
                      "k1": 1.2, "b": 0.75, "avgdoclen": 700,
                      "metadata_title_maxpos": "maxpos_title", "metadata_doclen": "doclen",
                      "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 3,
-                     "ffbase": 0.1, "fftie": 30,
-                     "proxffbias": 0.2, "proxfftie": 40, "maxdf": 0.2,
+                     "ffbase": 0.1, "fftie": 10,
+                     "proxffbias": 0.3, "proxfftie": 20, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat"
             })
             rt.addWeightingFunction( 1.0, "metadata", {"name": "pageweight" } )
