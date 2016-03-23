@@ -28,15 +28,25 @@
 		<li>using three machines: 3 1/2 hours = less than 1 hour unpacking and conversion, 2:15 for building the document search index and some minutes for copying the data.
 		</li>
 		</ul>
+		</p>
+		<p class="description">
 		It also means serving queries with response times expected nowadays from a search engine.
-		Reliable numbers about how far the engine can be stressed and how many 
-		simultaneus queries can be handled are not provided yet.
+		You find some numbers about the query performance of this Wikipedia demo system
+		<a href="wikipediaSearchQueryBenchmark.htm">here</a>.
 		</p>
 		<p class="description">But may I first introduce the machine?
 		<br/>It is an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
 		(<i>NUC6i3SYK with 16GB Ram and a 256GB SSD</i>):
 		</p>
 		<img src="images/NUC_6i3SYK_lores2.jpg" width="560" alt="Intel NUC (NUC6i3SYK with 16GB Ram and a 256GB SSD)" /></a>
+
+		<h2>Why using a NUC for a demo system ?</h2
+		<p class="description">
+		With new generation SSDs, non-volatile memory units are grouped closer to the CPU cores of 
+		modern servers. The hardware of a NUC is conceptually close to such a server. Just like 
+		one node of it. Because of the scalability of <i>Strus</i> we can now make some predictions
+		about how <i>Strus</i> will perform on real servers.
+		</p>
 
 		<h2>Installing the software</h2
 		<p class="description">
@@ -58,7 +68,6 @@ apt-get install g++
 apt-get install python
 apt-get install python-tornado
 apt-get install python-pip
-pip install tornado.tcpclient
 
 wget https://pypi.python.org/packages/source/t/tornado/tornado-4.3.tar.gz#md5=d13a99dc0b60ba69f5f8ec1235e5b232
 tar xvzf tornado-4.3.tar.gz
