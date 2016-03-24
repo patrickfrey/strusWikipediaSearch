@@ -337,9 +337,9 @@ double WeightingFunctionContextBM25_dpfc::call( const Index& docno)
 }
 
 
-static ArithmeticVariant parameterValue( const std::string& name, const std::string& value)
+static NumericVariant parameterValue( const std::string& name, const std::string& value)
 {
-	ArithmeticVariant rt;
+	NumericVariant rt;
 	if (!rt.initFromString(value.c_str())) throw strus::runtime_error(_TXT("numeric value expected as parameter '%s' (%s)"), name.c_str(), value.c_str());
 	return rt;
 }
@@ -391,7 +391,7 @@ void WeightingFunctionInstanceBM25_dpfc::addStringParameter( const std::string& 
 	CATCH_ERROR_ARG1_MAP( _TXT("error adding string parameter to '%s' weighting: %s"), "BM25_dpfc", *m_errorhnd);
 }
 
-void WeightingFunctionInstanceBM25_dpfc::addNumericParameter( const std::string& name, const ArithmeticVariant& value)
+void WeightingFunctionInstanceBM25_dpfc::addNumericParameter( const std::string& name, const NumericVariant& value)
 {
 	if (boost::algorithm::iequals( name, "match") || boost::algorithm::iequals( name, "struct"))
 	{
