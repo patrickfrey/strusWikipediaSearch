@@ -79,11 +79,12 @@
 
     linkvar = empty content /mediawiki/page/revision/text//link[@type='page']@id;
     catgvar = empty content /mediawiki/page/revision/text//link[@type='category']@id;
-    wwwvar = empty content /mediawiki/page/revision/text//wwwlink@id;
+    wwwvar  = empty content /mediawiki/page/revision/text//wwwlink@id;
 
 [ForwardIndex]
-    linkid  = lc:text content /mediawiki/page/revision/text//link[@type='page']@id;
-    catgid  = lc:text content /mediawiki/page/revision/text//link[@type='category']@id;
+    linkid  = text content /mediawiki/page/revision/text//link[@type='page']@id;
+    catgid  = text content /mediawiki/page/revision/text//link[@type='category']@id;
+    wwwlnk  = text content /mediawiki/page/revision/text//wwwlink@id;
 
     orig = text split /mediawiki/page/title();
     orig = text split /mediawiki/page/revision/text/h1();
@@ -133,8 +134,6 @@
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/link/link[@type='page']();
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/wwwlink();
-
-    wwwlnk = text content /mediawiki/page/revision/text//wwwlink@id;
 
 [Document]
     doc = /mediawiki/page;

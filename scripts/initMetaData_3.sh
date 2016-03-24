@@ -18,7 +18,7 @@ do
 	echo "[2.3] calculate a map docno -> number of references to this page"
 	scripts/calcDocidRefs.pl resources/docid_list$ii.txt resources/linkid_list.txt > resources/docnoref_map$ii.txt
 	echo "[2.4] calculate a map docno -> link popularity weight"
-	scripts/calcWeights.pl resources/docnoref_map$ii.txt 'tanh(x/50)' > resources/pageweight_map$ii.txt
+	scripts/calcWeights.pl resources/docnoref_map$ii.txt 'tanh(x/100)' > resources/pageweight_map$ii.txt
 	echo "[2.5] update the meta data table element pageweight with the link popularity weight"
 	strusUpdateStorage -s "path=$STORAGEPATH$ii" -m pageweight resources/pageweight_map$ii.txt
 done
