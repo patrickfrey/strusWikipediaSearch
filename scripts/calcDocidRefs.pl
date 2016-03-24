@@ -110,7 +110,7 @@ sub fetchLinkLine
 sub normalizeId
 {
 	my ($nam) = @_;
-	$nam =~ s/[\'\"\/\+\-\(\)]/ /g;
+	$nam =~ s/[\'\"\/\+\,\;\-\(\)]/ /g;
 	$nam =~ s/[ ][ ]+/ /g;
 	return lc( unidecode( $nam));
 }
