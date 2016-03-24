@@ -11,7 +11,7 @@ for ii in 1 2 3
 do
 	strusInspect -s "path=$STORAGEPATH$ii" fwstats linkid >> resources/linkid_list.txt
 	echo "[2.2] get the docno -> docid map"
-	strusInspect -s "path=$STORAGEPATH$ii" attribute docid | strusAnalyzePhrase -n "lc:text" -q '' - > resources/docid_list$ii.txt
+	strusInspect -s "path=$STORAGEPATH$ii" attribute docid | strusAnalyzePhrase -n "text" -q '' - > resources/docid_list$ii.txt
 done
 for ii in 1 2 3
 do
