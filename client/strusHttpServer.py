@@ -14,6 +14,7 @@ import signal
 import strus
 import strusMessage
 import time
+import unidecode
 
 # [0] Globals and helper classes:
 # The address of the global statistics server:
@@ -244,12 +245,28 @@ class QueryHandler( tornado.web.RequestHandler ):
     def getLinkQueryResults( self, ranks, firstlink, noflinks):
         results = []
         linktab = {}
+        linkreftab = {}
+        docidtab = {}
+        docreftab = {}
         for rank in ranks:
             for link in rank.links:
-                if link[0] in linktab:
-                    linktab[ link[0]] = 0.0 + linktab[ link[0]] + link[1] * rank.weight
+                refcnt = 1
+                docid = link[0]
+                if docid in docreftab:
+                    refcnt = 1 + docreftab[ docid]
+                    docreftab[ docid] = refcnt
                 else:
-                    linktab[ link[0]] = 0.0 + link[1] * rank.weight
+                    docreftab[ docid] = 1
+
+                linkid = unidecode.unidecode( link[0].decode('utf-8')).lower()
+                if linkid in linktab:
+                    linktab[ linkid] = 0.0 + linktab[ linkid] + link[1] * rank.weight
+                    _refcnt,_docid = linkreftab[ linkid]
+                    if (_refcnt < refcnt):
+                        linkreftab[ linkid] = [refcnt,docid]
+                else:
+                    linktab[ linkid] = 0.0 + link[1] * rank.weight
+                    linkreftab[ linkid] = [refcnt,docid]
         heap = [ ]
         for (link,weight) in linktab.iteritems():
             heap.append([-weight, link])
@@ -259,7 +276,8 @@ class QueryHandler( tornado.web.RequestHandler ):
         while li<le and heap:
             negweight,title = heapq.heappop( heap)
             if li >= firstlink:
-                results.append( LinkRow( title, -negweight))
+                _refcnt,_docid = linkreftab[ title]
+                results.append( LinkRow( _docid, -negweight))
             li = li + 1
         return results
 
