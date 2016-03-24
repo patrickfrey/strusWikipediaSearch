@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use 5.010;
+use Text::Unidecode;
 
 if ($#ARGV <= 0 || $#ARGV > 2)
 {
@@ -106,6 +107,14 @@ sub fetchLinkLine
 	return ($linkid,$cnt);
 }
 
+sub normalizeId
+{
+	my ($nam) = @_;
+	$nam =~ s/[\'\"\/\+\-\(\)]/ /g;
+	$nam =~ s/[ ][ ]+/ /g;
+	return lc( unidecode( $nam));
+}
+
 open my $docidfile, "<$ARGV[0]" or die "failed to open file $ARGV[0] for reading ($!)\n";
 open my $linkfile, "<$ARGV[1]" or die "failed to open file $ARGV[1] for reading ($!)\n";
 
@@ -113,13 +122,14 @@ my %docidtab = ();
 my ($docid,$docno) = fetchDocidLine( $docidfile);
 while ($docid)
 {
-	if ($docidtab{ $docid})
+	my $docid_norm = normalizeId( $docid);
+	if ($docidtab{ $docid_norm})
 	{
-		$docidtab{ $docid} = "$docidtab{$docid} $docno";
+		$docidtab{ $docid_norm} = "$docidtab{$docid_norm} $docno";
 	}
 	else
 	{
-		$docidtab{ $docid} = $docno;
+		$docidtab{ $docid_norm} = $docno;
 	}
 	($docid,$docno) = fetchDocidLine( $docidfile);
 }
@@ -128,7 +138,7 @@ my %linktab = (); # map docno -> refcnt
 my ($linkid,$linkcnt) = fetchLinkLine( $linkfile);
 while ($linkid)
 {
-	my $mainlinkid = $linkid;
+	my $mainlinkid = normalizeId( $linkid);
 	$mainlinkid =~ s/[#].*$//;
 	my $docnostr = $docidtab{ $mainlinkid};
 	if ($docnostr)

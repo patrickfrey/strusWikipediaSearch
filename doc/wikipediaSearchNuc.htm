@@ -54,7 +54,9 @@
 			<li>Install an Ubuntu 14.04 as OS on our NUC. You may chose another distribution.
 			See the <a href="installation.htm#packages">Strus package list</a> for that.
 			</li>
-			<li>Install developper software needed for the Wikipedia project:
+			<li>Install developper software needed for the Wikipedia project
+			(python and some perl - perl is needed in a helper script
+			for calculating the document weights):
 			<input class="toggle-box" id="pkginst" type="checkbox" >
 			<label for="pkginst">Shell commands (Ubuntu + Aptitude)</label>
 			<pre>
@@ -69,6 +71,7 @@ apt-get install python
 apt-get install python-tornado
 apt-get install python-pip
 pip install unidecode
+apt-get install libtext-unidecode-perl
 
 wget https://pypi.python.org/packages/source/t/tornado/tornado-4.3.tar.gz#md5=d13a99dc0b60ba69f5f8ec1235e5b232
 tar xvzf tornado-4.3.tar.gz

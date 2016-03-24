@@ -17,7 +17,7 @@ class Backend:
         # Query evaluation scheme:
         if scheme == "BM25pff":
             rt.addWeightingFunction( 1.0, "BM25pff", {
-                     "k1": 1.2, "b": 0.75, "avgdoclen": 700,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_title_maxpos": "maxpos_title", "metadata_doclen": "doclen",
                      "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 3,
                      "ffbase": 0.1, "fftie": 10,
@@ -28,7 +28,7 @@ class Backend:
 
         elif scheme == "BM25":
             rt.addWeightingFunction( 1.0, "BM25", {
-                     "k1": 1.2, "b": 0.75, "avgdoclen": 700,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
@@ -36,7 +36,7 @@ class Backend:
 
         elif scheme == "NBLNK":
             rt.addWeightingFunction( 1.0, "BM25", {
-                     "k1": 1.2, "b": 0.75, "avgdoclen": 700,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
