@@ -10,6 +10,7 @@
 #include "strus/weightingFunctionInterface.hpp"
 #include "strus/weightingFunctionInstanceInterface.hpp"
 #include "strus/weightingFunctionContextInterface.hpp"
+#include "strus/functionDescription.hpp"
 #include "strus/metaDataReaderInterface.hpp"
 #include "strus/storageClientInterface.hpp"
 #include "strus/index.hpp"
@@ -63,7 +64,7 @@ public:
 	virtual void addWeightingFeature(
 			const std::string& name_,
 			PostingIteratorInterface* itr_,
-			float weight_,
+			double weight_,
 			const TermStatistics& stats_);
 
 	virtual double call( const Index& docno);
@@ -137,9 +138,9 @@ public:
 
 	virtual ~WeightingFunctionBM25_dpfc(){}
 
-	virtual WeightingFunctionInstanceInterface* createInstance() const;
+	virtual WeightingFunctionInstanceInterface* createInstance( const QueryProcessorInterface*) const;
 
-	virtual Description getDescription() const;
+	virtual FunctionDescription getDescription() const;
 
 private:
 	ErrorBufferInterface* m_errorhnd;				///< buffer for error messages

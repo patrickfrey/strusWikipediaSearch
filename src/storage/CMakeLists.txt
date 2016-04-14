@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 # SOURCES AND INCLUDES
 # --------------------------------------
 include_directories(
+	"${PROJECT_SOURCE_DIR}/include"
 	"${Boost_INCLUDE_DIRS}"
 	"${strus_INCLUDE_DIRS}"
 	"${strusanalyzer_INCLUDE_DIRS}"

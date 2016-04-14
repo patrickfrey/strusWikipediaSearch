@@ -8,9 +8,9 @@
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/tokenizerFunctionInstanceInterface.hpp"
 #include "strus/tokenizerFunctionContextInterface.hpp"
-#include "strus/private/dll_tags.hpp"
+#include "strus/base/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
-#include "strus/analyzerErrorBufferInterface.hpp"
+#include "strus/errorBufferInterface.hpp"
 #include "textwolf/charset_utf8.hpp"
 #include <vector>
 #include <cstring>
@@ -204,7 +204,7 @@ class SeparationTokenizerFunctionContext
 	:public strus::TokenizerFunctionContextInterface
 {
 public:
-	SeparationTokenizerFunctionContext( TokenDelimiter delim_, TokenFilter filter_, strus::AnalyzerErrorBufferInterface* errorhnd_)
+	SeparationTokenizerFunctionContext( TokenDelimiter delim_, TokenFilter filter_, strus::ErrorBufferInterface* errorhnd_)
 		:m_delim(delim_),m_filter(filter_),m_errorhnd(errorhnd_){}
 
 	const char* skipToToken( char const* si, const char* se) const
@@ -240,15 +240,20 @@ public:
 private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
-	strus::AnalyzerErrorBufferInterface* m_errorhnd;
+	strus::ErrorBufferInterface* m_errorhnd;
 };
 
 class SeparationTokenizerFunctionInstance
 	:public strus::TokenizerFunctionInstanceInterface
 {
 public:
-	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter, strus::AnalyzerErrorBufferInterface* errorhnd_)
+	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter, strus::ErrorBufferInterface* errorhnd_)
 		:m_delim(delim),m_filter(filter),m_errorhnd(errorhnd_){}
+
+	virtual bool concatBeforeTokenize() const
+	{
+		return false;
+	}
 
 	strus::TokenizerFunctionContextInterface* createFunctionContext() const
 	{
@@ -262,14 +267,14 @@ public:
 private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
-	strus::AnalyzerErrorBufferInterface* m_errorhnd;
+	strus::ErrorBufferInterface* m_errorhnd;
 };
 
 class SeparationTokenizerFunction
 	:public strus::TokenizerFunctionInterface
 {
 public:
-	SeparationTokenizerFunction( const char* description_, TokenDelimiter delim_, TokenFilter filter_, strus::AnalyzerErrorBufferInterface* errorhnd_)
+	SeparationTokenizerFunction( const char* description_, TokenDelimiter delim_, TokenFilter filter_, strus::ErrorBufferInterface* errorhnd_)
 		:m_delim(delim_),m_filter(filter_),m_description(description_),m_errorhnd(errorhnd_){}
 
 	virtual strus::TokenizerFunctionInstanceInterface* createInstance( const std::vector<std::string>& args, const strus::TextProcessorInterface*) const
@@ -291,16 +296,16 @@ private:
 	TokenDelimiter m_delim;
 	TokenFilter m_filter;
 	const char* m_description;
-	strus::AnalyzerErrorBufferInterface* m_errorhnd;
+	strus::ErrorBufferInterface* m_errorhnd;
 };
 
 
-strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_inv( strus::AnalyzerErrorBufferInterface* errorhnd)
+strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_inv( strus::ErrorBufferInterface* errorhnd)
 {
 	return new SeparationTokenizerFunction( "Word boundary tokenizer for the Wikipedia collection", wordBoundaryDelimiter_european_inv, wordFilter_inv, errorhnd);
 }
 
-strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_fwd( strus::AnalyzerErrorBufferInterface* errorhnd)
+strus::TokenizerFunctionInterface* createWordSeparationTokenizer_european_fwd( strus::ErrorBufferInterface* errorhnd)
 {
 	return new SeparationTokenizerFunction( "Word boundary tokenizer for the Wikipedia collection", wordBoundaryDelimiter_european_fwd, wordFilter_fwd, errorhnd);
 }

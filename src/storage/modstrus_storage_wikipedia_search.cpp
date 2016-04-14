@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "strus/private/dll_tags.hpp"
+#include "strus/base/dll_tags.hpp"
 #include "strus/storageModule.hpp"
 #include "weightingBM25_dpfc.hpp"
 
