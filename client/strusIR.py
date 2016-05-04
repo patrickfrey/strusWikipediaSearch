@@ -65,7 +65,6 @@ class Backend:
     def __init__(self, config):
         # Open local storage on file with configuration specified:
         self.context = strus.Context()
-        self.context.defineStatisticsProcessor( "standard")
         self.storage = self.context.createStorageClient( config )
         self.queryeval = {}
         for scheme in [ "BM25", "BM25pff", "NBLNK" ]:

@@ -162,7 +162,7 @@ def processShutdown():
 if __name__ == "__main__":
     try:
         # Parse arguments:
-        defaultconfig = "path=storage; cache=512M"
+        defaultconfig = "path=storage; cache=512M; statsproc=default"
         parser = optparse.OptionParser()
         parser.add_option("-p", "--port", dest="port", default=7184,
                           help="Specify the port of this server as PORT (default %u)" % 7184,

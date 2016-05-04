@@ -22,7 +22,6 @@
 #include <vector>
 #include <set>
 #include <limits>
-#include <stdint.h>
 
 #undef STRUS_LOWLEVEL_DEBUG
 

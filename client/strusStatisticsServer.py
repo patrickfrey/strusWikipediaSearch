@@ -17,8 +17,7 @@ termDfMap = {}
 collectionSize = 0
 # Strus statistics message processor:
 strusctx = strus.Context()
-strusctx.defineStatisticsProcessor( "standard")
-strustat = strusctx.createStatisticsProcessor()
+strustat = strusctx.createStatisticsProcessor("")
 
 # [2] Request handlers
 def packedMessage( msg):
