@@ -42,6 +42,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <stdexcept>
+#include <new>
 
 namespace textwolf {
 
