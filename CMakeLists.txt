@@ -12,6 +12,7 @@ include( cmake/build_rules.cmake )
 include( cmake/boost.cmake)
 include( cmake/find_strus_package.cmake )
 
+find_strus_package( base )
 find_strus_package( core )
 find_strus_package( analyzer )
 find_strus_package( module )
