@@ -32,6 +32,10 @@ sub processLine
 		processLine( "$1 $3");
 		return;
 	}
+	while ($line =~ /^[a-z]{1,2}\s/)
+	{
+		$line =~ /^[a-z]{1,2}\s//;
+	}
 	$line =~ s/^[.,-]+//g;
 	$line =~ s/[\\~?!\%\*\$\=\:\;\|\^\&\#\@'"”“\-–\/\)\(\[\]\}\{]/ /g;
 	$line =~ s/\s\s+/ /g;
