@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use 5.010;
+use utf8;
+use open ':std', ':encoding(UTF-8)';
 
 my $num_args = $#ARGV + 1;
 if ($num_args == 0)
@@ -12,7 +14,7 @@ if ($num_args == 0)
 	exit;
 }
 
-@lines = ()
+my @lines = ();
 sub processLine
 {
 	my ($line) = @_;
@@ -24,19 +26,22 @@ sub processLine
 	{
 		return;
 	}
-	elsif (/^(.*)[\(](.*)[\)](.*)$/)
+	elsif ($line =~ /^(.*)[\(](.*)[\)](.*)$/)
 	{
-		processLine( $2);
+		processLine( "$2");
 		processLine( "$1 $3");
 		return;
 	}
-	$line =~ s/[\\~?!\#\@'"\-–\/\)\(\[\]]\}\{/ /g;
+	$line =~ s/^[.,-]+//g;
+	$line =~ s/[\\~?!\%\*\$\=\:\;\|\^\&\#\@'"”“\-–\/\)\(\[\]\}\{]/ /g;
 	$line =~ s/\s\s+/ /g;
-	@push( @lines, $line);
+	$line =~ s/^\s+//g;
+	$line =~ s/\s+$//g;
+	push( @lines, $line);
 }
 
-$inputfile = $ARGV[0];
-if ($inputfile == '-')
+my $inputfile = $ARGV[0];
+if ($inputfile eq '-')
 {
 	while (<>)
 	{
@@ -55,8 +60,8 @@ else
 }
 
 my @output = sort @lines;
-$oldline = "";
-foreach $line( @output) {
+my $oldline = "";
+foreach my $line( @output) {
 	if ($line ne $oldline)
 	{
 		$oldline = $line;
