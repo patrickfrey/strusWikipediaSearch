@@ -146,7 +146,7 @@ static bool isAlphaNum( char ch)
 
 static bool isSpace( char ch)
 {
-	return (ch <= 32);
+	return ((unsigned char)ch <= 32);
 }
 
 static bool isEqual( const char* id, const char* src, std::size_t size)
