@@ -34,13 +34,13 @@ sub processLine
 	}
 	$line =~ s/^[.,-]+//g;
 	$line =~ s/[\\~?!\%\*\$\=\:\;\|\^\&\#\@'"”“\-–\/\)\(\[\]\}\{]/ /g;
-	while ($line =~ /^[a-z]{1,2}\s/)
-	{
-		$line =~ s/^[a-z]{1,2}\s//;
-	}
 	$line =~ s/\s\s+/ /g;
 	$line =~ s/^\s+//g;
 	$line =~ s/\s+$//g;
+	while ($line =~ /^[a-z]{1,2}\s/ || $line =~ /^[a-z]{1,2}$/)
+	{
+		$line =~ s/^[a-z]{1,2}\s//;
+	}
 	push( @lines, $line);
 }
 
