@@ -40,8 +40,12 @@ sub processLine
 	while ($line =~ /^[a-z]{1,2}\s/ || $line =~ /^[a-z]{1,2}$/)
 	{
 		$line =~ s/^[a-z]{1,2}\s//;
+		$line =~ s/^[a-z]{1,2}$//;
 	}
-	push( @lines, $line);
+	if ($line ne "")
+	{
+		push( @lines, $line);
+	}
 }
 
 my $inputfile = $ARGV[0];
