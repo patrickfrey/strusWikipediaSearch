@@ -37,10 +37,10 @@ sub processLine
 	$line =~ s/\s\s+/ /g;
 	$line =~ s/^\s+//g;
 	$line =~ s/\s+$//g;
-	while ($line =~ /^[a-z]{1,2}\s/ || $line =~ /^[a-z]{1,2}$/)
+	while ($line =~ /^[a-zA-Z]{1,2}\s/ || $line =~ /^[a-zA-Z]{1,2}$/)
 	{
-		$line =~ s/^[a-z]{1,2}\s//;
-		$line =~ s/^[a-z]{1,2}$//;
+		$line =~ s/^[A-Za-z]{1,2}\s//;
+		$line =~ s/^[A-Za-z]{1,2}$//;
 	}
 	if ($line ne "")
 	{
