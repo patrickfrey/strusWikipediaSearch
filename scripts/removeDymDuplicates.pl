@@ -24,6 +24,7 @@ sub loadLine
 	{
 		return;
 	}
+	$line =~ s/\b[aA][aA][aA][aA][aA]+[a-zA-Z]*\s//g;
 	my $key = lc($line);
 	$key =~ s/s\b//g;
 	$key =~ s/a+\s//g;
