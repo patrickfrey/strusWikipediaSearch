@@ -7,3 +7,7 @@
 [Attribute]
 	phrase = regex("[^A-Za-z0-9]", " "):convdia(en) content_europe_inv /list/item();
 	docid = orig content_europe_inv /list/item();
+
+[Aggregator]
+	doclen = count( ngram);
+
