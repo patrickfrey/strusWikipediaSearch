@@ -60,6 +60,7 @@ storage/LOG
 storage/LOG.old
 storage/MANIFEST-*
 storage/CURRENT
+storage_dym/
 
 # Generated files for building the collection metadata for weighting
 resources/metadata_tist_doclen*.txt

@@ -16,13 +16,16 @@
  {% if scheme == "NBLNK" %}<option selected>NBLNK</option>{% else %}<option>NBLNK</option>{% end %}
  {% if scheme == "BM25" %}<option selected>BM25</option>{% else %}<option>BM25</option>{% end %}
  {% if scheme == "BM25pff" %}<option selected>BM25pff</option>{% else %}<option>BM25pff</option>{% end %}
-</select> 
-<input id="search" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="1" value="{{ querystr }}"/>
+</select>
+<input id="search" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}"/>
 <input id="submit" type="submit" value="Search" />
 <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}
  <input type="hidden" name="m" value="{{ mode }}"/>
 {% end %}
+<div id="DidYouMean">
+<div id="DidYouMeanList"></div>
+</div>
 </form>
 
 {% set prevrank = firstrank - maxnofranks %}

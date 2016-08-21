@@ -10,7 +10,3 @@ echo '<list>' >> data/dymitems.xml
 cat data/dymitems.txt | awk '{print "<item>" $0 "</item>"}' >> data/dymitems.xml
 echo '</list>' >> data/dymitems.xml
 
-# Manual edit:
-# 1. Remove single characters
-# 2. Remove sequences of the same Character os size > 4
-# 3. Remove lower case duplicates
