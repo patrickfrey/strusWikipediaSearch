@@ -45,7 +45,7 @@ class DymBackend:
         rt.addWeightingFunction( "metadata", {
                     "name": "doclen"
         })
-        rt.addWeightingFormula( "_0 / sqrt(_1 + 1)", {});
+        rt.addWeightingFormula( "_0 / log(_1 + 2)", {});
 
         # Summarizer for getting the document title:
         rt.addSummarizer( "attribute", { "name": "docid" })
@@ -125,13 +125,18 @@ class DymBackend:
 
         selexpr = ["contains", 0, 0]
         position = 0
+        prev_first = None
+        this_first = None
         for term in ngrams:
             if (term.position() != position):
+                prev_first,this_first = this_first,term
                 if (position != 0):
                     selexpr[2] = self.getCardinality( len(selexpr)-3)
                     query.defineFeature( "selfeat", selexpr, 1.0 )
                     selexpr = ["contains", 0, 0]
                 position = term.position()
+                if (prev_first != None):
+                    query.defineFeature( "docfeat", ["sequence", 1, [prev_first.type(), prev_first.value()], [term.type(), term.value()]], 2.5)
             selexpr.append( [term.type(), term.value()] )
             query.defineFeature( "docfeat", [term.type(), term.value()], 1.0)
 
@@ -140,6 +145,9 @@ class DymBackend:
         query.setMaxNofRanks( nofranks)
 
         # Evaluate the query:
+        termmap = {}
+        for term in terms:
+            termmap[ term] = 1
         candidates = {}
         result = query.evaluate()
         proposals = []
@@ -148,8 +156,12 @@ class DymBackend:
                 if sumelem.name() == 'docid':
                     for elem in string.split( sumelem.value()):
                         weight = candidates.get( elem)
-                        if (weight == None or weight < rank.weight()):
+                        if (weight == None):
                             candidates[ elem] = rank.weight()
+                        elif (weight < rank.weight()):
+                            candidates[ elem] = rank.weight()
+                        if (termmap.get( elem)):
+                            candidates[ elem] += len(elem)
 
         # Get the candidates:
         for term in terms:
@@ -173,8 +185,8 @@ class DymBackend:
         proposals.sort( key=lambda b: b.weight, reverse=True)
         rt = []
         nofresults = len(proposals)
-        if nofresults > 20:
-            nofresults = 20
+        if nofresults > nofranks:
+            nofresults = nofranks
         for proposal in proposals[ :nofresults]:
             rt.append( proposal.name)
         return rt

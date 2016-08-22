@@ -3,11 +3,12 @@
 
 [SearchIndex]
 	ngram = ngram(WithStart,3):lc word /list/item();
-	word = orig word /list/item();
+	word = lc:convdia("en") word /list/item();
 
 [Attribute]
 	docid = orig content /list/item();
 
 [Aggregator]
 	doclen = count( ngram);
+
 

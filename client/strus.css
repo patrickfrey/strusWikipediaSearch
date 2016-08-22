@@ -61,13 +61,13 @@ h2 {
     float: left;
 }
 
-#search, 
+#searchtext, 
 #submit,
 {
     float: left;
 }
 
-#search {
+#searchtext {
     padding: 5px 9px;
     height: 35px;
     width: 392px;
@@ -187,5 +187,23 @@ li {
 li:hover {
     background: #eee;
     cursor: pointer;
+}
+
+#DidYouMean {
+	clear: left;
+}
+#DidYouMeanList {
+	opacity:0.90;
+	display: none;
+	background: #cccccc;
+	width: 412px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.dymelem:hover, .dymelem:focus {
+	background-color: #aaa;
+}
+#DidYouMeanElem {
+	background: #cccccc;
+	width: 412px;
 }
 
