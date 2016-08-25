@@ -48,7 +48,7 @@ class DymBackend:
         rt.addWeightingFunction( "metadata", {
                     "name": "doclen"
         })
-        rt.addWeightingFormula( "_0 / log(_1 + 10)", {});
+        rt.addWeightingFormula( "0.5 * _0 + (_0 / (2 + _1)) * 0.5", {});
 
         # Summarizer for getting the document title:
         rt.addSummarizer( "attribute", { "name": "docid" })
@@ -191,7 +191,7 @@ class DymBackend:
                 if prev_first:
                     for term in words:
                         if (term.position() == prev_first.position()):
-                            query.defineFeature( "docfeat", ["sequence", 1, [term.type(), this_first.value()], [this_first.type(), term.value()]], 2.5)
+                            query.defineFeature( "docfeat", ["sequence", 1, [term.type(), term.value()], [this_first.type(), this_first.value()]], 2.5)
             selexpr.append( [term.type(), term.value()] )
             query.defineFeature( "docfeat", [term.type(), term.value()], 1.0)
 
