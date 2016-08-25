@@ -9,6 +9,6 @@
 	docid = orig content /list/item();
 
 [Aggregator]
-	doclen = count( ngram);
+	doclen = count( word);
 
 

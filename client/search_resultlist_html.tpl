@@ -9,7 +9,7 @@ function DidYouMeanQuery( text) {
 	$.getJSON( "http://127.0.0.1/querydym",
 	{
 		q: text,
-		n: 10
+		n: 20
 	},
 	function(jd) {
 		if (jd.error)
@@ -22,21 +22,45 @@ function DidYouMeanQuery( text) {
 			$.each( jd.result, function( i, obj) {
 				$('#DidYouMeanList').append('<div id="DidYouMeanElem" class="dymelem" tabindex="0"><a href="http://127.0.0.1/query?q=' + encodeURIComponent(obj) + '" tabindex="1">' + obj + '</a></div>');
 			});
+			if ( jd.result.length == 0 ) {
+				$('#DidYouMeanList').hide();
+			}
 		}
 	})
 	.fail(function(jqXHR, status, error){
 		 alert( "Error (status " + status + "): " + error );
 	})
 }
+
+var delayTimer;
 function submitDidYouMeanQuery() {
-	DidYouMeanQuery( $('#searchtext').val());
-	$('#DidYouMeanList').show();
+	clearTimeout(delayTimer);
+	delayTimer = setTimeout(function() {
+		DidYouMeanQuery( $('#searchtext').val());
+		$('#DidYouMeanList').show();
+	}, 700);
 }
 window.onclick = function(event) {
 	if (!event.target.matches('.dymelem')) {
 		$('#DidYouMeanList').hide();
 	}
 }
+$(document).keydown(function(e) {
+	// NOT FINISHED YET: Navigation with keyboard
+	var elements = $('#DidYouMean');
+	switch(event.which) {
+		case 37: // left
+		break;
+		case 38: // up
+		break;
+		case 39: // right
+		break;
+		case 40: // down
+		break;
+		default: return; // exit this handler for other keys
+	}
+	event.preventDefault(); // prevent the default action (scroll / move caret)
+});
 </script>
 {% end %}
 

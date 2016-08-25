@@ -48,7 +48,7 @@ class DymBackend:
         rt.addWeightingFunction( "metadata", {
                     "name": "doclen"
         })
-        rt.addWeightingFormula( "_0 / log(_1 + 2)", {});
+        rt.addWeightingFormula( "_0 / log(_1 + 10)", {});
 
         # Summarizer for getting the document title:
         rt.addSummarizer( "attribute", { "name": "docid" })
@@ -132,7 +132,6 @@ class DymBackend:
                 for oc in occupation:
                     if not elemidx in oc.list:
                         tmp_occupation.append( ItemOccupation( oc.list + [elemidx], oc.weight + 1.0/(dist+1) ))
-                        hasMatch = True
             occupation = tmp_occupation
             if not occupation:
                 return None
@@ -219,7 +218,6 @@ class DymBackend:
                     sumweight = 0.0
                     weight = rank.weight()
                     occupied = []
-                       
                     elems = sumelem.value().split()
                     occupation = DymBackend.getBestElemOccuppation( terms, elems)
                     if occupation is None:
