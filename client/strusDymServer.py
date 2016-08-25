@@ -151,7 +151,7 @@ class DymBackend:
                 else:
                     li += 1
             if orderdist < maxorderdist:
-                weight = (3 * oc.weight / 4) + (oc.weight / 4) / (orderdist+1)
+                weight = (0.75 * oc.weight) + (0.25 * oc.weight / (orderdist+3))
                 if not rt or rt.weight < weight:
                     rt = ItemOccupation( oc.list, weight)
         return rt
