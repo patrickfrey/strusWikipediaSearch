@@ -195,15 +195,20 @@ li:hover {
 #DidYouMeanList {
 	opacity:0.90;
 	display: none;
-	background: #cccccc;
+	background: #fafafa;
 	width: 412px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 .dymelem:hover, .dymelem:focus {
-	background-color: #aaa;
+	background-color: #cccccc;
+}
+.dymelem a {
+    color: black;
+    text-decoration: none;
+    display: block;
 }
 #DidYouMeanElem {
-	background: #cccccc;
+	background: #fafafa;
 	width: 412px;
 }
 

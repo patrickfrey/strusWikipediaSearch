@@ -100,7 +100,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_abstract = ""
         while (answerofs < answersize):
             if (answer[ answerofs] == '_'):
-                if (row_title != None):
+                if not row_title is None:
                     result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract))
                 row_docno = 0
                 row_weight = 0.0
@@ -131,7 +131,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 answerofs += abstractlen
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
-        if (row_title != None):
+        if not row_title is None:
             result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract))
         return result
 
@@ -234,7 +234,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         itrs = []
         maxnofresults = firstrank + nofranks
         for result in results:
-            if (result[0] == None):
+            if result[0] is None:
                 errors.append( result[1])
             else:
                 itrs.append( iter( result[0]))
@@ -297,7 +297,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 # Get the global statistics:
                 dflist,collectionsize,error = yield self.queryStats( terms)
-                if (error != None):
+                if (not error is None):
                     raise Exception( error)
                 # Assemble the query:
                 qry = bytearray()
@@ -361,7 +361,7 @@ class QueryHandler( tornado.web.RequestHandler ):
 # Answer a DYM (did you mean) query:
 class DymHandler( tornado.web.RequestHandler ):
     @tornado.gen.coroutine
-    def evaluateDymQuery( self, querystr, nofranks):
+    def evaluateDymQuery( self, oldquerystr, querystr, nofranks, nofresults, restrictdnlist):
         rt = ([],None)
         conn = None
         try:
@@ -371,6 +371,9 @@ class DymHandler( tornado.web.RequestHandler ):
             query += struct.pack( ">H%ds" % (querystrsize), querystrsize, querystr)
             query.append('N')
             query += struct.pack( ">H", nofranks)
+            for restrictdn in restrictdnlist:
+                query.append('D')
+                query += struct.pack( ">I", restrictdn)
 
             ri = dymserver.rindex(':')
             host,port = dymserver[:ri],int( dymserver[ri+1:])
@@ -408,14 +411,23 @@ class DymHandler( tornado.web.RequestHandler ):
     @tornado.gen.coroutine
     def get(self):
         try:
-            # q = query terms:
+            # q = query string:
             querystr = self.get_argument( "q", "").encode('utf-8')
+            oldquerystr = self.get_argument( "o", "").encode('utf-8')
             # n = nofranks:
             nofranks = int( self.get_argument( "n", 20))
+            # d = restrict to document:
+            restrictdnlist = []
+            restrictdn = int( self.get_argument( "d", 0))
+            if (restrictdn):
+                restrictdnlist.append( restrictdn)
             # Evaluate query:
-            (result,errormsg) = yield self.evaluateDymQuery( querystr, nofranks)
-            response = { 'error': None,
-                         'result': result
+            start_time = time.time()
+            (result,errormsg) = yield self.evaluateDymQuery( oldquerystr, querystr, nofranks, nofranks, restrictdnlist)
+            time_elapsed = time.time() - start_time
+            response = { 'error': errormsg,
+                         'result': result,
+                         'time': time_elapsed
             }
             self.write(response)
         except Exception as e:

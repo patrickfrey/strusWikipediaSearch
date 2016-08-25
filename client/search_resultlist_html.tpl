@@ -9,7 +9,7 @@ function DidYouMeanQuery( text) {
 	$.getJSON( "http://127.0.0.1/querydym",
 	{
 		q: text,
-		n: 100
+		n: 10
 	},
 	function(jd) {
 		if (jd.error)
@@ -57,7 +57,7 @@ window.onclick = function(event) {
  {% if scheme == "BM25" %}<option selected>BM25</option>{% else %}<option>BM25</option>{% end %}
  {% if scheme == "BM25pff" %}<option selected>BM25pff</option>{% else %}<option>BM25pff</option>{% end %}
 </select>
-<input id="searchtext" class="textinput" type="text" oninput="submitDidYouMeanQuery()" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off"/>
+<input id="searchtext" class="textinput" type="text" oninput="submitDidYouMeanQuery()" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 <input id="submit" type="submit" value="Search" />
 <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}
