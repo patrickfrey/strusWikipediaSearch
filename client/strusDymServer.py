@@ -159,7 +159,7 @@ class DymBackend:
 
     # Query for retrieval of 'did you mean' proposals:
     def evaluateQuery( self, querystr, nofranks, restrictdnlist):
-        # Remove common start terms in old query string
+        querystr = re.sub(r'([^a-zA-Z0-9])', " ", querystr)
         terms = querystr.split()
         if not terms:
             return []
@@ -219,7 +219,8 @@ class DymBackend:
                     sumweight = 0.0
                     weight = rank.weight()
                     occupied = []
-                    elems = sumelem.value().split()
+                    title = re.sub(r'([^a-zA-Z0-9])', " ", sumelem.value())
+                    elems = title.split()
                     occupation = DymBackend.getBestElemOccuppation( terms, elems)
                     if occupation is None:
                         continue
