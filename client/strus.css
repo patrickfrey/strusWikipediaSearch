@@ -1,192 +1,192 @@
 * {margin: 0; padding: 0;}
 
 h1 {
-    color:#888;
-    margin: 10px 10px;
-    font: bold 20px/1.5 'Open Sans', Arial, sans-serif;
+	color:#888;
+	margin: 10px 10px;
+	font: bold 20px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 h2 {
-    margin: 0px 5px;
-    font: bold 17px/1.5 'Open Sans', Arial, sans-serif;
+	margin: 0px 5px;
+	font: bold 17px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 #navigation  {
-    margin: 10px;
+	margin: 10px;
 }
 
 #logo {
-    margin: 10px;
-    height: 75px;
-    width: 75px;
+	margin: 10px;
+	height: 75px;
+	width: 75px;
 }
 
 #toolbar
 {
-    border-width: 0px;
-    border-style: solid;
-    border-color: #988;
+	border-width: 0px;
+	border-style: solid;
+	border-color: #988;
 }
 
 #searchbox
 {
-    background-color: #1111;
-    width: 508px;
-    height: 55px;
-    padding: 10px 10px;
+	background-color: #fafafa;
+	width: 508px;
+	height: 65px;
+	padding: 10px 10px;
 }
 
 #navbox
 {
-    padding: 25px 0px;
-    margin: 20px 105px;
+	padding: 25px 0px;
+	margin: 20px 105px;
 }
 
 #navprev,
 #navnext
 {
-    padding: 31px 3px;
+	padding: 31px 3px;
 }
 
 #logo,
 #toolbar
 {
-    float: left;
+	float: left;
 }
 
 #searchbox,
 #navprev,
 #navnext
 {
-    float: left;
+	float: left;
 }
 
 #searchtext, 
 #submit,
 {
-    float: left;
+	float: left;
 }
 
 #searchtext {
-    padding: 5px 9px;
-    height: 35px;
-    width: 392px;
-    border: 1px solid #988;
-    font: normal 13px 'Open Sans', Arial, sans-serif;
-    background: #11888;
+	padding: 5px 9px;
+	height: 35px;
+	width: 392px;
+	border: 1px solid #988;
+	font: normal 13px 'Open Sans', Arial, sans-serif;
+	background: #11888;
 }
 
 #submit,
 #back
 {
-    border-width: 1px;
-    border-style: solid;
-    border-color: #988;
-    height: 48px;
-    margin: 2px 0 0 0;
-    padding: 0;
-    width: 90px;
-    cursor: pointer;
-    font: bold 14px 'Open Sans', Arial, sans-serif;
-    color: #303030;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #988;
+	height: 48px;
+	margin: 2px 0 0 0;
+	padding: 0;
+	width: 90px;
+	cursor: pointer;
+	font: bold 14px 'Open Sans', Arial, sans-serif;
+	color: #303030;
 }
 
 #submit:active,
 #back:active{
-    background: #988;
-    outline: none;
+	background: #988;
+	outline: none;
 }
 
 #submit::-moz-focus-inner,
 #back::-moz-focus-inner {
-    border: 0;
+	border: 0;
 }
 
 #scheme
 {
-    width: 508px;
+	width: 508px;
 }
 
 #searchinfo
 {
-    clear: left;
-    margin: 0px 115px;
-    font: normal 13px 'Open Sans', Arial, sans-serif;
+	clear: left;
+	margin: 0px 115px;
+	font: normal 13px 'Open Sans', Arial, sans-serif;
 }
 
 #searcherror
 {
-    clear: left;
-    margin: 0px 105px;
-    font: italic 16px 'Open Sans', Arial, sans-serif;
+	clear: left;
+	margin: 0px 105px;
+	font: italic 16px 'Open Sans', Arial, sans-serif;
 }
 
 #searchresult {
-    margin: 20px 10px;
+	margin: 20px 10px;
 }
 
 ul {
-    list-style-type: none;
-    width: 80%;
+	list-style-type: none;
+	width: 80%;
 }
 
 h3 {
-    font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
+	font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_docno {
-    margin: 0px 5px;
-    width: 45px;
-    float: left;
-    color: #388;
-    font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
+	margin: 0px 5px;
+	width: 45px;
+	float: left;
+	color: #388;
+	font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_weight {
-    margin: 0px 5px;
-    width: 45px;
-    float: left;
-    color: #388;
-    font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
+	margin: 0px 5px;
+	width: 45px;
+	float: left;
+	color: #388;
+	font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_paratitle {
-    margin: 0px 5px;
-    float: left;
-    display: block;
-    white-space: pre-line;
-    color: #133;
-    font: italic 11px/1.5 'Open Sans', Arial, sans-serif;
+	margin: 0px 5px;
+	float: left;
+	display: block;
+	white-space: pre-line;
+	color: #133;
+	font: italic 11px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_abstract {
-    margin: 0px 5px;
-    float: left;
-    display: block;
-    white-space: pre-line;
-    color: #133;
-    font: normal 13px/1.5 'Open Sans', Arial, sans-serif;
+	margin: 0px 5px;
+	float: left;
+	display: block;
+	white-space: pre-line;
+	color: #133;
+	font: normal 13px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li #rank_linkid {
-    margin: 0px 5px;
-    float: left;
-    font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
+	margin: 0px 5px;
+	float: left;
+	font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 
 li b {
-    font: 12px/1.5 'Open Sans', Arial, sans-serif;
-    color: blue;
+	font: 12px/1.5 'Open Sans', Arial, sans-serif;
+	color: blue;
 }
 
 li {
-    padding: 5px;
-    overflow: auto;
+	padding: 5px;
+	overflow: auto;
 }
 
 li:hover {
-    background: #eee;
-    cursor: pointer;
+	background: #eee;
+	cursor: pointer;
 }
 
 #DidYouMean {
@@ -200,9 +200,9 @@ li:hover {
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 .dymelem a {
-    color: black;
-    text-decoration: none;
-    display: block;
+	color: black;
+	text-decoration: none;
+	display: block;
 }
 .dymelem a:hover, .dymelem a:focus {
 	background-color: #e0e0eb;

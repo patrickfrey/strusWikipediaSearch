@@ -145,21 +145,21 @@ class DymBackend:
                     oc.list[li-1],oc.list[li] = oc.list[li],oc.list[li-1]
                     orderdist += 1
                     if orderdist > maxorderdist:
-                        break
+                        return None
                     if li > 1:
                         li -= 1
                 else:
                     li += 1
-            orderdist += oc.list[0] + oc.list[-1] - len(oc.list) + 1
-            if orderdist < maxorderdist:
-                weight = (0.75 * oc.weight) + (0.25 * oc.weight / (orderdist+3))
-                if not rt or rt.weight < weight:
-                    rt = ItemOccupation( oc.list, weight)
+            if oc.list:
+                orderdist += oc.list[0] + oc.list[-1] - len(oc.list) + 1
+            weight = (0.75 * oc.weight) + (0.25 * oc.weight / (orderdist+3))
+            if not rt or rt.weight < weight:
+                rt = ItemOccupation( oc.list, weight)
         return rt
 
     # Query for retrieval of 'did you mean' proposals:
     def evaluateQuery( self, querystr, nofranks, restrictdnlist):
-        # Remove common start terms in old query string
+        querystr = re.sub(r'([^a-zA-Z0-9])', " ", querystr)
         terms = querystr.split()
         if not terms:
             return []
@@ -214,7 +214,8 @@ class DymBackend:
                     sumweight = 0.0
                     weight = rank.weight()
                     occupied = []
-                    elems = sumelem.value().split()
+                    title = re.sub(r'([^a-zA-Z0-9])', " ", sumelem.value())
+                    elems = title.split()
                     occupation = DymBackend.getBestElemOccuppation( terms, elems)
                     if occupation is None:
                         continue

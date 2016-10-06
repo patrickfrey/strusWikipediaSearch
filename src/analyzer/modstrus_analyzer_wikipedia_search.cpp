@@ -230,7 +230,7 @@ public:
 				}
 				if (m_filter( start, si))
 				{
-					rt.push_back( strus::analyzer::Token( start-src, start-src, si-start));
+					rt.push_back( strus::analyzer::Token( start-src/*ordpos*/, 0/*seg*/, start-src, si-start));
 				}
 			}
 			return rt;
