@@ -10,6 +10,10 @@
 import nltk
 from pprint import pprint
 import fileinput
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 def nnp_ouput( seq):
     halfsize = len(seq) / 2
