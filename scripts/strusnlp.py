@@ -10,10 +10,6 @@
 import nltk
 from pprint import pprint
 import fileinput
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 def nnp_ouput( seq):
     halfsize = len(seq) / 2
@@ -68,7 +64,7 @@ def concat_nounphrases( text):
         rt += nnp_ouput( seq) + " "
     return rt
 
-for line in fileinput.input():
+for line in open( sys.argv[1], encoding='utf-8'):
     print concat_nounphrases( line)
 
 
