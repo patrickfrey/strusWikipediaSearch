@@ -135,7 +135,7 @@ class DymBackend:
             occupation = tmp_occupation
             if not occupation:
                 return None
-        maxorderdist = 5
+        maxorderdist = 9 
         rt = None
         for oc in occupation:
             orderdist = 0
@@ -187,12 +187,7 @@ class DymBackend:
                     selexpr[2] = self.getCardinality( len(selexpr)-3)
                     selexprlist.append( selexpr)
                     selexpr = ["contains", 0, 0]
-                    query.defineFeature( "docfeat", ["sequence", 1, [prev_first.type(), prev_first.value()], [term.type(), term.value()]], 1.5)
                 position = term.position()
-                if prev_first:
-                    for term in words:
-                        if (term.position() == prev_first.position()):
-                            query.defineFeature( "docfeat", ["sequence", 1, [term.type(), term.value()], [this_first.type(), this_first.value()]], 2.5)
             selexpr.append( [term.type(), term.value()] )
             query.defineFeature( "docfeat", [term.type(), term.value()], 1.0)
 
