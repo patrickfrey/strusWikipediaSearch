@@ -10,6 +10,7 @@
 import nltk
 from pprint import pprint
 import fileinput
+import sys
 
 def nnp_ouput( seq):
     halfsize = len(seq) / 2
