@@ -16,6 +16,14 @@ def nnp_ouput( seq):
     if len(seq) == (halfsize * 2) and (seq[0:halfsize] == seq[halfsize:] or seq[0:halfsize] == seq[halfsize:][::-1]):
         return ' '.join( ['_'.join( seq[0:halfsize]), '_'.join( seq[halfsize:]) ])
     else:
+        if len(seq) > 4:
+            try:
+                halfsize = seq[ 1:].index( seq[0])+1
+                for ee in seq[0:halfsize]:
+                    dupidx = seq[ halfsize:].index( ee)
+                return ' '.join( ['_'.join( seq[0:halfsize]), '_'.join( seq[halfsize:]) ])
+            except:
+                pass
         return '_'.join( seq)
 
 def concat_nounphrases( text):
@@ -26,6 +34,7 @@ def concat_nounphrases( text):
     rt = ""
     curtk = None
     for tg in tagged:
+        print "%s %s" % (tg[1],tg[0])
         if tg[1] == "JJ" and tg[0] == "non":
             if seq:
                 rt += nnp_ouput( seq) + " "
