@@ -65,7 +65,7 @@ def concat_nounphrases( text):
     return rt
 
 for line in open( sys.argv[1], encoding='utf-8'):
-    print concat_nounphrases( line)
+    print concat_nounphrases( line.decode('utf-8'))
 
 
 
