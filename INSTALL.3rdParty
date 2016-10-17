@@ -1,0 +1,8 @@
+
+Ubuntu:
+This project uses NLTK and NLTK uses NumPy. Install it and its resources with
+	sudo pip install -U nltk
+	sudo pip install -U numpy
+	sudo mkdir /usr/share/nltk_data
+	sudo python -m nltk.downloader -d /usr/share/nltk_data all
+
