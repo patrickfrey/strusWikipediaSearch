@@ -13,19 +13,34 @@ import fileinput
 import sys
 import io
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+nnp_dict = {}
+
 def nnp_ouput( seq):
     halfsize = len(seq) / 2
     if len(seq) == (halfsize * 2) and (seq[0:halfsize] == seq[halfsize:] or seq[0:halfsize] == seq[halfsize:][::-1]):
-        return ' '.join( ['_'.join( seq[0:halfsize]), '_'.join( seq[halfsize:]) ])
+        elem1 = '_'.join( seq[0:halfsize])
+        elem2 = '_'.join( seq[halfsize:])
+        return ' '.join( [elem1, elem2])
     else:
         if len(seq) > 4:
             try:
                 halfsize = seq[ 1:].index( seq[0])+1
                 for ee in seq[0:halfsize]:
                     dupidx = seq[ halfsize:].index( ee)
-                return ' '.join( ['_'.join( seq[0:halfsize]), '_'.join( seq[halfsize:]) ])
+                elem1 = '_'.join( seq[0:halfsize])
+                elem2 = '_'.join( seq[halfsize:])
+                return ' '.join( [elem1, elem2])
             except:
                 pass
+        for halfsize in reversed( range( 2, len(seq)-1)):
+            if len(seq[halfsize]) < 4 and nnp_dict.get( '_'.join( seq[0:halfsize])) != None:
+                elem1 = '_'.join( seq[0:halfsize])
+                elem2 = '_'.join( seq[halfsize:])
+                return ' '.join( [elem1, elem2])
+        nnp_dict[ '_'.join( seq)] = 1
         return '_'.join( seq)
 
 def concat_nounphrases( text):
@@ -67,7 +82,7 @@ def concat_nounphrases( text):
     return rt
 
 for line in io.open( sys.argv[1], encoding='utf-8'):
-    print concat_nounphrases( line.decode('utf-8'))
+    print concat_nounphrases( line)
 
 
 
