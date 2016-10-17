@@ -12,6 +12,7 @@ from pprint import pprint
 import fileinput
 import sys
 import io
+import codecs
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -81,7 +82,7 @@ def concat_nounphrases( text):
         rt += nnp_ouput( seq) + " "
     return rt
 
-for line in io.open( sys.argv[1], encoding='utf-8'):
+for line in codecs.open( sys.argv[1], encoding='utf-8'):
     print concat_nounphrases( line)
 
 
