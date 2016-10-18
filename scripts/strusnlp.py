@@ -20,6 +20,8 @@ sys.setdefaultencoding('utf-8')
 nnp_dict = {}
 
 def nnp_split( seq):
+    if '_'.join(seq) in nnp_dict:
+        return None
     halfsize = len(seq) / 2
     if len(seq) == (halfsize * 2) and (seq[0:halfsize] == seq[halfsize:] or seq[0:halfsize] == seq[halfsize:][::-1]):
         return halfsize
@@ -43,7 +45,7 @@ def nnp_split( seq):
 
 
 def match_tag( tg, seektg):
-    if seektg[1] == tg[1] and (seektg[0] == None or seektg[0] == tg[0]):
+    if tg[1] in seektg[1:] and (seektg[0] == None or seektg[0] == tg[0]):
         return True
     return False
 
@@ -139,10 +141,7 @@ def get_tagged( text):
     tagged = nltk.pos_tag( tokens)
 
 #    print "SRC %s" % tagged
-    tagged = tag_first( tagged, ["is","VBZ"], ["a","DT"], ["RB"], "_")
-    tagged = tag_first( tagged, ["is","VBZ"], ["the","DT"], ["RB"], "_")
-    tagged = tag_first( tagged, ["was","VBD"], ["a","DT"], ["RB"], "_")
-    tagged = tag_first( tagged, ["was","VBD"], ["the","DT"], ["RB"], "_")
+    tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBN","VBP","VBZ"], [None,"DT","IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = concat_pairs( tagged, [None,"NN"], ["er","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["I","PRP"], "NN", "")
@@ -153,27 +152,25 @@ def get_tagged( text):
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NN", "_")
     return tagged
 
+def concat_word( tg):
+    if tg[1] == "NNP" or tg[1] == "NN":
+        seq = tg[0].split( '_')
+        halfsize = nnp_split( seq)
+        if halfsize == None:
+            return tg[0]
+        else:
+            return '_'.join( seq[ 0:halfsize]) + " " + '_'.join( seq[ halfsize:])
+    else:
+        return tg[0]
+
 def concat_phrases( text):
     tagged = get_tagged( text)
     if not tagged:
         return ""
 #    print "RES %s" % tagged
-    rt = "";
-    tg = tagged[0]
-    if tg[1] == "NNP" or tg[1] == "NN":
-        seq = tg[0].split( '_')
-        halfsize = nnp_split( seq)
-        if halfsize == None:
-            rt += " " + tg[0]
-        else:
-            rt += " " + '_'.join( seq[ 0:halfsize]) + " " + '_'.join( seq[ halfsize:])
+    rt = concat_word( tagged[0])
     for tg in tagged[1:]:
-        seq = tg[0].split( '_')
-        halfsize = nnp_split( seq)
-        if halfsize == None:
-            rt += " " + tg[0]
-        else:
-            rt += " " + '_'.join( seq[ 0:halfsize]) + " " + '_'.join( seq[ halfsize:])
+        rt += " " + concat_word( tg)
     return rt
 
 def fill_dict( text):
@@ -199,6 +196,19 @@ if cmd == "dict":
     for key,value in nnp_dict.iteritems():
         if value > mincnt:
             print "%s %u" % (key,value)
+
+elif cmd == "joindict":
+    infile = []
+    for dictfile in sys.argv[2:]:
+        for line in codecs.open( dictfile, "r", encoding='utf-8'):
+            tokstr,tokcnt = line.strip().split()
+            key = tokstr.decode('utf-8')
+            if key in nnp_dict:
+                nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+            else:
+                nnp_dict[ key] = int(tokcnt)
+    for key,value in nnp_dict.iteritems():
+        print "%s %u" % (key,value)
 
 elif cmd == "concat":
     infile = sys.argv[2]
