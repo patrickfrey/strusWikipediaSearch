@@ -188,11 +188,15 @@ cmd = sys.argv[1]
 
 if cmd == "dict":
     infile = sys.argv[2]
+    linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         fill_dict( line)
-        mincnt = 50
-        if len(sys.argv) > 3:
-            mincnt = int(sys.argv[3])
+        linecnt += 1
+        if linecnt % 10 == 0:
+            print >> sys.stderr, "processed %u lines" %linecnt
+    mincnt = 50
+    if len(sys.argv) > 3:
+        mincnt = int(sys.argv[3])
     for key,value in nnp_dict.iteritems():
         if value > mincnt:
             print "%s %u" % (key,value)
@@ -218,8 +222,12 @@ elif cmd == "concat":
             tokstr,tokcnt = line.strip().split()
             nnp_dict[ tokstr.decode('utf-8')] = int(tokcnt)
         print "read dictionary from file '%s'" % dictfile
+    linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print concat_phrases( line.encode('utf-8'))
+        linecnt += 1
+        if linecnt % 10 == 0:
+            print >> sys.stderr, "processed %u lines" %linecnt
 
 else:
     print "ERROR unknown command"
