@@ -192,7 +192,7 @@ if cmd == "dict":
     for line in codecs.open( infile, "r", encoding='utf-8'):
         fill_dict( line)
         linecnt += 1
-        if linecnt % 10 == 0:
+        if linecnt % 10000 == 0:
             print >> sys.stderr, "processed %u lines" %linecnt
     mincnt = 50
     if len(sys.argv) > 3:
@@ -226,7 +226,7 @@ elif cmd == "concat":
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print concat_phrases( line.encode('utf-8'))
         linecnt += 1
-        if linecnt % 10 == 0:
+        if linecnt % 10000 == 0:
             print >> sys.stderr, "processed %u lines" %linecnt
 
 else:
