@@ -2,19 +2,19 @@
 
 jobid=1
 rm docs.dump.$jobid.txt
-for dd in 00 03 06 09 12 15 18 21 24 ; do echo "-------- $dd"; scripts/nlp.sh data/wikipedia$dd.tar.gz $jobid; done
+for dd in 00 03 06 09 12 15 18 21 24 ; do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
 time scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
 time scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
 
 jobid=2
 rm docs.dump.$jobid.txt
-for dd in 01 04 07 10 13 16 19 22 25;  do echo "-------- $dd"; scripts/nlp.sh data/wikipedia$dd.tar.gz $jobid; done
+for dd in 01 04 07 10 13 16 19 22 25;  do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
 time scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
 time scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
 
 jobid=3
 rm docs.dump.$jobid.txt
-for dd in 02 05 08 11 14 17 20 23;     do echo "-------- $dd"; scripts/nlp.sh data/wikipedia$dd.tar.gz $jobid; done
+for dd in 02 05 08 11 14 17 20 23;     do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
 time scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
 time scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
 

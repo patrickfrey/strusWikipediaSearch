@@ -72,7 +72,7 @@ def concat_sequences( tagged, elem0, elem1, jointype, joinchr):
                     state = 0
                     bufelem = None
         else:
-            print( "illegal state in concat_seq")
+            print >> sys.stderr, "illegal state in concat_seq"
             raise
     if state == 1 and bufelem != None:
         rt.append( bufelem)
@@ -103,7 +103,7 @@ def concat_pairs( tagged, elem0, elem1, jointype, joinchr):
                     state = 0
                     bufelem = None
         else:
-            print( "illegal state in concat_seq")
+            print >> sys.stderr, "illegal state in concat_seq"
             raise
     if state == 1 and bufelem != None:
         rt.append( bufelem)
@@ -132,14 +132,14 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
                 state = 0
                 elemidx = None
         else:
-            print( "illegal state in tag_first")
+            print >> sys.stderr, "illegal state in tag_first"
             raise
     return rt
 
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-    print "NLP %s" % tagged
+#    print "NLP %s" % tagged
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
@@ -248,7 +248,7 @@ elif cmd == "concat":
         for line in codecs.open( dictfile, "r", encoding='utf-8'):
             tokstr,tokcnt = line.strip().split()
             nnp_dict[ tokstr.decode('utf-8')] = int(tokcnt)
-        print "read dictionary from file '%s'" % dictfile
+        print >> sys.stderr, "read dictionary from file '%s'" % dictfile
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print concat_phrases( line.encode('utf-8'))
@@ -257,7 +257,7 @@ elif cmd == "concat":
             print >> sys.stderr, "processed %u lines" %linecnt
 
 else:
-    print "ERROR unknown command"
+    print >> sys.stderr, "ERROR unknown command"
     raise
 
 
