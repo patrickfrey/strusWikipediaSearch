@@ -136,21 +136,31 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
             raise
     return rt
 
-def get_tagged( text):
+def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-
-#    print "SRC %s" % tagged
-    tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBN","VBP","VBZ"], [None,"DT","IN","TO"], ["RB","RBZ","RBS"], "_")
+    print "NLP %s" % tagged
+    tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
+    tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
+    tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
     tagged = concat_pairs( tagged, [None,"NN"], ["er","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["I","PRP"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["n","JJ"], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["s","NN"], "NNP", "")
     tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NN", "_")
     return tagged
+
+def get_tagged_tokens( text):
+    rt = []
+    tokens = text.strip().split()
+    for tk in tokens:
+        spidx = tk.find('#')
+        rt.append( [ tk[(spidx+1):], tk[0:spidx] ])
+    return rt
 
 def concat_word( tg):
     if tg[1] == "NNP" or tg[1] == "NN":
@@ -164,7 +174,7 @@ def concat_word( tg):
         return tg[0]
 
 def concat_phrases( text):
-    tagged = get_tagged( text)
+    tagged = get_tagged_tokens( text)
     if not tagged:
         return ""
 #    print "RES %s" % tagged
@@ -174,7 +184,7 @@ def concat_phrases( text):
     return rt
 
 def fill_dict( text):
-    tagged = get_tagged( text)
+    tagged = get_tagged_tokens( text)
     if tagged:
         for tg in tagged:
             if tg[1] == "NNP" or tg[1] == "NN":
@@ -185,11 +195,11 @@ def fill_dict( text):
                     nnp_dict[ key] = 1
 
 def tag_NLP( text):
-    tagged = get_tagged( text)
+    tagged = tag_tokens_NLP( text)
     rt = ""
     if tagged:
         for tg in tagged:
-            rt += tg[1] . "#" . tg[0] . " "
+            rt += tg[1] + "#" + tg[0] + " "
     return rt
 
 cmd = sys.argv[1]
@@ -206,7 +216,7 @@ if cmd == "dict":
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
     for key,value in nnp_dict.iteritems():
-        if value > mincnt:
+        if value >= mincnt:
             print "%s %u" % (key,value)
 
 elif cmd == "nlp":
