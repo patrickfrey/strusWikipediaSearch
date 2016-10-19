@@ -7,7 +7,7 @@ runNLP() {
 	for dd in $infiles ; do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
 	scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
 	rm docs.dump.$jobid.txt
-	scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
+	scripts/strusnlp.py dict docs.nlp.$jobid.txt 20 > dict.$jobid.txt
 }
 runNLP 1 "00 13"
 runNLP 2 "01 14"
