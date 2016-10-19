@@ -9,6 +9,7 @@ runNLP() {
 	rm docs.dump.$jobid.txt
 	scripts/strusnlp.py dict docs.nlp.$jobid.txt 20 > dict.$jobid.txt
 }
+
 runNLP 1 "00 13"
 runNLP 4 "03 16"
 runNLP 7 "06 19"
