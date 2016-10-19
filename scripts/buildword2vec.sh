@@ -1,25 +1,30 @@
 #!/bin/sh
 
-jobid=1
-rm docs.dump.$jobid.txt
-for dd in 00 03 06 09 12 15 18 21 24 ; do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
-time scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
-time scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
+runNLP() {
+	jobid=$1
+	infiles=$2
+	rm docs.dump.$jobid.txt
+	for dd in $infiles ; do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
+	scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
+	rm docs.dump.$jobid.txt
+	scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
+}
+runNLP 1 "00 13"
+runNLP 2 "01 14"
+runNLP 3 "02 15"
+runNLP 4 "03 16"
+runNLP 5 "04 17"
+runNLP 6 "05 18"
+runNLP 7 "06 19"
+runNLP 8 "07 20"
+runNLP 9 "08 21"
+runNLP 10 "09 22"
+runNLP 11 "10 23"
+runNLP 12 "11 24"
+runNLP 13 "12 25 26"
 
-jobid=2
-rm docs.dump.$jobid.txt
-for dd in 01 04 07 10 13 16 19 22 25;  do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
-time scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
-time scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
-
-jobid=3
-rm docs.dump.$jobid.txt
-for dd in 02 05 08 11 14 17 20 23;     do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
-time scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
-time scripts/strusnlp.py dict docs.nlp.$jobid.txt 30 > dict.$jobid.txt
-
-scripts/strusnlp.py joindict dict.{1,2,3}.txt > dict.txt
-rm dict.{1,2,3}.txt
+scripts/strusnlp.py joindict dict.{1,2,3,4,5,6,7,8,9,10,11,12,13}.txt > dict.txt
+rm dict.{1,2,3,4,5,6,7,8,9,10,11,12,13}.txt
 
 for dd in 1 2 3
 do
