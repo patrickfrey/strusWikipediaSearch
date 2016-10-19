@@ -184,6 +184,14 @@ def fill_dict( text):
                 else:
                     nnp_dict[ key] = 1
 
+def tag_NLP( text):
+    tagged = get_tagged( text)
+    rt = ""
+    if tagged:
+        for tg in tagged:
+            rt += tg[1] . "#" . tg[0] . " "
+    return rt
+
 cmd = sys.argv[1]
 
 if cmd == "dict":
@@ -200,6 +208,15 @@ if cmd == "dict":
     for key,value in nnp_dict.iteritems():
         if value > mincnt:
             print "%s %u" % (key,value)
+
+elif cmd == "nlp":
+    infile = sys.argv[2]
+    linecnt = 0
+    for line in codecs.open( infile, "r", encoding='utf-8'):
+        print "%s" % tag_NLP( line)
+        linecnt += 1
+        if linecnt % 10000 == 0:
+            print >> sys.stderr, "processed %u lines" %linecnt
 
 elif cmd == "joindict":
     infile = []
