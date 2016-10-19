@@ -87,7 +87,17 @@ WeightingFunctionContextBM25_dpfc::WeightingFunctionContextBM25_dpfc(
 	,m_sentence_ff_incr(sentence_ff_incr_)
 	,m_relevant_df_factor(relevant_df_factor_)
 	,m_errorhnd(errorhnd_)
-{}
+{
+	if (m_metadata_content_doclen < 0)
+	{
+		throw strus::runtime_error( _TXT("no meta data element for the document lenght defined"));
+	}
+	if (m_metadata_title_doclen < 0 && !attribute_title_doclen_.empty())
+	{
+		throw strus::runtime_error( _TXT("unknown meta data element '%s' for the title lenght defined"), attribute_title_doclen_.c_str());
+	}
+	
+}
 
 void WeightingFunctionContextBM25_dpfc::addWeightingFeature(
 		const std::string& name_,
