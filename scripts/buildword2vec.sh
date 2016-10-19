@@ -10,16 +10,18 @@ runNLP() {
 	scripts/strusnlp.py dict docs.nlp.$jobid.txt 20 > dict.$jobid.txt
 }
 runNLP 1 "00 13"
-runNLP 2 "01 14"
-runNLP 3 "02 15"
 runNLP 4 "03 16"
-runNLP 5 "04 17"
-runNLP 6 "05 18"
 runNLP 7 "06 19"
-runNLP 8 "07 20"
-runNLP 9 "08 21"
 runNLP 10 "09 22"
+
+runNLP 2 "01 14"
+runNLP 5 "04 17"
+runNLP 8 "07 20"
 runNLP 11 "10 23"
+
+runNLP 3 "02 15"
+runNLP 6 "05 18"
+runNLP 9 "08 21"
 runNLP 12 "11 24"
 runNLP 13 "12 25 26"
 
