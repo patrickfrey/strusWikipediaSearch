@@ -3,28 +3,19 @@
 runNLP() {
 	jobid=$1
 	infiles=$2
-	rm docs.dump.$jobid.txt
-	for dd in $infiles ; do echo "-------- $dd"; scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid; done
-	scripts/strusnlp.py nlp docs.dump.$jobid.txt > docs.nlp.$jobid.txt
-	rm docs.dump.$jobid.txt
-	scripts/strusnlp.py dict docs.nlp.$jobid.txt 3 > dict.$jobid.txt
+	rm nlpdata/docs.dump.$jobid.txt
+	for dd in $infiles ; do echo "-------- $dd"; github/strusWikipediaSearch/scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid 'nlpdata/tmp'; done
+	github/strusWikipediaSearch/scripts/strusnlp.py nlp nlpdata/docs.dump.$jobid.txt > nlpdata/docs.nlp.$jobid.txt
+	rm nlpdata/docs.dump.$jobid.txt
+	github/strusWikipediaSearch/scripts/strusnlp.py dict nlpdata/docs.nlp.$jobid.txt 3 > dict.$jobid.txt
 }
 
-runNLP 1 "00 13"
-runNLP 4 "03 16"
-runNLP 7 "06 19"
-runNLP 10 "09 22"
-
-runNLP 2 "01 14"
-runNLP 5 "04 17"
-runNLP 8 "07 20"
-runNLP 11 "10 23"
-
-runNLP 3 "02 15"
-runNLP 6 "05 18"
-runNLP 9 "08 21"
-runNLP 12 "11 24"
-runNLP 13 "12 25 26"
+runNLP 1 "00 13 03 16" &
+runNLP 2 "06 19 09 22" &
+runNLP 3 "01 14 04 17" &
+runNLP 4 "07 20 10 23 25" &
+runNLP 5 "02 15 05 18 12" &
+runNLP 6 "08 21 11 24 26" &
 
 scripts/strusnlp.py joindict dict.{1,2,3,4,5,6,7,8,9,10,11,12,13}.txt > dict.txt
 rm dict.{1,2,3,4,5,6,7,8,9,10,11,12,13}.txt
