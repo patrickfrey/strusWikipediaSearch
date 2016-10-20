@@ -13,6 +13,7 @@ import fileinput
 import sys
 import io
 import codecs
+import math
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -20,28 +21,29 @@ sys.setdefaultencoding('utf-8')
 nnp_dict = {}
 
 def nnp_split( seq):
-    if '_'.join(seq) in nnp_dict:
-        return None
-    halfsize = len(seq) / 2
-    if len(seq) == (halfsize * 2) and (seq[0:halfsize] == seq[halfsize:] or seq[0:halfsize] == seq[halfsize:][::-1]):
-        return halfsize
-    else:
-        if len(seq) > 4:
-            try:
-                halfsize = seq[ 1:].index( seq[0])+1
-                for ee in seq[0:halfsize]:
-                    dupidx = seq[ halfsize:].index( ee)
-                return halfsize
-            except:
-                pass
-        for halfsize in reversed( range( 1, len(seq)-1)):
-            first  = '_'.join( seq[0:halfsize])
-            second = '_'.join( seq[halfsize:])
-            if first.decode('utf-8') in nnp_dict:
-                return halfsize
-            if second.decode('utf-8') in nnp_dict:
-                return halfsize
-        return None
+    seqw = '_'.join(seq)
+    candidates = []
+    if seqw in nnp_dict:
+        candidates.append( None, nnp_dict[ seqw] * 1.7 )
+    halfsize = find( seqw, '_')
+    while halfsize != -1:
+        half1 = seqw[ 0:halfsize]
+        w1 = 0.0
+        half2 = seqw[ (halfsize+1):]
+        w2 = 0.0
+        if half1 in nnp_dict:
+            w1 = nnp_dict[ half1]
+        if half2 in nnp_dict:
+            w2 = nnp_dict[ half2]
+        candidates.append( [halfsize, w1 + w2] )
+        halfsize = find( seqw, '_', halfsize+1)
+    best_halfsize = None
+    best_weight = 0.0
+    for cd in candidates:
+        if cd[1] > best_weight:
+            best_halfsize = cd[0]
+            best_weight = cd[1]
+    return best_halfsize
 
 
 def match_tag( tg, seektg):
