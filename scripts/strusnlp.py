@@ -22,19 +22,24 @@ nnp_dict = {}
 
 def nnp_split( seq):
     seqw = '_'.join(seq)
+    seqlen = len(seq)
     candidates = []
     if seqw in nnp_dict:
-        candidates.append( None, nnp_dict[ seqw] * 1.7 )
+        candidates.append( None, nnp_dict[ seqw] * 1.7 * seqlen )
     halfsize = find( seqw, '_')
+    len1 = 0
+    len2 = seqlen
     while halfsize != -1:
         half1 = seqw[ 0:halfsize]
         w1 = 0.0
+        len1 += 1
         half2 = seqw[ (halfsize+1):]
         w2 = 0.0
+        len2 -= 1
         if half1 in nnp_dict:
-            w1 = nnp_dict[ half1]
+            w1 = nnp_dict[ half1] * len1
         if half2 in nnp_dict:
-            w2 = nnp_dict[ half2]
+            w2 = nnp_dict[ half2] * len2
         candidates.append( [halfsize, w1 + w2] )
         halfsize = find( seqw, '_', halfsize+1)
     best_halfsize = None
