@@ -25,7 +25,7 @@ def nnp_split( seq):
     seqlen = len(seq)
     candidates = []
     if seqw in nnp_dict:
-        candidates.append( None, nnp_dict[ seqw] * 1.7 * seqlen )
+        candidates.append( None, min( nnp_dict[ seqw], 100) * 1.7 * seqlen )
     halfsize = find( seqw, '_')
     len1 = 0
     len2 = seqlen
@@ -37,9 +37,9 @@ def nnp_split( seq):
         w2 = 0.0
         len2 -= 1
         if half1 in nnp_dict:
-            w1 = nnp_dict[ half1] * len1
+            w1 = min( nnp_dict[ half1], 100) * len1
         if half2 in nnp_dict:
-            w2 = nnp_dict[ half2] * len2
+            w2 = min( nnp_dict[ half2], 100) * len2
         candidates.append( [halfsize, w1 + w2] )
         halfsize = find( seqw, '_', halfsize+1)
     best_halfsize = None
