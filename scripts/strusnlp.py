@@ -24,7 +24,7 @@ nnp_right_dict = {}
 
 def fill_nnp_split_dict():
     for key in nnp_dict:
-        halfsize = find( key, '_')
+        halfsize = key.find('_')
         while halfsize != -1:
             leftkey = key[0:halfsize]
             if leftkey in nnp_left_dict:
@@ -36,19 +36,19 @@ def fill_nnp_split_dict():
                 nnp_right_dict[ rightkey] += 1
             else:
                 nnp_right_dict[ rightkey] = 1
-            halfsize = find( key, '_', halfsize+1)
+            halfsize = key.find('_',halfsize+1)
 
 
 def nnp_split( seqword):
     seqlen = 1
-    halfsize = find( seqword, '_')
+    halfsize = seqword.find('_')
     while halfsize != -1:
        seqlen += 1
-       halfsize = find( seqword[(halfsize+1):], '_')
+       halfsize = seqword.find('_',halfsize+1)
     candidates = []
     if seqword in nnp_dict:
         candidates.append( None, math.log( nnp_dict[ half1], 10) )
-    halfsize = find( seqword, '_')
+    halfsize = seqword.find('_')
     len1 = 0
     len2 = seqlen
     while halfsize != -1:
@@ -69,7 +69,7 @@ def nnp_split( seqword):
             else:
                 w2 = float(nnp_dict[ half2])
         candidates.append( [halfsize, w1 + w2] )
-        halfsize = find( seqword, '_', halfsize+1)
+        halfsize = seqword.find('_',halfsize+1)
     best_halfsize = None
     best_weight = 0.0
     for cd in candidates:
@@ -244,7 +244,7 @@ cmd = None
 if len( sys.argv) > 1:
     cmd = sys.argv[1]
 
-if cmd == None or cmd == '-h' or cmd == '--help':
+def print_usage():
     print "usage strusnlp.py <command> ..."
     print "<command>:"
     print "    dict <infile> [<mincnt>]:"
@@ -263,6 +263,9 @@ if cmd == None or cmd == '-h' or cmd == '--help':
     print "        default for <mincnt> is 50"
     print "    concat <infile> [<dictfile>]:"
     print "        produces phrases from NLP output and with help of a dictionary"
+    
+if cmd == None or cmd == '-h' or cmd == '--help':
+    print_usage()
 
 elif cmd == "dict":
     infile = sys.argv[2]
@@ -353,7 +356,8 @@ elif cmd == "concat":
             print >> sys.stderr, "processed %u lines" %linecnt
 
 else:
-    print >> sys.stderr, "ERROR unknown command"
+    print >> sys.stderr, "unknown command"
+    print_usage()
     raise
 
 
