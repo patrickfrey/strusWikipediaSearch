@@ -242,7 +242,27 @@ def tag_NLP( text):
 
 cmd = sys.argv[1]
 
-if cmd == "dict":
+if cmd == None or cmd == '-h' or cmd == '--help':
+    print "usage strusnlp.py <command> ..."
+    print "<command>:"
+    print "    dict <infile> [<mincnt>]:"
+    print "        print the content of the dictionary passed as argument"
+    print "        do not print elements with a lower count than <mincnt>"
+    print "        default for <mincnt> is 50"
+    print "    npl <infile>:"
+    print "        do NLP with the Python NLTK library on <infile>"
+    print "    joindict { <dictfile> }:"
+    print "        join several dictionaries passed as arguments"
+    print "    splitdict <dictfile>:"
+    print "        try to split entries in the dictionary"
+    print "        use the term occurrence statistics to make decisions"
+    print "    seldict <dictfile> [<mincnt>]:"
+    print "        select entries in a dictionary <dictfile> with a lower count than <mincnt>"
+    print "        default for <mincnt> is 50"
+    print "    concat <infile> [<dictfile>]:"
+    print "        produces phrases from NLP output and with help of a dictionary"
+
+elif cmd == "dict":
     infile = sys.argv[2]
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
