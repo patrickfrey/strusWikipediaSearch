@@ -23,19 +23,19 @@ nnp_left_dict = {}
 nnp_right_dict = {}
 
 def fill_nnp_split_dict():
-    for key in nnp_dict:
+    for key,value in nnp_dict.iteritems():
         halfsize = key.find('_')
         while halfsize != -1:
             leftkey = key[0:halfsize]
             if leftkey in nnp_left_dict:
-                nnp_left_dict[ leftkey] += 1
+                nnp_left_dict[ leftkey] += value
             else:
-                nnp_left_dict[ leftkey] = 1
+                nnp_left_dict[ leftkey] = value
             rightkey = key[(halfsize+1):]
             if rightkey in nnp_right_dict:
-                nnp_right_dict[ rightkey] += 1
+                nnp_right_dict[ rightkey] += value
             else:
-                nnp_right_dict[ rightkey] = 1
+                nnp_right_dict[ rightkey] = value
             halfsize = key.find('_',halfsize+1)
 
 
@@ -182,7 +182,6 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-#    print "NLP %s" % tagged
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
@@ -215,7 +214,6 @@ def concat_phrases( text):
     tagged = get_tagged_tokens( text)
     if not tagged:
         return ""
-#    print "RES %s" % tagged
     rt = concat_word( tagged[0])
     for tg in tagged[1:]:
         rt += " " + concat_word( tg)
