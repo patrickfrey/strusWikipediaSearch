@@ -40,6 +40,7 @@ def fill_nnp_split_dict():
 
 
 def nnp_split( seqword):
+#    print "SPLIT '%s'" % seqword
     seqlen = 1
     halfsize = seqword.find('_')
     while halfsize != -1:
@@ -47,7 +48,7 @@ def nnp_split( seqword):
        halfsize = seqword.find('_',halfsize+1)
     candidates = []
     if seqword in nnp_dict:
-        candidates.append( [ None, math.log( nnp_dict[ seqword], 10) ] )
+        candidates.append( [ None, math.log( nnp_dict[ seqword]) ] )
     halfsize = seqword.find('_')
     len1 = 0
     len2 = seqlen
@@ -60,14 +61,20 @@ def nnp_split( seqword):
         len2 -= 1
         if half1 in nnp_dict:
             if half1 in nnp_left_dict:
-                w1 = float(nnp_dict[ half1]) / (1.0 + float(nnp_left_dict[ half1]))
+#                print "    LEFT OCCUR '%s' %f %f" % (half1, float(nnp_dict[ half1]), float(nnp_left_dict[ half1]))
+                w1 = math.log(nnp_dict[ half1]) / (1.0 + math.log(nnp_left_dict[ half1]))
             else:
-                w1 = float(nnp_dict[ half1])
+#                print "    LEFT OCCUR '%s' %f" % (half1, float(nnp_dict[ half1]))
+                w1 = math.log(nnp_dict[ half1])
+#        print "    WEIGHT '%s' %f" % (half1, w1)
         if half2 in nnp_dict:
             if half2 in nnp_right_dict:
-                w2 = float(nnp_dict[ half2]) / (1.0 + float(nnp_right_dict[ half2]))
+#                print "    RIGHT OCCUR '%s' %f %f" % (half2, float(nnp_dict[ half2]), float(nnp_right_dict[ half2]))
+                w2 = math.log( nnp_dict[ half2]) / (1.0 + math.log(nnp_right_dict[ half2]))
             else:
-                w2 = float(nnp_dict[ half2])
+#                print "    RIGHT OCCUR '%s' %f" % (half2, float(nnp_dict[ half2]))
+                w2 = math.log(nnp_dict[ half2])
+#        print "    WEIGHT '%s' %f" % (half2, w2)
         candidates.append( [halfsize, w1 + w2] )
         halfsize = seqword.find('_',halfsize+1)
     best_halfsize = None
@@ -76,6 +83,14 @@ def nnp_split( seqword):
         if cd[1] > best_weight:
             best_halfsize = cd[0]
             best_weight = cd[1]
+#        if cd[0] == None:
+#            print "    CANDIDATE '%s' %f" % (seqword, cd[1])
+#        else:
+#            print "    CANDIDATE '%s' '%s' %f" % (seqword[ 0:(cd[0])], seqword[ (cd[0]+1):], cd[1])
+#    if best_halfsize == None:
+#        print "    BEST None"
+#    else:
+#        print "    BEST %u" % best_halfsize
     return best_halfsize
 
 def nnp_split_words( seqword):
@@ -182,6 +197,7 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
+#    print "NLP %s" % tagged
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
@@ -214,6 +230,7 @@ def concat_phrases( text):
     tagged = get_tagged_tokens( text)
     if not tagged:
         return ""
+#    print "RES %s" % tagged
     rt = concat_word( tagged[0])
     for tg in tagged[1:]:
         rt += " " + concat_word( tg)
