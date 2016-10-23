@@ -271,10 +271,11 @@ elif cmd == "dict":
     infile = sys.argv[2]
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
-        fill_dict( line)
-        linecnt += 1
-        if linecnt % 10000 == 0:
-            print >> sys.stderr, "processed %u lines" %linecnt
+        if line.strip():
+            fill_dict( line)
+            linecnt += 1
+            if linecnt % 10000 == 0:
+                print >> sys.stderr, "processed %u lines" %linecnt
     mincnt = 50
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
@@ -286,33 +287,36 @@ elif cmd == "nlp":
     infile = sys.argv[2]
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
-        print "%s" % tag_NLP( line)
-        linecnt += 1
-        if linecnt % 10000 == 0:
-            print >> sys.stderr, "processed %u lines" %linecnt
+        if line.strip():
+            print "%s" % tag_NLP( line)
+            linecnt += 1
+            if linecnt % 10000 == 0:
+                print >> sys.stderr, "processed %u lines" %linecnt
 
 elif cmd == "joindict":
     infile = []
     for dictfile in sys.argv[2:]:
         for line in codecs.open( dictfile, "r", encoding='utf-8'):
-            tokstr,tokcnt = line.strip().split()
-            key = tokstr.decode('utf-8')
-            if key in nnp_dict:
-                nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
-            else:
-                nnp_dict[ key] = int(tokcnt)
+            if line.strip():
+                tokstr,tokcnt = line.strip().split()
+                key = tokstr.decode('utf-8')
+                if key in nnp_dict:
+                    nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+                else:
+                    nnp_dict[ key] = int(tokcnt)
     for key,value in nnp_dict.iteritems():
         print "%s %u" % (key,value)
 
 elif cmd == "splitdict":
     dictfile = sys.argv[2]
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
-        tokstr,tokcnt = line.strip().split()
-        key = tokstr.decode('utf-8')
-        if key in nnp_dict:
-            nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
-        else:
-            nnp_dict[ key] = int(tokcnt)
+        if line.strip():
+            tokstr,tokcnt = line.strip().split()
+            key = tokstr.decode('utf-8')
+            if key in nnp_dict:
+                nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+            else:
+                nnp_dict[ key] = int(tokcnt)
     fill_nnp_split_dict()
     new_dict = {}
     for key,value in nnp_dict.iteritems():
@@ -327,12 +331,13 @@ elif cmd == "splitdict":
 elif cmd == "seldict":
     dictfile = sys.argv[2]
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
-        tokstr,tokcnt = line.strip().split()
-        key = tokstr.decode('utf-8')
-        if key in nnp_dict:
-            nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
-        else:
-            nnp_dict[ key] = int(tokcnt)
+        if line.strip():
+            tokstr,tokcnt = line.strip().split()
+            key = tokstr.decode('utf-8')
+            if key in nnp_dict:
+                nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+            else:
+                nnp_dict[ key] = int(tokcnt)
     mincnt = 50
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
@@ -345,8 +350,9 @@ elif cmd == "concat":
     if len(sys.argv) > 3:
         dictfile = sys.argv[3]
         for line in codecs.open( dictfile, "r", encoding='utf-8'):
-            tokstr,tokcnt = line.strip().split()
-            nnp_dict[ tokstr.decode('utf-8')] = int(tokcnt)
+            if line.strip():
+                tokstr,tokcnt = line.strip().split()
+                nnp_dict[ tokstr.decode('utf-8')] = int(tokcnt)
         fill_nnp_split_dict()
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
