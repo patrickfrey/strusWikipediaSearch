@@ -61,12 +61,12 @@ def nnp_split( seqword):
         if half1 in nnp_dict:
             if half1 in nnp_left_dict:
                 w1 = float(nnp_dict[ half1]) / (1.0 + float(nnp_left_dict[ half1]))
-            else
+            else:
                 w1 = float(nnp_dict[ half1])
         if half2 in nnp_dict:
             if half2 in nnp_right_dict:
                 w2 = float(nnp_dict[ half2]) / (1.0 + float(nnp_right_dict[ half2]))
-            else
+            else:
                 w2 = float(nnp_dict[ half2])
         candidates.append( [halfsize, w1 + w2] )
         halfsize = find( seqword, '_', halfsize+1)
@@ -240,7 +240,9 @@ def tag_NLP( text):
             rt += tg[1] + "#" + tg[0] + " "
     return rt
 
-cmd = sys.argv[1]
+cmd = None
+if len( sys.argv) > 1:
+    cmd = sys.argv[1]
 
 if cmd == None or cmd == '-h' or cmd == '--help':
     print "usage strusnlp.py <command> ..."
