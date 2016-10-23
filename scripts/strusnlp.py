@@ -19,29 +19,57 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 nnp_dict = {}
+nnp_left_dict = {}
+nnp_right_dict = {}
 
-def nnp_split( seq):
-    seqw = '_'.join(seq)
-    seqlen = len(seq)
+def fill_nnp_split_dict():
+    for key in nnp_dict:
+        halfsize = find( key, '_')
+        while halfsize != -1:
+            leftkey = key[0:halfsize]
+            if leftkey in nnp_left_dict:
+                nnp_left_dict[ leftkey] += 1
+            else:
+                nnp_left_dict[ leftkey] = 1
+            rightkey = key[(halfsize+1):]
+            if rightkey in nnp_right_dict:
+                nnp_right_dict[ rightkey] += 1
+            else:
+                nnp_right_dict[ rightkey] = 1
+            halfsize = find( key, '_', halfsize+1)
+
+
+def nnp_split( seqword):
+    seqlen = 1
+    halfsize = find( seqword, '_')
+    while halfsize != -1:
+       seqlen += 1
+       halfsize = find( seqword[(halfsize+1):], '_')
     candidates = []
-    if seqw in nnp_dict:
-        candidates.append( None, min( nnp_dict[ seqw], 100) * 1.7 * seqlen )
-    halfsize = find( seqw, '_')
+    if seqword in nnp_dict:
+        candidates.append( None, math.log( nnp_dict[ half1], 10) )
+    halfsize = find( seqword, '_')
     len1 = 0
     len2 = seqlen
     while halfsize != -1:
-        half1 = seqw[ 0:halfsize]
+        half1 = seqword[ 0:halfsize]
         w1 = 0.0
         len1 += 1
-        half2 = seqw[ (halfsize+1):]
+        half2 = seqword[ (halfsize+1):]
         w2 = 0.0
         len2 -= 1
         if half1 in nnp_dict:
-            w1 = min( nnp_dict[ half1], 100) * len1
+            if half1 in nnp_left_dict:
+                w1 = float(nnp_dict[ half1]) / (1.0 + float(nnp_left_dict[ half1]))
+            else
+                w1 = float(nnp_dict[ half1])
         if half2 in nnp_dict:
-            w2 = min( nnp_dict[ half2], 100) * len2
+            if half2 in nnp_right_dict:
+                w2 = float(nnp_dict[ half2]) / (1.0 + float(nnp_right_dict[ half2]))
+            else
+                w2 = float(nnp_dict[ half2])
         candidates.append( [halfsize, w1 + w2] )
-        halfsize = find( seqw, '_', halfsize+1)
+        halfsize = find( seqword, '_', halfsize+1)
     best_halfsize = None
     best_weight = 0.0
     for cd in candidates:
@@ -50,6 +78,14 @@ def nnp_split( seq):
             best_weight = cd[1]
     return best_halfsize
 
+def nnp_split_words( seqword, seqlen):
+    rt = []
+    halfsize = nnp_split( seqword)
+    if halfsize == None:
+        return [ seqword ]
+    half1 = '_'.join( seqword[ 0:halfsize])
+    half2 = '_'.join( seqword[ (halfsize+1):])
+    return nnp_split_words( half1) + nnp_split_words( half2)
 
 def match_tag( tg, seektg):
     if tg[1] in seektg[1:] and (seektg[0] == None or seektg[0] == tg[0]):
@@ -171,12 +207,7 @@ def get_tagged_tokens( text):
 
 def concat_word( tg):
     if tg[1] == "NNP" or tg[1] == "NN":
-        seq = tg[0].split( '_')
-        halfsize = nnp_split( seq)
-        if halfsize == None:
-            return tg[0]
-        else:
-            return '_'.join( seq[ 0:halfsize]) + " " + '_'.join( seq[ halfsize:])
+        return ' '.join( nnp_split_words( tg[0]))
     else:
         return tg[0]
 
@@ -248,6 +279,42 @@ elif cmd == "joindict":
     for key,value in nnp_dict.iteritems():
         print "%s %u" % (key,value)
 
+elif cmd == "splitdict":
+    dictfile = sys.argv[2]
+    for line in codecs.open( dictfile, "r", encoding='utf-8'):
+        tokstr,tokcnt = line.strip().split()
+        key = tokstr.decode('utf-8')
+        if key in nnp_dict:
+            nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+        else:
+            nnp_dict[ key] = int(tokcnt)
+    fill_nnp_split_dict()
+    new_dict = {}
+    for key,value in nnp_dict.iteritems():
+        for word in nnp_split_words( value):
+            if word in new_dict:
+                new_dict[ word] += value
+            else:
+                new_dict[ word] = value
+    for key,value in new_dict.iteritems():
+        print "%s %u" % (key,value)
+
+elif cmd == "seldict":
+    dictfile = sys.argv[2]
+    for line in codecs.open( dictfile, "r", encoding='utf-8'):
+        tokstr,tokcnt = line.strip().split()
+        key = tokstr.decode('utf-8')
+        if key in nnp_dict:
+            nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+        else:
+            nnp_dict[ key] = int(tokcnt)
+    mincnt = 50
+    if len(sys.argv) > 3:
+        mincnt = int(sys.argv[3])
+    for key,value in nnp_dict.iteritems():
+        if value >= mincnt:
+            print "%s %u" % (key,value)
+
 elif cmd == "concat":
     infile = sys.argv[2]
     if len(sys.argv) > 3:
@@ -255,7 +322,7 @@ elif cmd == "concat":
         for line in codecs.open( dictfile, "r", encoding='utf-8'):
             tokstr,tokcnt = line.strip().split()
             nnp_dict[ tokstr.decode('utf-8')] = int(tokcnt)
-        print >> sys.stderr, "read dictionary from file '%s'" % dictfile
+        fill_nnp_split_dict()
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print concat_phrases( line.encode('utf-8'))
