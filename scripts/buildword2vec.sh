@@ -1,6 +1,7 @@
 #!/bin/sh
 
 outprefix=nlpdata/
+scriptdir=scripts
 
 runNLP() {
 	jobid=$1
@@ -10,10 +11,10 @@ runNLP() {
 	dic_outputfile="$outprefix""dict.$jobid.txt"
 	rm $dmp_outputfile
 	rm $nlp_outputfile
-	for dd in $infiles ; do echo "-------- $dd"; github/strusWikipediaSearch/scripts/nlpdump.sh data/wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile; done
-	github/strusWikipediaSearch/scripts/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
+	for dd in $infiles ; do echo "-------- $dd"; $scriptdir/nlpdump.sh data/wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile; done
+	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	rm $dmp_outputfile
-	github/strusWikipediaSearch/scripts/strusnlp.py dict $nlp_outputfile 3 > $dic_outputfile
+	$scriptdir/strusnlp.py dict $nlp_outputfile 3 > $dic_outputfile
 }
 
 runNLP 1 "00 13 08" &
