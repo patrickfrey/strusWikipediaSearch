@@ -47,7 +47,7 @@ def nnp_split( seqword):
        halfsize = seqword.find('_',halfsize+1)
     candidates = []
     if seqword in nnp_dict:
-        candidates.append( None, math.log( nnp_dict[ half1], 10) )
+        candidates.append( [ None, math.log( nnp_dict[ seqword], 10) ] )
     halfsize = seqword.find('_')
     len1 = 0
     len2 = seqlen
@@ -78,13 +78,13 @@ def nnp_split( seqword):
             best_weight = cd[1]
     return best_halfsize
 
-def nnp_split_words( seqword, seqlen):
+def nnp_split_words( seqword):
     rt = []
     halfsize = nnp_split( seqword)
     if halfsize == None:
         return [ seqword ]
-    half1 = '_'.join( seqword[ 0:halfsize])
-    half2 = '_'.join( seqword[ (halfsize+1):])
+    half1 = seqword[ 0:halfsize]
+    half2 = seqword[ (halfsize+1):]
     return nnp_split_words( half1) + nnp_split_words( half2)
 
 def match_tag( tg, seektg):
@@ -316,7 +316,7 @@ elif cmd == "splitdict":
     fill_nnp_split_dict()
     new_dict = {}
     for key,value in nnp_dict.iteritems():
-        for word in nnp_split_words( value):
+        for word in nnp_split_words( key):
             if word in new_dict:
                 new_dict[ word] += value
             else:
