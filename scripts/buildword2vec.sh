@@ -42,6 +42,6 @@ done
 
 cat "$outprefix"docs.word2vec.{1,2,3,4,5,6}.txt > "$outprefix"docs.word2vec.txt
 
-../word2vec/bin/word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 4 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -save-vocab vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output vectors.bin
+../word2vec/bin/word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 4 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -save-vocab vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output "$outprefix"vectors.bin
 
 

@@ -203,11 +203,10 @@ def tag_tokens_NLP( text):
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
     tagged = concat_pairs( tagged, [None,"NN"], ["er","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["I","PRP"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["I","PRP"], "NN", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["n","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["s","NN"], "NNP", "")
     tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
-    tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NN", "_")
     return tagged
