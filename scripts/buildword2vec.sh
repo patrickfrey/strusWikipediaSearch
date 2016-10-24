@@ -31,9 +31,13 @@ runNLP 0 "05 18 12" &
 scripts/strusnlp.py joindict "$outprefix"dict.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"dict.txt
 rm dict.{0,1,2,3,4,5,6,7,8,9}.txt
 
+buildText() {
+	jobid=$1
+	scripts/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.txt > "$outprefix"docs.word2vec.$jobid.txt
+}
+
 for dd in 0 1 2 3 4 5 6 7 8 9
 do
-scripts/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.txt > "$outprefix"docs.word2vec.$dd.txt
 done
 
 cat "$outprefix"docs.word2vec.{1,2,3,4,5,6}.txt > "$outprefix"docs.word2vec.txt
