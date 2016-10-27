@@ -28,19 +28,21 @@ runNLP 8 "10 23 25" &
 runNLP 9 "02 15" &
 runNLP 0 "05 18 12" &
 
-scripts/strusnlp.py joindict "$outprefix"dict.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"dict.txt
+$scriptdir/strusnlp.py joindict "$outprefix"dict.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"dict.txt
 rm dict.{0,1,2,3,4,5,6,7,8,9}.txt
+$scriptdir/strusnlp.py splitdict "$outprefix"dict.txt "$outprefix"dict.split.txt
 
 buildText() {
 	jobid=$1
-	scripts/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.txt > "$outprefix"docs.word2vec.$jobid.txt
+	$scriptdir/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.split.txt > "$outprefix"docs.word2vec.$jobid.txt
 }
 
 for dd in 0 1 2 3 4 5 6 7 8 9
 do
+	buildText $dd &
 done
 
-cat "$outprefix"docs.word2vec.{1,2,3,4,5,6}.txt > "$outprefix"docs.word2vec.txt
+cat "$outprefix"docs.word2vec.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"docs.word2vec.txt
 
 ../word2vec/bin/word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 4 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -save-vocab vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output "$outprefix"vectors.bin
 

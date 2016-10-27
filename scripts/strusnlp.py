@@ -14,6 +14,7 @@ import sys
 import io
 import codecs
 import math
+from sets import Set
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -38,14 +39,40 @@ def fill_nnp_split_dict():
                 nnp_right_dict[ rightkey] = value
             halfsize = key.find('_',halfsize+1)
 
+def nnp_left_weight( word):
+    rt = 0.0
+    if word in nnp_left_dict:
+        rt = math.log(nnp_dict[ word]) / (1.0 + math.log(nnp_left_dict[ word]))
+#        print "    LEFT OCCUR '%s' %f %f" % (word, float(nnp_dict[ word]), float(nnp_left_dict[ word]))
+    else:
+        rt = math.log(nnp_dict[ word])
+#        print "    LEFT OCCUR '%s' %f" % (word, float(nnp_dict[ word]))
+    if len(word) > 4 and word[ -1] == 's':
+        if word[:-1] in nnp_left_dict:
+            rt += math.log(nnp_dict[ word[:-1]]) / (1.0 + math.log(nnp_left_dict[ word[:-1]]))
+        else:
+            rt += math.log(nnp_dict[ word[:-1]])
+        rt /= 2
+    return rt
+
+def nnp_right_weight( word):
+    rt = 0.0
+    if word in nnp_dict:
+        if word in nnp_right_dict:
+            rt = math.log( nnp_dict[ word]) / (1.0 + math.log(nnp_right_dict[ word]))
+#            print "    RIGHT OCCUR '%s' %f %f" % (word, float(nnp_dict[ word]), float(nnp_right_dict[ word]))
+        else:
+            rt = math.log(nnp_dict[ word])
+#            print "    RIGHT OCCUR '%s' %f" % (word, float(nnp_dict[ word]))
+    return rt
 
 def nnp_split( seqword):
 #    print "SPLIT '%s'" % seqword
     seqlen = 1
     halfsize = seqword.find('_')
     while halfsize != -1:
-       seqlen += 1
-       halfsize = seqword.find('_',halfsize+1)
+        seqlen += 1
+        halfsize = seqword.find('_',halfsize+1)
     candidates = []
     if seqword in nnp_dict:
         candidates.append( [ None, math.log( nnp_dict[ seqword]) ] )
@@ -54,26 +81,12 @@ def nnp_split( seqword):
     len2 = seqlen
     while halfsize != -1:
         half1 = seqword[ 0:halfsize]
-        w1 = 0.0
+        w1 = nnp_left_weight( half1)
         len1 += 1
         half2 = seqword[ (halfsize+1):]
-        w2 = 0.0
+        w2 = nnp_right_weight( half2)
         len2 -= 1
-        if half1 in nnp_dict:
-            if half1 in nnp_left_dict:
-#                print "    LEFT OCCUR '%s' %f %f" % (half1, float(nnp_dict[ half1]), float(nnp_left_dict[ half1]))
-                w1 = math.log(nnp_dict[ half1]) / (1.0 + math.log(nnp_left_dict[ half1]))
-            else:
-#                print "    LEFT OCCUR '%s' %f" % (half1, float(nnp_dict[ half1]))
-                w1 = math.log(nnp_dict[ half1])
 #        print "    WEIGHT '%s' %f" % (half1, w1)
-        if half2 in nnp_dict:
-            if half2 in nnp_right_dict:
-#                print "    RIGHT OCCUR '%s' %f %f" % (half2, float(nnp_dict[ half2]), float(nnp_right_dict[ half2]))
-                w2 = math.log( nnp_dict[ half2]) / (1.0 + math.log(nnp_right_dict[ half2]))
-            else:
-#                print "    RIGHT OCCUR '%s' %f" % (half2, float(nnp_dict[ half2]))
-                w2 = math.log(nnp_dict[ half2])
 #        print "    WEIGHT '%s' %f" % (half2, w2)
         candidates.append( [halfsize, w1 + w2] )
         halfsize = seqword.find('_',halfsize+1)
@@ -197,15 +210,25 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-#    print "NLP %s" % tagged
+#    print "NLP %s" % tagged (verbs without VBN)
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
     tagged = concat_pairs( tagged, [None,"NN"], ["er","NN"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["er","NNS"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["er","RB"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["er","JJ"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["er","FW"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["ers","NN"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["ers","NNS"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["ns","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["I","PRP"], "NN", "_")
+    tagged = concat_pairs( tagged, [None,"NN"], ["s","JJ"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NN", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["n","JJ"], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["ns","NN"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["s","NN"], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["s","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NN", "_")
@@ -216,7 +239,8 @@ def get_tagged_tokens( text):
     tokens = text.strip().split()
     for tk in tokens:
         spidx = tk.find('#')
-        rt.append( [ tk[(spidx+1):], tk[0:spidx] ])
+        if spidx < len(tk)-1:
+            rt.append( [ tk[(spidx+1):], tk[0:spidx] ])
     return rt
 
 def concat_word( tg):
