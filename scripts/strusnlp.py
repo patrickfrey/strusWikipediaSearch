@@ -285,27 +285,31 @@ if len( sys.argv) > 1:
 def print_usage():
     print "usage strusnlp.py <command> ..."
     print "<command>:"
-    print "    dict <infile> [<mincnt>]:"
-    print "        print the content of the dictionary passed as argument"
-    print "        do not print elements with a lower count than <mincnt>"
-    print "        default for <mincnt> is 50"
+    print "    makedict <infile> [<mincnt>]:"
+    print "        Create a dictionary from the NLP output in <infile>."
+    print "        Print only elements with a higher or equal count than <mincnt>."
+    print "        Default for <mincnt> is 1"
     print "    npl <infile>:"
-    print "        do NLP with the Python NLTK library on <infile>"
+    print "        Do NLP with the Python NLTK library on <infile>."
+    print "        Output tokens of the form \"<type>#<value>\", e.g. \"DT#the\"."
     print "    joindict { <dictfile> }:"
-    print "        join several dictionaries passed as arguments"
+    print "        Join several dictionaries passed as arguments"
     print "    splitdict <dictfile>:"
-    print "        try to split entries in the dictionary"
-    print "        use the term occurrence statistics to make decisions"
+    print "        Try to split entries in the dictionary."
+    print "        Use the term occurrence statistics to make decisions"
+    print "    splittest <dictfile> <word>:"
+    print "        Try to split the term <word> (for testing)."
+    print "        Use the term occurrence statistics to make decisions"
     print "    seldict <dictfile> [<mincnt>]:"
-    print "        select entries in a dictionary <dictfile> with a lower count than <mincnt>"
-    print "        default for <mincnt> is 50"
+    print "        Select the dictionary elements with a higher or equal count than <mincnt>."
+    print "        Default for <mincnt> is 1"
     print "    concat <infile> [<dictfile>]:"
-    print "        produces phrases from NLP output and with help of a dictionary"
+    print "        Produce phrases from NLP output and with help of a dictionary."
     
 if cmd == None or cmd == '-h' or cmd == '--help':
     print_usage()
 
-elif cmd == "dict":
+elif cmd == "makedict":
     infile = sys.argv[2]
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
@@ -314,7 +318,7 @@ elif cmd == "dict":
             linecnt += 1
             if linecnt % 10000 == 0:
                 print >> sys.stderr, "processed %u lines" %linecnt
-    mincnt = 50
+    mincnt = 1
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
     for key,value in nnp_dict.iteritems():
@@ -345,7 +349,7 @@ elif cmd == "joindict":
     for key,value in nnp_dict.iteritems():
         print "%s %u" % (key,value)
 
-elif cmd == "splitdict":
+elif cmd == "splitdict" or cmd == "splittest":
     dictfile = sys.argv[2]
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
         if line.strip():
@@ -356,15 +360,20 @@ elif cmd == "splitdict":
             else:
                 nnp_dict[ key] = int(tokcnt)
     fill_nnp_split_dict()
-    new_dict = {}
-    for key,value in nnp_dict.iteritems():
+    if cmd == "splitdict":
+        new_dict = {}
+        for key,value in nnp_dict.iteritems():
+            for word in nnp_split_words( key):
+                if word in new_dict:
+                    new_dict[ word] += value
+                else:
+                    new_dict[ word] = value
+        for key,value in new_dict.iteritems():
+            print "%s %u" % (key,value)
+    else: #cmd == "splittest"
+        key = sys.argv[3]
         for word in nnp_split_words( key):
-            if word in new_dict:
-                new_dict[ word] += value
-            else:
-                new_dict[ word] = value
-    for key,value in new_dict.iteritems():
-        print "%s %u" % (key,value)
+            print "%s" % word
 
 elif cmd == "seldict":
     dictfile = sys.argv[2]
