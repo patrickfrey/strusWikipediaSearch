@@ -51,7 +51,7 @@ def nnp_left_weight( word):
             leftocc += nnp_left_dict[ word[:-1]]
         if word[:-1] in nnp_dict:
             occ += nnp_dict[ word[:-1]]
-    return math.log( occ + 1) / math.log( leftocc + 1)
+    return math.log( occ + 1) / math.log( leftocc + 1),occ,leftocc
 
 def nnp_right_weight( word):
     occ = 0
@@ -60,7 +60,7 @@ def nnp_right_weight( word):
         rightocc += nnp_right_dict[ word]
     if word in nnp_dict:
         occ += nnp_dict[ word]
-    return math.log( occ + 1) / math.log( rightocc + 1)
+    return math.log( occ + 1) / math.log( rightocc + 1),occ,rightocc
 
 
 def nnp_split( seqword):
@@ -76,17 +76,17 @@ def nnp_split( seqword):
     len2 = seqlen
     while halfsize != -1:
         half1 = seqword[ 0:halfsize]
-        w1 = nnp_left_weight( half1)
+        w1,occ1,partocc1 = nnp_left_weight( half1)
         len1 += 1
         half2 = seqword[ (halfsize+1):]
-        w2 = nnp_right_weight( half2)
+        w2,occ2,partocc2 = nnp_right_weight( half2)
         len2 -= 1
-#        print "    WEIGHT '%s' %f" % (half1, w1)
-#        print "    WEIGHT '%s' %f" % (half2, w2)
+#        print "    WEIGHT '%s' %f %u %u" % (half1, w1,occ1,partocc1)
+#        print "    WEIGHT '%s' %f %u %u" % (half2, w2,occ2,partocc2)
         candidates.append( [halfsize, w1 + w2] )
         halfsize = seqword.find('_',halfsize+1)
     if seqword in nnp_dict:
-#        print "    FIRST WEIGHT '%s' %f (%u %f)" % (seqword, math.log( nnp_dict[ seqword]) / first_norm, nnp_dict[ seqword], first_norm)
+#        print "    FIRST WEIGHT '%s' %f (%u)" % (seqword, math.log( nnp_dict[ seqword]), nnp_dict[ seqword])
         candidates.append( [ None, math.log( nnp_dict[ seqword]) ])
     best_halfsize = None
     best_weight = 0.0
