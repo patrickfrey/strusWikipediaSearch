@@ -25,6 +25,8 @@ nnp_right_dict = {}
 
 def fill_nnp_split_dict():
     for key,value in nnp_dict.iteritems():
+        if key[0] == '_':
+            continue
         halfsize = key.find('_')
         while halfsize != -1:
             leftkey = key[0:halfsize]
@@ -66,6 +68,8 @@ def nnp_right_weight( word):
 def nnp_split( seqword):
 #    print "SPLIT '%s'" % seqword
     seqlen = 1
+    if seqword[0] == '_':
+        return None
     halfsize = seqword.find('_')
     while halfsize != -1:
         seqlen += 1
@@ -114,7 +118,7 @@ def nnp_split_words( seqword):
     return nnp_split_words( half1) + nnp_split_words( half2)
 
 def match_tag( tg, seektg):
-    if tg[1] in seektg[1:] and (seektg[0] == None or seektg[0] == tg[0]):
+    if tg[1] in seektg[1:] and tg[0][0] != '_' and (seektg[0] == None or seektg[0] == tg[0]):
         return True
     return False
 
@@ -208,7 +212,7 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-#    print "NLP %s" % tagged (verbs without VBN)
+#    print "NLP %s" % tagged
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
@@ -229,7 +233,7 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"NNP"], ["s","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
-    tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NN", "_")
+    tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NNP", "_")
     return tagged
 
 def get_tagged_tokens( text):
@@ -276,6 +280,61 @@ def tag_NLP( text):
             rt += tg[1] + "#" + tg[0] + " "
     return rt
 
+def get_phrase_id( text, pstart, pend):
+    rt = ''
+    spcidx = -1
+    while text[pstart] == ' ':
+        pstart += 1
+    for spc in ['\'','.',',',';']:
+        spcidx = text.find( spc, pstart, pend)
+        if spcidx != -1:
+            break
+    if spcidx == -1:
+        pi = pstart
+        pn = text.find( ' ', pi+1, pend)
+        while pn >= 0 and pn > pi+1:  # find spaces and do not accept two subsequent spaces
+            rt += '_' + text[ pi:pn]
+            pi = pn+1
+            pn = text.find( ' ', pi, pend)
+        if pn == -1:
+            if pi != pend:
+                rt += '_' + text[ pi:pend]
+        else:
+            rt = " \"" + text[ pstart:pend] + "\""
+    else:
+        rt = " \"" + text[ pstart:pend] + "\""
+    return rt
+
+def tag_phrases( text):
+    ti = text.find( '"')
+    if ti == -1:
+        return text
+    rt = text[ :ti]
+    while ti != -1:
+        pstart = ti+1
+        while text[pstart] == ' ':
+            pstart += 1
+        tn = text.find( '"', pstart, max( len(text),80))
+        if tn != -1:
+            pi = text.find( ':', pstart, tn)
+            while pi != -1:
+                rt += " " + get_phrase_id( text, pstart, pi)
+                pstart = pi+1
+                pi = text.find( ':', pstart, tn)
+            rt += " " + get_phrase_id( text, pstart, tn)
+        else:
+            rt += text[ ti:]
+            break
+        ti = tn + 1
+        tn = text.find( '"', ti)
+        if tn == -1:
+            rt += ' ' + text[ ti:]
+            break
+        else:
+            rt += ' ' + text[ ti:tn]
+        ti = tn
+    return rt
+
 cmd = None
 if len( sys.argv) > 1:
     cmd = sys.argv[1]
@@ -287,7 +346,7 @@ def print_usage():
     print "        Create a dictionary from the NLP output in <infile>."
     print "        Print only elements with a higher or equal count than <mincnt>."
     print "        Default for <mincnt> is 1"
-    print "    npl <infile>:"
+    print "    nlp <infile>:"
     print "        Do NLP with the Python NLTK library on <infile>."
     print "        Output tokens of the form \"<type>#<value>\", e.g. \"DT#the\"."
     print "    joindict { <dictfile> }:"
@@ -328,7 +387,7 @@ elif cmd == "nlp":
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         if line.strip():
-            print "%s" % tag_NLP( line)
+            print "%s" % tag_NLP( tag_phrases( line))
             linecnt += 1
             if linecnt % 10000 == 0:
                 print >> sys.stderr, "processed %u lines" %linecnt

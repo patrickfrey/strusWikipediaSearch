@@ -84,14 +84,14 @@
 [ForwardIndex]
     linkid  = text content /mediawiki/page/revision/text//link[@type='page']@id;
     wwwlnk  = text content /mediawiki/page/revision/text//wwwlink@id;
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/l1();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/l2();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/l3();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/l4();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/ol/li();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/ul/li();
-    entity  = text regex('["][ ]*([^"\'.,;\n]{5,60})[ ]*["]', 1) /mediawiki/page/revision/text/table/tr/td();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/l1();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/l2();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/l3();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/l4();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/ol/li();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/ul/li();
+    entity  = text regex('["][ ]*([^"\'.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/table/tr/td();
 
     orig = text split /mediawiki/page/title();
     orig = text split /mediawiki/page/revision/text/h1();
