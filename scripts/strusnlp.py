@@ -141,12 +141,12 @@ def find_sequence( tagged, sequence):
         raise
     for tidx,tg in enumerate( tagged):
         is_match = False
-        if (sequence[ state][1] == None or sequence[ state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
+        if (sequence[state][1] == None or (sequence[state][1] is list and tg[1] in sequence[state][1]) or sequence[state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
             is_match = True
         else:
             matchidx = None
             state = 0
-            if (sequence[ state][1] == None or sequence[ state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
+            if (sequence[state][1] == None or (sequence[state][1] is list and tg[1] in sequence[state][1]) or sequence[state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
                 is_match = True
         if is_match == True:
             if state == 0:
@@ -282,27 +282,7 @@ def tag_tokens_NLP( text):
     for tgidx in find_sequence( tagged, [[None,'NNP'],[None,None],[None,'NNP']]):
         if tagged[tgidx+1][0][0].isupper() == True:
             tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["del",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["della",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["di",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["du",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],["la",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-        tagged[tgidx+2] = [ tagged[tgidx+2][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],["l",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-        tagged[tgidx+2] = [ tagged[tgidx+2][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["ibn",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["bin",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["al",None],[None,'NNP']]):
+    for tgidx in find_sequence( tagged, [[None,'NNP'],[["de","del","della","di","du","von","ibn","bin","al"],None],[None,'NNP']]):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
