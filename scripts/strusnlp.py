@@ -299,7 +299,7 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"NNP"], ["n",None], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ns",None], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["s",None], "NNP", "")
-    tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
+    tagged = concat_pairs( tagged, [None,"JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NNP", "_")
     return tagged
