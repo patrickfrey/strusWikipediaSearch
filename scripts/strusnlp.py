@@ -118,6 +118,13 @@ def nnp_split_words( seqword):
     half2 = seqword[ (halfsize+1):]
     return nnp_split_words( half1) + nnp_split_words( half2)
 
+def parse_tokendef( tk):
+    spidx = tk.find('#')
+    if spidx < len(tk)-1:
+        return [ tk[(spidx+1):], tk[0:spidx] ]
+    else:
+        return None
+
 def match_tag( tg, seektg):
     if tg[1] in seektg[1:] and tg[0][0] != '_' and (seektg[0] == None or seektg[0] == tg[0]):
         return True
@@ -132,12 +139,12 @@ def find_sequence( tagged, sequence):
         raise
     for tidx,tg in enumerate( tagged):
         is_match = False
-        if sequence[ state] == None or sequence[ state] == tg[1]:
+        if (sequence[ state][1] == None or sequence[ state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
             is_match = True
         else:
             matchidx = None
             state = 0
-            if sequence[ state] == None or sequence[ state] == tg[1]:
+            if (sequence[ state][1] == None or sequence[ state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
                 is_match = True
         if is_match == True:
             if state == 0:
@@ -270,6 +277,27 @@ def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
 #    print "NLP %s" % tagged
+    for tgidx in find_sequence( tagged, [[None,'NNP'],[None,None],[None,'NNP']]):
+        if tagged[tgidx+1][0][0].isupper() == True:
+            tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["del",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["della",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["di",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["du",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["ibn",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],["la",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+        tagged[tgidx+2] = [ tagged[tgidx+2][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],["l",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+        tagged[tgidx+2] = [ tagged[tgidx+2][0],"NNP" ]
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
@@ -285,6 +313,8 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"NN"], ["s","VBZ"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","JJ"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NN", "_")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["ian","JJ"], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["ese","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["n","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ns","NN"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["s","NN"], "NNP", "")
@@ -299,9 +329,9 @@ def get_tagged_tokens( text):
     rt = []
     tokens = text.strip().split()
     for tk in tokens:
-        spidx = tk.find('#')
-        if spidx < len(tk)-1:
-            rt.append( [ tk[(spidx+1):], tk[0:spidx] ])
+        tkdef = parse_tokendef( tk)
+        if tkdef != None:
+            rt.append( tkdef)
     return rt
 
 def concat_word( tg):
@@ -410,9 +440,13 @@ def parse_sequence_pattern( sequence):
     rt = []
     for sq in sequence:
         if sq == '*':
-            rt.append( None)
+            rt.append( [None,None])
         else:
-            rt.append( sq)
+            tk = parse_tokendef( sq)
+            if tk == None:
+                rt.append( [None,None])
+            else:
+                rt.append( tk)
     return rt
 
 cmd = None
