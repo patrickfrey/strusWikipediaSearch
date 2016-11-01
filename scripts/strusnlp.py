@@ -290,14 +290,18 @@ def tag_tokens_NLP( text):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
     for tgidx in find_sequence( tagged, [[None,'NNP'],["du",None],[None,'NNP']]):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],["ibn",None],[None,'NNP']]):
-        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
     for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],["la",None],[None,'NNP']]):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
         tagged[tgidx+2] = [ tagged[tgidx+2][0],"NNP" ]
     for tgidx in find_sequence( tagged, [[None,'NNP'],["de",None],["l",None],[None,'NNP']]):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
         tagged[tgidx+2] = [ tagged[tgidx+2][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["ibn",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["bin",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
+    for tgidx in find_sequence( tagged, [[None,'NNP'],["al",None],[None,'NNP']]):
+        tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
