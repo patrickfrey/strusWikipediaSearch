@@ -17,6 +17,11 @@ runNLP() {
 	$scriptdir/strusnlp.py makedict $nlp_outputfile 3 > $dic_outputfile
 }
 
+runNLP 1 "00 13 08 01 14 26 18" &
+runNLP 2 "03 16 21 04 17 02 15" &
+runNLP 3 "06 19 11 07 20 05 12" &
+runNLP 4 "09 22 24 10 23 25" &
+
 runNLP 1 "00 13 08" &
 runNLP 2 "03 16 21" &
 runNLP 3 "06 19 11" &
