@@ -302,6 +302,8 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NNP", "_")
+    tagged = concat_pairs( tagged, [None,"NN"], [None,"NNS"], "NN", "_")
+    tagged = concat_pairs( tagged, [None,"NNP"], [None,"NNPS"], "NNP", "_")
     return tagged
 
 def get_tagged_tokens( text):
