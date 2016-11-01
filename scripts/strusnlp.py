@@ -122,6 +122,39 @@ def match_tag( tg, seektg):
         return True
     return False
 
+def mark_sequence( tagged, sequence, marker):
+    rt = "";
+    elems = []
+    state = 0
+    if len( sequence) == 0:
+        print >> sys.stderr, "empty sequence passed to mark_sequence"
+        raise
+    for tg in tagged:
+        if sequence[ state] == None or sequence[ state] == tg[1]:
+            elems.append( tg)
+            state += 1
+            if state >= len( sequence):
+                rt += marker;
+                for sq in sequence:
+                   rt += " " + sq[1] + "#" + sq[0]
+                state = 0
+        else:
+            elems = []
+            state = 0
+            for sq in sequence:
+               rt += " " + sq[1] + "#" + sq[0]
+            if sequence[ state] == None or sequence[ state] == tg[1]:
+                elems.append( tg)
+                state += 1
+                if state >= len( sequence):
+                    rt += marker;
+                    for sq in sequence:
+                       rt += " " + sq[1] + "#" + sq[0]
+                    state = 0
+            else:
+                rt += " " + tg[1] + "#" + tg[0]
+    return rt
+
 def concat_sequences( tagged, elem0, elem1, jointype, joinchr):
     rt = []
     state = 0
@@ -261,6 +294,12 @@ def concat_phrases( text):
         rt += " " + concat_word( tg)
     return rt
 
+def mark_phrases( text, sequence, marker):
+    tagged = get_tagged_tokens( text)
+    if not tagged:
+        return ""
+    return mark_sequence( tagged, sequence, marker)
+
 def fill_dict( text):
     tagged = get_tagged_tokens( text)
     if tagged:
@@ -362,7 +401,9 @@ def print_usage():
     print "        Default for <mincnt> is 1"
     print "    concat <infile> [<dictfile>]:"
     print "        Produce phrases from NLP output and with help of a dictionary."
-    
+    print "    markseq <infile> <sequence...> <marker>:"
+    print "        Marks a seuqence of types in the NLP dump with a start string <marker>."
+
 if cmd == None or cmd == '-h' or cmd == '--help':
     print_usage()
 
@@ -461,6 +502,19 @@ elif cmd == "concat":
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print concat_phrases( line.encode('utf-8'))
+        linecnt += 1
+        if linecnt % 10000 == 0:
+            print >> sys.stderr, "processed %u lines" %linecnt
+
+elif cmd == "markseq":
+    infile = sys.argv[2]
+    if len(sys.argv) < 5:
+        print >> sys.stderr, "too few arguments for markseq, at lease %u expected" % 4
+        raise
+    sequence = sys.argv[ 3:-2]
+    marker = sys.argv[ -1]
+    for line in codecs.open( infile, "r", encoding='utf-8'):
+        print mark_phrases( line.encode('utf-8'), sequence, marker)
         linecnt += 1
         if linecnt % 10000 == 0:
             print >> sys.stderr, "processed %u lines" %linecnt
