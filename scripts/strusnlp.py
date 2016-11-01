@@ -123,36 +123,34 @@ def match_tag( tg, seektg):
     return False
 
 def mark_sequence( tagged, sequence, marker):
-    rt = "";
+    rt = ""
     elems = []
     state = 0
     if len( sequence) == 0:
         print >> sys.stderr, "empty sequence passed to mark_sequence"
         raise
     for tg in tagged:
+        is_match = False
         if sequence[ state] == None or sequence[ state] == tg[1]:
+            is_match = True
+        else:
+            for em in elems:
+                rt += " " + sq[1] + "#" + sq[0]
+                elems = []
+                state = 0
+            if sequence[ state] == None or sequence[ state] == tg[1]:
+                is_match = True
+            else:
+                rt += " " + tg[1] + "#" + tg[0]
+        if is_match == True:
             elems.append( tg)
             state += 1
             if state >= len( sequence):
-                rt += marker;
-                for sq in sequence:
-                   rt += " " + sq[1] + "#" + sq[0]
+                rt += " " + marker
+                for em in elems:
+                    rt += " " + em[1] + "#" + em[0]
+                elems = []
                 state = 0
-        else:
-            elems = []
-            state = 0
-            for sq in sequence:
-               rt += " " + sq[1] + "#" + sq[0]
-            if sequence[ state] == None or sequence[ state] == tg[1]:
-                elems.append( tg)
-                state += 1
-                if state >= len( sequence):
-                    rt += marker;
-                    for sq in sequence:
-                       rt += " " + sq[1] + "#" + sq[0]
-                    state = 0
-            else:
-                rt += " " + tg[1] + "#" + tg[0]
     return rt
 
 def concat_sequences( tagged, elem0, elem1, jointype, joinchr):
@@ -511,7 +509,7 @@ elif cmd == "markseq":
     if len(sys.argv) < 5:
         print >> sys.stderr, "too few arguments for markseq, at lease %u expected" % 4
         raise
-    sequence_orig = sys.argv[ 3:-2]
+    sequence_orig = sys.argv[ 3:-1]
     sequence = []
     for sq in sequence_orig:
         if sq == '*':
@@ -519,6 +517,7 @@ elif cmd == "markseq":
         else:
             sequence.append( sq)
     marker = sys.argv[ -1]
+    linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print mark_phrases( line.encode('utf-8'), sequence, marker)
         linecnt += 1
