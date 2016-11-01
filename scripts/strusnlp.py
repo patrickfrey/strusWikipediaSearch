@@ -282,7 +282,7 @@ def tag_tokens_NLP( text):
     for tgidx in find_sequence( tagged, [[None,'NNP'],[None,None],[None,'NNP']]):
         if tagged[tgidx+1][0][0].isupper() == True:
             tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
-    for tgidx in find_sequence( tagged, [[None,'NNP'],[["de","del","della","di","du","von","ibn","bin","al"],None],[None,'NNP']]):
+    for tgidx in find_sequence( tagged, [[None,'NNP'],[["de","del","della","di","du","le","la","von","der","ibn","bin","al"],None],[None,'NNP']]):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
@@ -292,6 +292,7 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"NN"], ["n",None], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["ns",None], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s",None], "NN", "")
+    tagged = concat_pairs( tagged, [None,"JJ"], [None,"NNP"], "NNP", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NNP", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ian","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ese","JJ"], "NNP", "")
