@@ -14,7 +14,7 @@ runNLP() {
 	for dd in $infiles ; do echo "-------- $dd"; $scriptdir/nlpdump.sh data/wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile; done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	rm $dmp_outputfile
-	$scriptdir/strusnlp.py dict $nlp_outputfile 3 > $dic_outputfile
+	$scriptdir/strusnlp.py makedict $nlp_outputfile 3 > $dic_outputfile
 }
 
 runNLP 1 "00 13 08" &
