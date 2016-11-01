@@ -15,6 +15,7 @@ import io
 import codecs
 import math
 from sets import Set
+from copy import copy
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -122,35 +123,60 @@ def match_tag( tg, seektg):
         return True
     return False
 
-def mark_sequence( tagged, sequence, marker):
-    rt = ""
-    elems = []
+def find_sequence( tagged, sequence):
+    rt = []
+    matchidx = None
     state = 0
     if len( sequence) == 0:
-        print >> sys.stderr, "empty sequence passed to mark_sequence"
+        print >> sys.stderr, "empty sequence passed to find_sequence"
         raise
-    for tg in tagged:
+    for tidx,tg in enumerate( tagged):
         is_match = False
         if sequence[ state] == None or sequence[ state] == tg[1]:
             is_match = True
         else:
-            for em in elems:
-                rt += " " + sq[1] + "#" + sq[0]
-                elems = []
-                state = 0
+            matchidx = None
+            state = 0
             if sequence[ state] == None or sequence[ state] == tg[1]:
                 is_match = True
-            else:
-                rt += " " + tg[1] + "#" + tg[0]
         if is_match == True:
-            elems.append( tg)
+            if state == 0:
+                matchidx = tidx
             state += 1
             if state >= len( sequence):
-                rt += " " + marker
-                for em in elems:
-                    rt += " " + em[1] + "#" + em[0]
-                elems = []
+                rt.append( matchidx)
+                matchidx = None
                 state = 0
+    return rt
+
+def mark_sequences( tagged, sequence, marker):
+    rt = ""
+    prevpos = 0
+    for pos in find_sequence( tagged, sequence):
+        for sq in tagged[ prevpos:pos]:
+            if rt:
+                rt += ' '
+            rt += sq[1] + "#" + sq[0]
+        if rt:
+            rt += ' '
+        rt += marker
+        prevpos = pos
+    for sq in tagged[ prevpos:]:
+        if rt:
+            rt += ' '
+        rt += sq[1] + "#" + sq[0]
+    return rt
+
+def get_sequences( tagged, sequence):
+    rt = []
+    for pos in find_sequence( tagged, sequence):
+        endpos = pos + len(sequence)
+        seqstr = ""
+        for sq in tagged[ pos:endpos]:
+            if seqstr:
+                seqstr += ' '
+            seqstr += sq[1] + "#" + sq[0]
+        rt.append( seqstr)
     return rt
 
 def concat_sequences( tagged, elem0, elem1, jointype, joinchr):
@@ -256,11 +282,13 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"NN"], ["ers","NNS"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["ns","NN"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["s","VBZ"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s","JJ"], "NN", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NN", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["n","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ns","NN"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["s","NN"], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["s","VBZ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["s","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
@@ -296,7 +324,13 @@ def mark_phrases( text, sequence, marker):
     tagged = get_tagged_tokens( text)
     if not tagged:
         return ""
-    return mark_sequence( tagged, sequence, marker)
+    return mark_sequences( tagged, sequence, marker)
+
+def get_phrases( text, sequence):
+    tagged = get_tagged_tokens( text)
+    if not tagged:
+        return ""
+    return get_sequences( tagged, sequence)
 
 def fill_dict( text):
     tagged = get_tagged_tokens( text)
@@ -370,6 +404,15 @@ def tag_phrases( text):
         else:
             rt += ' ' + text[ ti:tn]
         ti = tn
+    return rt
+
+def parse_sequence_pattern( sequence):
+    rt = []
+    for sq in sequence:
+        if sq == '*':
+            rt.append( None)
+        else:
+            rt.append( sq)
     return rt
 
 cmd = None
@@ -509,17 +552,25 @@ elif cmd == "markseq":
     if len(sys.argv) < 5:
         print >> sys.stderr, "too few arguments for markseq, at lease %u expected" % 4
         raise
-    sequence_orig = sys.argv[ 3:-1]
-    sequence = []
-    for sq in sequence_orig:
-        if sq == '*':
-            sequence.append( None)
-        else:
-            sequence.append( sq)
+    sequence = parse_sequence_pattern( sys.argv[ 3:-1])
     marker = sys.argv[ -1]
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print mark_phrases( line.encode('utf-8'), sequence, marker)
+        linecnt += 1
+        if linecnt % 10000 == 0:
+            print >> sys.stderr, "processed %u lines" %linecnt
+
+elif cmd == "getseq":
+    infile = sys.argv[2]
+    if len(sys.argv) < 4:
+        print >> sys.stderr, "too few arguments for getseq, at lease %u expected" % 3
+        raise
+    sequence = parse_sequence_pattern( sys.argv[ 3:])
+    linecnt = 0
+    for line in codecs.open( infile, "r", encoding='utf-8'):
+        for phrase in get_phrases( line.encode('utf-8'), sequence):
+            print "%s" % phrase
         linecnt += 1
         if linecnt % 10000 == 0:
             print >> sys.stderr, "processed %u lines" %linecnt
