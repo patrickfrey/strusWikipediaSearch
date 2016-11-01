@@ -120,10 +120,12 @@ def nnp_split_words( seqword):
 
 def parse_tokendef( tk):
     spidx = tk.find('#')
-    if spidx < len(tk)-1:
+    if spidx == 0:
+        return [ tk, None ]
+    elif spidx < len(tk)-1:
         return [ tk[(spidx+1):], tk[0:spidx] ]
     else:
-        return None
+        return [ None, tk[0:spidx] ]
 
 def match_tag( tg, seektg):
     if tg[1] in seektg[1:] and tg[0][0] != '_' and (seektg[0] == None or seektg[0] == tg[0]):
@@ -147,6 +149,7 @@ def find_sequence( tagged, sequence):
             if (sequence[ state][1] == None or sequence[ state][1] == tg[1]) and (sequence[ state][0] == None or sequence[ state][0] == tg[0]):
                 is_match = True
         if is_match == True:
+            print "+++ IS MATCH %s %s" % (tg,sequence[ state])
             if state == 0:
                 matchidx = tidx
             state += 1
@@ -178,6 +181,7 @@ def get_sequences( tagged, sequence):
     rt = []
     for pos in find_sequence( tagged, sequence):
         endpos = pos + len(sequence)
+        print "+++ SEQ POS %u END %u" % (pos, endpos)
         seqstr = ""
         for sq in tagged[ pos:endpos]:
             if seqstr:
