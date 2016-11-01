@@ -511,7 +511,13 @@ elif cmd == "markseq":
     if len(sys.argv) < 5:
         print >> sys.stderr, "too few arguments for markseq, at lease %u expected" % 4
         raise
-    sequence = sys.argv[ 3:-2]
+    sequence_orig = sys.argv[ 3:-2]
+    sequence = []
+    for sq in sequence_orig:
+        if sq == '*':
+            sequence.append( None)
+        else:
+            sequence.append( sq)
     marker = sys.argv[ -1]
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print mark_phrases( line.encode('utf-8'), sequence, marker)
