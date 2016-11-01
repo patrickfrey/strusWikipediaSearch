@@ -128,7 +128,7 @@ def parse_tokendef( tk):
         return [ None, tk[0:spidx] ]
 
 def match_tag( tg, seektg):
-    if tg[1] in seektg[1:] and tg[0][0] != '_' and (seektg[0] == None or seektg[0] == tg[0]):
+    if tg[1] in seektg[1:] and (seektg[0] == None or seektg[0] == tg[0]):
         return True
     return False
 
@@ -194,17 +194,17 @@ def concat_sequences( tagged, elem0, elem1, jointype, joinchr):
     bufelem = None
     for tg in tagged:
         if state == 0:
-            if match_tag( tg, elem0):
+            if tg[0][0] != '_' and match_tag( tg, elem0):
                 state = 1
                 bufelem = tg
             else:
                 rt.append( tg)
         elif state == 1:
-            if match_tag( tg, elem1):
+            if tg[0][0] != '_' and match_tag( tg, elem1):
                 bufelem = [bufelem[0] + joinchr + tg[0], jointype]
             else:
                 rt.append( bufelem)
-                if match_tag( tg, elem0):
+                if tg[0][0] != '_' and match_tag( tg, elem0):
                     bufelem = tg
                 else:
                     rt.append( tg)
@@ -223,19 +223,19 @@ def concat_pairs( tagged, elem0, elem1, jointype, joinchr):
     bufelem = None
     for tg in tagged:
         if state == 0:
-            if match_tag( tg, elem0):
+            if tg[0][0] != '_' and match_tag( tg, elem0):
                 state = 1
                 bufelem = tg
             else:
                 rt.append( tg)
         elif state == 1:
-            if match_tag( tg, elem1):
+            if tg[0][0] != '_' and match_tag( tg, elem1):
                 rt.append( [bufelem[0] + joinchr + tg[0], jointype])
                 state = 0
                 bufelem = None
             else:
                 rt.append( bufelem)
-                if match_tag( tg, elem0):
+                if tg[0][0] != '_' and match_tag( tg, elem0):
                     bufelem = tg
                 else:
                     rt.append( tg)
@@ -254,17 +254,17 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
     elemidx = None
     for tgidx,tg in enumerate(tagged):
         if state == 0:
-            if match_tag( tg, elem0):
+            if tg[0][0] != '_' and match_tag( tg, elem0):
                 state = 1
                 elemidx = tgidx
         elif state == 1:
             if tg[1] in skiptypes:
                 pass
-            elif match_tag( tg, elem1):
+            elif tg[0][0] != '_' and match_tag( tg, elem1):
                 rt[ elemidx] = [ rt[ elemidx][0] + joinchr + tg[0], rt[ elemidx][1] ]
                 state = 0
                 elemidx = None
-            elif match_tag( tg, elem0):
+            elif tg[0][0] != '_' and match_tag( tg, elem0):
                 state = 1
                 elemidx = tgidx
             else:
