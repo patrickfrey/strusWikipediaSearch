@@ -128,7 +128,7 @@ def parse_tokendef( tk):
         return [ None, tk[0:spidx] ]
 
 def match_tag( tg, seektg):
-    if tg[1] in seektg[1:] and (seektg[0] == None or seektg[0] == tg[0]):
+    if (seektg[1] == None or tg[1] in seektg[1:]) and (seektg[0] == None or seektg[0] == tg[0]):
         return True
     return False
 
@@ -287,25 +287,17 @@ def tag_tokens_NLP( text):
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], [None,"IN","TO"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["a","DT"], ["RB","RBZ","RBS"], "_")
     tagged = tag_first( tagged, [None,"VB","VBZ","VBD","VBG","VBP","VBZ"], ["the","DT"], ["RB","RBZ","RBS"], "_")
-    tagged = concat_pairs( tagged, [None,"NN"], ["er","NN"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["er","NNS"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["er","RB"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["er","JJ"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["er","FW"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["ers","NN"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["ers","NNS"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["ns","NN"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["s","NN"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["s","VBZ"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NN"], ["s","JJ"], "NN", "")
-    tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NN", "_")
+    tagged = concat_pairs( tagged, [None,"NN"], ["er",None], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["ers",None], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["n",None], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["ns",None], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NN"], ["s",None], "NN", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NNP", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ian","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ese","JJ"], "NNP", "")
-    tagged = concat_pairs( tagged, [None,"NNP"], ["n","JJ"], "NNP", "")
-    tagged = concat_pairs( tagged, [None,"NNP"], ["ns","NN"], "NNP", "")
-    tagged = concat_pairs( tagged, [None,"NNP"], ["s","NN"], "NNP", "")
-    tagged = concat_pairs( tagged, [None,"NNP"], ["s","VBZ"], "NNP", "")
-    tagged = concat_pairs( tagged, [None,"NNP"], ["s","JJ"], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["n",None], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["ns",None], "NNP", "")
+    tagged = concat_pairs( tagged, [None,"NNP"], ["s",None], "NNP", "")
     tagged = concat_pairs( tagged, ["non","JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NNP", "_")
