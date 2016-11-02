@@ -1,7 +1,9 @@
 #!/bin/sh
 
-outprefix=nlpdata/
-scriptdir=scripts
+outprefix=origdata/
+inprefix=origdata/
+scriptdir=github/strusWikipediaSearch/scripts
+sourcedir=github/strusWikipediaSearch/config
 
 runNLP() {
 	jobid=$1
@@ -11,16 +13,16 @@ runNLP() {
 	dic_outputfile="$outprefix""dict.$jobid.txt"
 	rm $dmp_outputfile
 	rm $nlp_outputfile
-	for dd in $infiles ; do echo "-------- $dd"; $scriptdir/nlpdump.sh data/wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile; done
+	for dd in $infiles ; do echo "-------- $dd"; $scriptdir/nlpdump.sh "$inprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $sourcedir; done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	rm $dmp_outputfile
 	$scriptdir/strusnlp.py makedict $nlp_outputfile 3 > $dic_outputfile
 }
 
-runNLP 1 "00 13 08 01 14 26 18" &
-runNLP 2 "03 16 21 04 17 02 15" &
-runNLP 3 "06 19 11 07 20 05 12" &
-runNLP 4 "09 22 24 10 23 25" &
+# runNLP 1 "00 13 08 01 14 26 18" &
+# runNLP 2 "03 16 21 04 17 02 15" &
+# runNLP 3 "06 19 11 07 20 05 12" &
+# runNLP 4 "09 22 24 10 23 25" &
 
 runNLP 1 "00 13 08" &
 runNLP 2 "03 16 21" &
@@ -32,6 +34,8 @@ runNLP 7 "07 20" &
 runNLP 8 "10 23 25" &
 runNLP 9 "02 15" &
 runNLP 0 "05 18 12" &
+
+runNLP 1
 
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"dict.txt
 rm dict.{0,1,2,3,4,5,6,7,8,9}.txt
