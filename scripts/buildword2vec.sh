@@ -1,9 +1,15 @@
 #!/bin/sh
 
+# 24 CORE MACHINE:
 outprefix=origdata/
 inprefix=origdata/
 srcprefix=github/strusWikipediaSearch/
 scriptdir="$srcprefix"scripts
+# TOIMUB:
+# outprefix=nlpdata/
+# inprefix=data/
+# srcprefix=
+# scriptdir="$srcprefix"scripts
 
 runNLP() {
 	jobid=$1
