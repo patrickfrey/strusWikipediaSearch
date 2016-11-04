@@ -507,12 +507,15 @@ elif cmd == "splitdict" or cmd == "splittest":
     dictfile = sys.argv[2]
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
         if line.strip():
-            tokstr,tokcnt = line.strip().split()
-            key = tokstr.decode('utf-8')
-            if key in nnp_dict:
-                nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+            if line.strip().find(' ') == -1:
+                print "IGNORE [%s]" % line
             else:
-                nnp_dict[ key] = int(tokcnt)
+                tokstr,tokcnt = line.strip().split()
+                key = tokstr.decode('utf-8')
+                if key in nnp_dict:
+                    nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+                else:
+                    nnp_dict[ key] = int(tokcnt)
     fill_nnp_split_dict()
     if cmd == "splitdict":
         new_dict = {}
