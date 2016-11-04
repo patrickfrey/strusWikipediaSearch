@@ -48,6 +48,7 @@ runNLP 14 "14" &
 runNLP 15 "15" &
 runNLP 16 "16" &
 runNLP 17 "17" &
+runNLP 18 "18" &
 runNLP 19 "19" &
 runNLP 20 "20" &
 runNLP 21 "21" &
