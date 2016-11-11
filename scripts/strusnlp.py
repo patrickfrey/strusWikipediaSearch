@@ -508,7 +508,7 @@ elif cmd == "splitdict" or cmd == "splittest":
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
         if line.strip():
             if line.strip().find(' ') == -1:
-                print "IGNORE [%s]" % line
+                print >> sys.stderr, "IGNORE [%s]" % line
             else:
                 tokstr,tokcnt = line.strip().split()
                 key = tokstr.decode('utf-8')

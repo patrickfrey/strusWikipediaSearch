@@ -61,11 +61,11 @@ class DymBackend:
         self.storage_dym = self.context.createStorageClient( config )
         self.queryeval_dym = self.createQueryEval_dym()               # dym = did you mean ... ?
         self.analyzer = self.context.createQueryAnalyzer()
-        self.analyzer.definePhraseType(
-                    "dym", "ngram", "word", 
+        self.analyzer.addSearchIndexElement(
+                    "ngram", "dym", "word", 
                     ["lc", [ "ngram", "WithStart", 3]]
         )
-        self.analyzer.definePhraseType(
+        self.analyzer.addSearchIndexElement(
                     "word", "word", "word", 
                     ["lc", [ "convdia", "en"]]
         )
@@ -165,8 +165,8 @@ class DymBackend:
             return []
 
         # Analyze query:
-        ngrams = self.analyzer.analyzePhrase( "dym", querystr)
-        words  = self.analyzer.analyzePhrase( "word", querystr)
+        ngrams = self.analyzer.analyzeField( "dym", querystr)
+        words  = self.analyzer.analyzeField( "word", querystr)
         if not words or not ngrams:
             # Return empty result for empty query:
             return []

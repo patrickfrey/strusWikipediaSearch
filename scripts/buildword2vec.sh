@@ -60,7 +60,7 @@ runNLP 26 "26" &
 
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"dict.txt
 rm dict.{0,1,2,3,4,5,6,7,8,9}.txt
-$scriptdir/strusnlp.py splitdict "$outprefix"dict.txt "$outprefix"dict.split.txt
+$scriptdir/strusnlp.py splitdict "$outprefix"dict.txt > "$outprefix"dict.split.txt
 
 buildText() {
 	jobid=$1

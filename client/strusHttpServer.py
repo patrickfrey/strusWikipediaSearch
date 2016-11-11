@@ -31,8 +31,8 @@ msgclient = strusMessage.RequestClient()
 strusctx = strus.Context()
 strusctx.addResourcePath( "./resources")
 analyzer = strusctx.createQueryAnalyzer()
-analyzer.definePhraseType(
-        "text", "stem", "word", 
+analyzer.addSearchIndexElement(
+        "stem", "text", "word", 
         ["lc", ["dictmap", "irregular_verbs_en.txt"], ["stem", "en"], ["convdia", "en"], "lc"]
     )
 
@@ -290,7 +290,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         rt = None
         try:
             maxnofresults = firstrank + nofranks
-            terms = analyzer.analyzePhrase( "text", querystr)
+            terms = analyzer.analyzeField( "text", querystr)
             if len( terms) == 0:
                 # Return empty result for empty query:
                 rt = [[],[]]
