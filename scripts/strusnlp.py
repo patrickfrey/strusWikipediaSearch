@@ -54,7 +54,7 @@ def nnp_left_weight( word):
             leftocc += nnp_left_dict[ word[:-1]]
         if word[:-1] in nnp_dict:
             occ += nnp_dict[ word[:-1]]
-    return math.log( occ + 1) / (1 + math.log( leftocc + 1)),occ,leftocc
+    return math.log( 1 + (occ + 1) / (leftocc + 1)),occ,leftocc
 
 def nnp_right_weight( word):
     occ = 0
@@ -63,7 +63,7 @@ def nnp_right_weight( word):
         rightocc += nnp_right_dict[ word]
     if word in nnp_dict:
         occ += nnp_dict[ word]
-    return math.log( occ + 1) / (1 + math.log( rightocc + 1)),occ,rightocc
+    return math.log( 1 + (occ + 1) / (rightocc + 1)),occ,rightocc
 
 
 def nnp_split( seqword):
