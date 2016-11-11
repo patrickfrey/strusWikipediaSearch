@@ -58,7 +58,7 @@ runNLP 24 "24" &
 runNLP 25 "25" &
 runNLP 26 "26" &
 
-$scriptdir/strusnlp.py joindict "$outprefix"dict.{0,1,2,3,4,5,6,7,8,9}.txt > "$outprefix"dict.txt
+$scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"dict.txt
 rm dict.{0,1,2,3,4,5,6,7,8,9}.txt
 $scriptdir/strusnlp.py splitdict "$outprefix"dict.txt > "$outprefix"dict.split.txt
 
@@ -67,7 +67,7 @@ buildText() {
 	$scriptdir/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.split.txt > "$outprefix"docs.word2vec.$jobid.txt
 }
 
-for dd in 0 1 2 3 4 5 6 7 8 9
+for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 do
 	buildText $dd &
 done
