@@ -434,6 +434,21 @@ cmd = None
 if len( sys.argv) > 1:
     cmd = sys.argv[1]
 
+def read_dict( dictfile):
+    dict = {}
+    for line in codecs.open( dictfile, "r", encoding='utf-8'):
+        sline = line.strip()
+        if sline:
+            if sline.find(' ') == -1:
+                print >> sys.stderr, "IGNORE [%s]" % sline
+            tokstr,tokcnt = sline.split()
+            key = tokstr.decode('utf-8')
+            if key in dict:
+                dict[ key] = dict[ key] + int(tokcnt)
+            else:
+                dict[ key] = int(tokcnt)
+    return dict
+
 def print_usage():
     print "usage strusnlp.py <command> ..."
     print "<command>:"
@@ -504,18 +519,7 @@ elif cmd == "joindict":
         print "%s %u" % (key,value)
 
 elif cmd == "splitdict" or cmd == "splittest":
-    dictfile = sys.argv[2]
-    for line in codecs.open( dictfile, "r", encoding='utf-8'):
-        if line.strip():
-            if line.strip().find(' ') == -1:
-                print >> sys.stderr, "IGNORE [%s]" % line
-            else:
-                tokstr,tokcnt = line.strip().split()
-                key = tokstr.decode('utf-8')
-                if key in nnp_dict:
-                    nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
-                else:
-                    nnp_dict[ key] = int(tokcnt)
+    nnp_dict = read_dict( sys.argv[2])
     fill_nnp_split_dict()
     if cmd == "splitdict":
         new_dict = {}
@@ -529,19 +533,11 @@ elif cmd == "splitdict" or cmd == "splittest":
             print "%s %u" % (key,value)
     else: #cmd == "splittest"
         for key in sys.argv[3:]:
-            for word in nnp_split_words( key):
+            for word in nnp_split_words( key.decode('utf-8')):
                 print "%s" % word
 
 elif cmd == "seldict":
-    dictfile = sys.argv[2]
-    for line in codecs.open( dictfile, "r", encoding='utf-8'):
-        if line.strip():
-            tokstr,tokcnt = line.strip().split()
-            key = tokstr.decode('utf-8')
-            if key in nnp_dict:
-                nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
-            else:
-                nnp_dict[ key] = int(tokcnt)
+    nnp_dict = read_dict( sys.argv[2])
     mincnt = 50
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
@@ -552,11 +548,7 @@ elif cmd == "seldict":
 elif cmd == "concat":
     infile = sys.argv[2]
     if len(sys.argv) > 3:
-        dictfile = sys.argv[3]
-        for line in codecs.open( dictfile, "r", encoding='utf-8'):
-            if line.strip():
-                tokstr,tokcnt = line.strip().split()
-                nnp_dict[ tokstr.decode('utf-8')] = int(tokcnt)
+        nnp_dict = read_dict( sys.argv[3])
         fill_nnp_split_dict()
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
