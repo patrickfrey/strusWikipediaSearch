@@ -66,8 +66,9 @@ def nnp_right_weight( word):
     return math.log( 1 + (occ + 1) / (rightocc + 1)),occ,rightocc
 
 
-def nnp_split( seqword):
-#    print "SPLIT '%s'" % seqword
+def nnp_split( seqword, verbose):
+    if verbose:
+        print >> sys.stderr, "SPLIT '%s'" % seqword
     seqlen = 1
     if seqword[0] == '_':
         return None
@@ -86,12 +87,14 @@ def nnp_split( seqword):
         half2 = seqword[ (halfsize+1):]
         w2,occ2,partocc2 = nnp_right_weight( half2)
         len2 -= 1
-#        print "    WEIGHT '%s' %f %u %u" % (half1, w1,occ1,partocc1)
-#        print "    WEIGHT '%s' %f %u %u" % (half2, w2,occ2,partocc2)
+        if verbose:
+            print >> sys.stderr, "    WEIGHT '%s' %f %u %u" % (half1, w1,occ1,partocc1)
+            print >> sys.stderr, "    WEIGHT '%s' %f %u %u" % (half2, w2,occ2,partocc2)
         candidates.append( [halfsize, w1 + w2] )
         halfsize = seqword.find('_',halfsize+1)
     if seqword in nnp_dict:
-#        print "    FIRST WEIGHT '%s' %f (%u)" % (seqword, math.log( nnp_dict[ seqword]), nnp_dict[ seqword])
+        if verbose:
+            print "    FIRST WEIGHT '%s' %f (%u)" % (seqword, math.log( nnp_dict[ seqword]), nnp_dict[ seqword])
         candidates.append( [ None, math.log( nnp_dict[ seqword]) ])
     best_halfsize = None
     best_weight = 0.0
@@ -99,24 +102,26 @@ def nnp_split( seqword):
         if cd[1] > best_weight:
             best_halfsize = cd[0]
             best_weight = cd[1]
-#        if cd[0] == None:
-#            print "    CANDIDATE '%s' %f" % (seqword, cd[1])
-#        else:
-#            print "    CANDIDATE '%s' '%s' %f" % (seqword[ 0:(cd[0])], seqword[ (cd[0]+1):], cd[1])
-#    if best_halfsize == None:
-#        print "    BEST None"
-#    else:
-#        print "    BEST %u" % best_halfsize
+            if verbose:
+                if cd[0] == None:
+                    print "    CANDIDATE '%s' %f" % (seqword, cd[1])
+                else:
+                    print "    CANDIDATE '%s' '%s' %f" % (seqword[ 0:(cd[0])], seqword[ (cd[0]+1):], cd[1])
+    if verbose:
+         if best_halfsize == None:
+             print "    BEST None"
+         else:
+             print "    BEST %u" % best_halfsize
     return best_halfsize
 
-def nnp_split_words( seqword):
+def nnp_split_words( seqword, verbose):
     rt = []
-    halfsize = nnp_split( seqword)
+    halfsize = nnp_split( seqword, verbose)
     if halfsize == None:
         return [ seqword ]
     half1 = seqword[ 0:halfsize]
     half2 = seqword[ (halfsize+1):]
-    return nnp_split_words( half1) + nnp_split_words( half2)
+    return nnp_split_words( half1, verbose) + nnp_split_words( half2, verbose)
 
 def parse_tokendef( tk):
     spidx = tk.find('#')
@@ -317,7 +322,7 @@ def get_tagged_tokens( text):
 
 def concat_word( tg):
     if tg[1] == "NNP" or tg[1] == "NN":
-        return ' '.join( nnp_split_words( tg[0]))
+        return ' '.join( nnp_split_words( tg[0], False))
     else:
         return tg[0]
 
@@ -524,7 +529,7 @@ elif cmd == "splitdict" or cmd == "splittest":
     if cmd == "splitdict":
         new_dict = {}
         for key,value in nnp_dict.iteritems():
-            for word in nnp_split_words( key):
+            for word in nnp_split_words( key, False):
                 if word in new_dict:
                     new_dict[ word] += value
                 else:
@@ -533,7 +538,7 @@ elif cmd == "splitdict" or cmd == "splittest":
             print "%s %u" % (key,value)
     else: #cmd == "splittest"
         for key in sys.argv[3:]:
-            for word in nnp_split_words( key.decode('utf-8')):
+            for word in nnp_split_words( key.decode('utf-8'), True):
                 print "%s" % word
 
 elif cmd == "seldict":
