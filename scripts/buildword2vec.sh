@@ -60,16 +60,11 @@ runNLP 26 "26" &
 
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"dict.txt
 rm dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
-$scriptdir/strusnlp.py splitdict "$outprefix"dict.txt > "$outprefix"dict.split0.txt
-$scriptdir/strusnlp.py splitdict "$outprefix"dict.split0.txt > "$outprefix"dict.split1.txt
-$scriptdir/strusnlp.py splitdict "$outprefix"dict.split1.txt > "$outprefix"dict.split2.txt
-$scriptdir/strusnlp.py splitdict "$outprefix"dict.split2.txt > "$outprefix"dict.split3.txt
-mv "$outprefix"dict.split3.txt "$outprefix"dict.txt
-rm "$outprefix"dict.split*.txt
+$scriptdir/strusnlp.py splitdict "$outprefix"dict.txt > "$outprefix"dict.split.txt
 
 buildText() {
 	jobid=$1
-	$scriptdir/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.txt > "$outprefix"docs.word2vec.$jobid.txt
+	$scriptdir/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.split.txt > "$outprefix"docs.word2vec.$jobid.txt
 }
 
 for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
