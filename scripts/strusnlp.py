@@ -54,7 +54,8 @@ def nnp_left_weight( word):
             leftocc += nnp_left_dict[ word[:-1]]
         if word[:-1] in nnp_dict:
             occ += nnp_dict[ word[:-1]]
-    return math.log( 1 + (occ + 1) / (leftocc + 1)),occ,leftocc
+    dv = float( occ + 1) / float(leftocc + 1)
+    return math.log( 1.0 + dv),occ,leftocc,dv
 
 def nnp_right_weight( word):
     occ = 0
@@ -63,7 +64,8 @@ def nnp_right_weight( word):
         rightocc += nnp_right_dict[ word]
     if word in nnp_dict:
         occ += nnp_dict[ word]
-    return math.log( 1 + (occ + 1) / (rightocc + 1)),occ,rightocc
+    dv = float(occ + 1) / float(rightocc + 1)
+    return math.log( 1.0 + dv),occ,rightocc,dv
 
 
 def nnp_split( seqword, verbose):
@@ -82,19 +84,19 @@ def nnp_split( seqword, verbose):
     len2 = seqlen
     while halfsize != -1:
         half1 = seqword[ 0:halfsize]
-        w1,occ1,partocc1 = nnp_left_weight( half1)
+        w1,occ1,partocc1,dv1 = nnp_left_weight( half1)
         len1 += 1
         half2 = seqword[ (halfsize+1):]
-        w2,occ2,partocc2 = nnp_right_weight( half2)
+        w2,occ2,partocc2,dv2 = nnp_right_weight( half2)
         len2 -= 1
         if verbose:
-            print >> sys.stderr, "    WEIGHT '%s' %f %u %u" % (half1, w1,occ1,partocc1)
-            print >> sys.stderr, "    WEIGHT '%s' %f %u %u" % (half2, w2,occ2,partocc2)
+            print >> sys.stderr, "    WEIGHT '%s' %f %u %u %f" % (half1, w1,occ1,partocc1,dv1)
+            print >> sys.stderr, "    WEIGHT '%s' %f %u %u %f" % (half2, w2,occ2,partocc2,dv2)
         candidates.append( [halfsize, w1 + w2] )
         halfsize = seqword.find('_',halfsize+1)
     if seqword in nnp_dict:
         if verbose:
-            print "    FIRST WEIGHT '%s' %f (%u)" % (seqword, math.log( nnp_dict[ seqword]), nnp_dict[ seqword])
+            print >> sys.stderr, "    FIRST WEIGHT '%s' %f (%u)" % (seqword, math.log( nnp_dict[ seqword]), nnp_dict[ seqword])
         candidates.append( [ None, math.log( nnp_dict[ seqword]) ])
     best_halfsize = None
     best_weight = 0.0
@@ -104,14 +106,14 @@ def nnp_split( seqword, verbose):
             best_weight = cd[1]
             if verbose:
                 if cd[0] == None:
-                    print "    CANDIDATE '%s' %f" % (seqword, cd[1])
+                    print >> sys.stderr, "    CANDIDATE '%s' %f" % (seqword, cd[1])
                 else:
-                    print "    CANDIDATE '%s' '%s' %f" % (seqword[ 0:(cd[0])], seqword[ (cd[0]+1):], cd[1])
+                    print >> sys.stderr, "    CANDIDATE '%s' '%s' %f" % (seqword[ 0:(cd[0])], seqword[ (cd[0]+1):], cd[1])
     if verbose:
          if best_halfsize == None:
-             print "    BEST None"
+             print >> sys.stderr, "    BEST None"
          else:
-             print "    BEST %u" % best_halfsize
+             print >> sys.stderr, "    BEST %u" % best_halfsize
     return best_halfsize
 
 def nnp_split_words( seqword, verbose):
@@ -283,7 +285,7 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-#    print "NLP %s" % tagged
+#    print >> sys.stderr, "NLP %s" % tagged
     for tgidx in find_sequence( tagged, [[None,'NNP'],[None,None],[None,'NNP']]):
         if tagged[tgidx+1][0][0].isupper() == True:
             tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
@@ -330,7 +332,7 @@ def concat_phrases( text):
     tagged = get_tagged_tokens( text)
     if not tagged:
         return ""
-#    print "RES %s" % tagged
+#    print >> sys.stderr, "RES %s" % tagged
     rt = concat_word( tagged[0])
     for tg in tagged[1:]:
         rt += " " + concat_word( tg)
