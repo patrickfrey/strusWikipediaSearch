@@ -67,9 +67,8 @@ def nnp_right_weight( word):
     dv = float(occ + 1) / float(rightocc + 1)
     return math.log( 1.0 + dv),occ,rightocc,dv
 
-def nnp_join_weight( occ, partoccmax):
-    dv = float(occ + 1) / float(partoccmax + 1)
-    return 1.0 + math.log( 1.0 + dv)
+def nnp_join_weight( occ):
+    return math.log( float(occ + 1))
 
 def nnp_split( seqword, verbose):
     if verbose:
@@ -85,17 +84,12 @@ def nnp_split( seqword, verbose):
     halfsize = seqword.find('_')
     len1 = 0
     len2 = seqlen
-    partoccmax = 0
     while halfsize != -1:
         half1 = seqword[ 0:halfsize]
         w1,occ1,partocc1,dv1 = nnp_left_weight( half1)
-        if partocc1 > partoccmax:
-            partoccmax = partocc1
         len1 += 1
         half2 = seqword[ (halfsize+1):]
         w2,occ2,partocc2,dv2 = nnp_right_weight( half2)
-        if partocc2 > partoccmax:
-            partoccmax = partocc2
         len2 -= 1
         if verbose:
             print >> sys.stderr, "    WEIGHT '%s' %f %u %u %f" % (half1, w1,occ1,partocc1,dv1)
@@ -104,7 +98,7 @@ def nnp_split( seqword, verbose):
         halfsize = seqword.find('_',halfsize+1)
     if seqword in nnp_dict:
         occ = nnp_dict[ seqword]
-        wjoin = nnp_join_weight( occ, partoccmax)
+        wjoin = nnp_join_weight( occ)
         if verbose:
             print >> sys.stderr, "    FIRST WEIGHT '%s' %f (%u)" % (seqword, wjoin, nnp_dict[ seqword])
         candidates.append( [ None, wjoin ])
