@@ -4,6 +4,7 @@
 outprefix=origdata/
 inprefix=origdata/
 srcprefix=github/strusWikipediaSearch/
+w2wprefix=github/word2vec/bin
 scriptdir="$srcprefix"scripts
 # TOIMUB:
 # outprefix=nlpdata/
@@ -74,6 +75,6 @@ done
 
 cat "$outprefix"docs.word2vec.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"docs.word2vec.txt
 
-../word2vec/bin/word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 4 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -save-vocab vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output "$outprefix"vectors.bin
+"$w2wprefix"word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 4 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -save-vocab vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output "$outprefix"vectors.bin
 
 
