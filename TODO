@@ -1,0 +1,5 @@
+- add a '$' to verbs, so they can be stemmed in the query pattern, e.g. "moved$_to"
+
+
+
+
