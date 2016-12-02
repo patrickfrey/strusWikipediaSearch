@@ -68,7 +68,7 @@ def nnp_right_weight( word):
     return math.log( 1.0 + dv),occ,rightocc,dv
 
 def nnp_join_weight( occ, seqlen):
-    return math.log( float(occ + 1) / float( seqlen))
+    return math.log( 1.0 + float(occ + 1) / float( seqlen))
 
 def nnp_split( seqword, verbose):
     if verbose:
