@@ -32,11 +32,15 @@ def fill_nnp_split_dict():
         halfsize = key.find('_')
         while halfsize != -1:
             leftkey = key[0:halfsize]
+            if leftkey[-1] == '.':
+                leftkey = leftkey[ 0:-1]
             if leftkey in nnp_left_dict:
                 nnp_left_dict[ leftkey] += value
             else:
                 nnp_left_dict[ leftkey] = value
             rightkey = key[(halfsize+1):]
+            if rightkey[-1] == '.':
+                rightkey = rightkey[ 0:-1]
             if rightkey in nnp_right_dict:
                 nnp_right_dict[ rightkey] += value
             else:
@@ -78,6 +82,8 @@ def nnp_split( seqword, verbose):
     if verbose:
         print >> sys.stderr, "SPLIT '%s'" % seqword
     seqlen = 1
+    if seqword[-1] == '.':
+        seqword = seqword[ 0:-1]
     if seqword[0] == '_' or seqword in title_dict:
         return None
     halfsize = seqword.find('_')
@@ -90,7 +96,12 @@ def nnp_split( seqword, verbose):
     len2 = seqlen
     while halfsize != -1:
         half1 = seqword[ 0:halfsize]
+        if half1[-1] == '.':
+            half1 = half1[ 0:-1]
         half2 = seqword[ (halfsize+1):]
+        if half2[-1] == '.':
+            half2 = half2[ 0:-1]
+
         if half1[0].islower() and half2[0].isupper():
             if verbose:
                 print >> sys.stderr, "    RULE up follow lo: '%s' '%s'" % (half1,half2)
@@ -335,10 +346,21 @@ def get_tagged_tokens( text):
     return rt
 
 def concat_word( tg):
-    if tg[1] == "NNP" or tg[1] == "NN":
-        return ' '.join( nnp_split_words( tg[0], False))
+    word = tg[0]
+    if word == '.':
+        word = word[ 0:-1]
+    if tg[1] == "NNP":
+        return ' '.join( nnp_split_words( word, False))
+    if tg[1] == "NN":
+        if len(word) >= 2 and word[0].isupper() and word[1].islower():
+            word = word[0].lower() + word[1:]
+        return ' '.join( nnp_split_words( word, False))
+    if tg[1] == "PRP":
+        return word
     else:
-        return tg[0]
+        if len(word) >= 2 and word[0].isupper() and word[1].islower():
+            word = word[0].lower() + word[1:]
+        return word
 
 def concat_phrases( text):
     tagged = get_tagged_tokens( text)
