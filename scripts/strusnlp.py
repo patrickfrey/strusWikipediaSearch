@@ -69,7 +69,7 @@ def nnp_right_weight( word):
 
 def nnp_join_weight( occ, seqlen):
     if seqlen == 1:
-        return math.log( float(occ + 1)
+        return math.log( float(occ + 1))
     else:
         return math.log( float(occ + 1) / float( seqlen - 1))
 
