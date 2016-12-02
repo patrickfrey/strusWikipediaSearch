@@ -346,7 +346,7 @@ def get_tagged_tokens( text):
             rt.append( tkdef)
     return rt
 
-digits_pattern = re.compile( "(\d\d\d\d)(\d+)")
+digits_pattern = re.compile( "(\d\d)(\d\d\d+)")
 
 def concat_word( tg):
     word = tg[0]
