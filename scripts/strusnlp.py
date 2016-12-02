@@ -352,8 +352,9 @@ def concat_word( tg):
     word = tg[0]
     result = digits_pattern.search(word)
     while result != None:
-        repl = "".ljust( len(result.group(1)), '#')
-        word = word[ 0:result.start()] + repl + word[ result.end():]
+        match = result.group(1)
+        repl = "".ljust( len(match), '#')
+        word = word[ 0:match.start()] + repl + word[ match.end():]
         result = digits_pattern.search( word)
     if word == '.':
         word = word[ 0:-1]
