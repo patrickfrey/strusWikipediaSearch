@@ -68,7 +68,10 @@ def nnp_right_weight( word):
     return math.log( 1.0 + dv),occ,rightocc,dv
 
 def nnp_join_weight( occ, seqlen):
-    return math.log( 1.0 + float(occ + 1) / float( seqlen))
+    if seqlen == 1:
+        return math.log( float(occ + 1)
+    else:
+        return math.log( float(occ + 1) / float( seqlen - 1))
 
 def nnp_split( seqword, verbose):
     if verbose:
@@ -86,9 +89,13 @@ def nnp_split( seqword, verbose):
     len2 = seqlen
     while halfsize != -1:
         half1 = seqword[ 0:halfsize]
+        half2 = seqword[ (halfsize+1):]
+        if half1[0].islower() and half2[0].isupper():
+            if verbose:
+                print >> sys.stderr, "    RULE up follow lo: '%s' '%s'" % (half1,half2)
+            return halfsize
         w1,occ1,partocc1,dv1 = nnp_left_weight( half1)
         len1 += 1
-        half2 = seqword[ (halfsize+1):]
         w2,occ2,partocc2,dv2 = nnp_right_weight( half2)
         len2 -= 1
         if verbose:

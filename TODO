@@ -1,4 +1,10 @@
-- add a '$' to verbs, so they can be stemmed in the query pattern, e.g. "moved$_to"
+- word2vec: add a '$' to verbs, so they can be stemmed in the query pattern, e.g. "moved$_to"
+- word2vec: depending on word type make lowercase first letter in sentence
+- word2vec: clean input many items with dot '.' at end
+- word2vec: remove lovercase adjectives in front of uppercase Names
+
+
+
 
 
 
