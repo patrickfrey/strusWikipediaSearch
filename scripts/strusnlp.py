@@ -346,15 +346,16 @@ def get_tagged_tokens( text):
             rt.append( tkdef)
     return rt
 
-digits_pattern = re.compile( "\d\d\d\d(\d+)")
+digits_pattern = re.compile( "(\d\d\d\d)(\d+)")
 
 def concat_word( tg):
     word = tg[0]
     result = digits_pattern.search(word)
     while result != None:
-        match = result.group(1)
+        prev = result.group(1)
+        match = result.group(2)
         repl = "".ljust( len(match), '#')
-        word = word[ 0:match.start()] + repl + word[ match.end():]
+        word = word[ 0:result.start()] + prev + repl + word[ result.end():]
         result = digits_pattern.search( word)
     if word == '.':
         word = word[ 0:-1]
