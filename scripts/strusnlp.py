@@ -490,13 +490,13 @@ def read_dict( dictfile):
                 dict[ key] = int(tokcnt)
     return dict
 
-def read_titles( titlefile)
+def read_titles( titlefile):
     dict = {}
     for line in codecs.open( titlefile, "r", encoding='utf-8'):
         sline = line.strip()
         if sline:
             key = sline.decode('utf-8')
-                dict[ key] = 1
+            dict[ key] = 1
     return dict
 
 def print_usage():
