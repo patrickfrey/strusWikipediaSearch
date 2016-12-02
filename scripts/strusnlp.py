@@ -23,6 +23,7 @@ sys.setdefaultencoding('utf-8')
 nnp_dict = {}
 nnp_left_dict = {}
 nnp_right_dict = {}
+title_dict = {}
 
 def fill_nnp_split_dict():
     for key,value in nnp_dict.iteritems():
@@ -69,15 +70,15 @@ def nnp_right_weight( word):
 
 def nnp_join_weight( occ, seqlen):
     if seqlen == 1:
-        return math.log( float(occ + 1))
+        return math.log( float( occ + 1))
     else:
-        return math.log( float(occ + 1) / float( seqlen - 1))
+        return math.log( float( occ + 1) / float( seqlen - 1))
 
 def nnp_split( seqword, verbose):
     if verbose:
         print >> sys.stderr, "SPLIT '%s'" % seqword
     seqlen = 1
-    if seqword[0] == '_':
+    if seqword[0] == '_' or seqword in title_dict:
         return None
     halfsize = seqword.find('_')
     while halfsize != -1:
@@ -105,7 +106,7 @@ def nnp_split( seqword, verbose):
         halfsize = seqword.find('_',halfsize+1)
     if seqword in nnp_dict:
         occ = nnp_dict[ seqword]
-        wjoin = nnp_join_weight( occ, seqlen)
+        wjoin = nnp_join_weight( seqword, occ, seqlen)
         if verbose:
             print >> sys.stderr, "    FIRST WEIGHT '%s' %f (%u)" % (seqword, wjoin, nnp_dict[ seqword])
         candidates.append( [ None, wjoin ])
@@ -467,6 +468,15 @@ def read_dict( dictfile):
                 dict[ key] = int(tokcnt)
     return dict
 
+def read_titles( titlefile)
+    dict = {}
+    for line in codecs.open( titlefile, "r", encoding='utf-8'):
+        sline = line.strip()
+        if sline:
+            key = sline.decode('utf-8')
+                dict[ key] = 1
+    return dict
+
 def print_usage():
     print "usage strusnlp.py <command> ..."
     print "<command>:"
@@ -479,19 +489,19 @@ def print_usage():
     print "        Output tokens of the form \"<type>#<value>\", e.g. \"DT#the\"."
     print "    joindict { <dictfile> }:"
     print "        Join several dictionaries passed as arguments"
-    print "    splitdict <dictfile>:"
+    print "    splitdict <dictfile> [<titlesfile>]:"
     print "        Try to split entries in the dictionary."
     print "        Use the term occurrence statistics to make decisions"
-    print "    splittest <dictfile> <word>:"
+    print "    splittest <dictfile> <titlesfile> <word>:"
     print "        Try to split the term <word> (for testing)."
     print "        Use the term occurrence statistics to make decisions"
     print "    seldict <dictfile> [<mincnt>]:"
     print "        Select the dictionary elements with a higher or equal count than <mincnt>."
     print "        Default for <mincnt> is 1"
-    print "    concat <infile> [<dictfile>]:"
+    print "    concat <infile> [<dictfile>] [<titlesfile>]:"
     print "        Produce phrases from NLP output and with help of a dictionary."
     print "    markseq <infile> <sequence...> <marker>:"
-    print "        Marks a seuqence of types in the NLP dump with a start string <marker>."
+    print "        Marks a sequence of types in the NLP dump with a start string <marker>."
 
 if cmd == None or cmd == '-h' or cmd == '--help':
     print_usage()
@@ -539,6 +549,8 @@ elif cmd == "joindict":
 elif cmd == "splitdict" or cmd == "splittest":
     nnp_dict = read_dict( sys.argv[2])
     fill_nnp_split_dict()
+    if len(sys.argv) > 3:
+        title_dict = read_titles( sys.argv[3])
     if cmd == "splitdict":
         new_dict = {}
         for key,value in nnp_dict.iteritems():
@@ -568,6 +580,8 @@ elif cmd == "concat":
     if len(sys.argv) > 3:
         nnp_dict = read_dict( sys.argv[3])
         fill_nnp_split_dict()
+    if len(sys.argv) > 4:
+        title_dict = read_titles( sys.argv[4])
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
         print concat_phrases( line.encode('utf-8'))

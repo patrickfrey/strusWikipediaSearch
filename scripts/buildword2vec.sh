@@ -16,11 +16,15 @@ runNLP() {
 	jobid=$1
 	infiles=$2
 	dmp_outputfile="$outprefix""docs.dump.$jobid.txt"
+	dmp_titlefile="$outprefix""title.$jobid.txt"
 	nlp_outputfile="$outprefix""docs.nlp.$jobid.txt"
 	dic_outputfile="$outprefix""dict.$jobid.txt"
 	rm $dmp_outputfile
+	rm $dmp_titlefile
 	rm $nlp_outputfile
-	for dd in $infiles ; do echo "-------- $dd"; $scriptdir/nlpdump.sh "$inprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $srcprefix; done
+	for dd in $infiles ; do echo "-------- $dd";
+		$scriptdir/nlpdump.sh "$inprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $dmp_titlefile $srcprefix
+	done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	rm $dmp_outputfile
 	$scriptdir/strusnlp.py makedict $nlp_outputfile 3 > $dic_outputfile
