@@ -14,6 +14,7 @@ import sys
 import io
 import codecs
 import math
+import re
 from sets import Set
 from copy import copy
 
@@ -345,8 +346,15 @@ def get_tagged_tokens( text):
             rt.append( tkdef)
     return rt
 
+digits_pattern = re.compile( "\d\d\d\d(\d+)")
+
 def concat_word( tg):
     word = tg[0]
+    result = digits_pattern.search(word)
+    while result != None:
+        repl = "".ljust( len(result.group(1)), '#')
+        word = word[ 0:result.start()] + repl + word[ result.end():]
+        result = digits_pattern.search( word)
     if word == '.':
         word = word[ 0:-1]
     if tg[1] == "NNP":
