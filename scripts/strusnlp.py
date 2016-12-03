@@ -348,8 +348,7 @@ def get_tagged_tokens( text):
 
 digits_pattern = re.compile( "(\d\d)(\d\d\d+)")
 
-def concat_word( tg):
-    word = tg[0]
+def normalize_numbers( word):
     result = digits_pattern.search(word)
     while result != None:
         prev = result.group(1)
@@ -357,14 +356,35 @@ def concat_word( tg):
         repl = "".ljust( len(match), '#')
         word = word[ 0:result.start()] + prev + repl + word[ result.end():]
         result = digits_pattern.search( word)
+    return word
+
+def separate_affix_s( word):
+    if len(word) > 4 and word[-1] == 's':
+        if word[:-1] in nnp_dict:
+            occ_with_s = 0
+            occ_without_s = nnp_dict[ word[:-1]]
+            if word in nnp_dict:
+                occ_with_s = nnp_dict[ word]
+            if occ_without_s > occ_with_s * 3:
+                return word[:-1] + " s"
+    return word
+
+def concat_word( tg):
+    word = normalize_numbers( tg[0])
     if word == '.':
         word = word[ 0:-1]
     if tg[1] == "NNP":
-        return ' '.join( nnp_split_words( word, False))
+        rt = ''
+        for part in nnp_split_words( word, False):
+            rt += ' ' + separate_affix_s( part)
+        return rt
     if tg[1] == "NN":
         if len(word) >= 2 and word[0].isupper() and word[1].islower():
             word = word[0].lower() + word[1:]
-        return ' '.join( nnp_split_words( word, False))
+        rt = ''
+        for part in nnp_split_words( word, False):
+            rt += ' ' + separate_affix_s( part)
+        return rt
     if tg[1] == "PRP":
         return word
     else:
