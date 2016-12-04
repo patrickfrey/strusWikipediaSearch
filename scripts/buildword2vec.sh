@@ -24,7 +24,8 @@ runNLP() {
 	rm $nlp_outputfile
 	for dd in $infiles; do echo "PROCESS $dd"; $scriptdir/nlpdump.sh "$inprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $dmp_titlefile $srcprefix; done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
-	rm $dmp_outputfile
+	mkdir -p "$outprefix"data
+	mv $dmp_outputfile "$outprefix"data/
 	$scriptdir/strusnlp.py makedict $nlp_outputfile > $dic_outputfile
 }
 
