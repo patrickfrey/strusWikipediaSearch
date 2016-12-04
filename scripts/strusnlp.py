@@ -311,7 +311,7 @@ def tag_tokens_NLP( text):
     tagged = nltk.pos_tag( tokens)
 #    print >> sys.stderr, "NLP %s" % tagged
     for tgidx in find_sequence( tagged, [[None,'NNP'],[None,None],[None,'NNP']]):
-        if tagged[tgidx+1][0][0].isupper() == True:
+        if tagged[tgidx+1][0][0].isupper() == True or tagged[tgidx+1][1] == "IN":
             tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
     for tgidx in find_sequence( tagged, [[None,'NNP'],[["de","del","della","di","du","le","la","von","der","ibn","bin","al"],None],[None,'NNP']]):
         tagged[tgidx+1] = [ tagged[tgidx+1][0],"NNP" ]
@@ -324,6 +324,7 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"NN"], ["ns",None], "NN", "")
     tagged = concat_pairs( tagged, [None,"NN"], ["s",None], "NN", "")
     tagged = concat_pairs( tagged, [None,"JJ"], [None,"NNP"], "NNP", "_")
+    tagged = concat_pairs( tagged, ["The","DT"], [None,"NNP"], "NNP", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["I","PRP"], "NNP", "_")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ian","JJ"], "NNP", "")
     tagged = concat_pairs( tagged, [None,"NNP"], ["ese","JJ"], "NNP", "")

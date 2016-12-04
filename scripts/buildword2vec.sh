@@ -27,7 +27,7 @@ runNLP() {
 	done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	rm $dmp_outputfile
-	$scriptdir/strusnlp.py makedict $nlp_outputfile 3 > $dic_outputfile
+	$scriptdir/strusnlp.py makedict $nlp_outputfile > $dic_outputfile
 }
 
 # runNLP 1 "00 13 08 01 14 26 18" &
@@ -65,9 +65,9 @@ runNLP 26 "26" &
 
 cat "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt | sort | uniq > "$outprefix"title.txt
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"dict.txt
-rm dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
-rm title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
 $scriptdir/strusnlp.py splitdict "$outprefix"dict.txt "$outprefix"title.txt > "$outprefix"dict.split.txt
+rm "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
+rm "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
 
 buildText() {
 	jobid=$1
