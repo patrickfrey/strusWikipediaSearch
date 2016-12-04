@@ -118,7 +118,7 @@ def nnp_split( seqword, verbose):
         halfsize = seqword.find('_',halfsize+1)
     if seqword in nnp_dict:
         occ = nnp_dict[ seqword]
-        wjoin = nnp_join_weight( seqword, occ, seqlen)
+        wjoin = nnp_join_weight( occ, seqlen)
         if verbose:
             print >> sys.stderr, "    FIRST WEIGHT '%s' %f (%u)" % (seqword, wjoin, nnp_dict[ seqword])
         candidates.append( [ None, wjoin ])
