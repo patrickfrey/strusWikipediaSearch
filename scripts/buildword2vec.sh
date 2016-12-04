@@ -22,9 +22,7 @@ runNLP() {
 	rm $dmp_outputfile
 	rm $dmp_titlefile
 	rm $nlp_outputfile
-	for dd in $infiles ; do echo "-------- $dd";
-		$scriptdir/nlpdump.sh "$inprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $dmp_titlefile $srcprefix
-	done
+	for dd in $infiles; do echo "PROCESS $dd"; $scriptdir/nlpdump.sh "$inprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $dmp_titlefile $srcprefix; done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	rm $dmp_outputfile
 	$scriptdir/strusnlp.py makedict $nlp_outputfile > $dic_outputfile
@@ -66,8 +64,9 @@ runNLP 26 "26" &
 cat "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt | sort | uniq > "$outprefix"title.txt
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"dict.txt
 $scriptdir/strusnlp.py splitdict "$outprefix"dict.txt "$outprefix"title.txt > "$outprefix"dict.split.txt
-rm "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
-rm "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt
+mkdir -p "$outprefix"data
+mv "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt "$outprefix"data/
+mv "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt "$outprefix"data/
 
 buildText() {
 	jobid=$1
