@@ -306,7 +306,7 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
             raise
     return rt
 
-def elim_plural( tagged)
+def elim_plural( tagged):
     rt = []
     for tg in tagged:
         if tg[1] == "NNS":
