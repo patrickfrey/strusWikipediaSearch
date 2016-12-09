@@ -306,9 +306,21 @@ def tag_first( tagged, elem0, elem1, skiptypes, joinchr):
             raise
     return rt
 
+def elim_plural( tagged)
+    rt = []
+    for tg in tagged:
+        if tg[1] == "NNS":
+            rt.append( [ tg[0], "NN" ])
+        elif tg[1] == "NNPS":
+            rt.append( [ tg[0], "NNP" ])
+        else:
+            rt.append( tg)
+    return rt
+
 def tag_tokens_NLP( text):
     tokens = nltk.word_tokenize( text)
-    tagged = nltk.pos_tag( tokens)
+    tagged = elim_plural( nltk.pos_tag( tokens))
+
 #    print >> sys.stderr, "NLP %s" % tagged
     for tgidx in find_sequence( tagged, [[None,'NNP'],[None,None],[None,'NNP']]):
         if tagged[tgidx+1][0][0].isupper() == True or tagged[tgidx+1][1] == "IN":
@@ -334,8 +346,6 @@ def tag_tokens_NLP( text):
     tagged = concat_pairs( tagged, [None,"JJ"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NN"], [None,"NN"], "NN", "_")
     tagged = concat_sequences( tagged, [None,"NNP"], [None,"NNP"], "NNP", "_")
-    tagged = concat_pairs( tagged, [None,"NN"], [None,"NNS"], "NN", "_")
-    tagged = concat_pairs( tagged, [None,"NNP"], [None,"NNPS"], "NNP", "_")
     return tagged
 
 def get_tagged_tokens( text):
@@ -372,8 +382,8 @@ def separate_affix_s( word):
 
 def concat_word( tg):
     word = normalize_numbers( tg[0])
-    if word == '.':
-        word = word[ 0:-1]
+    if word[-1] == '.':
+        word = word[ 0:-1] + " ."
     if tg[1] == "NNP":
         rt = ''
         for part in nnp_split_words( word, False):
@@ -615,7 +625,7 @@ elif cmd == "splitdict" or cmd == "splittest":
         for key,value in new_dict.iteritems():
             print "%s %u" % (key,value)
     else: #cmd == "splittest"
-        for key in sys.argv[3:]:
+        for key in sys.argv[4:]:
             for word in nnp_split_words( key.decode('utf-8'), True):
                 print "%s" % word
 
