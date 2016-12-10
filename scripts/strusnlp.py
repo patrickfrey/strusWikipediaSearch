@@ -77,7 +77,7 @@ def nnp_join_weight( occ, seqlen):
     if seqlen == 1:
         return math.log( float( occ + 1))
     else:
-        return math.log( float( occ + 1) / float( seqlen - 1))
+        return math.log( float( occ + 1) / float( seqlen))
 
 def nnp_split( seqword, verbose):
     if verbose:
@@ -430,7 +430,16 @@ def fill_dict( text):
     if tagged:
         for tg in tagged:
             if tg[1] == "NNP" or tg[1] == "NN":
-                key = tg[0].decode('utf-8')
+                key = tg[0]
+                if key in nnp_dict:
+                    nnp_dict[ key] += 1
+                else:
+                    nnp_dict[ key] = 1
+            elif tg[1] == "NNPS" or tg[1] == "NNS":
+                if tg[0][-1] == 's':
+                    key = tg[0][:-1]
+                else:
+                    key = tg[0]
                 if key in nnp_dict:
                     nnp_dict[ key] += 1
                 else:
@@ -519,24 +528,22 @@ if len( sys.argv) > 1:
 def read_dict( dictfile):
     dict = {}
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
-        sline = line.strip()
+        sline = line.decode('utf-8').strip()
         if sline:
             if sline.find(' ') == -1:
                 print >> sys.stderr, "IGNORE [%s]" % sline
-            tokstr,tokcnt = sline.split()
-            key = tokstr.decode('utf-8')
+            key,cnt = sline.split()
             if key in dict:
-                dict[ key] = dict[ key] + int(tokcnt)
+                dict[ key] = dict[ key] + int(cnt)
             else:
-                dict[ key] = int(tokcnt)
+                dict[ key] = int(cnt)
     return dict
 
 def read_titles( titlefile):
     dict = {}
     for line in codecs.open( titlefile, "r", encoding='utf-8'):
-        sline = line.strip()
-        if sline:
-            key = sline.decode('utf-8')
+        key = line.decode('utf-8').strip()
+        if key:
             dict[ key] = 1
     return dict
 
@@ -572,8 +579,9 @@ if cmd == None or cmd == '-h' or cmd == '--help':
 elif cmd == "makedict":
     infile = sys.argv[2]
     linecnt = 0
-    for line in codecs.open( infile, "r", encoding='utf-8'):
-        if line.strip():
+    for lineitr in codecs.open( infile, "r", encoding='utf-8'):
+        line = lineitr.decode('utf-8').strip()
+        if line:
             fill_dict( line)
             linecnt += 1
             if linecnt % 10000 == 0:
@@ -588,8 +596,9 @@ elif cmd == "makedict":
 elif cmd == "nlp":
     infile = sys.argv[2]
     linecnt = 0
-    for line in codecs.open( infile, "r", encoding='utf-8'):
-        if line.strip():
+    for lineitr in codecs.open( infile, "r", encoding='utf-8'):
+        line = lineitr.decode('utf-8').strip()
+        if line:
             print "%s" % tag_NLP( tag_phrases( line))
             linecnt += 1
             if linecnt % 10000 == 0:
@@ -598,14 +607,14 @@ elif cmd == "nlp":
 elif cmd == "joindict":
     infile = []
     for dictfile in sys.argv[2:]:
-        for line in codecs.open( dictfile, "r", encoding='utf-8'):
-            if line.strip():
-                tokstr,tokcnt = line.strip().split()
-                key = tokstr.decode('utf-8')
+        for lineitr in codecs.open( dictfile, "r", encoding='utf-8'):
+            line = lineitr.decode('utf-8').strip()
+            if line:
+                key,cnt = line.split()
                 if key in nnp_dict:
-                    nnp_dict[ key] = nnp_dict[ key] + int(tokcnt)
+                    nnp_dict[ key] = nnp_dict[ key] + int(cnt)
                 else:
-                    nnp_dict[ key] = int(tokcnt)
+                    nnp_dict[ key] = int(cnt)
     for key,value in nnp_dict.iteritems():
         print "%s %u" % (key,value)
 
@@ -647,7 +656,7 @@ elif cmd == "concat":
         title_dict = read_titles( sys.argv[4])
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
-        print concat_phrases( line.encode('utf-8'))
+        print concat_phrases( line.decode('utf-8'))
         linecnt += 1
         if linecnt % 10000 == 0:
             print >> sys.stderr, "processed %u lines" %linecnt
@@ -661,7 +670,7 @@ elif cmd == "markseq":
     marker = sys.argv[ -1]
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
-        print mark_phrases( line.encode('utf-8'), sequence, marker)
+        print mark_phrases( line.decode('utf-8'), sequence, marker)
         linecnt += 1
         if linecnt % 10000 == 0:
             print >> sys.stderr, "processed %u lines" %linecnt
@@ -674,7 +683,7 @@ elif cmd == "getseq":
     sequence = parse_sequence_pattern( sys.argv[ 3:])
     linecnt = 0
     for line in codecs.open( infile, "r", encoding='utf-8'):
-        for phrase in get_phrases( line.encode('utf-8'), sequence):
+        for phrase in get_phrases( line.decode('utf-8'), sequence):
             print "%s" % phrase
         linecnt += 1
         if linecnt % 10000 == 0:
