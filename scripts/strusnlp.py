@@ -371,7 +371,10 @@ def normalize_numbers( word):
 
 def separate_affix_s( word):
     if len(word) > 4 and word[-1] == 's':
-        if word[:-1] in nnp_dict:
+        if word[-2] == '_':
+            if word[:-2] in nnp_dict:
+                return word[:-2] + " s"
+        elif word[:-1] in nnp_dict:
             occ_with_s = 0
             occ_without_s = nnp_dict[ word[:-1]]
             if word in nnp_dict:
