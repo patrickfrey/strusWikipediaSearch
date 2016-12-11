@@ -29,59 +29,35 @@ runNLP() {
 	$scriptdir/strusnlp.py makedict $nlp_outputfile > $dic_outputfile
 }
 
-# runNLP 1 "00 13 08 01 14 26 18" &
-# runNLP 2 "03 16 21 04 17 02 15" &
-# runNLP 3 "06 19 11 07 20 05 12" &
-# runNLP 4 "09 22 24 10 23 25" &
+runNLP 00 "00 01 02 03" &
+runNLP 01 "04 05 06 07" &
+runNLP 02 "08 09 10 11" &
+runNLP 03 "12 13 14 15" &
+runNLP 04 "16 17 18 19" &
+runNLP 05 "20 21 22 23" &
+runNLP 06 "24 25 26" &
 
-runNLP 00 "00" &
-runNLP 01 "01" &
-runNLP 02 "02" &
-runNLP 03 "03" &
-runNLP 04 "04" &
-runNLP 05 "05" &
-runNLP 06 "06" &
-runNLP 07 "07" &
-runNLP 08 "08" &
-runNLP 09 "09" &
-runNLP 10 "10" &
-runNLP 11 "11" &
-runNLP 12 "12" &
-runNLP 13 "13" &
-runNLP 14 "14" &
-runNLP 15 "15" &
-runNLP 16 "16" &
-runNLP 17 "17" &
-runNLP 18 "18" &
-runNLP 19 "19" &
-runNLP 20 "20" &
-runNLP 21 "21" &
-runNLP 22 "22" &
-runNLP 23 "23" &
-runNLP 24 "24" &
-runNLP 25 "25" &
-runNLP 26 "26" &
-
-cat "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt | sort | uniq > "$outprefix"title.txt
-$scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"dict.txt
+#,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+cat "$outprefix"title.{00,01,02,03,04,05,06}.txt | sort | uniq > "$outprefix"title.txt
+$scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06}.txt > "$outprefix"dict.txt
 $scriptdir/strusnlp.py splitdict "$outprefix"dict.txt "$outprefix"title.txt > "$outprefix"dict.split.txt
 mkdir -p "$outprefix"data
-mv "$outprefix"dict.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt "$outprefix"data/
-mv "$outprefix"title.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt "$outprefix"data/
+mv "$outprefix"dict.{00,01,02,03,04,05,06}.txt "$outprefix"data/
+mv "$outprefix"title.{00,01,02,03,04,05,06}.txt "$outprefix"data/
 
 buildText() {
 	jobid=$1
 	$scriptdir/strusnlp.py concat "$outprefix"docs.nlp.$jobid.txt "$outprefix"dict.split.txt "$outprefix"title.txt > "$outprefix"docs.word2vec.$jobid.txt
 }
 
-for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+for dd in 00 01 02 03 04 05 06
 do
 	buildText $dd
 done
 
-cat "$outprefix"docs.word2vec.{00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26}.txt > "$outprefix"docs.word2vec.txt
+cat "$outprefix"docs.word2vec.{00,01,02,03,04,05,06}.txt > "$outprefix"docs.word2vec.txt
 
-"$w2wprefix"word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 5 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab "$outprefix"vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output "$outprefix"vectors.bin
+"$w2wprefix"word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab "$outprefix"vocab.txt -cbow 0 -train "$outprefix"docs.word2vec.txt -output "$outprefix"vectors.bin
 
 strusCreateVsm -S "$srcprefix"config/vsm.conf -f "$outprefix"vectors.bin
 strusBuildVsm -S "$srcprefix"config/vsm.conf
