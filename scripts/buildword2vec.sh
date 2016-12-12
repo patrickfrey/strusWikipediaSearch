@@ -6,11 +6,6 @@ inprefix=origdata/
 srcprefix=github/strusWikipediaSearch/
 w2wprefix=github/word2vec/bin/
 scriptdir="$srcprefix"scripts
-# TOIMUB:
-# outprefix=nlpdata/
-# inprefix=data/
-# srcprefix=
-# scriptdir="$srcprefix"scripts
 
 runNLP() {
 	jobid=$1
