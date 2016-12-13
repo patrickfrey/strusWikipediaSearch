@@ -7,6 +7,13 @@ srcprefix=github/strusWikipediaSearch/
 w2wprefix=github/word2vec/bin/
 scriptdir="$srcprefix"scripts
 
+# TOIMUB:
+outprefix=vecdata/
+inprefix=vecdata/
+srcprefix=strusWikipediaSearch/
+w2wprefix=word2vec/bin/
+scriptdir="$srcprefix"scripts
+
 runNLP() {
 	jobid=$1
 	infiles=$2
@@ -56,4 +63,30 @@ cat "$outprefix"docs.word2vec.{00,01,02,03,04,05,06}.txt > "$outprefix"docs.word
 
 strusCreateVsm -S "$srcprefix"config/vsm.conf -f "$outprefix"vectors.bin
 strusBuildVsm -S "$srcprefix"config/vsm.conf
+
+# BUILD DYM AND CONCEPTS 
+conceptfile="$outprefix"conceptrules.txt
+dymfile="$outprefix"dymitems.txt
+dymdocs="$outprefix"dymitems.xml
+
+createDymXML()
+{
+	echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > $2
+	echo '<list>' >> $2
+	cat $1 | awk '{print "<item>" $0 "</item>"}' >> $2
+	echo '</list>' >> $2
+}
+
+rm -Rf "$outprefix"dymitems
+mkdir -p "$outprefix"dymitems
+strusInspectVsm -S "$srcprefix"/vsm.conf featname > $dymfile | awk '{print $2}' | sed 's/_/ /g' | split -l 100000 - "$outprefix"dymitems/doc
+for ff in `find "$outprefix"dymitems/doc -type f`; mv $ff $ff.txt; do createDymXML $ff.txt $ff.xml; done
+rm "$outprefix"dymitems/*.txt
+
+strusDestroy -s "path=storage_dym"
+strusCreate -s "path=storage_dym;max_open_files=256;write_buffer_size=512K;block_size=4K"
+time -p strusInsert -L error_insert_dym.log -s "path=storage;max_open_files=256;write_buffer_size=512K;block_size=4K" -R resources -m analyzer_wikipedia_search -f 1 -c 60000 -t 8 -x "xml" "$srcprefix"config/config/dym.ana "$outprefix"dymitems/
+
+strusInspectVsm -S "$srcprefix"vsm.conf confeatname | $scriptdir/createConceptRules.pl > $conceptfile
+
 

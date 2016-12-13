@@ -535,11 +535,12 @@ def read_dict( dictfile):
         if sline:
             if sline.find(' ') == -1:
                 print >> sys.stderr, "IGNORE [%s]" % sline
-            key,cnt = sline.split()
-            if key in dict:
-                dict[ key] = dict[ key] + int(cnt)
             else:
-                dict[ key] = int(cnt)
+                key,cnt = sline.split()
+                if key in dict:
+                    dict[ key] = dict[ key] + int(cnt)
+                else:
+                    dict[ key] = int(cnt)
     return dict
 
 def read_titles( titlefile):
@@ -613,11 +614,12 @@ elif cmd == "joindict":
         for lineitr in codecs.open( dictfile, "r", encoding='utf-8'):
             line = lineitr.decode('utf-8').strip()
             if line:
-                key,cnt = line.split()
-                if key in nnp_dict:
-                    nnp_dict[ key] = nnp_dict[ key] + int(cnt)
-                else:
-                    nnp_dict[ key] = int(cnt)
+                if sline.find(' ') != -1:
+                    key,cnt = line.split()
+                    if key in nnp_dict:
+                        nnp_dict[ key] = nnp_dict[ key] + int(cnt)
+                    else:
+                        nnp_dict[ key] = int(cnt)
     for key,value in nnp_dict.iteritems():
         print "%s %u" % (key,value)
 
