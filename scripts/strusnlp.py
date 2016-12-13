@@ -631,17 +631,21 @@ elif cmd == "splitdict" or cmd == "splittest":
         title_dict = read_titles( sys.argv[3])
     if cmd == "splitdict":
         new_dict = {}
-        for key,value in nnp_dict.iteritems():
-            keysplit = nnp_split_words( key, False)
-            if len(keysplit) == 1 and keysplit[0] == key:
-                pass
-            else:
-                for word in keysplit:
-                    if word in new_dict:
-                        new_dict[ word] += value
+        maxcount = 8
+        while maxcount >= 2:
+            for key,value in nnp_dict.iteritems():
+                if key.count('_') >= maxcount:
+                    keysplit = nnp_split_words( key, False)
+                    if len(keysplit) == 1 and keysplit[0] == key:
+                        pass
                     else:
-                        new_dict[ word] = value
-                del nnp_dict[ key]
+                        for word in keysplit:
+                            if word in new_dict:
+                                new_dict[ word] += value
+                            else:
+                                new_dict[ word] = value
+                    del nnp_dict[ key]
+            maxcount -= 1
         for key,value in new_dict.iteritems():
             print "%s %u" % (key,value)
     else: #cmd == "splittest"
