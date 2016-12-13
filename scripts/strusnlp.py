@@ -631,9 +631,9 @@ elif cmd == "splitdict" or cmd == "splittest":
         title_dict = read_titles( sys.argv[3])
     if cmd == "splitdict":
         new_dict = {}
-        delkeys = []
         maxcount = 8
         while maxcount >= 1:
+            delkeys = []
             for key,value in nnp_dict.iteritems():
                 if key.count('_') >= maxcount:
                     keysplit = nnp_split_words( key, False)
