@@ -632,11 +632,16 @@ elif cmd == "splitdict" or cmd == "splittest":
     if cmd == "splitdict":
         new_dict = {}
         for key,value in nnp_dict.iteritems():
-            for word in nnp_split_words( key, False):
-                if word in new_dict:
-                    new_dict[ word] += value
-                else:
-                    new_dict[ word] = value
+            keysplit = nnp_split_words( key, False)
+            if len(keysplit) == 1 and keysplit[0] == key:
+                pass
+            else:
+                for word in keysplit:
+                    if word in new_dict:
+                        new_dict[ word] += value
+                    else:
+                        new_dict[ word] = value
+                del nnp_dict[ key]
         for key,value in new_dict.iteritems():
             print "%s %u" % (key,value)
     else: #cmd == "splittest"
