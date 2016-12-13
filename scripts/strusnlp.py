@@ -614,7 +614,7 @@ elif cmd == "joindict":
         for lineitr in codecs.open( dictfile, "r", encoding='utf-8'):
             line = lineitr.decode('utf-8').strip()
             if line:
-                if sline.find(' ') != -1:
+                if line.find(' ') != -1:
                     key,cnt = line.split()
                     if key in nnp_dict:
                         nnp_dict[ key] = nnp_dict[ key] + int(cnt)
