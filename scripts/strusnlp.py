@@ -529,11 +529,11 @@ cmd = None
 if len( sys.argv) > 1:
     cmd = sys.argv[1]
 
-def read_dict( dictfile):
+def read_dict( dictfile, maxseqlen):
     dict = {}
     for line in codecs.open( dictfile, "r", encoding='utf-8'):
         sline = line.decode('utf-8').strip()
-        if sline:
+        if sline and sline.count('_') < maxseqlen:
             if sline.find(' ') == -1:
                 print >> sys.stderr, "IGNORE [%s]" % sline
             else:
@@ -625,7 +625,7 @@ elif cmd == "joindict":
         print "%s %u" % (key,value)
 
 elif cmd == "splitdict" or cmd == "splittest":
-    nnp_dict = read_dict( sys.argv[2])
+    nnp_dict = read_dict( sys.argv[2], 8)
     fill_nnp_split_dict()
     if len(sys.argv) > 3:
         title_dict = read_titles( sys.argv[3])
@@ -654,7 +654,7 @@ elif cmd == "splitdict" or cmd == "splittest":
                 print "%s" % word
 
 elif cmd == "seldict":
-    nnp_dict = read_dict( sys.argv[2])
+    nnp_dict = read_dict( sys.argv[2], 8)
     mincnt = 50
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
@@ -665,7 +665,7 @@ elif cmd == "seldict":
 elif cmd == "concat":
     infile = sys.argv[2]
     if len(sys.argv) > 3:
-        nnp_dict = read_dict( sys.argv[3])
+        nnp_dict = read_dict( sys.argv[3], 8)
         fill_nnp_split_dict()
     if len(sys.argv) > 4:
         title_dict = read_titles( sys.argv[4])
