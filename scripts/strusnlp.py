@@ -40,12 +40,13 @@ def fill_nnp_split_dict():
             else:
                 nnp_left_dict[ leftkey] = value
             rightkey = key[(halfsize+1):]
-            if rightkey[-1] == '.':
-                rightkey = rightkey[ 0:-1]
-            if rightkey in nnp_right_dict:
-                nnp_right_dict[ rightkey] += value
-            else:
-                nnp_right_dict[ rightkey] = value
+            if rightkey:
+                if rightkey[-1] == '.':
+                    rightkey = rightkey[ 0:-1]
+                if rightkey in nnp_right_dict:
+                    nnp_right_dict[ rightkey] += value
+                else:
+                    nnp_right_dict[ rightkey] = value
             halfsize = key.find('_',halfsize+1)
 
 def nnp_left_weight( word):
