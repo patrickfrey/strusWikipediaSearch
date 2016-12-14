@@ -57,7 +57,7 @@ def nnp_left_weight( word):
         leftocc += nnp_left_dict[ word]
     if word in nnp_dict:
         occ += nnp_dict[ word]
-    if len(word) > 4 and word[ -1] == 's':
+    if len(word) > 4 and word[ -1] == 's' and word not in title_dict:
         if word[:-1] in nnp_left_dict:
             leftocc += nnp_left_dict[ word[:-1]]
         if word[:-1] in nnp_dict:
@@ -104,9 +104,10 @@ def nnp_split( seqword, verbose):
         if half1[-1] == '.':
             half1 = half1[ 0:-1]
         half2 = seqword[ (halfsize+1):]
+        if not half2:
+            break
         if half2[-1] == '.':
             half2 = half2[ 0:-1]
-
         if half1[0].islower() and half2[0].isupper():
             if verbose:
                 print >> sys.stderr, "    RULE up follow lo: '%s' '%s'" % (half1,half2)
@@ -374,7 +375,7 @@ def normalize_numbers( word):
     return word
 
 def separate_affix_s( word):
-    if len(word) > 4 and word[-1] == 's':
+    if len(word) > 4 and word[-1] == 's' and not word in title_dict:
         if word[-2] == '_':
             if word[:-2] in nnp_dict:
                 return word[:-2] + " s"
@@ -443,7 +444,7 @@ def fill_dict( text):
                 else:
                     nnp_dict[ key] = 1
             elif tg[1] == "NNPS" or tg[1] == "NNS":
-                if tg[0][-1] == 's':
+                if tg[0][-1] == 's' and tg[0] not in title_dict:
                     key = tg[0][:-1]
                 else:
                     key = tg[0]
