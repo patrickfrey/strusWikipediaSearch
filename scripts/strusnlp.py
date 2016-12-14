@@ -57,6 +57,8 @@ def nnp_left_weight( word):
         leftocc += nnp_left_dict[ word]
     if word in nnp_dict:
         occ += nnp_dict[ word]
+    if word in title_dict:
+        occ *= 2
     if len(word) > 4 and word[ -1] == 's' and word not in title_dict:
         if word[:-1] in nnp_left_dict:
             leftocc += nnp_left_dict[ word[:-1]]
@@ -72,6 +74,8 @@ def nnp_right_weight( word):
         rightocc += nnp_right_dict[ word]
     if word in nnp_dict:
         occ += nnp_dict[ word]
+    if word in title_dict:
+        occ *= 2
     dv = float(occ + 1) / float(rightocc + 1)
     return math.log( 1.0 + dv),occ,rightocc,dv
 
@@ -149,6 +153,8 @@ def nnp_split_words( seqword, verbose):
     rt = []
     halfsize = nnp_split( seqword, verbose)
     if halfsize == None:
+        if seqword and seqword[-1] == '.':
+            seqword = seqword[ 0:-1]
         return [ seqword ]
     half1 = seqword[ 0:halfsize]
     half2 = seqword[ (halfsize+1):]
