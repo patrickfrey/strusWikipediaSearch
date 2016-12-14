@@ -26,7 +26,7 @@ for ff in `find $prefix$jobid/ -name "*.xml" | sort`
 do
 echo "analyze $ff"
 strusAnalyze -M /usr/local/lib/strus/modules -m analyzer_wikipedia_search -R "$srcprefix"resources/ -D "orig,sent=' .\n',para=' .\n',start=' .\n'" "$srcprefix"config/wikipedia.ana $ff | iconv -c -f utf-8 -t utf-8 - | "$srcprefix"scripts/nlpclean.sh | perl -C -pe 's/[~_=\/\#-\+\-]/ /g' | perl -C -pe 's/[()\|\[\]\{\}]/ \,/g' | perl -C -pe 's/[,]+\./\./g' | perl -C -pe 's/([\;\,\!\?\:\.])/\1 /g' >> $outputfile
-strusSegment -e '/mediawiki/page/title()' $ff | sed -E 's/\(.*\)//g' | "$srcprefix"scripts/nlpclean.sh | sed -E 's/[\/\,\:].*//' | sed -E 's/^[0-9]+[ -]+//' | sed -E 's/^[0-9]+[ ]+//' | sed -E 's/[\x27"-]/ /g' | sed -E 's/[ ]+/ /g' | sed -E 's/[ ]+$//' | sed -E 's/[ ]+/_/g' | egrep -v '[0-9]' | sort | uniq >> $titlefile
+strusAnalyze -M /usr/local/lib/strus/modules -m analyzer_wikipedia_search -R "$srcprefix"resources/ -D "tiword,start='\n'" "$srcprefix"config/wikipedia.ana $ff >> $titlefile
 done
 
 rm -Rf $prefix$jobid/
