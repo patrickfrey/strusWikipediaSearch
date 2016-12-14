@@ -33,12 +33,13 @@ def fill_nnp_split_dict():
         halfsize = key.find('_')
         while halfsize != -1:
             leftkey = key[0:halfsize]
-            if leftkey[-1] == '.':
-                leftkey = leftkey[ 0:-1]
-            if leftkey in nnp_left_dict:
-                nnp_left_dict[ leftkey] += value
-            else:
-                nnp_left_dict[ leftkey] = value
+            if leftkey:
+                if leftkey[-1] == '.':
+                    leftkey = leftkey[ 0:-1]
+                if leftkey in nnp_left_dict:
+                    nnp_left_dict[ leftkey] += value
+                else:
+                    nnp_left_dict[ leftkey] = value
             rightkey = key[(halfsize+1):]
             if rightkey:
                 if rightkey[-1] == '.':
@@ -84,9 +85,11 @@ def nnp_split( seqword, verbose):
     if verbose:
         print >> sys.stderr, "SPLIT '%s'" % seqword
     seqlen = 1
-    if seqword[-1] == '.':
+    while seqword and seqword[-1] == '.':
         seqword = seqword[ 0:-1]
-    if seqword[0] == '_' or seqword in title_dict:
+    while seqword and seqword[0] == '.':
+        seqword = seqword[ 1:]
+    if not seqword or seqword[0] == '_' or seqword in title_dict:
         return None
     halfsize = seqword.find('_')
     while halfsize != -1:
