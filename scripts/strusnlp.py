@@ -152,6 +152,10 @@ def nnp_split_words( seqword, verbose):
         return [ seqword ]
     half1 = seqword[ 0:halfsize]
     half2 = seqword[ (halfsize+1):]
+    if half1 and half1[-1] == '.':
+        half1 = half1[ 0:-1]
+    if half2 and half2[-1] == '.':
+        half2 = half2[ 0:-1]
     return nnp_split_words( half1, verbose) + nnp_split_words( half2, verbose)
 
 def parse_tokendef( tk):
@@ -542,10 +546,13 @@ def read_dict( dictfile, maxseqlen):
                 print >> sys.stderr, "IGNORE [%s]" % sline
             else:
                 key,cnt = sline.split()
-                if key in dict:
-                    dict[ key] = dict[ key] + int(cnt)
-                else:
-                    dict[ key] = int(cnt)
+                if key and key[-1] == '.':
+                    key = key[:-1]
+                if key:
+                    if key in dict:
+                        dict[ key] += int(cnt)
+                    else:
+                        dict[ key] = int(cnt)
     return dict
 
 def read_titles( titlefile):
@@ -659,7 +666,7 @@ elif cmd == "splitdict" or cmd == "splittest":
 
 elif cmd == "seldict":
     nnp_dict = read_dict( sys.argv[2], 8)
-    mincnt = 50
+    mincnt = 0
     if len(sys.argv) > 3:
         mincnt = int(sys.argv[3])
     for key,value in nnp_dict.iteritems():
