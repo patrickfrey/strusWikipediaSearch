@@ -62,6 +62,9 @@ sub processLine
 		}
 		foreach my $feat( @featar)
 		{
+			$feat =~ s/['"]//g;
+			next if ($feat eq '');
+
 			if ($fidx > 0)
 			{
 				$code .= ", ";
@@ -75,6 +78,7 @@ sub processLine
 			}
 			foreach my $term( @terms)
 			{
+				next if ($term eq '');
 				if ($tidx > 0)
 				{
 					$code .= ", ";
@@ -95,7 +99,10 @@ sub processLine
 		{
 			$code .= ";";
 		}
-		print "$code\n";
+		if ($fidx > 0)
+		{
+			print "$code\n";
+		}
 	}
 	else
 	{
