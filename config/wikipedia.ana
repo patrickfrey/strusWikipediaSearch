@@ -160,6 +160,9 @@
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/wwwlink();
 
+[PatternLexem]
+    lexem = text word /mediawiki/page/revision/text//();
+
 [Document]
     doc = /mediawiki/page;
 

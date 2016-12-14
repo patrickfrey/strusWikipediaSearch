@@ -43,6 +43,8 @@ runNLP 06 "24 25 26" &
 cat "$outprefix"title.{00,01,02,03,04,05,06}.txt | sort | uniq > "$outprefix"title.txt
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06}.txt > "$outprefix"dict.txt
 $scriptdir/strusnlp.py splitdict "$outprefix"dict.txt "$outprefix"title.txt > "$outprefix"dict.split.txt
+$scriptdir/strusnlp.py seldict "$outprefix"dict.split.txt 2 > "$outprefix"dict.split.2.txt
+mv "$outprefix"dict.split.2.txt "$outprefix"dict.split.txt
 mkdir -p "$outprefix"data
 mv "$outprefix"dict.{00,01,02,03,04,05,06}.txt "$outprefix"data/
 mv "$outprefix"title.{00,01,02,03,04,05,06}.txt "$outprefix"data/
