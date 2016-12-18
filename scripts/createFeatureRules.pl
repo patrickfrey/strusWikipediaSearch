@@ -4,28 +4,36 @@ use strict;
 use warnings;
 use 5.010;
 use Text::Unidecode;
+use feature qw( unicode_strings );
+use open qw/:std :utf8/;
 
 if ($#ARGV < 0 || $#ARGV > 2)
 {
-	print STDERR "usage: createConceptRules.pl <infile> [<lexem>] [<nampref>]\n";
+	print STDERR "usage: createFeatureRules.pl <infile> [<lexem>] [<restype>] [<normop>]\n";
 	print STDERR "       <infile>  :file ('-' for stdin) with lines starting with concept no followed\n";
 	print STDERR "                  by a colon and a list of multivalue features separated by spaces,\n";
 	print STDERR "                  the feature items separated by underscores.\n";
 	print STDERR "       <lexem>   :lexem term type name (default 'lexem').\n";
-	print STDERR "       <nampref> :name prefix for concepts created (default '').\n";
+	print STDERR "       <restype> :result type name 'name' or 'idx' (default 'name').\n";
+	print STDERR "       <normop>  :normalizer of tokens 'lc' or '' (default '').\n";
 	exit;
 }
 
 my $infilename = $ARGV[0];
 my $lexemtype = "lexem";
-my $nameprefix = "C";
+my $restype = "name";
+my $normop = "";
 if ($#ARGV >= 1)
 {
 	$lexemtype = $ARGV[1];
 }
 if ($#ARGV >= 2)
 {
-	$nameprefix = $ARGV[2];
+	$restype = $ARGV[2];
+}
+if ($#ARGV >= 3)
+{
+	$normop = $ARGV[3];
 }
 
 my $infile;
@@ -51,47 +59,50 @@ sub processLine
 	}
 	elsif ($ln =~ m/^([0-9]+)[:](.*)$/)
 	{
-		my $conceptno = $1;
-		my $rulestr = $2;
-		my @featar = split( /\s+/, trim( $rulestr));
-		my $fidx = 0;
-		my $code = "$nameprefix$conceptno = ";
-		if ($#featar > 0)
+		my $featno = $1;
+		my $feat = $2;
+		my $code;
+		if ($restype eq "name")
 		{
-			$code .= "any( "
+			$featstr = $feat:
+			$feat =~ s/_/ /g;
+			$code = "\"$featstr\" = ";
 		}
-		foreach my $feat( @featar)
+		else
 		{
-			$feat =~ s/['"]//g;
-			next if ($feat eq '');
+			$code = "$featname$featno = ";
+		}
+		$feat =~ s/['"]//g;
+		next if ($feat eq '');
 
-			if ($fidx > 0)
+		my @terms = split( /_+/, $feat);
+		my $tidx = 0;
+		if ($#terms > 0)
+		{
+			$code .= "sequence_imm( ";
+		}
+		foreach my $term( @terms)
+		{
+			next if ($term eq '');
+			if ($tidx > 0)
 			{
 				$code .= ", ";
 			}
-			$fidx += 1;
-			my @terms = split( /_+/, $feat);
-			my $tidx = 0;
-			if ($#terms > 0)
+			$tidx += 1;
+			if ($normop eq "lc")
 			{
-				$code .= "sequence_imm( ";
+				$code .= "$lexemtype \"" . lc($term) . "\"";
 			}
-			foreach my $term( @terms)
+			else if ($normop eq "")
 			{
-				next if ($term eq '');
-				if ($tidx > 0)
-				{
-					$code .= ", ";
-				}
-				$tidx += 1;
 				$code .= "$lexemtype \"$term\"";
 			}
-			if ($#terms > 0)
+			else
 			{
-				$code .= " )";
+				die "unknown norm op parameter passed";
 			}
 		}
-		if ($#featar > 0)
+		if ($#terms > 0)
 		{
 			$code .= " );";
 		}
@@ -99,10 +110,7 @@ sub processLine
 		{
 			$code .= ";";
 		}
-		if ($fidx > 0)
-		{
-			print "$code\n";
-		}
+		print "$code\n";
 	}
 	else
 	{

@@ -66,8 +66,7 @@ cat "$outprefix"docs.word2vec.{00,01,02,03,04,05,06}.txt > "$outprefix"docs.word
 strusCreateVsm -S "$srcprefix"config/vsm.conf -f "$outprefix"vectors.bin
 strusBuildVsm -S "$srcprefix"config/vsm.conf
 
-# BUILD DYM AND CONCEPTS 
-conceptfile="$outprefix"conceptrules.txt
+# BUILD DYM STORAGE
 dymfile="$outprefix"dymitems.txt
 dymdocs="$outprefix"dymitems.xml
 
@@ -89,6 +88,15 @@ strusDestroy -s "path=storage_dym"
 strusCreate -s "path=storage_dym;max_open_files=256;write_buffer_size=512K;block_size=4K"
 time -p strusInsert -L error_insert_dym.log -s "path=storage;max_open_files=256;write_buffer_size=512K;block_size=4K" -R resources -m analyzer_wikipedia_search -f 1 -c 60000 -t 8 -x "xml" "$srcprefix"config/config/dym.ana "$outprefix"dymitems/
 
-strusInspectVsm -S "$srcprefix"vsm.conf confeatname | $scriptdir/createConceptRules.pl > $conceptfile
+# BUILD CONCEPTS 
+pattern_conceptfeat_doc="$outprefix"pattern_conceptfeat_doc.txt
+pattern_forwardfeat_doc="$outprefix"pattern_forwardfeat_doc.txt
+pattern_searchfeat_doc="$outprefix"pattern_searchfeat_doc.txt
+pattern_searchfeat_qry="$outprefix"pattern_concept_qry.txt
+
+strusInspectVsm -S "$srcprefix"vsm.conf confeatname | $scriptdir/createConceptRules.pl - lexem C > $pattern_conceptfeat_doc
+strusInspectVsm -S "$srcprefix"vsm.conf featname    | $scriptdir/createFeatureRules.pl - lexem name > $pattern_forwardfeat_doc
+strusInspectVsm -S "$srcprefix"vsm.conf featname    | $scriptdir/createFeatureRules.pl - lexem F > $pattern_searchfeat_doc
+strusInspectVsm -S "$srcprefix"vsm.conf featname    | $scriptdir/createFeatureRules.pl - lexem F lc > $pattern_searchfeat_qry
 
 
