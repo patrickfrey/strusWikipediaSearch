@@ -79,13 +79,13 @@ createDymXML()
 
 rm -Rf "$outprefix"dymitems
 mkdir -p "$outprefix"dymitems
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname | awk '{print $2}' | sed 's/_/ /g' | split -l 100000 - "$outprefix"dymitems/doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname | iconv -c -f utf-8 -t utf-8 - | sed s/[\>\<]//g | awk '{print $2}' | sed -E 's/_+/ /g' | split -l 100000 - "$outprefix"dymitems/doc
 for ff in `find "$outprefix"dymitems/ -name "doc*" -type f`; do mv $ff $ff.txt; createDymXML $ff.txt $ff.xml; done
 rm "$outprefix"dymitems/*.txt
 
 strusDestroy -s "path=$blkrefix"storage_dym
-strusCreate -s "path=$blkrefix""storage_dym;max_open_files=256;write_buffer_size=512K;block_size=4K"
-time -p strusInsert -L error_insert_dym.log -s "path=$blkrefix""storage_dym;max_open_files=256;write_buffer_size=512K;block_size=4K; metadata=doclen UINT8" -R resources -m analyzer_wikipedia_search -f 1 -c 60000 -t 8 -x "xml" "$srcprefix"config/dym.ana "$outprefix"dymitems/
+strusCreate -s "path=$blkrefix""storage_dym;max_open_files=256;write_buffer_size=512K;block_size=4K;metadata=doclen UINT8"
+time -p strusInsert -L error_insert_dym.log -s "path=$blkrefix""storage_dym;max_open_files=256;write_buffer_size=512K;block_size=4K" -R resources -m analyzer_wikipedia_search -f 1 -c 60000 -t 8 -x "xml" "$srcprefix"config/dym.ana "$outprefix"dymitems/
 
 # BUILD CONCEPTS 
 pattern_conceptfeat_doc="$outprefix"pattern_conceptfeat_doc.txt
@@ -93,9 +93,9 @@ pattern_forwardfeat_doc="$outprefix"pattern_forwardfeat_doc.txt
 pattern_searchfeat_doc="$outprefix"pattern_searchfeat_doc.txt
 pattern_searchfeat_qry="$outprefix"pattern_concept_qry.txt
 
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf confeatname | $scriptdir/createConceptRules.pl - lexem C > $pattern_conceptfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | $scriptdir/createFeatureRules.pl - lexem name > $pattern_forwardfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | $scriptdir/createFeatureRules.pl - lexem F > $pattern_searchfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | $scriptdir/createFeatureRules.pl - lexem F lc > $pattern_searchfeat_qry
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf confeatname | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createConceptRules.pl - lexem C > $pattern_conceptfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createFeatureRules.pl - lexem name > $pattern_forwardfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createFeatureRules.pl - lexem F > $pattern_searchfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createFeatureRules.pl - lexem F lc > $pattern_searchfeat_qry
 
 
