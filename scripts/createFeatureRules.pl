@@ -73,7 +73,7 @@ sub processLine
 			$code = "$restype$featno = ";
 		}
 		$feat =~ s/[\.'"]//g;
-		if ($feat eq '') next;
+		if ($feat eq '') { next; }
 
 		my @terms = split( /_+/, $feat);
 		my $tidx = 0;

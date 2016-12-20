@@ -71,7 +71,7 @@ sub processLine
 		foreach my $feat( @featar)
 		{
 			$feat =~ s/[\.'"]//g;
-			if ($feat eq '') next;
+			if ($feat eq '') { next; }
 
 			if ($fidx > 0)
 			{
