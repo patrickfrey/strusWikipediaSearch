@@ -73,44 +73,45 @@ sub processLine
 			$code = "$restype$featno = ";
 		}
 		$feat =~ s/[\.'"]//g;
-		if ($feat eq '') { next; }
-
-		my @terms = split( /_+/, $feat);
-		my $tidx = 0;
-		if ($#terms > 0)
+		if ($feat ne '')
 		{
-			$code .= "sequence_imm( ";
-		}
-		foreach my $term( @terms)
-		{
-			next if ($term eq '');
-			if ($tidx > 0)
+			my @terms = split( /_+/, $feat);
+			my $tidx = 0;
+			if ($#terms > 0)
 			{
-				$code .= ", ";
+				$code .= "sequence_imm( ";
 			}
-			$tidx += 1;
-			if ($normop eq "lc")
+			foreach my $term( @terms)
 			{
-				$code .= "$lexemtype \"" . lc($term) . "\"";
+				next if ($term eq '');
+				if ($tidx > 0)
+				{
+					$code .= ", ";
+				}
+				$tidx += 1;
+				if ($normop eq "lc")
+				{
+					$code .= "$lexemtype \"" . lc($term) . "\"";
+				}
+				elsif ($normop eq "")
+				{
+					$code .= "$lexemtype \"$term\"";
+				}
+				else
+				{
+					die "unknown norm op parameter passed";
+				}
 			}
-			elsif ($normop eq "")
+			if ($#terms > 0)
 			{
-				$code .= "$lexemtype \"$term\"";
+				$code .= " );";
 			}
 			else
 			{
-				die "unknown norm op parameter passed";
+				$code .= ";";
 			}
+			print "$code\n";
 		}
-		if ($#terms > 0)
-		{
-			$code .= " );";
-		}
-		else
-		{
-			$code .= ";";
-		}
-		print "$code\n";
 	}
 	else
 	{
