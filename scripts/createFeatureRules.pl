@@ -7,7 +7,7 @@ use Text::Unidecode;
 use feature qw( unicode_strings );
 use open qw/:std :utf8/;
 
-if ($#ARGV < 0 || $#ARGV > 2)
+if ($#ARGV < 0 || $#ARGV > 3)
 {
 	print STDERR "usage: createFeatureRules.pl <infile> [<lexem>] [<restype>] [<normop>]\n";
 	print STDERR "       <infile>  :file ('-' for stdin) with lines starting with concept no followed\n";
@@ -57,22 +57,22 @@ sub processLine
 	if (trim( $ln) eq "")
 	{
 	}
-	elsif ($ln =~ m/^([0-9]+)[:](.*)$/)
+	elsif ($ln =~ m/^([0-9]+)\s(.*)$/)
 	{
 		my $featno = $1;
 		my $feat = $2;
-		my $code;
+		my $code = "";
 		if ($restype eq "name")
 		{
-			$featstr = $feat:
-			$feat =~ s/_/ /g;
+			my $featstr = $feat;
+			$featstr =~ s/_/ /g;
 			$code = "\"$featstr\" = ";
 		}
 		else
 		{
-			$code = "$featname$featno = ";
+			$code = "$restype$featno = ";
 		}
-		$feat =~ s/['"]//g;
+		$feat =~ s/[\.'"]//g;
 		next if ($feat eq '');
 
 		my @terms = split( /_+/, $feat);
@@ -93,7 +93,7 @@ sub processLine
 			{
 				$code .= "$lexemtype \"" . lc($term) . "\"";
 			}
-			else if ($normop eq "")
+			elsif ($normop eq "")
 			{
 				$code .= "$lexemtype \"$term\"";
 			}
