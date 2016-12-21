@@ -3,7 +3,7 @@
 [PatternLexem]
     lexem = text word /mediawiki/page/revision/text//();
 
-[PatternMatch]
+[PatternMatch std]
     idxconcept  = pattern_conceptfeat_doc.txt;
     idxfeature  = pattern_searchfeat_doc.txt;
     namefeature = pattern_forwardfeat_doc.txt;
