@@ -1,5 +1,6 @@
 #!/bin/sh
 
+outprefix=origdata/
 blkrefix=nlpdata/
 srcprefix=github/strusWikipediaSearch/
 
@@ -14,8 +15,8 @@ insertDocs()
 	storageid=$2
 	
 	mkdir -p tmp$storageid
-	tar -C tmp$storageid/ -xvzf $1
-	time -p strusInsert -L error_insert.log -s "`storageConfig $storageid`" -R resources -m analyzer_wikipedia_search -f 1 -c 50000 -t 3 -x "xml" config/wikipedia_concepts.ana tmp$storageid/
+	tar -C tmp$storageid/ -xvzf $tarfile
+	time -p strusInsert -L error_insert.log -s "`storageConfig $storageid`" -R "$outprefix"resources -m analyzer_wikipedia_search -f 1 -c 50000 -t 3 -x "xml" "$srcprefix"config/wikipedia_concepts.ana tmp$storageid/
 	rm -Rf tmp$storageid/
 }
 
@@ -24,7 +25,7 @@ buildStorage()
 	storageid=$1
 	docpkglist=$2
 	strusCreate -s "`storageConfig $storageid`"
-	for dd in $docpkglist; do insertDocs data/wikipedia$dd.tar.gz $storageid; done
+	for dd in $docpkglist; do insertDocs "$outprefix"wikipedia$dd.tar.gz $storageid; done
 }
 
 buildStorage 1 "00 03 06 09 12 15 18 21 24" &
