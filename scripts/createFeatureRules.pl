@@ -72,7 +72,7 @@ sub processLine
 		{
 			$code = "$restype$featno = ";
 		}
-		$feat =~ s/[\.'"]//g;
+		$feat =~ s/[\\\.'"]//g;
 		if ($feat ne '')
 		{
 			my @terms = split( /_+/, $feat);

@@ -70,7 +70,7 @@ sub processLine
 		}
 		foreach my $feat( @featar)
 		{
-			$feat =~ s/[\.'"]//g;
+			$feat =~ s/[\\\.'"]//g;
 			if ($feat eq '') { next; }
 
 			if ($fidx > 0)
