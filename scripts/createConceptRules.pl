@@ -7,33 +7,26 @@ use Text::Unidecode;
 use feature qw( unicode_strings );
 use open qw/:std :utf8/;
 
-if ($#ARGV < 0 || $#ARGV > 3)
+if ($#ARGV < 0 || $#ARGV > 2)
 {
-	print STDERR "usage: createConceptRules.pl <infile> [<lexem>] [<restype>] [<normop>]\n";
-	print STDERR "       <infile>  :file ('-' for stdin) with lines starting with concept no followed\n";
-	print STDERR "                  by a colon and a list of multivalue features separated by spaces,\n";
-	print STDERR "                  the feature items separated by underscores.\n";
-	print STDERR "       <lexem>   :lexem term type name (default 'lexem').\n";
-	print STDERR "       <restype> :result type name 'name' or 'idx' (default 'name').\n";
-	print STDERR "       <normop>  :normalizer of tokens 'lc' or '' (default '').\n";
+	print STDERR "usage: createConceptRules.pl <infile> [<restype>] [<srctype>]\n";
+	print STDERR "       <infile>  :file ('-' for stdin) with lines starting with concept number\n";
+	print STDERR "                  followed by feature numbers.\n";
+	print STDERR "       <restype> :result type prefix (default 'C').\n";
+	print STDERR "       <srctype> :source type prefix (default 'F').\n";
 	exit;
 }
 
 my $infilename = $ARGV[0];
-my $lexemtype = "lexem";
 my $restype = "C";
-my $normop = "";
+my $srctype = "F";
 if ($#ARGV >= 1)
 {
-	$lexemtype = $ARGV[1];
+	$restype = $ARGV[1];
 }
 if ($#ARGV >= 2)
 {
-	$restype = $ARGV[2];
-}
-if ($#ARGV >= 3)
-{
-	$normop = $ARGV[3];
+	$srctype = $ARGV[2];
 }
 
 my $infile;
@@ -70,41 +63,12 @@ sub processLine
 		}
 		foreach my $feat( @featar)
 		{
-			$feat =~ s/[\\\.'"]//g;
-			if ($feat eq '') { next; }
-
 			if ($fidx > 0)
 			{
 				$code .= ", ";
 			}
 			$fidx += 1;
-			my @terms = split( /_+/, $feat);
-			my $tidx = 0;
-			if ($#terms > 0)
-			{
-				$code .= "sequence_imm( ";
-			}
-			foreach my $term( @terms)
-			{
-				next if ($term eq '');
-				if ($tidx > 0)
-				{
-					$code .= ", ";
-				}
-				$tidx += 1;
-				if ($normop eq "lc")
-				{
-					$code .= "$lexemtype \"" . lc($term) . "\"";
-				}
-				elsif ($normop eq "")
-				{
-					$code .= "$lexemtype \"$term\"";
-				}
-			}
-			if ($#terms > 0)
-			{
-				$code .= " )";
-			}
+			$code .= $srctype . $feat;
 		}
 		if ($#featar > 0)
 		{
