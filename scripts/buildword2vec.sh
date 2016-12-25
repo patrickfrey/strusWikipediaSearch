@@ -79,7 +79,7 @@ createDymXML()
 
 rm -Rf "$outprefix"dymitems
 mkdir -p "$outprefix"dymitems
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname | iconv -c -f utf-8 -t utf-8 - | sed s/[\>\<]//g | awk '{print $2}' | sed -E 's/_+/ /g' | split -l 100000 - "$outprefix"dymitems/doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<]//g' | awk '{print $2}' | sed -E 's/_+/ /g' | split -l 100000 - "$outprefix"dymitems/doc
 for ff in `find "$outprefix"dymitems/ -name "doc*" -type f`; do mv $ff $ff.txt; createDymXML $ff.txt $ff.xml; done
 rm "$outprefix"dymitems/*.txt
 
@@ -93,9 +93,9 @@ pattern_forwardfeat_doc="$outprefix"pattern_forwardfeat_doc.txt
 pattern_searchfeat_doc="$outprefix"pattern_searchfeat_doc.txt
 pattern_searchfeat_qry="$outprefix"pattern_concept_qry.txt
 
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf confeatname | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createConceptRules.pl - lexem C > $pattern_conceptfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createFeatureRules.pl - lexem name > $pattern_forwardfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createFeatureRules.pl - lexem F > $pattern_searchfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createFeatureRules.pl - lexem F lc > $pattern_searchfeat_qry
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf confeatname | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createConceptRules.pl - lexem C > $pattern_conceptfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem name > $pattern_forwardfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem F > $pattern_searchfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem F lc > $pattern_searchfeat_qry
 
 

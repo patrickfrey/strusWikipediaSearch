@@ -165,6 +165,7 @@
     doc = /mediawiki/page;
 
 [Aggregator]
-    minpos_title = minpos( tist);
-    maxpos_title = maxpos( tist);
+    title_start = minpos( tist);
+    title_end = nextpos( tist);
     doclen = count( stem);
+

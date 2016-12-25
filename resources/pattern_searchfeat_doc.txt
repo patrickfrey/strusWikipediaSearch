@@ -1,0 +1,10 @@
+F1028471 = sequence_imm( lexem "Zhou", lexem "Wei" );
+F3048265 = sequence_imm( lexem "Wei", lexem "Zhou" );
+F3740025 = sequence_imm( lexem "Zhou", lexem "Weiqi" );
+F4540026 = sequence_imm( lexem "Zhou", lexem "Weiyun" );
+F5199057 = sequence_imm( lexem "Zhou", lexem "Weizhi" );
+F5313166 = sequence_imm( lexem "Weilie", lexem "of", lexem "Zhou" );
+F6236636 = sequence_imm( lexem "Zhou", lexem "Weiyuns" );
+F6236978 = sequence_imm( lexem "Zhou", lexem "Weihui" );
+F6563213 = sequence_imm( lexem "Zhou", lexem "Weijie" );
+F6826594 = sequence_imm( lexem "Chen", lexem "Yiru", lexem "Zhou", lexem "Weitong" );

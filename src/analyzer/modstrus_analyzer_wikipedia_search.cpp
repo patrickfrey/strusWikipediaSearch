@@ -7,7 +7,6 @@
  */
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/tokenizerFunctionInstanceInterface.hpp"
-#include "strus/tokenizerFunctionContextInterface.hpp"
 #include "strus/base/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
@@ -200,12 +199,18 @@ static bool wordFilter_fwd( char const*, const char*)
 	return true;
 }
 
-class SeparationTokenizerFunctionContext
-	:public strus::TokenizerFunctionContextInterface
+
+class SeparationTokenizerFunctionInstance
+	:public strus::TokenizerFunctionInstanceInterface
 {
 public:
-	SeparationTokenizerFunctionContext( TokenDelimiter delim_, TokenFilter filter_, strus::ErrorBufferInterface* errorhnd_)
-		:m_delim(delim_),m_filter(filter_),m_errorhnd(errorhnd_){}
+	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter, strus::ErrorBufferInterface* errorhnd_)
+		:m_delim(delim),m_filter(filter),m_errorhnd(errorhnd_){}
+
+	virtual bool concatBeforeTokenize() const
+	{
+		return false;
+	}
 
 	const char* skipToToken( char const* si, const char* se) const
 	{
@@ -213,7 +218,7 @@ public:
 		return si;
 	}
 
-	virtual std::vector<strus::analyzer::Token> tokenize( const char* src, std::size_t srcsize)
+	virtual std::vector<strus::analyzer::Token> tokenize( const char* src, std::size_t srcsize) const
 	{
 		try
 		{
@@ -237,32 +242,6 @@ public:
 		}
 		CATCH_ERROR_MAP_RETURN( _TXT("error in word separation tokenizer: %s"), *m_errorhnd, std::vector<strus::analyzer::Token>());
 	}
-private:
-	TokenDelimiter m_delim;
-	TokenFilter m_filter;
-	strus::ErrorBufferInterface* m_errorhnd;
-};
-
-class SeparationTokenizerFunctionInstance
-	:public strus::TokenizerFunctionInstanceInterface
-{
-public:
-	SeparationTokenizerFunctionInstance( TokenDelimiter delim, TokenFilter filter, strus::ErrorBufferInterface* errorhnd_)
-		:m_delim(delim),m_filter(filter),m_errorhnd(errorhnd_){}
-
-	virtual bool concatBeforeTokenize() const
-	{
-		return false;
-	}
-
-	strus::TokenizerFunctionContextInterface* createFunctionContext() const
-	{
-		try
-		{
-			return new SeparationTokenizerFunctionContext( m_delim, m_filter, m_errorhnd);
-		}
-		CATCH_ERROR_MAP_RETURN( _TXT("failed to create context of word separation tokenizer: %s"), *m_errorhnd, 0);
-	}
 
 private:
 	TokenDelimiter m_delim;
@@ -284,7 +263,7 @@ public:
 			if (args.size()) throw std::runtime_error( "no arguments expected for word separation tokenizer");
 			return new SeparationTokenizerFunctionInstance( m_delim, m_filter, m_errorhnd);
 		}
-		CATCH_ERROR_MAP_RETURN( _TXT("failed to create context of word separation tokenizer: %s"), *m_errorhnd, 0);
+		CATCH_ERROR_MAP_RETURN( _TXT("failed to create word separation tokenizer: %s"), *m_errorhnd, 0);
 	}
 
 	const char* getDescription() const

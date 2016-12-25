@@ -1,0 +1,10 @@
+"Zhou Wei" = sequence_imm( lexem "Zhou", lexem "Wei" );
+"Wei Zhou" = sequence_imm( lexem "Wei", lexem "Zhou" );
+"Zhou Weiqi" = sequence_imm( lexem "Zhou", lexem "Weiqi" );
+"Zhou Weiyun" = sequence_imm( lexem "Zhou", lexem "Weiyun" );
+"Zhou Weizhi" = sequence_imm( lexem "Zhou", lexem "Weizhi" );
+"Weilie of Zhou" = sequence_imm( lexem "Weilie", lexem "of", lexem "Zhou" );
+"Zhou Weiyuns" = sequence_imm( lexem "Zhou", lexem "Weiyuns" );
+"Zhou Weihui" = sequence_imm( lexem "Zhou", lexem "Weihui" );
+"Zhou Weijie" = sequence_imm( lexem "Zhou", lexem "Weijie" );
+"Chen Yiru Zhou Weitong" = sequence_imm( lexem "Chen", lexem "Yiru", lexem "Zhou", lexem "Weitong" );
