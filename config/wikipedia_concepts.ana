@@ -4,16 +4,16 @@
     lexem = text word /mediawiki/page/revision/text//();
 
 [PatternMatch std]
-    idxconcept  = pattern_conceptfeat_doc.txt;
-    idxfeature  = pattern_searchfeat_doc.txt;
-    namefeature = pattern_forwardfeat_doc.txt;
+    vecfeat  = pattern_searchfeat_doc.txt;
+    vecname  = pattern_forwardfeat_doc.txt;
 
 [SearchIndex]
-    vcidx <- idxconcept;
-    vfidx <- idxfeature;
+    vecfeat <- vecfeat;
 
 [ForwardIndex]
-    vfname <- namefeature;
+    vecname <- vecname;
+
+
 
 
 

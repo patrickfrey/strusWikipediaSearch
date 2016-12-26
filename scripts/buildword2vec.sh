@@ -90,7 +90,7 @@ time -p strusInsert -L error_insert_dym.log -s "path=$blkrefix""storage_dym;max_
 # BUILD CONCEPTS 
 pattern_forwardfeat_doc="$outprefix"pattern_forwardfeat_doc.txt
 pattern_searchfeat_doc="$outprefix"pattern_searchfeat_doc.txt
-pattern_searchfeat_qry="$outprefix"pattern_concept_qry.txt
+pattern_searchfeat_qry="$outprefix"pattern_searchfeat_qry.txt
 
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem F > $pattern_searchfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf confeatidx  | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createConceptRules.pl - lexem C F >> $pattern_searchfeat_doc
