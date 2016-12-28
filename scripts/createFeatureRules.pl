@@ -82,37 +82,30 @@ sub processLine
 			if ($#terms > 0)
 			{
 				$code .= "sequence_imm( ";
-			}
-			foreach my $term( @terms)
-			{
-				next if ($term eq '');
-				if ($tidx > 0)
+				foreach my $term( @terms)
 				{
-					$code .= ", ";
+					next if ($term eq '');
+					if ($tidx > 0)
+					{
+						$code .= ", ";
+					}
+					$tidx += 1;
+					if ($normop eq "lc")
+					{
+						$code .= "$lexemtype \"" . lc($term) . "\"";
+					}
+					elsif ($normop eq "")
+					{
+						$code .= "$lexemtype \"$term\"";
+					}
+					else
+					{
+						die "unknown norm op parameter passed";
+					}
 				}
-				$tidx += 1;
-				if ($normop eq "lc")
-				{
-					$code .= "$lexemtype \"" . lc($term) . "\"";
-				}
-				elsif ($normop eq "")
-				{
-					$code .= "$lexemtype \"$term\"";
-				}
-				else
-				{
-					die "unknown norm op parameter passed";
-				}
-			}
-			if ($#terms > 0)
-			{
 				$code .= " );";
+				print "$code\n";
 			}
-			else
-			{
-				$code .= ";";
-			}
-			print "$code\n";
 		}
 	}
 	else
