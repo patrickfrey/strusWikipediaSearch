@@ -9,7 +9,7 @@ use open qw/:std :utf8/;
 
 if ($#ARGV < 0 || $#ARGV > 3)
 {
-	print STDERR "usage: createFeatureRules.pl <infile> [<stopwordfile>] [<lexem>] [<restype>] [<normop>]\n";
+	print STDERR "usage: createFeatureRules.pl <infile> [<lexem>] [<restype>] [<normop>] [<stopwordfile>]\n";
 	print STDERR "       <infile>       :file ('-' for stdin) with lines starting with concept no followed\n";
 	print STDERR "                       by a colon and a list of multivalue features separated by spaces,\n";
 	print STDERR "                       the feature items separated by underscores.\n";
@@ -41,7 +41,19 @@ sub feedStopwordLine
 
 if ($#ARGV >= 1)
 {
-	open my $stopwordfile, "<$ARGV[1]" or die "failed to open file $ARGV[0] for reading ($!)\n";
+	$lexemtype = $ARGV[1];
+}
+if ($#ARGV >= 2)
+{
+	$restype = $ARGV[2];
+}
+if ($#ARGV >= 3)
+{
+	$normop = $ARGV[3];
+}
+if ($#ARGV >= 4)
+{
+	open my $stopwordfile, "<$ARGV[4]" or die "failed to open file $ARGV[0] for reading ($!)\n";
 	my $ln = readline ($stopwordfile);
 	while ($ln)
 	{
@@ -49,18 +61,6 @@ if ($#ARGV >= 1)
 		$ln = readline ($stopwordfile);
 	}
 	close $stopwordfile;
-}
-if ($#ARGV >= 2)
-{
-	$lexemtype = $ARGV[2];
-}
-if ($#ARGV >= 3)
-{
-	$restype = $ARGV[3];
-}
-if ($#ARGV >= 4)
-{
-	$normop = $ARGV[4];
 }
 
 my $infile;
