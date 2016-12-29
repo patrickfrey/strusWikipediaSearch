@@ -1,6 +1,7 @@
 #include "wikipedia.ana"
 
 [PatternLexem]
+    lexem = text word  /mediawiki/page/title();
     lexem = text word  /mediawiki/page/revision/text();
     lexem = text word  /mediawiki/page/revision/text/i();
     lexem = text word  /mediawiki/page/revision/text/b();

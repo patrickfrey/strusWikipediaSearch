@@ -146,6 +146,7 @@ sub processLine
 }
 
 print '%lexem ' . "$lexemtype\n";
+print '%exclusive' . "\n";
 
 while ($_ = <$infile>)
 {
