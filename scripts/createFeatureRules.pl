@@ -7,7 +7,7 @@ use Text::Unidecode;
 use feature qw( unicode_strings );
 use open qw/:std :utf8/;
 
-if ($#ARGV < 0 || $#ARGV > 3)
+if ($#ARGV < 0 || $#ARGV > 4)
 {
 	print STDERR "usage: createFeatureRules.pl <infile> [<lexem>] [<restype>] [<normop>] [<stopwordfile>]\n";
 	print STDERR "       <infile>       :file ('-' for stdin) with lines starting with concept no followed\n";
