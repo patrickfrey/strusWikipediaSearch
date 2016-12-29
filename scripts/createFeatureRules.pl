@@ -9,13 +9,14 @@ use open qw/:std :utf8/;
 
 if ($#ARGV < 0 || $#ARGV > 3)
 {
-	print STDERR "usage: createFeatureRules.pl <infile> [<lexem>] [<restype>] [<normop>]\n";
-	print STDERR "       <infile>  :file ('-' for stdin) with lines starting with concept no followed\n";
-	print STDERR "                  by a colon and a list of multivalue features separated by spaces,\n";
-	print STDERR "                  the feature items separated by underscores.\n";
-	print STDERR "       <lexem>   :lexem term type name (default 'lexem').\n";
-	print STDERR "       <restype> :result type name 'name' or 'idx' (default 'name').\n";
-	print STDERR "       <normop>  :normalizer of tokens 'lc' or '' (default '').\n";
+	print STDERR "usage: createFeatureRules.pl <infile> [<stopwordfile>] [<lexem>] [<restype>] [<normop>]\n";
+	print STDERR "       <infile>       :file ('-' for stdin) with lines starting with concept no followed\n";
+	print STDERR "                       by a colon and a list of multivalue features separated by spaces,\n";
+	print STDERR "                       the feature items separated by underscores.\n";
+	print STDERR "       <stopwordfile> :file with terms (stop words) not to use.\n";
+	print STDERR "       <lexem>        :lexem term type name (default 'lexem').\n";
+	print STDERR "       <restype>      :result type name 'name' or 'idx' (default 'name').\n";
+	print STDERR "       <normop>       :normalizer of tokens 'lc' or '' (default '').\n";
 	exit;
 }
 
@@ -23,17 +24,43 @@ my $infilename = $ARGV[0];
 my $lexemtype = "lexem";
 my $restype = "name";
 my $normop = "";
+my %stopword_dict = ();
+sub feedStopwordLine
+{
+	my ($ln) = @_;
+	my ($term,$cnt) = split /\s/, $ln;
+	if (defined $stopword_dict{ $term })
+	{
+		$stopword_dict{ $term } += $cnt;
+	}
+	else
+	{
+		$stopword_dict{ $term } = $cnt;
+	}
+}
+
 if ($#ARGV >= 1)
 {
-	$lexemtype = $ARGV[1];
+	open my $stopwordfile, "<$ARGV[1]" or die "failed to open file $ARGV[0] for reading ($!)\n";
+	my $ln = readline ($stopwordfile);
+	while ($ln)
+	{
+		feedStopwordLine( $ln);
+		$ln = readline ($stopwordfile);
+	}
+	close $stopwordfile;
 }
 if ($#ARGV >= 2)
 {
-	$restype = $ARGV[2];
+	$lexemtype = $ARGV[2];
 }
 if ($#ARGV >= 3)
 {
-	$normop = $ARGV[3];
+	$restype = $ARGV[3];
+}
+if ($#ARGV >= 4)
+{
+	$normop = $ARGV[4];
 }
 
 my $infile;
@@ -62,6 +89,10 @@ sub processLine
 		my $featno = $1;
 		my $feat = $2;
 		my $code = "";
+		if (defined $stopword_dict{ $feat })
+		{
+			return;
+		}
 		if ($restype eq "name")
 		{
 			my $featstr = $feat;
@@ -113,6 +144,8 @@ sub processLine
 		die "syntax error in rule line: $ln";
 	}
 }
+
+print '%lexem ' . "$lexemtype\n";
 
 while ($_ = <$infile>)
 {
