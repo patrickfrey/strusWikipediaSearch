@@ -48,22 +48,22 @@
     lexem = text word  /mediawiki/page/revision/text/h5();
     lexem = text word  /mediawiki/page/revision/text/h6();
 
-    lexem = orig punctuation(en,".") /mediawiki/page/revision/text();
-    lexem = orig content /mediawiki/page/revision/text/l1~;
-    lexem = orig content /mediawiki/page/revision/text/l2~;
-    lexem = orig content /mediawiki/page/revision/text/l3~;
-    lexem = orig content /mediawiki/page/revision/text/l4~;
-    lexem = orig content /mediawiki/page/revision/text/h1~;
-    lexem = orig content /mediawiki/page/revision/text/h2~;
-    lexem = orig content /mediawiki/page/revision/text/h3~;
-    lexem = orig content /mediawiki/page/revision/text/h4~;
-    lexem = orig content /mediawiki/page/revision/text/h5~;
-    lexem = orig content /mediawiki/page/revision/text/h6~;
-    lexem = orig content /mediawiki/page/revision/text//link[@type='file']~;
-    lexem = orig content /mediawiki/page/revision/text//link[@type='image']~;
-    lexem = orig content /mediawiki/page/revision/text//link[@type='category']~;
-    lexem = orig content /mediawiki/page/revision/text//li~;
-    lexem = orig content /mediawiki/page/revision/text//td~;
+    lexem = empty punctuation(en,".") /mediawiki/page/revision/text();
+    lexem = empty content /mediawiki/page/revision/text/l1~;
+    lexem = empty content /mediawiki/page/revision/text/l2~;
+    lexem = empty content /mediawiki/page/revision/text/l3~;
+    lexem = empty content /mediawiki/page/revision/text/l4~;
+    lexem = empty content /mediawiki/page/revision/text/h1~;
+    lexem = empty content /mediawiki/page/revision/text/h2~;
+    lexem = empty content /mediawiki/page/revision/text/h3~;
+    lexem = empty content /mediawiki/page/revision/text/h4~;
+    lexem = empty content /mediawiki/page/revision/text/h5~;
+    lexem = empty content /mediawiki/page/revision/text/h6~;
+    lexem = empty content /mediawiki/page/revision/text//link[@type='file']~;
+    lexem = empty content /mediawiki/page/revision/text//link[@type='image']~;
+    lexem = empty content /mediawiki/page/revision/text//link[@type='category']~;
+    lexem = empty content /mediawiki/page/revision/text//li~;
+    lexem = empty content /mediawiki/page/revision/text//td~;
 
 [PatternMatch std]
     vecfeat  = pattern_searchfeat_doc.txt;
