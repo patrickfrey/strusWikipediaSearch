@@ -78,6 +78,8 @@ sub trim
 	my $s = shift; $s =~ s/^\s+|\s+$//g; return $s;
 }
 
+my %rule_dict = ();
+
 sub processLine
 {
 	my ($ln) = @_;
@@ -128,6 +130,15 @@ sub processLine
 							return;
 						}
 					}
+				}
+				my $termkey = join( '_', @terms);
+				if (defined $rule_dict{ $termkey })
+				{
+					return;
+				}
+				else
+				{
+					$rule_dict{ $termkey } = 1;
 				}
 				$code .= "sequence_imm( ";
 				foreach my $term( @terms)

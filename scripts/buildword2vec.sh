@@ -93,14 +93,15 @@ pattern_searchfeat_doc="$outprefix"pattern_searchfeat_doc.txt
 pattern_searchfeat_qry="$outprefix"pattern_searchfeat_qry.txt
 pattern_stopwords="$outprefix"dict.stopwords.txt
 pattern_vocabulary="$outprefix"dict.vocabulary.txt
+pattern_titlefeat_doc="$outprefix"pattern_titlefeat_doc.txt
 
 cat "$outprefix"docs.word2vec.txt | $scriptdir/countTerms.pl > $pattern_vocabulary
 $scriptdir/strusnlp.py seldict $pattern_vocabulary 2000000 | grep -v '_' > $pattern_stopwords
 
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords > $pattern_searchfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf confeatidx  | iconv -c -f utf-8 -t utf-8 - | $scriptdir/createConceptRules.pl - C F >> $pattern_searchfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords > $pattern_searchfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords > $pattern_forwardfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords > $pattern_searchfeat_qry
+cat "$outprefix"title.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem T '' $pattern_stopwords > $pattern_titlefeat_doc
 
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords > $pattern_forwardfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords > $pattern_searchfeat_qry
 
 
