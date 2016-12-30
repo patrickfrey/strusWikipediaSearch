@@ -13,10 +13,10 @@ if ($#ARGV < 0 || $#ARGV > 4)
 	print STDERR "       <infile>       :file ('-' for stdin) with lines starting with concept no followed\n";
 	print STDERR "                       by a colon and a list of multivalue features separated by spaces,\n";
 	print STDERR "                       the feature items separated by underscores.\n";
-	print STDERR "       <stopwordfile> :file with terms (stop words) not to use.\n";
 	print STDERR "       <lexem>        :lexem term type name (default 'lexem').\n";
 	print STDERR "       <restype>      :result type name 'name' or 'idx' (default 'name').\n";
 	print STDERR "       <normop>       :normalizer of tokens 'lc' or '' (default '').\n";
+	print STDERR "       <stopwordfile> :file with terms (stop words) not to use.\n";
 	exit;
 }
 
@@ -108,9 +108,9 @@ sub processLine
 		$feat =~ s/[\\\.'"]//g;
 		if ($feat ne '')
 		{
-			my @terms = split( /_+/, $feat);
+			my @terms = split( /_/, $feat);
 			my $tidx = 0;
-			if ($#terms > 0)
+			if ($#terms >= 0)
 			{
 				$code .= "sequence_imm( ";
 				foreach my $term( @terms)
