@@ -2,7 +2,7 @@
     docid = text content /mediawiki/page/title();
     date = text content /mediawiki/page/revision/timestamp();
     contributor = text content /mediawiki/page/revision/contributor/username();
-    redirect text content_europe_inv /mediawiki/page/redirect@title;
+    redirect = text content_europe_inv /mediawiki/page/redirect@title;
 
 [SearchIndex]
     start = empty content /mediawiki/page/revision/text;
@@ -166,7 +166,7 @@
     doc = /mediawiki/page;
 
 [Metadata]
-    redirect const("1") content /mediawiki/page/revision/text/redirect;
+    redirect = const("1") content /mediawiki/page/revision/text/redirect;
 
 [Aggregator]
     title_start = minpos( tist);
