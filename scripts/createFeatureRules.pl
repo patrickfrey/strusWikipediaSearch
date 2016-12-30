@@ -96,9 +96,9 @@ sub processLine
 		if ($restype eq "name")
 		{
 			my $featstr = $feat;
-			$featstr =~ s/^_+//g;
-			$featstr =~ s/_+$//g;
-			$featstr =~ s/_+/ /g;
+			$featstr =~ s/^_[_]*//g;
+			$featstr =~ s/_[_]*$//g;
+			$featstr =~ s/_[_]*/ /g;
 			$code = "\"$featstr\" = ";
 		}
 		else
