@@ -1,6 +1,24 @@
 #include "wikipedia.ana"
 
 [PatternLexem]
+    titlexem = text word  /mediawiki/page/title();
+    titlexem = text word  /mediawiki/page/revision/text/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l1/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l1/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l2/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l2/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l3/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l3/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l4/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/l4/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/ol/li/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/ol/li/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/ul/li/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/ul/li/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/table/tr/td/link/link[@type='page']();
+    titlexem = text word  /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
+
     lexem = text word  /mediawiki/page/title();
     lexem = text word  /mediawiki/page/revision/text();
     lexem = text word  /mediawiki/page/revision/text/i();
@@ -67,13 +85,15 @@
     lexem = empty content /mediawiki/page/revision/text//td~;
 
 [PatternMatch std]
-    vecfeat  = pattern_searchfeat_doc.txt;
-    vecname  = pattern_forwardfeat_doc.txt;
+    vectfeat  = pattern_titlefeat_doc.txt;
+    vecsfeat  = pattern_searchfeat_doc.txt;
+    vecfname  = pattern_forwardfeat_doc.txt;
 
 [SearchIndex]
-    vecfeat <- vecfeat;
+    vecsfeat <- vecsfeat;
+    vectfeat <- vectfeat;
 
 [ForwardIndex]
-    vecname <- vecname;
+    vecfname <- vecfname;
 
 
