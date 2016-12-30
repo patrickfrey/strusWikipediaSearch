@@ -14,7 +14,7 @@ if ($#ARGV < 0 || $#ARGV > 4)
 	print STDERR "                       by a colon and a list of multivalue features separated by spaces,\n";
 	print STDERR "                       the feature items separated by underscores.\n";
 	print STDERR "       <lexem>        :lexem term type name (default 'lexem').\n";
-	print STDERR "       <restype>      :result type name 'name' or 'idx' (default 'name').\n";
+	print STDERR "       <restype>      :result type name 'name' or prefix (default 'name').\n";
 	print STDERR "       <normop>       :normalizer of tokens 'lc' or '' (default '').\n";
 	print STDERR "       <stopwordfile> :file with terms (stop words) not to use.\n";
 	exit;
@@ -132,6 +132,10 @@ sub processLine
 					}
 				}
 				my $termkey = join( '_', @terms);
+				if ($normop eq "lc")
+				{
+					$termkey = lc( $termkey);
+				}
 				if (defined $rule_dict{ $termkey })
 				{
 					return;
