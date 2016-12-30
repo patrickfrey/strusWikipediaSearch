@@ -89,15 +89,11 @@ sub processLine
 		my $featno = $1;
 		my $feat = $2;
 		my $code = "";
-		if (defined $stopword_dict{ $feat })
-		{
-			return;
-		}
+		$feat =~ s/^_[_]*//g;
+		$feat =~ s/_[_]*$//g;
 		if ($restype eq "name")
 		{
 			my $featstr = $feat;
-			$featstr =~ s/^_[_]*//g;
-			$featstr =~ s/_[_]*$//g;
 			$featstr =~ s/_[_]*/ /g;
 			$code = "\"$featstr\" = ";
 		}
@@ -106,6 +102,10 @@ sub processLine
 			$code = "$restype$featno = ";
 		}
 		$feat =~ s/[\\\.'"]//g;
+		if (defined $stopword_dict{ $feat })
+		{
+			return;
+		}
 		if ($feat ne '')
 		{
 			my @terms = split( /_/, $feat);
