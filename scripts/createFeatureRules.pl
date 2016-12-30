@@ -112,6 +112,23 @@ sub processLine
 			my $tidx = 0;
 			if ($#terms >= 0)
 			{
+				if ($#terms == 0)
+				{
+					if ($normop eq "lc")
+					{
+						if (defined $stopword_dict{ lc( $terms[0]) })
+						{
+							return;
+						}
+					}
+					else
+					{
+						if (defined $stopword_dict{ $terms[0] })
+						{
+							return;
+						}
+					}
+				}
 				$code .= "sequence_imm( ";
 				foreach my $term( @terms)
 				{
