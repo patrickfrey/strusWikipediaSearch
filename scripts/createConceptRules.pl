@@ -55,32 +55,9 @@ sub processLine
 		my $conceptno = $1;
 		my $rulestr = $2;
 		my @featar = split( /\s+/, trim( $rulestr));
-		my $fidx = 0;
-		my $code = "$restype$conceptno = ";
-		if ($#featar > 0)
-		{
-			$code .= "any( "
-		}
 		foreach my $feat( @featar)
 		{
-			if ($fidx > 0)
-			{
-				$code .= ", ";
-			}
-			$fidx += 1;
-			$code .= $srctype . $feat;
-		}
-		if ($#featar > 0)
-		{
-			$code .= " );";
-		}
-		else
-		{
-			$code .= ";";
-		}
-		if ($fidx > 0)
-		{
-			print "$code\n";
+			print "$restype$conceptno = $srctype$feat;\n";
 		}
 	}
 	else
