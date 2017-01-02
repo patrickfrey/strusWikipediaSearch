@@ -78,9 +78,9 @@
     sent = empty content /mediawiki/page/revision/text//li~;
     sent = empty content /mediawiki/page/revision/text//td~;
 
-    linkvar = empty content /mediawiki/page/revision/text//link[@type='page']@id;
-    catgvar = empty content /mediawiki/page/revision/text//link[@type='category']@id;
-    wwwvar  = empty content /mediawiki/page/revision/text//wwwlink@id;
+    linkvar = orig content /mediawiki/page/revision/text//link[@type='page']@id;
+    catgvar = orig content /mediawiki/page/revision/text//link[@type='category']@id;
+    wwwvar  = orig content /mediawiki/page/revision/text//wwwlink@id;
 
 [ForwardIndex]
     tiword  = text content_europe_inv /mediawiki/page/title();
