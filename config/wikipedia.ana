@@ -78,14 +78,14 @@
     sent = empty content /mediawiki/page/revision/text//li~;
     sent = empty content /mediawiki/page/revision/text//td~;
 
-    linkvar = orig content /mediawiki/page/revision/text//link[@type='page']@id;
-    catgvar = orig content /mediawiki/page/revision/text//link[@type='category']@id;
-    wwwvar  = orig content /mediawiki/page/revision/text//wwwlink@id;
+    linkvar = empty content /mediawiki/page/revision/text//link[@type='page']@id;
+    wwwvar  = empty content /mediawiki/page/revision/text//wwwlink@id;
 
 [ForwardIndex]
     tiword  = text content_europe_inv /mediawiki/page/title();
     linkid  = text content /mediawiki/page/revision/text//link[@type='page']@id;
     wwwlnk  = text content /mediawiki/page/revision/text//wwwlink@id;
+
     entity  = text regex('["][ ]*([^"\'\`.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text();
     entity  = text regex('["][ ]*([^"\'\`.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/l1();
     entity  = text regex('["][ ]*([^"\'\`.,;\n]{5,80})[ ]*["]', 1) /mediawiki/page/revision/text/l2();

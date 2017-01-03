@@ -1,23 +1,8 @@
 #include "wikipedia.ana"
 
 [PatternLexem]
-    titlexem = text word  /mediawiki/page/title();
-    titlexem = text word  /mediawiki/page/revision/text/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l1/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l1/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l2/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l2/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l3/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l3/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l4/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/l4/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/ol/li/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/ol/li/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/ul/li/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/ul/li/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/table/tr/td/link/link[@type='page']();
-    titlexem = text word  /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
+    titlexem = text content_europe_inv  /mediawiki/page/title();
+    titlexem = text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
 
     lexem = text word  /mediawiki/page/title();
     lexem = text word  /mediawiki/page/revision/text();
