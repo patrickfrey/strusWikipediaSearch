@@ -3,11 +3,11 @@
 outprefix=origdata/
 blkrefix=nlpdata/
 srcprefix=github/strusWikipediaSearch/
-threads=12
+threads=8
 
 storageConfig()
 {
-	echo "path=$blkrefix""storage$1; metadata=redirect UInt8,minpos_title UInt8,maxpos_title UInt8,doclen UInt32,pageweight Float32;max_open_files=256;write_buffer_size=512K;block_size=4K"
+	echo "path=$blkrefix""storage$1; metadata=redirect UInt8,title_start UInt8,title_end UInt8,doclen UInt32,pageweight Float32;max_open_files=256;write_buffer_size=512K;block_size=4K"
 }
 
 insertDocs()
@@ -17,7 +17,7 @@ insertDocs()
 	
 	mkdir -p tmp$storageid
 	tar -C tmp$storageid/ -xvzf $tarfile
-	time -p strusInsert -L error_insert$storageid.log -s "`storageConfig $storageid`" -R "$srcprefix"config -R "$srcprefix"resources -R "$outprefix"/. -m analyzer_wikipedia_search -m analyzer_pattern -f 1 -c 50000 -t $threads -x "xml" "$srcprefix"config/wikipedia_concepts.ana tmp$storageid/
+	time -p strusInsert -L error_insert$storageid.log -s "`storageConfig $storageid`" -R "$srcprefix"config -R "$srcprefix"resources -R "$outprefix"/. -m analyzer_wikipedia_search -m analyzer_pattern -f 1 -c 5000 -t $threads -x "xml" "$srcprefix"config/wikipedia_concepts.ana tmp$storageid/
 	rm -Rf tmp$storageid/
 }
 
