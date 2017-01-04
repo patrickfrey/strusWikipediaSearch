@@ -79,6 +79,46 @@ sub trim
 }
 
 my %rule_dict = ();
+my $hsymcnt = 0;
+
+sub getLexem
+{
+	my ($term) = @_;
+	if ($normop eq "lc")
+	{
+		return "$lexemtype \"" . lc($term) . "\"";
+	}
+	elsif ($normop eq "")
+	{
+		return "$lexemtype \"$term\"";
+	}
+	else
+	{
+		die "unknown norm op parameter passed";
+	}
+}
+
+sub printSingleTermRule
+{
+	my ($result,$arg1) = @_;
+	my $lexem1 = getLexem( $arg1);
+	print "$result = $lexem1;\n"
+}
+
+sub printTermRule
+{
+	my ($result,$arg1,$arg2) = @_;
+	my $lexem1 = getLexem( $arg1);
+	my $lexem2 = getLexem( $arg2);
+	print "$result = sequence_imm( $lexem1, $lexem2);\n"
+}
+
+sub printNonTermRule
+{
+	my ($result,$arg1,$arg2) = @_;
+	my $lexem2 = getLexem( $arg2);
+	print "$result = sequence_imm( $arg1, $lexem2);\n"
+}
 
 sub processLine
 {
@@ -90,18 +130,18 @@ sub processLine
 	{
 		my $featno = $1;
 		my $feat = $2;
-		my $code = "";
 		$feat =~ s/^_[_]*//g;
 		$feat =~ s/_[_]*$//g;
+		my $result = "";
 		if ($restype eq "name")
 		{
 			my $featstr = $feat;
 			$featstr =~ s/_[_]*/ /g;
-			$code = "\"$featstr\" = ";
+			$result = "\"$featstr\"";
 		}
 		else
 		{
-			$code = "$restype$featno = ";
+			$result = "$restype$featno";
 		}
 		$feat =~ s/[\\\.'"]//g;
 		if (defined $stopword_dict{ $feat })
@@ -144,30 +184,28 @@ sub processLine
 				{
 					$rule_dict{ $termkey } = 1;
 				}
-				$code .= "sequence_imm( ";
-				foreach my $term( @terms)
+				if ($#terms == 0)
 				{
-					next if ($term eq '');
-					if ($tidx > 0)
-					{
-						$code .= ", ";
-					}
-					$tidx += 1;
-					if ($normop eq "lc")
-					{
-						$code .= "$lexemtype \"" . lc($term) . "\"";
-					}
-					elsif ($normop eq "")
-					{
-						$code .= "$lexemtype \"$term\"";
-					}
-					else
-					{
-						die "unknown norm op parameter passed";
-					}
+					printSingleTermRule( $result, $terms[0]);
 				}
-				$code .= " );";
-				print "$code\n";
+				elsif ($#terms == 1)
+				{
+					printTermRule( $result, $terms[0], $terms[1]);
+				}
+				else
+				{
+					$hsymcnt += 1;
+					printTermRule( "._$hsymcnt", $terms[0], $terms[1]);
+					my $hi = 2;
+					while ($hi < $#terms)
+					{
+						my $nonterminal = "_$hsymcnt";
+						$hsymcnt += 1;
+						printNonTermRule( "._$hsymcnt", $nonterminal, $terms[$hi]);
+						$hi += 1;
+					}
+					printNonTermRule( "$result", "_$hsymcnt", $terms[$hi]);
+				}
 			}
 		}
 	}
@@ -179,6 +217,7 @@ sub processLine
 
 print '%lexem ' . "$lexemtype\n";
 print '%exclusive' . "\n";
+print '%stopwordOccurrenceFactor 0.001' . "\n";
 
 while ($_ = <$infile>)
 {
