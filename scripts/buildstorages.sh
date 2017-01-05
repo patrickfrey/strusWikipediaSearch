@@ -3,7 +3,7 @@
 outprefix=origdata/
 blkrefix=nlpdata/
 srcprefix=github/strusWikipediaSearch/
-threads=8
+threads=12
 
 storageConfig()
 {
