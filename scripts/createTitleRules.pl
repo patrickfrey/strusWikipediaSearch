@@ -163,13 +163,19 @@ sub processLine
 			else
 			{
 				my $patternid = getSubPatternId( join( '_', $terms[0], $terms[1]));
-				printTermRule( "._$patternid", $terms[0], $terms[1]);
+				if ($patternid == $sub_pattern_cnt)
+				{
+					printTermRule( "._$patternid", $terms[0], $terms[1]);
+				}
 				my $hi = 2;
 				while ($hi < $#terms)
 				{
 					my $nonterminal = "_$patternid";
 					$patternid = getSubPatternId( join( '_', $nonterminal, $terms[$hi]));
-					printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
+					if ($patternid == $sub_pattern_cnt)
+					{
+						printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
+					}
 					$hi += 1;
 				}
 				printNonTermRule( "$result", "_$patternid", $terms[$hi]);
