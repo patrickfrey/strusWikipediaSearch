@@ -154,14 +154,11 @@ sub processLine
 			my $tidx = 0;
 			if ($#terms >= 0)
 			{
-				if ($#terms == 0)
-				{
-					if (defined $stopword_dict{ $terms[0] })
-					{
-						return;
-					}
-				}
 				my $termkey = join( '_', @terms);
+				if (defined $stopword_dict{ $termkey })
+				{
+					return;
+				}
 				if ($normop eq "lc")
 				{
 					$termkey = lc( $termkey);
