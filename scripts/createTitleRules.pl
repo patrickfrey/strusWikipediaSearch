@@ -127,8 +127,9 @@ sub processLine
 			{
 				$termkey = lc( $termkey);
 			}
-			if (defined $rule_dict{ $termkey })
+			elsif (defined $rule_dict{ $termkey })
 			{
+				# ... duplicate elimination only if no normop defined
 				return;
 			}
 			else

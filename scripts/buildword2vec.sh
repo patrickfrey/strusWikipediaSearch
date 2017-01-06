@@ -91,17 +91,21 @@ time -p strusInsert -L error_insert_dym.log -s "path=$blkrefix""storage_dym;max_
 pattern_forwardfeat_doc="$outprefix"pattern_forwardfeat_doc.txt
 pattern_searchfeat_doc="$outprefix"pattern_searchfeat_doc.txt
 pattern_searchfeat_qry="$outprefix"pattern_searchfeat_qry.txt
-pattern_stopwords="$outprefix"dict.stopwords.txt
+pattern_stopwords_doc="$outprefix"dict.stopwords_doc.txt
+pattern_stopwords_qry="$outprefix"dict.stopwords_qry.txt
 pattern_vocabulary="$outprefix"dict.vocabulary.txt
 pattern_titlefeat_doc="$outprefix"pattern_titlefeat_doc.txt
+pattern_titlefeat_qry="$outprefix"pattern_titlefeat_qry.txt
 
 cat "$outprefix"docs.word2vec.txt | $scriptdir/countTerms.pl > $pattern_vocabulary
-$scriptdir/strusnlp.py seldict $pattern_vocabulary 1000000 | grep -v '_' > $pattern_stopwords
+$scriptdir/strusnlp.py seldict $pattern_vocabulary 1000000 | grep -v '_' > $pattern_stopwords_qry
+$scriptdir/strusnlp.py seldict $pattern_vocabulary 500000 > $pattern_stopwords_doc
 
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords > $pattern_searchfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords > $pattern_forwardfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords > $pattern_searchfeat_qry
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords_doc > $pattern_searchfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords_qry > $pattern_searchfeat_qry
 cat "$outprefix"title.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - titlexem T '' > $pattern_titlefeat_doc
+cat "$outprefix"title.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - titlexem T lc > $pattern_titlefeat_qry
 
 
 

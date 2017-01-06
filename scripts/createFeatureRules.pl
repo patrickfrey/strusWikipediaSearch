@@ -156,19 +156,9 @@ sub processLine
 			{
 				if ($#terms == 0)
 				{
-					if ($normop eq "lc")
+					if (defined $stopword_dict{ $terms[0] })
 					{
-						if (defined $stopword_dict{ lc( $terms[0]) })
-						{
-							return;
-						}
-					}
-					else
-					{
-						if (defined $stopword_dict{ $terms[0] })
-						{
-							return;
-						}
+						return;
 					}
 				}
 				my $termkey = join( '_', @terms);
@@ -176,8 +166,9 @@ sub processLine
 				{
 					$termkey = lc( $termkey);
 				}
-				if (defined $rule_dict{ $termkey })
+				elsif (defined $rule_dict{ $termkey })
 				{
+					# ... duplicate elimination only if no normop defined
 					return;
 				}
 				else
