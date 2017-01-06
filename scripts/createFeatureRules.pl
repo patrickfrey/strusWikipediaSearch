@@ -79,7 +79,6 @@ sub trim
 }
 
 my %rule_dict = ();
-my $hsymcnt = 0;
 
 sub getLexem
 {
@@ -119,6 +118,24 @@ sub printNonTermRule
 	my $lexem2 = getLexem( $arg2);
 	print "$result = sequence_imm( $arg1, $lexem2);\n"
 }
+
+my %sub_pattern_map = ();
+my $sub_pattern_cnt = 0;
+sub getSubPatternId
+{
+	my ($key) = @_;
+	if (defined $sub_pattern_map{ $key })
+	{
+		return $sub_pattern_map{ $key }
+	}
+	else
+	{
+		$sub_pattern_cnt += 1;
+		$sub_pattern_map{ $key } = $sub_pattern_cnt;
+		return $sub_pattern_cnt;
+	}
+}
+
 
 sub processLine
 {
@@ -182,17 +199,17 @@ sub processLine
 				}
 				else
 				{
-					$hsymcnt += 1;
-					printTermRule( "._$hsymcnt", $terms[0], $terms[1]);
+					my $patternid = getSubPatternId( join( '_', $terms[0], $terms[1]));
+					printTermRule( "._$patternid", $terms[0], $terms[1]);
 					my $hi = 2;
 					while ($hi < $#terms)
 					{
-						my $nonterminal = "_$hsymcnt";
-						$hsymcnt += 1;
-						printNonTermRule( "._$hsymcnt", $nonterminal, $terms[$hi]);
+						my $nonterminal = "_$patternid";
+						$patternid = getSubPatternId( join( '_', $nonterminal, $terms[$hi]));
+						printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
 						$hi += 1;
 					}
-					printNonTermRule( "$result", "_$hsymcnt", $terms[$hi]);
+					printNonTermRule( "$result", "_$patternid", $terms[$hi]);
 				}
 			}
 		}
