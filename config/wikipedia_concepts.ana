@@ -2,7 +2,8 @@
 
 [PatternLexem]
     titlexem = text content_europe_inv  /mediawiki/page/title();
-    titlexem = text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
+    lnklexem = text content_europe_inv  /mediawiki/page/title();
+    lnklexem = text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
 
     lexem = text word  /mediawiki/page/title();
     lexem = text word  /mediawiki/page/revision/text();
@@ -71,6 +72,7 @@
 
 [PatternMatch std]
     vectfeat  = pattern_titlefeat_doc.txt;
+    veclfeat  = pattern_lnkfeat_doc.txt;
     vecsfeat  = pattern_searchfeat_doc.txt;
     vecfname  = pattern_forwardfeat_doc.txt;
 
@@ -80,5 +82,6 @@
 
 [ForwardIndex]
     vecfname <- vecfname;
+    veclfeat <- veclfeat;
 
 
