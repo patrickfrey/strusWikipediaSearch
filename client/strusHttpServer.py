@@ -347,7 +347,6 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
-            print "QUERY %s '%s' i=%u n=%u" % (scheme,querystr,firstrank,nofranks)
             # Render the results:
             if (scheme == "NBLNK"):
                template = "search_nblnk_html.tpl"

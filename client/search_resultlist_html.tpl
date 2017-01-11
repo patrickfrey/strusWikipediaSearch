@@ -17,7 +17,7 @@
 <form id="searchbox" name="search" class method="GET" action="evalQuery.php">
 <input type="hidden" name="s" value="{{ scheme }}"/>
 <input id="searchtext" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-<input id="submit" type="submit" value="Search" />
+<input id="submit_search" type="submit" value="Search" />
 <input type="hidden" name="i" value="{{ firstrank }}"/>
 <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}
@@ -33,7 +33,7 @@
  <form id="navprev" name="prev" class method="GET" action="query">
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
- <input id="submit" type="submit" value="<<" />
+ <input id="submit_prev" type="submit" value="<<" />
  <input type="hidden" name="i" value="{{ prevrank }}"/>
  <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}
@@ -46,7 +46,7 @@
  <form id="navnext" name="next" class method="GET" action="query">
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
- <input id="submit" type="submit" value=">>" />
+ <input id="submit_next" type="submit" value=">>" />
  <input type="hidden" name="i" value="{{ nextrank }}"/>
  <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}

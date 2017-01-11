@@ -5,7 +5,7 @@ try
 	$nofRanks = 6;
 	$firstRank = 0;
 	$scheme = "BM25pff";
-	$mode = "";
+	$mode = NULL;
 	$query = "";
 	$restrict = NULL;
 
@@ -16,7 +16,7 @@ try
 	}
 	if (array_key_exists( 'i', $_GET))
 	{
-		$firstRank = intval( $_GET['i']);
+		$firstRank = 0;
 	}
 	if (array_key_exists( 'q', $_GET))
 	{
@@ -39,15 +39,21 @@ try
 			. '&i=' . $firstRank
 			. '&n=' . $nofRanks
 			. '&s=' . urlencode($scheme)
-			. '&m=' . urlencode($mode)
-			. '&d=' . $restrict
 			;
+	if ($mode)
+	{
+		$service_url .= '&m=' . urlencode($mode);
+	}
+	if ($restrict)
+	{
+		$service_url .= '&d=' . $restrict;
+	}
 	$curl = curl_init( $service_url);
 	curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true);
 	$response = curl_exec( $curl);
 	if (curl_error($curl))
 	{
-		$response = "<html><head><title>strus error</title></head><body><p>failed to connect to server</p></html>";
+		$response = '<html><head><title>strus error</title></head><body><p>failed to connect to server</p></html>';
 	}
 	else
 	{
@@ -56,6 +62,6 @@ try
 	echo $response;
 }
 catch( Exception $e ) {
-	echo "<html><head><title>strus error</title></head><body><p>failed to connect to server</p></html>";
+	echo '<html><head><title>strus error</title></head><body><p>failed to connect to server</p></html>';
 }
 ?>

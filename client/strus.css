@@ -11,7 +11,7 @@ h2 {
 	font: bold 17px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-#navigation  {
+#navigation {
 	margin: 10px;
 }
 
@@ -23,49 +23,38 @@ h2 {
 	width: 74px;
 }
 
-#toolbar
-{
+#toolbar {
 	border-width: 0px;
 	border-style: solid;
 	border-color: #988;
 }
 
-#searchbox
-{
+#searchbox {
 	background-color: #CED8F6;
-	width: 508px;
-	height: 60px;
+	width: 708px;
+	height: 57px;
 	padding: 10px 10px;
 }
 
-#navbox
-{
+#navbox {
 	padding: 25px 0px;
 	margin: 20px 105px;
 }
 
 #navprev,
-#navnext
-{
-	padding: 31px 3px;
+#navnext {
+	padding: 10px 3px;
 }
 
 #logo,
-#toolbar
-{
-	float: left;
-}
-
-#searchbox,
-#navprev,
-#navnext
-{
+#toolbar {
 	float: left;
 }
 
 #searchtext, 
-#submit,
-{
+#submit_search,
+#submit_prev,
+#submit_next {
 	float: left;
 }
 
@@ -78,9 +67,10 @@ h2 {
 	background: #11888;
 }
 
-#submit,
-#back
-{
+#submit_search,
+#submit_prev,
+#submit_next,
+#back {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #988;
@@ -93,13 +83,13 @@ h2 {
 	color: #303030;
 }
 
-#submit:active,
-#back:active{
+#submit_search:active,
+#back:active {
 	background: #988;
 	outline: none;
 }
 
-#submit::-moz-focus-inner,
+#submit_search::-moz-focus-inner,
 #back::-moz-focus-inner {
 	border: 0;
 }
