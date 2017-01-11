@@ -16,9 +16,11 @@ h2 {
 }
 
 #logo {
-	margin: 10px;
-	height: 75px;
-	width: 75px;
+	background-color: #CED8F6;
+	opacity: 0.7;
+	margin: 1px;
+	height: 74px;
+	width: 74px;
 }
 
 #toolbar
@@ -30,9 +32,9 @@ h2 {
 
 #searchbox
 {
-	background-color: #fafafa;
+	background-color: #CED8F6;
 	width: 508px;
-	height: 65px;
+	height: 60px;
 	padding: 10px 10px;
 }
 
@@ -68,11 +70,11 @@ h2 {
 }
 
 #searchtext {
-	padding: 5px 9px;
-	height: 35px;
+	padding: 20px 9px;
+	height: 15px;
 	width: 392px;
 	border: 1px solid #988;
-	font: normal 13px 'Open Sans', Arial, sans-serif;
+	font: normal 18px 'Open Sans', Arial, sans-serif;
 	background: #11888;
 }
 
@@ -82,12 +84,12 @@ h2 {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #988;
-	height: 48px;
+	height: 57px;
 	margin: 2px 0 0 0;
 	padding: 0;
 	width: 90px;
 	cursor: pointer;
-	font: bold 14px 'Open Sans', Arial, sans-serif;
+	font: bold 16px 'Open Sans', Arial, sans-serif;
 	color: #303030;
 }
 

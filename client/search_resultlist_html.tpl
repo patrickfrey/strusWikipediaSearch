@@ -1,63 +1,6 @@
 {% extends "search_base_html.tpl" %}
 
 {% block script %}
-<script type = "text/javascript"
-	src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
-</script>
-<script type = "text/javascript" language = "javascript">
-function DidYouMeanQuery( text) {
-	$.getJSON( "http://127.0.0.1/querydym",
-	{
-		q: text,
-		n: 20
-	},
-	function(jd) {
-		if (jd.error)
-		{
-			alert( "Error: " + jd.error );
-		}
-		else
-		{
-			$('#DidYouMeanList').html('');
-			$.each( jd.result, function( i, obj) {
-				$('#DidYouMeanList').append('<div id="DidYouMeanElem" class="dymelem" tabindex="0"><a href="http://127.0.0.1/query?q=' + encodeURIComponent(obj) + '" tabindex="1">' + obj + '</a></div>');
-			});
-			if ( jd.result.length == 0 ) {
-				$('#DidYouMeanList').hide();
-			}
-		}
-	})
-	.fail(function(jqXHR, status, error){
-		 alert( "Error (status " + status + "): " + error );
-	})
-}
-
-var delayTimer;
-function submitDidYouMeanQuery() {
-	clearTimeout(delayTimer);
-	delayTimer = setTimeout(function() {
-		DidYouMeanQuery( $('#searchtext').val());
-		$('#DidYouMeanList').show();
-	}, 700);
-}
-window.onclick = function(event) {
-	if (!event.target.matches('.dymelem')) {
-		$('#DidYouMeanList').hide();
-	}
-}
-$(document).keydown(function(e) {
-	// NOT FINISHED YET: Navigation with keyboard
-	var elements = $('#DidYouMean');
-	switch(event.which) {
-		case 38: // up
-		break;
-		case 40: // down
-		break;
-		default: return; // exit this handler for other keys
-	}
-	event.preventDefault(); // prevent the default action (scroll / move caret)
-});
-</script>
 {% end %}
 
 {% block navigation %}
@@ -71,21 +14,15 @@ $(document).keydown(function(e) {
 </div>
 
 <div id="toolbar">
-<form id="searchbox" name="search" class method="GET" action="query">
-<select name="s" id="scheme">
- {% if scheme == "NBLNK" %}<option selected>NBLNK</option>{% else %}<option>NBLNK</option>{% end %}
- {% if scheme == "BM25" %}<option selected>BM25</option>{% else %}<option>BM25</option>{% end %}
- {% if scheme == "BM25pff" %}<option selected>BM25pff</option>{% else %}<option>BM25pff</option>{% end %}
-</select>
-<input id="searchtext" class="textinput" type="text" oninput="submitDidYouMeanQuery()" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+<form id="searchbox" name="search" class method="GET" action="evalQuery.php">
+<input type="hidden" name="s" value="{{ scheme }}"/>
+<input id="searchtext" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 <input id="submit" type="submit" value="Search" />
+<input type="hidden" name="i" value="{{ firstrank }}"/>
 <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}
  <input type="hidden" name="m" value="{{ mode }}"/>
 {% end %}
-<div id="DidYouMean">
-<div id="DidYouMeanList"></div>
-</div>
 </form>
 
 {% set prevrank = firstrank - maxnofranks %}
@@ -104,7 +41,7 @@ $(document).keydown(function(e) {
 {% end %}
 </form>
 {% end %}
-{% if len(results) == maxnofranks %}
+{% if hasmore %}
 {% set nextrank = firstrank + maxnofranks %}
  <form id="navnext" name="next" class method="GET" action="query">
  <input type="hidden" name="s" value="{{ scheme }}"/>

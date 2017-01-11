@@ -345,14 +345,14 @@ class QueryHandler( tornado.web.RequestHandler ):
                 selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 100, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
             else:
-                result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks, restrictdn)
+                result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
             # Render the results:
             if (scheme == "NBLNK"):
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
-            self.render( template, results=result[0], messages=result[1],
+            self.render( template, results=result[0:-1], hasmore=(len(results)>nofranks), messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, maxnofranks=nofranks, mode=mode,
                          scheme=scheme, querystr=querystr)
         except Exception as e:

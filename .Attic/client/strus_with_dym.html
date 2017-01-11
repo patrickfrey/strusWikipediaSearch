@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wikipedia search with Strus</title>
+<link href="static/strus.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="static/favicon.ico?v=2" type="image/x-icon">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<script type = "text/javascript"
+	src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
+<script type = "text/javascript" language = "javascript">
+function DidYouMeanQuery( text) {
+	$.getJSON( "http://127.0.0.1/querydym",
+	{
+		q: text,
+		n: 20
+	},
+	function(jd) {
+		if (jd.error)
+		{
+			alert( "Error: " + jd.error );
+		}
+		else
+		{
+			$('#DidYouMeanList').html('');
+			$.each( jd.result, function( i, obj) {
+				$('#DidYouMeanList').append('<div id="DidYouMeanElem" class="dymelem" tabindex="0"><a href="http://127.0.0.1/query?q=' + encodeURIComponent(obj) + '" tabindex="1">' + obj + '</a></div>');
+			});
+			if ( jd.result.length == 0 ) {
+				$('#DidYouMeanList').hide();
+			}
+		}
+	})
+	.fail(function(jqXHR, status, error){
+		 alert( "Error (status " + status + "): " + error );
+	})
+}
+
+var delayTimer;
+function submitDidYouMeanQuery() {
+	clearTimeout(delayTimer);
+	delayTimer = setTimeout(function() {
+		DidYouMeanQuery( $('#searchtext').val());
+		$('#DidYouMeanList').show();
+	}, 700);
+}
+window.onclick = function(event) {
+	if (!event.target.matches('.dymelem')) {
+		$('#DidYouMeanList').hide();
+	}
+}
+$(document).keydown(function(e) {
+	// NOT FINISHED YET: Navigation with keyboard
+	var elements = $('#DidYouMean');
+	switch(event.which) {
+		case 38: // up
+		break;
+		case 40: // down
+		break;
+		default: return; // exit this handler for other keys
+	}
+	event.preventDefault(); // prevent the default action (scroll / move caret)
+});
+</script>
+</head>
+<body>
+
+<div id="navigation">
+<div id="logo">
+ <a target="_blank" href="http://project-strus.net">
+  <img width="100%" src="static/strus_logo.jpg" alt="strus logo"/>
+<!-- Copyright: <a href='http://www.123rf.com/profile_guarding123'>guarding123 / 123RF Stock Photo</a>
+-->
+</a>
+</div>
+<div id="toolbar">
+<form id="searchbox" name="search" class method="GET" action="query">
+<select name="s" id="scheme">
+ <option>NBLNK</option>
+ <option>BM25</option>
+ <option selected>BM25pff</option>
+</select>
+<input id="searchtext" class="textinput" type="text" oninput="submitDidYouMeanQuery()" maxlength="256" size="32" name="q" tabindex="0" value="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+<input id="submit" type="submit" value="Search" />
+<input type="hidden" name="n" value="6"/>
+<div id="DidYouMean">
+<div id="DidYouMeanList"></div>
+</div>
+</form>
+</div>
+</div>
+</body>
+</html>
+
