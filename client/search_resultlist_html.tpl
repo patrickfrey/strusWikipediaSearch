@@ -30,7 +30,7 @@
 {% set prevrank = 0 %}
 {% end %}
 {% if prevrank < firstrank %}
- <form id="navprev" name="prev" class method="GET" action="query">
+ <form id="navprev" name="prev" class method="GET" action="evalQuery.php">
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
  <input id="submit_prev" type="submit" value="<<" />
@@ -43,7 +43,7 @@
 {% end %}
 {% if hasmore %}
 {% set nextrank = firstrank + maxnofranks %}
- <form id="navnext" name="next" class method="GET" action="query">
+ <form id="navnext" name="next" class method="GET" action="evalQuery.php">
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
  <input id="submit_next" type="submit" value=">>" />
