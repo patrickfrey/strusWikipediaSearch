@@ -19,13 +19,13 @@
 <input id="searchtext" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 <input id="submit_search" type="submit" value="Search" />
 <input type="hidden" name="i" value="{{ firstrank }}"/>
-<input type="hidden" name="n" value="{{ maxnofranks }}"/>
+<input type="hidden" name="n" value="{{ nofranks }}"/>
 {% if mode != None %}
  <input type="hidden" name="m" value="{{ mode }}"/>
 {% end %}
 </form>
 
-{% set prevrank = firstrank - maxnofranks %}
+{% set prevrank = firstrank - nofranks %}
 {% if prevrank < 0 %}
 {% set prevrank = 0 %}
 {% end %}
@@ -35,7 +35,7 @@
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
  <input type="hidden" name="i" value="{{ prevrank }}"/>
- <input type="hidden" name="n" value="{{ maxnofranks }}"/>
+ <input type="hidden" name="n" value="{{ nofranks }}"/>
  {% if mode != None %}
   <input type="hidden" name="m" value="{{ mode }}"/>
  {% end %}
@@ -46,13 +46,14 @@
 </form>
 
 {% if hasmore %}
-{% set nextrank = firstrank + maxnofranks %}
+{% set nextrank = firstrank + nofranks %}
  <form id="navnext" name="next" class method="GET" action="evalQuery.php">
  <input id="submit_next" type="submit" value=">>" />
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
+ <input type="hidden" name="f" value="{{ firstrank }}"/>
  <input type="hidden" name="i" value="{{ nextrank }}"/>
- <input type="hidden" name="n" value="{{ maxnofranks }}"/>
+ <input type="hidden" name="n" value="{{ nofranks }}"/>
 {% if mode != None %}
  <input type="hidden" name="m" value="{{ mode }}"/>
 {% end %}
