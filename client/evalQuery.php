@@ -6,7 +6,8 @@ try
 	$firstRank = 0;
 	$scheme = "BM25pff";
 	$mode = "";
-	$query = NULL;
+	$query = "";
+	$restrict = NULL;
 
 	parse_str( getenv('QUERY_STRING'), $_GET);
 	if (array_key_exists( 'n', $_GET))
@@ -29,12 +30,17 @@ try
 	{
 		$mode = $_GET['m'];
 	}
+	if (array_key_exists( 'd', $_GET))
+	{
+		$restrict = intval( $_GET['d']);
+	}
 	$service_url = 'http://demo.project-strus.net/' . $command
-			. '?q=' . urlencode($queryString)
+			. '?q=' . urlencode($query)
 			. '&i=' . $firstRank
 			. '&n=' . $nofRanks
 			. '&s=' . urlencode($scheme)
 			. '&m=' . urlencode($mode)
+			. '&d=' . $restrict
 			;
 	$curl = curl_init( $service_url);
 	curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true);

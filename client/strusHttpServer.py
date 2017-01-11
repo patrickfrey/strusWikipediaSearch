@@ -347,12 +347,13 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
+            print "QUERY %s '%s' i=%u n=%u" % (scheme,querystr,firstrank,nofranks)
             # Render the results:
             if (scheme == "NBLNK"):
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
-            self.render( template, results=result[0:-1], hasmore=(len(results)>nofranks), messages=result[1],
+            self.render( template, results=result[0][:-1], hasmore=(len(result[0])>nofranks), messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, maxnofranks=nofranks, mode=mode,
                          scheme=scheme, querystr=querystr)
         except Exception as e:
