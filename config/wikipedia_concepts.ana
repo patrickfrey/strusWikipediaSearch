@@ -1,9 +1,9 @@
 #include "wikipedia.ana"
 
 [PatternLexem]
-    titlexem = text content_europe_inv  /mediawiki/page/title();
-    lnklexem = text content_europe_inv  /mediawiki/page/title();
-    lnklexem = text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
+    titlexem = lc:text content_europe_inv  /mediawiki/page/title();
+    lnklexem = lc:text content_europe_inv  /mediawiki/page/title();
+    lnklexem = lc:text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
 
     lexem = text word  /mediawiki/page/title();
     lexem = text word  /mediawiki/page/revision/text();

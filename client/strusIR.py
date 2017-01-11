@@ -18,11 +18,11 @@ class Backend:
         if scheme == "BM25pff":
             rt.addWeightingFunction( "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
-                     "metadata_title_maxpos": "maxpos_title", "metadata_doclen": "doclen",
+                     "metadata_doclen": "doclen",
                      "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 3,
                      "ffbase": 0.1, "fftie": 10,
                      "proxffbias": 0.3, "proxfftie": 20, "maxdf": 0.2,
-                     ".para": "para", ".struct": "sentence", ".match": "docfeat"
+                     ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
             rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
 
@@ -54,10 +54,10 @@ class Backend:
             rt.addSummarizer( "attribute", { "name": "docid" })
             # Summarizer for abstracting:
             rt.addSummarizer( "matchphrase", {
-                  "type": "orig", "metadata_title_maxpos": "maxpos_title",
+                  "type": "orig",
                   "windowsize": 40, "sentencesize": 100, "cardinality": 3, "maxdf": 0.2,
                   "matchmark": '$<b>$</b>',
-                  ".struct": "sentence", ".match": "docfeat", ".para": "para"
+                  ".struct": "sentence", ".match": "docfeat", ".para": "para", ".title": "titlefield"
             })
         return rt
 
@@ -100,6 +100,8 @@ class Backend:
             query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 
         query.defineFeature( "selfeat", selexpr, 1.0 )
+        query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
+
         if scheme == "NBLNK" and len( terms) > 0:
             if len( terms) > 1:
                 for pair in self.getAscendingIndexPairs( len( terms)):

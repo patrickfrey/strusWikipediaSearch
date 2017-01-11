@@ -168,7 +168,7 @@ if __name__ == "__main__":
                           help="Specify the port of this server as PORT (default %u)" % 7184,
                           metavar="PORT")
         parser.add_option("-c", "--config", dest="config", default=defaultconfig,
-                          help="Specify the storage path as CONF (default '%s')" % defaultconfig,
+                          help="Specify the storage config as CONF (default '%s')" % defaultconfig,
                           metavar="CONF")
         parser.add_option("-i", "--serverno", dest="serverno", default=serverno,
                           help="Specify the number of the storage node as NO (default %s)" % serverno,
