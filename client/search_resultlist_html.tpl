@@ -31,29 +31,36 @@
 {% end %}
 {% if prevrank < firstrank %}
  <form id="navprev" name="prev" class method="GET" action="evalQuery.php">
+ <input id="submit_prev" type="submit" value="<<" />
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
- <input id="submit_prev" type="submit" value="<<" />
  <input type="hidden" name="i" value="{{ prevrank }}"/>
  <input type="hidden" name="n" value="{{ maxnofranks }}"/>
-{% if mode != None %}
- <input type="hidden" name="m" value="{{ mode }}"/>
+ {% if mode != None %}
+  <input type="hidden" name="m" value="{{ mode }}"/>
+ {% end %}
+{% else %}
+ <form id="navprev" name="prev" class method="GET">
+ <input id="submit_prev" type="submit" value="<<" disabled />
 {% end %}
 </form>
-{% end %}
+
 {% if hasmore %}
 {% set nextrank = firstrank + maxnofranks %}
  <form id="navnext" name="next" class method="GET" action="evalQuery.php">
+ <input id="submit_next" type="submit" value=">>" />
  <input type="hidden" name="s" value="{{ scheme }}"/>
  <input type="hidden" name="q" value="{{ querystr }}"/>
- <input id="submit_next" type="submit" value=">>" />
  <input type="hidden" name="i" value="{{ nextrank }}"/>
  <input type="hidden" name="n" value="{{ maxnofranks }}"/>
 {% if mode != None %}
  <input type="hidden" name="m" value="{{ mode }}"/>
 {% end %}
- </form>
+{% else %}
+ <form id="navnext" name="next" class method="GET">
+ <input id="submit_next" type="submit" value=">>" disabled />
 {% end %}
+ </form>
 </div>
 </div>
 {% end %}

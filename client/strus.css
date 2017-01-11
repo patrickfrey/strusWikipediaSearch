@@ -25,7 +25,7 @@ h2 {
 
 #toolbar {
 	background-color: #CED8F6;
-	width: 708px;
+	width: 682px;
 	height: 57px;
 	padding: 10px 10px;
 }
@@ -46,6 +46,11 @@ h2 {
 #submit_prev,
 #submit_next {
 	float: left;
+}
+
+#submit_prev[disabled],
+#submit_next[disabled] {
+	opacity:0.4;
 }
 
 #searchtext {
