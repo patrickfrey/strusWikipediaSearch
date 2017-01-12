@@ -96,6 +96,22 @@ sub getLexem
 		die "unknown norm op parameter passed";
 	}
 }
+sub getTermKey
+{
+	my ($term) = @_;
+	if ($normop eq "lc")
+	{
+		return lc($term);
+	}
+	elsif ($normop eq "")
+	{
+		return $term;
+	}
+	else
+	{
+		die "unknown norm op parameter passed";
+	}
+}
 
 sub printSingleTermRule
 {
@@ -137,95 +153,102 @@ sub getSubPatternId
 	}
 }
 
+sub printRules
+{
+	my ($result,$feat) = @_;
+	my @terms = split( /_/, $feat);
+	my $tidx = 0;
+	if ($#terms >= 0)
+	{
+		my $termkey = getTermKey( join( "_", @terms));
+		if (defined $stopword_dict{ $termkey })
+		{
+			return;
+		}
+		if (defined $rule_dict{ $termkey })
+		{
+			# ... duplicate elimination only if no normop defined
+			return;
+		}
+		else
+		{
+			$rule_dict{ $termkey } = 1;
+		}
+		if ($#terms == 0)
+		{
+			printSingleTermRule( $result, $terms[0]);
+		}
+		elsif ($#terms == 1)
+		{
+			printTermRule( $result, $terms[0], $terms[1]);
+		}
+		else
+		{
+			my $patternid = getSubPatternId( getTermKey($terms[0]) . "_" . getTermKey($terms[1]));
+			if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
+			{
+				printTermRule( "._$patternid", $terms[0], $terms[1]);
+				$sub_pattern_lastcnt = $patternid;
+			}
+			my $hi = 2;
+			while ($hi < $#terms)
+			{
+				my $nonterminal = "_$patternid";
+				$patternid = getSubPatternId( $nonterminal . "_" . getTermKey($terms[$hi]));
+				if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
+				{
+					printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
+					$sub_pattern_lastcnt = $patternid;
+				}
+				$hi += 1;
+			}
+			printNonTermRule( "$result", "_$patternid", $terms[$hi]);
+		}
+	}
+}
+
+sub getResultId
+{
+	my ($featno,$feat) = @_;
+
+	$feat =~ s/^_[_]*//g;
+	$feat =~ s/_[_]*$//g;
+	if ($restype eq "name")
+	{
+		my $featstr = $feat;
+		$featstr =~ s/_[_]*/ /g;
+		$featstr =~ s/[ ][ ]*/ /g;
+		return "\"$featstr\"";
+	}
+	else
+	{
+		return "$restype$featno";
+	}
+}
 
 sub processLine
 {
 	my ($ln) = @_;
 	if (trim( $ln) eq "")
 	{
+		return;
 	}
-	elsif ($ln =~ m/^([0-9]+)\s(.*)$/)
+	my $result = "";
+	my $feat = "";
+	$feat =~ s/[\\\.'"]//g;
+	if ($ln =~ m/^([0-9]+)\s(.*)$/)
 	{
 		my $featno = $1;
-		my $feat = $2;
-		$feat =~ s/^_[_]*//g;
-		$feat =~ s/_[_]*$//g;
-		my $result = "";
-		if ($restype eq "name")
-		{
-			my $featstr = $feat;
-			$featstr =~ s/_[_]*/ /g;
-			$result = "\"$featstr\"";
-		}
-		else
-		{
-			$result = "$restype$featno";
-		}
-		$feat =~ s/[\\\.'"]//g;
-		if (defined $stopword_dict{ $feat })
-		{
-			return;
-		}
-		if ($feat ne '')
-		{
-			my @terms = split( /_/, $feat);
-			my $tidx = 0;
-			if ($#terms >= 0)
-			{
-				my $termkey = join( '_', @terms);
-				if (defined $stopword_dict{ $termkey })
-				{
-					return;
-				}
-				if ($normop eq "lc")
-				{
-					$termkey = lc( $termkey);
-				}
-				elsif (defined $rule_dict{ $termkey })
-				{
-					# ... duplicate elimination only if no normop defined
-					return;
-				}
-				else
-				{
-					$rule_dict{ $termkey } = 1;
-				}
-				if ($#terms == 0)
-				{
-					printSingleTermRule( $result, $terms[0]);
-				}
-				elsif ($#terms == 1)
-				{
-					printTermRule( $result, $terms[0], $terms[1]);
-				}
-				else
-				{
-					my $patternid = getSubPatternId( getLexem($terms[0]) . '_' . getLexem($terms[1]));
-					if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
-					{
-						printTermRule( "._$patternid", $terms[0], $terms[1]);
-						$sub_pattern_lastcnt = $patternid;
-					}
-					my $hi = 2;
-					while ($hi < $#terms)
-					{
-						my $nonterminal = "_$patternid";
-						$patternid = getSubPatternId( $nonterminal . "_" . getLexem($terms[$hi]));
-						if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
-						{
-							printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
-							$sub_pattern_lastcnt = $patternid;
-						}
-						$hi += 1;
-					}
-					printNonTermRule( "$result", "_$patternid", $terms[$hi]);
-				}
-			}
-		}
+		$feat = $2;
+		$result = getResultId( $featno, $feat);
 	}
 	else
 	{
 		die "syntax error in rule line: $ln";
+	}
+	if ($feat ne '')
+	{
+		printRules( $result, $feat);
 	}
 }
 
