@@ -118,7 +118,7 @@ def processCommand( message):
                 results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [restrictdn], debugtrace)
 
             # Build the result and pack it into the reply message for the client:
-            if scheme == "NBLNK":
+            if scheme == "NBLNK" or scheme == "TILNK":
                 for result in results:
                     rt.append( '_')
                     rt.append( 'D')

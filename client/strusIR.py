@@ -34,7 +34,7 @@ class Backend:
             })
             rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
 
-        elif scheme == "NBLNK":
+        elif scheme == "NBLNK" or scheme == "TILNK":
             rt.addWeightingFunction( "BM25", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
@@ -49,6 +49,11 @@ class Backend:
                   "norm": 0.0001, "var": "LINK", "type": "linkid",
                   ".match": "sumfeat"
             })
+        elif scheme == "TILNK":
+                rt.addSummarizer( "accuvariable", {
+                      "norm": 0.0001, "var": "LINK", "type": "veclfeat",
+                      ".match": "sumfeat"
+                })
         else:
             # Summarizer for getting the document title:
             rt.addSummarizer( "attribute", { "name": "docid" })
@@ -67,7 +72,7 @@ class Backend:
         self.context = strus.Context()
         self.storage = self.context.createStorageClient( config )
         self.queryeval = {}
-        for scheme in [ "BM25", "BM25pff", "NBLNK" ]:
+        for scheme in [ "BM25", "BM25pff", "NBLNK", "TILNK" ]:
             self.queryeval[ scheme] = self.createQueryEval( scheme)
 
     # Get pairs (a,b) of a and b in [0..N-1] with a < b:
@@ -102,7 +107,7 @@ class Backend:
         query.defineFeature( "selfeat", selexpr, 1.0 )
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
 
-        if scheme == "NBLNK" and len( terms) > 0:
+        if (scheme == "NBLNK" or scheme == "TILNK") and len( terms) > 0:
             if len( terms) > 1:
                 for pair in self.getAscendingIndexPairs( len( terms)):
                     term1 = terms[ pair[ 0]]

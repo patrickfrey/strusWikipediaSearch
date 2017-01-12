@@ -179,7 +179,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             if (reply[0] == 'E'):
                 rt = (None, "storage server %s:%d returned error: %s" % (host, port, reply[1:]))
             elif (reply[0] == 'Y'):
-                if scheme == "NBLNK":
+                if scheme == "NBLNK" or scheme == "TILNK":
                     result = self.unpackAnswerLinkQuery( reply, 1, len(reply)-1)
                 else:
                     result = self.unpackAnswerTextQuery( reply, 1, len(reply)-1)
@@ -301,10 +301,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     raise Exception( error)
                 # Assemble the query:
                 qry = bytearray()
-                if scheme == "NBLNK":
-                    qry += bytearray( b"L")
-                else:
-                    qry += bytearray( b"Q")
+                qry += bytearray( b"Q")
                 qry += bytearray( b"M") + struct.pack( ">H%ds" % (len(scheme)), len(scheme), scheme)
                 qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
                 qry += bytearray( b"I") + struct.pack( ">H", 0)
@@ -341,12 +338,12 @@ class QueryHandler( tornado.web.RequestHandler ):
             mode = self.get_argument( "m", None)
             # Evaluate query:
             start_time = time.time()
-            if scheme == "NBLNK":
+            if scheme == "NBLNK" or scheme == "TILNK":
                 selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 100, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
             elif scheme == "STD":
                 noflinks = 10
-                selectresult = yield self.evaluateQueryText( "NBLNK", querystr, 0, 100, restrictdn)
+                selectresult = yield self.evaluateQueryText( "TILNK", querystr, 0, 100, restrictdn)
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
@@ -359,7 +356,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
             # Render the results:
-            if (scheme == "NBLNK" or scheme == "STD"):
+            if (scheme == "NBLNK" or scheme == "TILNK" or scheme == "STD"):
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
