@@ -344,7 +344,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             if scheme == "NBLNK":
                 selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 100, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
-            if scheme == "STD":
+            elif scheme == "STD":
                 noflinks = 10
                 selectresult = yield self.evaluateQueryText( "NBLNK", querystr, 0, 100, restrictdn)
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
@@ -359,7 +359,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
             # Render the results:
-            if (scheme == "NBLNK"):
+            if (scheme == "NBLNK" or scheme == "STD"):
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
