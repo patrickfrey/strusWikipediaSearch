@@ -121,6 +121,7 @@ sub printNonTermRule
 
 my %sub_pattern_map = ();
 my $sub_pattern_cnt = 0;
+my $sub_pattern_lastcnt = 0;
 sub getSubPatternId
 {
 	my ($key) = @_;
@@ -200,18 +201,20 @@ sub processLine
 				else
 				{
 					my $patternid = getSubPatternId( getLexem($terms[0]) . '_' . getLexem($terms[1]));
-					if ($patternid == $sub_pattern_cnt)
+					if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
 					{
 						printTermRule( "._$patternid", $terms[0], $terms[1]);
+						$sub_pattern_lastcnt = $patternid;
 					}
 					my $hi = 2;
 					while ($hi < $#terms)
 					{
 						my $nonterminal = "_$patternid";
 						$patternid = getSubPatternId( $nonterminal . "_" . getLexem($terms[$hi]));
-						if ($patternid == $sub_pattern_cnt)
+						if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
 						{
 							printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
+							$sub_pattern_lastcnt = $patternid;
 						}
 						$hi += 1;
 					}
