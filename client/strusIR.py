@@ -172,7 +172,7 @@ class Backend:
         result = query.evaluate()
         rt = []
         # Rewrite the results:
-        if scheme == 'NBLNK':
+        if scheme == "NBLNK" or scheme == "TILNK":
             for rank in result.ranks():
                 links = []
                 for sumelem in rank.summaryElements():
