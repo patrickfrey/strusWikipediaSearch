@@ -334,16 +334,27 @@ class QueryHandler( tornado.web.RequestHandler ):
             # n = nofranks:
             nofranks = int( self.get_argument( "n", 6))
             # s = query evaluation scheme:
-            scheme = self.get_argument( "s", "BM25pff").encode('utf-8')
+            scheme = self.get_argument( "s", "STD").encode('utf-8')
             # d = document number to restrict to:
             restrictdn = int( self.get_argument( "d", 0))
             # m = mode {"debug"}:
             mode = self.get_argument( "m", None)
             # Evaluate query:
             start_time = time.time()
-            if (scheme == "NBLNK"):
+            if scheme == "NBLNK":
                 selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 100, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
+            if scheme == "STD":
+                noflinks = 10
+                selectresult = yield self.evaluateQueryText( "NBLNK", querystr, 0, 100, restrictdn)
+                links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
+                if len(links) >= 1:
+                    weightnorm = links[0].weight;
+                    maplinks = [ LinkRow(links[0].title,1.0) ]
+                    for link in links[1:]:
+                        maplinks.append( LinkRow( link.title, link.weight / weightnorm))
+                    links = maplinks
+                result = [links, selectresult[1]]
             else:
                 result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time

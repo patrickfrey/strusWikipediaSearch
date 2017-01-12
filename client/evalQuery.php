@@ -4,7 +4,7 @@ try
 	$command = "query";
 	$nofRanks = 6;
 	$firstRank = 0;
-	$scheme = "BM25pff";
+	$scheme = NULL;
 	$mode = NULL;
 	$query = "";
 	$restrict = NULL;
@@ -16,7 +16,7 @@ try
 	}
 	if (array_key_exists( 'i', $_GET))
 	{
-		$firstRank = 0;
+		$firstRank = $_GET['i'];
 	}
 	if (array_key_exists( 'q', $_GET))
 	{
@@ -38,8 +38,11 @@ try
 			. '?q=' . urlencode($query)
 			. '&i=' . $firstRank
 			. '&n=' . $nofRanks
-			. '&s=' . urlencode($scheme)
 			;
+	if ($scheme)
+	{
+		$service_url .= '&s=' . urlencode($scheme);
+	}
 	if ($mode)
 	{
 		$service_url .= '&m=' . urlencode($mode);
