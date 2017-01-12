@@ -155,6 +155,10 @@ sub getSubPatternId
 sub printRules
 {
 	my ($result,$feat) = @_;
+	$feat =~ s/^_[_]*//g;
+	$feat =~ s/_[_]*$//g;
+	$feat =~ s/_[_]*/_/g;
+	$feat =~ s/_[_]*/_/g;
 	my @terms = split( /_/, $feat);
 	my $tidx = 0;
 	if ($#terms >= 0)
