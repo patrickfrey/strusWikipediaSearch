@@ -162,7 +162,7 @@ sub processLine
 			}
 			else
 			{
-				my $patternid = getSubPatternId( $terms[0] . '_' . $terms[1]);
+				my $patternid = getSubPatternId( getLexem($terms[0]) . "_" . getLexem($terms[1]));
 				if ($patternid == $sub_pattern_cnt)
 				{
 					printTermRule( "._$patternid", $terms[0], $terms[1]);
@@ -171,7 +171,7 @@ sub processLine
 				while ($hi < $#terms)
 				{
 					my $nonterminal = "_$patternid";
-					$patternid = getSubPatternId( $nonterminal . "_" . $terms[$hi]);
+					$patternid = getSubPatternId( $nonterminal . "_" . getLexem($terms[$hi]));
 					if ($patternid == $sub_pattern_cnt)
 					{
 						printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
