@@ -129,12 +129,13 @@ sub printTermRule
 
 sub printNonTermRule
 {
-	my ($result,$arg1,$arg2) = @_;
+	my ($result,$arg1,$arg2,$range) = @_;
 	my $lexem2 = getLexem( $arg2);
-	print "$result = sequence_imm( $arg1, $lexem2);\n"
+	print "$result = sequence_imm( $arg1, $lexem2 | $range);\n"
 }
 
 my %sub_pattern_map = ();
+my %sub_pattern_length_map = ();
 my $sub_pattern_cnt = 0;
 my $sub_pattern_lastcnt = 0;
 sub getSubPatternId
@@ -190,6 +191,7 @@ sub printRules
 			my $patternid = getSubPatternId( getTermKey($terms[0]) . "_" . getTermKey($terms[1]));
 			if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
 			{
+				$sub_pattern_length_map{ $patternid } = 2;
 				printTermRule( "._$patternid", $terms[0], $terms[1]);
 				$sub_pattern_lastcnt = $patternid;
 			}
@@ -197,15 +199,19 @@ sub printRules
 			while ($hi < $#terms)
 			{
 				my $nonterminal = "_$patternid";
+				my $nonterminal_length = $sub_pattern_length_map{ $patternid };
+
 				$patternid = getSubPatternId( $nonterminal . "_" . getTermKey($terms[$hi]));
 				if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
 				{
-					printNonTermRule( "._$patternid", $nonterminal, $terms[$hi]);
+					$sub_pattern_length_map{ $patternid } = $nonterminal_length + 1;
+					printNonTermRule( "._$patternid", $nonterminal, $terms[$hi], $nonterminal_length + 1);
 					$sub_pattern_lastcnt = $patternid;
 				}
 				$hi += 1;
 			}
-			printNonTermRule( "$result", "_$patternid", $terms[$hi]);
+			my $nonterminal_length = $sub_pattern_length_map{ $patternid };
+			printNonTermRule( "$result", "_$patternid", $terms[$hi], $nonterminal_length + 1);
 		}
 	}
 }
