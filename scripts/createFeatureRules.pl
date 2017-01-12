@@ -235,7 +235,7 @@ sub processLine
 	}
 	my $result = "";
 	my $feat = "";
-	$feat =~ s/[\\\.'"]//g;
+	$ln =~ s/[\\\.'"]//g;
 	if ($ln =~ m/^([0-9]+)\s(.*)$/)
 	{
 		my $featno = $1;
