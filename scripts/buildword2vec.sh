@@ -17,7 +17,7 @@ scriptdir="$srcprefix"scripts
 runTITLE() {
 	jobid=$1
 	infile=$2
-	dmp_outputfile="$outprefix""title.$infile.txt"
+	dmp_outputfile="$outprefix""links.$infile.txt"
 
 	rm $dmp_outputfile
 	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$jobid" tmp "$dmp_outputfile" $srcprefix
