@@ -40,6 +40,7 @@ analyzer.addSearchIndexElement(
 ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract'])
 NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
+QueryStruct = collections.namedtuple('QueryStruct', ['terms','links'])
 
 # [1] HTTP handlers:
 # Answer a query (issue a query to all storage servers and merge it to one result):
@@ -285,12 +286,16 @@ class QueryHandler( tornado.web.RequestHandler ):
             li = li + 1
         return results
 
+    def analyzeQuery( self, scheme, querystr):
+        terms = analyzer.analyzeField( "text", querystr)
+        return QueryStruct( terms, [])
+
     @tornado.gen.coroutine
-    def evaluateQueryText( self, scheme, querystr, firstrank, nofranks, restrictdn):
+    def evaluateQuery( self, scheme, querystruct, firstrank, nofranks, restrictdn):
         rt = None
         try:
             maxnofresults = firstrank + nofranks
-            terms = analyzer.analyzeField( "text", querystr)
+            terms = querystruct.terms
             if len( terms) == 0:
                 # Return empty result for empty query:
                 rt = [[],[]]
@@ -312,8 +317,15 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry += bytearray( b"T")
                     typesize = len(terms[ii].type())
                     valuesize = len(terms[ii].value())
-                    qry += struct.pack( ">qHH", dflist[ii], typesize, valuesize)
+                    qry += struct.pack( ">qdHH", dflist[ii], 1.0, typesize, valuesize)
                     qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
+                for lnk in querystruct.links:
+                    type = "vectfeat"
+                    typesize = 8
+                    value = lnk.title
+                    valuesize = len(value)
+                    qry += struct.pack( ">qdHH", dflist[ii], lnk.weight, typesize, valuesize)
+                    qry += struct.pack( "%ds%ds" % (typesize,valuesize), type, value)
                 # Query all storage servers:
                 results = yield self.issueQueries( storageservers, scheme, qry)
                 rt = self.mergeQueryResults( results, firstrank, nofranks)
@@ -338,12 +350,15 @@ class QueryHandler( tornado.web.RequestHandler ):
             mode = self.get_argument( "m", None)
             # Evaluate query:
             start_time = time.time()
+            # Analyze query:
+            querystruct = self.analyzeQuery( scheme, querystr)
+
             if scheme == "NBLNK" or scheme == "TILNK":
-                selectresult = yield self.evaluateQueryText( scheme, querystr, 0, 100, restrictdn)
+                selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 100, restrictdn)
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
             elif scheme == "STD":
                 noflinks = 10
-                selectresult = yield self.evaluateQueryText( "TILNK", querystr, 0, 100, restrictdn)
+                selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 100, restrictdn)
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
@@ -351,9 +366,10 @@ class QueryHandler( tornado.web.RequestHandler ):
                     for link in links[1:]:
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
-                result = [links, selectresult[1]]
+                querystruct.links = links
+                result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
             else:
-                result = yield self.evaluateQueryText( scheme, querystr, firstrank, nofranks+1, restrictdn)
+                result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
             # Render the results:
             if (scheme == "NBLNK" or scheme == "TILNK" or scheme == "STD"):

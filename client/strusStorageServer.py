@@ -70,7 +70,7 @@ def processCommand( message):
         messageofs = 1
         if message[0] == 'Q':
             # QUERY:
-            Term = collections.namedtuple('Term', ['type', 'value', 'df'])
+            Term = collections.namedtuple('Term', ['type', 'value', 'df', 'weight'])
             nofranks = 20
             restrictdn = 0
             collectionsize = 0
@@ -98,11 +98,11 @@ def processCommand( message):
                     (collectionsize,) = struct.unpack_from( ">q", message, messageofs+1)
                     messageofs += struct.calcsize( ">q") + 1
                 elif (message[ messageofs] == 'T'):
-                    (df,typesize,valuesize) = struct.unpack_from( ">qHH", message, messageofs+1)
-                    messageofs += struct.calcsize( ">qHH") + 1
+                    (df,weight,typesize,valuesize) = struct.unpack_from( ">qdHH", message, messageofs+1)
+                    messageofs += struct.calcsize( ">qdHH") + 1
                     (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
                     messageofs += typesize + valuesize
-                    terms.append( Term( type, value, df))
+                    terms.append( Term( type, value, df, weight))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
