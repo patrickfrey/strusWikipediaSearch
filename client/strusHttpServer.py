@@ -366,7 +366,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     for link in links[1:]:
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
-                querystruct.links = links
+                querystruct = QueryStruct( querystruct.terms, links)
                 result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
             else:
                 result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
