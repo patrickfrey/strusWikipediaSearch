@@ -16,11 +16,13 @@ scriptdir="$srcprefix"scripts
 
 runTITLE() {
 	infile=$1
-	dmp_outputfile="$outprefix""title.$jobid.txt"
+	dmp_outputfile="$outprefix""title.$infile.txt"
 
 	rm $dmp_outputfile
-	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $srcprefix
+	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$outprefix"tmp "$dmp_outputfile" $srcprefix
 }
+
+runTITLE 00
 
 runNLP() {
 	jobid=$1

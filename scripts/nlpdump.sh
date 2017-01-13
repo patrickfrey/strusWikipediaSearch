@@ -1,10 +1,9 @@
 #!/bin/sh
 
 tarfile=$1
-jobid=$2
-prefix=$3
-outputfile=$4
-srcprefix=$5
+prefix=$2
+outputfile=$3
+srcprefix=$4
 
 if [ x$prefix = 'x' ]
 then
