@@ -19,7 +19,7 @@ mkdir -p $prefix$jobid
 tar -C $prefix$jobid/ -xvzf $1
 for ff in `find $prefix$jobid/ -name "*.xml" | sort`
 do
-strusAnalyze -M /usr/local/lib/strus/modules -m analyzer_wikipedia_search -R "$srcprefix"resources/ -D "doc='\n*',docid,start=' = ',linkid,end=';'" "$srcprefix"config/wikipedia_links.ana $ff | iconv -c -f utf-8 -t utf-8 - > $outputfile
+strusAnalyze -M /usr/local/lib/strus/modules -m analyzer_wikipedia_search -R "$srcprefix"resources/ -D "doc='\n*',docid,start=' = ',redirect='->',linkid,end=';'" "$srcprefix"config/wikipedia_links.ana $ff | iconv -c -f utf-8 -t utf-8 - > $outputfile
 done
 
 rm -Rf $prefix$jobid/
