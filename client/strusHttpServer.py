@@ -320,6 +320,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry += struct.pack( ">qdHH", dflist[ii], 1.0, typesize, valuesize)
                     qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
                 for lnk in querystruct.links:
+                    qry += bytearray( b"T")
                     type = "vectfeat"
                     typesize = 8
                     value = lnk.title
