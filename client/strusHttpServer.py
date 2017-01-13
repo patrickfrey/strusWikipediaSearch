@@ -368,7 +368,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
                 querystruct = QueryStruct( querystruct.terms, links)
-                result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
+                result = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
             else:
                 result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
