@@ -14,17 +14,23 @@ srcprefix=strusWikipediaSearch/
 w2wprefix=word2vec/bin/
 scriptdir="$srcprefix"scripts
 
+runTITLE() {
+	infile=$1
+	dmp_outputfile="$outprefix""title.$jobid.txt"
+
+	rm $dmp_outputfile
+	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $srcprefix
+}
+
 runNLP() {
 	jobid=$1
 	infiles=$2
 	dmp_outputfile="$outprefix""docs.dump.$jobid.txt"
-	dmp_titlefile="$outprefix""title.$jobid.txt"
 	nlp_outputfile="$outprefix""docs.nlp.$jobid.txt"
 	dic_outputfile="$outprefix""dict.$jobid.txt"
 	rm $dmp_outputfile
-	rm $dmp_titlefile
 	rm $nlp_outputfile
-	for dd in $infiles; do echo "PROCESS $dd"; $scriptdir/nlpdump.sh "$outprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $dmp_titlefile $srcprefix; done
+	for dd in $infiles; do echo "PROCESS $dd"; $scriptdir/nlpdump.sh "$outprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $srcprefix; done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	mkdir -p "$outprefix"data
 	mv $dmp_outputfile "$outprefix"data/

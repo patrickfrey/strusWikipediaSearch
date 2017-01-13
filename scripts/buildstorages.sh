@@ -3,7 +3,7 @@
 outprefix=origdata/
 blkrefix=nlpdata/
 srcprefix=github/strusWikipediaSearch/
-threads=15
+threads=12
 
 storageConfig()
 {
@@ -23,7 +23,7 @@ unpackData()
   docpkglist=$2
   mkdir -p tmp$storageid
   for dd in $docpkglist; do
-    tar -C tmp$storageid/ -xvzf $dd
+    tar -C tmp$storageid/ -xvzf "$outprefix"wikipedia$dd.tar.gz
   done
 }
 
@@ -35,24 +35,47 @@ buildStorage()
 }
 
 createStorage 1
-unpackData 1 "00 03 06 09"
+threads=12
+unpackData 1 "00 03 06"
 buildStorage 1
-unpackData 1 "12 15 18 21 24"
+threads=8
+unpackData 1 "09 12 15"
 buildStorage 1
 
 createStorage 2
-unpackData 2 "01 04 07 10 13"
+threads=12
+unpackData 2 "01 04 07"
 buildStorage 2
-unpackData 2 "16 19 22 25"
+threads=8
+unpackData 2 "10 13 16"
 buildStorage 2
+
 
 createStorage 3
-unpackData 3 "02 05 08 11"
+threads=12
+unpackData 3 "02 05 08"
 buildStorage 3
-unpackData 3 "14 17 20 23 26"
+threads=8
+unpackData 3 "11 14 17"
 buildStorage 3
 
+createStorage 4
+threads=12
+unpackData 4 "18 21 24"
+buildStorage 4
+threads=8
+unpackData 4 "19 22 25"
+buildStorage 4
 
+threads=4
+unpackData 4 "20"
+buildStorage 4
 
+threads=6
+unpackData 1 "23"
+buildStorage 1
+buildStorage 3
 
-
+threads=6
+unpackData 1 "26"
+buildStorage 1
