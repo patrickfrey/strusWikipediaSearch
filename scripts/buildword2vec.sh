@@ -20,7 +20,7 @@ runTITLE() {
 	dmp_outputfile="$outprefix""title.$infile.txt"
 
 	rm $dmp_outputfile
-	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$jobid" "$outprefix"tmp "$dmp_outputfile" $srcprefix
+	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$jobid" tmp "$dmp_outputfile" $srcprefix
 }
 
 runTITLE 1 00
@@ -33,7 +33,7 @@ runNLP() {
 	dic_outputfile="$outprefix""dict.$jobid.txt"
 	rm $dmp_outputfile
 	rm $nlp_outputfile
-	for dd in $infiles; do echo "PROCESS $dd"; $scriptdir/nlpdump.sh "$outprefix"wikipedia$dd.tar.gz $jobid "$outprefix"tmp $dmp_outputfile $srcprefix; done
+	for dd in $infiles; do echo "PROCESS $dd"; $scriptdir/nlpdump.sh "$outprefix"wikipedia$dd.tar.gz $jobid tmp $dmp_outputfile $srcprefix; done
 	$scriptdir/strusnlp.py nlp $dmp_outputfile > $nlp_outputfile
 	mkdir -p "$outprefix"data
 	mv $dmp_outputfile "$outprefix"data/
