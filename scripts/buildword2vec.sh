@@ -15,14 +15,15 @@ w2wprefix=word2vec/bin/
 scriptdir="$srcprefix"scripts
 
 runTITLE() {
-	infile=$1
+	jobid=$1
+	infile=$2
 	dmp_outputfile="$outprefix""title.$infile.txt"
 
 	rm $dmp_outputfile
-	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$outprefix"tmp "$dmp_outputfile" $srcprefix
+	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$jobid" "$outprefix"tmp "$dmp_outputfile" $srcprefix
 }
 
-runTITLE 00
+runTITLE 1 00
 
 runNLP() {
 	jobid=$1
