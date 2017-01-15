@@ -14,7 +14,7 @@ srcprefix=strusWikipediaSearch/
 w2wprefix=word2vec/bin/
 scriptdir="$srcprefix"scripts
 
-runTITLE() {
+runLINKS() {
 	jobid=$1
 	infile=$2
 	dmp_outputfile="$outprefix""links.$infile.txt"
@@ -25,7 +25,7 @@ runTITLE() {
 
 for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 do
-	runTITLE 1 $dd
+	runLINKS 1 $dd
 done
 
 runNLP() {
@@ -51,14 +51,12 @@ runNLP 04 "16 17 18 19" &
 runNLP 05 "20 21 22 23" &
 runNLP 06 "24 25 26" &
 
-cat "$outprefix"title.{00,01,02,03,04,05,06}.txt | sort | uniq > "$outprefix"title.txt
 $scriptdir/strusnlp.py joindict "$outprefix"dict.{00,01,02,03,04,05,06}.txt > "$outprefix"dict.txt
 $scriptdir/strusnlp.py seldict "$outprefix"dict.txt 2 > "$outprefix"dict.sel.txt
 $scriptdir/strusnlp.py splitdict "$outprefix"dict.sel.txt "$outprefix"title.txt > "$outprefix"dict.split.txt
 mkdir -p "$outprefix"data
 rm "$outprefix"dict.sel.txt
 mv "$outprefix"dict.{00,01,02,03,04,05,06}.txt "$outprefix"data/
-mv "$outprefix"title.{00,01,02,03,04,05,06}.txt "$outprefix"data/
 
 buildText() {
 	jobid=$1
@@ -116,8 +114,8 @@ $scriptdir/strusnlp.py seldict $pattern_vocabulary 500000 > $pattern_stopwords_d
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords_doc > $pattern_searchfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords_qry > $pattern_searchfeat_qry
-cat "$outprefix"title.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - lnklexem T lc $pattern_stopwords_qry > $pattern_lnkfeat_doc
-cat "$outprefix"title.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - titlexem T lc $pattern_stopwords_qry > $pattern_titlefeat_doc
+cat "$outprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$outprefix"redirects.txt lnklexem T lc $pattern_stopwords_qry > $pattern_lnkfeat_doc
+cat "$outprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$outprefix"redirects.txt titlexem T lc $pattern_stopwords_qry > $pattern_titlefeat_doc
 
 
 

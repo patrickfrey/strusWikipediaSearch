@@ -7,22 +7,48 @@ use Text::Unidecode;
 use feature qw( unicode_strings );
 use open qw/:std :utf8/;
 
-if ($#ARGV < 0 || $#ARGV > 4)
+if ($#ARGV < 1 || $#ARGV > 5)
 {
-	print STDERR "usage: createTitleRules.pl <infile> [<restype>] [<normop>]\n";
-	print STDERR "       <infile>       :file ('-' for stdin) with title lines to process\n";
-	print STDERR "       <lexem>        :lexem term type name (default 'lexem').\n";
-	print STDERR "       <restype>      :result type name 'name' or prefix (default 'name').\n";
-	print STDERR "       <normop>       :normalizer of tokens 'lc' or '' (default '').\n";
-	print STDERR "       <stopwordfile> :file with terms (stop words) not to use.\n";
+	print STDERR "usage: createTitleRules.pl <infile> <redirectsfile> [<restype>] [<normop>] [<stopwordfile>]\n";
+	print STDERR "       <infile>        :file ('-' for stdin) with title lines to process\n";
+	print STDERR "       <redirectsfile> :file with the redirects to process\n";
+	print STDERR "       <lexem>         :lexem term type name (default 'lexem').\n";
+	print STDERR "       <restype>       :result type name 'name' or prefix (default 'name').\n";
+	print STDERR "       <normop>        :normalizer of tokens 'lc' or '' (default '').\n";
+	print STDERR "       <stopwordfile>  :file with terms (stop words) not to use.\n";
 	exit;
 }
 
 my $infilename = $ARGV[0];
+my $redirfilename = $ARGV[1];
 my $lexemtype = "lexem";
 my $restype = "name";
 my $normop = "";
 my %stopword_dict = ();
+my %redir_dict = ();
+
+sub trim
+{
+	my $s = shift; $s =~ s/^\s+|\s+$//g; return $s;
+}
+
+sub getTermKey
+{
+	my ($term) = @_;
+	if ($normop eq "lc")
+	{
+		return lc($term);
+	}
+	elsif ($normop eq "")
+	{
+		return $term;
+	}
+	else
+	{
+		die "unknown norm op parameter passed";
+	}
+}
+
 sub feedStopwordLine
 {
 	my ($ln) = @_;
@@ -37,21 +63,21 @@ sub feedStopwordLine
 	}
 }
 
-if ($#ARGV >= 1)
-{
-	$lexemtype = $ARGV[1];
-}
 if ($#ARGV >= 2)
 {
-	$restype = $ARGV[2];
+	$lexemtype = $ARGV[2];
 }
 if ($#ARGV >= 3)
 {
-	$normop = $ARGV[3];
+	$restype = $ARGV[3];
 }
 if ($#ARGV >= 4)
 {
-	open my $stopwordfile, "<$ARGV[4]" or die "failed to open file $ARGV[0] for reading ($!)\n";
+	$normop = $ARGV[4];
+}
+if ($#ARGV >= 5)
+{
+	open my $stopwordfile, "<$ARGV[5]" or die "failed to open file $ARGV[5] for reading ($!)\n";
 	my $ln = readline ($stopwordfile);
 	while ($ln)
 	{
@@ -61,6 +87,27 @@ if ($#ARGV >= 4)
 	close $stopwordfile;
 }
 
+sub feedRedirLine
+{
+	my ($ln) = @_;
+	my ($key,$dest) = split /\s/, $ln;
+	unless (defined $stopword_dict{ $term })
+	{
+		print STDERR, "key '$key' defined twice\n";
+	}
+	$redir_dict{ getTermKey( trim( $dest)) } = trim( $key);
+}
+
+open my $redirfile, "<$redirfilename" or die "failed to open file $redirfilename for reading ($!)\n";
+my $ln = readline ($redirfile);
+while ($ln)
+{
+	feedRedirLine( $ln);
+	$ln = readline ($redirfile);
+}
+close $redirfile;
+
+
 my $infile;
 if ($infilename eq '-')
 {
@@ -69,11 +116,6 @@ if ($infilename eq '-')
 else
 {
 	open $infile, "<$infilename" or die "failed to open file $infilename for reading ($!)\n";
-}
-
-sub trim
-{
-	my $s = shift; $s =~ s/^\s+|\s+$//g; return $s;
 }
 
 my %rule_dict = ();
@@ -89,22 +131,6 @@ sub getLexem
 	elsif ($normop eq "")
 	{
 		return "$lexemtype \"$term\"";
-	}
-	else
-	{
-		die "unknown norm op parameter passed";
-	}
-}
-sub getTermKey
-{
-	my ($term) = @_;
-	if ($normop eq "lc")
-	{
-		return lc($term);
-	}
-	elsif ($normop eq "")
-	{
-		return $term;
 	}
 	else
 	{
@@ -212,6 +238,10 @@ sub printRules
 			}
 			my $nonterminal_length = $sub_pattern_length_map{ $patternid };
 			printNonTermRule( "$result", "_$patternid", $terms[$hi], $nonterminal_length + 1);
+		}
+		if (defined $redir_dict{ $termkey })
+		{
+			printRules( $result, $redir_dict{ $termkey } );
 		}
 	}
 }

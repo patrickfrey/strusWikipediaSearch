@@ -25,6 +25,29 @@ my $lexemtype = "lexem";
 my $restype = "name";
 my $normop = "";
 my %stopword_dict = ();
+
+sub trim
+{
+	my $s = shift; $s =~ s/^\s+|\s+$//g; return $s;
+}
+
+sub getTermKey
+{
+	my ($term) = @_;
+	if ($normop eq "lc")
+	{
+		return lc($term);
+	}
+	elsif ($normop eq "")
+	{
+		return $term;
+	}
+	else
+	{
+		die "unknown norm op parameter passed";
+	}
+}
+
 sub feedStopwordLine
 {
 	my ($ln) = @_;
@@ -73,11 +96,6 @@ else
 	open $infile, "<$infilename" or die "failed to open file $infilename for reading ($!)\n";
 }
 
-sub trim
-{
-	my $s = shift; $s =~ s/^\s+|\s+$//g; return $s;
-}
-
 my %rule_dict = ();
 
 sub getLexem
@@ -90,22 +108,6 @@ sub getLexem
 	elsif ($normop eq "")
 	{
 		return "$lexemtype \"$term\"";
-	}
-	else
-	{
-		die "unknown norm op parameter passed";
-	}
-}
-sub getTermKey
-{
-	my ($term) = @_;
-	if ($normop eq "lc")
-	{
-		return lc($term);
-	}
-	elsif ($normop eq "")
-	{
-		return $term;
 	}
 	else
 	{
@@ -193,7 +195,7 @@ sub printRules
 			if ($patternid == $sub_pattern_cnt && $patternid != $sub_pattern_lastcnt)
 			{
 				$sub_pattern_length_map{ $patternid } = 2;
-				printTermRule( "._$patternid", $terms[0], $terms[1], 2);
+				printTermRule( "._$patternid", $terms[0], $terms[1]);
 				$sub_pattern_lastcnt = $patternid;
 			}
 			my $hi = 2;
