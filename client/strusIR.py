@@ -112,6 +112,7 @@ class Backend:
 
         query.defineFeature( "selfeat", selexpr, 1.0 )
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
+        query.addMetaDataRestrictionCondition( "==", "redirect", 0, true);
 
         if (scheme == "NBLNK" or scheme == "TILNK") and len( terms) > 0:
             if len( terms) > 1:
