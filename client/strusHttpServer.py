@@ -365,7 +365,9 @@ class QueryHandler( tornado.web.RequestHandler ):
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
                     maplinks = [ LinkRow(links[0].title,1.0) ]
+                    print "+++ LINK %s %f" % (links[0].title, 1.0)
                     for link in links[1:]:
+                        print "+++ LINK %s %f" % (link.title, link.weight / weightnorm)
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
                 querystruct = QueryStruct( querystruct.terms, links)
@@ -374,7 +376,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
             time_elapsed = time.time() - start_time
             # Render the results:
-            if (scheme == "NBLNK" or scheme == "TILNK" or scheme == "STD"):
+            if (scheme == "NBLNK" or scheme == "TILNK"):
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
