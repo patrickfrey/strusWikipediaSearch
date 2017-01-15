@@ -243,6 +243,7 @@ sub processLine
 		return;
 	}
 	my $feat = $ln;
+	$feat =~ s/\s.*$//;	# ... cut away everything after first space
 	$featno = $featno + 1;
 	$feat =~ s/[\\\.'"]//g;
 	my $result = getResultId( $featno, $feat);

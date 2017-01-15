@@ -141,6 +141,7 @@
 
 [Metadata]
     redirect = const("1") content /mediawiki/page/redirect@title;
+    pageweight = dictmap("pagerank.txt"):lc:wordjoin("_") content /mediawiki/page/title();
 
 [Aggregator]
     title_start = minpos( tist);
