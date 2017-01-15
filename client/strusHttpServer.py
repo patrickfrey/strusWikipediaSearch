@@ -294,6 +294,7 @@ class QueryHandler( tornado.web.RequestHandler ):
     def evaluateQuery( self, scheme, querystruct, firstrank, nofranks, restrictdn):
         rt = None
         try:
+            print "+++ EVAL %s %s" % (scheme, querystruct)
             maxnofresults = firstrank + nofranks
             terms = querystruct.terms
             if len( terms) == 0:
@@ -325,7 +326,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     typesize = 8
                     value = lnk.title
                     valuesize = len(value)
-                    qry += struct.pack( ">qdHH", dflist[ii], lnk.weight, typesize, valuesize)
+                    qry += struct.pack( ">qdHH", 0, lnk.weight, typesize, valuesize)
                     qry += struct.pack( "%ds%ds" % (typesize,valuesize), type, value)
                 # Query all storage servers:
                 results = yield self.issueQueries( storageservers, scheme, qry)

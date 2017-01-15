@@ -93,16 +93,22 @@ class Backend:
                     cardinality = 3
             selexpr = ["contains",0,cardinality]
             for term in terms:
-                selexpr.append( ["tist", term.value] )
+                if (term.df > 0.0):
+                    selexpr.append( ["tist", term.value] )
+                    print "+++ SEL %s %s" % ("tist", term.value)
 
         else:
             selexpr = ["contains"]
             for term in terms:
-                selexpr.append( [term.type, term.value] )
+                if (term.df > 0.0):
+                    selexpr.append( [term.type, term.value] )
+                    print "+++ SEL %s %s" % (term.type, term.value)
 
         for term in terms:
+            print "+++ FEAT %s %s %u" % (term.type, term.value, term.df)
             query.defineFeature( "docfeat", [term.type, term.value], 1.0)
-            query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
+            if term.df > 0.0:
+                query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 
         query.defineFeature( "selfeat", selexpr, 1.0 )
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )

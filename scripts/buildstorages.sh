@@ -7,7 +7,7 @@ threads=12
 
 storageConfig()
 {
-  echo "path=$blkrefix""storage$1; metadata=redirect UInt8,title_start UInt8,title_end UInt8,doclen UInt32,pageweight Float32;max_open_files=256;write_buffer_size=512K;block_size=4K"
+  echo "path=$blkrefix""storage$1; metadata=redirect UInt8,pageweight UInt8,title_start UInt8,title_end UInt8,doclen UInt32;max_open_files=256;write_buffer_size=512K;block_size=4K"
 }
 
 createStorage()

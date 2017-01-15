@@ -1,5 +1,6 @@
 [Attribute]
     docid = text content /mediawiki/page/title();
+    titid = lc:wordjoin("_") content /mediawiki/page/title();
     date = text content /mediawiki/page/revision/timestamp();
     contributor = text content /mediawiki/page/revision/contributor/username();
     redirect = text content /mediawiki/page/redirect@title;

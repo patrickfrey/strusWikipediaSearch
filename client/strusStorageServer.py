@@ -57,7 +57,7 @@ def packedMessage( msg):
 # Determine if the query is only containing high frequency terms. In this case we change the retrieval scheme:
 def isStopWordsOnlyQuery( terms, collectionsize):
     for term in terms:
-        if term.df < collectionsize/12:
+        if term.df != 0.0 and term.df < collectionsize/12:
             return False
     return True
 
