@@ -4,6 +4,6 @@
     start    = empty content /mediawiki/page/revision/text;
     end      = empty content /mediawiki/page/revision/text~;
     linkid   = lc:wordjoin("_") content /mediawiki/page/revision/text//link[@type='page']@id;
-    redirect = empty content /mediawiki/page/revision/text/redirect;
+    redirect = empty content /mediawiki/page/redirect@title;
 
 

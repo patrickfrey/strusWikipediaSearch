@@ -140,7 +140,7 @@
     doc = /mediawiki/page;
 
 [Metadata]
-    redirect = const("1") content /mediawiki/page/revision/text/redirect;
+    redirect = const("1") content /mediawiki/page/redirect@title;
 
 [Aggregator]
     title_start = minpos( tist);

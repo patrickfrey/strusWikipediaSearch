@@ -294,7 +294,6 @@ class QueryHandler( tornado.web.RequestHandler ):
     def evaluateQuery( self, scheme, querystruct, firstrank, nofranks, restrictdn):
         rt = None
         try:
-            print "+++ EVAL %s %s" % (scheme, querystruct)
             maxnofresults = firstrank + nofranks
             terms = querystruct.terms
             if len( terms) == 0:
@@ -365,9 +364,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
                     maplinks = [ LinkRow(links[0].title,1.0) ]
-                    print "+++ LINK %s %f" % (links[0].title, 1.0)
                     for link in links[1:]:
-                        print "+++ LINK %s %f" % (link.title, link.weight / weightnorm)
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
                 querystruct = QueryStruct( querystruct.terms, links)
