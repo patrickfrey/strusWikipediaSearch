@@ -90,7 +90,7 @@ if ($#ARGV >= 5)
 sub feedRedirLine
 {
 	my ($ln) = @_;
-	my ($key,$dest) = split /\s/, $ln;
+	my ($key,$dest) = split /[\t ]+/, $ln;
 	$dest = getTermKey( trim( $dest));
 	$key = trim( $key );
 	if (defined $redir_dict{ $dest })
