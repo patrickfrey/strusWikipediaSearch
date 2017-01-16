@@ -246,7 +246,7 @@ sub printRules
 		}
 		if (defined $redir_dict{ $termkey })
 		{
-			@redirsources = split( /\n/, $redir_dict{ $termkey } );
+			my @redirsources = split( /\n/, $redir_dict{ $termkey } );
 			foreach my $rsrc (@redirsources)
 			{
 				printRules( $result, $rsrc );
