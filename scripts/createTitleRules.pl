@@ -91,11 +91,16 @@ sub feedRedirLine
 {
 	my ($ln) = @_;
 	my ($key,$dest) = split /\s/, $ln;
-	unless (defined $stopword_dict{ $term })
+	$dest = getTermKey( trim( $dest));
+	$key = trim( $key );
+	if (defined $redir_dict{ $dest })
 	{
-		print STDERR, "key '$key' defined twice\n";
+		$redir_dict{ $dest } .= "\n" . $key;
 	}
-	$redir_dict{ getTermKey( trim( $dest)) } = trim( $key);
+	else
+	{
+		$redir_dict{ $dest } = $key;
+	}
 }
 
 open my $redirfile, "<$redirfilename" or die "failed to open file $redirfilename for reading ($!)\n";
@@ -241,7 +246,11 @@ sub printRules
 		}
 		if (defined $redir_dict{ $termkey })
 		{
-			printRules( $result, $redir_dict{ $termkey } );
+			@redirsources = split( /\n/, $redir_dict{ $termkey } );
+			foreach my $rsrc (@redirsources)
+			{
+				printRules( $result, $rsrc );
+			}
 		}
 	}
 }
