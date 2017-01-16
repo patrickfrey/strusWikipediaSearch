@@ -249,7 +249,10 @@ sub printRules
 			my @redirsources = split( /\n/, $redir_dict{ $termkey } );
 			foreach my $rsrc (@redirsources)
 			{
-				printRules( $result, $rsrc );
+				unless (defined $rule_dict{ $rsrc })
+				{
+					printRules( $result, $rsrc );
+				}
 			}
 		}
 	}
