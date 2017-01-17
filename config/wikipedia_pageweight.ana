@@ -1,0 +1,5 @@
+[Attribute]
+    docid = text content /mediawiki/page/title();
+[Metadata]
+    pageweight = dictmap("pagerank.txt", "0"):lc:wordjoin("_") content /mediawiki/page/title();
+

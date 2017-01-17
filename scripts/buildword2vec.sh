@@ -110,12 +110,13 @@ pattern_titlefeat_doc="$outprefix"pattern_titlefeat_doc.txt
 cat "$outprefix"docs.word2vec.txt | $scriptdir/countTerms.pl > $pattern_vocabulary
 $scriptdir/strusnlp.py seldict $pattern_vocabulary 1000000 | grep -v '_' > $pattern_stopwords_qry
 $scriptdir/strusnlp.py seldict $pattern_vocabulary 500000 > $pattern_stopwords_doc
+echo "" > "$outprefix"redirects_empty.txt
 
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords_doc > $pattern_searchfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords_qry > $pattern_searchfeat_qry
 cat "$outprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$outprefix"redirects.txt lnklexem T lc $pattern_stopwords_qry > $pattern_lnkfeat_doc
-cat "$outprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$outprefix"redirects.txt titlexem T lc $pattern_stopwords_qry > $pattern_titlefeat_doc
+cat "$outprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$outprefix"redirects_empty.txt titlexem T lc $pattern_stopwords_qry > $pattern_titlefeat_doc
 
 
 
