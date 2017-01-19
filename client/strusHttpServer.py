@@ -359,7 +359,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
             elif scheme == "STD":
                 noflinks = 1
-                selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 100, restrictdn)
+                selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 100, [])
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
@@ -367,7 +367,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     for link in links[1:]:
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
-                querystruct = QueryStruct( querystruct.terms, maplinks)
+                querystruct = QueryStruct( querystruct.terms, links)
                 result = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
             else:
                 result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
