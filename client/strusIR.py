@@ -34,7 +34,7 @@ class Backend:
             })
             if scheme == "BM25pg":
                 rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
-                rt.addWeightingFormula( "d * _1 * _2 + (1 - d) * _1", {"d", 0.6} )
+                rt.addWeightingFormula( "d * _0 * _1 + (1 - d) * _0", {"d": 0.6} )
 
         elif scheme == "NBLNK" or scheme == "TILNK":
             rt.addWeightingFunction( "BM25", {
@@ -42,7 +42,7 @@ class Backend:
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
-            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            rt.addWeightingFunction( "metadata", [ {"name": "pageweight" } ] )
         else:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
