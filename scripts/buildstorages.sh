@@ -1,13 +1,13 @@
 #!/bin/sh
 
 outprefix=origdata/
-blkrefix=nlpdata/
+blkprefix=strusrepos/
 srcprefix=github/strusWikipediaSearch/
 threads=12
 
 storageConfig()
 {
-  echo "path=$blkrefix""storage$1; metadata=redirect UInt8,pageweight UInt8,title_start UInt8,title_end UInt8,doclen UInt32;max_open_files=256;write_buffer_size=512K;block_size=4K"
+  echo "path=$blkprefix""storage$1; metadata=redirect UInt8,pageweight UInt8,title_start UInt8,title_end UInt8,doclen UInt32;max_open_files=256;write_buffer_size=512K;block_size=4K"
 }
 
 createStorage()
@@ -34,8 +34,13 @@ buildStorage()
   rm -Rf tmp$storageid/
 }
 
+assignPageweights()
+{
+  strusUpdateStorage -s "`storageConfig $storageid`" -x titid -m pageweight "$outprefix"pagerank.txt
+}
+
 createStorage 1
-threads=14
+threads=10
 unpackData 1 "00 03 06"
 buildStorage 1
 threads=8
@@ -46,16 +51,16 @@ createStorage 2
 threads=10
 unpackData 2 "01 04 07"
 buildStorage 2
-threads=8
+threads=6
 unpackData 2 "10 13 16"
 buildStorage 2
 
 
 createStorage 3
-threads=12
+threads=10
 unpackData 3 "02 05 08"
 buildStorage 3
-threads=8
+threads=6
 unpackData 3 "11 14 17"
 buildStorage 3
 
@@ -79,3 +84,10 @@ buildStorage 3
 threads=6
 unpackData 1 "26"
 buildStorage 1
+
+
+assignPageweights 1
+assignPageweights 2
+assignPageweights 3
+assignPageweights 4
+

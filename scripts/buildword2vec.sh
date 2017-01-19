@@ -23,9 +23,11 @@ runLINKS() {
 	$scriptdir/linkdump.sh "$outprefix"wikipedia$infile.tar.gz "$jobid" tmp "$dmp_outputfile" $srcprefix
 }
 
+rm "$outprefix""links.all.txt"
 for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 do
 	runLINKS 1 $dd
+	"$outprefix""links.$dd.txt" >> "$outprefix""links.all.txt"
 done
 
 runNLP() {
@@ -110,7 +112,9 @@ pattern_titlefeat_doc="$outprefix"pattern_titlefeat_doc.txt
 cat "$outprefix"docs.word2vec.txt | $scriptdir/countTerms.pl > $pattern_vocabulary
 $scriptdir/strusnlp.py seldict $pattern_vocabulary 1000000 | grep -v '_' > $pattern_stopwords_qry
 $scriptdir/strusnlp.py seldict $pattern_vocabulary 500000 > $pattern_stopwords_doc
+
 echo "" > "$outprefix"redirects_empty.txt
+strusPageRank -i 100 -g -n 100 -r "$outprefix"redirects.txt "$outprefix"links.all.txt > "$outprefix"pagerank.txt
 
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords_doc > $pattern_searchfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc

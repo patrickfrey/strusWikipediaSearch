@@ -26,13 +26,15 @@ class Backend:
             })
             rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
 
-        elif scheme == "BM25":
+        elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
-            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            if scheme == "BM25pg":
+                rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+                rt.addWeightingFormula( "d * _1 * _2 + (1 - d) * _1", {"d", 0.6} )
 
         elif scheme == "NBLNK" or scheme == "TILNK":
             rt.addWeightingFunction( "BM25", {
@@ -72,7 +74,7 @@ class Backend:
         self.context = strus.Context()
         self.storage = self.context.createStorageClient( config )
         self.queryeval = {}
-        for scheme in [ "BM25", "BM25pff", "NBLNK", "TILNK" ]:
+        for scheme in [ "BM25", "BM25pg", "BM25pff", "NBLNK", "TILNK" ]:
             self.queryeval[ scheme] = self.createQueryEval( scheme)
 
     # Get pairs (a,b) of a and b in [0..N-1] with a < b:

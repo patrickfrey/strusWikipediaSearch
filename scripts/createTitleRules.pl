@@ -295,9 +295,8 @@ sub processLine
 	}
 }
 
-print '%lexem ' . "$lexemtype\n";
-print '%exclusive' . "\n";
-print '%stopwordOccurrenceFactor = 0.001' . "\n";
+print '%FEEDER lexem ' . "$lexemtype\n";
+print '%MATCHER exclusive, stopwordOccurrenceFactor = 0.001' . "\n";
 
 while ($_ = <$infile>)
 {
