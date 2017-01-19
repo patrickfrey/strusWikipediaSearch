@@ -42,7 +42,7 @@ class Backend:
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
-            rt.addWeightingFunction( "metadata", [ {"name": "pageweight" } ] )
+            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
         else:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
