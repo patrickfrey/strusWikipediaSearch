@@ -377,7 +377,13 @@ class QueryHandler( tornado.web.RequestHandler ):
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
-            self.render( template, results=result[0][:-1], hasmore=(len(result[0])>nofranks), messages=result[1],
+            if len(result[0]) > nofranks:
+                hasmore = True
+                ranklist = result[0][:-1]
+            else:
+                hasmore = False
+                ranklist = result[0]
+            self.render( template, results=ranklist, hasmore=hasmore, messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, nofranks=nofranks, mode=mode,
                          scheme=scheme, querystr=querystr)
         except Exception as e:
