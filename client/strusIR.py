@@ -17,7 +17,7 @@ class Backend:
         # Query evaluation scheme:
         if scheme == "BM25pff":
             rt.addWeightingFunction( "BM25pff", {
-                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
                      "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 3,
                      "ffbase": 0.1, "fftie": 10,
@@ -25,16 +25,17 @@ class Backend:
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
             rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
-                     "k1": 1.2, "b": 0.75, "avgdoclen": 500,
+                     "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
             })
             if scheme == "BM25pg":
                 rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
-                rt.addWeightingFormula( "d * _0 * _1 + (1 - d) * _0", {"d": 0.6} )
+                rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
 
         elif scheme == "NBLNK" or scheme == "TILNK":
             rt.addWeightingFunction( "BM25", {
