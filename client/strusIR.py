@@ -176,7 +176,7 @@ class Backend:
         query.setMaxNofRanks( nofranks)
         query.setMinRank( firstrank)
         query.defineGlobalStatistics( {'nofdocs' : collectionsize} )
-        if (len(restrictset) > 0):
+        if restrictset:
             query.addDocumentEvaluationSet( restrictset )
         # Evaluate the query:
         result = query.evaluate()
