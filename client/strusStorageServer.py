@@ -105,11 +105,11 @@ def processCommand( message):
                     messageofs += typesize + valuesize
                     terms.append( Term( type, value, df, weight))
                 elif (message[ messageofs] == 'L'):
-                        (weight,typesize,valuesize) = struct.unpack_from( ">dHH", message, messageofs+1)
-                        messageofs += struct.calcsize( ">dHH") + 1
-                        (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
-                        messageofs += typesize + valuesize
-                        links.append( Term( type, value, 0, weight))
+                    (weight,typesize,valuesize) = struct.unpack_from( ">dHH", message, messageofs+1)
+                    messageofs += struct.calcsize( ">dHH") + 1
+                    (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
+                    messageofs += typesize + valuesize
+                    links.append( Term( type, value, 0, weight))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
