@@ -320,12 +320,12 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry += struct.pack( ">qdHH", dflist[ii], 1.0, typesize, valuesize)
                     qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
                 for lnk in querystruct.links:
-                    qry += bytearray( b"T")
+                    qry += bytearray( b"L")
                     type = "vectfeat"
                     typesize = 8
                     value = lnk.title
                     valuesize = len(value)
-                    qry += struct.pack( ">qdHH", 0, lnk.weight, typesize, valuesize)
+                    qry += struct.pack( ">dHH", lnk.weight, typesize, valuesize)
                     qry += struct.pack( "%ds%ds" % (typesize,valuesize), type, value)
                 # Query all storage servers:
                 results = yield self.issueQueries( storageservers, scheme, qry)

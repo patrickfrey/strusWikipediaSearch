@@ -43,7 +43,7 @@ createStorage 1
 threads=10
 unpackData 1 "00 03 06"
 buildStorage 1
-threads=8
+threads=6
 unpackData 1 "09 12 15"
 buildStorage 1
 

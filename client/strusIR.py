@@ -24,7 +24,7 @@ class Backend:
                      "proxffbias": 0.3, "proxfftie": 20, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
-            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            rt.addWeightingFunction( "constant", {".match": "lnkfeat" } )
             rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
@@ -86,7 +86,7 @@ class Backend:
                 yield [i,k]
 
     # Define features for weighting and summarization:
-    def defineFeatures( self, scheme, query, seltitle, terms, collectionsize):
+    def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
         if seltitle == True:
             cardinality = 0
             if (len( terms) >= 3):
@@ -98,20 +98,20 @@ class Backend:
             for term in terms:
                 if (term.df > 0.0):
                     selexpr.append( ["tist", term.value] )
-                    print "+++ SEL %s %s" % ("tist", term.value)
 
         else:
             selexpr = ["contains"]
             for term in terms:
                 if (term.df > 0.0):
                     selexpr.append( [term.type, term.value] )
-                    print "+++ SEL %s %s" % (term.type, term.value)
 
         for term in terms:
-            print "+++ FEAT %s %s %u" % (term.type, term.value, term.df)
-            query.defineFeature( "docfeat", [term.type, term.value], 1.0)
+            query.defineFeature( "docfeat", [term.type, term.value], term.weight)
             if term.df > 0.0:
                 query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
+
+        for link in links:
+            query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
 
         query.defineFeature( "selfeat", selexpr, 1.0 )
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
@@ -163,7 +163,7 @@ class Backend:
                 query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
-    def evaluateQuery( self, scheme, seltitle, terms, collectionsize, firstrank, nofranks, restrictset, debugtrace):
+    def evaluateQuery( self, scheme, seltitle, terms, links, collectionsize, firstrank, nofranks, restrictset, debugtrace):
         if not scheme in self.queryeval:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
         queryeval = self.queryeval[ scheme]
@@ -172,7 +172,7 @@ class Backend:
             # Return empty result for empty query:
             return []
 
-        self.defineFeatures( scheme, query, seltitle, terms, collectionsize)
+        self.defineFeatures( scheme, query, seltitle, terms, links, collectionsize)
         query.setMaxNofRanks( nofranks)
         query.setMinRank( firstrank)
         query.defineGlobalStatistics( {'nofdocs' : collectionsize} )

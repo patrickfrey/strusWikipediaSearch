@@ -77,6 +77,7 @@ def processCommand( message):
             firstrank = 0
             scheme = "BM25"
             terms = []
+            links = []
             # Build query to evaluate from the request:
             messagesize = len(message)
             while (messageofs < messagesize):
@@ -103,6 +104,12 @@ def processCommand( message):
                     (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
                     messageofs += typesize + valuesize
                     terms.append( Term( type, value, df, weight))
+                elif (message[ messageofs] == 'L'):
+                        (weight,typesize,valuesize) = struct.unpack_from( ">dHH", message, messageofs+1)
+                        messageofs += struct.calcsize( ">dHH") + 1
+                        (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
+                        messageofs += typesize + valuesize
+                        links.append( Term( type, value, 0, weight))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
@@ -113,9 +120,9 @@ def processCommand( message):
 
             # Evaluate query:
             if restrictdn == 0:
-                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [], debugtrace)
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [], debugtrace)
             else:
-                results = backend.evaluateQuery( scheme, doTitleSelect, terms, collectionsize, firstrank, nofranks, [restrictdn], debugtrace)
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [restrictdn], debugtrace)
 
             # Build the result and pack it into the reply message for the client:
             if scheme == "NBLNK" or scheme == "TILNK":
