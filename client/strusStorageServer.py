@@ -17,7 +17,7 @@ import strusIR
 backend = None
 # Port of the global statistics server:
 statserver = "localhost:7183"
-# IO loop:
+# Globals:
 global pubstats
 pubstats = False
 global serverno

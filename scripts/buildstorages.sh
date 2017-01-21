@@ -76,12 +76,11 @@ threads=4
 unpackData 4 "20"
 buildStorage 4
 
-threads=6
+threads=4
 unpackData 1 "23"
 buildStorage 1
-buildStorage 3
 
-threads=6
+threads=4
 unpackData 1 "26"
 buildStorage 1
 

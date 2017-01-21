@@ -49,7 +49,7 @@ class Backend:
 
         if scheme == "NBLNK":
             rt.addSummarizer( "accuvariable", {
-                  "norm": 0.0001, "pairmul": 2.0, "var": "LINK", "type": "linkid",
+                  "norm": 0.0001, "pairmul": 3.0, "var": "LINK", "type": "linkid",
                   ".match": "sumfeat"
             })
         elif scheme == "TILNK":
