@@ -22,6 +22,8 @@ import pprint
 statserver = "localhost:7183"
 # The address of the global dym (did you mean) server:
 dymserver = "localhost:7189"
+# The address of the query analyze server:
+qryserver = "localhost:7182"
 # Strus storage server addresses:
 storageservers = []
 # Strus client connection factory:
@@ -40,7 +42,19 @@ analyzer.addSearchIndexElement(
 ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract'])
 NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
-QueryStruct = collections.namedtuple('QueryStruct', ['terms','links'])
+QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','weight'])
+RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
+QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedlist','errors'])
+
+def packMessage( msg):
+    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
+
+def unpackMessage( msg, msgofs):
+    (strsize,) = struct.unpack_from( ">H", msg, msgofs)
+    msgofs += struct.calcsize( ">H")
+    (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
+    msgofs += strsize
+    return [str,msgofs]
 
 # [1] HTTP handlers:
 # Answer a query (issue a query to all storage servers and merge it to one result):
@@ -63,9 +77,9 @@ class QueryHandler( tornado.web.RequestHandler ):
             conn = yield msgclient.connect( host, port)
             statreply = yield msgclient.issueRequest( conn, statquery)
 
-            if (statreply[0] == 'E'):
+            if statreply[0] == 'E':
                 raise Exception( "failed to query global statistics: %s" % statreply[1:])
-            elif (statreply[0] != 'Y'):
+            elif statreply[0] != 'Y':
                 raise Exception( "protocol error loading global statistics")
             dflist = []
             collsize = 0
@@ -74,19 +88,19 @@ class QueryHandler( tornado.web.RequestHandler ):
             while (statsofs < statslen):
                 (statsval,) = struct.unpack_from( ">q", statreply, statsofs)
                 statsofs += struct.calcsize( ">q")
-                if (len(dflist) < len(terms)):
+                if len(dflist) < len(terms):
                     dflist.append( statsval)
-                elif (len(dflist) == len(terms)):
+                elif len(dflist) == len(terms):
                     collsize = statsval
                 else:
                     break
-            if (statsofs != statslen):
+            if statsofs != statslen:
                 raise Exception("result does not match query")
             rt = (dflist, collsize, None)
             conn.close()
         except Exception as e:
             errmsg = "query statistic server failed: %s" % e;
-            if (conn):
+            if conn:
                 conn.close()
             rt = ([],0,errmsg)
         raise tornado.gen.Return( rt)
@@ -100,7 +114,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_paratitle = ""
         row_abstract = ""
         while (answerofs < answersize):
-            if (answer[ answerofs] == '_'):
+            if answer[ answerofs] == '_':
                 if not row_title is None:
                     result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract))
                 row_docno = 0
@@ -109,23 +123,23 @@ class QueryHandler( tornado.web.RequestHandler ):
                 row_paratitle = ""
                 row_abstract = ""
                 answerofs += 1
-            elif (answer[ answerofs] == 'D'):
+            elif answer[ answerofs] == 'D':
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
                 answerofs += struct.calcsize( ">I") + 1
-            elif (answer[ answerofs] == 'W'):
+            elif answer[ answerofs] == 'W':
                 (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
                 answerofs += struct.calcsize( ">f") + 1
-            elif (answer[ answerofs] == 'T'):
+            elif answer[ answerofs] == 'T':
                 (titlelen,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
                 (row_title,) = struct.unpack_from( "%us" % titlelen, answer, answerofs)
                 answerofs += titlelen
-            elif (answer[ answerofs] == 'P'):
+            elif answer[ answerofs] == 'P':
                 (paratitlelen,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
                 (row_paratitle,) = struct.unpack_from( "%us" % paratitlelen, answer, answerofs)
                 answerofs += paratitlelen
-            elif (answer[ answerofs] == 'A'):
+            elif answer[ answerofs] == 'A':
                 (abstractlen,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
                 (row_abstract,) = struct.unpack_from( "%us" % abstractlen, answer, answerofs)
@@ -142,20 +156,20 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_weight = 0.0
         row_links = []
         while (answerofs < answersize):
-            if (answer[ answerofs] == '_'):
-                if (row_docno != 0):
+            if answer[ answerofs] == '_':
+                if row_docno != 0:
                     result.append( NblnkRow( row_docno, row_weight, row_links))
                 row_docno = 0
                 row_weight = 0.0
                 row_links = []
                 answerofs += 1
-            elif (answer[ answerofs] == 'D'):
+            elif answer[ answerofs] == 'D':
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
                 answerofs += struct.calcsize( ">I") + 1
-            elif (answer[ answerofs] == 'W'):
+            elif answer[ answerofs] == 'W':
                 (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
                 answerofs += struct.calcsize( ">f") + 1
-            elif (answer[ answerofs] == 'L'):
+            elif answer[ answerofs] == 'L':
                 (linkidlen,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
                 (linkidstr,weight) = struct.unpack_from( ">%dsf" % linkidlen, answer, answerofs)
@@ -163,7 +177,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 row_links.append([linkidstr,weight])
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
-        if (row_docno != 0):
+        if row_docno != 0:
             result.append( NblnkRow( row_docno, row_weight, row_links))
         return result
 
@@ -177,9 +191,9 @@ class QueryHandler( tornado.web.RequestHandler ):
         try:
             conn = yield msgclient.connect( host, port)
             reply = yield msgclient.issueRequest( conn, qryblob)
-            if (reply[0] == 'E'):
+            if reply[0] == 'E':
                 rt = (None, "storage server %s:%d returned error: %s" % (host, port, reply[1:]))
-            elif (reply[0] == 'Y'):
+            elif reply[0] == 'Y':
                 if scheme == "NBLNK" or scheme == "TILNK":
                     result = self.unpackAnswerLinkQuery( reply, 1, len(reply)-1)
                 else:
@@ -189,7 +203,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 rt = (None, "protocol error storage %s:%u query: unknown header %s" % (host,port,reply[0]))
             conn.close()
         except Exception as e:
-            if (conn):
+            if conn:
                 conn.close()
             rt = (None, "call of storage server %s:%u failed: %s" % (host, port, str(e)))
         raise tornado.gen.Return( rt)
@@ -241,7 +255,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 itrs.append( iter( result[0]))
         ri = 0
         for result in self.mergeResultIter( itrs):
-            if (ri == maxnofresults):
+            if ri == maxnofresults:
                 break
             merged.append( result)
             ri += 1
@@ -267,7 +281,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 if linkid in linktab:
                     linktab[ linkid] = 0.0 + linktab[ linkid] + link[1] * rank.weight
                     _refcnt,_docid = linkreftab[ linkid]
-                    if (_refcnt < refcnt):
+                    if _refcnt < refcnt:
                         linkreftab[ linkid] = [refcnt,docid]
                 else:
                     linktab[ linkid] = 0.0 + link[1] * rank.weight
@@ -286,9 +300,79 @@ class QueryHandler( tornado.web.RequestHandler ):
             li = li + 1
         return results
 
+    @tornado.gen.coroutine
     def analyzeQuery( self, scheme, querystr):
-        terms = analyzer.analyzeField( "text", querystr)
-        return QueryStruct( terms, [])
+        terms = []
+        relatedlist = []
+        errors = []
+        try:
+            query = bytearray("Q")
+            query.append('X')
+            query += packMessage( querystr)
+            query.append('N')
+            query += struct.pack( ">H", nofranks)
+
+            ri = qryserver.rindex(':')
+            host,port = qryserver[:ri],int( qryserver[ri+1:])
+            conn = yield msgclient.connect( host, port)
+            reply = yield msgclient.issueRequest( conn, query)
+            if reply[0] == 'E':
+                raise Exception( "failed to query dym server: %s" % reply[1:])
+            elif reply[0] != 'Y':
+                raise Exception( "protocol error in dym server query")
+            replyofs = 1
+            replylen = len(reply)
+            while replyofs < replylen:
+                if reply[ replyofs] == 'T':
+                    replyofs += 1
+                    type = None
+                    value = None
+                    pos = 1
+                    weight = 1.0
+                    while replyofs < replylen:
+                        if reply[ replyofs] == 'T':
+                            (type,replyofs) = unpackMessage( reply, replyofs+1)
+                        elif reply[ replyofs] == 'V':
+                            (type,replyofs) = unpackMessage( reply, replyofs+1)
+                        elif reply[ replyofs] == 'P':
+                            (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">I") + 1
+                        elif reply[ replyofs] == 'W':
+                            (weight,) = struct.unpack_from( ">f", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">f") + 1
+                        elif reply[ replyofs] == '_':
+                            replyofs += 1
+                            break
+                    terms.append( QueryTerm( type, value, pos, weight) )
+                elif reply[ replyofs] == 'R':
+                    replyofs += 1
+                    value = None
+                    index = -1
+                    weight = 0.0
+                    while replyofs < replylen:
+                        if reply[ replyofs] == 'V':
+                            (value,) = unpackMessage( reply, replyofs+1)
+                        elif reply[ replyofs] == 'I':
+                            (index,) = struct.unpack_from( ">I", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">I") + 1
+                        elif reply[ replyofs] == 'W':
+                            (weight,) = struct.unpack_from( ">f", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">f") + 1
+                        elif reply[ replyofs] == '_':
+                            replyofs += 1
+                            break
+                    relatedlist.append( RelatedTerm( value, index, weight) )
+                else:
+                    break
+            if replyofs != replylen:
+                raise Exception("query analyze server result format error")
+            conn.close()
+        except Exception as e:
+            errors.append( "query analyze server request failed: %s" % e);
+            if conn:
+                conn.close()
+            terms = analyzer.analyzeField( "text", querystr)
+        raise tornado.gen.Return( QueryStruct( terms, [], relatedlist, errors) )
 
     @tornado.gen.coroutine
     def evaluateQuery( self, scheme, querystruct, firstrank, nofranks, restrictdn):
@@ -302,7 +386,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 # Get the global statistics:
                 dflist,collectionsize,error = yield self.queryStats( terms)
-                if (not error is None):
+                if not error is None:
                     raise Exception( error)
                 # Assemble the query:
                 qry = bytearray()
@@ -311,7 +395,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
                 qry += bytearray( b"I") + struct.pack( ">H", 0)
                 qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
-                if (restrictdn != 0):
+                if restrictdn != 0:
                     qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
                 for ii in range( 0, len( terms)):
                     qry += bytearray( b"T")
@@ -352,14 +436,17 @@ class QueryHandler( tornado.web.RequestHandler ):
             # Evaluate query:
             start_time = time.time()
             # Analyze query:
-            querystruct = self.analyzeQuery( scheme, querystr)
+            querystruct = yield self.analyzeQuery( scheme, querystr)
+            errors += querystruct.errors
 
             if scheme == "NBLNK" or scheme == "TILNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 100, restrictdn)
-                result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), selectresult[1]]
+                errors += selectresult[1]
+                result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), errors]
             elif scheme == "STD":
                 noflinks = 10
                 selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 100, 0)
+                errors += selectresult[1]
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
@@ -367,13 +454,17 @@ class QueryHandler( tornado.web.RequestHandler ):
                     for link in links[1:]:
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
-                querystruct = QueryStruct( querystruct.terms, links)
-                result = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
+                querystruct = QueryStruct( querystruct.terms, links, querystruct.relatedlist, errors)
+                qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
+                errors += qryresult[1]
+                result = [qryresult[0],errors]
             else:
-                result = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
+                qryresult = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn)
+                errors += qryresult[1]
+                result = [qryresult[0],errors]
             time_elapsed = time.time() - start_time
             # Render the results:
-            if (scheme == "NBLNK" or scheme == "TILNK"):
+            if scheme == "NBLNK" or scheme == "TILNK":
                template = "search_nblnk_html.tpl"
             else:
                template = "search_bm25_html.tpl"
@@ -410,31 +501,32 @@ class DymHandler( tornado.web.RequestHandler ):
             host,port = dymserver[:ri],int( dymserver[ri+1:])
             conn = yield msgclient.connect( host, port)
             reply = yield msgclient.issueRequest( conn, query)
-            if (reply[0] == 'E'):
+            if reply[0] == 'E':
                 raise Exception( "failed to query dym server: %s" % reply[1:])
-            elif (reply[0] != 'Y'):
+            elif reply[0] != 'Y':
                 raise Exception( "protocol error in dym server query")
             proposals = []
             replyofs = 1
             replylen = len(reply)
             while (replyofs < replylen):
-                if (reply[ replyofs] == '_'):
+                if reply[ replyofs] == '_':
                     replyofs += 1
-                if (reply[ replyofs] == 'P'):
+                elif reply[ replyofs] == 'P':
                     replyofs += 1
                     (propsize,) = struct.unpack_from( ">H", reply, replyofs)
                     replyofs += struct.calcsize( ">H")
                     (propstr,) = struct.unpack_from( "%ds" % (propsize), reply, replyofs)
                     replyofs += propsize
                     proposals.append( propstr)
-
-            if (replyofs != replylen):
+                else:
+                    break
+            if replyofs != replylen:
                 raise Exception("dym server result format error")
             rt = (proposals, None)
             conn.close()
         except Exception as e:
             errmsg = "dym server request failed: %s" % e;
-            if (conn):
+            if conn:
                 conn.close()
             rt = ([], errmsg)
         raise tornado.gen.Return( rt)
@@ -450,7 +542,7 @@ class DymHandler( tornado.web.RequestHandler ):
             # d = restrict to document:
             restrictdnlist = []
             restrictdn = int( self.get_argument( "d", 0))
-            if (restrictdn):
+            if restrictdn:
                 restrictdnlist.append( restrictdn)
             # Evaluate query:
             start_time = time.time()
@@ -499,19 +591,19 @@ if __name__ == "__main__":
         (options, args) = parser.parse_args()
         myport = int(options.port)
         statserver = options.statserver
-        if (statserver[0:].isdigit()):
+        if statserver[0:].isdigit():
             statserver = '{}:{}'.format( 'localhost', statserver)
         dymserver = options.dymserver
-        if (dymserver[0:].isdigit()):
+        if dymserver[0:].isdigit():
             dymserver = '{}:{}'.format( 'localhost', dymserver)
 
         # Positional arguments are storage server addresses, if empty use default at localhost:7184
         for arg in args:
-            if (arg[0:].isdigit()):
+            if arg[0:].isdigit():
                 storageservers.append( '{}:{}'.format( 'localhost', arg))
             else:
                 storageservers.append( arg)
-        if (len( storageservers) == 0):
+        if len( storageservers) == 0:
             storageservers.append( "localhost:7184")
 
         # Start server:

@@ -20,7 +20,7 @@ strusctx = strus.Context()
 strustat = strusctx.createStatisticsProcessor("")
 
 # [2] Request handlers
-def packedMessage( msg):
+def packMessage( msg):
     return struct.pack( ">H%ds" % len(msg), len(msg), msg)
 
 def termDfMapKey( type, value):

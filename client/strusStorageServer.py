@@ -51,7 +51,7 @@ def publishStatistics( itr):
         msg = itr.getNext()
 
 # Pack a message with its length (processCommand protocol)
-def packedMessage( msg):
+def packMessage( msg):
     return struct.pack( ">H%ds" % len(msg), len(msg), msg)
 
 # Determine if the query is only containing high frequency terms. In this case we change the retrieval scheme:
@@ -134,7 +134,7 @@ def processCommand( message):
                     rt += struct.pack( ">f", result['weight'])
                     for linkid,weight in result['links']:
                         rt.append( 'L')
-                        rt += packedMessage( linkid) + struct.pack( ">f", weight)
+                        rt += packMessage( linkid) + struct.pack( ">f", weight)
             else:
                 for result in results:
                     rt.append( '_')
@@ -143,13 +143,13 @@ def processCommand( message):
                     rt.append( 'W')
                     rt += struct.pack( ">f", result['weight'])
                     rt.append( 'T')
-                    rt += packedMessage( result['title'])
+                    rt += packMessage( result['title'])
                     paratitle = result['paratitle']
                     if (len( paratitle) > 0):
                         rt.append( 'P')
-                        rt += packedMessage( paratitle)
+                        rt += packMessage( paratitle)
                     rt.append( 'A')
-                    rt += packedMessage( result['abstract'])
+                    rt += packMessage( result['abstract'])
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:

@@ -48,10 +48,17 @@ analyzer.addSearchIndexElementFromPatternMatch( "vecsfeat", "vecsfeat", [] )
 
 
 # Pack a message with its length (processCommand protocol)
-def packedMessage( msg):
+def packMessage( msg):
     return struct.pack( ">H%ds" % len(msg), len(msg), msg)
 
-RelatedElem  = collections.namedtuple('RelatedElem', ['name', 'value', 'weight'])
+def unpackMessage( msg, msgofs):
+    (strsize,) = struct.unpack_from( ">H", msg, msgofs)
+    msgofs += struct.calcsize( ">H")
+    (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
+    msgofs += strsize
+    return [str,msgofs]
+
+RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
 
 # Server callback function that intepretes the client message sent, executes the command and packs the result for the client
 @tornado.gen.coroutine
@@ -70,15 +77,12 @@ def processCommand( message):
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
                 if (message[ messageofs] == 'X'):
-                    (strsize,) = struct.unpack_from( ">H", message, messageofs+1)
-                    messageofs += struct.calcsize( ">H") + 1
-                    (querystr,) = struct.unpack_from( "%ds" % (strsize), message, messageofs)
-                    messageofs += typesize + valuesize
+                    (querystr,messageofs) = unpackMessage( message, messageofs+1)
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
             # Analyze query:
-            relateds = []
+            relatedlist = []
             terms = analyzer.analyzeField( "text", querystr)
             f_indices = []
             for term in terms:
@@ -93,7 +97,7 @@ def processCommand( message):
                     neighbour_set = vecsearcher.findSimilar( vec, nofranks)
                     for neighbour in neighbour_set:
                         fname = vecstorage.featureName( neighbour)
-                        relateds.append( RelatedElem( fname, "F%u" % neighbour, 0.0 ))
+                        relatedlist.append( RelatedTerm( fname, neighbour, 0.0 ))
                 else:
                     neighbour_set = set()
                     for concept in vecstorage.featureConcepts( "", f_indices[0]):
@@ -101,26 +105,26 @@ def processCommand( message):
                             neighbour_set.append( neighbour)
                     for neighbour in neighbour_set:
                         fname = vecstorage.featureName( neighbour)
-                        relateds.append( RelatedElem( fname, "F%u" % neighbour, 0.0 ))
+                        relatedlist.append( RelatedTerm( fname, neighbour, 0.0 ))
 
             # Build the result and pack it into the reply message for the client:
             for term in terms:
-                rt.append( 'E')
                 rt.append( 'T')
-                rt += packedMessage( term.type())
+                rt.append( 'T')
+                rt += packMessage( term.type())
                 rt.append( 'V')
-                rt += packedMessage( term.value())
+                rt += packMessage( term.value())
                 rt.append( 'P')
                 rt += struct.pack( ">I", term.pos())
                 rt.append( 'W')
                 rt += struct.pack( ">f", term.weight())
                 rt.append( '_')
-            for related in relateds:
+            for related in relatedlist:
                 rt.append( 'R')
-                rt.append( 'N')
-                rt += packedMessage( related.name)
                 rt.append( 'V')
-                rt += packedMessage( related.value)
+                rt += packMessage( related.value)
+                rt.append( 'I')
+                rt += struct.pack( ">I", related.index)
                 rt.append( 'W')
                 rt += struct.pack( ">f", related.weight)
                 rt.append( '_')
@@ -145,8 +149,8 @@ if __name__ == "__main__":
         # Parse arguments:
         defaultconfig = "path=storage; cache=512M"
         parser = optparse.OptionParser()
-        parser.add_option("-p", "--port", dest="port", default=7184,
-                          help="Specify the port of this server as PORT (default %u)" % 7184,
+        parser.add_option("-p", "--port", dest="port", default=7182,
+                          help="Specify the port of this server as PORT (default %u)" % 7182,
                           metavar="PORT")
         parser.add_option("-c", "--config", dest="config", default=defaultconfig,
                           help="Specify the storage config as CONF (default '%s')" % defaultconfig,
