@@ -164,6 +164,8 @@ if __name__ == "__main__":
         myport = int(options.port)
         debugtrace = options.do_debugtrace
         serverno = int( options.serverno)
+        config = options.config
+
         vecstorage = strusctx.createStorageClient( config )
         vecsearcher = vecstorage.createSearcher( 0, vecstorage.nofFeatures() )
 
