@@ -318,9 +318,9 @@ class QueryHandler( tornado.web.RequestHandler ):
             conn = yield msgclient.connect( host, port)
             reply = yield msgclient.issueRequest( conn, query)
             if reply[0] == 'E':
-                raise Exception( "failed to query dym server: %s" % reply[1:])
+                raise Exception( "failed to query analyze server: %s" % reply[1:])
             elif reply[0] != 'Y':
-                raise Exception( "protocol error in dym server query")
+                raise Exception( "protocol error in query analyze server query")
             replyofs = 1
             replylen = len(reply)
             while replyofs < replylen:

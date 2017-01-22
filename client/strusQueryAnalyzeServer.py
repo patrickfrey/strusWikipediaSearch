@@ -66,6 +66,8 @@ def processCommand( message):
     rt = bytearray(b"Y")
     try:
         messagesize = len(message)
+        if messagesize < 1:
+            raise tornado.gen.Return( b"Eempty request string")
         messageofs = 1
         if message[0] == 'Q':
             # QUERY:
@@ -76,7 +78,7 @@ def processCommand( message):
                 if (message[ messageofs] == 'N'):
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
-                if (message[ messageofs] == 'X'):
+                elif (message[ messageofs] == 'X'):
                     (querystr,messageofs) = unpackMessage( message, messageofs+1)
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
