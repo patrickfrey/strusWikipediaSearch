@@ -73,16 +73,14 @@ unpackData 4 "19 22 25"
 buildStorage 4
 
 threads=4
-unpackData 4 "20"
-buildStorage 4
-
-threads=4
-unpackData 1 "23"
+unpackData 1 "20"
 buildStorage 1
-
 threads=4
-unpackData 1 "26"
-buildStorage 1
+unpackData 2 "23"
+buildStorage 2
+threads=4
+unpackData 3 "26"
+buildStorage 3
 
 
 assignPageweights 1

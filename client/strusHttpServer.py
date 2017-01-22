@@ -301,7 +301,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         return results
 
     @tornado.gen.coroutine
-    def analyzeQuery( self, scheme, querystr):
+    def analyzeQuery( self, scheme, querystr, nofranks):
         terms = []
         relatedlist = []
         errors = []
@@ -437,7 +437,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             # Evaluate query:
             start_time = time.time()
             # Analyze query:
-            querystruct = yield self.analyzeQuery( scheme, querystr)
+            querystruct = yield self.analyzeQuery( scheme, querystr, 20)
             errors = querystruct.errors
 
             if scheme == "NBLNK" or scheme == "TILNK":

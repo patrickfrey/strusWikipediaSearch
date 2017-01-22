@@ -166,7 +166,6 @@ if __name__ == "__main__":
             parser.print_help()
 
         myport = int(options.port)
-        pubstats = options.do_publish_stats
         debugtrace = options.do_debugtrace
         statserver = options.statserver
         serverno = int( options.serverno)
