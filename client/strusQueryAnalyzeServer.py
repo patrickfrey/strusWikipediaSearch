@@ -166,7 +166,7 @@ if __name__ == "__main__":
         serverno = int( options.serverno)
         config = options.config
 
-        vecstorage = strusctx.createStorageClient( config )
+        vecstorage = strusctx.createVectorStorageClient( config )
         vecsearcher = vecstorage.createSearcher( 0, vecstorage.nofFeatures() )
 
         # Start server:
