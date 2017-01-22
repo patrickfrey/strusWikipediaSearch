@@ -47,7 +47,7 @@ RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'
 QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedlist','errors'])
 
 def packMessage( msg):
-    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
+    return struct.pack( ">H%ds" % (len(msg)), len(msg), msg)
 
 def unpackMessage( msg, msgofs):
     (strsize,) = struct.unpack_from( ">H", msg, msgofs)
@@ -305,11 +305,12 @@ class QueryHandler( tornado.web.RequestHandler ):
         terms = []
         relatedlist = []
         errors = []
+        conn = None
         try:
-            query = bytearray("Q")
-            query.append('X')
+            query = bytearray( b"Q")
+            query += bytearray(b'X')
             query += packMessage( querystr)
-            query.append('N')
+            query += bytearray(b'N')
             query += struct.pack( ">H", nofranks)
 
             ri = qryserver.rindex(':')
@@ -422,7 +423,7 @@ class QueryHandler( tornado.web.RequestHandler ):
     def get(self):
         try:
             # q = query terms:
-            querystr = self.get_argument( "q", "")
+            querystr = str( self.get_argument( "q", ""))
             # i = firstrank:
             firstrank = int( self.get_argument( "i", 0))
             # n = nofranks:
@@ -437,7 +438,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             start_time = time.time()
             # Analyze query:
             querystruct = yield self.analyzeQuery( scheme, querystr)
-            errors += querystruct.errors
+            errors = querystruct.errors
 
             if scheme == "NBLNK" or scheme == "TILNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 100, restrictdn)
