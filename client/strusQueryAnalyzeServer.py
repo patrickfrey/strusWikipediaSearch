@@ -135,13 +135,9 @@ def processCommand( message):
     raise tornado.gen.Return( rt)
 
 
-# Shutdown function that sends the negative statistics to the statistics server (unsubscribe):
+# Shutdown function:
 def processShutdown():
-    global pubstats
-    if (pubstats):
-        pubstats = False
-# !--- The following code does not work because the server shuts down before publishing the df decrements:
-#        publishStatistics( backend.getDoneStatisticsIterator())
+    pass
 
 # Server main:
 if __name__ == "__main__":
@@ -167,7 +163,6 @@ if __name__ == "__main__":
 
         myport = int(options.port)
         debugtrace = options.do_debugtrace
-        statserver = options.statserver
         serverno = int( options.serverno)
         vecstorage = strusctx.createStorageClient( config )
         vecsearcher = vecstorage.createSearcher( 0, vecstorage.nofFeatures() )
