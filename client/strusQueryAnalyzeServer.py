@@ -88,8 +88,10 @@ def processCommand( message):
             terms = analyzer.analyzeField( "text", querystr)
             f_indices = []
             for term in terms:
-                if term.type == "vecsfeat" and term.value[0] == 'F':
-                    f_indices.append( int( term.value[1:]))
+                if term.type() == "vecsfeat":
+                    value = term.value()
+                    if value[0] == 'F':
+                        f_indices.append( int( value[1:]))
             # Calculate nearest neighbours:
             if len( f_indices) > 0:
                 if len( f_indices) > 1:
@@ -128,6 +130,8 @@ def processCommand( message):
                 rt.append( 'W')
                 rt += struct.pack( ">f", related.weight)
                 rt.append( '_')
+                print "+++ RELATED %s %u %f" % (related.value, related.index, related.weight)
+
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:
