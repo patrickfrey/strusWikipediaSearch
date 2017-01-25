@@ -93,12 +93,13 @@ def processCommand( message):
                     value = term.value()
                     if value[0] == 'F':
                         f_indices.append( int( value[1:]))
+                        print "+++ VEC %s" % (term.value())
             # Calculate nearest neighbours:
             if len( f_indices) > 0:
                 if len( f_indices) > 1:
                     vec = vecstorage.featureVector( f_indices[0])
-                    for nextvec in f_indices[1:]:
-                        vec = map( numbers.Real.__add__, vec, nextvec)
+                    for nextidx in f_indices[1:]:
+                        vec = map( numbers.Real.__add__, vec, vecstorage.featureVector( nextidx))
                     neighbour_set = vecsearcher.findSimilar( vec, nofranks)
                     for neighbour in neighbour_set:
                         fname = vecstorage.featureName( neighbour)
@@ -131,7 +132,6 @@ def processCommand( message):
                 rt.append( 'W')
                 rt += struct.pack( ">f", related.weight)
                 rt.append( '_')
-                print "+++ RELATED %s %u %f" % (related.value, related.index, related.weight)
 
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
