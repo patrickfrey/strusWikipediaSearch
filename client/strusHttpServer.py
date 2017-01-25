@@ -45,7 +45,7 @@ NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','weight'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
-QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedlist','errors'])
+QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedterms','errors'])
 
 def packMessage( msg):
     return struct.pack( ">H%ds" % (len(msg)), len(msg), msg)
@@ -304,7 +304,7 @@ class QueryHandler( tornado.web.RequestHandler ):
     @tornado.gen.coroutine
     def analyzeQuery( self, scheme, querystr, nofranks):
         terms = []
-        relatedlist = []
+        relatedterms = []
         errors = []
         conn = None
         try:
@@ -359,7 +359,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    relatedlist.append( RelatedTerm( value, index, weight) )
+                    print "+++ RELATED %s %u %f" % (value, index, weight)
+                    relatedterms.append( RelatedTerm( value, index, weight) )
                 else:
                     break
             if replyofs != replylen:
@@ -372,7 +373,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             alt_terms = analyzer.analyzeField( "text", querystr)
             for term in alt_terms:
                 terms.append( QueryTerm( term.type(), term.value(), term.position(), 1.0))
-        raise tornado.gen.Return( QueryStruct( terms, [], relatedlist, errors) )
+        raise tornado.gen.Return( QueryStruct( terms, [], relatedterms, errors) )
 
     @tornado.gen.coroutine
     def evaluateQuery( self, scheme, querystruct, firstrank, nofranks, restrictdn):
@@ -455,7 +456,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     for link in links[1:]:
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
-                relatedterms = querystruct.relatedlist
+                relatedterms = querystruct.relatedterms
                 querystruct = QueryStruct( querystruct.terms, links, relatedterms, errors)
                 qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
                 errors += qryresult[1]
