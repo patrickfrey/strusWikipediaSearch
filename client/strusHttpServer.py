@@ -67,10 +67,10 @@ class QueryHandler( tornado.web.RequestHandler ):
             statquery = bytearray("Q")
             for term in terms:
                 statquery.append('T')
-                typesize = len( term.type())
-                valuesize = len( term.value())
+                typesize = len( term.type)
+                valuesize = len( term.value)
                 statquery += struct.pack( ">HH", typesize, valuesize)
-                statquery += struct.pack( "%ds%ds" % (typesize,valuesize), term.type(), term.value())
+                statquery += struct.pack( "%ds%ds" % (typesize,valuesize), term.type, term.value)
             statquery.append('N')
             ri = statserver.rindex(':')
             host,port = statserver[:ri],int( statserver[ri+1:])
@@ -370,7 +370,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 conn.close()
             alt_terms = analyzer.analyzeField( "text", querystr)
             for term in alt_terms:
-                terms.append( QueryTerm( term.type(), term.value(), term.position(), 1.0)
+                terms.append( QueryTerm( term.type(), term.value(), term.position(), 1.0))
         raise tornado.gen.Return( QueryStruct( terms, [], relatedlist, errors) )
 
     @tornado.gen.coroutine
