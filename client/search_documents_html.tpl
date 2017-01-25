@@ -1,10 +1,14 @@
 {% extends "search_resultlist_html.tpl" %}
 
 {% block relatedblock %}
-{% if relatedlist %}
+<p><b>LINE 4</b></p>
+{% if relatedterms %}
+<p><b>LINE 6</b></p>
 <div id="relatedresult">
+<p><b>LINE 8</b></p>
 <ul>
 {% for result in relatedterms %}
+<p><b>LINE 11</b></p>
 {% set resultlink = "evalQuery.php?q=" + urllib.urlencode(result.value) + "s=" + {{scheme}} %}
 <li onclick="parent.location='evalQuery.php?{{resultlink}}'">
 <div id="related">

@@ -10,6 +10,7 @@
   <body>
   {% block navigation %}{% end %}
   {% block infoblock %}{% end %}
+  {% block relatedblock %}{% end %}
   {% block resultblock %}{% end %}
   </body>
 </html>
