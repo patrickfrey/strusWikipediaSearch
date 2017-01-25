@@ -85,6 +85,9 @@
 {% end %}
 {% end %}
 
+{% block relatedblock %}
+{% end %}
+
 {% block resultblock %}
 {% end %}
 

@@ -16,6 +16,7 @@ import strusMessage
 import time
 import unidecode
 import pprint
+import urllib
 
 # [0] Globals and helper classes:
 # The address of the global statistics server:
@@ -437,6 +438,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             # Analyze query:
             querystruct = yield self.analyzeQuery( scheme, querystr, 20)
             errors = querystruct.errors
+            relatedterms = None
 
             if scheme == "NBLNK" or scheme == "TILNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 100, restrictdn)
@@ -453,7 +455,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                     for link in links[1:]:
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
-                querystruct = QueryStruct( querystruct.terms, links, querystruct.relatedlist, errors)
+                relatedterms = querystruct.relatedlist
+                querystruct = QueryStruct( querystruct.terms, links, relatedterms, errors)
                 qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
                 errors += qryresult[1]
                 result = [qryresult[0],errors]
@@ -466,14 +469,15 @@ class QueryHandler( tornado.web.RequestHandler ):
             if scheme == "NBLNK" or scheme == "TILNK":
                template = "search_nblnk_html.tpl"
             else:
-               template = "search_bm25_html.tpl"
+               template = "search_documents_html.tpl"
             if len(result[0]) > nofranks:
                 hasmore = True
                 ranklist = result[0][:-1]
             else:
                 hasmore = False
                 ranklist = result[0]
-            self.render( template, results=ranklist, hasmore=hasmore, messages=result[1],
+            self.render( template,
+                         results=ranklist, relatedterms=relatedterms, hasmore=hasmore, messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, nofranks=nofranks, mode=mode,
                          scheme=scheme, querystr=querystr)
         except Exception as e:
