@@ -9,9 +9,8 @@
 <ul>
 {% for result in relatedterms %}
 <p><b>LINE 11</b></p>
-{% set resultlink = "evalQuery.php?q=" + urlencode( result.value) + "s=" + scheme %}
-
-<li onclick="parent.location='evalQuery.php?{{resultlink}}'">
+{% set queryparam = urlencode( result.value) %}
+<li onclick="parent.location='evalQuery.php?q={{queryparam}}&s={{scheme}}'">
 <div id="related">
 <div id="related_term">{{ result.value }}</div>
 <div id="related_weight">{{ "%.4f" % result.weight }}</div>
