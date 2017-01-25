@@ -12,6 +12,7 @@ import strusMessage
 import binascii
 import time
 import strus
+import numbers
 
 # server:
 global serverno
@@ -97,7 +98,7 @@ def processCommand( message):
                 if len( f_indices) > 1:
                     vec = vecstorage.featureVector( f_indices[0])
                     for nextvec in f_indices[1:]:
-                        vec = map( double.__add__, vec, nextvec)
+                        vec = map( numbers.Real.__add__, vec, nextvec)
                     neighbour_set = vecsearcher.findSimilar( vec, nofranks)
                     for neighbour in neighbour_set:
                         fname = vecstorage.featureName( neighbour)
@@ -106,7 +107,7 @@ def processCommand( message):
                     neighbour_set = set()
                     for concept in vecstorage.featureConcepts( "", f_indices[0]):
                         for neighbour in vecstorage.conceptFeatures( "", concept):
-                            neighbour_set.append( neighbour)
+                            neighbour_set.add( neighbour)
                     for neighbour in neighbour_set:
                         fname = vecstorage.featureName( neighbour)
                         relatedlist.append( RelatedTerm( fname, neighbour, 0.0 ))

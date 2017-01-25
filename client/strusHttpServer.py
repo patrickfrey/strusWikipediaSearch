@@ -349,7 +349,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     weight = 0.0
                     while replyofs < replylen:
                         if reply[ replyofs] == 'V':
-                            (value,) = unpackMessage( reply, replyofs+1)
+                            (value,replyofs) = unpackMessage( reply, replyofs+1)
                         elif reply[ replyofs] == 'I':
                             (index,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
