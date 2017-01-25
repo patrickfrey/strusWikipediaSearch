@@ -333,7 +333,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                         if reply[ replyofs] == 'T':
                             (type,replyofs) = unpackMessage( reply, replyofs+1)
                         elif reply[ replyofs] == 'V':
-                            (type,replyofs) = unpackMessage( reply, replyofs+1)
+                            (value,replyofs) = unpackMessage( reply, replyofs+1)
                         elif reply[ replyofs] == 'P':
                             (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
@@ -379,7 +379,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         try:
             maxnofresults = firstrank + nofranks
             terms = querystruct.terms
-            if len( terms) == 0:
+            if not terms:
                 # Return empty result for empty query:
                 rt = [[],[]]
             else:
