@@ -329,7 +329,6 @@ class QueryHandler( tornado.web.RequestHandler ):
                     type = None
                     value = None
                     pos = 1
-                    weight = 1.0
                     while replyofs < replylen:
                         if reply[ replyofs] == 'T':
                             (type,replyofs) = unpackMessage( reply, replyofs+1)
@@ -338,13 +337,10 @@ class QueryHandler( tornado.web.RequestHandler ):
                         elif reply[ replyofs] == 'P':
                             (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
-                        elif reply[ replyofs] == 'W':
-                            (weight,) = struct.unpack_from( ">f", reply, replyofs+1)
-                            replyofs += struct.calcsize( ">f") + 1
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    terms.append( QueryTerm( type, value, pos, weight) )
+                    terms.append( QueryTerm( type, value, pos, 1.0) )
                 elif reply[ replyofs] == 'R':
                     replyofs += 1
                     value = None
@@ -372,7 +368,9 @@ class QueryHandler( tornado.web.RequestHandler ):
             errors.append( "query analyze server request failed: %s" % e);
             if conn:
                 conn.close()
-            terms = analyzer.analyzeField( "text", querystr)
+            alt_terms = analyzer.analyzeField( "text", querystr)
+            for term in alt_terms:
+                terms.append( QueryTerm( term.type(), term.value(), term.position(), 1.0)
         raise tornado.gen.Return( QueryStruct( terms, [], relatedlist, errors) )
 
     @tornado.gen.coroutine
@@ -400,10 +398,10 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
                 for ii in range( 0, len( terms)):
                     qry += bytearray( b"T")
-                    typesize = len(terms[ii].type())
-                    valuesize = len(terms[ii].value())
+                    typesize = len(terms[ii].type)
+                    valuesize = len(terms[ii].value)
                     qry += struct.pack( ">qdHH", dflist[ii], 1.0, typesize, valuesize)
-                    qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type(), terms[ii].value())
+                    qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type, terms[ii].value)
                 for lnk in querystruct.links:
                     qry += bytearray( b"L")
                     type = "vectfeat"

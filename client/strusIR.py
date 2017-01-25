@@ -87,6 +87,7 @@ class Backend:
 
     # Define features for weighting and summarization:
     def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
+        print "+++ QUERY TERMS: %s" % terms
         if seltitle == True:
             cardinality = 0
             if (len( terms) >= 3):

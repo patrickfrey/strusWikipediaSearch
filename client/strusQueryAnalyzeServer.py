@@ -117,9 +117,7 @@ def processCommand( message):
                 rt.append( 'V')
                 rt += packMessage( term.value())
                 rt.append( 'P')
-                rt += struct.pack( ">I", term.pos())
-                rt.append( 'W')
-                rt += struct.pack( ">f", term.weight())
+                rt += struct.pack( ">I", term.position())
                 rt.append( '_')
             for related in relatedlist:
                 rt.append( 'R')
