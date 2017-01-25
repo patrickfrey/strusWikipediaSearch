@@ -1,5 +1,4 @@
 {% extends "search_resultlist_html.tpl" %}
-{% import urlencode from urllib %}
 
 {% block relatedblock %}
 <p><b>LINE 4</b></p>
