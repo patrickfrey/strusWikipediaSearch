@@ -96,8 +96,8 @@ def processCommand( message):
                         print "+++ VEC %s" % (term.value())
             # Calculate nearest neighbours:
             if len( f_indices) > 0:
+                vec = vecstorage.featureVector( f_indices[0])
                 if len( f_indices) > 1:
-                    vec = vecstorage.featureVector( f_indices[0])
                     for nextidx in f_indices[1:]:
                         vec = map( numbers.Real.__add__, vec, vecstorage.featureVector( nextidx))
                     neighbour_ranklist = vecsearcher.findSimilar( vec, nofranks)
