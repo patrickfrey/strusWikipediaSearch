@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-  {% from urllib import urlencode %}
   <head>
   <title>Wikipedia search with Strus</title>
   <link href="static/strus.css" rel="stylesheet" type="text/css">

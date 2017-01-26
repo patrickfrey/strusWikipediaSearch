@@ -44,7 +44,7 @@ ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'pa
 NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','weight'])
-RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
+RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
 QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedterms','errors'])
 
 def packMessage( msg):
@@ -359,8 +359,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    print "+++ RELATED %s %u %f" % (value, index, weight)
-                    relatedterms.append( RelatedTerm( value, index, weight) )
+                    relatedterms.append( RelatedTerm( value, urllib.urlencode(value), index, weight) )
                 else:
                     break
             if replyofs != replylen:
@@ -477,6 +476,9 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 hasmore = False
                 ranklist = result[0]
+            print "+++ RELATED %u" % (len(relatedterms))
+            for relt in relatedterms:
+                print "+++ RELATED %s %s %s %u %f" % (template, relt.value, relt.encvalue, relt.index, relt.weight)
             self.render( template,
                          results=ranklist, relatedterms=relatedterms, hasmore=hasmore, messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, nofranks=nofranks, mode=mode,
