@@ -116,21 +116,49 @@ h2 {
 	margin: 20px 10px;
 }
 
-ul {
-	list-style-type: none;
-	width: 80%;
-}
-
 h3 {
 	font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-li #related_value {
-	margin: 0px 5px;
-	width: 45px;
+#relatedresult {
+	margin: 15px 15px;
+}
+
+#relatedresult ul {
+	border-style: solid;
+	border-width: 1px;
+	display: table;
+	list-style-type: none;
+	width: 80%;
+}
+
+#relatedresult li {
+	display: inline;
 	float: left;
-	color: #388;
+	padding: 5px;
+	overflow: auto;
+}
+
+#related_value {
+	color: red;
 	font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
+}
+
+#related_weight {
+	display: none;
+}
+
+#searchresult {
+	margin: 25px 15px;
+	float: none;
+	clear: left;
+	display: block;
+}
+
+#searchresult ul {
+	display: block;
+	list-style-type: none;
+	width: 80%;
 }
 
 li #rank_docno {
