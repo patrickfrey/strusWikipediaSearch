@@ -133,14 +133,6 @@ li #related_value {
 	font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-li #related_weight {
-	margin: 0px 5px;
-	width: 45px;
-	float: left;
-	color: #388;
-	font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
-}
-
 li #rank_docno {
 	margin: 0px 5px;
 	width: 45px;

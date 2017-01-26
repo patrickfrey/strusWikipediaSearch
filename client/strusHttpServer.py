@@ -359,7 +359,6 @@ class QueryHandler( tornado.web.RequestHandler ):
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    print "+++ RELATED %s" % value
                     encvalue = urllib.quote( value)
                     relatedterms.append( RelatedTerm( value, encvalue, index, weight) )
                 else:
@@ -478,9 +477,6 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 hasmore = False
                 ranklist = result[0]
-            print "+++ RELATED %u" % (len(relatedterms))
-            for relt in relatedterms:
-                print "+++ RELATED %s %s %s %u %f" % (template, relt.value, relt.encvalue, relt.index, relt.weight)
             self.render( template,
                          results=ranklist, relatedterms=relatedterms, hasmore=hasmore, messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, nofranks=nofranks, mode=mode,

@@ -1,16 +1,13 @@
 {% extends "search_resultlist_html.tpl" %}
 
 {% block relatedblock %}
-<p><b>LINE 4</b></p>
 {% if relatedterms %}
-<p><b>LINE 6</b></p>
 <div id="relatedresult">
-<p><b>LINE 8</b></p>
 <ul>
 {% for result in relatedterms %}
 <li onclick="parent.location='evalQuery.php?q={{ result.encvalue }}&s={{ scheme }}'">
 <div id="related">
-<div id="related_term">{{ result.value }}</div>
+<div id="related_term">{{ result.value.replace('_',' ') }}</div>
 <div id="related_weight">{{ "%.4f" % result.weight }}</div>
 </div>
 </li>
