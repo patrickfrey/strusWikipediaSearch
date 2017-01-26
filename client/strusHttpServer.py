@@ -359,7 +359,9 @@ class QueryHandler( tornado.web.RequestHandler ):
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    relatedterms.append( RelatedTerm( value, urllib.urlencode(value), index, weight) )
+                    print "+++ RELATED %s" % value
+                    encvalue = urllib.quote( value)
+                    relatedterms.append( RelatedTerm( value, encvalue, index, weight) )
                 else:
                     break
             if replyofs != replylen:

@@ -100,18 +100,20 @@ def processCommand( message):
                     vec = vecstorage.featureVector( f_indices[0])
                     for nextidx in f_indices[1:]:
                         vec = map( numbers.Real.__add__, vec, vecstorage.featureVector( nextidx))
-                    neighbour_set = vecsearcher.findSimilar( vec, nofranks)
-                    for neighbour in neighbour_set:
-                        fname = vecstorage.featureName( neighbour)
-                        relatedlist.append( RelatedTerm( fname, neighbour, 0.0 ))
+                    neighbour_ranklist = vecsearcher.findSimilar( vec, nofranks)
                 else:
+                    neighbour_list = []
                     neighbour_set = set()
                     for concept in vecstorage.featureConcepts( "", f_indices[0]):
                         for neighbour in vecstorage.conceptFeatures( "", concept):
                             neighbour_set.add( neighbour)
                     for neighbour in neighbour_set:
-                        fname = vecstorage.featureName( neighbour)
-                        relatedlist.append( RelatedTerm( fname, neighbour, 0.0 ))
+                        neighbour_list.append( neighbour)
+                    neighbour_ranklist = vecsearcher.findSimilarFromSelection( neighbour_list, vec, nofranks)
+
+                for neighbour in neighbour_ranklist:
+                    fname = vecstorage.featureName( neighbour.index())
+                    relatedlist.append( RelatedTerm( fname, neighbour.index(), neighbour.weight()))
 
             # Build the result and pack it into the reply message for the client:
             for term in terms:
