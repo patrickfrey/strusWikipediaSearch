@@ -44,7 +44,7 @@ threads=10
 unpackData 1 "00 03 06"
 buildStorage 1
 threads=6
-unpackData 1 "09 12 15"
+unpackData 1 "09 12 15 20"
 buildStorage 1
 
 createStorage 2
@@ -52,16 +52,15 @@ threads=10
 unpackData 2 "01 04 07"
 buildStorage 2
 threads=6
-unpackData 2 "10 13 16"
+unpackData 2 "10 13 16 23"
 buildStorage 2
-
 
 createStorage 3
 threads=10
 unpackData 3 "02 05 08"
 buildStorage 3
 threads=6
-unpackData 3 "11 14 17"
+unpackData 3 "11 14 17 26"
 buildStorage 3
 
 createStorage 4
@@ -71,16 +70,6 @@ buildStorage 4
 threads=8
 unpackData 4 "19 22 25"
 buildStorage 4
-
-threads=4
-unpackData 1 "20"
-buildStorage 1
-threads=4
-unpackData 2 "23"
-buildStorage 2
-threads=4
-unpackData 3 "26"
-buildStorage 3
 
 
 assignPageweights 1
