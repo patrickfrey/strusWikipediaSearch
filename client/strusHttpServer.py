@@ -425,7 +425,7 @@ class QueryHandler( tornado.web.RequestHandler ):
     def get(self):
         try:
             # q = query terms:
-            querystr = str( self.get_argument( "q", ""))
+            querystr = str( self.get_argument( "q", "").encode('utf-8'))
             # i = firstrank:
             firstrank = int( self.get_argument( "i", 0))
             # n = nofranks:

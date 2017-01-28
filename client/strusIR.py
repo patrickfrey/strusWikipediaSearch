@@ -19,7 +19,7 @@ class Backend:
             rt.addWeightingFunction( "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
-                     "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 3,
+                     "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 2,
                      "ffbase": 0.1, "fftie": 10,
                      "proxffbias": 0.3, "proxfftie": 20, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
@@ -54,8 +54,9 @@ class Backend:
             })
         elif scheme == "TILNK":
                 rt.addSummarizer( "accuvariable", {
-                      "norm": 0.0001, "var": "LINK", "type": "veclfeat",
-                      ".match": "sumfeat"
+                      "norm": 0.0001, "var": "LINK",
+                      ".match": "sumfeat",
+                      "type": "veclfeat", "$link":"veclfeat"
                 })
         else:
             # Summarizer for getting the document title:
