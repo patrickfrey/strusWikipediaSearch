@@ -82,6 +82,8 @@
 <div id="searchinfo">
 <p>Results {{rank1}} .. {{rankN}}&nbsp;&nbsp;&nbsp; Answer time: {{ "%.3f" % time_elapsed}} seconds</p>
 </div>
+{% else %}
+<p>No matching documents&nbsp;&nbsp;&nbsp; Answer time: {{ "%.3f" % time_elapsed}} seconds</p>
 {% end %}
 {% end %}
 
