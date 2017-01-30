@@ -43,7 +43,7 @@ analyzer.addSearchIndexElement(
 ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract'])
 NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
-QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','weight'])
+QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
 QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedterms','errors'])
 
@@ -330,6 +330,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     type = None
                     value = None
                     pos = 1
+                    length = 1
                     while replyofs < replylen:
                         if reply[ replyofs] == 'T':
                             (type,replyofs) = unpackMessage( reply, replyofs+1)
@@ -338,10 +339,13 @@ class QueryHandler( tornado.web.RequestHandler ):
                         elif reply[ replyofs] == 'P':
                             (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
+                        elif reply[ replyofs] == 'L':
+                            (length,) = struct.unpack_from( ">I", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">I") + 1
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    terms.append( QueryTerm( type, value, pos, 1.0) )
+                    terms.append( QueryTerm( type, value, pos, length, 1.0) )
                 elif reply[ replyofs] == 'R':
                     replyofs += 1
                     value = None
@@ -374,7 +378,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 conn.close()
             alt_terms = analyzer.analyzeField( "text", querystr)
             for term in alt_terms:
-                terms.append( QueryTerm( term.type(), term.value(), term.position(), 1.0))
+                terms.append( QueryTerm( term.type(), term.value(), term.position(), term.length(), 1.0))
         raise tornado.gen.Return( QueryStruct( terms, [], relatedterms, errors) )
 
     @tornado.gen.coroutine
@@ -387,6 +391,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                 # Return empty result for empty query:
                 rt = [[],[]]
             else:
+                for term in terms:
+                    print "+++ TERM %s '%s' %u %u" % (term.type, term.value, term.pos, term.len)
                 # Get the global statistics:
                 dflist,collectionsize,error = yield self.queryStats( terms)
                 if not error is None:

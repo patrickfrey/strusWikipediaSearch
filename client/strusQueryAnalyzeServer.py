@@ -123,6 +123,8 @@ def processCommand( message):
                 rt += packMessage( term.value())
                 rt.append( 'P')
                 rt += struct.pack( ">I", term.position())
+                rt.append( 'L')
+                rt += struct.pack( ">I", term.length())
                 rt.append( '_')
             for related in relatedlist:
                 rt.append( 'R')

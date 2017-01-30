@@ -56,7 +56,7 @@ class Backend:
                 rt.addSummarizer( "accuvariable", {
                       "norm": 0.0001, "var": "LINK",
                       ".match": "sumfeat",
-                      "type": "veclfeat", "$link":"veclfeat"
+                      "type": "veclfeat",
                 })
         else:
             # Summarizer for getting the document title:
@@ -88,7 +88,6 @@ class Backend:
 
     # Define features for weighting and summarization:
     def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
-        print "+++ QUERY TERMS: %s" % terms
         if seltitle == True:
             cardinality = 0
             if (len( terms) >= 3):
