@@ -347,7 +347,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                             replyofs += 1
                             break
                     terms.append( QueryTerm( type, value, pos, length, 1.0) )
-                if reply[ replyofs] == 'C':
+                elif reply[ replyofs] == 'C':
                     replyofs += 1
                     type = None
                     value = None
