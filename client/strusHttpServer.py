@@ -362,7 +362,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 conn.close()
             alt_terms = analyzer.analyzeField( "text", querystr)
             for term in alt_terms:
-                terms.append( QueryTerm( term.type(), term.value(), term.position(), term.length(), 1.0, False))
+                terms.append( QueryTerm( term.type(), term.value(), term.position(), term.length(), 1.0, True))
         raise tornado.gen.Return( QueryStruct( terms, [], relatedterms, errors) )
 
     @tornado.gen.coroutine

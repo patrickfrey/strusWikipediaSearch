@@ -89,7 +89,7 @@ class Backend:
     # Define features for weighting and summarization:
     def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
         for term in terms:
-            print "++++ TERM %s %s %u %u %u" % (term.type,term.value,term.pos,term.len,term.cover)
+            print "++++ TERM %s %s %u %u" % (term.type,term.value,term.df,term.cover)
         selexpr1 = []
         selexpr2 = []
         if seltitle == True:
