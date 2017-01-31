@@ -88,37 +88,61 @@ class Backend:
 
     # Define features for weighting and summarization:
     def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
+        selexpr1 = []
+        selexpr2 = []
         if seltitle == True:
+            selfeat = []
+            for term in terms:
+                if term.df > 0.0:
+                    selfeat.append( ["tist", term.value] )
             cardinality = 0
-            if (len( terms) >= 3):
-                if (len( terms) == 3):
+            if len( selfeat) >= 3:
+                if len( selfeat) == 3:
                     cardinality = 2
                 else:
                     cardinality = 3
-            selexpr = ["contains",0,cardinality]
-            for term in terms:
-                if (term.df > 0.0):
-                    selexpr.append( ["tist", term.value] )
-
+            selexpr1 = ["contains",0,cardinality] + selfeat
         else:
-            selexpr = ["contains"]
+            selfeat1 = []
+            selfeat2 = []
             for term in terms:
-                if (term.df > 0.0):
-                    selexpr.append( [term.type, term.value] )
+                if term.df > 0.0:
+                    if term.cover:
+                        selfeat1.append( [term.type, term.value] )
+                        if term.type == "stem":
+                            selfeat2.append( [term.type, term.value] )
+                    else:
+                        selfeat2.append( [term.type, term.value] )
+            selexpr1 = ["contains"] + selfeat1
+            if scheme != "NBLNK" and scheme != "TILNK":
+                selexpr2 = ["contains"] + selfeat2
 
-        for term in terms:
-            query.defineFeature( "docfeat", [term.type, term.value], term.weight)
-            if term.df > 0.0:
-                query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
+        if len(selexpr1) < 2 and len(selexpr2):
+            raise Exception( "query features not found in collection")
+
+        if scheme == "NBLNK" or scheme == "TILNK":
+            for term in terms:
+                if term.cover:
+                    query.defineFeature( "docfeat", [term.type, term.value], term.weight)
+                    if term.df > 0.0:
+                        query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
+        else:
+            for term in terms:
+                query.defineFeature( "docfeat", [term.type, term.value], term.weight)
+                if term.df > 0.0:
+                    query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 
         for link in links:
             query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
 
-        query.defineFeature( "selfeat", selexpr, 1.0 )
+        query.defineFeature( "selfeat", selexpr1, 1.0 )
+        if selexpr2:
+            query.defineFeature( "selfeat", selexpr2, 1.0 )
+
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
         query.addMetaDataRestrictionCondition( "==", "redirect", 0, True);
 
-        if (scheme == "NBLNK" or scheme == "TILNK") and len( terms) > 0:
+        if scheme == "NBLNK" or scheme == "TILNK" and len( terms) > 0:
             if len( terms) > 1:
                 for pair in self.getAscendingIndexPairs( len( terms)):
                     term1 = terms[ pair[ 0]]

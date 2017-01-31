@@ -43,19 +43,10 @@ analyzer.addSearchIndexElement(
 ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract'])
 NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
-QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight'])
+QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight','cover'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
-QueryStruct = collections.namedtuple('QueryStruct', ['terms','coverterms','links','relatedterms','errors'])
+QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedterms','errors'])
 
-def packMessage( msg):
-    return struct.pack( ">H%ds" % (len(msg)), len(msg), msg)
-
-def unpackMessage( msg, msgofs):
-    (strsize,) = struct.unpack_from( ">H", msg, msgofs)
-    msgofs += struct.calcsize( ">H")
-    (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
-    msgofs += strsize
-    return [str,msgofs]
 
 # [1] HTTP handlers:
 # Answer a query (issue a query to all storage servers and merge it to one result):
@@ -68,10 +59,8 @@ class QueryHandler( tornado.web.RequestHandler ):
             statquery = bytearray("Q")
             for term in terms:
                 statquery.append('T')
-                typesize = len( term.type)
-                valuesize = len( term.value)
-                statquery += struct.pack( ">HH", typesize, valuesize)
-                statquery += struct.pack( "%ds%ds" % (typesize,valuesize), term.type, term.value)
+                strusMessage.packString( term.type)
+                strusMessage.packString( term.value)
             statquery.append('N')
             ri = statserver.rindex(':')
             host,port = statserver[:ri],int( statserver[ri+1:])
@@ -131,20 +120,11 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
                 answerofs += struct.calcsize( ">f") + 1
             elif answer[ answerofs] == 'T':
-                (titlelen,) = struct.unpack_from( ">H", answer, answerofs+1)
-                answerofs += struct.calcsize( ">H") + 1
-                (row_title,) = struct.unpack_from( "%us" % titlelen, answer, answerofs)
-                answerofs += titlelen
+                (row_title,answerofs) = strusMessage.unpackString( answer, answerofs+1)
             elif answer[ answerofs] == 'P':
-                (paratitlelen,) = struct.unpack_from( ">H", answer, answerofs+1)
-                answerofs += struct.calcsize( ">H") + 1
-                (row_paratitle,) = struct.unpack_from( "%us" % paratitlelen, answer, answerofs)
-                answerofs += paratitlelen
+                (row_paratitle,answerofs) = strusMessage.unpackString( answer, answerofs+1)
             elif answer[ answerofs] == 'A':
-                (abstractlen,) = struct.unpack_from( ">H", answer, answerofs+1)
-                answerofs += struct.calcsize( ">H") + 1
-                (row_abstract,) = struct.unpack_from( "%us" % abstractlen, answer, answerofs)
-                answerofs += abstractlen
+                (row_abstract,answerofs) = strusMessage.unpackString( answer, answerofs+1)
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
         if not row_title is None:
@@ -304,14 +284,13 @@ class QueryHandler( tornado.web.RequestHandler ):
     @tornado.gen.coroutine
     def analyzeQuery( self, scheme, querystr, nofranks):
         terms = []
-        coverterms = []
         relatedterms = []
         errors = []
         conn = None
         try:
             query = bytearray(b"Q")
             query += bytearray(b'X')
-            query += packMessage( querystr)
+            query += strusMessage.packString( querystr)
             query += bytearray(b'N')
             query += struct.pack(">H", nofranks)
 
@@ -330,44 +309,27 @@ class QueryHandler( tornado.web.RequestHandler ):
                     replyofs += 1
                     type = None
                     value = None
+                    cover = False
                     pos = 1
                     length = 1
                     while replyofs < replylen:
                         if reply[ replyofs] == 'T':
-                            (type,replyofs) = unpackMessage( reply, replyofs+1)
+                            (type,replyofs) = strusMessage.unpackString( reply, replyofs+1)
                         elif reply[ replyofs] == 'V':
-                            (value,replyofs) = unpackMessage( reply, replyofs+1)
+                            (value,replyofs) = strusMessage.unpackString( reply, replyofs+1)
                         elif reply[ replyofs] == 'P':
                             (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
                         elif reply[ replyofs] == 'L':
                             (length,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
+                        elif reply[ replyofs] == 'C':
+                            (cover,) = struct.unpack_from( ">?", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">?") + 1
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break
-                    terms.append( QueryTerm( type, value, pos, length, 1.0) )
-                elif reply[ replyofs] == 'C':
-                    replyofs += 1
-                    type = None
-                    value = None
-                    pos = 1
-                    length = 1
-                    while replyofs < replylen:
-                        if reply[ replyofs] == 'T':
-                            (type,replyofs) = unpackMessage( reply, replyofs+1)
-                        elif reply[ replyofs] == 'V':
-                            (value,replyofs) = unpackMessage( reply, replyofs+1)
-                        elif reply[ replyofs] == 'P':
-                            (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
-                            replyofs += struct.calcsize( ">I") + 1
-                        elif reply[ replyofs] == 'L':
-                            (length,) = struct.unpack_from( ">I", reply, replyofs+1)
-                            replyofs += struct.calcsize( ">I") + 1
-                        elif reply[ replyofs] == '_':
-                            replyofs += 1
-                            break
-                    coverterms.append( QueryTerm( type, value, pos, length, 1.0) )
+                    terms.append( QueryTerm( type, value, pos, length, 1.0, cover) )
                 elif reply[ replyofs] == 'R':
                     replyofs += 1
                     value = None
@@ -375,7 +337,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     weight = 0.0
                     while replyofs < replylen:
                         if reply[ replyofs] == 'V':
-                            (value,replyofs) = unpackMessage( reply, replyofs+1)
+                            (value,replyofs) = strusMessage.unpackString( reply, replyofs+1)
                         elif reply[ replyofs] == 'I':
                             (index,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
@@ -400,8 +362,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                 conn.close()
             alt_terms = analyzer.analyzeField( "text", querystr)
             for term in alt_terms:
-                terms.append( QueryTerm( term.type(), term.value(), term.position(), term.length(), 1.0))
-        raise tornado.gen.Return( QueryStruct( terms, coverterms, [], relatedterms, errors) )
+                terms.append( QueryTerm( term.type(), term.value(), term.position(), term.length(), 1.0, False))
+        raise tornado.gen.Return( QueryStruct( terms, [], relatedterms, errors) )
 
     @tornado.gen.coroutine
     def evaluateQuery( self, scheme, querystruct, firstrank, nofranks, restrictdn):
@@ -415,8 +377,6 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 for term in terms:
                     print "+++ TERM %s '%s' %u %u" % (term.type, term.value, term.pos, term.len)
-                for term in querystruct.coverterms:
-                    print "+++ COVERTERM %s '%s' %u %u" % (term.type, term.value, term.pos, term.len)
                 # Get the global statistics:
                 dflist,collectionsize,error = yield self.queryStats( terms)
                 if not error is None:
@@ -424,7 +384,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 # Assemble the query:
                 qry = bytearray()
                 qry += bytearray( b"Q")
-                qry += bytearray( b"M") + struct.pack( ">H%ds" % (len(scheme)), len(scheme), scheme)
+                qry += bytearray( b"M") + strusMessage.packString( scheme)
                 qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
                 qry += bytearray( b"I") + struct.pack( ">H", 0)
                 qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
@@ -432,18 +392,14 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
                 for ii in range( 0, len( terms)):
                     qry += bytearray( b"T")
-                    typesize = len(terms[ii].type)
-                    valuesize = len(terms[ii].value)
-                    qry += struct.pack( ">qdHH", dflist[ii], 1.0, typesize, valuesize)
-                    qry += struct.pack( "%ds%ds" % (typesize,valuesize), terms[ii].type, terms[ii].value)
+                    qry += strusMessage.packString( terms[ii].type)
+                    qry += strusMessage.packString( terms[ii].value)
+                    qry += struct.pack( ">qd?", dflist[ii], 1.0, terms[ii].cover)
                 for lnk in querystruct.links:
                     qry += bytearray( b"L")
-                    type = "vectfeat"
-                    typesize = 8
-                    value = lnk.title
-                    valuesize = len(value)
-                    qry += struct.pack( ">dHH", lnk.weight, typesize, valuesize)
-                    qry += struct.pack( "%ds%ds" % (typesize,valuesize), type, value)
+                    qry += strusMessage.packString( "vectfeat")
+                    qry += strusMessage.packString( lnk.title)
+                    qry += struct.pack( ">d", lnk.weight)
                 # Query all storage servers:
                 results = yield self.issueQueries( storageservers, scheme, qry)
                 rt = self.mergeQueryResults( results, firstrank, nofranks)
@@ -489,7 +445,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                         maplinks.append( LinkRow( link.title, link.weight / weightnorm))
                     links = maplinks
                 relatedterms = querystruct.relatedterms
-                querystruct = QueryStruct( querystruct.terms, querystruct.coverterms, links, relatedterms, errors)
+                querystruct = QueryStruct( querystruct.terms, links, relatedterms, errors)
                 qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
                 errors += qryresult[1]
                 result = [qryresult[0],errors]

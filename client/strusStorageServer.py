@@ -50,9 +50,6 @@ def publishStatistics( itr):
             raise Exception( "unexpected close of statistics server")
         msg = itr.getNext()
 
-# Pack a message with its length (processCommand protocol)
-def packMessage( msg):
-    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
 
 # Determine if the query is only containing high frequency terms. In this case we change the retrieval scheme:
 def isStopWordsOnlyQuery( terms, collectionsize):
@@ -70,7 +67,7 @@ def processCommand( message):
         messageofs = 1
         if message[0] == 'Q':
             # QUERY:
-            Term = collections.namedtuple('Term', ['type', 'value', 'df', 'weight'])
+            Term = collections.namedtuple('Term', ['type', 'value', 'df', 'weight', 'cover'])
             nofranks = 20
             restrictdn = 0
             collectionsize = 0
@@ -91,25 +88,22 @@ def processCommand( message):
                     (restrictdn,) = struct.unpack_from( ">I", message, messageofs+1)
                     messageofs += struct.calcsize( ">I") + 1
                 elif (message[ messageofs] == 'M'):
-                    (schemesize,) = struct.unpack_from( ">H", message, messageofs+1)
-                    messageofs += struct.calcsize( ">H") + 1
-                    (scheme,) = struct.unpack_from( "%ds" % (schemesize), message, messageofs)
-                    messageofs += schemesize
+                    (scheme,messageofs) = strusMessage.unpackString( message, messageofs+1)
                 elif (message[ messageofs] == 'S'):
                     (collectionsize,) = struct.unpack_from( ">q", message, messageofs+1)
                     messageofs += struct.calcsize( ">q") + 1
                 elif (message[ messageofs] == 'T'):
-                    (df,weight,typesize,valuesize) = struct.unpack_from( ">qdHH", message, messageofs+1)
-                    messageofs += struct.calcsize( ">qdHH") + 1
-                    (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
-                    messageofs += typesize + valuesize
-                    terms.append( Term( type, value, df, weight))
+                    (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
+                    (value, messageofs) = strusMessage.unpackString( message, messageofs)
+                    (df,weight,cover) = struct.unpack_from( ">qd?", message, messageofs)
+                    messageofs += struct.calcsize( ">qd?")
+                    terms.append( Term( type, value, df, weight, cover))
                 elif (message[ messageofs] == 'L'):
-                    (weight,typesize,valuesize) = struct.unpack_from( ">dHH", message, messageofs+1)
-                    messageofs += struct.calcsize( ">dHH") + 1
-                    (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
-                    messageofs += typesize + valuesize
-                    links.append( Term( type, value, 0, weight))
+                    (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
+                    (value, messageofs) = strusMessage.unpackString( message, messageofs)
+                    (weight,) = struct.unpack_from( ">q", message, messageofs)
+                    messageofs += struct.calcsize( ">q")
+                    links.append( Term( type, value, 0, weight, False))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
@@ -134,7 +128,7 @@ def processCommand( message):
                     rt += struct.pack( ">f", result['weight'])
                     for linkid,weight in result['links']:
                         rt.append( 'L')
-                        rt += packMessage( linkid) + struct.pack( ">f", weight)
+                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
             else:
                 for result in results:
                     rt.append( '_')
@@ -143,13 +137,13 @@ def processCommand( message):
                     rt.append( 'W')
                     rt += struct.pack( ">f", result['weight'])
                     rt.append( 'T')
-                    rt += packMessage( result['title'])
+                    rt += strusMessage.packString( result['title'])
                     paratitle = result['paratitle']
                     if (len( paratitle) > 0):
                         rt.append( 'P')
-                        rt += packMessage( paratitle)
+                        rt += strusMessage.packString( paratitle)
                     rt.append( 'A')
-                    rt += packMessage( result['abstract'])
+                    rt += strusMessage.packString( result['abstract'])
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:

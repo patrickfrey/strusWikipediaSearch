@@ -47,18 +47,6 @@ analyzer.addPatternLexem( "punct", "text", ["regex", "[,]"], ["lc"] )
 analyzer.definePatternMatcherPostProcFromFile( "vecsfeat", "std", "pattern_searchfeat_qry.bin" )
 analyzer.addSearchIndexElementFromPatternMatch( "vecsfeat", "vecsfeat", [] )
 
-
-# Pack a message with its length (processCommand protocol)
-def packMessage( msg):
-    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
-
-def unpackMessage( msg, msgofs):
-    (strsize,) = struct.unpack_from( ">H", msg, msgofs)
-    msgofs += struct.calcsize( ">H")
-    (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
-    msgofs += strsize
-    return [str,msgofs]
-
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
 
 # Server callback function that intepretes the client message sent, executes the command and packs the result for the client
@@ -80,13 +68,15 @@ def processCommand( message):
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
                 elif (message[ messageofs] == 'X'):
-                    (querystr,messageofs) = unpackMessage( message, messageofs+1)
+                    (querystr,messageofs) = strusMessage.unpackString( message, messageofs+1)
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
             # Analyze query:
             relatedlist = []
             terms = analyzer.analyzeField( "text", querystr)
+
+            # Extract vectors referenced:
             f_indices = []
             for term in terms:
                 if term.type() == "vecsfeat":
@@ -95,33 +85,35 @@ def processCommand( message):
                         f_indices.append( int( value[1:]))
 
             # Calculate covering query features:
-            coverfeats = []
+            coverfeats = Set()
             skippos = 0
             if len(terms) > 1:
-                curfeat = terms[0]
-                for term in terms[1:]:
+                curfeatidx = 0
+                for termidx,term in enumerate(terms[1:]:, 1)
                     if skippos:
                         if term.position() >= skippos:
                             skippos = 0
-                            curfeat = term
+                            curfeatidx = termidx
                         continue
+
+                    curfeat = terms[ curfeatidx]
                     if curfeat.position() <= term.position() and curfeat.position() + curfeat.length() >= term.position() + term.length():
                         if curfeat.position() == term.position() and curfeat.position() + curfeat.length() == term.position() + term.length():
                             if term.type() == "stem":
-                                curfeat = term
+                                curfeatidx = termidx
                         else:
                             continue
                     elif curfeat.position() >= term.position() and curfeat.position() + curfeat.length() <= term.position() + term.length():
-                        curfeat = term
+                        curfeatidx = termidx
                     else:
-                        coverfeats.append( curfeat)
+                        coverfeats.add( curfeatidx)
                         skippos = curfeat.position() + curfeat.length()
                         if term.position() >= skippos:
                             skippos = 0
-                            curfeat = term
-                coverfeats.append( curfeat)
+                            curfeatidx = termidx
+                coverfeats.add( curfeatidx)
 
-            # Calculate nearest neighbours:
+            # Calculate nearest neighbours of vectors exctracted:
             if len( f_indices) > 0:
                 vec = vecstorage.featureVector( f_indices[0])
                 if len( f_indices) > 1:
@@ -143,32 +135,26 @@ def processCommand( message):
                     relatedlist.append( RelatedTerm( fname, neighbour.index(), neighbour.weight()))
 
             # Build the result and pack it into the reply message for the client:
-            for term in terms:
+            for termidx,term in enumerate(terms):
                 rt.append( 'T')
                 rt.append( 'T')
-                rt += packMessage( term.type())
+                rt += strusMessage.packString( term.type())
                 rt.append( 'V')
-                rt += packMessage( term.value())
+                rt += strusMessage.packString( term.value())
                 rt.append( 'P')
                 rt += struct.pack( ">I", term.position())
                 rt.append( 'L')
                 rt += struct.pack( ">I", term.length())
-                rt.append( '_')
-            for term in coverfeats:
                 rt.append( 'C')
-                rt.append( 'T')
-                rt += packMessage( term.type())
-                rt.append( 'V')
-                rt += packMessage( term.value())
-                rt.append( 'P')
-                rt += struct.pack( ">I", term.position())
-                rt.append( 'L')
-                rt += struct.pack( ">I", term.length())
+                if termidx in coverfeats:
+                    rt += struct.pack( ">?", True)
+                else:
+                    rt += struct.pack( ">?", False)
                 rt.append( '_')
             for related in relatedlist:
                 rt.append( 'R')
                 rt.append( 'V')
-                rt += packMessage( related.value)
+                rt += strusMessage.packString( related.value)
                 rt.append( 'I')
                 rt += struct.pack( ">I", related.index)
                 rt.append( 'W')

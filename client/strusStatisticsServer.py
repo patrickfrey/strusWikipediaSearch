@@ -19,13 +19,10 @@ collectionSize = 0
 strusctx = strus.Context()
 strustat = strusctx.createStatisticsProcessor("")
 
-# [2] Request handlers
-def packMessage( msg):
-    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
-
 def termDfMapKey( type, value):
     return "%s~%s" % (type,value)
 
+# [2] Request handlers
 @tornado.gen.coroutine
 def processCommand( message):
     rt = bytearray("Y")
@@ -54,11 +51,8 @@ def processCommand( message):
             messageofs = 1
             while (messageofs < messagesize):
                 if (message[ messageofs] == 'T'):
-                    # Fetch df of term, message format [T][typesize:16][valuesize:16][type string][value string]:
-                    (typesize,valuesize) = struct.unpack_from( ">HH", message, messageofs+1)
-                    messageofs += struct.calcsize( ">HH") + 1
-                    (type,value) = struct.unpack_from( "%ds%ds" % (typesize,valuesize), message, messageofs)
-                    messageofs += typesize + valuesize
+                    (type, messageofs) = strusMessage.unpackString( message, messageofs)
+                    (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     df = 0
                     key = termDfMapKey( type, value)
                     if key in termDfMap:

@@ -9,6 +9,17 @@ import sys
 import struct
 import binascii
 
+# Pack a message with its length (processCommand protocol)
+def packString( msg):
+    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
+
+def unpackString( msg, msgofs):
+    (strsize,) = struct.unpack_from( ">H", msg, msgofs)
+    msgofs += struct.calcsize( ">H")
+    (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
+    msgofs += strsize
+    return [str,msgofs]
+
 class TcpConnection( object):
     def __init__(self, stream, command_callback):
         self.stream = stream
