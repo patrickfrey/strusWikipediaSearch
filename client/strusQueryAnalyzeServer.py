@@ -116,6 +116,9 @@ def processCommand( message):
                     else:
                         coverfeats.append( curfeat)
                         skippos = curfeat.position() + curfeat.length()
+                        if term.position() >= skippos:
+                            skippos = 0
+                            curfeat = term
 
             # Calculate nearest neighbours:
             if len( f_indices) > 0:

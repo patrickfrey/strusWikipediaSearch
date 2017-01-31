@@ -415,6 +415,8 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 for term in terms:
                     print "+++ TERM %s '%s' %u %u" % (term.type, term.value, term.pos, term.len)
+                for term in querystruct.coverterms:
+                    print "+++ COVERTERM %s '%s' %u %u" % (term.type, term.value, term.pos, term.len)
                 # Get the global statistics:
                 dflist,collectionsize,error = yield self.queryStats( terms)
                 if not error is None:
