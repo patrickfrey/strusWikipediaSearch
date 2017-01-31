@@ -88,6 +88,8 @@ class Backend:
 
     # Define features for weighting and summarization:
     def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
+        for term in terms:
+            print "++++ TERM %s %s %u %u %u" % (term.type,term.value,term.pos,term.len,term.cover)
         selexpr1 = []
         selexpr2 = []
         if seltitle == True:
@@ -101,7 +103,8 @@ class Backend:
                     cardinality = 2
                 else:
                     cardinality = 3
-            selexpr1 = ["contains",0,cardinality] + selfeat
+            if selfeat:
+                selexpr1 = ["contains",0,cardinality] + selfeat
         else:
             selfeat1 = []
             selfeat2 = []
@@ -113,12 +116,13 @@ class Backend:
                             selfeat2.append( [term.type, term.value] )
                     else:
                         selfeat2.append( [term.type, term.value] )
-            selexpr1 = ["contains"] + selfeat1
-            if scheme != "NBLNK" and scheme != "TILNK":
+            if selfeat1:
+                selexpr1 = ["contains"] + selfeat1
+            if scheme != "NBLNK" and scheme != "TILNK" and selfeat2:
                 selexpr2 = ["contains"] + selfeat2
 
-        if len(selexpr1) < 2 and len(selexpr2):
-            raise Exception( "query features not found in collection")
+        if not selexpr1 and not selexpr2:
+            raise Exception( "query features not found in the collection")
 
         if scheme == "NBLNK" or scheme == "TILNK":
             queryterms = []
