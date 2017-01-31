@@ -375,8 +375,6 @@ class QueryHandler( tornado.web.RequestHandler ):
                 # Return empty result for empty query:
                 rt = [[],[]]
             else:
-                for term in terms:
-                    print "+++ TERM %s '%s' %u %u %u" % (term.type, term.value, term.pos, term.len, term.cover)
                 # Get the global statistics:
                 dflist,collectionsize,error = yield self.queryStats( terms)
                 if not error is None:

@@ -88,8 +88,6 @@ class Backend:
 
     # Define features for weighting and summarization:
     def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
-        for term in terms:
-            print "++++ TERM %s %s %u %u" % (term.type,term.value,term.df,term.cover)
         selexpr1 = []
         selexpr2 = []
         if seltitle == True:
@@ -129,14 +127,12 @@ class Backend:
             for term in terms:
                 if term.cover:
                     queryterms.append( term)
-                    print "+++ CALL defineFeature %s %s" % (term.type, term.value)
                     query.defineFeature( "docfeat", [term.type, term.value], term.weight)
                     if term.df > 0.0:
                         query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
             terms = queryterms
         else:
             for term in terms:
-                print "+++ CALL defineFeature %s %s" % (term.type, term.value)
                 query.defineFeature( "docfeat", [term.type, term.value], term.weight)
                 if term.df > 0.0:
                     query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
@@ -144,8 +140,6 @@ class Backend:
         for link in links:
             query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
 
-        print "+++ SEL EXPR 1: %s" % selexpr1
-        print "+++ SEL EXPR 2: %s" % selexpr2
         query.defineFeature( "selfeat", selexpr1, 1.0 )
         if selexpr2:
             query.defineFeature( "selfeat", selexpr2, 1.0 )
