@@ -93,6 +93,30 @@ def processCommand( message):
                     value = term.value()
                     if value[0] == 'F':
                         f_indices.append( int( value[1:]))
+
+            # Calculate covering query features:
+            coverfeats = []
+            skippos = 0
+            if len(terms) > 1:
+                curfeat = terms[0]
+                for term in terms[1:]:
+                    if skippos:
+                        if term.position() >= skippos:
+                            skippos = 0
+                            curfeat = term
+                        continue
+                    if curfeat.position() <= term.position() and curfeat.position() + curfeat.length() >= term.position() + term.length():
+                        if curfeat.position() == term.position() and curfeat.position() + curfeat.length() == term.position() + term.length():
+                            if term.type() == "stem":
+                                curfeat = term
+                        else:
+                            continue
+                    elif curfeat.position() >= term.position() and curfeat.position() + curfeat.length() <= term.position() + term.length():
+                        curfeat = term
+                    else:
+                        coverfeats.append( curfeat)
+                        skippos = curfeat.position() + curfeat.length()
+
             # Calculate nearest neighbours:
             if len( f_indices) > 0:
                 vec = vecstorage.featureVector( f_indices[0])
@@ -117,6 +141,17 @@ def processCommand( message):
             # Build the result and pack it into the reply message for the client:
             for term in terms:
                 rt.append( 'T')
+                rt.append( 'T')
+                rt += packMessage( term.type())
+                rt.append( 'V')
+                rt += packMessage( term.value())
+                rt.append( 'P')
+                rt += struct.pack( ">I", term.position())
+                rt.append( 'L')
+                rt += struct.pack( ">I", term.length())
+                rt.append( '_')
+            for term in coverfeats:
+                rt.append( 'C')
                 rt.append( 'T')
                 rt += packMessage( term.type())
                 rt.append( 'V')
