@@ -51,7 +51,7 @@ def processCommand( message):
             messageofs = 1
             while (messageofs < messagesize):
                 if (message[ messageofs] == 'T'):
-                    (type, messageofs) = strusMessage.unpackString( message, messageofs)
+                    (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     df = 0
                     key = termDfMapKey( type, value)

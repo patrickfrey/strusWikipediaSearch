@@ -59,8 +59,8 @@ class QueryHandler( tornado.web.RequestHandler ):
             statquery = bytearray("Q")
             for term in terms:
                 statquery.append('T')
-                strusMessage.packString( term.type)
-                strusMessage.packString( term.value)
+                statquery += strusMessage.packString( term.type)
+                statquery += strusMessage.packString( term.value)
             statquery.append('N')
             ri = statserver.rindex(':')
             host,port = statserver[:ri],int( statserver[ri+1:])

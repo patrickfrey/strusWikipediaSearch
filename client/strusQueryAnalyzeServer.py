@@ -13,6 +13,7 @@ import binascii
 import time
 import strus
 import numbers
+from sets import Set
 
 # server:
 global serverno
@@ -89,7 +90,7 @@ def processCommand( message):
             skippos = 0
             if len(terms) > 1:
                 curfeatidx = 0
-                for termidx,term in enumerate(terms[1:]:, 1)
+                for termidx,term in enumerate(terms[1:], 1):
                     if skippos:
                         if term.position() >= skippos:
                             skippos = 0
