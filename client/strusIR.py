@@ -48,12 +48,12 @@ class Backend:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
         if scheme == "NBLNK":
-            rt.addSummarizer( "accuvariable", {
-                  "norm": 0.0001, "pairmul": 3.0, "var": "LINK", "type": "linkid",
+            rt.addSummarizer( "accuvar", {
+                  "norm": 0.0001, "cofactor": 2.0, "var": "LINK", "type": "linkid",
                   ".match": "sumfeat"
             })
         elif scheme == "TILNK":
-                rt.addSummarizer( "accuvariable", {
+                rt.addSummarizer( "accuvar", {
                       "norm": 0.0001, "var": "LINK",
                       ".match": "sumfeat",
                       "type": "veclfeat",
