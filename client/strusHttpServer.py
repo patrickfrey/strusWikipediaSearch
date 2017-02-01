@@ -175,7 +175,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             if reply[0] == 'E':
                 rt = (None, "storage server %s:%d returned error: %s" % (host, port, reply[1:]))
             elif reply[0] == 'Y':
-                if scheme == "NBLNK" or scheme == "TILNK":
+                if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
                     result = self.unpackAnswerLinkQuery( reply, 1, len(reply)-1)
                 else:
                     result = self.unpackAnswerTextQuery( reply, 1, len(reply)-1)
@@ -427,7 +427,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             errors = querystruct.errors
             relatedterms = None
 
-            if scheme == "NBLNK" or scheme == "TILNK":
+            if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 200, restrictdn)
                 errors += selectresult[1]
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), errors]
@@ -453,7 +453,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = [qryresult[0],errors]
             time_elapsed = time.time() - start_time
             # Render the results:
-            if scheme == "NBLNK" or scheme == "TILNK":
+            if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
                template = "search_nblnk_html.tpl"
             else:
                template = "search_documents_html.tpl"
