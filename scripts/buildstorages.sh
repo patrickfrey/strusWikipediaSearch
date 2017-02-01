@@ -36,6 +36,7 @@ buildStorage()
 
 assignPageweights()
 {
+  storageid=$1
   strusUpdateStorage -s "`storageConfig $storageid`" -x titid -m pageweight "$outprefix"pagerank.txt
 }
 

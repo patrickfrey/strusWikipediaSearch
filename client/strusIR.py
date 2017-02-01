@@ -48,15 +48,16 @@ class Backend:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
         if scheme == "NBLNK":
-            rt.addSummarizer( "accuvar", {
-                  "norm": 0.0001, "cofactor": 2.0, "var": "LINK", "type": "linkid",
-                  ".match": "sumfeat"
+            rt.addSummarizer( "accunear", {
+                  "cofactor": 1.2, "type": "linkid", "range": 30, "cardinality": "80%",
+                  "nofranks":20, "result":"LINK",
+                  ".match": "docfeat"
             })
         elif scheme == "TILNK":
-                rt.addSummarizer( "accuvar", {
-                      "norm": 0.0001, "var": "LINK",
-                      ".match": "sumfeat",
-                      "type": "veclfeat",
+                rt.addSummarizer( "accunear", {
+                  "cofactor": 1.2, "type": "veclfeat", "range": 30, "cardinality": "80%",
+                  "nofranks":20, "result":"LINK",
+                  ".match": "docfeat"
                 })
         else:
             # Summarizer for getting the document title:
@@ -122,20 +123,14 @@ class Backend:
         if not selexpr1 and not selexpr2:
             raise Exception( "query features not found in the collection")
 
-        if scheme == "NBLNK" or scheme == "TILNK":
-            queryterms = []
-            for term in terms:
-                if term.cover:
-                    queryterms.append( term)
-                    query.defineFeature( "docfeat", [term.type, term.value], term.weight)
-                    if term.df > 0.0:
-                        query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
-            terms = queryterms
-        else:
-            for term in terms:
+        queryterms = []
+        for term in terms:
+            if term.cover:
+                queryterms.append( term)
                 query.defineFeature( "docfeat", [term.type, term.value], term.weight)
                 if term.df > 0.0:
                     query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
+        terms = queryterms
 
         for link in links:
             query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
@@ -147,50 +142,6 @@ class Backend:
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
         query.addMetaDataRestrictionCondition( "==", "redirect", 0, True);
 
-        if scheme == "NBLNK" or scheme == "TILNK" and len( terms) > 0:
-            if len( terms) > 1:
-                for pair in self.getAscendingIndexPairs( len( terms)):
-                    term1 = terms[ pair[ 0]]
-                    term2 = terms[ pair[ 1]]
-                    if pair[0]+1 == pair[1]:
-                        # ... subsequent terms in query:
-                        expr = [
-                            [ "sequence_struct", 3, ["sent"], [term1.type,term1.value], [term2.type,term2.value]],
-                            [ "sequence_struct", 3, ["sent"], [term2.type,term2.value], [term1.type,term1.value]],
-                            [ "within_struct",  5,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]],
-                            [ "within_struct", 20,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]]
-                        ]
-                        weight = [ 4.0, 2.5, 2.0, 1.5 ]
-                        for ii in range(4):
-                            sumexpr = [ "chain_struct", 50, ["sent"], ["=LINK", "linkvar"], expr[ ii] ]
-                            query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
-                            sumexpr = [ "sequence_struct", -50, ["sent"], expr[ ii], ["=LINK", "linkvar"] ]
-                            query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
-
-                    elif pair[0]+2 < pair[1]:
-                        # ... far away terms in query:
-                        expr = [ "within_struct", 20, ["sent"], [term1.type,term1.value], [term2.type,term2.value]]
-                        weight = 1.1
-                        sumexpr = [ "inrange_struct", 50, ["sent"], ["=LINK", "linkvar"], expr ]
-                        query.defineFeature( "sumfeat", sumexpr, weight )
-                    else:
-                        expr = [
-                            [ "within_struct",  5,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]],
-                            [ "within_struct", 20,  ["sent"], [term1.type,term1.value], [term2.type,term2.value]]
-                        ]
-                        weight = [ 1.9, 1.4 ]
-                        for ii in range(2):
-                            sumexpr = [ "chain_struct", 50, ["sent"], ["=LINK", "linkvar"], expr[ ii] ]
-                            query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
-                            sumexpr = [ "sequence_struct", -50, ["sent"], expr[ ii], ["=LINK", "linkvar"] ]
-                            query.defineFeature( "sumfeat", sumexpr, weight[ ii] )
-            else:
-                # ... single term query
-                expr = [ terms[0].type, terms[0].value ]
-                sumexpr = [ "chain_struct", 50, ["sent"], ["=LINK","linkvar"], expr ]
-                query.defineFeature( "sumfeat", sumexpr, 1.0 )
-                sumexpr = [ "sequence_struct", -50, ["sent"], expr, ["=LINK","linkvar"] ]
-                query.defineFeature( "sumfeat", sumexpr, 1.0 )
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
     def evaluateQuery( self, scheme, seltitle, terms, links, collectionsize, firstrank, nofranks, restrictset, debugtrace):
