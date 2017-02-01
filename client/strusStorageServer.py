@@ -101,8 +101,8 @@ def processCommand( message):
                 elif (message[ messageofs] == 'L'):
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
-                    (weight,) = struct.unpack_from( ">q", message, messageofs)
-                    messageofs += struct.calcsize( ">q")
+                    (weight,) = struct.unpack_from( ">d", message, messageofs)
+                    messageofs += struct.calcsize( ">d")
                     links.append( Term( type, value, 0, weight, False))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")

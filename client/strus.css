@@ -179,7 +179,7 @@ li #rank_weight {
 
 li #rank_paratitle {
 	margin: 0px 5px;
-	float: left;
+	clear: left;
 	display: block;
 	white-space: pre-line;
 	color: #133;
@@ -188,7 +188,7 @@ li #rank_paratitle {
 
 li #rank_abstract {
 	margin: 0px 5px;
-	float: left;
+	clear: left;
 	display: block;
 	white-space: pre-line;
 	color: #133;
@@ -197,7 +197,7 @@ li #rank_abstract {
 
 li #rank_linkid {
 	margin: 0px 5px;
-	float: left;
+	clear: left;
 	font: bold 14px/1.5 'Open Sans', Arial, sans-serif;
 }
 

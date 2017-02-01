@@ -432,7 +432,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 errors += selectresult[1]
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), errors]
             elif scheme == "STD":
-                noflinks = 10
+                noflinks = 20
                 selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 200, 0)
                 errors += selectresult[1]
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
