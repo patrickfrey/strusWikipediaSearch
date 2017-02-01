@@ -27,10 +27,10 @@
 <div id="rank">
 {% if mode == "debug" %}
 <div id="rank_docno">{{ result.docno }}</div>
-<div id="rank_weight">{{ "%.4f" % result.weight }}<br/></div>
+<div id="rank_weight">{{ "%.4f" % result.weight }}</div>
 {% end %}
 {% if len( result.paratitle ) > 0 %}
-<div id="rank_paratitle"> {% raw result.paratitle %} </div><br/>
+<div id="rank_paratitle"> {% raw result.paratitle %} </div>
 {% end %}
 <div id="rank_abstract"> {% raw result.abstract %} </div>
 </div>
