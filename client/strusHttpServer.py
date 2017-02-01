@@ -428,12 +428,12 @@ class QueryHandler( tornado.web.RequestHandler ):
             relatedterms = None
 
             if scheme == "NBLNK" or scheme == "TILNK":
-                selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 100, restrictdn)
+                selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 200, restrictdn)
                 errors += selectresult[1]
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), errors]
             elif scheme == "STD":
                 noflinks = 10
-                selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 100, 0)
+                selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 200, 0)
                 errors += selectresult[1]
                 links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
                 if len(links) >= 1:

@@ -44,6 +44,7 @@ class Backend:
                      ".match": "docfeat"
             })
             rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
         else:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
