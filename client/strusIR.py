@@ -19,8 +19,8 @@ class Backend:
             rt.addWeightingFunction( "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
-                     "titleinc": 2.4, "tidocnorm": 100, "windowsize": 40, 'cardinality': 2,
-                     "ffbase": 0.1, "fftie": 10,
+                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 2,
+                     "ffbase": 0.3, "fftie": 10,
                      "proxffbias": 0.3, "proxfftie": 20, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
