@@ -129,6 +129,22 @@ def processCommand( message):
                     for linkid,weight in result['links']:
                         rt.append( 'L')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+            elif scheme == "STDLNK":
+                for result in results:
+                    rt.append( '_')
+                    rt.append( 'D')
+                    rt += struct.pack( ">I", result['docno'])
+                    rt.append( 'W')
+                    rt += struct.pack( ">f", result['weight'])
+                    for linkid,weight in result['links']:
+                        rt.append( 'L')
+                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+                    for linkid,weight in result['vectors']:
+                        rt.append( 'V')
+                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+                    for linkid,weight in result['vectors']:
+                        rt.append( 'T')
+                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
             else:
                 for result in results:
                     rt.append( '_')

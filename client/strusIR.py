@@ -37,7 +37,7 @@ class Backend:
                 rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
                 rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
 
-        elif scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
+        elif scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
             rt.addWeightingFunction( "BM25", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
@@ -55,17 +55,33 @@ class Backend:
                   ".match": "docfeat"
             })
         elif scheme == "TILNK":
-                rt.addSummarizer( "accunear", {
+            rt.addSummarizer( "accunear", {
                   "cofactor": 1.2, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
-                })
+            })
         elif scheme == "VCLNK":
-                rt.addSummarizer( "accunear", {
-                   "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
-                   "nofranks":20, "result":"LINK",
-                   ".match": "docfeat"
-                })
+            rt.addSummarizer( "accunear", {
+                  "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
+                  "nofranks":20, "result":"LINK",
+                  ".match": "docfeat"
+            })
+        elif scheme == "STDLNK":
+            rt.addSummarizer( "accunear", {
+                  "cofactor": 1.2, "type": "linkid", "range": 30, "cardinality": "75%",
+                  "nofranks":20, "result":"TITLE",
+                  ".match": "docfeat"
+            })
+            rt.addSummarizer( "accunear", {
+                  "cofactor": 1.2, "type": "veclfeat", "range": 30, "cardinality": "75%",
+                  "nofranks":20, "result":"LINK",
+                  ".match": "docfeat"
+            })
+            rt.addSummarizer( "accunear", {
+                  "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
+                  "nofranks":20, "result":"VECTOR",
+                  ".match": "docfeat"
+            })
         else:
             # Summarizer for getting the document title:
             rt.addSummarizer( "attribute", { "name": "docid" })
@@ -84,7 +100,7 @@ class Backend:
         self.context = strus.Context()
         self.storage = self.context.createStorageClient( config )
         self.queryeval = {}
-        for scheme in [ "BM25", "BM25pg", "BM25pff", "NBLNK", "TILNK", "VCLNK" ]:
+        for scheme in [ "BM25", "BM25pg", "BM25pff", "NBLNK", "TILNK", "VCLNK", "STDLNK" ]:
             self.queryeval[ scheme] = self.createQueryEval( scheme)
 
     # Get pairs (a,b) of a and b in [0..N-1] with a < b:
@@ -124,7 +140,7 @@ class Backend:
                         selfeat2.append( [term.type, term.value] )
             if selfeat1:
                 selexpr1 = ["contains"] + selfeat1
-            if scheme != "NBLNK" and scheme != "TILNK" and scheme != "VCLNK" and selfeat2:
+            if scheme != "NBLNK" and scheme != "TILNK" and scheme != "VCLNK" and scheme != "STDLNK" and selfeat2:
                 selexpr2 = ["contains"] + selfeat2
 
         if not selexpr1 and not selexpr2:
@@ -178,6 +194,20 @@ class Backend:
                         links.append( [sumelem.value().strip(), sumelem.weight()])
                 rt.append( {
                        'docno':rank.docno(), 'weight':rank.weight(), 'links':links})
+        elif scheme == "STDLNK":
+            for rank in result.ranks():
+                links = []
+                vectors = []
+                titles = []
+                for sumelem in rank.summaryElements():
+                    if sumelem.name() == 'LINK':
+                        links.append( [sumelem.value().strip(), sumelem.weight()])
+                    elif sumelem.name() == 'VECTOR':
+                        vectors.append( [sumelem.value().strip(), sumelem.weight()])
+                    elif sumelem.name() == 'TITLE':
+                        titles.append( [sumelem.value().strip(), sumelem.weight()])
+                rt.append( {
+                       'docno':rank.docno(), 'weight':rank.weight(), 'links':links, 'vectors':vectors, 'titles':titles})
         else:
             if (debugtrace):
                 print "pass %u, nof matches %u" %(result.evaluationPass(), result.nofDocumentsRanked())

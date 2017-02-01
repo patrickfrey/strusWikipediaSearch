@@ -41,7 +41,7 @@ analyzer.addSearchIndexElement(
 
 # Query evaluation structures:
 ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract'])
-NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links'])
+NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links', 'vectors', 'titles'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight','cover'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
@@ -136,10 +136,12 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_docno = 0
         row_weight = 0.0
         row_links = []
+        row_vectors = []
+        row_titles = []
         while (answerofs < answersize):
             if answer[ answerofs] == '_':
                 if row_docno != 0:
-                    result.append( NblnkRow( row_docno, row_weight, row_links))
+                    result.append( NblnkRow( row_docno, row_weight, row_links, row_vectors, row_titles))
                 row_docno = 0
                 row_weight = 0.0
                 row_links = []
@@ -151,15 +153,24 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
                 answerofs += struct.calcsize( ">f") + 1
             elif answer[ answerofs] == 'L':
-                (linkidlen,) = struct.unpack_from( ">H", answer, answerofs+1)
-                answerofs += struct.calcsize( ">H") + 1
-                (linkidstr,weight) = struct.unpack_from( ">%dsf" % linkidlen, answer, answerofs)
-                answerofs += linkidlen + struct.calcsize( ">f")
-                row_links.append([linkidstr,weight])
+                (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
+                (weight,) = struct.unpack_from( ">f", answer, answerofs)
+                answerofs += struct.calcsize( ">f")
+                row_links.append([idstr,weight])
+            elif answer[ answerofs] == 'V':
+                (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
+                (weight,) = struct.unpack_from( ">f", answer, answerofs)
+                answerofs += struct.calcsize( ">f")
+                row_vectors.append([idstr,weight])
+            elif answer[ answerofs] == 'T':
+                (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
+                (weight,) = struct.unpack_from( ">f", answer, answerofs)
+                answerofs += struct.calcsize( ">f")
+                row_titles.append([idstr,weight])
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
         if row_docno != 0:
-            result.append( NblnkRow( row_docno, row_weight, row_links))
+            result.append( NblnkRow( row_docno, row_weight, row_links, row_vectors, row_titles))
         return result
 
     @tornado.gen.coroutine
@@ -175,7 +186,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             if reply[0] == 'E':
                 rt = (None, "storage server %s:%d returned error: %s" % (host, port, reply[1:]))
             elif reply[0] == 'Y':
-                if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
+                if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
                     result = self.unpackAnswerLinkQuery( reply, 1, len(reply)-1)
                 else:
                     result = self.unpackAnswerTextQuery( reply, 1, len(reply)-1)
@@ -427,7 +438,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             errors = querystruct.errors
             relatedterms = None
 
-            if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
+            if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 200, restrictdn)
                 errors += selectresult[1]
                 result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), errors]
@@ -453,7 +464,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = [qryresult[0],errors]
             time_elapsed = time.time() - start_time
             # Render the results:
-            if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
+            if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
                template = "search_nblnk_html.tpl"
             else:
                template = "search_documents_html.tpl"
