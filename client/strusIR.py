@@ -19,13 +19,13 @@ class Backend:
             rt.addWeightingFunction( "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
-                     "titleinc": 2.4, "windowsize": 40, 'cardinality': 2,
-                     "ffbase": 0.3, "fftie": 10,
-                     "proxffbias": 0.3, "proxfftie": 20, "maxdf": 0.2,
+                     "titleinc": 4.0, "windowsize": 40, 'cardinality': 2,
+                     "ffbase": 0.4, "fftie": 20,
+                     "proxffbias": 0.3, "proxfftie": 30, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
             rt.addWeightingFunction( "constant", {".match": "lnkfeat" } )
-            rt.addWeightingFormula( "d * _0 * _1 + (1 - d) * _0", {"d": 0.4} )
+            rt.addWeightingFormula( "d * _0 * _1 + (1 - d) * _0", {"d": 0.5} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
