@@ -135,6 +135,13 @@ def processCommand( message):
                     fname = vecstorage.featureName( neighbour.index())
                     relatedlist.append( RelatedTerm( fname, neighbour.index(), neighbour.weight()))
 
+            if debugtrace:
+                termstr = ""
+                for termidx in coverfeats:
+                    term = terms[ termidx]
+                    termstr += term.type() + " '" + term.value() + "' "
+                print "cover query terms: %s" % termstr
+
             # Build the result and pack it into the reply message for the client:
             for termidx,term in enumerate(terms):
                 rt.append( 'T')
