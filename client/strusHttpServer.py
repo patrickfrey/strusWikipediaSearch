@@ -446,10 +446,11 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = [self.getLinkQueryResults( selectresult[0], 'links', firstrank, nofranks+1), errors]
             elif scheme == "STD":
                 noflinks = 20
+                nofnblinks = 12
                 selectresult = yield self.evaluateQuery( "STDLNK", querystruct, 0, 120, 0)
                 errors += selectresult[1]
                 links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks)
-                nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofranks)
+                nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofnblinks)
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
                     maplinks = [ LinkRow(links[0].title,1.0) ]

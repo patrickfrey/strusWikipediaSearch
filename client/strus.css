@@ -137,14 +137,32 @@ h3 {
 	float: left;
 	padding: 5px;
 	overflow: auto;
+	font: 10px/1.5 'Open Sans', Arial, sans-serif;
+	color: #1888;
 }
 
-#related_value {
-	color: red;
-	font: 200 11px/1.5 'Open Sans', Arial, sans-serif;
+#nblinkresult {
+	margin: 15px 15px;
 }
 
-#related_weight {
+#nblinkresult ul {
+	border-style: solid;
+	border-width: 1px;
+	display: table;
+	list-style-type: none;
+	width: 80%;
+}
+
+#nblinkresult li {
+	display: inline;
+	float: left;
+	padding: 5px;
+	overflow: auto;
+	font: 10px/1.5 'Open Sans', Arial, sans-serif;
+	color: #3888;
+}
+
+#related_weight, #nblink_weight {
 	display: none;
 }
 
@@ -216,26 +234,4 @@ li:hover {
 	cursor: pointer;
 }
 
-#DidYouMean {
-	clear: left;
-}
-#DidYouMeanList {
-	opacity:0.90;
-	display: none;
-	background: #fafafa;
-	width: 412px;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-.dymelem a {
-	color: black;
-	text-decoration: none;
-	display: block;
-}
-.dymelem a:hover, .dymelem a:focus {
-	background-color: #e0e0eb;
-}
-#DidYouMeanElem {
-	background: #fafafa;
-	width: 412px;
-}
 

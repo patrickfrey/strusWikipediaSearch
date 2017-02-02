@@ -19,14 +19,14 @@
 
 {% block nblinksblock %}
 {% if nblinks %}
-<div id="relatedresult">
+<div id="nblinkresult">
 <ul>
 {% for nblink in nblinks %}
-{% set enclink = nblink.replace(' ','_') %}
+{% set enclink = nblink.title.replace(' ','_') %}
 <li onclick="parent.location='https://en.wikipedia.org/wiki/{{ enclink }}'">
-<div id="related">
-<div id="related_term">{{ nblink.title }}</div>
-<div id="related_weight">{{ "%.4f" % nblink.weight }}</div>
+<div id="nblink">
+<div id="nblink_term">{{ nblink.title }}</div>
+<div id="nblink_weight">{{ "%.4f" % nblink.weight }}</div>
 </div>
 </li>
 {% end %}
