@@ -25,7 +25,8 @@ class Backend:
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
             rt.addWeightingFunction( "constant", {".match": "lnkfeat" } )
-            rt.addWeightingFormula( "d * _0 * _1 + (1 - d) * _0", {"d": 0.5} )
+            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            rt.addWeightingFormula( "d * _0 * (_2 / 10 + _1) + (1 - d) * _0", {"d": 0.5} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {

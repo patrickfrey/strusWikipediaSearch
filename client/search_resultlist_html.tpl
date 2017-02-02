@@ -17,7 +17,7 @@
 <form id="searchbox" name="search" class method="GET" action="evalQuery.php">
 <input id="searchtext" class="textinput" type="text" maxlength="256" size="32" name="q" tabindex="0" value="{{ querystr }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 <input id="submit_search" type="submit" value="Search" />
-<input type="hidden" name="i" value="{{ firstrank }}"/>
+<input type="hidden" name="i" value="0"/>
 <input type="hidden" name="n" value="{{ nofranks }}"/>
 {% if scheme != None %}
  <input type="hidden" name="s" value="{{ scheme }}"/>

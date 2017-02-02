@@ -16,7 +16,7 @@ h2 {
 }
 
 #logo {
-	background-color: #CED8F6;
+	background-color: #ceddd0;
 	opacity: 0.8;
 	margin: 1px;
 	height: 74px;
@@ -24,7 +24,7 @@ h2 {
 }
 
 #toolbar {
-	background-color: #CED8F6;
+	background-color: #ceddd0;
 	width: 682px;
 	height: 57px;
 	padding: 10px 10px;
@@ -75,6 +75,7 @@ h2 {
 	width: 90px;
 	cursor: pointer;
 	font: bold 16px 'Open Sans', Arial, sans-serif;
+	background: #c9d6cb;
 	color: #303030;
 }
 
@@ -137,8 +138,8 @@ h3 {
 	float: left;
 	padding: 5px;
 	overflow: auto;
-	font: 10px/1.5 'Open Sans', Arial, sans-serif;
-	color: #1888;
+	font: 12px/1.5 'Open Sans', Arial, sans-serif;
+	color: #1f5426;
 }
 
 #nblinkresult {
@@ -158,8 +159,8 @@ h3 {
 	float: left;
 	padding: 5px;
 	overflow: auto;
-	font: 10px/1.5 'Open Sans', Arial, sans-serif;
-	color: #3888;
+	font: 12px/1.5 'Open Sans', Arial, sans-serif;
+	color: #1f3354;
 }
 
 #related_weight, #nblink_weight {
