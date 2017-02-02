@@ -147,7 +147,6 @@ class Backend:
         if not selexpr1 and not selexpr2:
             raise Exception( "query features not found in the collection")
 
-        queryterms = []
         for term in terms:
             if term.cover:
                 query.defineFeature( "docfeat", [term.type, term.value], term.weight)
@@ -157,7 +156,8 @@ class Backend:
         for link in links:
             query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
 
-        query.defineFeature( "selfeat", selexpr1, 1.0 )
+        if selexpr1:
+            query.defineFeature( "selfeat", selexpr1, 1.0 )
         if selexpr2:
             query.defineFeature( "selfeat", selexpr2, 1.0 )
 
