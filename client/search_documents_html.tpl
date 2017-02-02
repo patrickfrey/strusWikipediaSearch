@@ -17,7 +17,7 @@
 {% end %}
 {% end %}
 
-{% block titlesblock %}
+{% block nblinksblock %}
 {% if nblinks %}
 <div id="relatedresult">
 <ul>

@@ -89,12 +89,8 @@
 {% end %}
 {% end %}
 
-{% block relatedblock %}
-{% end %}
+{% block relatedblock %}{% end %}
+{% block nblinksblock %}{% end %}
+{% block resultblock %}{% end %}
 
-{% block titlesblock %}
-{% end %}
-
-{% block resultblock %}
-{% end %}
 

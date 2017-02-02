@@ -11,6 +11,7 @@
   {% block navigation %}{% end %}
   {% block infoblock %}{% end %}
   {% block relatedblock %}{% end %}
+  {% block nblinksblock %}{% end %}
   {% block resultblock %}{% end %}
   </body>
 </html>
