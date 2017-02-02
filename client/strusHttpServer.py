@@ -270,7 +270,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 else:
                     docreftab[ docid] = 1
 
-                linkid = unidecode.unidecode( link[0].decode('utf-8')).lower()
+                linkid = link[0]
                 if linkid in linktab:
                     linktab[ linkid] = 0.0 + linktab[ linkid] + link[1] * rank.weight
                     _refcnt,_docid = linkreftab[ linkid]
