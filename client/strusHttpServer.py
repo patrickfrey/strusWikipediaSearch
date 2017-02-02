@@ -21,14 +21,15 @@ import urllib
 # [0] Globals and helper classes:
 # The address of the global statistics server:
 statserver = "localhost:7183"
-# The address of the global dym (did you mean) server:
-dymserver = "localhost:7189"
 # The address of the query analyze server:
 qryserver = "localhost:7182"
 # Strus storage server addresses:
 storageservers = []
 # Strus client connection factory:
 msgclient = strusMessage.RequestClient()
+# Globals:
+global debugtrace
+debugtrace = False
 
 # Query analyzer structures:
 strusctx = strus.Context()
@@ -253,14 +254,14 @@ class QueryHandler( tornado.web.RequestHandler ):
             ri += 1
         return (merged[ firstrank:maxnofresults], errors)
 
-    def getLinkQueryResults( self, ranks, firstlink, noflinks):
+    def getLinkQueryResults( self, ranks, linkname, firstlink, noflinks):
         results = []
         linktab = {}
         linkreftab = {}
         docidtab = {}
         docreftab = {}
         for rank in ranks:
-            for link in rank.links:
+            for link in getattr( rank, linkname):
                 refcnt = 1
                 docid = link[0]
                 if docid in docreftab:
@@ -441,12 +442,12 @@ class QueryHandler( tornado.web.RequestHandler ):
             if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 200, restrictdn)
                 errors += selectresult[1]
-                result = [self.getLinkQueryResults( selectresult[0], firstrank, nofranks), errors]
+                result = [self.getLinkQueryResults( selectresult[0], 'links', firstrank, nofranks), errors]
             elif scheme == "STD":
                 noflinks = 20
-                selectresult = yield self.evaluateQuery( "TILNK", querystruct, 0, 200, 0)
+                selectresult = yield self.evaluateQuery( "STDLNK", querystruct, 0, 200, 0)
                 errors += selectresult[1]
-                links = self.getLinkQueryResults( selectresult[0], 0, noflinks)
+                links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks)
                 if len(links) >= 1:
                     weightnorm = links[0].weight;
                     maplinks = [ LinkRow(links[0].title,1.0) ]
@@ -481,89 +482,11 @@ class QueryHandler( tornado.web.RequestHandler ):
         except Exception as e:
             self.render( "search_error_html.tpl", message=e)
 
-# Answer a DYM (did you mean) query:
-class DymHandler( tornado.web.RequestHandler ):
-    @tornado.gen.coroutine
-    def evaluateDymQuery( self, oldquerystr, querystr, nofranks, nofresults, restrictdnlist):
-        rt = ([],None)
-        conn = None
-        try:
-            query = bytearray("Q")
-            query.append('S')
-            querystrsize = len( querystr)
-            query += struct.pack( ">H%ds" % (querystrsize), querystrsize, querystr)
-            query.append('N')
-            query += struct.pack( ">H", nofranks)
-            for restrictdn in restrictdnlist:
-                query.append('D')
-                query += struct.pack( ">I", restrictdn)
-
-            ri = dymserver.rindex(':')
-            host,port = dymserver[:ri],int( dymserver[ri+1:])
-            conn = yield msgclient.connect( host, port)
-            reply = yield msgclient.issueRequest( conn, query)
-            if reply[0] == 'E':
-                raise Exception( "failed to query dym server: %s" % reply[1:])
-            elif reply[0] != 'Y':
-                raise Exception( "protocol error in dym server query")
-            proposals = []
-            replyofs = 1
-            replylen = len(reply)
-            while (replyofs < replylen):
-                if reply[ replyofs] == '_':
-                    replyofs += 1
-                elif reply[ replyofs] == 'P':
-                    replyofs += 1
-                    (propsize,) = struct.unpack_from( ">H", reply, replyofs)
-                    replyofs += struct.calcsize( ">H")
-                    (propstr,) = struct.unpack_from( "%ds" % (propsize), reply, replyofs)
-                    replyofs += propsize
-                    proposals.append( propstr)
-                else:
-                    break
-            if replyofs != replylen:
-                raise Exception("dym server result format error")
-            rt = (proposals, None)
-            conn.close()
-        except Exception as e:
-            errmsg = "dym server request failed: %s" % e;
-            if conn:
-                conn.close()
-            rt = ([], errmsg)
-        raise tornado.gen.Return( rt)
-
-    @tornado.gen.coroutine
-    def get(self):
-        try:
-            # q = query string:
-            querystr = self.get_argument( "q", "").encode('utf-8')
-            oldquerystr = self.get_argument( "o", "").encode('utf-8')
-            # n = nofranks:
-            nofranks = int( self.get_argument( "n", 20))
-            # d = restrict to document:
-            restrictdnlist = []
-            restrictdn = int( self.get_argument( "d", 0))
-            if restrictdn:
-                restrictdnlist.append( restrictdn)
-            # Evaluate query:
-            start_time = time.time()
-            (result,errormsg) = yield self.evaluateDymQuery( oldquerystr, querystr, nofranks, nofranks, restrictdnlist)
-            time_elapsed = time.time() - start_time
-            response = { 'error': errormsg,
-                         'result': result,
-                         'time': time_elapsed
-            }
-            self.write(response)
-        except Exception as e:
-            response = { 'error': str(e) }
-            self.write(response)
 
 # [2] Dispatcher:
 application = tornado.web.Application([
     # /query in the URL triggers the handler for answering queries:
     (r"/query", QueryHandler),
-    # /dym in the URL triggers the handler for answering queries:
-    (r"/querydym", DymHandler),
     # files like images referenced in tornado templates:
     (r"/static/(.*)",tornado.web.StaticFileHandler,
         {"path": os.path.dirname(os.path.realpath(sys.argv[0]))},)
@@ -585,18 +508,15 @@ if __name__ == "__main__":
         parser.add_option("-s", "--statserver", dest="statserver", default=statserver,
                           help="Specify the address of the statistics server as ADDR (default %s" % statserver,
                           metavar="ADDR")
-        parser.add_option("-d", "--dymserver", dest="dymserver", default=dymserver,
-                          help="Specify the address of the dym server as ADDR (default %s" % dymserver,
-                          metavar="ADDR")
+        parser.add_option("-G", "--debug", action="store_true", dest="do_debugtrace", default=False,
+                          help="Tell the node to print some messages for tracing what it does")
 
         (options, args) = parser.parse_args()
         myport = int(options.port)
         statserver = options.statserver
         if statserver[0:].isdigit():
             statserver = '{}:{}'.format( 'localhost', statserver)
-        dymserver = options.dymserver
-        if dymserver[0:].isdigit():
-            dymserver = '{}:{}'.format( 'localhost', dymserver)
+        debugtrace = options.do_debugtrace
 
         # Positional arguments are storage server addresses, if empty use default at localhost:7184
         for arg in args:

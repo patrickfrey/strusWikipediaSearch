@@ -156,6 +156,7 @@ class Backend:
         terms = queryterms
 
         for link in links:
+            print "+++ LINK %s %s %s" % (link.type, link.value, link.weight)
             query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
 
         query.defineFeature( "selfeat", selexpr1, 1.0 )
