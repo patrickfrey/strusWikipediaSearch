@@ -92,6 +92,9 @@
 {% block relatedblock %}
 {% end %}
 
+{% block titlesblock %}
+{% end %}
+
 {% block resultblock %}
 {% end %}
 

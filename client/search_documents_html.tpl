@@ -17,12 +17,30 @@
 {% end %}
 {% end %}
 
+{% block titlesblock %}
+{% if nblinks %}
+<div id="relatedresult">
+<ul>
+{% for nblink in nblinks %}
+{% set enclink = nblink.replace(' ','_') %}
+<li onclick="parent.location='https://en.wikipedia.org/wiki/{{ enclink }}'">
+<div id="related">
+<div id="related_term">{{ nblink.title }}</div>
+<div id="related_weight">{{ "%.4f" % nblink.weight }}</div>
+</div>
+</li>
+{% end %}
+</ul>
+</div>
+{% end %}
+{% end %}
+
 {% block resultblock %}
 <div id="searchresult">
 <ul>
 {% for result in results %}
-{% set link = result.title.replace(' ','_') %}
-<li onclick="parent.location='https://en.wikipedia.org/wiki/{{ link }}'">
+{% set enclink = result.title.replace(' ','_') %}
+<li onclick="parent.location='https://en.wikipedia.org/wiki/{{ enclink }}'">
 <h3>{{ result.title }}</h3>
 <div id="rank">
 {% if mode == "debug" %}

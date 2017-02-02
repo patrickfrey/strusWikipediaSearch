@@ -142,7 +142,7 @@ def processCommand( message):
                     for linkid,weight in result['vectors']:
                         rt.append( 'V')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
-                    for linkid,weight in result['vectors']:
+                    for linkid,weight in result['titles']:
                         rt.append( 'T')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
             else:
