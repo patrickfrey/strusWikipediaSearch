@@ -130,7 +130,7 @@ h3 {
 	border-width: 1px;
 	display: table;
 	list-style-type: none;
-	width: 80%;
+	width: 92%;
 }
 
 #relatedresult li {
@@ -151,7 +151,7 @@ h3 {
 	border-width: 1px;
 	display: table;
 	list-style-type: none;
-	width: 80%;
+	width: 92%;
 }
 
 #nblinkresult li {
@@ -177,7 +177,7 @@ h3 {
 #searchresult ul {
 	display: block;
 	list-style-type: none;
-	width: 80%;
+	width: 92%;
 }
 
 li #rank_docno {

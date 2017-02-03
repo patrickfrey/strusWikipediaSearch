@@ -89,7 +89,7 @@ class Backend:
             # Summarizer for abstracting:
             rt.addSummarizer( "matchphrase", {
                   "type": "orig",
-                  "windowsize": 40, "sentencesize": 100, "cardinality": 3, "maxdf": 0.2,
+                  "windowsize": 40, "sentencesize": 100, "cardinality": "60%", "maxdf": 0.2,
                   "matchmark": '$<b>$</b>',
                   ".struct": "sentence", ".match": "docfeat", ".para": "para", ".title": "titlefield"
             })
