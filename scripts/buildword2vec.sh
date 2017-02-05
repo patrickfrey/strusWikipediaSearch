@@ -27,7 +27,7 @@ rm "$outprefix""links.all.txt"
 for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 do
 	runLINKS 1 $dd
-	"$outprefix""links.$dd.txt" >> "$outprefix""links.all.txt"
+	cat "$outprefix""links.$dd.txt" >> "$outprefix""links.all.txt"
 done
 
 runNLP() {
