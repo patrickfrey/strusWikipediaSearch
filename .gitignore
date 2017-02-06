@@ -50,7 +50,7 @@ cmake/build_rules.cmake.user
 # Compiled Programs
 src/wikimediaToXml/strusWikimediaToXml
 src/wikimediaToXml/validateXml
-src/storage/strusPatchIndexTitle
+src/storage/strusWikipediaDemoPatchIndexTitle
 
 # Data
 data/enwiki-20150205-pages-articles-multistream.xml.bz2
