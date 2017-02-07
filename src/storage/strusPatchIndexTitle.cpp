@@ -139,7 +139,7 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 	for (; ti != te; ++ti)
 	{
 		const DocumentDef& def = data.documentar[ ti->second];
-		out << ti->first;
+		out << ti->first << std::endl;
 		out << "\t" << DOC_SEARCH_TYPE_TITLE << " " << def.titlefeat << " 1" << std::endl;
 		std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
 		for (; ri != re; ++ri)
