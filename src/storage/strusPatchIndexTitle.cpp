@@ -176,11 +176,11 @@ int main( int argc, const char** argv)
 				printUsage();
 				return 0;
 			}
-			if (std::strcmp( argv[ argi], "-p") == 0 || std::strcmp( argv[ argi], "--print") == 0)
+			else if (std::strcmp( argv[ argi], "-p") == 0 || std::strcmp( argv[ argi], "--print") == 0)
 			{
 				doPrintOnly = true;
 			}
-			if (std::strcmp( argv[ argi], "-s") == 0 || std::strcmp( argv[ argi], "--storage") == 0)
+			else if (std::strcmp( argv[ argi], "-s") == 0 || std::strcmp( argv[ argi], "--storage") == 0)
 			{
 				++argi;
 				if (argi == argc) throw std::runtime_error("argument (storage configuration string) expected for option -s");
