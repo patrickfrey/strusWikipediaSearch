@@ -89,6 +89,8 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 	strus::Index docno = 1, maxdocno = storage->maxDocumentNumber();
 	for (; docno <= maxdocno; ++docno)
 	{
+		attreader->skipDoc( docno);
+
 		std::string titleid = attreader->getValue( titleattr);
 		std::string titlefeat;
 		std::vector<TitleReference> reflist;
