@@ -125,10 +125,17 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 				}
 			}
 		}
-		if (titlefeat.empty())
+		if (verbose)
 		{
 			std::string docid( attreader->getValue( docidattr));
-			if (verbose) std::cerr << "no title found for: '" << docid << "'" << std::endl;
+			if (titlefeat.empty())
+			{
+				if (verbose) std::cerr << "no title feature found for: '" << docid << "'" << std::endl;
+			}
+			else
+			{
+				if (verbose) std::cerr << "title feature " << titlefeat << " found for: '" << docid << "'" << std::endl;			
+			}
 		}
 		std::set<std::string> occurrencies;
 
