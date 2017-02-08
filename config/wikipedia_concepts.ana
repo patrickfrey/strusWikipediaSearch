@@ -4,6 +4,7 @@
     titlexem = lc:text content_europe_inv  /mediawiki/page/title();
     lnklexem = lc:text content_europe_inv  /mediawiki/page/title();
     lnklexem = lc:text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
+    lnklexem = lc:text content_europe_inv  /mediawiki/page/revision/text//link/link[@type='page']@id;
 
     lexem = text word  /mediawiki/page/title();
     lexem = text word  /mediawiki/page/revision/text();
