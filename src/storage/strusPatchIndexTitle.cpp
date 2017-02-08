@@ -46,6 +46,7 @@ static void printUsage()
 	std::cerr << "    -h          : print this usage" << std::endl;
 	std::cerr << "    -s <CFG>    : process storage with configuration <CFG>" << std::endl;
 	std::cerr << "    -p          : print patches only without applying them" << std::endl;
+	std::cerr << "    -V          : verbose output when collection the data" << std::endl;
 	std::cerr << "    -c <SIZE>   : size of updates per transaction (default 50000)" << std::endl;
 }
 
@@ -89,7 +90,7 @@ struct PatchIndexData
 		:storageConfig(o.storageConfig),documentar(o.documentar),dfmap(o.dfmap){}
 };
 
-static void buildData( PatchIndexData& data, strus::StorageClientInterface* storage)
+static void buildData( PatchIndexData& data, strus::StorageClientInterface* storage, bool verbose)
 {
 	std::auto_ptr<strus::AttributeReaderInterface> attreader( storage->createAttributeReader());
 	if (!attreader.get()) throw std::runtime_error( "failed to create attribute reader");
@@ -127,8 +128,10 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 		if (titlefeat.empty())
 		{
 			std::string docid( attreader->getValue( docidattr));
-			std::cerr << "no title found for: '" << docid << "'" << std::endl;
+			if (verbose) std::cerr << "no title found for: '" << docid << "'" << std::endl;
 		}
+		std::set<std::string> occurrencies;
+
 		forward_titleref_itr->skipDoc( docno);
 		forward_linkid_itr->skipDoc( docno);
 		strus::Index titleref_pos = forward_titleref_itr->skipPos(0);
@@ -142,25 +145,24 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 			}
 			else if (linkid_pos < titleref_pos)
 			{
-				std::cerr << "link id without associated title: '" << forward_linkid_itr->fetch() << "'" << std::endl;
+				if (verbose) std::cerr << "link id without associated title [" << linkid_pos << "," << titleref_pos << "] : '" << forward_linkid_itr->fetch() << "'" << std::endl;
 				linkid_pos  = forward_linkid_itr->skipPos( linkid_pos+1);
 			}
 			else
 			{
 				// ... we select only the title references that align with a linkid reference in the forward index
-				std::set<std::string> occurrencies;
 				std::string featname( forward_titleref_itr->fetch());
 				occurrencies.insert( featname);
 				reflist.push_back( TitleReference( featname, titleref_pos));
+				if (verbose) std::cerr << "found matching link [" << linkid_pos << "] " << featname << " : '" << forward_linkid_itr->fetch() << "'" << std::endl;
 				titleref_pos = forward_titleref_itr->skipPos( titleref_pos+1);
 				linkid_pos  = forward_linkid_itr->skipPos( linkid_pos+1);
-
-				std::set<std::string>::const_iterator oi = occurrencies.begin(), oe = occurrencies.end();
-				for (; oi != oe; ++oi)
-				{
-					data.dfmap[ *oi] += 1;
-				}
 			}
+		}
+		std::set<std::string>::const_iterator oi = occurrencies.begin(), oe = occurrencies.end();
+		for (; oi != oe; ++oi)
+		{
+			data.dfmap[ *oi] += 1;
 		}
 		data.documentar.push_back( DocumentDef( titleid, docno, titlefeat, reflist));
 	}
@@ -258,6 +260,7 @@ int main( int argc, const char** argv)
 		unsigned int transactionSize = 50000;
 		std::vector<std::string> storageconfigs;
 		bool doPrintOnly = false;
+		bool verbose = false;
 
 		for (; argi < argc; ++argi)
 		{
@@ -269,6 +272,10 @@ int main( int argc, const char** argv)
 			else if (std::strcmp( argv[ argi], "-p") == 0 || std::strcmp( argv[ argi], "--print") == 0)
 			{
 				doPrintOnly = true;
+			}
+			else if (std::strcmp( argv[ argi], "-V") == 0 || std::strcmp( argv[ argi], "--verbose") == 0)
+			{
+				verbose = true;
 			}
 			else if (std::strcmp( argv[ argi], "-c") == 0 || std::strcmp( argv[ argi], "--commit") == 0)
 			{
@@ -324,7 +331,7 @@ int main( int argc, const char** argv)
 			if (!storage.get()) throw std::runtime_error( "failed to create storage client");
 
 			PatchIndexData procdata( *ci);
-			buildData( procdata, storage.get());
+			buildData( procdata, storage.get(), verbose);
 			if (doPrintOnly)
 			{
 				printData( std::cout, procdata);
