@@ -31,6 +31,7 @@
 
 #undef STRUS_LOWLEVEL_DEBUG
 
+#define DOC_ATTRIBUTE_DOCID        "docid"
 #define DOC_ATTRIBUTE_TITLEID      "titid"
 #define DOC_SEARCH_TYPE_TITLE      "vectfeat"
 #define DOC_FORWARD_TYPE_TITLEREF  "veclfeat"
@@ -63,29 +64,29 @@ struct TitleReference
 
 struct DocumentDef
 {
+	std::string titleid;
 	strus::Index docno;
 	std::string titlefeat;
 	std::vector<TitleReference> reflist;
 
-	DocumentDef( const strus::Index& docno_, const std::string& titlefeat_, const std::vector<TitleReference>& reflist_)
-		:docno(docno_),titlefeat(titlefeat_),reflist(reflist_){}
+	DocumentDef( const std::string& titleid_, const strus::Index& docno_, const std::string& titlefeat_, const std::vector<TitleReference>& reflist_)
+		:titleid(titleid_),docno(docno_),titlefeat(titlefeat_),reflist(reflist_){}
 	DocumentDef( const DocumentDef& o)
-		:docno(o.docno),titlefeat(o.titlefeat),reflist(o.reflist){}
+		:titleid(o.titleid),docno(o.docno),titlefeat(o.titlefeat),reflist(o.reflist){}
 };
 
 struct PatchIndexData
 {
 	std::string storageConfig;
-	TitleDocidxMap titleDocidxMap;
 	std::vector<DocumentDef> documentar;
 	std::map<std::string,strus::Index> dfmap;
 
 	PatchIndexData( const std::string& storageConfig_)
-		:storageConfig(storageConfig_),titleDocidxMap(),documentar(),dfmap(){}
+		:storageConfig(storageConfig_),documentar(),dfmap(){}
 	PatchIndexData( const std::string& storageConfig_, const TitleDocidxMap& titleDocidxMap_, const std::vector<DocumentDef>& documentar_, const std::map<std::string,strus::Index>& dfmap_)
-		:storageConfig(storageConfig_),titleDocidxMap(titleDocidxMap_),documentar(documentar_),dfmap(dfmap_){}
+		:storageConfig(storageConfig_),documentar(documentar_),dfmap(dfmap_){}
 	PatchIndexData( const PatchIndexData& o)
-		:storageConfig(o.storageConfig),titleDocidxMap(o.titleDocidxMap),documentar(o.documentar),dfmap(o.dfmap){}
+		:storageConfig(o.storageConfig),documentar(o.documentar),dfmap(o.dfmap){}
 };
 
 static void buildData( PatchIndexData& data, strus::StorageClientInterface* storage)
@@ -94,6 +95,8 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 	if (!attreader.get()) throw std::runtime_error( "failed to create attribute reader");
 	strus::Index titleattr = attreader->elementHandle( DOC_ATTRIBUTE_TITLEID);
 	if (titleattr == 0) throw std::runtime_error( "title attribute not defined in storage");
+	strus::Index docidattr = attreader->elementHandle( DOC_ATTRIBUTE_DOCID);
+	if (docidattr == 0) throw std::runtime_error( "docid attribute not defined in storage");
 	std::auto_ptr<strus::DocumentTermIteratorInterface> search_title_itr( storage->createDocumentTermIterator( DOC_SEARCH_TYPE_TITLE));
 	if (!search_title_itr.get()) throw std::runtime_error( "failed to create seach index title iterator");
 	std::auto_ptr<strus::ForwardIteratorInterface> forward_titleref_itr( storage->createForwardIterator( DOC_FORWARD_TYPE_TITLEREF));
@@ -121,6 +124,11 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 				}
 			}
 		}
+		if (titlefeat.empty())
+		{
+			std::string docid( attreader->getValue( docidattr));
+			std::cerr << "no title found for: '" << docid << "'" << std::endl;
+		}
 		forward_titleref_itr->skipDoc( docno);
 		forward_linkid_itr->skipDoc( docno);
 		strus::Index titleref_pos = forward_titleref_itr->skipPos(0);
@@ -134,6 +142,7 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 			}
 			else if (linkid_pos < titleref_pos)
 			{
+				std::cerr << "link id without associated title: '" << forward_linkid_itr->fetch() << "'" << std::endl;
 				linkid_pos  = forward_linkid_itr->skipPos( linkid_pos+1);
 			}
 			else
@@ -153,8 +162,7 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 				}
 			}
 		}
-		data.titleDocidxMap[ titleid] = data.documentar.size();
-		data.documentar.push_back( DocumentDef( docno, titlefeat, reflist));
+		data.documentar.push_back( DocumentDef( titleid, docno, titlefeat, reflist));
 	}
 }
 
@@ -162,14 +170,14 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 {
 	std::cerr << "update title references of storage " << data.storageConfig << std::endl;
 	unsigned int doccnt = 0;
-	TitleDocidxMap::const_iterator ti = data.titleDocidxMap.begin(), te = data.titleDocidxMap.end();
+	std::vector<DocumentDef>::const_iterator ti = data.documentar.begin(), te = data.documentar.end();
 	while (ti != te)
 	{
 		std::auto_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
 		unsigned int ci = 0, ce = transactionSize;
 		for (; ti != te && ci < ce; ++ti,++ci)
 		{
-			const DocumentDef& def = data.documentar[ ti->second];
+			const DocumentDef& def = *ti;
 			std::auto_ptr<strus::StorageDocumentUpdateInterface> document(
 					transaction->createDocumentUpdate( def.docno));
 			document->addSearchIndexTerm( DOC_SEARCH_TYPE_TITLE, def.titlefeat, 1);
@@ -209,11 +217,11 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 
 static void printData( std::ostream& out, const PatchIndexData& data)
 {
-	TitleDocidxMap::const_iterator ti = data.titleDocidxMap.begin(), te = data.titleDocidxMap.end();
+	std::vector<DocumentDef>::const_iterator ti = data.documentar.begin(), te = data.documentar.end();
 	for (; ti != te; ++ti)
 	{
-		const DocumentDef& def = data.documentar[ ti->second];
-		out << ti->first << std::endl;
+		const DocumentDef& def = *ti;
+		out << def.titleid << std::endl;
 		out << "\t" << DOC_SEARCH_TYPE_TITLE << " " << def.titlefeat << " 1" << std::endl;
 		std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
 		for (; ri != re; ++ri)
