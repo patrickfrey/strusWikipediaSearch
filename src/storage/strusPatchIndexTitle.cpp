@@ -197,7 +197,7 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 		}
 		fprintf( stderr, "\rupdated %u documents          ", doccnt);
 	}
-	std::cerr << std::endl;
+	fprintf( stderr, "updated %u documents\n", doccnt);
 	doccnt = 0;
 	std::cerr << "update title reference df's of storage " << data.storageConfig << std::endl;
 	std::map<std::string,strus::Index>::const_iterator di = data.dfmap.begin(), de = data.dfmap.end();
@@ -214,7 +214,7 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 		transaction->commit();
 		fprintf( stderr, "\rupdated %u df's             ", doccnt);
 	}
-	std::cerr << std::endl;
+	fprintf( stderr, "updated %u df's\n", doccnt);
 }
 
 static void printData( std::ostream& out, const PatchIndexData& data)
