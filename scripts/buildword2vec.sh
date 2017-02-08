@@ -90,7 +90,7 @@ strusCreateVectorStorage -S "$srcprefix"config/vsm.conf -f "$resprefix"vectors.b
 strusBuildVectorStorage -S "$srcprefix"config/vsm.conf
 
 
-# CALCULATE PAGERANK AND BUILD RULES FOR PATTERN MATCHING
+# CALCULATE PAGE WEIGHT AND BUILD RULES FOR PATTERN MATCHING
 pattern_forwardfeat_doc="$resprefix"pattern_forwardfeat_doc.txt
 pattern_searchfeat_doc="$resprefix"pattern_searchfeat_doc.txt
 pattern_searchfeat_qry="$resprefix"pattern_searchfeat_qry.txt
@@ -105,7 +105,7 @@ $scriptdir/strusnlp.py seldict $pattern_vocabulary 1000000 | grep -v '_' > $patt
 $scriptdir/strusnlp.py seldict $pattern_vocabulary 500000 > $pattern_stopwords_doc
 
 echo "" > "$resprefix"redirects_empty.txt
-strusPageRank -i 100 -g -n 100 -r "$resprefix"redirects.txt "$resprefix"links.all.txt > "$resprefix"pagerank.txt
+strusPageWeight -i 100 -g -n 100 -r "$resprefix"redirects.txt "$resprefix"links.all.txt > "$resprefix"pagerank.txt
 
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords_doc > $pattern_searchfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc

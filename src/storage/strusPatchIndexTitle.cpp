@@ -11,6 +11,8 @@
 #include "strus/lib/storage_objbuild.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/storageClientInterface.hpp"
+#include "strus/storageDocumentUpdateInterface.hpp"
+#include "strus/storageTransactionInterface.hpp"
 #include "strus/attributeReaderInterface.hpp"
 #include "strus/documentTermIteratorInterface.hpp"
 #include "strus/moduleLoaderInterface.hpp"
@@ -19,11 +21,13 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <set>
 #include <iostream>
 #include <stdexcept>
 #include <cstring>
 #include <cstdio>
 #include <memory>
+#include <cstdlib>
 
 #undef STRUS_LOWLEVEL_DEBUG
 
@@ -58,19 +62,28 @@ struct TitleReference
 
 struct DocumentDef
 {
+	strus::Index docno;
 	std::string titlefeat;
 	std::vector<TitleReference> reflist;
 
-	DocumentDef( const std::string& titlefeat_, const std::vector<TitleReference>& reflist_)
-		:titlefeat(titlefeat_),reflist(reflist_){}
+	DocumentDef( const strus::Index& docno_, const std::string& titlefeat_, const std::vector<TitleReference>& reflist_)
+		:docno(docno_),titlefeat(titlefeat_),reflist(reflist_){}
 	DocumentDef( const DocumentDef& o)
-		:titlefeat(o.titlefeat),reflist(o.reflist){}
+		:docno(o.docno),titlefeat(o.titlefeat),reflist(o.reflist){}
 };
 
 struct PatchIndexData
 {
 	TitleDocidxMap titleDocidxMap;
 	std::vector<DocumentDef> documentar;
+	std::map<std::string,strus::Index> dfmap;
+
+	PatchIndexData()
+		:titleDocidxMap(),documentar(),dfmap(){}
+	PatchIndexData( const TitleDocidxMap& titleDocidxMap_, const std::vector<DocumentDef>& documentar_, const std::map<std::string,strus::Index>& dfmap_)
+		:titleDocidxMap(titleDocidxMap_),documentar(documentar_),dfmap(dfmap_){}
+	PatchIndexData( const PatchIndexData& o)
+		:titleDocidxMap(o.titleDocidxMap),documentar(o.documentar),dfmap(o.dfmap){}
 };
 
 static void buildData( PatchIndexData& data, strus::StorageClientInterface* storage)
@@ -123,13 +136,59 @@ static void buildData( PatchIndexData& data, strus::StorageClientInterface* stor
 			}
 			else
 			{
-				reflist.push_back( TitleReference( forward_titleref_itr->fetch(), titleref_pos));
+				// ... we select only the title references that align with a linkid reference in the forward index
+				std::set<std::string> occurrencies;
+				std::string featname( forward_titleref_itr->fetch());
+				occurrencies.insert( featname);
+				reflist.push_back( TitleReference( featname, titleref_pos));
 				titleref_pos = forward_titleref_itr->skipPos( titleref_pos+1);
 				linkid_pos  = forward_linkid_itr->skipPos( linkid_pos+1);
+
+				std::set<std::string>::const_iterator oi = occurrencies.begin(), oe = occurrencies.end();
+				for (; oi != oe; ++oi)
+				{
+					data.dfmap[ *oi] += 1;
+				}
 			}
 		}
 		data.titleDocidxMap[ titleid] = data.documentar.size();
-		data.documentar.push_back( DocumentDef( titlefeat, reflist));
+		data.documentar.push_back( DocumentDef( docno, titlefeat, reflist));
+	}
+}
+
+static void rewriteIndex( strus::StorageClientInterface* storage, const PatchIndexData& data, unsigned int transactionSize)
+{
+	TitleDocidxMap::const_iterator ti = data.titleDocidxMap.begin(), te = data.titleDocidxMap.end();
+	while (ti != te)
+	{
+		std::auto_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
+		unsigned int ci = 0, ce = transactionSize;
+		for (; ti != te && ci < ce; ++ti,++ci)
+		{
+			const DocumentDef& def = data.documentar[ ti->second];
+			std::auto_ptr<strus::StorageDocumentUpdateInterface> document(
+					transaction->createDocumentUpdate( def.docno));
+			document->addSearchIndexTerm( DOC_SEARCH_TYPE_TITLE, def.titlefeat, 1);
+			std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
+			for (; ri != re; ++ri)
+			{
+				document->addForwardIndexTerm( DOC_FORWARD_TYPE_TITLEREF, ri->featname, ri->pos);
+			}
+			document->done();
+		}
+		transaction->commit();
+	}
+	std::map<std::string,strus::Index>::const_iterator di = data.dfmap.begin(), de = data.dfmap.end();
+	while (di != de)
+	{
+		std::auto_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
+		unsigned int ci = 0, ce = transactionSize;
+		for (; di != de && ci < ce; ++di,++ci)
+		{
+			strus::Index old_df = storage->documentFrequency( DOC_FORWARD_TYPE_TITLEREF, di->first);
+			transaction->updateDocumentFrequency( DOC_FORWARD_TYPE_TITLEREF, di->first, di->second - old_df);
+		}
+		transaction->commit();
 	}
 }
 
@@ -146,6 +205,11 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 		{
 			out << "\t" << DOC_FORWARD_TYPE_TITLEREF << " " << ri->featname << " " << ri->pos << std::endl;
 		}
+	}
+	std::map<std::string,strus::Index>::const_iterator di = data.dfmap.begin(), de = data.dfmap.end();
+	for (; di != de; ++di)
+	{
+		out << "# " << DOC_FORWARD_TYPE_TITLEREF << " " << di->first << " " << di->second << std::endl;
 	}
 }
 
@@ -168,6 +232,7 @@ int main( int argc, const char** argv)
 			return 0;
 		}
 		int argi = 1;
+		unsigned int transactionSize = 50000;
 		std::vector<std::string> storageconfigs;
 		bool doPrintOnly = false;
 
@@ -182,10 +247,16 @@ int main( int argc, const char** argv)
 			{
 				doPrintOnly = true;
 			}
+			else if (std::strcmp( argv[ argi], "-c") == 0 || std::strcmp( argv[ argi], "--commit") == 0)
+			{
+				if (argi == argc || argv[ argi][0] == '-') throw std::runtime_error("argument (commit size) expected for option -c");
+				transactionSize = atoi( argv[ argi]);
+				if (!transactionSize) throw std::runtime_error("positive number expected as argument for option -c");
+			}
 			else if (std::strcmp( argv[ argi], "-s") == 0 || std::strcmp( argv[ argi], "--storage") == 0)
 			{
 				++argi;
-				if (argi == argc) throw std::runtime_error("argument (storage configuration string) expected for option -s");
+				if (argi == argc || argv[ argi][0] == '-') throw std::runtime_error("argument (storage configuration string) expected for option -s");
 				storageconfigs.push_back( argv[ argi]);
 			}
 			else if (std::strcmp( argv[ argi], "-") == 0)
@@ -222,7 +293,6 @@ int main( int argc, const char** argv)
 		storageBuilder.reset( moduleLoader->createStorageObjectBuilder());
 		if (!storageBuilder.get()) throw std::runtime_error( "failed to create storage object builder");
 
-		PatchIndexData procdata;
 		std::vector<std::string>::const_iterator ci = storageconfigs.begin(), ce = storageconfigs.end();
 		for (; ci != ce; ++ci)
 		{
@@ -230,11 +300,16 @@ int main( int argc, const char** argv)
 				storage( strus::createStorageClient( storageBuilder.get(), errorBuffer.get(), *ci));
 			if (!storage.get()) throw std::runtime_error( "failed to create storage client");
 
+			PatchIndexData procdata;
 			buildData( procdata, storage.get());
-		}
-		if (doPrintOnly)
-		{
-			printData( std::cout, procdata);
+			if (doPrintOnly)
+			{
+				printData( std::cout, procdata);
+			}
+			else
+			{
+				rewriteIndex( storage.get(), procdata, transactionSize);
+			}
 		}
 		std::cerr << "done" << std::endl;
 		return 0;
