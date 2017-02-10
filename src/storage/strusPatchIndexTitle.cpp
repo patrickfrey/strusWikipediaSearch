@@ -189,7 +189,10 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 			const DocumentDef& def = *ti;
 			std::auto_ptr<strus::StorageDocumentUpdateInterface> document(
 					transaction->createDocumentUpdate( def.docno));
-			document->addSearchIndexTerm( DOC_SEARCH_TYPE_TITLE, def.titlefeat, 1);
+			if (!def.titlefeat.empty())
+			{
+				document->addSearchIndexTerm( DOC_SEARCH_TYPE_TITLE, def.titlefeat, 1);
+			}
 			std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
 			for (; ri != re; ++ri)
 			{
@@ -231,7 +234,10 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 	{
 		const DocumentDef& def = *ti;
 		out << def.titleid << std::endl;
-		out << "\t" << DOC_SEARCH_TYPE_TITLE << " '" << def.titlefeat << "' 1" << std::endl;
+		if (!def.titlefeat.empty())
+		{
+			out << "\t" << DOC_SEARCH_TYPE_TITLE << " '" << def.titlefeat << "' 1" << std::endl;
+		}
 		std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
 		for (; ri != re; ++ri)
 		{
