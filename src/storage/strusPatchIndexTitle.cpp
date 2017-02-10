@@ -231,11 +231,11 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 	{
 		const DocumentDef& def = *ti;
 		out << def.titleid << std::endl;
-		out << "\t" << DOC_SEARCH_TYPE_TITLE << " " << def.titlefeat << " 1" << std::endl;
+		out << "\t" << DOC_SEARCH_TYPE_TITLE << " '" << def.titlefeat << "' 1" << std::endl;
 		std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
 		for (; ri != re; ++ri)
 		{
-			out << "\t" << DOC_FORWARD_TYPE_TITLEREF << " " << ri->featname << " " << ri->pos << std::endl;
+			out << "\t" << DOC_FORWARD_TYPE_TITLEREF << " '" << ri->featname << "' " << ri->pos << std::endl;
 		}
 	}
 	std::map<std::string,strus::Index>::const_iterator di = data.dfmap.begin(), de = data.dfmap.end();
