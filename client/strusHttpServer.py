@@ -69,7 +69,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         for link in links:
             statquery.append('T')
             statquery += strusMessage.packString( linktype)
-            statquery += strusMessage.packString( link)
+            statquery += strusMessage.packString( link.title)
         statquery.append('N')
         return statquery
 
