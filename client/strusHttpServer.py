@@ -94,14 +94,8 @@ class QueryHandler( tornado.web.RequestHandler ):
             while (statsofs < statslen):
                 (statsval,) = struct.unpack_from( ">q", statreply, statsofs)
                 statsofs += struct.calcsize( ">q")
-                if len(dflist) < len(terms):
-                    dflist.append( statsval)
-                elif len(dflist) == len(terms):
-                    collsize = statsval
-                else:
-                    break
-            if statsofs != statslen:
-                raise Exception("result does not match query")
+                dflist.append( statsval)
+            collsize = dflist.pop()
             rt = (dflist, collsize, None)
             conn.close()
         except Exception as e:
@@ -450,7 +444,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             # Evaluate query:
             start_time = time.time()
             # Analyze query:
-            querystruct = yield self.analyzeQuery( scheme, querystr, 20)
+            querystruct = yield self.analyzeQuery( scheme, querystr, 30)
             errors = querystruct.errors
             relatedterms = None
             nblinks = None
