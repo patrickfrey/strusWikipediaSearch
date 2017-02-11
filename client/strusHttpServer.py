@@ -14,6 +14,7 @@ import signal
 import strus
 import strusMessage
 import time
+import math
 import unidecode
 import pprint
 import urllib
@@ -48,21 +49,35 @@ QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','wei
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
 QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedterms','errors'])
 
+def LinkRowKey( linkrow):
+    return linkrow.weight
 
 # [1] HTTP handlers:
 # Answer a query (issue a query to all storage servers and merge it to one result):
 class QueryHandler( tornado.web.RequestHandler ):
+    def termStatQuery( self, terms):
+        statquery = bytearray("Q")
+        for term in terms:
+            statquery.append('T')
+            statquery += strusMessage.packString( term.type)
+            statquery += strusMessage.packString( term.value)
+        statquery.append('N')
+        return statquery
+
+    def linkStatQuery( self, linktype, links):
+        statquery = bytearray("Q")
+        for link in links:
+            statquery.append('T')
+            statquery += strusMessage.packString( linktype)
+            statquery += strusMessage.packString( link)
+        statquery.append('N')
+        return statquery
+
     @tornado.gen.coroutine
-    def queryStats( self, terms):
+    def queryStatserver( self, startquery):
         rt = ([],0,None)
         conn = None
         try:
-            statquery = bytearray("Q")
-            for term in terms:
-                statquery.append('T')
-                statquery += strusMessage.packString( term.type)
-                statquery += strusMessage.packString( term.value)
-            statquery.append('N')
             ri = statserver.rindex(':')
             host,port = statserver[:ri],int( statserver[ri+1:])
             conn = yield msgclient.connect( host, port)
@@ -388,7 +403,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 rt = [[],[]]
             else:
                 # Get the global statistics:
-                dflist,collectionsize,error = yield self.queryStats( terms)
+                dflist,collectionsize,error = yield self.queryStatserver( self.termStatQuery( terms))
                 if not error is None:
                     raise Exception( error)
                 # Assemble the query:
@@ -446,17 +461,24 @@ class QueryHandler( tornado.web.RequestHandler ):
                 result = [self.getLinkQueryResults( selectresult[0], 'links', firstrank, nofranks+1), errors]
             elif scheme == "STD":
                 noflinks = 20
-                nofnblinks = 12
+                nofnblinks = 15
                 selectresult = yield self.evaluateQuery( "STDLNK", querystruct, 0, 120, 0)
                 errors += selectresult[1]
-                links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks)
+                links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks * 4 + 10)
                 nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofnblinks)
                 if len(links) >= 1:
-                    weightnorm = links[0].weight;
-                    maplinks = [ LinkRow(links[0].title,1.0) ]
-                    for link in links[1:]:
-                        maplinks.append( LinkRow( link.title, link.weight / weightnorm))
-                    links = maplinks
+                    dflist,collectionsize,error = yield self.queryStatserver( self.linkStatQuery( "veclfeat", links))
+                    if not error is None:
+                        errors.append( error)
+                    else:
+                        weightnorm = links[0].weight;
+                        for link,df in zip( links, dflist):
+                            idf = math.log( collectionsize / (df + 1))
+                            maplinks.append( LinkRow( link.title, idf * (link.weight / weightnorm)))
+                        if len(maplinks) > noflinks:
+                            links = sorted( maplinks, key=LinkRowKey)[0:noflinks]
+                        else:
+                            links = sorted( maplinks, key=LinkRowKey)
                 relatedterms = querystruct.relatedterms
                 querystruct = QueryStruct( querystruct.terms, links, [], errors)
                 qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
