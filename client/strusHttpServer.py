@@ -465,6 +465,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     if not error is None:
                         errors.append( error)
                     else:
+                        maplinks = []
                         weightnorm = links[0].weight;
                         for link,df in zip( links, dflist):
                             idf = math.log( collectionsize / (df + 1))
