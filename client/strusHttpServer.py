@@ -74,7 +74,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         return statquery
 
     @tornado.gen.coroutine
-    def queryStatserver( self, startquery):
+    def queryStatserver( self, statquery):
         rt = ([],0,None)
         conn = None
         try:
