@@ -458,22 +458,14 @@ class QueryHandler( tornado.web.RequestHandler ):
                 nofnblinks = 15
                 selectresult = yield self.evaluateQuery( "STDLNK", querystruct, 0, 120, 0)
                 errors += selectresult[1]
-                links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks * 4 + 10)
+                links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks)
                 nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofnblinks)
                 if len(links) >= 1:
-                    dflist,collectionsize,error = yield self.queryStatserver( self.linkStatQuery( "veclfeat", links))
-                    if not error is None:
-                        errors.append( error)
-                    else:
-                        maplinks = []
-                        weightnorm = links[0].weight;
-                        for link,df in zip( links, dflist):
-                            idf = math.log( collectionsize / (df + 1))
-                            maplinks.append( LinkRow( link.title, idf * (link.weight / weightnorm)))
-                        if len(maplinks) > noflinks:
-                            links = sorted( maplinks, key=LinkRowKey)[0:noflinks]
-                        else:
-                            links = sorted( maplinks, key=LinkRowKey)
+                    maplinks = []
+                    weightnorm = links[0].weight;
+                    for link in links:
+                        maplinks.append( LinkRow( link.title, link.weight / weightnorm))
+                    links = maplinks
                 relatedterms = querystruct.relatedterms
                 querystruct = QueryStruct( querystruct.terms, links, [], errors)
                 qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
