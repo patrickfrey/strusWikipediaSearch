@@ -25,7 +25,7 @@ class Backend:
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
             if scheme == "BM25std":
-                rt.addWeightingFunction( "constant", {".match": "lnkfeat" } )
+                rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" } )
                 rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
                 rt.addWeightingFormula( "d * (_2 / 10 + _1) + (1 - d) * _0", {"d": 0.4} )
 
@@ -70,12 +70,12 @@ class Backend:
             })
         elif scheme == "STDLNK":
             rt.addSummarizer( "accunear", {
-                  "cofactor": 1.2, "type": "linkid", "range": 30, "cardinality": "75%",
+                  "cofactor": 2.5, "type": "linkid", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"TITLE",
                   ".match": "docfeat"
             })
             rt.addSummarizer( "accunear", {
-                  "cofactor": 1.2, "type": "veclfeat", "range": 30, "cardinality": "75%",
+                  "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
             })
