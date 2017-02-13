@@ -27,7 +27,7 @@ class Backend:
             if scheme == "BM25std":
                 rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" } )
                 rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
-                rt.addWeightingFormula( "d * (_2 / 10 + _1) + (1 - d) * _0", {"d": 0.4} )
+                rt.addWeightingFormula( "d * (_2 / 50 + _1) + (1 - d) * _0", {"d": 0.4} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
