@@ -462,13 +462,13 @@ class QueryHandler( tornado.web.RequestHandler ):
                 nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofnblinks)
                 if len(links) >= 1:
                     maplinks = []
-                    weightnorm = links[0].weight;
+                    weightnorm = math.log( links[0].weight);
                     for link in links:
-                        maplinks.append( LinkRow( link.title, link.weight / weightnorm))
+                        maplinks.append( LinkRow( link.title, math.log( link.weight) / weightnorm))
                     links = maplinks
                 relatedterms = querystruct.relatedterms
                 querystruct = QueryStruct( querystruct.terms, links, [], errors)
-                qryresult = yield self.evaluateQuery( "BM25pff", querystruct, firstrank, nofranks+1, restrictdn)
+                qryresult = yield self.evaluateQuery( "BM25std", querystruct, firstrank, nofranks+1, restrictdn)
                 errors += qryresult[1]
                 result = [qryresult[0],errors]
             else:

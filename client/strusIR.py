@@ -15,7 +15,7 @@ class Backend:
         rt.addSelectionFeature( "selfeat")
 
         # Query evaluation scheme:
-        if scheme == "BM25pff":
+        if scheme == "BM25pff" or scheme == "BM25std":
             rt.addWeightingFunction( "BM25pff", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
@@ -24,9 +24,10 @@ class Backend:
                      "proxffbias": 0.3, "proxfftie": 30, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
             })
-            rt.addWeightingFunction( "constant", {".match": "lnkfeat" } )
-            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
-            rt.addWeightingFormula( "d * _0 * (_2 / 10 + _1) + (1 - d) * _0", {"d": 0.5} )
+            if scheme == "BM25std":
+                rt.addWeightingFunction( "constant", {".match": "lnkfeat" } )
+                rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+                rt.addWeightingFormula( "d * (_2 / 10 + _1) + (1 - d) * _0", {"d": 0.4} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
@@ -78,11 +79,11 @@ class Backend:
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
             })
-            rt.addSummarizer( "accunear", {
-                  "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
-                  "nofranks":20, "result":"VECTOR",
-                  ".match": "docfeat"
-            })
+            # rt.addSummarizer( "accunear", {
+            #      "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
+            #      "nofranks":20, "result":"VECTOR",
+            #      ".match": "docfeat"
+            # })
         else:
             # Summarizer for getting the document title:
             rt.addSummarizer( "attribute", { "name": "docid" })
@@ -101,7 +102,7 @@ class Backend:
         self.context = strus.Context()
         self.storage = self.context.createStorageClient( config )
         self.queryeval = {}
-        for scheme in [ "BM25", "BM25pg", "BM25pff", "NBLNK", "TILNK", "VCLNK", "STDLNK" ]:
+        for scheme in [ "BM25", "BM25pg", "BM25pff", "BM25std", "NBLNK", "TILNK", "VCLNK", "STDLNK" ]:
             self.queryeval[ scheme] = self.createQueryEval( scheme)
 
     # Get pairs (a,b) of a and b in [0..N-1] with a < b:
