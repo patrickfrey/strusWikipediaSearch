@@ -51,19 +51,19 @@ class Backend:
 
         if scheme == "NBLNK":
             rt.addSummarizer( "accunear", {
-                  "cofactor": 1.2, "type": "linkid", "range": 30, "cardinality": "75%",
+                  "cofactor": 2.5, "type": "linkid", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
             })
         elif scheme == "TILNK":
             rt.addSummarizer( "accunear", {
-                  "cofactor": 1.2, "type": "veclfeat", "range": 30, "cardinality": "75%",
+                  "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
             })
         elif scheme == "VCLNK":
             rt.addSummarizer( "accunear", {
-                  "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
+                  "cofactor": 2.5, "type": "vecfname", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
             })
