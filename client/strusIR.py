@@ -26,8 +26,7 @@ class Backend:
             })
             if scheme == "BM25std":
                 rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" } )
-                rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
-                rt.addWeightingFormula( "d * (_2 / 50 + _1) + (1 - d) * _0", {"d": 0.4} )
+                rt.addWeightingFormula( "d * _1 + (1 - d) * _0", {"d": 0.4} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
@@ -150,7 +149,7 @@ class Backend:
 
         for term in terms:
             if term.cover:
-                query.defineFeature( "docfeat", [term.type, term.value], term.weight)
+                query.defineFeature( "docfeat", [term.type, term.value, term.length], term.weight)
                 if term.df > 0.0:
                     query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 

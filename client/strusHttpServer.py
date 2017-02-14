@@ -413,7 +413,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry += bytearray( b"T")
                     qry += strusMessage.packString( terms[ii].type)
                     qry += strusMessage.packString( terms[ii].value)
-                    qry += struct.pack( ">qd?", dflist[ii], 1.0, terms[ii].cover)
+                    qry += struct.pack( ">Hqd?", terms[ii].length, dflist[ii], 1.0, terms[ii].cover)
                 for lnk in querystruct.links:
                     qry += bytearray( b"L")
                     qry += strusMessage.packString( "vectfeat")

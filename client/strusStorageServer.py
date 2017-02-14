@@ -67,7 +67,7 @@ def processCommand( message):
         messageofs = 1
         if message[0] == 'Q':
             # QUERY:
-            Term = collections.namedtuple('Term', ['type', 'value', 'df', 'weight', 'cover'])
+            Term = collections.namedtuple('Term', ['type', 'value', 'length', 'df', 'weight', 'cover'])
             nofranks = 20
             restrictdn = 0
             collectionsize = 0
@@ -95,9 +95,9 @@ def processCommand( message):
                 elif (message[ messageofs] == 'T'):
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
-                    (df,weight,cover) = struct.unpack_from( ">qd?", message, messageofs)
-                    messageofs += struct.calcsize( ">qd?")
-                    terms.append( Term( type, value, df, weight, cover))
+                    (length,df,weight,cover) = struct.unpack_from( ">Hqd?", message, messageofs)
+                    messageofs += struct.calcsize( ">Hqd?")
+                    terms.append( Term( type, value, length, df, weight, cover))
                 elif (message[ messageofs] == 'L'):
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
