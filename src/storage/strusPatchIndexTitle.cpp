@@ -189,11 +189,19 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 			const DocumentDef& def = *ti;
 			std::auto_ptr<strus::StorageDocumentUpdateInterface> document(
 					transaction->createDocumentUpdate( def.docno));
-			if (!def.titlefeat.empty())
+			if (def.titlefeat.empty())
+			{
+				document->clearSearchIndexTerm( DOC_SEARCH_TYPE_TITLE);
+			}
+			else
 			{
 				document->addSearchIndexTerm( DOC_SEARCH_TYPE_TITLE, def.titlefeat, 1);
 			}
 			std::vector<TitleReference>::const_iterator ri = def.reflist.begin(), re = def.reflist.end();
+			if (ri == re)
+			{
+				document->clearForwardIndexTerm( DOC_FORWARD_TYPE_TITLEREF);
+			}
 			for (; ri != re; ++ri)
 			{
 				document->addForwardIndexTerm( DOC_FORWARD_TYPE_TITLEREF, ri->featname, ri->pos);

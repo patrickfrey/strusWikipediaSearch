@@ -162,8 +162,7 @@ class Backend:
             query.defineFeature( "selfeat", selexpr2, 1.0 )
 
         query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
-        query.addMetaDataRestrictionCondition( "==", "redirect", 0, True);
-
+        query.addMetaDataRestrictionCondition( "==", "redirect", 0, True)
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
     def evaluateQuery( self, scheme, seltitle, terms, links, collectionsize, firstrank, nofranks, restrictset, debugtrace):
