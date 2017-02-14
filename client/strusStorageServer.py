@@ -103,7 +103,7 @@ def processCommand( message):
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     (weight,) = struct.unpack_from( ">d", message, messageofs)
                     messageofs += struct.calcsize( ">d")
-                    links.append( Term( type, value, 0, weight, False))
+                    links.append( Term( type, value, 1, 0, weight, False))
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
