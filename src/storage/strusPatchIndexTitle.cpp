@@ -261,14 +261,14 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 
 int main( int argc, const char** argv)
 {
+	std::auto_ptr<strus::ErrorBufferInterface> errorBuffer( strus::createErrorBuffer_standard( 0, 2));
+	if (!errorBuffer.get())
+	{
+		std::cerr << "failed to create error buffer" << std::endl;
+		return -1;
+	}
 	try
 	{
-		std::auto_ptr<strus::ErrorBufferInterface> errorBuffer( strus::createErrorBuffer_standard( 0, 2));
-		if (!errorBuffer.get())
-		{
-			std::cerr << "failed to create error buffer" << std::endl;
-			return -1;
-		}
 		g_errorhnd = errorBuffer.get();
 
 		if (argc <= 1)
