@@ -52,6 +52,12 @@ assignPageweights()
   strusUpdateStorage -s "`storageConfig $storageid`" -x titid -m pageweight "$resprefix"pagerank.txt
 }
 
+patchTitleFeatures()
+{
+  storageid=$1
+  strusWikipediaDemoPatchIndexTitle -s "`storageConfig $storageid`"
+}
+
 #
 # BUILDING THE COLLECTION
 #
@@ -92,4 +98,10 @@ assignPageweights 1
 assignPageweights 2
 assignPageweights 3
 assignPageweights 4
+
+patchTitleFeatures 1
+patchTitleFeatures 2
+patchTitleFeatures 3
+patchTitleFeatures 4
+
 
