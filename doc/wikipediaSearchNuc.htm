@@ -14,33 +14,12 @@
 <script type="text/javascript">
 </script><div id="wrap">
 	<div id="content">
-		<p><font color=red size=20><b>THIS DOCUMENT IS OUTDATED !</b></font></p>
 		<h1>Wikipedia search on a NUC with Strus</h1>
-		<p class="description">Modern machines got damn powerful. We can show you how
-		to run a fulltext search engine on the complete Wikipedia collection English
-		(without citations, but with contents of tables) with 
-		sophisticated retrieval schemes on an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
-		(<i>NUC6i3SYK</i>) using <a href="index.htm">Strus</a>.
-		"Running" means that reacting on problems in the project is within your reach,
-		because it is possible to rebuild the search index within one working day:
-		<ul>
-		<li>using one machine: less than 8 hours = less than 1 hour upacking and conversion to XML, 6:45 for building the document search index
-		</li>
-		<li>using three machines: 3 1/2 hours = less than 1 hour unpacking and conversion, 2:15 for building the document search index and some minutes for copying the data.
-		</li>
-		</ul>
+		<p class="description">We run a fulltext search engine on the complete Wikipedia 
+		collection English (without citations, but with contents of tables) as demo project.
+		The machine we use is an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
+		(<i>NUC6i3SYK</i> with 32GB Ram and a 256GB SSD (<a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Here is a picture of the maschine</a>).
 		</p>
-		<p class="description">
-		It also means serving queries with response times expected nowadays from a search engine.
-		You find some numbers about the query performance of this Wikipedia demo system
-		<a href="wikipediaSearchQueryBenchmark.htm">here</a>.
-		</p>
-		<p class="description">But may I first introduce the machine?
-		<br/>It is an <a href="http://www.intel.com/content/www/us/en/nuc/overview.html">Intel NUC</a>
-		(<i>NUC6i3SYK with 16GB Ram and a 256GB SSD</i>):
-		</p>
-		<img src="images/NUC_6i3SYK_lores2.jpg" width="560" alt="Intel NUC (NUC6i3SYK with 16GB Ram and a 256GB SSD)" /></a>
-
 		<h2>Why using a NUC for a demo system ?</h2
 		<p class="description">
 		With new generation SSDs, non-volatile memory units are grouped closer to the CPU cores of 
@@ -48,266 +27,28 @@
 		one node of it. Because of the scalability of <i>Strus</i> we can now make some predictions
 		about how <i>Strus</i> will perform on real servers.
 		</p>
-
-		<h2>Installing the software</h2
+		<h1>Installation</h1>
 		<p class="description">
-		<ol>
-			<li>Install an Ubuntu 14.04 as OS on our NUC. You may chose another distribution.
-			See the <a href="installation.htm#packages">Strus package list</a> for that.
-			</li>
-			<li>Install developper software needed for the Wikipedia project
-			(python and some perl - perl is needed in a helper script
-			for calculating the document weights):
-			<input class="toggle-box" id="pkginst" type="checkbox" >
-			<label for="pkginst">Shell commands (Ubuntu + Aptitude)</label>
-			<pre>
-apt-get install git-core
-apt-get install cmake
-apt-get install libboost-dev
-apt-get install libboost-thread-dev
-apt-get install libboost-python1.54.0
-apt-get install gcc
-apt-get install g++
-apt-get install python
-apt-get install python-tornado
-apt-get install python-pip
-pip install unidecode
-apt-get install libtext-unidecode-perl
-
-wget https://pypi.python.org/packages/source/t/tornado/tornado-4.3.tar.gz#md5=d13a99dc0b60ba69f5f8ec1235e5b232
-tar xvzf tornado-4.3.tar.gz
-cd tornado-4.3
-python setup.py build
-python setup.py install
-			</pre>
-			</li>
-
-			<li>Install the Strus packages for development on it:
-			<input class="toggle-box" id="struspkginst" type="checkbox" >
-			<label for="struspkginst">Shell commands for installing the Strus packages</label>
-			<pre>
-apt-get update
-wget http://download.opensuse.org/repositories/home:PatrickFrey/xUbuntu_14.04/Release.key
-sudo apt-key add - < Release.key
-apt-get update
-apt-get upgrade
-apt-get install strus strus-dev
-apt-get install strusanalyzer strusanalyzer-dev
-apt-get install strusmodule strusmodule-dev
-apt-get install strusrpc strusrpc-dev
-apt-get install strusutilities strusutilities-dev
-apt-get install strusbindings-python
-			</pre>
-			</li>
-
-			<li>Clone the Wikipedia github project and build it:
-			<input class="toggle-box" id="wpinst" type="checkbox" >
-			<label for="wpinst">Shell commands for building the Wikipedia search project</label>
-			<pre>
-git clone git@github.com:patrickfrey/strusWikipediaSearch.git
-cd strusWikipediaSearch
-cmake -DLIB_INSTALL_DIR=lib/x86_64-linux-gnu/ -DCMAKE_INSTALL_PREFIX=/usr/
-make
-make install
-			</pre>
-			</li>
-		</ol>
+		The scripts buildword2vec.sh and buildstorages.sh is the scripts directory of the strusWikipediaSearch
+		project are needed for building the wikipedia storage for retrieval. They have to be adapted
+		for your use. We suggest to use a stronger machine than a NUC for building the data
+		and the storages. On an Intel NUC the whole process of building the data and the storages will
+		last for about roughly 10 days (4 days NLP + 4 days insert + 2 days Word2vec and some other helpers).
+		This is substantially longer than 5 1/2 hours in a previous version.
 		</p>
-		<h2>Build the search index</h2>
-		<ol>
-		<li>Download a wikipedia chunk, split and convert it to XML chunks.
-		We compress the XML chunk for not wasting disk space we will eventually need, when
-		building indexes for other languages than English.
-		<input class="toggle-box" id="datadownload" type="checkbox" >
-		<label for="datadownload">Shell commands for download (<b>scripts/download.sh</b>)</label>
-		<pre>
-mkdir -p data
-wget -q -O - http://dumps.wikimedia.your.org/enwiki/20160204/enwiki-20160204-pages-articles.xml.bz2 \
-| bzip2 -d -c \
-| strusWikimediaToXml -f "data/wikipedia%04u.xml,20M" -n0 -s -
-		</pre>
-		<input class="toggle-box" id="datapacking" type="checkbox" >
-		<label for="datapacking">Shell commands for packing the downloaded data (<b>scripts/packfiles.sh</b> to run in parallel with download.
-		The script is debatable and hacky. Maybe you have a better solution.)</label>
-		<pre>
-cd data
-for dd in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
-    fnam="wikipedia$dd"'99.xml'
-    while [ ! -f  "$fnam" ]
-        do echo waiting for $fnam
-        sleep 3
-    done
-    sleep 5 
-    tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
-done
-sleep 600
-for dd in 25; do
-    tar --remove-files -cvzf ./wikipedia$dd.tar.gz ./wikipedia$dd*.xml
-done
-cd ..
-		</pre>
-		<input class="toggle-box" id="datachunks" type="checkbox" >
-		<label for="datachunks">Content of the <i>data</i> directory after download and packing the data</label>
-		<pre>
-wikipedia00.tar.gz
-wikipedia01.tar.gz
-wikipedia02.tar.gz
-wikipedia03.tar.gz
-wikipedia04.tar.gz
-wikipedia05.tar.gz
-wikipedia06.tar.gz
-wikipedia07.tar.gz
-wikipedia08.tar.gz
-wikipedia09.tar.gz
-wikipedia10.tar.gz
-wikipedia11.tar.gz
-wikipedia12.tar.gz
-wikipedia13.tar.gz
-wikipedia14.tar.gz
-wikipedia15.tar.gz
-wikipedia16.tar.gz
-wikipedia17.tar.gz
-wikipedia18.tar.gz
-wikipedia19.tar.gz
-wikipedia20.tar.gz
-wikipedia21.tar.gz
-wikipedia22.tar.gz
-wikipedia23.tar.gz
-wikipedia24.tar.gz
-wikipedia25.tar.gz
-wikipedia26.tar.gz
-		</pre>
-		</li>
-		<li>We build the storages for 3 storage nodes and insert the dowloaded
-		and converted XML chunks. I measured a runtime of 5 hours and 12 minutes
-		for this on my NUC.
-		<input class="toggle-box" id="insertstorage" type="checkbox" >
-		<label for="insertstorage">Helper script <b>scripts/insert.sh</b></label>
-		<pre>
-#!/bin/sh
-
-mkdir -p tmp
-tar -C tmp/ -xvzf $1
-time strusInsert -L error_insert.log -s "path=storage;max_open_files=256;write_buffer_size=512K;block_size=4K" -R resources -m analyzer_wikipedia_search -f 1 -c 50000 -t 3 -x "xml" config/wikipedia.ana tmp/
-rm -Rf tmp/
-		</pre>
-		<input class="toggle-box" id="buildindex" type="checkbox" >
-		<label for="buildindex">Shell commands for building the document indices (<b>scripts/buildstorages.sh</b>)</label>
-		<pre>
-strusCreate -S config/storage.conf
-for dd in 00 03 06 09 12 15 18 21 24 ; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
-mv storage storage1
-strusCreate -S config/storage.conf
-for dd in 01 04 07 10 13 16 19 22 25; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
-mv storage storage2
-strusCreate -S config/storage.conf
-for dd in 02 05 08 11 14 17 20 23 26; do echo "-------- $dd"; scripts/insert.sh data/wikipedia$dd.tar.gz; done
-mv storage storage3
-		</pre>
-		</li>
-		<li>Watch the strusInsert program at work
-		<img src="images/top_insert.jpg" width="800" alt="strusInsert at work" /></a>
-		<p class="description"><i>The strusInsert program at work. The high CPU usage
-		has periodically some breaks in the commit phase.
-		For tuning the system to other hardware you have to change the settings in
-		scripts/insert.sh. Without the ideal settings the insert performace may degrade heavily.
-		With a growing index the CPU usage may also drop significantly in average.
-		But I must state here, that strus is able to deal with conventional disks.
-		I used a 32bit maschine with a SATA disk for a long time as demo to investigate
-		and improve the behaviour of Strus. It is by now playing fairly well with
-		decent settings. You just have to expect insertion times about 24 hours or 
-		even beyond on a setup with conventional hard disks.
-		</i></p>
-		</li>
-		<li>After insert we initialize the document weight in the metadata table,
-		calculated from the number of page references to that document.
-		We do not calculate a transitive page rank, but just use the number
-		of links pointing to that document. From this value we calculate a
-		pageweight between 0.0 and 1.0. We have a shell script prepared for that.
-		<input class="toggle-box" id="initmeta" type="checkbox" >
-		<label for="initmeta">Commands for calculating the <i>pageweight</i> (<b>scripts/initMetaData_3.sh</b>)</label>
-		<pre>
-#!/bin/sh
-
-# This script assumes that the meta data table schema has an element "pageweight Float32" defined
-
-STORAGEPATH=storage
-
-# Initialize the link popularity weight in document meta data (element pageweight):
-echo "[2.1] get the link reference statistics"
-truncate -s 0 resources/linkid_list.txt
-for ii in 1 2 3
-do
-	strusInspect -s "path=$STORAGEPATH$ii" fwstats linkid >> resources/linkid_list.txt
-	echo "[2.2] get the docno -> docid map"
-	strusInspect -s "path=$STORAGEPATH$ii" attribute docid | strusAnalyzePhrase -n "lc:text" -q '' - > resources/docid_list$ii.txt
-done
-for ii in 1 2 3
-do
-	echo "[2.3] calculate a map docno -> number of references to this page"
-	scripts/calcDocidRefs.pl resources/docid_list$ii.txt resources/linkid_list.txt > resources/docnoref_map$ii.txt
-	echo "[2.4] calculate a map docno -> link popularity weight"
-	scripts/calcWeights.pl resources/docnoref_map$ii.txt 'tanh(x/50)' > resources/pageweight_map$ii.txt
-	echo "[2.5] update the meta data table element pageweight with the link popularity weight"
-	strusUpdateStorage -s "path=$STORAGEPATH$ii" -m pageweight resources/pageweight_map$ii.txt
-done
-		</pre>
-		</li>
-		</ol>
-		<h2>Starting up the system</h2>
-		<p class="description">The setup of the system is similar to the one described in the code project article
-		<a href="http://www.codeproject.com/Articles/1066960/Distributing-a-search-engine-index-with-Strus">Distributing a search engine index with Strus</a>.
-		We have 3 storage servers (each one serving one storage built before) and one statistics server plus one web server.
-		For simplicity we start each of the different servers in a screen. You may know how to configure
-		them as a service on your system.
-		</p>
-		<ol>
-		<li><b>Statistics server</b>
-		<br/>The statistics server is holding the global statistics of the collection.
-		The statistic server holds the data that make query results from different storage nodes comparable
-		and thus a split of the search index according our needs possible.
-		<input class="toggle-box" id="statserver" type="checkbox" >
-		<label for="statserver">Shell command for starting up the statistics server in a screen</label>
-		<pre>
-screen -dmS statserver client/strusStatisticsServer.py
-		</pre>
-		</li>
-		<li><b>Storage servers</b>
-		<br/>Each storage server node serves queries on one storage index built.
-		<input class="toggle-box" id="storageserver" type="checkbox" >
-		<label for="storageserver">Shell command for starting up the storage servers in a screen</label>
-		<pre>
-for ii in 1 2 3
-do
-screen -dmS storageserver$ii client/strusStorageServer.py -i $ii -c "path=storage$ii; cache=2G" -p 719$ii -P
-done
-		</pre>
-		</li>
-		<li><b>Http server</b>
-		<br/>Our HTTP server based on <a href="http://www.tornadoweb.org/en/stable">Tornado</a>
-		answers the queries comming in as HTTP GET requests and returns the result as rendered HTML pages.
-		<input class="toggle-box" id="httpserver" type="checkbox" >
-		<label for="httpserver">Shell command for starting up the webserver in a screen</label>
-		<pre>
-screen -dmS httpserver client/strusHttpServer.py -p 80 7191 7192 7193
-		</pre>
-		</li>
-		<ol>
-		<h2>Searching</h2>
-		<img src="images/Query.jpg" height="480" alt="Query results" /></a>
-		<p class="description"><i>We got results, now we can start to improve our weighting scheme.</i></p>
-
-		<h2>More about the project</h2>
-		<p class="description">There exists a description of the formal aspects of this project like
-		the configuration and query evaluation schemes used. If you want to dig deeper, you'll
-		find some anchors <a href="./wikipediaSearch.htm">here</a>.
-		</p>
-
-		<h2>Online</h2>
-		<p class="description">You might not want to build up a Wikipedia search or another
-		search project on your own, but maybe you got curious. There is a NUC out there
-		running a <a href="http://demo.project-strus.net">Wikipedia search for you</a>.
-		I am currently hosting it from my flat, so service availability is best effort.
+		<h2>Steps</h2>
+		<p class="description">
+		For building the data for the wikipeadia search the following steps have to be done:
+		<ul>
+		<li>Collect all link relations of documents into a file. (script <i>buildword2vec.sh</i>)</li>
+		<li>Run NLP (with help of the NLTK package for python) and create the input for word2vec. (script <i>buildword2vec.sh</i>)</li>
+		<li>Run word2vec and insert the resulting vectors and the associated named entities into a storage and build all relations needed (grouping vectors into concept classes). (script <i>buildword2vec.sh</i>)</li>
+		<li>Calculate the page weights. (script <i>buildword2vec.sh</i>) Page  weights are used in the first pass query to find the most relevant documents for title link extraction.</li>
+		<li>Build rules for pattern matching to recognize multi-part named entities in the documents and the query. (script <i>buildword2vec.sh</i>)</li>
+		<li>Analyze and insert the documents. (script <i>buildstorages.sh</i>)</li>
+		<li>Assign weights to pages. (script <i>buildstorages.sh</i>)</li>
+		<li>Patch some structures in the storage. (script <i>buildstorages.sh</i>) This is a hack for removing unwanted features inserted. It will be subsituted with a proper solution in the future.</li>
+		</ul>
 		</p>
 	</div>
 </div>

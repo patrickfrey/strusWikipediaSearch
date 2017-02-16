@@ -86,7 +86,7 @@ cat "$resprefix"docs.word2vec.{00,01,02,03,04,05,06}.txt > "$resprefix"docs.word
 #
 "$w2wprefix"word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 4 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab "$resprefix"vocab.txt -cbow 0 -train "$resprefix"docs.word2vec.txt -output "$resprefix"vectors.bin
 
-strusCreateVectorStorage -S "$srcprefix"config/vsm.conf -f "$resprefix"vectors.bin
+strusCreateVectorStorage -P -S "$srcprefix"config/vsm.conf -f "$resprefix"vectors.bin
 strusBuildVectorStorage -S "$srcprefix"config/vsm.conf
 
 

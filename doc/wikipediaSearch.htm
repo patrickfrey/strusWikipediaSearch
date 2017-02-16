@@ -94,17 +94,19 @@ maxpos_title UInt8     (last position of the title)
 
 		<h2>The analyzer configuration</h2>
 		<p class="description">
-		The file config/wikipedia.ana is the configuration of the analyzer as required by
+		The files config/wikipedia.ana and config/wikipedia_concepts.ana are the configuration of the analyzer as required by
 		the program strusInsert. You can find the grammar of the analyzer
 		configuration language <a href="grammar_analyzerprg_doc.htm">here (analyzer configuration language)</a>.
 		</p>
 		<input class="toggle-box" id="analyzercfg" type="checkbox" >
-		<label for="analyzercfg">config/wikipedia.ana</label>
+		<label for="analyzercfg">Analyzer configuration</label>
 		<pre>
 [Attribute]
     docid = text content /mediawiki/page/title();
+    titid = lc:wordjoin("_") content /mediawiki/page/title();
     date = text content /mediawiki/page/revision/timestamp();
     contributor = text content /mediawiki/page/revision/contributor/username();
+    redirect = text content /mediawiki/page/redirect@title;
 
 [SearchIndex]
     start = empty content /mediawiki/page/revision/text;
@@ -180,13 +182,10 @@ maxpos_title UInt8     (last position of the title)
     sent = empty content /mediawiki/page/revision/text//li~;
     sent = empty content /mediawiki/page/revision/text//td~;
 
-    linkvar = empty content /mediawiki/page/revision/text//link[@type='page']@id;
-    catgvar = empty content /mediawiki/page/revision/text//link[@type='category']@id;
-    wwwvar = empty content /mediawiki/page/revision/text//wwwlink@id;
-
 [ForwardIndex]
-    linkid  = lc:text content /mediawiki/page/revision/text//link[@type='page']@id;
-    catgid  = lc:text content /mediawiki/page/revision/text//link[@type='category']@id;
+    tiword  = text content_europe_inv /mediawiki/page/title();
+    linkid  = text content /mediawiki/page/revision/text//link[@type='page']@id;
+    wwwlnk  = text content /mediawiki/page/revision/text//wwwlink@id;
 
     orig = text split /mediawiki/page/title();
     orig = text split /mediawiki/page/revision/text/h1();
@@ -237,44 +236,121 @@ maxpos_title UInt8     (last position of the title)
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
     orig = text content_europe_fwd /mediawiki/page/revision/text/table/tr/td/wwwlink();
 
-    wwwlnk = text content /mediawiki/page/revision/text//wwwlink@id;
-
 [Document]
     doc = /mediawiki/page;
 
+[Metadata]
+    redirect = const("1") content /mediawiki/page/redirect@title;
+
 [Aggregator]
-    minpos_title = minpos( tist);
-    maxpos_title = maxpos( tist);
+    title_start = minpos( tist);
+    title_end = nextpos( tist);
     doclen = count( stem);
+[PatternLexem]
+    titlexem = lc:text content_europe_inv  /mediawiki/page/title();
+    lnklexem = lc:text content_europe_inv  /mediawiki/page/title();
+    lnklexem = lc:text content_europe_inv  /mediawiki/page/revision/text//link[@type='page']@id;
+    lnklexem = lc:text content_europe_inv  /mediawiki/page/revision/text//link/link[@type='page']@id;
+
+    lexem = text word  /mediawiki/page/title();
+    lexem = text word  /mediawiki/page/revision/text();
+    lexem = text word  /mediawiki/page/revision/text/i();
+    lexem = text word  /mediawiki/page/revision/text/b();
+    lexem = text word  /mediawiki/page/revision/text/l1();
+    lexem = text word  /mediawiki/page/revision/text/l2();
+    lexem = text word  /mediawiki/page/revision/text/l3();
+    lexem = text word  /mediawiki/page/revision/text/l4();
+    lexem = text word  /mediawiki/page/revision/text/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/l1/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l1/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l1/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/l2/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l2/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l2/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/l3/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l3/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l3/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/l4/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l4/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/l4/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/ol/li();
+    lexem = text word  /mediawiki/page/revision/text/ol/li/i();
+    lexem = text word  /mediawiki/page/revision/text/ol/li/b();
+    lexem = text word  /mediawiki/page/revision/text/ol/li/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/ol/li/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/ol/li/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/ul/li();
+    lexem = text word  /mediawiki/page/revision/text/ul/li/i();
+    lexem = text word  /mediawiki/page/revision/text/ul/li/b();
+    lexem = text word  /mediawiki/page/revision/text/ul/li/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/ul/li/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/ul/li/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/table/tr/td();
+    lexem = text word  /mediawiki/page/revision/text/table/tr/td/i();
+    lexem = text word  /mediawiki/page/revision/text/table/tr/td/b();
+    lexem = text word  /mediawiki/page/revision/text/table/tr/td/link/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/table/tr/td/link[@type='page']();
+    lexem = text word  /mediawiki/page/revision/text/table/tr/td/wwwlink();
+    lexem = text word  /mediawiki/page/revision/text/h1();
+    lexem = text word  /mediawiki/page/revision/text/h2();
+    lexem = text word  /mediawiki/page/revision/text/h3();
+    lexem = text word  /mediawiki/page/revision/text/h4();
+    lexem = text word  /mediawiki/page/revision/text/h5();
+    lexem = text word  /mediawiki/page/revision/text/h6();
+
+    lexem = empty punctuation(en,".,:;?!()-") /mediawiki/page/revision/text();
+    lexem = empty content /mediawiki/page/revision/text/l1~;
+    lexem = empty content /mediawiki/page/revision/text/l2~;
+    lexem = empty content /mediawiki/page/revision/text/l3~;
+    lexem = empty content /mediawiki/page/revision/text/l4~;
+    lexem = empty content /mediawiki/page/revision/text/h1~;
+    lexem = empty content /mediawiki/page/revision/text/h2~;
+    lexem = empty content /mediawiki/page/revision/text/h3~;
+    lexem = empty content /mediawiki/page/revision/text/h4~;
+    lexem = empty content /mediawiki/page/revision/text/h5~;
+    lexem = empty content /mediawiki/page/revision/text/h6~;
+    lexem = empty content /mediawiki/page/revision/text//link[@type='file']~;
+    lexem = empty content /mediawiki/page/revision/text//link[@type='image']~;
+    lexem = empty content /mediawiki/page/revision/text//link[@type='category']~;
+    lexem = empty content /mediawiki/page/revision/text//li~;
+    lexem = empty content /mediawiki/page/revision/text//td~;
+
+[PatternMatch std]
+    vectfeat  = pattern_titlefeat_doc.txt;
+    veclfeat  = pattern_lnkfeat_doc.txt;
+    vecsfeat  = pattern_searchfeat_doc.txt;
+    vecfname  = pattern_forwardfeat_doc.txt;
+
+[SearchIndex]
+    vecsfeat <- vecsfeat;
+    vectfeat <- vectfeat;
+
+[ForwardIndex]
+    vecfname <- vecfname;
+    veclfeat <- veclfeat;
 		</pre>
 
-		<h2>Weighting schemas implemented</h2>
-		<p class="description"><b>BM25</b>: Classical BM25 with k1=1.2, b=0.75, avgdoclen=500
-		</p>
-		<p class="description"><b>BM25pff (BM25 with proximity)</b>: BM25 with some ff penalties for missing proximity requirements.
-		<br/>I know that implementing an retrieval scheme on my own like with BM25pff
-		is a shaky ground. There are a lot of attempts to combine BM25 with aspects of proximity.
-		I have read some of the papers. I would like to decide for a standard retrieval scheme of 
-		this kind that has more evidence to work than my rule of thumb scheme <i>BM25pff</i>.
-		Suggestions are welcome.
-		</p>
-		<p class="description"><b>NBLNK</b>: Extract links weighted according their appearance in sentences that contain configurations of query terms. 
-		The documents inspected are the best 100 documents of each storage node evaluated with BM25
-		on documents containing all query terms. The weighting of the links is done by accumulating 
-		weights of feature expressions build from pairs of query terms
-		(or one term in case of a single term query).
-		</p>
+		<h2>Weighting schema</h2>
 		<p class="description">
-		For both BM25 and BM25pff there is an extra weight added representing link popularity: w=tanh(n/50), 
-		where n is the number of links pointing to the page (df of references). 
-		All query evaluation schemes rank only documents that contain all query terms.
-		There is no spelling correction mechanism implemented.
-		</p>
-		<p class="description">
-		For any query that consists only of very high frequent words (so called stop words in IR),
-		a restriction is made on documents that contain a subset of the query term in the title.
-		This is done to avoid big scans on documents that raise query answering time by factors
-		compared with an ordinary query.
+		We provide 3 types of searches:
+		<ul>
+		<li>Nearest vector search: The wikipedia collection has been processed with word2vec.
+		We got about 10 million vectors assigned to named entities. The query evaluation
+		identifies the entities in the query, adds up their vectors to one vector
+		and searches for the closest vectors (cosine similarity) in the collection.
+		For the search we use brute force LSH with 2000 bits for each vector.
+		The named entities assigned to the closest vectors found are shown as first result.</li>
+		<li>Most popular links: The links that are close to matches are weighted and the
+		most popular links are shown in the second part of the result.</li>
+		<li>Ranklist: The query result is calculated as combination of 2 queries.
+		First we evaluate the most popular links like in (2). Then we do
+		a combination of a schema derived from BM25, additionaly taking into account the
+		proximity of features (we call it BM25pff), and the weighting of the links pointing
+		to document candidates.
+		</li>
+		</ul>
 		</p>
 </div>
 </body>
