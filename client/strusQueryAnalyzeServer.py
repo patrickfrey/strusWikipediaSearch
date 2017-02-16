@@ -60,8 +60,6 @@ def processCommand( message):
             raise tornado.gen.Return( b"Eempty request string")
         messageofs = 1
         if message[0] == 'Q':
-            # QUERY:
-            terms = []
             # Build query to evaluate from the request:
             messagesize = len(message)
             while (messageofs < messagesize):
@@ -113,9 +111,11 @@ def processCommand( message):
                             skippos = 0
                             curfeatidx = termidx
                 coverfeats.add( curfeatidx)
+            elif len(terms) == 1:
+                coverfeats.add( 0)
 
             # Calculate nearest neighbours of vectors exctracted:
-            if len( f_indices) > 0:
+            if f_indices:
                 vec = vecstorage.featureVector( f_indices[0])
                 if len( f_indices) > 1:
                     for nextidx in f_indices[1:]:
