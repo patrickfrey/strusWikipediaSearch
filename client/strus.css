@@ -97,17 +97,17 @@ h2 {
 
 #querydescr
 {
+	margin: 22px 10px;
+	display: table;
 	clear: left;
-	margin: 0px 115px;
-	font: normal 13px 'Open Sans', Arial, sans-serif;
+	font: italic 16px 'Open Sans', Arial, sans-serif;
+	color: #1f5426;
+	width: 700px;
 }
 #querydescrpara
 {
-	border-style: solid;
-	border-width: 1px;
+	margin: 22px 10px;
 	display: table;
-	list-style-type: none;
-	width: 92%;
 }
 
 #searchinfo

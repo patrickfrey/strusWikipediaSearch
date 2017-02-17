@@ -35,6 +35,7 @@
 <input id="submit_next" type="submit" value=">>" disabled/>
 </form>
 </div>
+</div>
 
 <div id="querydescr">
 <p id="querydescrpara">
@@ -45,16 +46,19 @@ The query evaluation recognizes multipart entities with patterns and treats them
 <p id="querydescrpara">
 The query evaluation result consists of 3 parts. The first part returns the entities with closest vector
 (cosine similarity) in the collection. The collection knows of about 10 million named entities with an
-associated vector calculated with <a href="https://en.wikipedia.org/wiki/Word2vec">word2vec</a>.<br/>
+associated vector calculated with <a href="https://en.wikipedia.org/wiki/Word2vec">word2vec</a>.
+</p>
+<p id="querydescrpara">
 The second part returns the most popular links near query entities. Of course the search does not scan the
-whole collection. It extracts the links from the top 120 documents matching a query.<br/>
+whole collection. It extracts the links from the top 120 documents matching a query.
+</p>
+<p id="querydescrpara">
 The third part is a ranklist calculated with BM25pff, a schema derived from BM25, taking proximity into
 account plus the link popularity depending on the query as calculated in part 2.
 </p>
 <p id="querydescrpara">
-Enjoy your experience with the deep search of <i>Strus</i>!
+Enjoy your experience with the deep search of <i>Strus</i> on Wikipedia!
 </p>
-</div>
 </div>
 </body>
 </html>
