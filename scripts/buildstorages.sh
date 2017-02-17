@@ -62,7 +62,7 @@ patchTitleFeatures()
 # BUILDING THE COLLECTION
 #
 createStorage 1
-threads=10
+threads=12
 unpackData 1 "00 03 06"
 buildStorage 1
 threads=6
@@ -70,7 +70,7 @@ unpackData 1 "09 12 15 20"
 buildStorage 1
 
 createStorage 2
-threads=10
+threads=12
 unpackData 2 "01 04 07"
 buildStorage 2
 threads=6
@@ -78,7 +78,7 @@ unpackData 2 "10 13 16 23"
 buildStorage 2
 
 createStorage 3
-threads=10
+threads=12
 unpackData 3 "02 05 08"
 buildStorage 3
 threads=6

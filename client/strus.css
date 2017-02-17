@@ -95,6 +95,21 @@ h2 {
 	width: 508px;
 }
 
+#querydescr
+{
+	clear: left;
+	margin: 0px 115px;
+	font: normal 13px 'Open Sans', Arial, sans-serif;
+}
+#querydescrpara
+{
+	border-style: solid;
+	border-width: 1px;
+	display: table;
+	list-style-type: none;
+	width: 92%;
+}
+
 #searchinfo
 {
 	clear: left;
