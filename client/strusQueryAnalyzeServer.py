@@ -44,7 +44,7 @@ analyzer.addSearchIndexElement(
         ["lc", ["dictmap", "irregular_verbs_en.txt"], ["stem", "en"], ["convdia", "en"], "lc"]
     )
 analyzer.addPatternLexem( "lexem", "text", "word", ["lc"] )
-analyzer.addPatternLexem( "punct", "text", ["regex", "[,]"], ["lc"] )
+analyzer.addPatternLexem( "lexem", "text", ["regex", "[,]"], ["orig"] )
 analyzer.definePatternMatcherPostProcFromFile( "vecsfeat", "std", "pattern_searchfeat_qry.bin" )
 analyzer.addSearchIndexElementFromPatternMatch( "vecsfeat", "vecsfeat", [] )
 
