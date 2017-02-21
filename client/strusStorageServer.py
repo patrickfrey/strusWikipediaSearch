@@ -106,6 +106,7 @@ def processCommand( message):
                     messageofs += struct.calcsize( ">d")
                     links.append( Term( type, value, 1, 0, weight, False))
                 elif message[ messageofs] == 'B':
+                    messageofs += 1
                     with_debuginfo = True
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")

@@ -242,8 +242,6 @@ class Backend:
                             debuginfo += debug_weighting
                         if debug_summarization:
                             debuginfo += debug_summarization
-                if debuginfo:
-                    print "DEBUG: %s" % debuginfo
                 rt.append( RankResult( rank.docno(), title, paratitle, rank.weight(), content, debuginfo))
         return rt
 
