@@ -230,7 +230,7 @@ class Backend:
                                 debug_weighting += sumelem.value()
                             else:
                                 debug_weighting = sumelem.value()
-                        elif sumelem.name() == 'debug_weighting':
+                        elif sumelem.name() == 'debug_summarization':
                             if debug_summarization:
                                 debug_summarization += sumelem.value()
                             else:
