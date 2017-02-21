@@ -11,11 +11,11 @@ import binascii
 
 # Pack a message with its length (processCommand protocol)
 def packString( msg):
-    return struct.pack( ">H%ds" % len(msg), len(msg), msg)
+    return struct.pack( ">I%ds" % len(msg), len(msg), msg)
 
 def unpackString( msg, msgofs):
-    (strsize,) = struct.unpack_from( ">H", msg, msgofs)
-    msgofs += struct.calcsize( ">H")
+    (strsize,) = struct.unpack_from( ">I", msg, msgofs)
+    msgofs += struct.calcsize( ">I")
     (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
     msgofs += strsize
     return [str,msgofs]
