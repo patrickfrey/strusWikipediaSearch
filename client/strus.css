@@ -229,7 +229,7 @@ li #rank_abstract {
 	font: normal 13px/1.5 'Open Sans', Arial, sans-serif;
 }
 
-li #rank_debuginfo {
+#rank_debuginfo {
 	margin: 0px 5px;
 	display: table;
 	border-width: 1px;
