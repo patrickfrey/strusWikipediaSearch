@@ -38,7 +38,7 @@
 {% block resultblock %}
 <div id="searchresult">
 <ul>
-{% for result in results %}
+{% for idx,result in enumerate(results) %}
 {% set enclink = result.title.replace(' ','_') %}
 <li onclick="parent.location='https://en.wikipedia.org/wiki/{{ enclink }}'">
 <h3>{{ result.title }}</h3>
@@ -56,8 +56,8 @@
 
 {% if result.debuginfo %}
 <div id="rank_debuginfo">
-<input class="toggle-box" id="DebugInfo_usage" type="checkbox" >
-<label for="DebugInfo_usage">Debug</label>
+<input class="toggle-box" id="DebugInfo{{resultidx}}_usage" type="checkbox" >
+<label for="DebugInfo{{resultidx}}_usage">Debug</label>
 <pre>
 {% raw result.debuginfo %}
 </pre>

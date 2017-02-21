@@ -235,13 +235,13 @@ class Backend:
                                 debug_summarization += sumelem.value()
                             else:
                                 debug_summarization = sumelem.value()
-                    if with_debuginfo:
-                        if not debuginfo:
-                            debuginfo = ""
-                        if debug_weighting:
-                            debuginfo += debug_weighting
-                        if debug_summarization:
-                            debuginfo += debug_summarization
+                if with_debuginfo:
+                    if not debuginfo:
+                        debuginfo = ""
+                    if debug_weighting:
+                        debuginfo += debug_weighting
+                    if debug_summarization:
+                        debuginfo += debug_summarization
                 rt.append( RankResult( rank.docno(), title, paratitle, rank.weight(), content, debuginfo))
         return rt
 
