@@ -75,35 +75,38 @@ def processCommand( message):
             scheme = "BM25"
             terms = []
             links = []
+            with_debuginfo = False
             # Build query to evaluate from the request:
             messagesize = len(message)
             while (messageofs < messagesize):
-                if (message[ messageofs] == 'I'):
+                if message[ messageofs] == 'I':
                     (firstrank,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
-                elif (message[ messageofs] == 'N'):
+                elif message[ messageofs] == 'N':
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
-                elif (message[ messageofs] == 'D'):
+                elif message[ messageofs] == 'D':
                     (restrictdn,) = struct.unpack_from( ">I", message, messageofs+1)
                     messageofs += struct.calcsize( ">I") + 1
-                elif (message[ messageofs] == 'M'):
+                elif message[ messageofs] == 'M':
                     (scheme,messageofs) = strusMessage.unpackString( message, messageofs+1)
-                elif (message[ messageofs] == 'S'):
+                elif message[ messageofs] == 'S':
                     (collectionsize,) = struct.unpack_from( ">q", message, messageofs+1)
                     messageofs += struct.calcsize( ">q") + 1
-                elif (message[ messageofs] == 'T'):
+                elif message[ messageofs] == 'T':
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     (length,df,weight,cover) = struct.unpack_from( ">Hqd?", message, messageofs)
                     messageofs += struct.calcsize( ">Hqd?")
                     terms.append( Term( type, value, length, df, weight, cover))
-                elif (message[ messageofs] == 'L'):
+                elif message[ messageofs] == 'L':
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     (weight,) = struct.unpack_from( ">d", message, messageofs)
                     messageofs += struct.calcsize( ">d")
                     links.append( Term( type, value, 1, 0, weight, False))
+                elif message[ messageofs] == 'B':
+                    with_debuginfo = True
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
@@ -114,52 +117,52 @@ def processCommand( message):
 
             # Evaluate query:
             if restrictdn == 0:
-                results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [], debugtrace)
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [], debugtrace, with_debuginfo)
             else:
-                results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [restrictdn], debugtrace)
+                results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [restrictdn], debugtrace, with_debuginfo)
 
             # Build the result and pack it into the reply message for the client:
             if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
                 for result in results:
                     rt.append( '_')
                     rt.append( 'D')
-                    rt += struct.pack( ">I", result['docno'])
+                    rt += struct.pack( ">I", result.docno)
                     rt.append( 'W')
-                    rt += struct.pack( ">f", result['weight'])
-                    for linkid,weight in result['links']:
+                    rt += struct.pack( ">f", result.weight)
+                    for linkid,weight in result.links:
                         rt.append( 'L')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
             elif scheme == "STDLNK":
                 for result in results:
                     rt.append( '_')
                     rt.append( 'D')
-                    rt += struct.pack( ">I", result['docno'])
+                    rt += struct.pack( ">I", result.docno)
                     rt.append( 'W')
-                    rt += struct.pack( ">f", result['weight'])
-                    for linkid,weight in result['links']:
+                    rt += struct.pack( ">f", result.weight)
+                    for linkid,weight in result.links:
                         rt.append( 'L')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
-                    for linkid,weight in result['vectors']:
-                        rt.append( 'V')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
-                    for linkid,weight in result['titles']:
+                    for linkid,weight in result.titles:
                         rt.append( 'T')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
             else:
                 for result in results:
                     rt.append( '_')
                     rt.append( 'D')
-                    rt += struct.pack( ">I", result['docno'])
+                    rt += struct.pack( ">I", result.docno)
                     rt.append( 'W')
-                    rt += struct.pack( ">f", result['weight'])
+                    rt += struct.pack( ">f", result.weight)
                     rt.append( 'T')
-                    rt += strusMessage.packString( result['title'])
-                    paratitle = result['paratitle']
-                    if (len( paratitle) > 0):
+                    rt += strusMessage.packString( result.title)
+                    if result.paratitle:
                         rt.append( 'P')
-                        rt += strusMessage.packString( paratitle)
+                        rt += strusMessage.packString( result.paratitle)
+                    if result.debuginfo:
+                        rt.append( 'B')
+                        rt += strusMessage.packString( result.debuginfo)
                     rt.append( 'A')
-                    rt += strusMessage.packString( result['abstract'])
+                    rt += strusMessage.packString( result.abstract)
+    
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:

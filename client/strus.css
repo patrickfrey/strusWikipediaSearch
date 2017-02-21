@@ -229,6 +229,58 @@ li #rank_abstract {
 	font: normal 13px/1.5 'Open Sans', Arial, sans-serif;
 }
 
+li #rank_debuginfo {
+	margin: 0px 5px;
+	display: table;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #988;
+	color: #133;
+	font: normal 13px/1.5 'Courier, sans-serif;
+}
+
+.toggle-box {
+  display: none;
+}
+
+.toggle-box + label {
+  cursor: pointer;
+  display: block;
+  font-weight: italic;
+  line-height: 21px;
+  margin-bottom: 5px;
+}
+
+.toggle-box + label + pre {
+  display: none;
+  margin-bottom: 10px;
+}
+
+.toggle-box:checked + label + pre {
+  display: block;
+}
+
+.toggle-box + label:before {
+  background-color: #888;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  color: #FFFFFF;
+  content: "+";
+  display: block;
+  float: left;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  margin-right: 5px;
+  text-align: center;
+  width: 20px;
+}
+
+.toggle-box:checked + label:before {
+  content: "\2212";
+} 
+
 li #rank_linkid {
 	margin: 0px 5px;
 	clear: left;

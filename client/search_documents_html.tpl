@@ -47,10 +47,20 @@
 <div id="rank_docno">{{ result.docno }}</div>
 <div id="rank_weight">{{ "%.4f" % result.weight }}</div>
 {% end %}
-{% if len( result.paratitle ) > 0 %}
+{% if result.paratitle %}
 <div id="rank_paratitle"> {% raw result.paratitle %} </div>
 {% end %}
 <div id="rank_abstract"> {% raw result.abstract %} </div>
+
+{% if result.debuginfo %}
+<div id="rank_debuginfo">
+<input class="toggle-box" id="DebugInfo_usage" type="checkbox" >
+<label for="DebugInfo_usage">Debug</label>
+<pre>
+{% raw result.debuginfo %}
+</pre>
+</div>
+{% end %}
 </div>
 </li>
 {% end %}

@@ -2,6 +2,10 @@ import strus
 import itertools
 import heapq
 import re
+import collections
+
+RankResult = collections.namedtuple('RankResult', ['docno','title','paratitle','weight','abstract','debuginfo'])
+LinkResult = collections.namedtuple('LinkResult', ['docno','weight','links'])
 
 class Backend:
     # Create a query evaluation scheme:
@@ -23,10 +27,10 @@ class Backend:
                      "ffbase": 0.4, "fftie": 20,
                      "proxffbias": 0.3, "proxfftie": 30, "maxdf": 0.2,
                      ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
-            })
+            }, "debug_weighting")
             if scheme == "BM25std":
-                rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" } )
-                rt.addWeightingFormula( "d * _1 + (1 - d) * _0", {"d": 0.6} )
+                rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" }, "debug_weighting" )
+                rt.addWeightingFormula( "d * _1 + (1 - d) * _0", {"d": 0.7} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
@@ -35,7 +39,7 @@ class Backend:
                      ".match": "docfeat"
             })
             if scheme == "BM25pg":
-                rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+                rt.addWeightingFunction( "metadata", {"name": "pageweight" }, "debug_weighting" )
                 rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
 
         elif scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
@@ -43,8 +47,8 @@ class Backend:
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
                      ".match": "docfeat"
-            })
-            rt.addWeightingFunction( "metadata", {"name": "pageweight" } )
+            }, "debug_weighting")
+            rt.addWeightingFunction( "metadata", {"name": "pageweight" }, "debug_weighting" )
             rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
         else:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
@@ -54,45 +58,40 @@ class Backend:
                   "cofactor": 2.5, "type": "linkid", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
-            })
+            }, "debug_summarization")
         elif scheme == "TILNK":
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
-            })
+            }, "debug_summarization")
         elif scheme == "VCLNK":
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "vecfname", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
-            })
+            }, "debug_summarization")
         elif scheme == "STDLNK":
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "linkid", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"TITLE",
                   ".match": "docfeat"
-            })
+            }, "debug_summarization")
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
                   ".match": "docfeat"
-            })
-            # rt.addSummarizer( "accunear", {
-            #      "cofactor": 1.2, "type": "vecfname", "range": 30, "cardinality": "75%",
-            #      "nofranks":20, "result":"VECTOR",
-            #      ".match": "docfeat"
-            # })
+            }, "debug_summarization")
         else:
             # Summarizer for getting the document title:
-            rt.addSummarizer( "attribute", { "name": "docid" })
+            rt.addSummarizer( "attribute", { "name": "docid" }, "debug_summarization")
             # Summarizer for abstracting:
             rt.addSummarizer( "matchphrase", {
                   "type": "orig",
                   "windowsize": 40, "sentencesize": 100, "cardinality": "60%", "maxdf": 0.2,
                   "matchmark": '$<b>$</b>',
                   ".struct": "sentence", ".match": "docfeat", ".para": "para", ".title": "titlefield"
-            })
+            }, "debug_summarization")
         return rt
 
     # Constructor. Initializes the query evaluation schemes and the query and document analyzers:
@@ -168,7 +167,7 @@ class Backend:
         query.addMetaDataRestrictionCondition( "==", "redirect", 0, True)
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
-    def evaluateQuery( self, scheme, seltitle, terms, links, collectionsize, firstrank, nofranks, restrictset, debugtrace):
+    def evaluateQuery( self, scheme, seltitle, terms, links, collectionsize, firstrank, nofranks, restrictset, debugtrace, with_debuginfo):
         if not scheme in self.queryeval:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
         queryeval = self.queryeval[ scheme]
@@ -183,6 +182,8 @@ class Backend:
         query.defineGlobalStatistics( {'nofdocs' : collectionsize} )
         if restrictset:
             query.addDocumentEvaluationSet( restrictset )
+        if with_debuginfo:
+            query.setDebugMode( True)
         # Evaluate the query:
         result = query.evaluate()
         rt = []
@@ -193,29 +194,27 @@ class Backend:
                 for sumelem in rank.summaryElements():
                     if sumelem.name() == 'LINK':
                         links.append( [sumelem.value().strip(), sumelem.weight()])
-                rt.append( {
-                       'docno':rank.docno(), 'weight':rank.weight(), 'links':links})
+                rt.append( LinkResult( rank.docno(), rank.weight(), links))
         elif scheme == "STDLNK":
             for rank in result.ranks():
                 links = []
-                vectors = []
                 titles = []
                 for sumelem in rank.summaryElements():
                     if sumelem.name() == 'LINK':
                         links.append( [sumelem.value().strip(), sumelem.weight()])
-                    elif sumelem.name() == 'VECTOR':
-                        vectors.append( [sumelem.value().strip(), sumelem.weight()])
                     elif sumelem.name() == 'TITLE':
                         titles.append( [sumelem.value().strip(), sumelem.weight()])
-                rt.append( {
-                       'docno':rank.docno(), 'weight':rank.weight(), 'links':links, 'vectors':vectors, 'titles':titles})
+                rt.append( LinkResult( rank.docno(), rank.weight(), links))
         else:
             if (debugtrace):
                 print "pass %u, nof matches %u" %(result.evaluationPass(), result.nofDocumentsRanked())
             for rank in result.ranks():
                 content = ""
                 title = ""
-                paratitle = ""
+                paratitle = None
+                debug_weighting = None
+                debug_summarization = None
+                debuginfo = None
                 for sumelem in rank.summaryElements():
                     if sumelem.name() == 'phrase' or sumelem.name() == 'docstart':
                         if content != "":
@@ -225,10 +224,24 @@ class Backend:
                         paratitle = sumelem.value()
                     elif sumelem.name() == 'docid':
                         title = sumelem.value()
-                rt.append( {
-                       'docno':rank.docno(), 'title':title, 'paratitle':paratitle,
-                       'weight':rank.weight(), 'abstract':content
-                })
+                    elif with_debuginfo:
+                        if sumelem.name() == 'debug_weighting':
+                            if debug_weighting:
+                                debug_weighting += sumelem.value()
+                            else:
+                                debug_weighting = sumelem.value()
+                        elif sumelem.name() == 'debug_weighting':
+                            if debug_summarization:
+                                debug_summarization += sumelem.value()
+                            else:
+                                debug_summarization = sumelem.value()
+                    if with_debuginfo:
+                        debuginfo = ""
+                        if debug_weighting:
+                            debuginfo += debug_weighting
+                        if debug_summarization:
+                            debuginfo += debug_summarization
+                rt.append( RankResult( rank.docno(), title, paratitle, rank.weight(), content, debuginfo))
         return rt
 
     # Get an iterator on all absolute statistics of the storage
