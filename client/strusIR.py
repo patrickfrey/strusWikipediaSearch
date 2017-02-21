@@ -145,7 +145,10 @@ class Backend:
                 selexpr2 = ["contains"] + selfeat2
 
         if not selexpr1 and not selexpr2:
-            raise Exception( "query features not found in the collection")
+            alltermstr = ""
+            for term in terms:
+               alltermstr += " %s '%s'" % (term.type, term.value)
+            raise Exception( "query features %s not found in the collection" % alltermstr)
 
         for term in terms:
             if term.cover:
