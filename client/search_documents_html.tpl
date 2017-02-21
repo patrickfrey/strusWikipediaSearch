@@ -51,6 +51,7 @@
 <div id="rank_paratitle"> {% raw result.paratitle %} </div>
 {% end %}
 <div id="rank_abstract"> {% raw result.abstract %} </div>
+</div>
 
 {% if result.debuginfo %}
 <div id="rank_debuginfo">
@@ -61,7 +62,6 @@
 </pre>
 </div>
 {% end %}
-</div>
 </li>
 {% end %}
 </ul>
