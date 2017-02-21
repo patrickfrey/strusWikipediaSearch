@@ -38,7 +38,7 @@
 {% block resultblock %}
 <div id="searchresult">
 <ul>
-{% for idx,result in enumerate(results) %}
+{% for resultidx,result in enumerate(results) %}
 {% set enclink = result.title.replace(' ','_') %}
 <li onclick="parent.location='https://en.wikipedia.org/wiki/{{ enclink }}'">
 <h3>{{ result.title }}</h3>
