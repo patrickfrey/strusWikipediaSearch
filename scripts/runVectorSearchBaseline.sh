@@ -1,9 +1,11 @@
 #!/bin/sh
 
+outdir=tmp
+
 run() {
 	residx=$1
-	resfileBase="baseline$residx.txt"
-	resfileSearch="search$residx.txt"
+	resfileBase="$outdir/baseline$residx.txt"
+	resfileSearch="$outdir/search$residx.txt"
 	nofFeatures=`strusInspectVectorStorage -s "path=strusrepos/vsm" nofFeat`
 	feat1=`shuf -i 0-$nofFeatures -n 1`
 	feat2=`shuf -i 0-$nofFeatures -n 1`
