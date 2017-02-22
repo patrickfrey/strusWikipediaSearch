@@ -15,8 +15,9 @@ run() {
 	echo "Find $featname1 + $featname2"
 	echo "Find $featname1 + $featname2" > $resfileBase
 	echo "Find $featname1 + $featname2" > $resfileSearch
-	echo "strusInspectVectorStorage -N 100 -x -s \"path=$vsmdir/vsm\" opfeatwname \%$feat1 + \%$feat2" > $resfileBase
-	echo "strusInspectVectorStorage -N 20     -s \"path=$vsmdir/vsm\" opfeatwname \%$feat1 + \%$feat2" > $resfileSearch
+	strusInspectVectorStorage -T 20 -N 100 -x -s "path=$vsmdir/vsm" opfeatwname \%$feat1 \+ \%$feat2 > $resfileBase
+	strusInspectVectorStorage -T 20 -N 20     -s "path=$vsmdir/vsm" opfeatwname \%$feat1 \+ \%$feat2 > $resfileSearch
 }
 
 for ii in $(seq 1 100); do echo `run $ii`; done
+
