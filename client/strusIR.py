@@ -30,7 +30,7 @@ class Backend:
             }, "debug_weighting")
             if scheme == "BM25std":
                 rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" }, "debug_weighting" )
-                rt.addWeightingFormula( "d * _1 *_0 + (1 - d) * _0", {"d": 0.5} )
+                rt.addWeightingFormula( "d * _1 + (1 - d) * _0", {"d": 0.7} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
