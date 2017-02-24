@@ -20,10 +20,6 @@ link_directories(
 # ------------------------------------
 # LIBRARY
 # ------------------------------------
-add_library( modstrus_storage_wikipedia_search  MODULE  modstrus_storage_wikipedia_search.cpp weightingBM25_dpfc.cpp )
-set_target_properties( modstrus_storage_wikipedia_search PROPERTIES PREFIX "")
-target_link_libraries( modstrus_storage_wikipedia_search strus_module )
-
 add_executable( strusWikipediaDemoPatchIndexTitle strusPatchIndexTitle.cpp )
 target_link_libraries( strusWikipediaDemoPatchIndexTitle  "${Boost_LIBRARIES}" strus_database_leveldb strus_base strus_storage strus_storage_objbuild strus_error strus_module ${Intl_LIBRARIES} )
 
@@ -31,10 +27,6 @@ target_link_libraries( strusWikipediaDemoPatchIndexTitle  "${Boost_LIBRARIES}" s
 # ------------------------------
 # INSTALLATION
 # ------------------------------
-install( TARGETS modstrus_storage_wikipedia_search
-           LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus/modules
-	   RUNTIME DESTINATION bin )
-
 install( TARGETS strusWikipediaDemoPatchIndexTitle
            RUNTIME DESTINATION bin )
 
