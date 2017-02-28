@@ -42,7 +42,7 @@ unpackData()
 buildStorage()
 {
   storageid=$1
-  time -p strusInsert -s "`storageConfig $storageid`" -R "$srcprefix"config -R "$srcprefix"resources -R "$resprefix"/. -m analyzer_wikipedia_search -m analyzer_pattern -f 1 -c 5000 -t $threads -x "xml" "$srcprefix"config/wikipedia_concepts.ana tmp$storageid/
+  time -p strusInsert -s "`storageConfig $storageid`" -R "$srcprefix"config -R "$srcprefix"resources -R "$resprefix"/. -m analyzer_pattern -f 1 -c 5000 -t $threads -x "xml" "$srcprefix"config/wikipedia_concepts.ana tmp$storageid/
   rm -Rf tmp$storageid/
 }
 

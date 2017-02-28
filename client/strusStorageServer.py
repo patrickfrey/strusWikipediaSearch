@@ -123,6 +123,9 @@ def processCommand( message):
                 results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [restrictdn], debugtrace, with_debuginfo)
 
             # Build the result and pack it into the reply message for the client:
+            rt.append( 'Z')
+            rt += struct.pack( ">H", serverno)
+
             if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
                 for result in results:
                     rt.append( '_')
@@ -163,7 +166,6 @@ def processCommand( message):
                         rt += strusMessage.packString( result.debuginfo)
                     rt.append( 'A')
                     rt += strusMessage.packString( result.abstract)
-    
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:

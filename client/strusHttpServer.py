@@ -42,8 +42,8 @@ analyzer.addSearchIndexElement(
     )
 
 # Query evaluation structures:
-ResultRow = collections.namedtuple('ResultRow', ['docno', 'weight', 'title', 'paratitle', 'abstract', 'debuginfo'])
-NblnkRow = collections.namedtuple('NblnkRow', ['docno', 'weight', 'links', 'titles'])
+ResultRow = collections.namedtuple('ResultRow', ['serverno','docno', 'weight', 'title', 'paratitle', 'abstract', 'debuginfo'])
+NblnkRow = collections.namedtuple('NblnkRow', ['serverno','docno', 'weight', 'links', 'titles'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight','cover'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
@@ -108,6 +108,7 @@ class QueryHandler( tornado.web.RequestHandler ):
 
     def unpackAnswerTextQuery( self, answer, answerofs, answersize):
         result = []
+        serverno = 0
         row_docno = 0
         row_weight = 0.0
         row_title = None
@@ -117,7 +118,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         while (answerofs < answersize):
             if answer[ answerofs] == '_':
                 if not row_title is None:
-                    result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract, row_debuginfo))
+                    result.append( ResultRow( serverno, row_docno, row_weight, row_title, row_paratitle, row_abstract, row_debuginfo))
                 row_docno = 0
                 row_weight = 0.0
                 row_title = None
@@ -139,14 +140,18 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (row_abstract,answerofs) = strusMessage.unpackString( answer, answerofs+1)
             elif answer[ answerofs] == 'B':
                 (row_debuginfo,answerofs) = strusMessage.unpackString( answer, answerofs+1)
+            elif answer[ answerofs] == 'Z':
+                (serverno,) = struct.unpack_from( ">H", answer, answerofs+1)
+                answerofs += struct.calcsize( ">H") + 1
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
         if not row_title is None:
-            result.append( ResultRow( row_docno, row_weight, row_title, row_paratitle, row_abstract, row_debuginfo))
+            result.append( ResultRow( serverno, row_docno, row_weight, row_title, row_paratitle, row_abstract, row_debuginfo))
         return result
 
     def unpackAnswerLinkQuery( self, answer, answerofs, answersize):
         result = []
+        serverno = 0
         row_docno = 0
         row_weight = 0.0
         row_links = []
@@ -154,7 +159,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         while (answerofs < answersize):
             if answer[ answerofs] == '_':
                 if row_docno != 0:
-                    result.append( NblnkRow( row_docno, row_weight, row_links, row_titles))
+                    result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_titles))
                 row_docno = 0
                 row_weight = 0.0
                 row_links = []
@@ -175,10 +180,13 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (weight,) = struct.unpack_from( ">f", answer, answerofs)
                 answerofs += struct.calcsize( ">f")
                 row_titles.append([idstr,weight])
+            elif answer[ answerofs] == 'Z':
+                (serverno,) = struct.unpack_from( ">H", answer, answerofs+1)
+                answerofs += struct.calcsize( ">H") + 1
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
         if row_docno != 0:
-            result.append( NblnkRow( row_docno, row_weight, row_links, row_titles))
+            result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_titles))
         return result
 
     @tornado.gen.coroutine
