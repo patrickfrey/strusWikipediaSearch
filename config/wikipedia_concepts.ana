@@ -54,7 +54,7 @@
     lexem = text word  /mediawiki/page/revision/text/h5();
     lexem = text word  /mediawiki/page/revision/text/h6();
 
-    lexem = empty punctuation(en,".,:;?!()-") /mediawiki/page/revision/text();
+    lexem = empty punctuation("en", ".,:;?!()-") /mediawiki/page/revision/text//();
     lexem = empty content /mediawiki/page/revision/text/l1~;
     lexem = empty content /mediawiki/page/revision/text/l2~;
     lexem = empty content /mediawiki/page/revision/text/l3~;

@@ -62,7 +62,22 @@
     stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h5();
     stem = lc:convdia(en):stem(en):dictmap("irregular_verbs_en.txt"):lc word /mediawiki/page/revision/text/h6();
 
-    sent = empty punctuation(en,".") /mediawiki/page/revision/text();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/i();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/b();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/l1();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/l2();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/l3();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/l4();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/ol/li();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/ol/li/i();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/ol/li/b();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/ul/li();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/ul/li/i();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/ul/li/b();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/table/tr/td();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/table/tr/td/i();
+    sent = empty punctuation(en,"") /mediawiki/page/revision/text/table/tr/td/b();
     sent = empty content /mediawiki/page/revision/text/l1~;
     sent = empty content /mediawiki/page/revision/text/l2~;
     sent = empty content /mediawiki/page/revision/text/l3~;
