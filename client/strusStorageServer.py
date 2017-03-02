@@ -149,6 +149,9 @@ def processCommand( message):
                     for linkid,weight in result.titles:
                         rt.append( 'T')
                         rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+                    for featid,weight in result.features:
+                        rt.append( 'F')
+                        rt += strusMessage.packString( featid) + struct.pack( ">f", weight)
             else:
                 for result in results:
                     rt.append( '_')

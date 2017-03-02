@@ -5,7 +5,7 @@ import re
 import collections
 
 RankResult = collections.namedtuple('RankResult', ['docno','title','paratitle','weight','abstract','debuginfo'])
-LinkResult = collections.namedtuple('LinkResult', ['docno','weight','links','titles'])
+LinkResult = collections.namedtuple('LinkResult', ['docno','weight','links','features','titles'])
 
 class Backend:
     # Create a query evaluation scheme:
@@ -80,6 +80,11 @@ class Backend:
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
+                  ".match": "docfeat"
+            }, "debug_summarization")
+            rt.addSummarizer( "accunear", {
+                  "cofactor": 2.5, "type": "vecfname", "range": 20, "cardinality": "75%",
+                  "nofranks":20, "result":"VECTOR",
                   ".match": "docfeat"
             }, "debug_summarization")
         else:
@@ -194,17 +199,20 @@ class Backend:
                 for sumelem in rank.summaryElements():
                     if sumelem.name() == 'LINK':
                         links.append( [sumelem.value().strip(), sumelem.weight()])
-                rt.append( LinkResult( rank.docno(), rank.weight(), links, []))
+                rt.append( LinkResult( rank.docno(), rank.weight(), links, [], []))
         elif scheme == "STDLNK":
             for rank in result.ranks():
                 links = []
+                features = []
                 titles = []
                 for sumelem in rank.summaryElements():
                     if sumelem.name() == 'LINK':
                         links.append( [sumelem.value().strip(), sumelem.weight()])
                     elif sumelem.name() == 'TITLE':
                         titles.append( [sumelem.value().strip(), sumelem.weight()])
-                rt.append( LinkResult( rank.docno(), rank.weight(), links, titles))
+                    elif sumelem.name() == 'VECTOR':
+                        features.append( [sumelem.value().strip(), sumelem.weight()])
+                rt.append( LinkResult( rank.docno(), rank.weight(), links, features, titles))
         else:
             if (debugtrace):
                 print "pass %u, nof matches %u" %(result.evaluationPass(), result.nofDocumentsRanked())

@@ -43,7 +43,7 @@ analyzer.addSearchIndexElement(
 
 # Query evaluation structures:
 ResultRow = collections.namedtuple('ResultRow', ['serverno','docno', 'weight', 'title', 'paratitle', 'abstract', 'debuginfo'])
-NblnkRow = collections.namedtuple('NblnkRow', ['serverno','docno', 'weight', 'links', 'titles'])
+NblnkRow = collections.namedtuple('NblnkRow', ['serverno','docno', 'weight', 'links', 'features', 'titles'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
 QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight','cover'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
@@ -156,13 +156,16 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_weight = 0.0
         row_links = []
         row_titles = []
+        row_features = []
         while (answerofs < answersize):
             if answer[ answerofs] == '_':
                 if row_docno != 0:
-                    result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_titles))
+                    result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_features, row_titles))
                 row_docno = 0
                 row_weight = 0.0
                 row_links = []
+                row_titles = []
+                row_features = []
                 answerofs += 1
             elif answer[ answerofs] == 'D':
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
@@ -175,6 +178,11 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (weight,) = struct.unpack_from( ">f", answer, answerofs)
                 answerofs += struct.calcsize( ">f")
                 row_links.append([idstr,weight])
+            elif answer[ answerofs] == 'F':
+                (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
+                (weight,) = struct.unpack_from( ">f", answer, answerofs)
+                answerofs += struct.calcsize( ">f")
+                row_features.append([idstr,weight])
             elif answer[ answerofs] == 'T':
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
                 (weight,) = struct.unpack_from( ">f", answer, answerofs)
@@ -186,7 +194,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             else:
                 raise Exception( "protocol error: unknown result column name '%c'" % (answer[answerofs]))
         if row_docno != 0:
-            result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_titles))
+            result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_features, row_titles))
         return result
 
     @tornado.gen.coroutine
