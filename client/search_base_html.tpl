@@ -12,6 +12,7 @@
   {% block infoblock %}{% end %}
   {% block relatedblock %}{% end %}
   {% block nblinksblock %}{% end %}
+  {% block featuresblock %}{% end %}
   {% block resultblock %}{% end %}
   </body>
 </html>

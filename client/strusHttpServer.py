@@ -464,6 +464,7 @@ class QueryHandler( tornado.web.RequestHandler ):
             errors = querystruct.errors
             relatedterms = None
             nblinks = None
+            features = None
             with_debuginfo = (mode == "debug")
 
             if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
@@ -473,10 +474,12 @@ class QueryHandler( tornado.web.RequestHandler ):
             elif scheme == "STD":
                 noflinks = 20
                 nofnblinks = 20
+                noffeatures = 15
                 selectresult = yield self.evaluateQuery( "STDLNK", querystruct, 0, 120, 0, False)
                 errors += selectresult[1]
                 links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks)
                 nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofnblinks)
+                features = self.getLinkQueryResults( selectresult[0], 'features', 0, noffeatures)
                 if len(links) >= 1:
                     maplinks = []
                     for link in links:
@@ -504,7 +507,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 hasmore = False
                 ranklist = result[0]
             self.render( template,
-                         results=ranklist, relatedterms=relatedterms, nblinks=nblinks, hasmore=hasmore, messages=result[1],
+                         results=ranklist, relatedterms=relatedterms, nblinks=nblinks, features=features, hasmore=hasmore, messages=result[1],
                          time_elapsed=time_elapsed, firstrank=firstrank, nofranks=nofranks, mode=mode,
                          scheme=scheme, querystr=querystr)
         except Exception as e:

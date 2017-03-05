@@ -108,7 +108,7 @@ echo "" > "$resprefix"redirects_empty.txt
 strusPageWeight -i 100 -g -n 100 -r "$resprefix"redirects.txt "$resprefix"links.all.txt > "$resprefix"pagerank.txt
 
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem F '' $pattern_stopwords_doc > $pattern_searchfeat_doc
-strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | grep '_' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc
+strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem name '' $pattern_stopwords_doc > $pattern_forwardfeat_doc
 strusInspectVectorStorage -S "$srcprefix"config/vsm.conf featname    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/]//g' | $scriptdir/createFeatureRules.pl - lexem F lc $pattern_stopwords_qry > $pattern_searchfeat_qry
 cat "$resprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$resprefix"redirects.txt lnklexem T lc $pattern_stopwords_qry > $pattern_lnkfeat_doc
 cat "$resprefix"pagerank.txt    | iconv -c -f utf-8 -t utf-8 - | sed -E 's/[\\\>\<\"/\!\?\:\;\-]/ /g' | $scriptdir/createTitleRules.pl - "$resprefix"redirects_empty.txt titlexem T lc $pattern_stopwords_qry > $pattern_titlefeat_doc

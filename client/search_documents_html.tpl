@@ -35,6 +35,23 @@
 {% end %}
 {% end %}
 
+{% block featuresblock %}
+{% if features %}
+<div id="featureresult">
+<ul>
+{% for feature in features %}
+<li>
+<div id="featurelink">
+<div id="featurelink_term">{{ feature.title }}</div>
+<div id="featurelink_weight">{{ "%.4f" % feature.weight }}</div>
+</div>
+</li>
+{% end %}
+</ul>
+</div>
+{% end %}
+{% end %}
+
 {% block resultblock %}
 <div id="searchresult">
 <ul>

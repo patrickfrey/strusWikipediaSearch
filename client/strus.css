@@ -178,7 +178,28 @@ h3 {
 	color: #1f3354;
 }
 
-#related_weight, #nblink_weight {
+#featureresult {
+	margin: 15px 15px;
+}
+
+#featureresult ul {
+	border-style: solid;
+	border-width: 1px;
+	display: table;
+	list-style-type: none;
+	width: 92%;
+}
+
+#featureresult li {
+	display: inline;
+	float: left;
+	padding: 5px;
+	overflow: auto;
+	font: 12px/1.5 'Open Sans', Arial, sans-serif;
+	color: #351f4f;
+}
+
+#related_weight, #nblink_weight, #feature_weight {
 	display: none;
 }
 
