@@ -199,7 +199,7 @@ h3 {
 	color: #351f4f;
 }
 
-#related_weight, #nblink_weight {
+#related_weight, #nblink_weight, #featurelink_weight {
 	display: none;
 }
 
