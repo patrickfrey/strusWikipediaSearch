@@ -130,8 +130,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
                 answerofs += struct.calcsize( ">I") + 1
             elif answer[ answerofs] == 'W':
-                (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
-                answerofs += struct.calcsize( ">f") + 1
+                (row_weight,) = struct.unpack_from( ">d", answer, answerofs+1)
+                answerofs += struct.calcsize( ">d") + 1
             elif answer[ answerofs] == 'T':
                 (row_title,answerofs) = strusMessage.unpackString( answer, answerofs+1)
             elif answer[ answerofs] == 'P':
@@ -171,22 +171,22 @@ class QueryHandler( tornado.web.RequestHandler ):
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
                 answerofs += struct.calcsize( ">I") + 1
             elif answer[ answerofs] == 'W':
-                (row_weight,) = struct.unpack_from( ">f", answer, answerofs+1)
-                answerofs += struct.calcsize( ">f") + 1
+                (row_weight,) = struct.unpack_from( ">d", answer, answerofs+1)
+                answerofs += struct.calcsize( ">d") + 1
             elif answer[ answerofs] == 'L':
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-                (weight,) = struct.unpack_from( ">f", answer, answerofs)
-                answerofs += struct.calcsize( ">f")
+                (weight,) = struct.unpack_from( ">d", answer, answerofs)
+                answerofs += struct.calcsize( ">d")
                 row_links.append([idstr,weight])
             elif answer[ answerofs] == 'F':
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-                (weight,) = struct.unpack_from( ">f", answer, answerofs)
-                answerofs += struct.calcsize( ">f")
+                (weight,) = struct.unpack_from( ">d", answer, answerofs)
+                answerofs += struct.calcsize( ">d")
                 row_features.append([idstr,weight])
             elif answer[ answerofs] == 'T':
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-                (weight,) = struct.unpack_from( ">f", answer, answerofs)
-                answerofs += struct.calcsize( ">f")
+                (weight,) = struct.unpack_from( "d", answer, answerofs)
+                answerofs += struct.calcsize( ">d")
                 row_titles.append([idstr,weight])
             elif answer[ answerofs] == 'Z':
                 (serverno,) = struct.unpack_from( ">H", answer, answerofs+1)
@@ -377,8 +377,8 @@ class QueryHandler( tornado.web.RequestHandler ):
                             (index,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
                         elif reply[ replyofs] == 'W':
-                            (weight,) = struct.unpack_from( ">f", reply, replyofs+1)
-                            replyofs += struct.calcsize( ">f") + 1
+                            (weight,) = struct.unpack_from( ">d", reply, replyofs+1)
+                            replyofs += struct.calcsize( ">d") + 1
                         elif reply[ replyofs] == '_':
                             replyofs += 1
                             break

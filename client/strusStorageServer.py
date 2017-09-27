@@ -132,33 +132,33 @@ def processCommand( message):
                     rt.append( 'D')
                     rt += struct.pack( ">I", result.docno)
                     rt.append( 'W')
-                    rt += struct.pack( ">f", result.weight)
+                    rt += struct.pack( ">d", result.weight)
                     for linkid,weight in result.links:
                         rt.append( 'L')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+                        rt += strusMessage.packString( linkid) + struct.pack( ">d", weight)
             elif scheme == "STDLNK":
                 for result in results:
                     rt.append( '_')
                     rt.append( 'D')
                     rt += struct.pack( ">I", result.docno)
                     rt.append( 'W')
-                    rt += struct.pack( ">f", result.weight)
+                    rt += struct.pack( ">d", result.weight)
                     for linkid,weight in result.links:
                         rt.append( 'L')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+                        rt += strusMessage.packString( linkid) + struct.pack( ">d", weight)
                     for linkid,weight in result.titles:
                         rt.append( 'T')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">f", weight)
+                        rt += strusMessage.packString( linkid) + struct.pack( ">d", weight)
                     for featid,weight in result.features:
                         rt.append( 'F')
-                        rt += strusMessage.packString( featid) + struct.pack( ">f", weight)
+                        rt += strusMessage.packString( featid) + struct.pack( ">d", weight)
             else:
                 for result in results:
                     rt.append( '_')
                     rt.append( 'D')
                     rt += struct.pack( ">I", result.docno)
                     rt.append( 'W')
-                    rt += struct.pack( ">f", result.weight)
+                    rt += struct.pack( ">d", result.weight)
                     rt.append( 'T')
                     rt += strusMessage.packString( result.title)
                     if result.paratitle:

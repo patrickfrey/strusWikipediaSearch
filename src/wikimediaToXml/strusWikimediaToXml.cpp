@@ -11,6 +11,7 @@
 #include "textwolf/xmlprinter.hpp"
 #include "textwolf/charset_utf8.hpp"
 #include "inputStream.hpp"
+#include "strus/base/local_ptr.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -1692,7 +1693,7 @@ int main( int argc, const char* argv[])
 	int rt = 0;
 	try
 	{
-		std::auto_ptr<FileOutput> fileOutput;
+		strus::local_ptr<FileOutput> fileOutput;
 		textwolf::PositionIndex rangeStart = 0;
 		textwolf::PositionIndex rangeEnd = std::numeric_limits<textwolf::PositionIndex>::max();
 		int minarg = 1;

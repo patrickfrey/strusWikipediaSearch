@@ -1,6 +1,5 @@
-- word2vec: depending on word type make lowercase first letter in sentence
-- word2vec: clean input many items with dot '.' at end
-- word2vec: remove lovercase adjectives in front of uppercase Names
+Patch index title: Take only vectfeat for titles with minimal length (calculate minimal length in advance)
+Group similar features (cosine similarity) in selection features of query by OR
 
 
 

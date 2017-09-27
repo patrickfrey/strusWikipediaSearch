@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/// \brief Program calculating pagerank for a list of link definitions read from stdin
+/// \brief Program patching the wikipedia index (temporary hack for insuffieciency of the base)
 #include "strus/lib/module.hpp"
 #include "strus/lib/error.hpp"
 #include "strus/lib/storage_objbuild.hpp"
@@ -18,6 +18,7 @@
 #include "strus/moduleLoaderInterface.hpp"
 #include "strus/forwardIteratorInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/base/local_ptr.hpp"
 #include <vector>
 #include <string>
 #include <map>
@@ -92,17 +93,17 @@ struct PatchIndexData
 
 static void buildData( PatchIndexData& data, strus::StorageClientInterface* storage, bool verbose)
 {
-	std::auto_ptr<strus::AttributeReaderInterface> attreader( storage->createAttributeReader());
+	strus::local_ptr<strus::AttributeReaderInterface> attreader( storage->createAttributeReader());
 	if (!attreader.get()) throw std::runtime_error( "failed to create attribute reader");
 	strus::Index titleattr = attreader->elementHandle( DOC_ATTRIBUTE_TITLEID);
 	if (titleattr == 0) throw std::runtime_error( "title attribute not defined in storage");
 	strus::Index docidattr = attreader->elementHandle( DOC_ATTRIBUTE_DOCID);
 	if (docidattr == 0) throw std::runtime_error( "docid attribute not defined in storage");
-	std::auto_ptr<strus::DocumentTermIteratorInterface> search_title_itr( storage->createDocumentTermIterator( DOC_SEARCH_TYPE_TITLE));
+	strus::local_ptr<strus::DocumentTermIteratorInterface> search_title_itr( storage->createDocumentTermIterator( DOC_SEARCH_TYPE_TITLE));
 	if (!search_title_itr.get()) throw std::runtime_error( "failed to create seach index title iterator");
-	std::auto_ptr<strus::ForwardIteratorInterface> forward_titleref_itr( storage->createForwardIterator( DOC_FORWARD_TYPE_TITLEREF));
+	strus::local_ptr<strus::ForwardIteratorInterface> forward_titleref_itr( storage->createForwardIterator( DOC_FORWARD_TYPE_TITLEREF));
 	if (!forward_titleref_itr.get()) throw std::runtime_error( "failed to create forward index title ref iterator");
-	std::auto_ptr<strus::ForwardIteratorInterface> forward_linkid_itr( storage->createForwardIterator( DOC_FORWARD_TYPE_LINKID));
+	strus::local_ptr<strus::ForwardIteratorInterface> forward_linkid_itr( storage->createForwardIterator( DOC_FORWARD_TYPE_LINKID));
 	if (!forward_linkid_itr.get()) throw std::runtime_error( "failed to create forward index linkid iterator");
 
 	strus::Index docno = 1, maxdocno = storage->maxDocumentNumber();
@@ -182,12 +183,12 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 	std::vector<DocumentDef>::const_iterator ti = data.documentar.begin(), te = data.documentar.end();
 	while (ti != te)
 	{
-		std::auto_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
+		strus::local_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
 		unsigned int ci = 0, ce = transactionSize;
 		for (; ti != te && ci < ce; ++ti,++ci)
 		{
 			const DocumentDef& def = *ti;
-			std::auto_ptr<strus::StorageDocumentUpdateInterface> document(
+			strus::local_ptr<strus::StorageDocumentUpdateInterface> document(
 					transaction->createDocumentUpdate( def.docno));
 			if (def.titlefeat.empty())
 			{
@@ -221,7 +222,7 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 	std::map<std::string,strus::Index>::const_iterator di = data.dfmap.begin(), de = data.dfmap.end();
 	while (di != de)
 	{
-		std::auto_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
+		strus::local_ptr<strus::StorageTransactionInterface> transaction( storage->createTransaction());
 		unsigned int ci = 0, ce = transactionSize;
 		for (; di != de && ci < ce; ++di,++ci)
 		{
@@ -233,6 +234,7 @@ static void rewriteIndex( strus::StorageClientInterface* storage, const PatchInd
 		fprintf( stderr, "\rupdated %u df's             ", doccnt);
 	}
 	fprintf( stderr, "updated %u df's\n", doccnt);
+	storage->close();
 }
 
 static void printData( std::ostream& out, const PatchIndexData& data)
@@ -261,7 +263,7 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 
 int main( int argc, const char** argv)
 {
-	std::auto_ptr<strus::ErrorBufferInterface> errorBuffer( strus::createErrorBuffer_standard( 0, 2));
+	strus::local_ptr<strus::ErrorBufferInterface> errorBuffer( strus::createErrorBuffer_standard( 0, 2));
 	if (!errorBuffer.get())
 	{
 		std::cerr << "failed to create error buffer" << std::endl;
@@ -337,17 +339,17 @@ int main( int argc, const char** argv)
 			return -1;
 		}
 
-		std::auto_ptr<strus::ModuleLoaderInterface> moduleLoader( strus::createModuleLoader( errorBuffer.get()));
+		strus::local_ptr<strus::ModuleLoaderInterface> moduleLoader( strus::createModuleLoader( errorBuffer.get()));
 		if (!moduleLoader.get()) throw std::runtime_error( "failed to create module loader");
 		
-		std::auto_ptr<strus::StorageObjectBuilderInterface> storageBuilder;
+		strus::local_ptr<strus::StorageObjectBuilderInterface> storageBuilder;
 		storageBuilder.reset( moduleLoader->createStorageObjectBuilder());
 		if (!storageBuilder.get()) throw std::runtime_error( "failed to create storage object builder");
 
 		std::vector<std::string>::const_iterator ci = storageconfigs.begin(), ce = storageconfigs.end();
 		for (; ci != ce; ++ci)
 		{
-			std::auto_ptr<strus::StorageClientInterface>
+			strus::local_ptr<strus::StorageClientInterface>
 				storage( strus::createStorageClient( storageBuilder.get(), errorBuffer.get(), *ci));
 			if (!storage.get()) throw std::runtime_error( "failed to create storage client");
 

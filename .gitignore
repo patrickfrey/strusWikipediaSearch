@@ -47,6 +47,9 @@ CPackSourceConfig.cmake
 CPackSourceConfig.cmake.user
 cmake/build_rules.cmake.user
 
+# Suggested build directory
+build
+
 # Compiled Programs
 src/wikimediaToXml/strusWikimediaToXml
 src/wikimediaToXml/validateXml

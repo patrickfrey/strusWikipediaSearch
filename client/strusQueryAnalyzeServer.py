@@ -166,7 +166,7 @@ def processCommand( message):
                 rt.append( 'I')
                 rt += struct.pack( ">I", related.index)
                 rt.append( 'W')
-                rt += struct.pack( ">f", related.weight)
+                rt += struct.pack( ">d", related.weight)
                 rt.append( '_')
 
         else:
