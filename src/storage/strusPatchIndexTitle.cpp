@@ -13,6 +13,7 @@
 #include "strus/storageClientInterface.hpp"
 #include "strus/storageDocumentUpdateInterface.hpp"
 #include "strus/storageTransactionInterface.hpp"
+#include "strus/storageObjectBuilderInterface.hpp"
 #include "strus/attributeReaderInterface.hpp"
 #include "strus/documentTermIteratorInterface.hpp"
 #include "strus/moduleLoaderInterface.hpp"
