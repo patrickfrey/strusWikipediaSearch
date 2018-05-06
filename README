@@ -1,10 +1,13 @@
 Search engine for Wikipedia (Strus demo project).
 Running demo search engine at http://demo.project-strus.net
 
+Licenced as MPLv2 (Mozilla Public License, Version 2 - https://www.mozilla.org/en-US/MPL/2.0)
+For 3rdParty licenses see LICENSE.3rdParty
+
+The project Strus implements a set of libraries, tools for building a competitive, 
+scalable search engine for text retrieval.
+It is a solution for small projects as well as larger scale applications.
 Strus project homepage at http://project-strus.net with articles, links, documentation.
 
-* Contributors welcome
-* Open for sharing ideas
-* Open for interesting projects
 
 

@@ -19,6 +19,7 @@
 #include "strus/moduleLoaderInterface.hpp"
 #include "strus/forwardIteratorInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/debugTraceInterface.hpp"
 #include "strus/base/local_ptr.hpp"
 #include <vector>
 #include <string>
@@ -30,8 +31,6 @@
 #include <cstdio>
 #include <memory>
 #include <cstdlib>
-
-#undef STRUS_LOWLEVEL_DEBUG
 
 #define DOC_ATTRIBUTE_DOCID        "docid"
 #define DOC_ATTRIBUTE_TITLEID      "titid"
@@ -264,7 +263,13 @@ static void printData( std::ostream& out, const PatchIndexData& data)
 
 int main( int argc, const char** argv)
 {
-	strus::local_ptr<strus::ErrorBufferInterface> errorBuffer( strus::createErrorBuffer_standard( 0, 2));
+	strus::DebugTraceInterface* dbgtrace = strus::createDebugTrace_standard( 2);
+	if (!dbgtrace)
+	{
+		std::cerr << "failed to create debug trace" << std::endl;
+		return -1;
+	}
+	strus::local_ptr<strus::ErrorBufferInterface> errorBuffer( strus::createErrorBuffer_standard( 0, 2, dbgtrace/*passed with ownership*/));
 	if (!errorBuffer.get())
 	{
 		std::cerr << "failed to create error buffer" << std::endl;

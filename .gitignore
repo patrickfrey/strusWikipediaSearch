@@ -47,8 +47,9 @@ CPackSourceConfig.cmake
 CPackSourceConfig.cmake.user
 cmake/build_rules.cmake.user
 
-# Suggested build directory
+# Suggested build directories
 build
+build_clang
 
 # Compiled Programs
 src/wikimediaToXml/strusWikimediaToXml
