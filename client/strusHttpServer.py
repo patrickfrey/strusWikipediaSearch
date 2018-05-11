@@ -304,7 +304,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                     linktab[ linkid] = 0.0 + link[1] * rank.weight
                     linkreftab[ linkid] = [refcnt,docid]
         heap = [ ]
-        for (link,weight) in linktab.iteritems():
+        for (link,weight) in linktab.items():
             heap.append([-weight, link])
         heapq.heapify(heap)
         li = 0
