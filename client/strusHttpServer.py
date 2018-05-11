@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
@@ -15,7 +15,6 @@ import strus
 import strusMessage
 import time
 import math
-import unidecode
 import pprint
 import urllib
 
@@ -36,7 +35,7 @@ debugtrace = False
 strusctx = strus.Context()
 strusctx.addResourcePath( "./resources")
 analyzer = strusctx.createQueryAnalyzer()
-analyzer.addSearchIndexElement(
+analyzer.addElement(
         "stem", "text", "word", 
         ["lc", ["dictmap", "irregular_verbs_en.txt"], ["stem", "en"], ["convdia", "en"], "lc"]
     )
@@ -45,7 +44,7 @@ analyzer.addSearchIndexElement(
 ResultRow = collections.namedtuple('ResultRow', ['serverno','docno', 'weight', 'title', 'paratitle', 'abstract', 'debuginfo'])
 NblnkRow = collections.namedtuple('NblnkRow', ['serverno','docno', 'weight', 'links', 'features', 'titles'])
 LinkRow = collections.namedtuple('LinkRow', ['title','weight'])
-QueryTerm = collections.namedtuple('QueryTerm', ['type','value','pos','len','weight','cover'])
+QueryTerm = collections.namedtuple('QueryTerm', ['type','value','length','weight'])
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'encvalue', 'index', 'weight'])
 QueryStruct = collections.namedtuple('QueryStruct', ['terms','links','relatedterms','errors'])
 
@@ -56,21 +55,21 @@ def LinkRowKey( linkrow):
 # Answer a query (issue a query to all storage servers and merge it to one result):
 class QueryHandler( tornado.web.RequestHandler ):
     def termStatQuery( self, terms):
-        statquery = bytearray("Q")
+        statquery = bytearray(b"Q")
         for term in terms:
-            statquery.append('T')
-            statquery += strusMessage.packString( term.type)
-            statquery += strusMessage.packString( term.value)
-        statquery.append('N')
+            statquery.extend( b'T')
+            statquery.extend( strusMessage.packString( term.type))
+            statquery.extend( strusMessage.packString( term.value))
+        statquery.extend( b'N')
         return statquery
 
     def linkStatQuery( self, linktype, links):
         statquery = bytearray("Q")
         for link in links:
-            statquery.append('T')
-            statquery += strusMessage.packString( linktype)
-            statquery += strusMessage.packString( link.title)
-        statquery.append('N')
+            statquery.extend( b'T')
+            statquery.extend( strusMessage.packString( linktype))
+            statquery.extend( strusMessage.packString( link.title))
+        statquery.extend( b'N')
         return statquery
 
     @tornado.gen.coroutine
@@ -83,9 +82,9 @@ class QueryHandler( tornado.web.RequestHandler ):
             conn = yield msgclient.connect( host, port)
             statreply = yield msgclient.issueRequest( conn, statquery)
 
-            if statreply[0] == 'E':
+            if statreply[0] == ord('E'):
                 raise Exception( "failed to query global statistics: %s" % statreply[1:])
-            elif statreply[0] != 'Y':
+            elif statreply[0] != ord('Y'):
                 raise Exception( "protocol error loading global statistics")
             dflist = []
             collsize = 0
@@ -116,7 +115,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_abstract = None
         row_debuginfo = None
         while (answerofs < answersize):
-            if answer[ answerofs] == '_':
+            if answer[ answerofs] == ord('_'):
                 if not row_title is None:
                     result.append( ResultRow( serverno, row_docno, row_weight, row_title, row_paratitle, row_abstract, row_debuginfo))
                 row_docno = 0
@@ -126,21 +125,21 @@ class QueryHandler( tornado.web.RequestHandler ):
                 row_abstract = None
                 row_debuginfo = None
                 answerofs += 1
-            elif answer[ answerofs] == 'D':
+            elif answer[ answerofs] == ord('D'):
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
                 answerofs += struct.calcsize( ">I") + 1
-            elif answer[ answerofs] == 'W':
+            elif answer[ answerofs] == ord('W'):
                 (row_weight,) = struct.unpack_from( ">d", answer, answerofs+1)
                 answerofs += struct.calcsize( ">d") + 1
-            elif answer[ answerofs] == 'T':
+            elif answer[ answerofs] == ord('T'):
                 (row_title,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-            elif answer[ answerofs] == 'P':
+            elif answer[ answerofs] == ord('P'):
                 (row_paratitle,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-            elif answer[ answerofs] == 'A':
+            elif answer[ answerofs] == ord('A'):
                 (row_abstract,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-            elif answer[ answerofs] == 'B':
+            elif answer[ answerofs] == ord('B'):
                 (row_debuginfo,answerofs) = strusMessage.unpackString( answer, answerofs+1)
-            elif answer[ answerofs] == 'Z':
+            elif answer[ answerofs] == ord('Z'):
                 (serverno,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
             else:
@@ -158,7 +157,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         row_titles = []
         row_features = []
         while (answerofs < answersize):
-            if answer[ answerofs] == '_':
+            if answer[ answerofs] == ord('_'):
                 if row_docno != 0:
                     result.append( NblnkRow( serverno, row_docno, row_weight, row_links, row_features, row_titles))
                 row_docno = 0
@@ -167,28 +166,28 @@ class QueryHandler( tornado.web.RequestHandler ):
                 row_titles = []
                 row_features = []
                 answerofs += 1
-            elif answer[ answerofs] == 'D':
+            elif answer[ answerofs] == ord('D'):
                 (row_docno,) = struct.unpack_from( ">I", answer, answerofs+1)
                 answerofs += struct.calcsize( ">I") + 1
-            elif answer[ answerofs] == 'W':
+            elif answer[ answerofs] == ord('W'):
                 (row_weight,) = struct.unpack_from( ">d", answer, answerofs+1)
                 answerofs += struct.calcsize( ">d") + 1
-            elif answer[ answerofs] == 'L':
+            elif answer[ answerofs] == ord('L'):
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
                 (weight,) = struct.unpack_from( ">d", answer, answerofs)
                 answerofs += struct.calcsize( ">d")
                 row_links.append([idstr,weight])
-            elif answer[ answerofs] == 'F':
+            elif answer[ answerofs] == ord('F'):
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
                 (weight,) = struct.unpack_from( ">d", answer, answerofs)
                 answerofs += struct.calcsize( ">d")
                 row_features.append([idstr,weight])
-            elif answer[ answerofs] == 'T':
+            elif answer[ answerofs] == ord('T'):
                 (idstr,answerofs) = strusMessage.unpackString( answer, answerofs+1)
                 (weight,) = struct.unpack_from( "d", answer, answerofs)
                 answerofs += struct.calcsize( ">d")
                 row_titles.append([idstr,weight])
-            elif answer[ answerofs] == 'Z':
+            elif answer[ answerofs] == ord('Z'):
                 (serverno,) = struct.unpack_from( ">H", answer, answerofs+1)
                 answerofs += struct.calcsize( ">H") + 1
             else:
@@ -207,9 +206,9 @@ class QueryHandler( tornado.web.RequestHandler ):
         try:
             conn = yield msgclient.connect( host, port)
             reply = yield msgclient.issueRequest( conn, qryblob)
-            if reply[0] == 'E':
+            if reply[0] == ord('E'):
                 rt = (None, "storage server %s:%d returned error: %s" % (host, port, reply[1:]))
-            elif reply[0] == 'Y':
+            elif reply[0] == ord('Y'):
                 if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
                     result = self.unpackAnswerLinkQuery( reply, 1, len(reply)-1)
                 else:
@@ -221,7 +220,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         except Exception as e:
             if conn:
                 conn.close()
-            rt = (None, "call of storage server %s:%u failed: %s" % (host, port, str(e)))
+            rt = (None, "call of storage server %s:%u failed: %s" % (host, port, e))
         raise tornado.gen.Return( rt)
 
     @tornado.gen.coroutine
@@ -230,7 +229,7 @@ class QueryHandler( tornado.web.RequestHandler ):
         try:
             results = yield [ self.issueQuery( addr, scheme, qryblob) for addr in servers ]
         except Exception as e:
-            raise tornado.gen.Return( [], ["error issueing query: %s" % str(e)])
+            raise tornado.gen.Return( [], ["error issueing query: %s" % e])
         raise tornado.gen.Return( results)
 
     # Merge code derived from Python Cookbook (Sebastien Keim, Raymond Hettinger and Danny Yoo)
@@ -238,22 +237,24 @@ class QueryHandler( tornado.web.RequestHandler ):
     def mergeResultIter( self, resultlists):
         # prepare a priority queue whose items are pairs of the form (-weight, resultlistiter):
         heap = [ ]
+        iterar = [ ]
         for resultlist in resultlists:
             resultlistiter = iter(resultlist)
             for result in resultlistiter:
                 # subseq is not empty, therefore add this subseq's pair
                 # (current-value, iterator) to the list
-                heap.append((-result.weight, result, resultlistiter))
+                heap.append((-result.weight, result, len(iterar)))
+                iterar.append( resultlistiter)
                 break
         # make the priority queue into a heap
         heapq.heapify(heap)
         while heap:
             # get and yield the result with the highest weight (minus lowest negative weight):
-            negative_weight, result, resultlistiter = heap[0]
+            negative_weight, result, resultlistidx = heap[0]
             yield result
-            for result in resultlistiter:
+            for result in iterar[ resultlistidx]:
                 # resultlists is not finished, replace best pair in the priority queue
-                heapq.heapreplace( heap, (-result.weight, result, resultlistiter))
+                heapq.heapreplace( heap, (-result.weight, result, resultlistidx))
                 break
             else:
                 # subseq has been exhausted, therefore remove it from the queue
@@ -324,62 +325,54 @@ class QueryHandler( tornado.web.RequestHandler ):
         conn = None
         try:
             query = bytearray(b"Q")
-            query += bytearray(b'X')
-            query += strusMessage.packString( querystr)
-            query += bytearray(b'N')
-            query += struct.pack(">H", nofranks)
+            query.extend(b'X')
+            query.extend( strusMessage.packString( querystr))
+            query.extend( b'N')
+            query.extend( struct.pack(">H", nofranks))
 
             ri = qryserver.rindex(':')
             host,port = qryserver[:ri],int( qryserver[ri+1:])
             conn = yield msgclient.connect( host, port)
             reply = yield msgclient.issueRequest( conn, query)
-            if reply[0] == 'E':
+            if reply[0] == ord('E'):
                 raise Exception( "failed to query analyze server: %s" % reply[1:])
-            elif reply[0] != 'Y':
+            elif reply[0] != ord('Y'):
                 raise Exception( "protocol error in query analyze server query")
             replyofs = 1
             replylen = len(reply)
             while replyofs < replylen:
-                if reply[ replyofs] == 'T':
+                if reply[ replyofs] == ord('T'):
                     replyofs += 1
                     type = None
                     value = None
-                    cover = False
-                    pos = 1
                     length = 1
                     while replyofs < replylen:
-                        if reply[ replyofs] == 'T':
+                        if reply[ replyofs] == ord('T'):
                             (type,replyofs) = strusMessage.unpackString( reply, replyofs+1)
-                        elif reply[ replyofs] == 'V':
+                        elif reply[ replyofs] == ord('V'):
                             (value,replyofs) = strusMessage.unpackString( reply, replyofs+1)
-                        elif reply[ replyofs] == 'P':
-                            (pos,) = struct.unpack_from( ">I", reply, replyofs+1)
-                            replyofs += struct.calcsize( ">I") + 1
-                        elif reply[ replyofs] == 'L':
+                        elif reply[ replyofs] == ord('L'):
                             (length,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
-                        elif reply[ replyofs] == 'C':
-                            (cover,) = struct.unpack_from( ">?", reply, replyofs+1)
-                            replyofs += struct.calcsize( ">?") + 1
-                        elif reply[ replyofs] == '_':
+                        elif reply[ replyofs] == ord('_'):
                             replyofs += 1
                             break
-                    terms.append( QueryTerm( type, value, pos, length, 1.0, cover) )
-                elif reply[ replyofs] == 'R':
+                    terms.append( QueryTerm( type, value, length, 1.0) )
+                elif reply[ replyofs] == ord('R'):
                     replyofs += 1
                     value = None
                     index = -1
                     weight = 0.0
                     while replyofs < replylen:
-                        if reply[ replyofs] == 'V':
+                        if reply[ replyofs] == ord('V'):
                             (value,replyofs) = strusMessage.unpackString( reply, replyofs+1)
-                        elif reply[ replyofs] == 'I':
+                        elif reply[ replyofs] == ord('I'):
                             (index,) = struct.unpack_from( ">I", reply, replyofs+1)
                             replyofs += struct.calcsize( ">I") + 1
-                        elif reply[ replyofs] == 'W':
+                        elif reply[ replyofs] == ord('W'):
                             (weight,) = struct.unpack_from( ">d", reply, replyofs+1)
                             replyofs += struct.calcsize( ">d") + 1
-                        elif reply[ replyofs] == '_':
+                        elif reply[ replyofs] == ord('_'):
                             replyofs += 1
                             break
                     valuestr = value.replace('_',' ')
@@ -395,9 +388,9 @@ class QueryHandler( tornado.web.RequestHandler ):
             errors.append( "query analyze server request failed: %s" % e);
             if conn:
                 conn.close()
-            alt_terms = analyzer.analyzeField( "text", querystr)
+            alt_terms = analyzer.analyzeTermExpression( ["text",querystr] )
             for term in alt_terms:
-                terms.append( QueryTerm( term.type(), term.value(), term.position(), term.length(), 1.0, True))
+                terms.append( QueryTerm( term.type, term.value, term.length, 1.0, True))
         raise tornado.gen.Return( QueryStruct( terms, [], relatedterms, errors) )
 
     @tornado.gen.coroutine
@@ -415,44 +408,44 @@ class QueryHandler( tornado.web.RequestHandler ):
                 if not error is None:
                     raise Exception( error)
                 # Assemble the query:
-                qry = bytearray()
-                qry += bytearray( b"Q")
-                qry += bytearray( b"M") + strusMessage.packString( scheme)
-                qry += bytearray( b"S") + struct.pack( ">q", collectionsize)
-                qry += bytearray( b"I") + struct.pack( ">H", 0)
-                qry += bytearray( b"N") + struct.pack( ">H", maxnofresults)
+                qry = bytearray( b"Q")
+                qry.extend( bytearray( b"M") + strusMessage.packString( scheme))
+                qry.extend( bytearray( b"S") + struct.pack( ">q", collectionsize))
+                qry.extend( bytearray( b"I") + struct.pack( ">H", 0))
+                qry.extend( bytearray( b"N") + struct.pack( ">H", maxnofresults))
                 if with_debuginfo:
-                    qry += bytearray( b"B")
+                    qry.extend( bytearray( b"B"))
                 if restrictdn != 0:
-                    qry += bytearray( b"D") + struct.pack( ">I", restrictdn)
+                    qry.extend( bytearray( b"D"))
+                    qry.extend( struct.pack( ">I", restrictdn))
                 for ii in range( 0, len( terms)):
-                    qry += bytearray( b"T")
-                    qry += strusMessage.packString( terms[ii].type)
-                    qry += strusMessage.packString( terms[ii].value)
-                    qry += struct.pack( ">Hqd?", terms[ii].len, dflist[ii], 1.0, terms[ii].cover)
+                    qry.extend( bytearray( b"T"))
+                    qry.extend( strusMessage.packString( terms[ii].type))
+                    qry.extend( strusMessage.packString( terms[ii].value))
+                    qry.extend( struct.pack( ">Hqd", terms[ii].length, dflist[ii], 1.0))
                 for lnk in querystruct.links:
-                    qry += bytearray( b"L")
-                    qry += strusMessage.packString( "vectfeat")
-                    qry += strusMessage.packString( lnk.title)
-                    qry += struct.pack( ">d", lnk.weight)
+                    qry.extend( bytearray( b"L"))
+                    qry.extend( strusMessage.packString( "vectfeat"))
+                    qry.extend( strusMessage.packString( lnk.title))
+                    qry.extend( struct.pack( ">d", lnk.weight))
                 # Query all storage servers:
                 results = yield self.issueQueries( storageservers, scheme, qry)
                 rt = self.mergeQueryResults( results, firstrank, nofranks)
         except Exception as e:
-            rt = ([], ["error evaluation query: %s" % str(e)])
+            rt = ([], ["error evaluation query: %s" % e])
         raise tornado.gen.Return( rt)
 
     @tornado.gen.coroutine
     def get(self):
         try:
             # q = query terms:
-            querystr = str( self.get_argument( "q", "").encode('utf-8'))
+            querystr = self.get_argument( "q", "")
             # i = firstrank:
             firstrank = int( self.get_argument( "i", 0))
             # n = nofranks:
             nofranks = int( self.get_argument( "n", 6))
             # s = query evaluation scheme:
-            scheme = self.get_argument( "s", "STD").encode('utf-8')
+            scheme = self.get_argument( "s", "STD")
             # d = document number to restrict to:
             restrictdn = int( self.get_argument( "d", 0))
             # m = mode {"debug"}:

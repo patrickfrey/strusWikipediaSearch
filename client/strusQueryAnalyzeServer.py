@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import tornado.ioloop
 import tornado.web
 import tornado.gen
@@ -13,7 +13,6 @@ import binascii
 import time
 import strus
 import numbers
-from sets import Set
 
 # server:
 global serverno
@@ -39,14 +38,20 @@ strusctx.loadModule( "analyzer_pattern");
 strusctx.loadModule( "storage_vector_std");
 
 analyzer = strusctx.createQueryAnalyzer()
-analyzer.addSearchIndexElement(
+analyzer.addElement(
         "stem", "text", "word", 
         ["lc", ["dictmap", "irregular_verbs_en.txt"], ["stem", "en"], ["convdia", "en"], "lc"]
     )
+analyzer.addElement(
+        "selstem", "seltext", "word", 
+        ["lc", ["dictmap", "irregular_verbs_en.txt"], ["stem", "en"], ["convdia", "en"], "lc"]
+    )
+
 analyzer.addPatternLexem( "lexem", "text", "word", ["lc"] )
 analyzer.addPatternLexem( "lexem", "text", ["regex", "[,]"], ["orig"] )
 analyzer.definePatternMatcherPostProcFromFile( "vecsfeat", "std", "pattern_searchfeat_qry.bin" )
-analyzer.addSearchIndexElementFromPatternMatch( "vecsfeat", "vecsfeat", [] )
+analyzer.addElementFromPatternMatch( "vecsfeat", "vecsfeat", [] )
+analyzer.declareElementPriority( "vecsfeat", 1)
 
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
 
@@ -59,60 +64,28 @@ def processCommand( message):
         if messagesize < 1:
             raise tornado.gen.Return( b"Eempty request string")
         messageofs = 1
-        if message[0] == 'Q':
+        if message[0] == ord('Q'):
             # Build query to evaluate from the request:
-            messagesize = len(message)
             while (messageofs < messagesize):
-                if (message[ messageofs] == 'N'):
+                if (message[ messageofs] == ord('N')):
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
-                elif (message[ messageofs] == 'X'):
+                elif (message[ messageofs] == ord('X')):
                     (querystr,messageofs) = strusMessage.unpackString( message, messageofs+1)
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
             # Analyze query:
             relatedlist = []
-            terms = analyzer.analyzeField( "text", querystr)
+            terms = analyzer.analyzeTermExpression( [["text", querystr], ["seltext", querystr]])
 
             # Extract vectors referenced:
             f_indices = []
             for term in terms:
-                if term.type() == "vecsfeat":
-                    value = term.value()
-                    if value[0] == 'F':
+                if term.type == "vecsfeat":
+                    value = term.value
+                    if value[0] == ord('F'):
                         f_indices.append( int( value[1:]))
-
-            # Calculate covering query features:
-            coverfeats = Set()
-            skippos = 0
-            if len(terms) > 1:
-                curfeatidx = 0
-                for termidx,term in enumerate(terms[1:], 1):
-                    if skippos:
-                        if term.position() >= skippos:
-                            skippos = 0
-                            curfeatidx = termidx
-                        continue
-
-                    curfeat = terms[ curfeatidx]
-                    if curfeat.position() <= term.position() and curfeat.position() + curfeat.length() >= term.position() + term.length():
-                        if curfeat.position() == term.position() and curfeat.position() + curfeat.length() == term.position() + term.length():
-                            if term.type() == "stem":
-                                curfeatidx = termidx
-                        else:
-                            continue
-                    elif curfeat.position() >= term.position() and curfeat.position() + curfeat.length() <= term.position() + term.length():
-                        curfeatidx = termidx
-                    else:
-                        coverfeats.add( curfeatidx)
-                        skippos = curfeat.position() + curfeat.length()
-                        if term.position() >= skippos:
-                            skippos = 0
-                            curfeatidx = termidx
-                coverfeats.add( curfeatidx)
-            elif len(terms) == 1:
-                coverfeats.add( 0)
 
             # Calculate nearest neighbours of vectors exctracted:
             if f_indices:
@@ -132,49 +105,34 @@ def processCommand( message):
                     neighbour_ranklist = vecsearcher.findSimilarFromSelection( neighbour_list, vec, nofranks)
 
                 for neighbour in neighbour_ranklist:
-                    fname = vecstorage.featureName( neighbour.index())
-                    relatedlist.append( RelatedTerm( fname, neighbour.index(), neighbour.weight()))
-
-            if debugtrace:
-                termstr = ""
-                for termidx in coverfeats:
-                    term = terms[ termidx]
-                    termstr += term.type() + " '" + term.value() + "' "
-                print "cover query terms: %s" % termstr
+                    fname = vecstorage.featureName( neighbour.index)
+                    relatedlist.append( RelatedTerm( fname, neighbour.index, neighbour.weight))
 
             # Build the result and pack it into the reply message for the client:
             for termidx,term in enumerate(terms):
-                rt.append( 'T')
-                rt.append( 'T')
-                rt += strusMessage.packString( term.type())
-                rt.append( 'V')
-                rt += strusMessage.packString( term.value())
-                rt.append( 'P')
-                rt += struct.pack( ">I", term.position())
-                rt.append( 'L')
-                rt += struct.pack( ">I", term.length())
-                rt.append( 'C')
-                if termidx in coverfeats:
-                    rt += struct.pack( ">?", True)
-                else:
-                    rt += struct.pack( ">?", False)
-                rt.append( '_')
+                rt.extend( b'T')
+                rt.extend( b'T')
+                rt.extend( strusMessage.packString( term.type))
+                rt.extend( b'V')
+                rt.extend( strusMessage.packString( term.value))
+                if (term.length):
+                    rt.extend( b'L')
+                    rt.extend( struct.pack( ">I", term.length))
+                rt.extend( b'_')
             for related in relatedlist:
-                rt.append( 'R')
-                rt.append( 'V')
-                rt += strusMessage.packString( related.value)
-                rt.append( 'I')
-                rt += struct.pack( ">I", related.index)
-                rt.append( 'W')
-                rt += struct.pack( ">d", related.weight)
-                rt.append( '_')
-
+                rt.extend( b'R')
+                rt.extend( b'V')
+                rt.extend( strusMessage.packString( related.value))
+                rt.extend( b'I')
+                rt.extend( struct.pack( ">I", related.index))
+                rt.extend( b'W')
+                rt.extend( struct.pack( ">d", related.weight))
+                rt.extend( b'_')
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:
-        raise tornado.gen.Return( bytearray( b"E" + str(e)) )
+        raise tornado.gen.Return( bytearray( "E%s" % e, 'utf-8'))
     raise tornado.gen.Return( rt)
-
 
 # Shutdown function:
 def processShutdown():

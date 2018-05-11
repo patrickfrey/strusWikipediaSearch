@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import tornado.ioloop
 import tornado.web
 import tornado.gen
@@ -38,17 +38,18 @@ def publishStatistics( itr):
     except IOError as e:
         raise Exception( "connection to statistics server %s failed (%s)" % (statserver, e))
 
-    msg = itr.getNext()
-    while (len(msg) > 0):
+    for msg in itr:
         try:
-            reply = yield msgclient.issueRequest( conn, b"P" + struct.pack(">H",serverno) + bytearray(msg) )
-            if (reply[0] == 'E'):
+            requestblob = bytearray( b"P");
+            requestblob.extend( struct.pack(">H",serverno))
+            requestblob.extend( bytearray(msg))
+            reply = yield msgclient.issueRequest( conn, requestblob)
+            if (reply[0] == ord('E')):
                 raise Exception( "error in statistics server: %s" % reply[ 1:])
-            elif (reply[0] != 'Y'):
+            elif (reply[0] != ord('Y')):
                 raise Exception( "protocol error publishing statistics")
         except tornado.iostream.StreamClosedError:
             raise Exception( "unexpected close of statistics server")
-        msg = itr.getNext()
 
 
 # Determine if the query is only containing high frequency terms. In this case we change the retrieval scheme:
@@ -65,9 +66,9 @@ def processCommand( message):
     try:
         messagesize = len(message)
         messageofs = 1
-        if message[0] == 'Q':
+        if message[0] == ord('Q'):
             # QUERY:
-            Term = collections.namedtuple('Term', ['type', 'value', 'length', 'df', 'weight', 'cover'])
+            Term = collections.namedtuple('Term', ['type', 'value', 'length', 'df', 'weight'])
             nofranks = 20
             restrictdn = 0
             collectionsize = 0
@@ -79,33 +80,33 @@ def processCommand( message):
             # Build query to evaluate from the request:
             messagesize = len(message)
             while (messageofs < messagesize):
-                if message[ messageofs] == 'I':
+                if message[ messageofs] == ord('I'):
                     (firstrank,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
-                elif message[ messageofs] == 'N':
+                elif message[ messageofs] == ord('N'):
                     (nofranks,) = struct.unpack_from( ">H", message, messageofs+1)
                     messageofs += struct.calcsize( ">H") + 1
-                elif message[ messageofs] == 'D':
+                elif message[ messageofs] == ord('D'):
                     (restrictdn,) = struct.unpack_from( ">I", message, messageofs+1)
                     messageofs += struct.calcsize( ">I") + 1
-                elif message[ messageofs] == 'M':
+                elif message[ messageofs] == ord('M'):
                     (scheme,messageofs) = strusMessage.unpackString( message, messageofs+1)
-                elif message[ messageofs] == 'S':
+                elif message[ messageofs] == ord('S'):
                     (collectionsize,) = struct.unpack_from( ">q", message, messageofs+1)
                     messageofs += struct.calcsize( ">q") + 1
-                elif message[ messageofs] == 'T':
+                elif message[ messageofs] == ord('T'):
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
-                    (length,df,weight,cover) = struct.unpack_from( ">Hqd?", message, messageofs)
-                    messageofs += struct.calcsize( ">Hqd?")
-                    terms.append( Term( type, value, length, df, weight, cover))
-                elif message[ messageofs] == 'L':
+                    (length,df,weight) = struct.unpack_from( ">Hqd", message, messageofs)
+                    messageofs += struct.calcsize( ">Hqd")
+                    terms.append( Term( type, value, length, df, weight))
+                elif message[ messageofs] == ord('L'):
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     (weight,) = struct.unpack_from( ">d", message, messageofs)
                     messageofs += struct.calcsize( ">d")
                     links.append( Term( type, value, 1, 0, weight, False))
-                elif message[ messageofs] == 'B':
+                elif message[ messageofs] == ord('B'):
                     messageofs += 1
                     with_debuginfo = True
                 else:
@@ -116,6 +117,7 @@ def processCommand( message):
             # the documents containing some query terms in the title and the most referenced
             # documents in the collection.
 
+            print( "call evaluate query!")
             # Evaluate query:
             if restrictdn == 0:
                 results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [], debugtrace, with_debuginfo)
@@ -123,56 +125,56 @@ def processCommand( message):
                 results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [restrictdn], debugtrace, with_debuginfo)
 
             # Build the result and pack it into the reply message for the client:
-            rt.append( 'Z')
-            rt += struct.pack( ">H", serverno)
+            rt.extend( b'Z')
+            rt.extend( struct.pack( ">H", serverno))
 
             if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
                 for result in results:
-                    rt.append( '_')
-                    rt.append( 'D')
-                    rt += struct.pack( ">I", result.docno)
-                    rt.append( 'W')
-                    rt += struct.pack( ">d", result.weight)
+                    rt.extend( b'_')
+                    rt.extend( b'D')
+                    rt.extend( struct.pack( ">I", result.docno))
+                    rt.extend( b'W')
+                    rt.extend( struct.pack( ">d", result.weight))
                     for linkid,weight in result.links:
-                        rt.append( 'L')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">d", weight)
+                        rt.extend( b'L')
+                        rt.extend( strusMessage.packString( linkid) + struct.pack( ">d", weight))
             elif scheme == "STDLNK":
                 for result in results:
-                    rt.append( '_')
-                    rt.append( 'D')
-                    rt += struct.pack( ">I", result.docno)
-                    rt.append( 'W')
-                    rt += struct.pack( ">d", result.weight)
+                    rt.extend( b'_')
+                    rt.extend( b'D')
+                    rt.extend( struct.pack( ">I", result.docno))
+                    rt.extend( b'W')
+                    rt.extend( struct.pack( ">d", result.weight))
                     for linkid,weight in result.links:
-                        rt.append( 'L')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">d", weight)
+                        rt.extend( b'L')
+                        rt.extend( strusMessage.packString( linkid) + struct.pack( ">d", weight))
                     for linkid,weight in result.titles:
-                        rt.append( 'T')
-                        rt += strusMessage.packString( linkid) + struct.pack( ">d", weight)
+                        rt.extend( b'T')
+                        rt.extend( strusMessage.packString( linkid) + struct.pack( ">d", weight))
                     for featid,weight in result.features:
-                        rt.append( 'F')
-                        rt += strusMessage.packString( featid) + struct.pack( ">d", weight)
+                        rt.extend( b'F')
+                        rt.extend( strusMessage.packString( featid) + struct.pack( ">d", weight))
             else:
                 for result in results:
-                    rt.append( '_')
-                    rt.append( 'D')
-                    rt += struct.pack( ">I", result.docno)
-                    rt.append( 'W')
-                    rt += struct.pack( ">d", result.weight)
-                    rt.append( 'T')
-                    rt += strusMessage.packString( result.title)
+                    rt.extend( b'_')
+                    rt.extend( b'D')
+                    rt.extend( struct.pack( ">I", result.docno))
+                    rt.extend( b'W')
+                    rt.extend( struct.pack( ">d", result.weight))
+                    rt.extend( b'T')
+                    rt.extend( strusMessage.packString( result.title))
                     if result.paratitle:
-                        rt.append( 'P')
-                        rt += strusMessage.packString( result.paratitle)
+                        rt.extend( b'P')
+                        rt.extend( strusMessage.packString( result.paratitle))
                     if result.debuginfo:
-                        rt.append( 'B')
-                        rt += strusMessage.packString( result.debuginfo)
-                    rt.append( 'A')
-                    rt += strusMessage.packString( result.abstract)
+                        rt.extend( b'B')
+                        rt.extend( strusMessage.packString( result.debuginfo))
+                    rt.extend( b'A')
+                    rt.extend( strusMessage.packString( result.abstract))
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:
-        raise tornado.gen.Return( bytearray( b"E" + str(e)) )
+        raise tornado.gen.Return( bytearray( "E%s" % e, 'utf-8'))
     raise tornado.gen.Return( rt)
 
 
@@ -223,15 +225,15 @@ if __name__ == "__main__":
 
         if (pubstats):
             # Start publish local statistics:
-            print "Load local statistics to publish (serverno %u) ..." % serverno
+            print ("Load local statistics to publish (serverno %u) ..." % serverno)
             publishStatistics( backend.getInitStatisticsIterator())
 
         # Start server:
-        print "Starting server ..."
+        print( "Starting server ...")
         server = strusMessage.RequestServer( processCommand, processShutdown)
         server.start( myport)
-        print "Terminated"
+        print( "Terminated")
     except Exception as e:
-        print e
+        print( e)
 
 

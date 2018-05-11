@@ -1,9 +1,14 @@
-
 Ubuntu:
+	# python3
+	sudo apt-get install python3
+	# install tornado
+	sudo apt-get update
+	sudo apt-get install python3-tornado
+
 This project uses NLTK and NLTK uses NumPy. Install it and its resources with
-	sudo pip install -U nltk
-	sudo pip install -U numpy
+	sudo apt-get install python3-numpy
+	sudo python3.4 -m pip install nltk
 	sudo mkdir /usr/share/nltk_data
-	sudo python -m nltk.downloader -d /usr/share/nltk_data punkt
-	sudo python -m nltk.downloader -d /usr/share/nltk_data averaged_perceptron_tagger
+	sudo python3 -m nltk.downloader -d /usr/share/nltk_data punkt
+	sudo python3 -m nltk.downloader -d /usr/share/nltk_data averaged_perceptron_tagger
 

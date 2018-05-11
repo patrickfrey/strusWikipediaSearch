@@ -26,30 +26,33 @@ class Backend:
                      "titleinc": 4.0, "windowsize": 60, 'cardinality': "60%",
                      "ffbase": 0.4,
                      "maxdf": 0.2,
-                     ".para": "para", ".struct": "sentence", ".match": "docfeat", ".title": "titlefield"
-            }, "debug_weighting")
+                     "para": {"feature":"para"}, "struct": {"feature":"sentence"}, "match": {"feature":"docfeat"}, "title": {"feature":"titlefield"},
+                     "debug": "debug_weighting"
+            })
             if scheme == "BM25std":
-                rt.addWeightingFunction( "constant", {"precalc":1, ".match": "lnkfeat" }, "debug_weighting" )
-                rt.addWeightingFormula( "d * _1 + (1 - d) * _0", {"d": 0.7} )
+                rt.addWeightingFunction( "constant", {"precalc":1, "match": {"feature":"lnkfeat"}, "debug":"debug_weighting" })
+                rt.defineWeightingFormula( "d * _1 + (1 - d) * _0", {"d": 0.7} )
 
         elif scheme == "BM25" or scheme == "BM25pg":
             rt.addWeightingFunction( "BM25", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 1000,
                      "metadata_doclen": "doclen",
-                     ".match": "docfeat"
+                     "match": {"feature":"docfeat"},
+                     "debug":"debug_weighting"
             })
             if scheme == "BM25pg":
-                rt.addWeightingFunction( "metadata", {"name": "pageweight" }, "debug_weighting" )
-                rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
+                rt.addWeightingFunction( "metadata", {"name":"pageweight", "debug":"debug_weighting" })
+                rt.defineWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
 
         elif scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
             rt.addWeightingFunction( "BM25", {
                      "k1": 1.2, "b": 0.75, "avgdoclen": 500,
                      "metadata_doclen": "doclen",
-                     ".match": "docfeat"
-            }, "debug_weighting")
-            rt.addWeightingFunction( "metadata", {"name": "pageweight" }, "debug_weighting" )
-            rt.addWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
+                     "match": {"feature":"docfeat"},
+                     "debug":"debug_weighting"
+            })
+            rt.addWeightingFunction( "metadata", {"name": "pageweight", "debug":"debug_weighting" })
+            rt.defineWeightingFormula( "d * _0 * (_1 / 10) + (1 - d) * _0", {"d": 0.2} )
         else:
             raise Exception( "unknown query evaluation scheme %s" % scheme)
 
@@ -57,46 +60,56 @@ class Backend:
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "linkid", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
-                  ".match": "docfeat"
-            }, "debug_summarization")
+                  "match": {"feature":"docfeat"},
+                  "debug": "debug_summarization"
+            })
         elif scheme == "TILNK":
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
-                  ".match": "docfeat"
-            }, "debug_summarization")
+                  "match": {"feature":"docfeat"},
+                  "debug": "debug_summarization"
+            })
         elif scheme == "VCLNK":
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "vecfname", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
-                  ".match": "docfeat"
-            }, "debug_summarization")
+                  "match": {"feature":"docfeat"},
+                  "debug": "debug_summarization"
+            })
         elif scheme == "STDLNK":
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "linkid", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"TITLE",
-                  ".match": "docfeat"
-            }, "debug_summarization")
+                  "match": {"feature":"docfeat"},
+                  "debug": "debug_summarization"
+            })
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "veclfeat", "range": 30, "cardinality": "75%",
                   "nofranks":20, "result":"LINK",
-                  ".match": "docfeat"
-            }, "debug_summarization")
+                  "match": {"feature":"docfeat"},
+                  "debug": "debug_summarization"
+            })
             rt.addSummarizer( "accunear", {
                   "cofactor": 2.5, "type": "vecfname", "range": 20, "cardinality": "75%",
                   "nofranks":20, "result":"VECTOR",
-                  ".match": "docfeat"
-            }, "debug_summarization")
+                  "match": {"feature":"docfeat"},
+                  "debug": "debug_summarization"
+            })
         else:
             # Summarizer for getting the document title:
-            rt.addSummarizer( "attribute", { "name": "docid" }, "debug_summarization")
+            rt.addSummarizer( "attribute", { 
+                  "name": "docid",
+                  "debug": "debug_summarization"
+            })
             # Summarizer for abstracting:
             rt.addSummarizer( "matchphrase", {
                   "type": "orig",
                   "windowsize": 40, "sentencesize": 100, "cardinality": "60%", "maxdf": 0.2,
                   "matchmark": '$<b>$</b>',
-                  ".struct": "sentence", ".match": "docfeat", ".para": "para", ".title": "titlefield"
-            }, "debug_summarization")
+                  "struct": {"feature":"sentence"}, "match": {"feature":"docfeat"}, "para": {"feature":"para"}, "title": {"feature":"titlefield"},
+                  "debug": "debug_summarization"
+            })
         return rt
 
     # Constructor. Initializes the query evaluation schemes and the query and document analyzers:
@@ -116,7 +129,7 @@ class Backend:
                 yield [i,k]
 
     # Define features for weighting and summarization:
-    def defineFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
+    def addFeatures( self, scheme, query, seltitle, terms, links, collectionsize):
         selexpr1 = []
         selexpr2 = []
         if seltitle == True:
@@ -137,12 +150,10 @@ class Backend:
             selfeat2 = []
             for term in terms:
                 if term.df > 0.0:
-                    if term.cover:
-                        selfeat1.append( [term.type, term.value] )
-                        if term.type == "stem":
-                            selfeat2.append( [term.type, term.value] )
+                    if term.type == "selstem":
+                        selfeat2.append( ["stem", term.value] )
                     else:
-                        selfeat2.append( [term.type, term.value] )
+                        selfeat1.append( [term.type, term.value] )
             if selfeat1:
                 selexpr1 = ["contains"] + selfeat1
             if scheme != "NBLNK" and scheme != "TILNK" and scheme != "VCLNK" and scheme != "STDLNK" and selfeat2:
@@ -155,21 +166,21 @@ class Backend:
             raise Exception( "query features %s not found in the collection" % alltermstr)
 
         for term in terms:
-            if term.cover:
-                query.defineFeature( "docfeat", [term.type, term.value, term.length], term.weight)
+            if term.type != "selstem":
+                query.addFeature( "docfeat", [term.type, term.value, term.length], term.weight)
                 if term.df > 0.0:
                     query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 
         for link in links:
-            query.defineFeature( "lnkfeat", [link.type, link.value], link.weight)
+            query.addFeature( "lnkfeat", [link.type, link.value], link.weight)
 
         if selexpr1:
-            query.defineFeature( "selfeat", selexpr1, 1.0 )
+            query.addFeature( "selfeat", selexpr1, 1.0 )
         if selexpr2:
-            query.defineFeature( "selfeat", selexpr2, 1.0 )
+            query.addFeature( "selfeat", selexpr2, 1.0 )
 
-        query.defineDocFieldFeature( "titlefield", "title_start", "title_end" )
-        query.addMetaDataRestrictionCondition( "==", "redirect", 0, True)
+        query.addFeature( "titlefield", {"from":"title_start", "to":"title_end"} )
+        query.addMetaDataRestriction( ["==", "redirect", 0] )
 
     # Query evaluation scheme for a classical information retrieval query with BM25:
     def evaluateQuery( self, scheme, seltitle, terms, links, collectionsize, firstrank, nofranks, restrictset, debugtrace, with_debuginfo):
@@ -181,7 +192,7 @@ class Backend:
             # Return empty result for empty query:
             return []
 
-        self.defineFeatures( scheme, query, seltitle, terms, links, collectionsize)
+        self.addFeatures( scheme, query, seltitle, terms, links, collectionsize)
         query.setMaxNofRanks( nofranks)
         query.setMinRank( firstrank)
         query.defineGlobalStatistics( {'nofdocs' : collectionsize} )
@@ -194,55 +205,55 @@ class Backend:
         rt = []
         # Rewrite the results:
         if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK":
-            for rank in result.ranks():
+            for rank in result.ranks:
                 links = []
-                for sumelem in rank.summaryElements():
-                    if sumelem.name() == 'LINK':
-                        links.append( [sumelem.value().strip(), sumelem.weight()])
-                rt.append( LinkResult( rank.docno(), rank.weight(), links, [], []))
+                for sumelem in rank.summary:
+                    if sumelem.name == 'LINK':
+                        links.append( [sumelem.value.strip(), sumelem.weight])
+                rt.append( LinkResult( rank.docno, rank.weight, links, [], []))
         elif scheme == "STDLNK":
-            for rank in result.ranks():
+            for rank in result.ranks:
                 links = []
                 features = []
                 titles = []
-                for sumelem in rank.summaryElements():
-                    if sumelem.name() == 'LINK':
-                        links.append( [sumelem.value().strip(), sumelem.weight()])
-                    elif sumelem.name() == 'TITLE':
-                        titles.append( [sumelem.value().strip(), sumelem.weight()])
-                    elif sumelem.name() == 'VECTOR':
-                        features.append( [sumelem.value().strip(), sumelem.weight()])
-                rt.append( LinkResult( rank.docno(), rank.weight(), links, features, titles))
+                for sumelem in rank.summary:
+                    if sumelem.name == 'LINK':
+                        links.append( [sumelem.value.strip(), sumelem.weight])
+                    elif sumelem.name == 'TITLE':
+                        titles.append( [sumelem.value.strip(), sumelem.weight])
+                    elif sumelem.name == 'VECTOR':
+                        features.append( [sumelem.value.strip(), sumelem.weight])
+                rt.append( LinkResult( rank.docno, rank.weight, links, features, titles))
         else:
             if (debugtrace):
-                print "pass %u, nof matches %u" %(result.evaluationPass(), result.nofDocumentsRanked())
-            for rank in result.ranks():
+                print( "pass %u, nof matches %u" %(result.evalpass, result.nofranked))
+            for rank in result.ranks:
                 content = ""
                 title = ""
                 paratitle = None
                 debug_weighting = None
                 debug_summarization = None
                 debuginfo = None
-                for sumelem in rank.summaryElements():
-                    if sumelem.name() == 'phrase' or sumelem.name() == 'docstart':
+                for sumelem in rank.summary:
+                    if sumelem.name == 'phrase' or sumelem.name == 'docstart':
                         if content != "":
                             content += ' --- '
-                        content += sumelem.value()
-                    elif sumelem.name() == 'para':
-                        paratitle = sumelem.value()
-                    elif sumelem.name() == 'docid':
-                        title = sumelem.value()
+                        content += sumelem.value
+                    elif sumelem.name == 'para':
+                        paratitle = sumelem.value
+                    elif sumelem.name == 'docid':
+                        title = sumelem.value
                     elif with_debuginfo:
-                        if sumelem.name() == 'debug_weighting':
+                        if sumelem.name == 'debug_weighting':
                             if debug_weighting:
-                                debug_weighting += sumelem.value()
+                                debug_weighting += sumelem.value
                             else:
-                                debug_weighting = sumelem.value()
-                        elif sumelem.name() == 'debug_summarization':
+                                debug_weighting = sumelem.value
+                        elif sumelem.name == 'debug_summarization':
                             if debug_summarization:
-                                debug_summarization += sumelem.value()
+                                debug_summarization += sumelem.value
                             else:
-                                debug_summarization = sumelem.value()
+                                debug_summarization = sumelem.value
                 if with_debuginfo:
                     if not debuginfo:
                         debuginfo = ""
@@ -250,26 +261,26 @@ class Backend:
                         debuginfo += debug_weighting
                     if debug_summarization:
                         debuginfo += debug_summarization
-                rt.append( RankResult( rank.docno(), title, paratitle, rank.weight(), content, debuginfo))
+                rt.append( RankResult( rank.docno, title, paratitle, rank.weight, content, debuginfo))
         return rt
 
     # Get an iterator on all absolute statistics of the storage
     def getInitStatisticsIterator( self):
-        return self.storage.createInitStatisticsIterator( True)
+        return self.storage.getAllStatistics( True)
 
     # Get an iterator on all absolute statistics of the storage
     def getDoneStatisticsIterator( self):
-        return self.storage.createInitStatisticsIterator( False)
+        return self.storage.getAllStatistics( False)
 
     # Get an iterator on statistic updates of the storage
     def getUpdateStatisticsIterator( self):
-        return self.storage.createUpdateStatisticsIterator()
+        return self.storage.getChangeStatistics()
 
     # Load the list of docno of documents with a pageweight higher than specified
     def getMinimumPageweightDocnos( self, minpageweight):
         rt = []
         browse = self.storage.createDocumentBrowser()
-        browse.addMetaDataRestrictionCondition( ">=", "pageweight", minpageweight, True)
+        browse.addMetaDataRestriction( [">=", "pageweight", minpageweight] )
         docno = browse.skipDoc( 0)
         while (docno > 0):
             rt.append( docno)

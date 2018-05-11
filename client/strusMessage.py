@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import tornado.ioloop
 import tornado.gen
 import tornado.tcpclient
@@ -11,9 +11,19 @@ import binascii
 
 # Pack a message with its length (processCommand protocol)
 def packString( msg):
+    return struct.pack( ">I%ds" % len(msg), len(msg), msg.encode("utf-8"))
+
+def packBytes( msg):
     return struct.pack( ">I%ds" % len(msg), len(msg), msg)
 
 def unpackString( msg, msgofs):
+    (strsize,) = struct.unpack_from( ">I", msg, msgofs)
+    msgofs += struct.calcsize( ">I")
+    (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
+    msgofs += strsize
+    return [str.decode("utf-8"),msgofs]
+
+def unpackBytes( msg, msgofs):
     (strsize,) = struct.unpack_from( ">I", msg, msgofs)
     msgofs += struct.calcsize( ">I")
     (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
@@ -33,7 +43,9 @@ class TcpConnection( object):
                 (msgsize,) = struct.unpack( ">I", msgsizemsg)
                 msg = yield self.stream.read_bytes( msgsize)
                 reply = yield self.command_callback( msg)
-                yield self.stream.write( struct.pack( ">I", len(reply)) + bytes(reply))
+                replymsg = bytearray( struct.pack( ">I", len(reply)))
+                replymsg.extend( reply)
+                yield self.stream.write( replymsg)
         except tornado.iostream.StreamClosedError:
             pass
 
@@ -71,6 +83,5 @@ class RequestClient( tornado.tcpclient.TCPClient):
         (replysize,) = struct.unpack( ">I", replysizemsg)
         reply = yield stream.read_bytes( replysize)
         raise tornado.gen.Return( reply)
-
 
 
