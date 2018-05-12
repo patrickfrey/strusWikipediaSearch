@@ -112,7 +112,7 @@ def processCommand( message):
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
-            if (with_debuginfo):
+            if (with_debuginfo or debugtrace):
                 backend.enableDebugTrace()
 
             doTitleSelect = isStopWordsOnlyQuery( terms, collectionsize)
@@ -173,7 +173,7 @@ def processCommand( message):
                         rt.extend( strusMessage.packString( result.debuginfo))
                     rt.extend( b'A')
                     rt.extend( strusMessage.packString( result.abstract))
-            if (with_debuginfo):
+            if (with_debuginfo or debugtrace):
                 backend.printDebugTrace()
                 backend.disableDebugTrace()
         else:
