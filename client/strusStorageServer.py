@@ -112,6 +112,9 @@ def processCommand( message):
                 else:
                     raise tornado.gen.Return( b"Eunknown parameter")
 
+            if (with_debuginfo):
+                backend.enableDebugTrace()
+
             doTitleSelect = isStopWordsOnlyQuery( terms, collectionsize)
             # ... if we have a query containing only stopwords, we reduce our search space to 
             # the documents containing some query terms in the title and the most referenced
@@ -171,6 +174,9 @@ def processCommand( message):
                         rt.extend( strusMessage.packString( result.debuginfo))
                     rt.extend( b'A')
                     rt.extend( strusMessage.packString( result.abstract))
+            if (with_debuginfo):
+                backend.printDebugTrace()
+                backend.disableDebugTrace()
         else:
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:

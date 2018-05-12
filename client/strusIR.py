@@ -3,6 +3,7 @@ import itertools
 import heapq
 import re
 import collections
+import utils
 
 RankResult = collections.namedtuple('RankResult', ['docno','title','paratitle','weight','abstract','debuginfo'])
 LinkResult = collections.namedtuple('LinkResult', ['docno','weight','links','features','titles'])
@@ -121,6 +122,17 @@ class Backend:
         for scheme in [ "BM25", "BM25pg", "BM25pff", "BM25std", "NBLNK", "TILNK", "VCLNK", "STDLNK" ]:
             self.queryeval[ scheme] = self.createQueryEval( scheme)
 
+    def enableDebugTrace( self):
+        self.context.enableDebugTrace( "query")
+        self.context.enableDebugTrace( "analyzer")
+
+    def printDebugTrace( self):
+        print( "DUMP\n%s\n" % dumpTree( self.context.fetchDebugTrace()))
+
+    def disableDebugTrace( self):
+        self.context.disableDebugTrace( "query")
+        self.context.disableDebugTrace( "analyzer")
+
     # Get pairs (a,b) of a and b in [0..N-1] with a < b:
     @staticmethod
     def getAscendingIndexPairs( N):
@@ -135,7 +147,7 @@ class Backend:
         if seltitle == True:
             selfeat = []
             for term in terms:
-                if term.df > 0.0:
+                if term.df > 0.0 and term.type != "selstem":
                     selfeat.append( ["tist", term.value] )
             cardinality = 0
             if len( selfeat) >= 3:
@@ -162,7 +174,8 @@ class Backend:
         if not selexpr1 and not selexpr2:
             alltermstr = ""
             for term in terms:
-               alltermstr += " %s '%s'" % (term.type, term.value)
+                if term.type != "selstem":
+                    alltermstr += " %s '%s'" % (term.type, term.value)
             raise Exception( "query features %s not found in the collection" % alltermstr)
 
         for term in terms:
