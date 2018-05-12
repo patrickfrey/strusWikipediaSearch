@@ -161,6 +161,7 @@ class Backend:
             selfeat1 = []
             selfeat2 = []
             for term in terms:
+                print("++++ TERM %s '%s' %f", term.type, term.value, term.df)
                 if term.df > 0.0:
                     if term.type == "selstem":
                         selfeat2.append( ["stem", term.value] )
