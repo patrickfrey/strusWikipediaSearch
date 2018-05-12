@@ -390,7 +390,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                 conn.close()
             alt_terms = analyzer.analyzeTermExpression( ["text",querystr] )
             for term in alt_terms:
-                terms.append( QueryTerm( term.type, term.value, term.length, 1.0, True))
+                terms.append( QueryTerm( term.type, term.value, term.length, 1.0))
         raise tornado.gen.Return( QueryStruct( terms, [], relatedterms, errors) )
 
     @tornado.gen.coroutine
@@ -422,7 +422,10 @@ class QueryHandler( tornado.web.RequestHandler ):
                     qry.extend( bytearray( b"T"))
                     qry.extend( strusMessage.packString( terms[ii].type))
                     qry.extend( strusMessage.packString( terms[ii].value))
-                    qry.extend( struct.pack( ">Hqd", terms[ii].length, dflist[ii], 1.0))
+                    if (terms[ii].length):
+                        qry.extend( struct.pack( ">Hqd", terms[ii].length, dflist[ii], 1.0))
+                    else:
+                        qry.extend( struct.pack( ">Hqd", 1, dflist[ii], 1.0))
                 for lnk in querystruct.links:
                     qry.extend( bytearray( b"L"))
                     qry.extend( strusMessage.packString( "vectfeat"))
@@ -462,14 +465,14 @@ class QueryHandler( tornado.web.RequestHandler ):
 
             if scheme == "NBLNK" or scheme == "TILNK" or scheme == "VCLNK" or scheme == "STDLNK":
                 selectresult = yield self.evaluateQuery( scheme, querystruct, 0, 120, restrictdn, with_debuginfo)
-                errors += selectresult[1]
+                errors.extend( selectresult[1])
                 result = [self.getLinkQueryResults( selectresult[0], 'links', firstrank, nofranks+1), errors]
             elif scheme == "STD":
                 noflinks = 20
                 nofnblinks = 20
                 noffeatures = 15
                 selectresult = yield self.evaluateQuery( "STDLNK", querystruct, 0, 120, 0, False)
-                errors += selectresult[1]
+                errors.extend( selectresult[1])
                 links = self.getLinkQueryResults( selectresult[0], 'links', 0, noflinks)
                 nblinks = self.getLinkQueryResults( selectresult[0], 'titles', 0, nofnblinks)
                 features = self.getLinkQueryResults( selectresult[0], 'features', 0, noffeatures)
@@ -481,11 +484,11 @@ class QueryHandler( tornado.web.RequestHandler ):
                 relatedterms = querystruct.relatedterms
                 querystruct = QueryStruct( querystruct.terms, links, [], errors)
                 qryresult = yield self.evaluateQuery( "BM25std", querystruct, firstrank, nofranks+1, restrictdn, with_debuginfo)
-                errors += qryresult[1]
+                errors.extend( qryresult[1])
                 result = [qryresult[0],errors]
             else:
                 qryresult = yield self.evaluateQuery( scheme, querystruct, firstrank, nofranks+1, restrictdn, with_debuginfo)
-                errors += qryresult[1]
+                errors.extend( qryresult[1])
                 result = [qryresult[0],errors]
             time_elapsed = time.time() - start_time
             # Render the results:

@@ -120,7 +120,6 @@ def processCommand( message):
             # the documents containing some query terms in the title and the most referenced
             # documents in the collection.
 
-            print( "call evaluate query!")
             # Evaluate query:
             if restrictdn == 0:
                 results = backend.evaluateQuery( scheme, doTitleSelect, terms, links, collectionsize, firstrank, nofranks, [], debugtrace, with_debuginfo)
