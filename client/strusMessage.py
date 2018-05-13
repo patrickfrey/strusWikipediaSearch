@@ -21,7 +21,7 @@ def unpackString( msg, msgofs):
     msgofs += struct.calcsize( ">I")
     (str,) = struct.unpack_from( "%ds" % (strsize), msg, msgofs)
     msgofs += strsize
-    return [str.decode("utf-8"),msgofs]
+    return [str.decode("utf-8", "ignore"),msgofs]
 
 def unpackBytes( msg, msgofs):
     (strsize,) = struct.unpack_from( ">I", msg, msgofs)
