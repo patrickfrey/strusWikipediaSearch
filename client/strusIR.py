@@ -127,7 +127,7 @@ class Backend:
         self.context.enableDebugTrace( "analyzer")
 
     def printDebugTrace( self):
-        print( "DUMP\n%s\n" % dumpTree( self.context.fetchDebugTrace()))
+        print( "Query:\n%s\n" % utils.dumpTree( self.context.fetchDebugTrace()))
 
     def disableDebugTrace( self):
         self.context.disableDebugTrace( "query")

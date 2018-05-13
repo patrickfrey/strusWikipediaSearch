@@ -57,3 +57,4 @@ def _dumpTree( indent, obj, depth, excludeList):
 
 def dumpTree( obj):
 	return _dumpTree( "", obj, 20, {})
+
