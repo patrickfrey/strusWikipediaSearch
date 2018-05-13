@@ -139,7 +139,8 @@ def processCommand( message):
                     rt.extend( struct.pack( ">d", result.weight))
                     for linkid,weight in result.links:
                         rt.extend( b'L')
-                        rt.extend( strusMessage.packString( linkid) + struct.pack( ">d", weight))
+                        rt.extend( strusMessage.packString( linkid))
+                        rt.extend( struct.pack( ">d", weight))
             elif scheme == "STDLNK":
                 for result in results:
                     rt.extend( b'_')
@@ -149,13 +150,16 @@ def processCommand( message):
                     rt.extend( struct.pack( ">d", result.weight))
                     for linkid,weight in result.links:
                         rt.extend( b'L')
-                        rt.extend( strusMessage.packString( linkid) + struct.pack( ">d", weight))
+                        rt.extend( strusMessage.packString( linkid))
+                        rt.extend( struct.pack( ">d", weight))
                     for linkid,weight in result.titles:
                         rt.extend( b'T')
-                        rt.extend( strusMessage.packString( linkid) + struct.pack( ">d", weight))
+                        rt.extend( strusMessage.packString( linkid))
+                        rt.extend( struct.pack( ">d", weight))
                     for featid,weight in result.features:
                         rt.extend( b'F')
-                        rt.extend( strusMessage.packString( featid) + struct.pack( ">d", weight))
+                        rt.extend( strusMessage.packString( featid))
+                        rt.extend( struct.pack( ">d", weight))
             else:
                 for result in results:
                     rt.extend( b'_')

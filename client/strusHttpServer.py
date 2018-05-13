@@ -409,10 +409,14 @@ class QueryHandler( tornado.web.RequestHandler ):
                     raise Exception( error)
                 # Assemble the query:
                 qry = bytearray( b"Q")
-                qry.extend( bytearray( b"M") + strusMessage.packString( scheme))
-                qry.extend( bytearray( b"S") + struct.pack( ">q", collectionsize))
-                qry.extend( bytearray( b"I") + struct.pack( ">H", 0))
-                qry.extend( bytearray( b"N") + struct.pack( ">H", maxnofresults))
+                qry.extend( bytearray( b"M"))
+                qry.extend( strusMessage.packString( scheme))
+                qry.extend( bytearray( b"S"))
+                qry.extend( struct.pack( ">q", collectionsize))
+                qry.extend( bytearray( b"I"))
+                qry.extend( struct.pack( ">H", 0))
+                qry.extend( bytearray( b"N"))
+                qry.extend( struct.pack( ">H", maxnofresults))
                 if with_debuginfo:
                     qry.extend( bytearray( b"B"))
                 if restrictdn != 0:
