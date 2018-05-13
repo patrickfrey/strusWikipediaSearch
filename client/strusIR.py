@@ -147,7 +147,7 @@ class Backend:
         if seltitle == True:
             selfeat = []
             for term in terms:
-                if term.df > 0.0 and term.type != "selstem":
+                if term.df > 0.0:
                     selfeat.append( ["tist", term.value] )
             cardinality = 0
             if len( selfeat) >= 3:
@@ -161,12 +161,8 @@ class Backend:
             selfeat1 = []
             selfeat2 = []
             for term in terms:
-                print("++++ TERM %s '%s' %f", term.type, term.value, term.df)
                 if term.df > 0.0:
-                    if term.type == "selstem":
-                        selfeat2.append( ["stem", term.value] )
-                    else:
-                        selfeat1.append( [term.type, term.value] )
+                    selfeat1.append( [term.type, term.value] )
             if selfeat1:
                 selexpr1 = ["contains"] + selfeat1
             if scheme != "NBLNK" and scheme != "TILNK" and scheme != "VCLNK" and scheme != "STDLNK" and selfeat2:
@@ -175,15 +171,13 @@ class Backend:
         if not selexpr1 and not selexpr2:
             alltermstr = ""
             for term in terms:
-                if term.type != "selstem":
-                    alltermstr += " %s '%s'" % (term.type, term.value)
+                alltermstr += " %s '%s'" % (term.type, term.value)
             raise Exception( "query features %s not found in the collection" % alltermstr)
 
         for term in terms:
-            if term.type != "selstem":
-                query.addFeature( "docfeat", [term.type, term.value, term.length], term.weight)
-                if term.df > 0.0:
-                    query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
+            query.addFeature( "docfeat", [term.type, term.value, term.length], term.weight)
+            if term.df > 0.0:
+                query.defineTermStatistics( term.type, term.value, {'df' : int(term.df)} )
 
         for link in links:
             query.addFeature( "lnkfeat", [link.type, link.value], link.weight)

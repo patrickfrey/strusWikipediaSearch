@@ -53,10 +53,7 @@ def processCommand( message):
                     (type, messageofs) = strusMessage.unpackString( message, messageofs+1)
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     df = 0
-                    if (type == "selstem"):
-                        key = termDfMapKey( "stem", value)
-                    else:
-                        key = termDfMapKey( type, value)
+                    key = termDfMapKey( type, value)
                     if key in termDfMap:
                         df = termDfMap[ key]
                     rt += struct.pack( ">q", df)

@@ -36,6 +36,7 @@ msgclient = strusMessage.RequestClient()
 strusctx.addResourcePath( "./resources")
 strusctx.loadModule( "analyzer_pattern");
 strusctx.loadModule( "storage_vector_std");
+AnalyzerTerm = collections.namedtuple('AnalyzerTerm', ['type','value','length'])
 
 analyzer = strusctx.createQueryAnalyzer()
 analyzer.addElement(
@@ -80,12 +81,32 @@ def processCommand( message):
             terms = analyzer.analyzeTermExpression( [["text", querystr], ["seltext", querystr]])
 
             # Extract vectors referenced:
+            for term in terms:
+                if term.value[0] == ord('F'):
+                    f_indices.append( int( term.value[1:]))
+
+            # Build real list of features for retrieval in the searchindex:
+            pos2term = {}
+            pos = 0
             f_indices = []
             for term in terms:
-                if term.type == "vecsfeat":
-                    value = term.value
-                    if value[0] == ord('F'):
-                        f_indices.append( int( value[1:]))
+                if term.type != "selstem":
+                    if term.length and term.length > 1:
+                        pos2term[ pos] = AnalyzerTerm( term.type, term.value, term.length)
+                        pos += term.length
+                    elif term.type == "stem":
+                        pos2term[ pos] = AnalyzerTerm( term.type, term.value, 1)
+                        pos += 1
+            pos = 0
+            for term in terms:
+                if term.type == "selstem":
+                    if not pos in pos2term:
+                        pos2term[ pos] = AnalyzerTerm( "stem", term.value, 1)
+                    pos += 1
+            finalterms = []
+            for pos, term in pos2term.items():
+                finalterms.append( term)
+            terms = finalterms
 
             # Calculate nearest neighbours of vectors exctracted:
             if f_indices:
