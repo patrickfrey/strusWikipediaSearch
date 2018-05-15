@@ -83,7 +83,7 @@ def processCommand( message):
             # Extract vectors referenced:
             f_indices = []
             for term in terms:
-                if term.value[0] == ord('F'):
+                if term.value[0] == 'F':
                     f_indices.append( int( term.value[1:]))
 
             # Build real list of features for retrieval in the searchindex:
