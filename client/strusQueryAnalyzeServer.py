@@ -81,6 +81,7 @@ def processCommand( message):
             terms = analyzer.analyzeTermExpression( [["text", querystr], ["seltext", querystr]])
 
             # Extract vectors referenced:
+            f_indices = []
             for term in terms:
                 if term.value[0] == ord('F'):
                     f_indices.append( int( term.value[1:]))
@@ -88,7 +89,6 @@ def processCommand( message):
             # Build real list of features for retrieval in the searchindex:
             pos2term = {}
             pos = 0
-            f_indices = []
             for term in terms:
                 if term.type != "selstem":
                     if term.length and term.length > 1:
