@@ -16,7 +16,7 @@ import strusMessage
 import time
 import math
 import pprint
-import urllib
+import urllib.parse
 
 # [0] Globals and helper classes:
 # The address of the global statistics server:
@@ -377,7 +377,7 @@ class QueryHandler( tornado.web.RequestHandler ):
                             break
                     valuestr = value.replace('_',' ')
                     if (valuestr.lower() != querystr.lower()):
-                        encvalue = urllib.quote( valuestr)
+                        encvalue = urllib.parse.quote( valuestr)
                         relatedterms.append( RelatedTerm( valuestr, encvalue, index, weight) )
                 else:
                     break
