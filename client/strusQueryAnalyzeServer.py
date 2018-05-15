@@ -126,8 +126,8 @@ def processCommand( message):
                     neighbour_ranklist = vecsearcher.findSimilarFromSelection( neighbour_list, vec, nofranks)
 
                 for neighbour in neighbour_ranklist:
-                    fname = vecstorage.featureName( neighbour.index)
-                    relatedlist.append( RelatedTerm( fname, neighbour.index, neighbour.weight))
+                    fname = vecstorage.featureName( neighbour.featidx)
+                    relatedlist.append( RelatedTerm( fname, neighbour.featidx, neighbour.weight))
 
             # Build the result and pack it into the reply message for the client:
             for termidx,term in enumerate(terms):
