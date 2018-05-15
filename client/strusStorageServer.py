@@ -105,7 +105,7 @@ def processCommand( message):
                     (value, messageofs) = strusMessage.unpackString( message, messageofs)
                     (weight,) = struct.unpack_from( ">d", message, messageofs)
                     messageofs += struct.calcsize( ">d")
-                    links.append( Term( type, value, 1, 0, weight, False))
+                    links.append( Term( type, value, 1, 0, weight))
                 elif message[ messageofs] == ord('B'):
                     messageofs += 1
                     with_debuginfo = True
