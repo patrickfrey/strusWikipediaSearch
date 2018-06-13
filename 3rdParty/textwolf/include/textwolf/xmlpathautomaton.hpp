@@ -1,37 +1,10 @@
 /*
----------------------------------------------------------------------
-    The template library textwolf implements an input iterator on
-    a set of XML path expressions without backward references on an
-    STL conforming input iterator as source. It does no buffering
-    or read ahead and is dedicated for stream processing of XML
-    for a small set of XML queries.
-    Stream processing in this context refers to processing the
-    document without buffering anything but the current result token
-    processed with its tag hierarchy information.
-
-    Copyright (C) 2010,2011,2012,2013,2014 Patrick Frey
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 3.0 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
---------------------------------------------------------------------
-
-	The latest version of textwolf can be found at 'http://github.com/patrickfrey/textwolf'
-	For documentation see 'http://patrickfrey.github.com/textwolf'
-
---------------------------------------------------------------------
-*/
+ * Copyright (c) 2014 Patrick P. Frey
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 /// \file textwolf/xmlpathautomaton.hpp
 /// \brief Automaton to select path expressions from an XML iterator
 
@@ -43,6 +16,7 @@
 #include "textwolf/xmlscanner.hpp"
 #include "textwolf/staticbuffer.hpp"
 #include <limits>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -64,7 +38,6 @@ public:
 	{}
 
 	typedef CharSet_ CharSet;
-	typedef int Hash;
 	typedef XMLPathSelectAutomaton<CharSet> ThisXMLPathSelectAutomaton;
 
 	virtual ~XMLPathSelectAutomaton(){}
@@ -466,7 +439,7 @@ private:
 	///\param [in] srckey the ASCII encoded representation in the source
 	///\param [in] follow true, uf the state transition is active for all sub scopes of the activation state
 	///\return the target state of the transition defined
-	int defineNext( int stateidx, Operation op, unsigned int keysize, const char* key, const char* srckey, bool follow=false) throw(exception,std::bad_alloc)
+	int defineNext( int stateidx, Operation op, unsigned int keysize, const char* key, const char* srckey, bool follow=false)
 	{
 		try
 		{
@@ -503,7 +476,7 @@ private:
 			states[ stateidx].defineNext( op, keysize, key, srckey, lastidx, follow);
 			return stateidx=lastidx;
 		}
-		catch (std::bad_alloc)
+		catch (const std::bad_alloc&)
 		{
 			throw exception( OutOfMem);
 		}
@@ -521,7 +494,7 @@ private:
 	///\param [in] start start of index range where this state transition fires
 	///\param [in] end end of index range where this state transition fires
 	///\return index of the state where this output action was defined
-	int defineOutput( int stateidx, const Mask& printOpMask, int typeidx, bool follow, int start, int end) throw(exception,std::bad_alloc)
+	int defineOutput( int stateidx, const Mask& printOpMask, int typeidx, bool follow, int start, int end)
 	{
 		try
 		{
@@ -547,7 +520,7 @@ private:
 			states[ stateidx].defineOutput( printOpMask, typeidx, follow, start, end);
 			return stateidx;
 		}
-		catch (std::bad_alloc)
+		catch (const std::bad_alloc&)
 		{
 			throw exception( OutOfMem);
 		}
@@ -564,9 +537,6 @@ public:
 	struct PathElement :throws_exception
 	{
 	private:
-		XMLPathSelectAutomaton* xs;		//< XML Path select automaton where this node is an element of
-		int stateidx;				//< state of this element in the automaton
-
 		///\class Range
 		///\brief Element counting range defining what are indices of valid elements
 		struct Range
@@ -587,6 +557,8 @@ public:
 			///\brief Constructor
 			Range()				:start(0),end(-1){}
 		};
+		XMLPathSelectAutomaton* xs;	//< XML Path select automaton where this node is an element of
+		int stateidx;			//< state of this element in the automaton
 		Range range;			//< Index range of this XML path element
 		bool follow;			//< true, if this element is active (firing) for all sub scopes of the activation scope
 		Mask pushOpMask;		//< mask for firing element actions
@@ -607,7 +579,7 @@ public:
 		///\param [in] op XML operation type of this state transition
 		///\param [in] value key value as ASCII with encoded entities for higher unicode characters of this state transition
 		///\return *this
-		PathElement& doSelect( Operation op, const char* value) throw(exception,std::bad_alloc)
+		PathElement& doSelect( Operation op, const char* value)
 		{
 			static XMLScannerBase::IsTagCharMap isTagCharMap;
 			if (xs != 0)
@@ -629,6 +601,7 @@ public:
 					stateidx = xs->defineNext( stateidx, op, 0, 0, 0, follow);
 				}
 			}
+			follow = false; //... follow only valid for this state transition
 			return *this;
 		}
 
@@ -680,7 +653,7 @@ public:
 		///\brief Define the output of the current element
 		///\param [in] typeidx type of the element produced
 		///\return *this
-		PathElement& push( int typeidx) throw(exception,std::bad_alloc)
+		PathElement& push( int typeidx)
 		{
 			if (xs != 0) stateidx = xs->defineOutput( stateidx, printOpMask, typeidx, follow, range.start, range.end);
 			return *this;
@@ -700,77 +673,80 @@ public:
 		///\brief Corresponds to "//" in abbreviated syntax of XPath
 		///\return *this
 		PathElement& operator --(int)							{return doFollow();}
+		///\brief Corresponds to "//" in abbreviated syntax of XPath
+		///\return *this
+		PathElement& forAllDescendants()						{return doFollow();}
 		///\brief Find tag by name
 		///\param [in] name name of the tag
 		///\return *this
 		///\remark same as selectTag(const char*)
-		PathElement& operator []( const char* name) throw(exception,std::bad_alloc)	{return doSelect( OpenTag, name);}
+		PathElement& operator []( const char* name)					{return doSelect( OpenTag, name);}
 		///\brief Find tag by name
 		///\param [in] name name of the tag
 		///\return *this
-		PathElement& selectTag( const char* name) throw(exception,std::bad_alloc)	{return doSelect( OpenTag, name);}
+		PathElement& selectTag( const char* name)					{return doSelect( OpenTag, name);}
 		///\brief Find close tag of current tag selected
 		///\return *this
-		PathElement& selectCloseTag() throw(exception,std::bad_alloc)			{return doSelect( CloseTag, 0);}
+		PathElement& selectCloseTag()							{return doSelect( CloseTag, 0);}
 
 		///\brief Find tag with one attribute
 		///\param [in] name name of the attribute
 		///\return *this
 		///\remark same as selectAttribute(const char*)
-		PathElement& operator ()( const char* name) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
+		PathElement& operator ()( const char* name)					{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
 		///\brief Find tag with one attribute
 		///\param [in] name name of the attribute
 		///\return *this
-		PathElement& selectAttribute( const char* name) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
+		PathElement& selectAttribute( const char* name)					{return doSelect( Attribute, name).defineOutput( ThisAttributeValue);}
 
 		///\brief Find tag with one attribute,value condition
 		///\remark same as ifAttribute(const char*,const char*)
 		///\param [in] name name of the attribute
 		///\param [in] value value of the attribute
 		///\return *this
-		PathElement& operator ()( const char* name, const char* value) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
+		PathElement& operator ()( const char* name, const char* value)			{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
 
 		///\brief Find tag with one attribute,value condition
 		///\param [in] name name of the attribute
 		///\param [in] value value of the attribute
 		///\return *this
-		PathElement& ifAttribute( const char* name, const char* value) throw(exception,std::bad_alloc)	{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
+		PathElement& ifAttribute( const char* name, const char* value)			{return doSelect( Attribute, name).doSelect( ThisAttributeValue, value);}
 
 		///\brief Define maximum element index to push
 		///\param [in] idx maximum element index
 		///\return *this
-		PathElement& TO(int idx) throw(exception,std::bad_alloc)			{return doCount((idx>=0)?(idx+1):-1);}
+		PathElement& TO(int idx)							{return doCount((idx>=0)?(idx+1):-1);}
 		///\brief Define minimum element index to push
 		///\param [in] idx minimum element index
 		///\return *this
-		PathElement& FROM(int idx) throw(exception,std::bad_alloc)			{return doStart(idx); return *this;}
+		PathElement& FROM(int idx)							{return doStart(idx); return *this;}
 		///\brief Define minimum and maximum element index to push
 		///\param [in] idx1 minimum element index
 		///\param [in] idx2 maximum element index
 		///\return *this
-		PathElement& RANGE(int idx1, int idx2) throw(exception,std::bad_alloc)		{return doRange(idx1,(idx2>=0)?(idx2+1):-1); return *this;}
+		PathElement& RANGE(int idx1, int idx2)						{return doRange(idx1,(idx2>=0)?(idx2+1):-1); return *this;}
 		///\brief Define index of the element index to push
 		///\param [in] idx element index
 		///\return *this
-		PathElement& INDEX(int idx) throw(exception,std::bad_alloc)			{return doRange(idx,idx+1); return *this;}
+		PathElement& INDEX(int idx)							{return doRange(idx,idx+1); return *this;}
 
 		///\brief Define element type to push
 		///\param [in] type element type
 		///\return *this
 		///\remark same as assignType(int)
-		PathElement& operator =(int type) throw(exception,std::bad_alloc)		{return push( type);}
+		PathElement& operator =(int type)						{return push( type);}
 		///\brief Define element type to push
 		///\param [in] type element type
 		///\return *this
-		PathElement& assignType(int type) throw(exception,std::bad_alloc)		{return push( type);}
+		PathElement& assignType(int type)						{return push( type);}
 
 		///\brief Define grab content
 		///\remark same as selectContent()
 		///\return *this
-		PathElement& operator ()()  throw(exception,std::bad_alloc)			{return defineOutput(Content);}
+		PathElement& operator ()()							{return defineOutput(Content);}
 		///\brief Define grab content
 		///\return *this
-		PathElement& selectContent()  throw(exception,std::bad_alloc)			{return defineOutput(Content);}
+		PathElement& selectContent() 							{return defineOutput(Content);}
 	};
 
 	///\brief Get automaton root element to start an XML path definition

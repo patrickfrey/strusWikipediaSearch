@@ -1,37 +1,10 @@
 /*
----------------------------------------------------------------------
-    The template library textwolf implements an input iterator on
-    a set of XML path expressions without backward references on an
-    STL conforming input iterator as source. It does no buffering
-    or read ahead and is dedicated for stream processing of XML
-    for a small set of XML queries.
-    Stream processing in this context refers to processing the
-    document without buffering anything but the current result token
-    processed with its tag hierarchy information.
-
-    Copyright (C) 2010,2011,2012,2013,2014 Patrick Frey
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 3.0 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
---------------------------------------------------------------------
-
-	The latest version of textwolf can be found at 'http://github.com/patrickfrey/textwolf'
-	For documentation see 'http://patrickfrey.github.com/textwolf'
-
---------------------------------------------------------------------
-*/
+ * Copyright (c) 2014 Patrick P. Frey
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 /// \file textwolf/xmlscanner.hpp
 /// \brief XML parser iterator interface for processing the XML elements one by one
 
@@ -85,7 +58,7 @@ public:
 	/// \brief Get state addressed by its index
 	/// \param [in] stateIdx index of the state
 	/// \return state defintion reference
-	Element* get( int stateIdx) throw(exception)
+	Element* get( int stateIdx)
 	{
 		if ((unsigned int)stateIdx>size) throw exception(InvalidState);
 		return tab + stateIdx;
@@ -97,7 +70,7 @@ private:
 
 	/// \brief Create a new state
 	/// \param [in] stateIdx index of the state (must be the size of the STM array, so that state identifiers can be named by enumeration constants for better readability)
-	void newState( int stateIdx) throw(exception)
+	void newState( int stateIdx)
 	{
 		if (size != (unsigned int)stateIdx) throw exception( StateNumbersNotAscending);
 		if (size >= MaxNofStates) throw exception( DimOutOfRange);
@@ -106,7 +79,7 @@ private:
 
 	/// \brief Define a transition for all control character types not firing yet in the last state defined
 	/// \param [in] nextState the follow state index defined for these transitions
-	void addOtherTransition( int nextState) throw(exception)
+	void addOtherTransition( int nextState)
 	{
 		if (size == 0) throw exception( InvalidState);
 		if (nextState < 0 || nextState > MaxNofStates) throw exception( InvalidParamState);
@@ -120,7 +93,7 @@ private:
 	/// \brief Define a transition for inputchr in the last state defined
 	/// \param [in] inputchr the firing input control character type
 	/// \param [in] nextState the follow state index defined for this transition
-	void addTransition( ControlCharacter inputchr, int nextState) throw(exception)
+	void addTransition( ControlCharacter inputchr, int nextState)
 	{
 		if (size == 0) throw exception( InvalidState);
 		if ((int)inputchr >= (int)NofControlCharacter) throw exception( InvalidParamChar);
@@ -132,7 +105,7 @@ private:
 
 	/// \brief Define a self directing transition for inputchr in the last state defined (the state remains the same for this input)
 	/// \param [in] inputchr the firing input control character type
-	void addTransition( ControlCharacter inputchr) throw(exception)
+	void addTransition( ControlCharacter inputchr)
 	{
 		addTransition( inputchr, size-1);
 	}
@@ -140,7 +113,7 @@ private:
 	/// \brief Define an action in the last state defined (to be executed when entering the state)
 	/// \param [in] action_op action operand
 	/// \param [in] action_arg action argument
-	void addAction( int action_op, int action_arg=0) throw(exception)
+	void addAction( int action_op, int action_arg=0)
 	{
 		if (size == 0) throw exception( InvalidState);
 		if (tab[ size-1].action.op != -1) throw exception( InvalidState);
@@ -150,7 +123,7 @@ private:
 
 	/// \brief Define an error in the last state defined to be reported when no fallback is defined and no firing input character parsed
 	/// \param [in] error code to be reported
-	void addMiss( int error) throw(exception)
+	void addMiss( int error)
 	{
 		if (size == 0) throw exception( InvalidState);
 		if (tab[ size-1].missError != -1) throw exception( InvalidState);
@@ -159,7 +132,7 @@ private:
 
 	/// \brief Define in the last state defined a fallback state transition that is fired when no firing input character parsed
 	/// \param [in] stateIdx follow state index
-	void addFallback( int stateIdx) throw(exception)
+	void addFallback( int stateIdx)
 	{
 		if (size == 0) throw exception( InvalidState);
 		if (tab[ size-1].fallbackState != -1) throw exception( InvalidState);

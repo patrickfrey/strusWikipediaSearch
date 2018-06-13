@@ -1,37 +1,10 @@
 /*
----------------------------------------------------------------------
-    The template library textwolf implements an input iterator on
-    a set of XML path expressions without backward references on an
-    STL conforming input iterator as source. It does no buffering
-    or read ahead and is dedicated for stream processing of XML
-    for a small set of XML queries.
-    Stream processing in this context refers to processing the
-    document without buffering anything but the current result token
-    processed with its tag hierarchy information.
-
-    Copyright (C) 2010,2011,2012,2013,2014 Patrick Frey
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 3.0 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
---------------------------------------------------------------------
-
-	The latest version of textwolf can be found at 'http://github.com/patrickfrey/textwolf'
-	For documentation see 'http://patrickfrey.github.com/textwolf'
-
---------------------------------------------------------------------
-*/
+ * Copyright (c) 2014 Patrick P. Frey
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 /// \file textwolf/xmlpathselect.hpp
 /// \brief Context of running automaton selecting path expressions from an XML iterator
 
@@ -48,6 +21,8 @@
 #include <vector>
 #include <map>
 #include <cstddef>
+#include <iostream>
+#include <sstream>
 
 namespace textwolf {
 
@@ -75,7 +50,6 @@ private:
 	const ThisXMLPathSelectAutomaton* atm;		//< XML select automaton
 	typedef typename ThisXMLPathSelectAutomaton::Mask Mask;
 	typedef typename ThisXMLPathSelectAutomaton::Token Token;
-	typedef typename ThisXMLPathSelectAutomaton::Hash Hash;
 	typedef typename ThisXMLPathSelectAutomaton::State State;
 	typedef typename ThisXMLPathSelectAutomaton::Scope Scope;
 
@@ -378,7 +352,7 @@ public:
 
 		/// \brief Skip to next element
 		/// \return *this
-		iterator& skip() throw(exception,std::bad_alloc)
+		iterator& skip()
 		{
 			if (input != 0)
 			{

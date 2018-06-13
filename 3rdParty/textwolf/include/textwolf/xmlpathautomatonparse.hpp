@@ -1,37 +1,10 @@
 /*
----------------------------------------------------------------------
-    The template library textwolf implements an input iterator on
-    a set of XML path expressions without backward references on an
-    STL conforming input iterator as source. It does no buffering
-    or read ahead and is dedicated for stream processing of XML
-    for a small set of XML queries.
-    Stream processing in this context refers to processing the
-    document without buffering anything but the current result token
-    processed with its tag hierarchy information.
-
-    Copyright (C) 2010,2011,2012,2013,2014 Patrick Frey
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 3.0 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
---------------------------------------------------------------------
-
-	The latest version of textwolf can be found at 'http://github.com/patrickfrey/textwolf'
-	For documentation see 'http://patrickfrey.github.com/textwolf'
-
---------------------------------------------------------------------
-*/
+ * Copyright (c) 2014 Patrick P. Frey
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 /// \file textwolf/xmlpathautomatonparse.hpp
 /// \brief Parser to create a path expression selector automaton from a source (list of path expression in abbreviated syntax of xpath)
 
@@ -42,6 +15,8 @@
 #include "textwolf/cstringiterator.hpp"
 #include <limits>
 #include <string>
+#include <cstdlib>
+#include <list>
 #include <vector>
 #include <cstring>
 #include <cstddef>
@@ -69,12 +44,7 @@ public:
 
 	int addExpression( int typeidx, const char* esrc, std::size_t esrcsize)
 	{
-		std::string idstrings;
-		CStringIterator pitr( esrc, esrcsize);
-		SrcScanner pp( m_srccharset, pitr);
-		std::vector<std::size_t> idref;
-		std::size_t id;
-
+		// Check for namespaces, not supported:
 		char const* xx = (char const*)std::memchr( esrc, ':', esrcsize);
 		while (xx)
 		{
@@ -85,174 +55,66 @@ public:
 			}
 			xx = (char const*)std::memchr( xx+1, ':', esrcsize - (xpos+1));
 		}
-		for (; *pp; skipSpaces( pp))
-		{
-			switch (*pp)
-			{
-				case '/':
-				case '*':
-				case '@':
-				case '~':
-				case '=':
-				case '[':
-				case ']':
-				case ',':
-					++pp;
-					continue;
-				case '"':
-				case '\'':
-					id = parseValue( pp, idstrings);
-					idref.push_back( id);
-					continue;
-				case '(':
-					while (*pp != 0 && *pp != ')') pp++;
-					if (*pp == 0) return pp.getPosition()+1;
-					++pp;
-					continue;
-				default:
-					if (pp.control() == Undef || pp.control() == Any)
-					{
-						id = parseIdentifier( pp, idstrings);
-						idref.push_back( id);
-					}
-					else
-					{
-						return pp.getPosition()+1;
-					}
-			}
-		}
-		typename std::vector<std::size_t>::const_iterator di = idref.begin(), de = idref.end();
 
+		// Parse the expression:
+		IdentifierBuf idbuf( &m_atmcharset);
 		CStringIterator itr( esrc, esrcsize);
 		SrcScanner src( m_srccharset, itr);
-		PathElement expr( this);
+		ExprState expr( this);
+		enum State {SelectStart,SelectTag,SelectAttribute,SelectTagId,SelectAttributeId,SelectContent,SelectCondition};
+		State state = SelectStart;
+		std::vector<const char*> alt;
+
 		for (; *src; skipSpaces( src))
 		{
 			switch (*src)
 			{
 				case '@':
 				{
-					if (di == de) return src.getPosition()+1;
+					if (state != SelectStart && state != SelectTag && state != SelectTagId && state != SelectCondition) return src.getPosition()+1;
 					++src;
-					skipIdentifier( src);
-					expr.selectAttribute( getIdentifier( *di++, idstrings));
-					continue;
+					state = SelectAttribute;
+					break;
 				}
 				case '/':
 				{
+					if (state != SelectStart && state != SelectCondition && state != SelectTagId) return src.getPosition()+1;
 					++src;
 					if (*src == '/')
 					{
-						expr --;
+						expr.forAllDescendants();
 						++src;
-						if (*src == '@')
-						{
-							++src;
-							if (*src == '*')
-							{
-								++src;
-								expr.selectAttribute( 0);
-							}
-							else
-							{
-								if (di == de) return src.getPosition()+1;
-								skipIdentifier( src);
-								expr.selectAttribute( getIdentifier( *di++, idstrings));
-							}
-						}
-						else if (*src == '(')
-						{
-							continue;
-						}
-						else
-						{
-							if (*src == '*')
-							{
-								++src;
-								expr.selectTag( 0);
-							}
-							else
-							{		
-								if (di == de) return src.getPosition()+1;
-								skipIdentifier( src);
-								expr.selectTag( getIdentifier( *di++, idstrings));
-							}
-						}
 					}
-					else
-					{
-						if (*src == '@')
-						{
-							++src;
-							if (*src == '*')
-							{
-								++src;
-								expr.selectAttribute( 0);
-							}
-							else
-							{
-								if (di == de) return src.getPosition()+1;
-								skipIdentifier( src);
-								expr.selectAttribute( getIdentifier( *di++, idstrings));
-							}
-						}
-						else if (*src == '(')
-						{
-							continue;
-						}
-						else
-						{
-							if (*src == '*')
-							{
-								++src;
-								expr.selectTag( 0);
-							}
-							else
-							{
-								if (di == de) return src.getPosition()+1;
-								skipIdentifier( src);
-								expr.selectTag( getIdentifier( *di++, idstrings));
-							}
-						}
-					}
-					continue;
-				}
-				case '~':
-				{
-					++src;
-					expr.selectCloseTag();
-					continue;
+					state = SelectTag;
+					break;
 				}
 				case '[':
 				{
+					if (state != SelectStart && state != SelectTag && state != SelectTagId && state != SelectCondition) return src.getPosition()+1;
 					++src; skipSpaces( src);
 					if (*src == '@')
 					{
 						++src; skipSpaces( src);
 						// Attribute condition:
-						skipIdentifier( src);
+						if (!isIdentifierChar( src)) return src.getPosition()+1;
+						const char* attrname = idbuf.parseIdentifier( src);
 						skipSpaces( src);
-						if (di == de) return src.getPosition()+1;
-						const char* attrname = getIdentifier( *di++, idstrings);
 						if (*src != '=') return src.getPosition()+1;
 						++src; skipSpaces( src);
-						skipValue( src);
+						const char* attrval = idbuf.parseValue( src);
 						skipSpaces( src);
-						const char* attrval = getIdentifier( *di++, idstrings);
-						if (*src != ']') return src.getPosition()+1;
+						if (!attrval || *src != ']') return src.getPosition()+1;
 						expr.ifAttribute( attrname, attrval);
 						++src;
 					}
 					else
 					{
 						// Range
-						skipIdentifier( src);
 						skipSpaces( src);
-						if (di == de) return src.getPosition()+1;
-						const char* range_start_str = getIdentifier( *di++, idstrings);
-						int range_start = parseNum( range_start_str);
-						if (range_start < 0 || range_start_str[0]) return src.getPosition()+1;
-
+						if (!isIdentifierChar( src)) return src.getPosition()+1;
+						int range_start = parseNum( src);
+						if (range_start < 0) return src.getPosition()+1;
+						skipSpaces( src);
 						if (*src == ',')
 						{
 							++src; skipSpaces( src);
@@ -263,13 +125,10 @@ public:
 							}
 							else
 							{
-								skipIdentifier( src);
+								if (!isIdentifierChar( src)) return src.getPosition()+1;
+								int range_end = parseNum( src);
+								if (range_end < 0) return src.getPosition()+1;
 								skipSpaces( src);
-								if (di == de) return src.getPosition()+1;
-								const char* range_end_str = getIdentifier( *di++, idstrings);
-								int range_end = parseNum( range_end_str);
-								if (range_end < 0 || range_end_str[0]) return src.getPosition()+1;
-								++src; skipSpaces( src);
 								if (*src != ']') return src.getPosition()+1;
 								expr.RANGE( range_start, range_end);
 								++src;
@@ -285,20 +144,68 @@ public:
 							return src.getPosition()+1;
 						}
 					}
-					continue;
+					state = SelectCondition;
+					break;
 				}
 				case '(':
+					if (state != SelectStart && state != SelectTag && state != SelectTagId && state != SelectCondition) return src.getPosition()+1;
 					++src;
 					skipSpaces( src);
 					if (*src != ')') return src.getPosition()+1;
 					++src;
 					expr.selectContent();
-					skipSpaces( src);
-					if (*src) return src.getPosition()+1;
-					continue;
-
+					state = SelectContent;
+					break;
+				case '*':
+					if (state != SelectStart && state != SelectTag && state != SelectAttribute) return src.getPosition()+1;
+					++src;
+					if (state == SelectAttribute)
+					{
+						expr.selectAttribute( 0);
+						state = SelectAttributeId;
+					}
+					else
+					{
+						expr.selectTag( 0);
+						state = SelectTagId;
+					}
+					break;
+				case '{':
+					if (state != SelectStart && state != SelectTag && state != SelectAttribute) return src.getPosition()+1;
+					alt = idbuf.parseIdentifierList( src, '{', '}');
+					if (alt.empty()) return src.getPosition()+1;
+					if (state == SelectAttribute)
+					{
+						expr.selectAttributeAlt( alt);
+						state = SelectAttributeId;
+					}
+					else
+					{
+						expr.selectTagAlt( alt);
+						state = SelectTagId;
+					}
+					break;
+				case '~':
+					if (state != SelectTagId && state != SelectStart && state != SelectCondition) return src.getPosition()+1;
+					++src;
+					expr.selectCloseTag();
+					state = SelectContent;
+					break;
 				default:
-					return src.getPosition()+1;
+					if (state != SelectStart && state != SelectTag && state != SelectAttribute) return src.getPosition()+1;
+					if (!isIdentifierChar( src)) return src.getPosition()+1;
+
+					if (state == SelectAttribute)
+					{
+						expr.selectAttribute( idbuf.parseIdentifier( src));
+						state = SelectAttributeId;
+					}
+					else
+					{
+						expr.selectTag( idbuf.parseIdentifier( src));
+						state = SelectTagId;
+					}
+					break;
 			}
 		}
 		expr.assignType( typeidx);
@@ -306,12 +213,63 @@ public:
 	}
 
 private:
+#define ExprState_FOREACH( EXPR) {typename std::vector<PathElement>::iterator si = statelist.begin(), se = statelist.end(); for (; si != se; ++si) {si->EXPR;}}
+	class ExprState
+	{
+	public:
+		ExprState( XMLPathSelectAutomatonParser* atm)
+		{
+			statelist.push_back(PathElement(atm));
+		}
+		ExprState( const ExprState& o)
+			:statelist(o.statelist){}
+
+		void selectTagAlt( std::vector<const char*> alt)
+		{
+			std::vector<PathElement> new_statelist;
+			std::vector<const char*>::const_iterator ai = alt.begin(), ae = alt.end();
+			for (; ai != ae; ++ai)
+			{
+				ExprState alt_path( *this);
+				alt_path.selectTag( *ai);
+				new_statelist.insert( new_statelist.end(), alt_path.statelist.begin(), alt_path.statelist.end());
+			}
+			statelist = new_statelist;
+		}
+		void selectAttributeAlt( std::vector<const char*> alt)
+		{
+			std::vector<PathElement> new_statelist;
+			std::vector<const char*>::const_iterator ai = alt.begin(), ae = alt.end();
+			for (; ai != ae; ++ai)
+			{
+				ExprState alt_path( *this);
+				alt_path.selectAttribute( *ai);
+				new_statelist.insert( new_statelist.end(), alt_path.statelist.begin(), alt_path.statelist.end());
+			}
+			statelist = new_statelist;
+		}
+
+		void TO(int idx)						ExprState_FOREACH(TO(idx))
+		void FROM(int idx)						ExprState_FOREACH(FROM(idx))
+		void RANGE(int idx1, int idx2)					ExprState_FOREACH(RANGE(idx1,idx2))
+		void INDEX(int idx)						ExprState_FOREACH(INDEX(idx))
+		void selectAttribute( const char* name)				ExprState_FOREACH(selectAttribute(name))
+		void selectTag( const char* name)				ExprState_FOREACH(selectTag(name))
+		void assignType(int type)					ExprState_FOREACH(assignType(type))
+		void forAllDescendants()					ExprState_FOREACH(forAllDescendants())
+		void selectCloseTag()						ExprState_FOREACH(selectCloseTag())
+		void ifAttribute( const char* name, const char* value)		ExprState_FOREACH(ifAttribute(name,value))
+		void selectContent()						ExprState_FOREACH(selectContent())
+	private:
+		std::vector<PathElement> statelist;
+	};
+
 	static void skipSpaces( SrcScanner& src)
 	{
 		for (; src.control() == Space; ++src);
 	}
 
-	static int parseNum( char const*& src)
+	static int parseNum( SrcScanner& src)
 	{
 		std::string num;
 		for (; *src>='0' && *src<='9';++src) num.push_back( *src);
@@ -323,74 +281,70 @@ private:
 	{
 		if (src.control() == Undef || src.control() == Any)
 		{
-			if (*src == (unsigned char)'*') return false;
-			if (*src == (unsigned char)'~') return false;
-			if (*src == (unsigned char)'/') return false;
-			if (*src == (unsigned char)'(') return false;
-			if (*src == (unsigned char)')') return false;
-			if (*src == (unsigned char)'@') return false;
-			return true;
+			static const char opchr[] = "*~/(){}[]@,;";
+			return (0==std::strchr( opchr, *src));
 		}
 		return false;
 	}
 
-	std::size_t parseIdentifier( SrcScanner& src, std::string& idstrings)
+	class IdentifierBuf
 	{
-		std::size_t rt = idstrings.size();
-		for (; isIdentifierChar(src); ++src)
-		{
-			m_atmcharset.print( *src, idstrings);
-		}
-		m_atmcharset.print( 0, idstrings);
-		return rt;
-	}
+	public:
+		explicit IdentifierBuf( const AtmCharSet* atmcharset_)
+			:atmcharset(atmcharset_){}
+		~IdentifierBuf(){}
 
-	std::size_t parseValue( SrcScanner& src, std::string& idstrings)
-	{
-		std::size_t rt = idstrings.size();
-		if (*src == '"' || *src == '\'')
+		const char* parseIdentifier( SrcScanner& src)
 		{
-			unsigned char eb = *src;
-			for (++src; *src && *src != eb; ++src)
-			{
-				m_atmcharset.print( *src, idstrings);
-			}
-			if (*src) ++src;
-		}
-		else
-		{
+			idlist.push_back( std::string());
 			for (; isIdentifierChar(src); ++src)
 			{
-				m_atmcharset.print( *src, idstrings);
+				atmcharset->print( *src, idlist.back());
+			}
+			return idlist.back().c_str();
+		}
+		const char* parseValue( SrcScanner& src)
+		{
+			idlist.push_back( std::string());
+			if (*src == '"' || *src == '\'')
+			{
+				unsigned char eb = *src;
+				for (++src; *src && *src != eb; ++src)
+				{
+					atmcharset->print( *src, idlist.back());
+				}
+				if (*src) ++src;
+				return idlist.back().c_str();
+			}
+			else if (isIdentifierChar(src))
+			{
+				return parseIdentifier( src);
+			}
+			else
+			{
+				return NULL;
 			}
 		}
-		m_atmcharset.print( 0, idstrings);
-		return rt;
-	}
-
-	static void skipIdentifier( SrcScanner& src)
-	{
-		for (; isIdentifierChar(src); ++src){}
-	}
-
-	static void skipValue( SrcScanner& src)
-	{
-		if (*src == '"' || *src == '\'')
+		std::vector<const char*> parseIdentifierList( SrcScanner& src, unsigned char startBracket, unsigned char endBracket)
 		{
-			unsigned char eb = *src;
-			for (++src; *src && *src != eb; ++src){}
-			if (*src) ++src;
+			std::vector<const char*> rt;
+			if (*src != startBracket) return std::vector<const char*>();
+			do
+			{
+				++src; skipSpaces( src);
+				if (!isIdentifierChar( src)) return std::vector<const char*>();
+				rt.push_back( parseIdentifier( src));
+				skipSpaces( src);
+			} while (*src == ',');
+			if (*src != endBracket) return std::vector<const char*>();
+			++src;
+			return rt;
 		}
-		else
-		{
-			for (; isIdentifierChar(src); ++src){}
-		}
-	}
 
-	const char* getIdentifier( std::size_t idx, const std::string& idstrings) const
-	{
-		return idstrings.c_str() + idx;
-	}
+	private:
+		const AtmCharSet* atmcharset;
+		std::list<std::string> idlist;
+	};
 
 private:
 	AtmCharSet m_atmcharset;
