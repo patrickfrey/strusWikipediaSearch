@@ -56,11 +56,23 @@ analyzer.declareElementPriority( "vecsfeat", 1)
 
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
 
+def dumpDebugTrace( obj, indent):
+    if isinstance(obj, dict):
+        print( "%s%s\n" % (indent, obj))
+    for k in obj.keys():
+        print( "%s%s:\n" % (indent, str(k)))
+        dumpDebugTrace( obj[k], indent + "  ")
+    return s
+
 # Server callback function that intepretes the client message sent, executes the command and packs the result for the client
 @tornado.gen.coroutine
 def processCommand( message):
     rt = bytearray(b"Y")
     try:
+        if debugtrace:
+            strusctx.enableDebugTrace( "analyzer")
+            strusctx.enableDebugTrace( "pattern")
+
         messagesize = len(message)
         if messagesize < 1:
             raise tornado.gen.Return( b"Eempty request string")
@@ -150,9 +162,19 @@ def processCommand( message):
                 rt.extend( struct.pack( ">d", related.weight))
                 rt.extend( b'_')
         else:
+            if debugtrace:
+                strusctx.disableDebugTrace( "analyzer")
+                strusctx.disableDebugTrace( "pattern")
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:
+        if debugtrace:
+            strusctx.disableDebugTrace( "analyzer")
+            strusctx.disableDebugTrace( "pattern")
         raise tornado.gen.Return( bytearray( "E%s" % e, 'utf-8'))
+    if debugtrace:
+        dumpDebugTrace( strusctx.fetchDebugTrace())
+        strusctx.disableDebugTrace( "analyzer")
+        strusctx.disableDebugTrace( "pattern")
     raise tornado.gen.Return( rt)
 
 # Shutdown function:
