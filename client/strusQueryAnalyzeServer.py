@@ -71,7 +71,6 @@ def processCommand( message):
     try:
         if debugtrace:
             strusctx.enableDebugTrace( "analyzer")
-            strusctx.enableDebugTrace( "pattern")
 
         messagesize = len(message)
         if messagesize < 1:
@@ -164,17 +163,14 @@ def processCommand( message):
         else:
             if debugtrace:
                 strusctx.disableDebugTrace( "analyzer")
-                strusctx.disableDebugTrace( "pattern")
             raise Exception( "unknown protocol command '%c'" % (message[0]))
     except Exception as e:
         if debugtrace:
             strusctx.disableDebugTrace( "analyzer")
-            strusctx.disableDebugTrace( "pattern")
         raise tornado.gen.Return( bytearray( "E%s" % e, 'utf-8'))
     if debugtrace:
         dumpDebugTrace( strusctx.fetchDebugTrace())
         strusctx.disableDebugTrace( "analyzer")
-        strusctx.disableDebugTrace( "pattern")
     raise tornado.gen.Return( rt)
 
 # Shutdown function:
