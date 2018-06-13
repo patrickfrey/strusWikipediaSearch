@@ -56,13 +56,13 @@ analyzer.declareElementPriority( "vecsfeat", 1)
 
 RelatedTerm  = collections.namedtuple('RelatedTerm', ['value', 'index', 'weight'])
 
-def dumpDebugTrace( obj, indent):
-    if isinstance(obj, dict):
-        print( "%s%s\n" % (indent, obj))
-    for k in obj.keys():
-        print( "%s%s:\n" % (indent, str(k)))
-        dumpDebugTrace( obj[k], indent + "  ")
-    return s
+def dumpDebugTrace( obj, indent, depth):
+    if depth > 0:
+        if isinstance(obj, dict):
+            print( "%s%s\n" % (indent, obj))
+        for k in obj.keys():
+            print( "%s%s:\n" % (indent, str(k)))
+            dumpDebugTrace( obj[k], indent + "  ", depth-1)
 
 # Server callback function that intepretes the client message sent, executes the command and packs the result for the client
 @tornado.gen.coroutine
@@ -169,7 +169,7 @@ def processCommand( message):
             strusctx.disableDebugTrace( "analyzer")
         raise tornado.gen.Return( bytearray( "E%s" % e, 'utf-8'))
     if debugtrace:
-        dumpDebugTrace( strusctx.fetchDebugTrace())
+        dumpDebugTrace( strusctx.fetchDebugTrace(), "", 5)
         strusctx.disableDebugTrace( "analyzer")
     raise tornado.gen.Return( rt)
 
