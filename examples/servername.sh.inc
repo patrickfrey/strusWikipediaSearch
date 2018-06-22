@@ -1,3 +1,6 @@
+SERVER_NAME=`printenv SERVER_NAME`
+SERVER_ADDR=`printenv SERVER_ADDR`
+
 if [ x"$SERVER_NAME" = x"" ]
 then
 	export SERVER_NAME="127.0.0.1";
