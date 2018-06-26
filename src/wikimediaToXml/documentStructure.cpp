@@ -349,7 +349,7 @@ static std::string getIdentifier( const std::string& txt)
 			++si;
 		}
 	}
-	if (!rt.empty() && rt[ rt.size()-1] == '_') rt.pop_back();
+	if (!rt.empty() && rt[ rt.size()-1] == '_') rt.resize( rt.size()-1);
 	return rt;
 }
 
