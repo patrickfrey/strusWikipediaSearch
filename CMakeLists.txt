@@ -6,12 +6,17 @@ include(cmake/install_prefix.cmake)
 # Project globals:
 project( StrusWikipediaSearch )
 
+set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
+include( cmake/cxx11.cmake )
+check_for_cxx11_compiler( HAVE_CXX11 )
 include( cmake/dist.cmake )
 include( cmake/LinuxDistribution.cmake )
 include( cmake/build_rules.cmake )
 include( cmake/boost.cmake)
 include( cmake/find_strus_package.cmake )
 include( cmake/link_rules.cmake )
+include( cmake/intl.cmake )
+include( cmake/cppcheck.cmake )
 
 find_strus_package( base )
 find_strus_package( core )

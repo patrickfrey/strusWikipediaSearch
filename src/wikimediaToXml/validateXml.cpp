@@ -10,7 +10,7 @@
 #include "textwolf/xmlscanner.hpp"
 #include "textwolf/xmlprinter.hpp"
 #include "textwolf/charset_utf8.hpp"
-#include "inputStream.hpp"
+#include "strus/base/inputStream.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -26,6 +26,28 @@
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinter;
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
+class IStream
+	:public textwolf::IStream
+{
+public:
+	explicit IStream( const std::string& docpath)
+		:m_impl(docpath){}
+	virtual ~IStream(){}
+
+	virtual std::size_t read( void* buf, std::size_t bufsize)
+	{
+		return m_impl.read( (char*)buf, bufsize);
+	}
+
+	virtual int errorcode() const
+	{
+		return m_impl.error();
+	}
+
+private:
+	strus::InputStream m_impl;
+};
+
 int main( int argc, const char* argv[])
 {
 	int rt = 0;
@@ -38,9 +60,8 @@ int main( int argc, const char* argv[])
 			std::cerr << "<inputfile>   :File to process or '-' for stdin" << std::endl;
 			return 0;
 		}
-		strus::InputStream input( argv[1]);
-		textwolf::StdInputStream inputreader( input.stream());
-		textwolf::IStreamIterator inputiterator( &inputreader);
+		IStream input( argv[1]);
+		textwolf::IStreamIterator inputiterator( &input, 1<<12/*buffer size*/);
 
 		XmlScanner xs( inputiterator);
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
