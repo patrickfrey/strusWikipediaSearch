@@ -33,6 +33,7 @@
 
 static bool g_verbose = false;
 static bool g_silent = false;
+static bool g_beautified = false;
 static std::string g_outputdir;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
@@ -120,6 +121,9 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				break;
 			case strus::WikimediaLexem::EntityMarker:
 				doc.addEntityMarker();
+				break;
+			case strus::WikimediaLexem::QuotationMarker:
+				doc.addQuotationMarker();
 				break;
 			case strus::WikimediaLexem::OpenCitation:
 				doc.openCitation();
@@ -221,9 +225,15 @@ static void outputFile( int fileCounter, const strus::DocumentStructure& doc)
 {
 	char dirnam[ 16];
 	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
+
 	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), doc.id() + ".xml"));
-	int ec = strus::writeFile( filename, doc.toxml());
-	if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
+	int ec = strus::writeFile( filename, doc.toxml( g_beautified));
+	if (ec) std::cerr << "error writing xml output file " << filename << ": " << std::strerror(ec) << std::endl;
+
+	std::string textfilename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), doc.id() + ".txt"));
+	ec = strus::writeFile( textfilename, doc.tostring());
+	if (ec) std::cerr << "error writing text dump file " << textfilename << ": " << std::strerror(ec) << std::endl;
+
 	if (!doc.errors().empty())
 	{
 		std::ostringstream errorstext;
@@ -260,14 +270,6 @@ public:
 		strus::DocumentStructure doc;
 		doc.setTitle( m_title);
 		parseDocumentText( doc, m_content.c_str(), m_content.size());
-		if (!g_silent)
-		{
-			std::vector<std::string>::const_iterator ei = doc.errors().begin(), ee = doc.errors().end();
-			for (int eidx=1; ei != ee; ++ei,++eidx)
-			{
-				std::cerr << "error " << eidx << " processing document '" << m_title << "':" << *ei << std::endl;
-			}
-		}
 		doc.finish();
 		outputFile( m_fileindex, doc);
 	}
@@ -436,6 +438,10 @@ int main( int argc, const char* argv[])
 			{
 				g_verbose = true;
 			}
+			else if (0==std::strcmp(argv[argi],"-B"))
+			{
+				g_beautified = true;
+			}
 			else if (0==std::strcmp(argv[argi],"-h"))
 			{
 				printusage = true;
@@ -485,6 +491,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -h           :print this usage" << std::endl;
 			std::cerr << "    -S           :silent mode (suppress warnings)" << std::endl;
 			std::cerr << "    -V           :verbose mode (output every item processed to stderr)" << std::endl;
+			std::cerr << "    -B           :beautified readable XML output" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
 			std::cerr << "    -n <ns>      :reduce output to namespace <ns> (0=article)" << std::endl;
 			std::cerr << "    -R           :collect redirects only" << std::endl;

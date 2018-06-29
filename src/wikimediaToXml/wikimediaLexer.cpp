@@ -123,7 +123,7 @@ static TagType parseTagType( char const*& si, const char* se)
 			++si;
 		}
 		const char* tgnam = si;
-		while (si < se && !isAlpha(*si)) ++si;
+		while (si < se && isAlpha(*si)) ++si;
 		if (0==std::memcmp( tgnam, "nowiki", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
@@ -291,6 +291,13 @@ static int countAndSkip( char const*& si, const char* se,  char ch, int maxcnt)
 	return rt;
 }
 
+static bool compareFollowString( const char* si, const char* se, const char* str)
+{
+	char const* xi = str;
+	for (; si < se && *xi && *xi == *si; ++si,++xi){}
+	return *xi == '\0';
+}
+
 WikimediaLexem WikimediaLexer::next()
 {
 	m_prev_si = m_si;
@@ -336,13 +343,40 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::Text, 0, "\n");
 			};
 		}
+		else if (m_si[0] == '"')
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			m_si += 1;
+			return WikimediaLexem( WikimediaLexem::QuotationMarker);
+		}
+		else if (m_si[0] == '&' && (m_se - m_si) >= 6 && compareFollowString( m_si, m_se, "&quot;"))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			m_si += 6;
+			return WikimediaLexem( WikimediaLexem::QuotationMarker);
+		}
+		else if (m_si[0] == '&' && (m_se - m_si) >= 6 && compareFollowString( m_si, m_se, "&nbsp;"))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			m_si += 6;
+			return WikimediaLexem( WikimediaLexem::Text, 0, " ");
+		}
 		else if (*m_si == '#')
 		{
 			if (start != m_si)
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
-			if (0==std::memcmp( "#REDIRECT", m_si, 9))
+			if (compareFollowString( m_si, m_se, "#REDIRECT"))
 			{
 				m_si += 9;
 				return WikimediaLexem( WikimediaLexem::Redirect);

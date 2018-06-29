@@ -25,6 +25,8 @@ public:
 			Title,
 			EntityStart,
 			EntityEnd,
+			QuotationStart,
+			QuotationEnd,
 			HeadingStart,
 			HeadingEnd,
 			ListItemStart,
@@ -57,6 +59,8 @@ public:
 			"Title",
 			"EntityStart",
 			"EntityEnd",
+			"QuotationStart",
+			"QuotationEnd",
 			"HeadingStart",
 			"HeadingEnd",
 			"ListItemStart",
@@ -84,10 +88,10 @@ public:
 			"CitationLink",0};
 		return ar[tp];
 	}
-	enum StructType {StructNone,StructEntity,StructHeading,StructList,StructCitation,StructRef,StructTable,StructTableTitle,StructTableHead,StructTableRow,StructTableCol};
+	enum StructType {StructNone,StructEntity,StructQuotation,StructHeading,StructList,StructCitation,StructRef,StructTable,StructTableTitle,StructTableHead,StructTableRow,StructTableCol};
 	static const char* structTypeName( StructType st)
 	{
-		static const char* ar[] = {"None","Entity","Heading","List","Citation","Ref","Table","TableTitle","TableHead","TableRow","TableCol"};
+		static const char* ar[] = {"None","Entity","Quotation","Heading","List","Citation","Ref","Table","TableTitle","TableHead","TableRow","TableCol"};
 		return ar[ st];
 	}
 	static StructType structType( Type ti)
@@ -96,6 +100,8 @@ public:
 			StructNone/*Title*/,
 			StructEntity/*EntityStart*/,
 			StructNone/*EntityEnd*/,
+			StructQuotation/*QuotationStart*/,
+			StructNone/*QuotationEnd*/,
 			StructHeading/*HeadingStart*/,
 			StructNone/*HeadingEnd*/,
 			StructList/*ListItemStart*/,
@@ -129,6 +135,8 @@ public:
 			Title/*Title*/,
 			EntityEnd/*EntityStart*/,
 			EntityStart/*EntityEnd*/,
+			QuotationEnd/*QuotationStart*/,
+			QuotationStart/*QuotationEnd*/,
 			HeadingEnd/*HeadingStart*/,
 			HeadingStart/*HeadingEnd*/,
 			ListItemEnd/*ListItemStart*/,
@@ -260,6 +268,10 @@ public:
 	{
 		addQuoteItem( Paragraph::EntityStart);
 	}
+	void addQuotationMarker()
+	{
+		addQuoteItem( Paragraph::QuotationStart);
+	}
 	void openTable()
 	{
 		closeDanglingStructures( Paragraph::TableStart);
@@ -328,7 +340,7 @@ public:
 	}
 	void finish();
 
-	std::string toxml() const;
+	std::string toxml( bool beautified) const;
 	std::string tostring() const;
 	std::string statestring() const;
 

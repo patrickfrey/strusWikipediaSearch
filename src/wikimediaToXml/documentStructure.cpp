@@ -193,6 +193,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 		switch (ii->type())
 		{
 			case Paragraph::EntityStart:
+			case Paragraph::QuotationStart:
 			case Paragraph::HeadingStart:
 			case Paragraph::ListItemStart:
 			case Paragraph::CitationStart:
@@ -205,6 +206,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				stk.push_back( ii->type());
 				break;
 			case Paragraph::EntityEnd:
+			case Paragraph::QuotationEnd:
 			case Paragraph::HeadingEnd:
 			case Paragraph::ListItemEnd:
 			case Paragraph::CitationEnd:
@@ -246,6 +248,11 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		{
 			m_parar[ m_structStack.back().start] = Paragraph( Paragraph::Text, "", "\"");
 			m_structStack.pop_back();
+		}
+		else if (para.type() == Paragraph::QuotationStart)
+		{
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::HeadingStart)
 		{
@@ -305,10 +312,12 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType)
 	if (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType)
 	{
 		m_parar[ m_structStack.back().start].setId( collectQuoteText( m_parar.begin() + m_structStack.back().start, m_parar.end()));
+		m_structStack.pop_back();
 		m_parar.push_back( Paragraph( endType, "", ""));
 	}
 	else
 	{
+		m_structStack.push_back( StructRef( 0, m_parar.size()));
 		m_parar.push_back( Paragraph( startType, "", ""));
 	}
 }
@@ -525,7 +534,6 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 	{
 		m_parar.push_back( Paragraph( type, id, text));
 	}
-	m_parar.push_back( Paragraph( type, id, text));
 }
 
 void DocumentStructure::finish()
@@ -534,7 +542,7 @@ void DocumentStructure::finish()
 	checkStartEndSectionBalance( m_parar.begin(), m_parar.end());
 }
 
-std::string DocumentStructure::toxml() const
+std::string DocumentStructure::toxml( bool beautified) const
 {
 	std::string rt;
 	std::vector<Paragraph::StructType> stk;
@@ -544,12 +552,14 @@ std::string DocumentStructure::toxml() const
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(; pi != pe; ++pi)
 	{
+		if (beautified) output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
 		switch (pi->type())
 		{
 			case Paragraph::Title:
 				output.printOpenTag( "docid", rt);
 				output.printValue( pi->id(), rt);
 				output.printCloseTag( rt);
+				if (beautified) output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
 				output.printOpenTag( "title", rt);
 				output.printValue( pi->text(), rt);
 				output.printCloseTag( rt);
@@ -561,7 +571,16 @@ std::string DocumentStructure::toxml() const
 				output.printValue( pi->text(), rt);
 				output.switchToContent( rt);
 				break;
+			case Paragraph::QuotationStart:
+				stk.push_back( Paragraph::StructQuotation);
+				output.printOpenTag( "quot", rt);
+				output.switchToContent( rt);
+				break;
 			case Paragraph::EntityEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::QuotationEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;

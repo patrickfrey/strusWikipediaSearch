@@ -35,6 +35,7 @@ struct WikimediaLexem
 		ListItem,
 		EndOfLine,
 		EntityMarker,
+		QuotationMarker,
 		OpenCitation,
 		CloseCitation,
 		OpenWWWLink,
@@ -54,7 +55,7 @@ struct WikimediaLexem
 		static const char* ar[] =
 		{
 			"EOF","Error","Text","URL","Redirect","OpenHeading","CloseHeading","ListItem",
-			"EndOfLine","EntityMarker","OpenCitation","CloseCitation",
+			"EndOfLine","EntityMarker","QuotationMarker","OpenCitation","CloseCitation",
 			"OpenWWWLink","CloseWWWLink","OpenPageLink","ClosePageLink",
 			"OpenTable", "CloseTable","TableTitle","TableRowDelim","TableColDelim",
 			"TableHeadDelim","ColDelim",0
