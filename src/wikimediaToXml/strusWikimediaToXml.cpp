@@ -31,9 +31,9 @@
 #include <queue>
 #include <limits>
 
-#define STRUS_LOWLEVEL_DEBUG
-
+static bool g_verbose = false;
 static bool g_silent = false;
+static std::string g_outputdir;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
@@ -42,9 +42,26 @@ static std::string parseItemText( strus::WikimediaLexer& lexer)
 	std::string rt;
 	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id == strus::WikimediaLexem::Text; lexem = lexer.next())
 	{
+		if (g_verbose) std::cerr << "LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " '" << strus::outputString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << "'" << std::endl;
 		rt.append( lexem.value);
 	}
 	lexer.unget();
+	return rt;
+}
+
+static std::string parseWebLinkText( strus::WikimediaLexer& lexer)
+{
+	std::string rt;
+	strus::WikimediaLexem lexem = lexer.next();
+	for (; lexem.id == strus::WikimediaLexem::Text; lexem = lexer.next())
+	{
+		if (g_verbose) std::cerr << "LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " '" << strus::outputString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << "'" << std::endl;
+		rt.append( lexem.value);
+	}
+	if (lexem.id != strus::WikimediaLexem::CloseWWWLink)
+	{
+		lexer.unget();
+	}
 	return rt;
 }
 
@@ -54,36 +71,55 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 
 	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id != strus::WikimediaLexem::EoF; lexem = lexer.next())
 	{
-#ifdef STRUS_LOWLEVEL_DEBUG
-		std::cerr << "LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " '" << strus::outputString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << "'" << std::endl;
-#endif
-		switch (lexem.id)
+		if (g_verbose)
 		{
+			std::cerr << "LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
+			std::cerr << "STATE " << doc.statestring() << std::endl;
+		}
+		switch (lexem.id)
+		{			
 			case strus::WikimediaLexem::EoF:
+				break;
+			case strus::WikimediaLexem::Error:
+				doc.addError( lexem.value);
 				break;
 			case strus::WikimediaLexem::Text:
 				doc.addText( lexem.value);
 				break;
+			case strus::WikimediaLexem::Math:
+				doc.addText( lexem.value);
+				break;
+			case strus::WikimediaLexem::NoWiki:
+				doc.addText( lexem.value);
+				break;
+			case strus::WikimediaLexem::Url:
+				doc.addWebLink( lexem.value, lexem.value);
+				if (g_verbose) std::cerr << "STATE " << doc.statestring() << std::endl;
+				break;
 			case strus::WikimediaLexem::Redirect:
 				throw std::runtime_error("unexpected redirect in document");
 				break;
-			case strus::WikimediaLexem::ListItem1:
-			case strus::WikimediaLexem::ListItem2:
-			case strus::WikimediaLexem::ListItem3:
-			case strus::WikimediaLexem::ListItem4:
-				doc.openListItem( (int)lexem.id - (int)strus::WikimediaLexem::ListItem1 + 1);
+			case strus::WikimediaLexem::OpenHeading:
+				doc.openHeading( (int)lexem.idx);
+				break;
+			case strus::WikimediaLexem::CloseHeading:
+				doc.closeHeading();
+				break;
+			case strus::WikimediaLexem::OpenRef:
+				doc.openRef();
+				break;
+			case strus::WikimediaLexem::CloseRef:
+				doc.closeRef();
+				break;
+			case strus::WikimediaLexem::ListItem:
+				doc.openListItem( (int)lexem.idx);
 				break;
 			case strus::WikimediaLexem::EndOfLine:
-				doc.closeOpenListItem();
+				doc.closeOpenEolnItem();
+				doc.addText( "\n");
 				break;
-			case strus::WikimediaLexem::Heading1:
-			case strus::WikimediaLexem::Heading2:
-			case strus::WikimediaLexem::Heading3:
-			case strus::WikimediaLexem::Heading4:
-			case strus::WikimediaLexem::Heading5:
-			case strus::WikimediaLexem::Heading6:
-				doc.closeOpenListItem();
-				doc.addHeading( (int)lexem.id - (int)strus::WikimediaLexem::Heading1 + 1, lexem.value);
+			case strus::WikimediaLexem::EntityMarker:
+				doc.addEntityMarker();
 				break;
 			case strus::WikimediaLexem::OpenCitation:
 				doc.openCitation();
@@ -92,53 +128,114 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.closeCitation();
 				break;
 			case strus::WikimediaLexem::OpenWWWLink:
-				doc.addWebLink( lexem.value, parseItemText( lexer));
+				doc.addWebLink( lexem.value, parseWebLinkText( lexer));
+				if (g_verbose) std::cerr << "STATE " << doc.statestring() << std::endl;
 				break;
-			case strus::WikimediaLexem::OpenLink:
+			case strus::WikimediaLexem::CloseWWWLink:
+				doc.addText( lexem.value); // ... we treat it as text because with an open it is consumed by the case strus::WikimediaLexem::OpenWWWLink
+				break;
+			case strus::WikimediaLexem::OpenPageLink:
 			{
-				doc.addPageLink( lexem.value, parseItemText( lexer));
-				break;
-			}
-			case strus::WikimediaLexem::CloseLink:
-				break;
-			case strus::WikimediaLexem::OpenTable:
-			{
-				std::string title = parseItemText( lexer);
-				std::vector<std::string> colnames;
-
-				for (strus::WikimediaLexem lexem = lexer.next(); lexem.id == strus::WikimediaLexem::TableHeadDelim; lexem = lexer.next())
+				strus::WikimediaLexem oplexem = lexer.next();
+				if (oplexem.id == strus::WikimediaLexem::ClosePageLink)
 				{
-					colnames.push_back( parseItemText( lexer));
+					doc.addPageLink( lexem.value, lexem.value);
 				}
-				doc.openTable( title, colnames);
+				else if (oplexem.id == strus::WikimediaLexem::ColDelim)
+				{
+					strus::WikimediaLexem contentlexem = lexer.next();
+					if (contentlexem.id == strus::WikimediaLexem::Text)
+					{
+						strus::WikimediaLexem followlexem = lexer.next();
+						if (followlexem.id != strus::WikimediaLexem::ClosePageLink || !oplexem.value.empty())
+						{
+							lexer.unget();
+							doc.addPageLink( lexem.value, lexem.value);
+							doc.openCitation();
+							if (!oplexem.value.empty())
+							{
+								doc.addText( oplexem.value + "=" + contentlexem.value);
+							}
+							else
+							{
+								doc.addText( contentlexem.value);
+							}
+						}
+						else
+						{
+							doc.addPageLink( lexem.value, contentlexem.value);
+						}
+					}
+					else
+					{
+						lexer.unget();
+						doc.addPageLink( lexem.value, lexem.value);
+					}
+				}
+				else
+				{
+					lexer.unget();
+				}
 				break;
 			}
+			case strus::WikimediaLexem::ClosePageLink:
+				doc.closeCitation();
+				break;
+				
+			case strus::WikimediaLexem::OpenTable:
+				doc.openTable();
+				break;
 			case strus::WikimediaLexem::CloseTable:
 				doc.closeTable();
+				break;
+			case strus::WikimediaLexem::TableTitle:
+				doc.addTableTitle();
+				break;
+			case strus::WikimediaLexem::TableHeadDelim:
+				doc.addTableHead();
 				break;
 			case strus::WikimediaLexem::TableRowDelim:
 				doc.addTableRow();
 				break;
-			case strus::WikimediaLexem::TableTitle:
-				doc.addError("unexpected table title");
-				break;
-			case strus::WikimediaLexem::TableHeadDelim:
-				doc.addError("unexpected table head delimiter");
+			case strus::WikimediaLexem::TableColDelim:
+				doc.addTableCol();
 				break;
 			case strus::WikimediaLexem::ColDelim:
-				doc.addTableCol( parseItemText( lexer));
+				doc.addAttribute( lexem.value, parseItemText( lexer));
+				if (g_verbose) std::cerr << "STATE " << doc.statestring() << std::endl;
 				break;
 		}
 	}
 }
 
+static void createOutputDir( int fileCounter)
+{
+	char dirnam[ 16];
+	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
+	std::string dirpath( strus::joinFilePath( g_outputdir, dirnam));
+	int ec = strus::createDir( dirpath, false/*fail if exists*/);
+	if (ec) std::cerr << "error creating directory " << dirpath << ": " << std::strerror(ec) << std::endl;
+}
+
 static void outputFile( int fileCounter, const strus::DocumentStructure& doc)
 {
 	char dirnam[ 16];
-	std::snprintf( dirnam, sizeof(dirnam), "%03u", fileCounter / 10000);
-	std::string filename( strus::joinFilePath( dirnam, doc.id() + "*.xml"));
+	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
+	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), doc.id() + ".xml"));
 	int ec = strus::writeFile( filename, doc.toxml());
 	if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
+	if (!doc.errors().empty())
+	{
+		std::ostringstream errorstext;
+		std::vector<std::string>::const_iterator ei = doc.errors().begin(), ee = doc.errors().end();
+		for (int eidx=1; ei != ee; ++ei,++eidx)
+		{
+			errorstext << "[" << eidx << "] " << *ei << "\n";
+		}
+		std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), doc.id() + ".err"));
+		int ec = strus::writeFile( filename, errorstext.str());
+		if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
+	}
 }
 
 class Work
@@ -163,7 +260,6 @@ public:
 		strus::DocumentStructure doc;
 		doc.setTitle( m_title);
 		parseDocumentText( doc, m_content.c_str(), m_content.size());
-		doc.finish();
 		if (!g_silent)
 		{
 			std::vector<std::string>::const_iterator ei = doc.errors().begin(), ee = doc.errors().end();
@@ -172,6 +268,7 @@ public:
 				std::cerr << "error " << eidx << " processing document '" << m_title << "':" << *ei << std::endl;
 			}
 		}
+		doc.finish();
 		outputFile( m_fileindex, doc);
 	}
 
@@ -305,25 +402,6 @@ private:
 	strus::InputStream m_impl;
 };
 
-static std::string getTagContentString( XmlScanner::iterator& itr, const XmlScanner::iterator& end)
-{
-	++itr;
-	if (itr == end) return std::string();
-	if (itr->type() == XmlScanner::Content)
-	{
-		return std::string( itr->content(), itr->size());
-	}
-	else
-	{
-		return std::string();
-	}
-}
-
-static int getTagContentInt( XmlScanner::iterator& itr, const XmlScanner::iterator& end, int maxval)
-{
-	return strus::numstring_conv::toint( getTagContentString( itr, end), maxval);
-}
-
 static int getIntOptionArg( int argi, int argc, const char* argv[])
 {
 	if (argv[argi+1])
@@ -350,9 +428,13 @@ int main( int argc, const char* argv[])
 
 		for (;argi < argc; ++argi)
 		{
-			if (0==std::strcmp(argv[argi],"-s"))
+			if (0==std::strcmp(argv[argi],"-S"))
 			{
 				g_silent = true;
+			}
+			else if (0==std::strcmp(argv[argi],"-V"))
+			{
+				g_verbose = true;
 			}
 			else if (0==std::strcmp(argv[argi],"-h"))
 			{
@@ -388,7 +470,7 @@ int main( int argc, const char* argv[])
 				break;
 			}
 		}
-		if (argc > argi+2 || argc < argi+2)
+		if (argc > argi+2 || argc < argi+1)
 		{
 			if (argc > argi+2) std::cerr << "too many arguments" << std::endl;
 			if (argc < argi+2) std::cerr << "too few arguments" << std::endl;
@@ -397,17 +479,19 @@ int main( int argc, const char* argv[])
 		}
 		if (printusage)
 		{
-			std::cerr << "Usage: strusWikimediaToXml [options] <inputfile> <outputdir>" << std::endl;
+			std::cerr << "Usage: strusWikimediaToXml [options] <inputfile> [<outputdir>]" << std::endl;
 			std::cerr << "<inputfile>   :File to process or '-' for stdin" << std::endl;
 			std::cerr << "options:" << std::endl;
 			std::cerr << "    -h           :print this usage" << std::endl;
-			std::cerr << "    -s           :silent mode (suppress warnings)" << std::endl;
+			std::cerr << "    -S           :silent mode (suppress warnings)" << std::endl;
+			std::cerr << "    -V           :verbose mode (output every item processed to stderr)" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
 			std::cerr << "    -n <ns>      :reduce output to namespace <ns> (0=article)" << std::endl;
 			std::cerr << "    -R           :collect redirects only" << std::endl;
 			return rt;
 		}
 		IStream input( argv[argi]);
+		if (argi+1 < argc) g_outputdir = argv[argi+1];
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
 		if (nofThreads <= 0) nofThreads = 0;
 		struct WorkerArray
@@ -441,23 +525,22 @@ int main( int argc, const char* argv[])
 				ns = 0;
 				title.clear();
 				redirect_title.clear();
+				content.clear();
 			}
 		};
 
 		XmlScanner xs( inputiterator);
 		XmlScanner::iterator itr=xs.begin(),end=xs.end();
 		DocAttributes docAttributes;
-		int taglevel = 0;
 		int workeridx = 0;
 		int docCounter = 0;
 		enum TagId {TagIgnored,TagPage,TagNs,TagTitle,TagText,TagRedirect};
 		TagId lastTag = TagIgnored;
+		std::vector<TagId> tagstack;
 
 		for (; !terminated && itr!=end; ++itr)
 		{
-#ifdef STRUS_LOWLEVEL_DEBUG
-			std::cerr << "element " << itr->name() << " '" << std::string( itr->content(), itr->size()) << "'" << std::endl;
-#endif
+			if (g_verbose) std::cerr << "ELEMENT " << itr->name() << " " << strus::outputLineString( itr->content(), itr->content()+itr->size(), 80) << std::endl;
 			switch (itr->type())
 			{
 				case XmlScanner::None: break;
@@ -499,44 +582,42 @@ int main( int argc, const char* argv[])
 					if (namespaceset && itr->size() == 2  && 0==std::memcmp( itr->content(), "ns", itr->size()))
 					{
 						lastTag = TagNs;
-						docAttributes.ns = getTagContentInt( itr, end, 10000);
 					}
 					else if (itr->size() == 4 && 0==std::memcmp( itr->content(), "page", itr->size()))
 					{
 						lastTag = TagPage;
-						taglevel = 1;
 						docAttributes.clear();
+						if (docCounter % 1000 == 0)
+						{
+							createOutputDir( docCounter);
+						}
 					}
 					else if (itr->size() == 5 && 0==std::memcmp( itr->content(), "title", itr->size()))
 					{
 						lastTag = TagTitle;
-						docAttributes.title = getTagContentString( itr, end);
-						if (docAttributes.title.empty())
-						{
-							throw std::runtime_error( "empty title document");
-						}
 					}
 					if (itr->size() == 4 && 0==std::memcmp( itr->content(), "text", itr->size()))
 					{
 						lastTag = TagText;
-						docAttributes.content = getTagContentString( itr, end);
-						if (docAttributes.content.empty())
-						{
-							throw std::runtime_error( strus::string_format( "empty content document '%s'", docAttributes.title.c_str()));
-						}
 					}
 					if (itr->size() == 8 && 0==std::memcmp( itr->content(), "redirect", itr->size()))
 					{
 						lastTag = TagRedirect;
 					}
+					tagstack.push_back( lastTag);
 					break;
 				}
 				case XmlScanner::CloseTagIm:
 				case XmlScanner::CloseTag:
 				{
 					lastTag = TagIgnored;
-					--taglevel;
-					if (taglevel == 0)
+					TagId closedTag = TagIgnored;
+					if (!tagstack.empty())
+					{
+						closedTag = tagstack.back();
+						tagstack.pop_back();
+					}
+					if (closedTag == TagPage)
 					{
 						if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{
@@ -545,7 +626,7 @@ int main( int argc, const char* argv[])
 								std::cout << strus::string_format( "%s\t%s\n", docAttributes.title.c_str(), docAttributes.redirect_title.c_str());
 							}
 						}
-						else if (!docAttributes.title.empty() || !docAttributes.content.empty())
+						else if (!docAttributes.title.empty() && !docAttributes.content.empty())
 						{
 							if (!collectRedirects)
 							{
@@ -582,10 +663,42 @@ int main( int argc, const char* argv[])
 								}
 							}
 						}
+						else
+						{
+							std::cerr << "invalid document" << std::endl;
+						}
 					}
 					break;
 				}
 				case XmlScanner::Content:
+					switch (lastTag)
+					{
+						case TagIgnored:
+							break;
+						case TagPage:
+							break;
+						case TagNs:
+						{
+							std::string contentstr( itr->content(), itr->size());
+							docAttributes.ns = strus::numstring_conv::toint( contentstr, 10000);
+							break;
+						}
+						case TagTitle:
+						{
+							docAttributes.title = std::string( itr->content(), itr->size());
+							break;
+						}
+						case TagText:
+						{
+							docAttributes.content = std::string( itr->content(), itr->size());
+							break;
+						}
+						case TagRedirect:
+						{
+							docAttributes.redirect_title = std::string( itr->content(), itr->size());
+							break;
+						}
+					}
 					break;
 				case XmlScanner::Exit:
 					terminated = true;

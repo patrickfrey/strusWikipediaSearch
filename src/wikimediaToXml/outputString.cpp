@@ -36,5 +36,18 @@ std::string strus::outputString( const char* si, const char* se, int maxlen)
 	}
 }
 
+std::string strus::outputLineString( const char* si, const char* se, int maxlen)
+{
+	std::string rt = outputString( si, se, maxlen);
+	std::string::iterator ri = rt.begin(), re = rt.end();
+	for (; ri != re; ++ri)
+	{
+		if ((unsigned char)*ri < 32)
+		{
+			*ri = ' ';
+		}
+	}
+	return rt;
+}
 
 

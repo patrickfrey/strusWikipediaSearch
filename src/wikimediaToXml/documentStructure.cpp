@@ -86,8 +86,17 @@ class XmlPrinter
 	:public XmlPrinterBase
 {
 public:
-	XmlPrinter( bool subDocument=false)
-		:XmlPrinterBase(subDocument){}
+	XmlPrinter()
+		:XmlPrinterBase(){}
+
+	void printHeader( std::string& buf)
+	{
+		if (!XmlPrinterBase::printHeader( "UTF-8", "yes", buf))
+		{
+			const char* errstr = XmlPrinterBase::lasterror();
+			throw std::runtime_error( std::string( "xml print error: ") + (errstr?errstr:"") + " when printing XML header");
+		}
+	}
 
 	void printOpenTag( const std::string& tag, std::string& buf)
 	{
@@ -162,6 +171,19 @@ public:
 	}
 };
 
+static std::string collectQuoteText( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+{
+	std::string rt;
+	for (; pi != pe && pi->type() != Paragraph::EntityEnd; ++pi)
+	{
+		if (pi->type() == Paragraph::PageLink || pi->type() == Paragraph::WebLink || pi->type() == Paragraph::Text || pi->type() == Paragraph::NoWiki || pi->type() == Paragraph::Math)
+		{
+			rt.append( pi->text());
+		}
+	}
+	return rt;
+}
+
 void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end)
 {
 	std::vector<Paragraph::Type> stk;
@@ -170,38 +192,39 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 	{
 		switch (ii->type())
 		{
-			case Paragraph::Title:
-				break;
-			case Paragraph::Heading:
-				break;
-			case Paragraph::TableStart:
+			case Paragraph::EntityStart:
+			case Paragraph::HeadingStart:
 			case Paragraph::ListItemStart:
 			case Paragraph::CitationStart:
+			case Paragraph::RefStart:
+			case Paragraph::TableStart:
+			case Paragraph::TableTitleStart:
+			case Paragraph::TableHeadStart:
 			case Paragraph::TableRowStart:
+			case Paragraph::TableColStart:
 				stk.push_back( ii->type());
 				break;
-			case Paragraph::TableEnd:
-				if (stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", "", ii->typeName()));
-				if (stk.back() != Paragraph::TableStart) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ii->typeName()));
+			case Paragraph::EntityEnd:
+			case Paragraph::HeadingEnd:
 			case Paragraph::ListItemEnd:
-				if (stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", "", ii->typeName()));
-				if (stk.back() != Paragraph::ListItemStart) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ii->typeName()));
 			case Paragraph::CitationEnd:
-				if (stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", "", ii->typeName()));
-				if (stk.back() != Paragraph::CitationStart) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ii->typeName()));
-				break;
+			case Paragraph::RefEnd:
+			case Paragraph::TableEnd:
+			case Paragraph::TableTitleEnd:
+			case Paragraph::TableHeadEnd:
 			case Paragraph::TableRowEnd:
-				if (stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", "", ii->typeName()));
-				if (stk.back() != Paragraph::TableRowStart) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ii->typeName()));
+			case Paragraph::TableColEnd:
+				if (stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: ...%s", ii->typeName()));
+				if (stk.back() != Paragraph::invType( ii->type())) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ii->typeName()));
+				stk.pop_back();
 				break;
-			case Paragraph::TableCol:
-				break;
+			case Paragraph::Title:
+			case Paragraph::Attribute:
 			case Paragraph::Text:
-				break;
+			case Paragraph::NoWiki:
+			case Paragraph::Math:
 			case Paragraph::PageLink:
-				break;
 			case Paragraph::WebLink:
-				break;
 			case Paragraph::CitationLink:
 				break;
 		}
@@ -209,73 +232,65 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 	if (!stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ""));
 }
 
-void DocumentStructure::openListItem( int lidx)
-{
-	while (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == Paragraph::ListItemStart && m_structStack.back().idx <= lidx)
-	{
-		Paragraph para = m_parar[ m_structStack.back().start];
-		m_parar.push_back( Paragraph( Paragraph::ListItemEnd, para.id(), para.text()));
-		m_structStack.pop_back();
-	}
-	m_structStack.push_back( StructRef( lidx, m_parar.size()));
-	m_parar.push_back( Paragraph( Paragraph::ListItemStart, strus::string_format("l%d", lidx), ""));
-}
-
-void DocumentStructure::closeOpenListItem()
-{
-	if (m_structStack.empty()) return;
-	Paragraph para = m_parar[ m_structStack.back().start];
-	if (para.type() == Paragraph::ListItemStart)
-	{
-		m_parar.push_back( Paragraph( Paragraph::ListItemEnd, para.id(), para.text()));
-		m_structStack.pop_back();
-	}
-}
-
-void DocumentStructure::closeOpenCitation()
-{
-	if (m_structStack.empty()) return;
-	int start = m_structStack.back().start;
-	Paragraph para = m_parar[ start];
-	if (para.type() == Paragraph::CitationStart)
-	{
-		m_parar.push_back( Paragraph( Paragraph::CitationEnd, para.id(), ""));
-		m_citations.insert( m_citations.end(), m_parar.begin() + start, m_parar.end());
-		m_parar.resize( start);
-		m_parar.push_back( Paragraph( Paragraph::CitationLink, para.id(), ""));
-		m_structStack.pop_back();
-	}
-}
-
 void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttype)
 {
 	while (!m_structStack.empty())
 	{
-		Paragraph para = m_parar[ m_structStack.back().start];
+		int startidx = m_structStack.back().start;
+		Paragraph para = m_parar[ startidx];
 		if (para.type() == starttype)
 		{
 			return;
 		}
-		else if (para.type() == Paragraph::TableRowStart)
+		else if (para.type() == Paragraph::EntityStart)
 		{
-			m_parar.push_back( Paragraph( Paragraph::TableRowEnd, para.id(), para.text()));
+			m_parar[ m_structStack.back().start] = Paragraph( Paragraph::Text, "", "\"");
 			m_structStack.pop_back();
-			if (!m_tableDefs.empty()) m_tableDefs.back().coliter = 0;
 		}
-		else if (para.type() == Paragraph::TableStart)
+		else if (para.type() == Paragraph::HeadingStart)
 		{
-			m_parar.push_back( Paragraph( Paragraph::TableEnd, para.id(), para.text()));
-			m_structStack.pop_back();
-			if (!m_tableDefs.empty()) m_tableDefs.pop_back();
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::ListItemStart)
 		{
-			m_parar.push_back( Paragraph( Paragraph::ListItemEnd, para.id(), para.text()));
-			m_structStack.pop_back();
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::CitationStart)
 		{
-			closeOpenCitation();
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::RefStart)
+		{
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::TableStart)
+		{
+			if (starttype == Paragraph::TableRowStart || starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::TableTitleStart)
+		{
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::TableHeadStart)
+		{
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::TableRowStart)
+		{
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::TableColStart)
+		{
+			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
 		}
 		else
 		{
@@ -284,32 +299,118 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 	}
 }
 
+void DocumentStructure::addQuoteItem( Paragraph::Type startType)
+{
+	Paragraph::Type endType = Paragraph::invType( startType);
+	if (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType)
+	{
+		m_parar[ m_structStack.back().start].setId( collectQuoteText( m_parar.begin() + m_structStack.back().start, m_parar.end()));
+		m_parar.push_back( Paragraph( endType, "", ""));
+	}
+	else
+	{
+		m_parar.push_back( Paragraph( startType, "", ""));
+	}
+}
+
+void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx)
+{
+	Paragraph::Type endType = Paragraph::invType( startType);
+	while (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType && m_structStack.back().idx <= lidx)
+	{
+		Paragraph para = m_parar[ m_structStack.back().start];
+		m_parar.push_back( Paragraph( endType, para.id(), para.text()));
+		m_structStack.pop_back();
+	}
+	m_structStack.push_back( StructRef( lidx, m_parar.size()));
+	m_parar.push_back( Paragraph( startType, strus::string_format("%s%d", prefix, lidx), ""));
+}
+
+void DocumentStructure::closeAutoCloseItem( Paragraph::Type startType)
+{
+	Paragraph::Type endType = Paragraph::invType( startType);
+	if (m_structStack.empty()) return;
+	Paragraph para = m_parar[ m_structStack.back().start];
+	if (para.type() == startType)
+	{
+		m_parar.push_back( Paragraph( endType, para.id(), para.text()));
+		m_structStack.pop_back();
+	}
+}
+
+void DocumentStructure::openStructure( Paragraph::Type startType, const char* prefix, int lidx)
+{
+	if (startType == Paragraph::TableStart)
+	{
+		m_tableDefs.push_back( TableDef( m_parar.size()));
+	}
+	m_structStack.push_back( StructRef( 0, m_parar.size()));
+	m_parar.push_back( Paragraph( startType, strus::string_format("%s%d", prefix, lidx), ""));
+}
+
+void DocumentStructure::finishStructure( int startidx)
+{
+	Paragraph para = m_parar[ startidx];
+	Paragraph::Type endType = Paragraph::invType( para.type());
+	m_parar.push_back( Paragraph( endType, para.id(), ""));
+	if (endType == Paragraph::CitationEnd)
+	{
+		m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
+		m_parar.resize( startidx);
+		m_parar.push_back( Paragraph( Paragraph::CitationLink, para.id(), ""));
+	}
+	else if (endType == Paragraph::TableEnd)
+	{
+		if (!m_tableDefs.empty())
+		{
+			m_tableDefs.pop_back();
+		}
+		else
+		{
+			m_errors.push_back( strus::string_format( "close of table called without table definition"));
+		}
+	}
+	else if (endType == Paragraph::TableRowEnd)
+	{
+		if (!m_tableDefs.empty())
+		{
+			m_tableDefs.back().coliter = 0;
+		}
+		else
+		{
+			m_errors.push_back( strus::string_format( "close of table row called without table definition"));
+		}
+	}
+	m_structStack.pop_back();
+}
+
+void DocumentStructure::closeStructure( Paragraph::Type startType)
+{
+	closeDanglingStructures( startType);
+	if (m_structStack.empty())
+	{
+		m_errors.push_back( strus::string_format( "close of %s structure called without open ()", Paragraph::structTypeName( Paragraph::structType( startType))));
+		return;
+	}
+	int startidx = m_structStack.back().start;
+	const Paragraph& para = m_parar[ startidx];
+	if (para.type() == startType)
+	{
+		finishStructure( startidx);
+	}
+	else
+	{
+		const char* stnam = Paragraph::structTypeName( Paragraph::structType( para.type()));
+		m_errors.push_back( strus::string_format( "close of %s structure called without open (%s)", Paragraph::structTypeName( Paragraph::structType( startType)), stnam));
+		return;
+	}
+}
+
 void DocumentStructure::closeOpenStructures()
 {
 	closeDanglingStructures( Paragraph::Title/*no match => remove all*/);
-}
-
-void DocumentStructure::openCitation()
-{
-	m_structStack.push_back( StructRef( 0, m_parar.size()));
-	m_parar.push_back( Paragraph( Paragraph::CitationStart, strus::string_format("cit%d", ++m_citationCnt), ""));
-}
-
-void DocumentStructure::closeCitation()
-{
-	closeDanglingStructures( Paragraph::CitationStart);
-	if (m_structStack.empty())
-	{
-		m_errors.push_back( "close citation called without open");
-		return;
-	}
-	Paragraph para = m_parar[ m_structStack.back().start];
-	if (para.type() != Paragraph::CitationStart)
-	{
-		m_errors.push_back( "close citation called without open");
-		return;
-	}
-	closeOpenCitation();
+	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
+	m_citations.clear();
 }
 
 static std::string getIdentifier( const std::string& txt)
@@ -400,140 +501,45 @@ void DocumentStructure::setTitle( const std::string& text)
 	}
 }
 
-void DocumentStructure::addHeading( int idx, const std::string& text)
+Paragraph::StructType DocumentStructure::currentStructType() const
 {
-	closeOpenStructures();
-	m_parar.push_back( Paragraph( Paragraph::Heading, strus::string_format("h%d", idx), text));
+	if (m_structStack.empty()) return Paragraph::StructNone;
+	return m_parar[ m_structStack.back().start].structType();
 }
 
-void DocumentStructure::addText( const std::string& text)
+void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText)
 {
-	m_parar.push_back( Paragraph( Paragraph::Text, "", text));
-}
-
-void DocumentStructure::addPageLink( const std::string& id, const std::string& text)
-{
-	m_parar.push_back( Paragraph( Paragraph::PageLink, id, text));
-}
-
-void DocumentStructure::addWebLink( const std::string& id, const std::string& text)
-{
-	m_parar.push_back( Paragraph( Paragraph::WebLink, id, text));
-}
-
-void DocumentStructure::openTable( const std::string& title, const std::vector<std::string>& coltitles)
-{
-	m_tableDefs.push_back( TableDef( coltitles));
-	m_structStack.push_back( StructRef( 0, m_parar.size()));
-	m_parar.push_back( Paragraph( Paragraph::TableStart, strus::string_format("tab%d", (int)m_tableDefs.size()), title));
-}
-
-void DocumentStructure::addTableRow()
-{
-	if (m_tableDefs.empty())
+	if (!m_parar.empty())
 	{
-		m_errors.push_back( "add table row called without open table");
-		return;
-	}
-	closeOpenTableRow();
-	int rowiter = m_tableDefs.back().rowiter++;
-	m_structStack.push_back( StructRef( rowiter, m_parar.size()));
-	m_parar.push_back( Paragraph( Paragraph::TableRowStart, strus::string_format("row%d", rowiter), ""));
-}
-
-void DocumentStructure::closeOpenTableRow()
-{
-	if (m_tableDefs.empty())
-	{
-		m_errors.push_back( "close open table row called without open table");
-		return;
-	}
-	closeDanglingStructures( Paragraph::TableRowStart);
-	if (m_tableDefs.back().rowiter)
-	{
-		Paragraph para = m_parar[ m_structStack.back().start];
-		if (para.type() == Paragraph::TableRowStart)
+		Paragraph::Type tp = m_parar.back().type();
+		if (tp == Paragraph::Text)
 		{
-			m_parar.push_back( Paragraph( Paragraph::TableRowEnd, para.id(), para.text()));
-			m_structStack.pop_back();
+			m_parar.back().addText( text);
 		}
 		else
 		{
-			m_errors.push_back( "close open table row called without open table structure");
+			m_parar.push_back( Paragraph( type, id, text));
 		}
 	}
-	m_tableDefs.back().coliter = 0;
-}
-
-void DocumentStructure::addTableCol( const std::string& text)
-{
-	if (m_tableDefs.empty())
-	{
-		m_errors.push_back( "add table row called without open table");
-		return;
-	}
-	int coliter = m_tableDefs.back().coliter++;
-	if (coliter >= (int)m_tableDefs.back().coltitles.size())
-	{
-		m_errors.push_back( "column index of table exceeds number of columns");
-		return;
-	}
-	m_parar.push_back( Paragraph( Paragraph::TableCol, m_tableDefs.back().coltitles[ coliter], text));
-	
-}
-
-void DocumentStructure::closeTable()
-{
-	closeOpenTableRow();
-	closeDanglingStructures( Paragraph::TableStart);
-	if (m_structStack.empty())
-	{
-		m_errors.push_back( "close table called without open");
-		return;
-	}
-	Paragraph para = m_parar[ m_structStack.back().start];
-	if (para.type() == Paragraph::TableStart)
-	{
-		m_tableDefs.pop_back();
-		m_parar.push_back( Paragraph( Paragraph::TableEnd, para.id(), para.text()));
-		m_structStack.pop_back();
-		m_tableDefs.pop_back();
-	}
 	else
 	{
-		m_errors.push_back( "close table called without open");
-		return;
+		m_parar.push_back( Paragraph( type, id, text));
 	}
-}
-
-void DocumentStructure::addAttribute( const std::string& id, const std::string& text)
-{
-	if (m_parar.empty())
-	{
-		m_errors.push_back( "add attribute without context");
-		return;
-	}
-	if (m_parar.back().type() == Paragraph::CitationStart)
-	{
-		m_parar.back().addAttribute( id, text);
-	}
-	else
-	{
-		m_errors.push_back( "add attribute outside of a context");
-	}
+	m_parar.push_back( Paragraph( type, id, text));
 }
 
 void DocumentStructure::finish()
 {
-	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
-	m_citations.clear();
+	closeOpenStructures();
 	checkStartEndSectionBalance( m_parar.begin(), m_parar.end());
 }
 
-std::string DocumentStructure::toxml( bool subDocument) const
+std::string DocumentStructure::toxml() const
 {
 	std::string rt;
-	XmlPrinter output( subDocument);
+	std::vector<Paragraph::StructType> stk;
+	XmlPrinter output;
+	output.printHeader( rt);
 	output.printOpenTag( "doc", rt);
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(; pi != pe; ++pi)
@@ -548,66 +554,176 @@ std::string DocumentStructure::toxml( bool subDocument) const
 				output.printValue( pi->text(), rt);
 				output.printCloseTag( rt);
 				break;
-			case Paragraph::Heading:
-				output.printOpenTag( pi->id(), rt);
-				output.printValue( pi->text(), rt);
-				output.printCloseTag( rt);
-				break;
-			case Paragraph::TableStart:
-				output.printOpenTag( pi->id(), rt);
-				output.printAttribute( "title", rt);
+			case Paragraph::EntityStart:
+				stk.push_back( Paragraph::StructEntity);
+				output.printOpenTag( "entity", rt);
+				output.printAttribute( "id", rt);
 				output.printValue( pi->text(), rt);
 				output.switchToContent( rt);
 				break;
-			case Paragraph::TableEnd:
+			case Paragraph::EntityEnd:
+				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
-			case Paragraph::TableRowStart:
-				output.printOpenTag( pi->id(), rt);
-				break;
-			case Paragraph::TableRowEnd:
-				output.printCloseTag( rt);
-				break;
-			case Paragraph::TableCol:
-				output.printOpenTag( pi->id(), rt);
-				output.printCloseTag( rt);
-				output.printAttribute( "title", rt);
-				output.printValue( pi->text(), rt);
+			case Paragraph::HeadingStart:
+				stk.push_back( Paragraph::StructHeading);
+				output.printOpenTag( "heading", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
 				output.switchToContent( rt);
+				break;
+			case Paragraph::HeadingEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
 				break;
 			case Paragraph::ListItemStart:
-				output.printOpenTag( pi->id(), rt);
+				stk.push_back( Paragraph::StructList);
+				output.printOpenTag( "list", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
 				break;
 			case Paragraph::ListItemEnd:
+				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::CitationStart:
-				output.printOpenTag( pi->id(), rt);
+				stk.push_back( Paragraph::StructCitation);
+				output.printOpenTag( "citation", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
 				break;
 			case Paragraph::CitationEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::RefStart:
+				stk.push_back( Paragraph::StructRef);
+				output.printOpenTag( "ref", rt);
+				output.switchToContent( rt);
+				break;
+			case Paragraph::RefEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::TableStart:
+				stk.push_back( Paragraph::StructTable);
+				output.printOpenTag( "table", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
+				break;
+			case Paragraph::TableEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::TableTitleStart:
+				stk.push_back( Paragraph::StructTableTitle);
+				output.printOpenTag( "heading", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
+				break;
+			case Paragraph::TableTitleEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::TableHeadStart:
+				stk.push_back( Paragraph::StructTableHead);
+				output.printOpenTag( "head", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
+				break;
+			case Paragraph::TableHeadEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::TableRowStart:
+				stk.push_back( Paragraph::StructTableRow);
+				output.printOpenTag( "row", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
+				break;
+			case Paragraph::TableRowEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::TableColStart:
+				stk.push_back( Paragraph::StructTableCol);
+				output.printOpenTag( "column", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
+				break;
+			case Paragraph::TableColEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::Attribute:
+				output.printOpenTag( "attr", rt);
+				output.printAttribute( "id", rt);
+				output.printValue( pi->id(), rt);
+				output.switchToContent( rt);
+				output.printValue( pi->text(), rt);
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::Text:
-				output.printValue( pi->text(), rt);
+				if (stk.empty())
+				{
+					output.printOpenTag( "text", rt);
+					output.printValue( pi->text(), rt);
+					output.printCloseTag( rt);
+				}
+				else
+				{
+					output.printValue( pi->text(), rt);
+				}
+				break;
+			case Paragraph::NoWiki:
+				if (stk.empty())
+				{
+					output.printOpenTag( "nowiki", rt);
+					output.printValue( pi->text(), rt);
+					output.printCloseTag( rt);
+				}
+				else
+				{
+					output.printValue( pi->text(), rt);
+				}
+				break;
+			case Paragraph::Math:
+				if (stk.empty())
+				{
+					output.printOpenTag( "math", rt);
+					output.printValue( pi->text(), rt);
+					output.printCloseTag( rt);
+				}
+				else
+				{
+					output.printValue( pi->text(), rt);
+				}
 				break;
 			case Paragraph::PageLink:
-				output.printOpenTag( "link", rt);
+				output.printOpenTag( "pagelink", rt);
 				output.printAttribute( "id", rt);
 				output.printValue( pi->id(), rt);
 				output.switchToContent( rt);
-				output.printValue( pi->text(), rt);
+				output.printValue( pi->text().empty() ? pi->id() : pi->text(), rt);
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::WebLink:
-				output.printOpenTag( "href", rt);
-				output.printAttribute( "id", rt);
+				output.printOpenTag( "wwwlink", rt);
+				output.printAttribute( "href", rt);
 				output.printValue( pi->id(), rt);
 				output.switchToContent( rt);
-				output.printValue( pi->text(), rt);
+				output.printValue( pi->text().empty() ? pi->id() : pi->text(), rt);
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::CitationLink:
-				output.printOpenTag( "cit", rt);
+				output.printOpenTag( "citlink", rt);
 				output.printAttribute( "id", rt);
 				output.printValue( pi->id(), rt);
 				output.switchToContent( rt);
@@ -631,3 +747,18 @@ std::string DocumentStructure::tostring() const
 	return out.str();
 }
 
+std::string DocumentStructure::statestring() const
+{
+	std::string rt;
+	std::vector<StructRef>::const_iterator ri = m_structStack.begin(), re = m_structStack.end();
+	for (int ridx=0; re != ri; --re,++ridx)
+	{
+		if (ridx) rt.append( ", ");
+		rt.append( Paragraph::structTypeName( Paragraph::structType( m_parar[ (*(re-1)).start].type())));
+	}
+	if (!m_tableDefs.empty())
+	{
+		rt.append( strus::string_format( " [tables %d]", (int)m_tableDefs.size()));
+	}
+	return rt;
+}

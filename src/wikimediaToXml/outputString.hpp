@@ -15,6 +15,7 @@
 /// \brief strus toplevel namespace
 namespace strus {
 
+std::string outputLineString( const char* si, const char* se, int maxlen=60);
 std::string outputString( const char* si, const char* se, int maxlen=60);
 
 }//namespace
