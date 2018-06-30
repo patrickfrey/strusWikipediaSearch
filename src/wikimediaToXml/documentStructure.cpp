@@ -521,6 +521,14 @@ static bool isSpaceOnlyText( const std::string& text)
 	return !*si;
 }
 
+void DocumentStructure::clearOpenText()
+{
+	if (!m_parar.empty() && m_parar.back().type() == Paragraph::Text)
+	{
+		m_parar.pop_back();
+	}
+}
+
 void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText)
 {
 	if (joinText)

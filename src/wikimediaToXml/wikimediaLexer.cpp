@@ -95,10 +95,16 @@ enum TagType {
 	TagNoWikiClose,
 	TagMathOpen,
 	TagMathClose,
+	TagSupOpen,
+	TagSupClose,
 	TagRefOpen,
 	TagRefClose,
 	TagSpanOpen,
 	TagSpanClose,
+	TagAbbrOpen,
+	TagAbbrClose,
+	TagCenterOpen,
+	TagCenterClose,
 	TagSmallOpen,
 	TagSmallClose,
 	TagBlockquoteOpen,
@@ -130,7 +136,7 @@ static TagType parseTagType( char const*& si, const char* se)
 		}
 		const char* tgnam = si;
 		while (si < se && isAlpha(*si)) ++si;
-		if (0==std::memcmp( tgnam, "nowiki", si-tgnam))
+		if (si-tgnam == 6 && 0==std::memcmp( tgnam, "nowiki", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
@@ -139,7 +145,7 @@ static TagType parseTagType( char const*& si, const char* se)
 				return open ? TagNoWikiOpen : TagNoWikiClose;
 			}
 		}
-		else if (0==std::memcmp( tgnam, "math", si-tgnam))
+		else if (si-tgnam == 4 && 0==std::memcmp( tgnam, "math", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
@@ -148,16 +154,26 @@ static TagType parseTagType( char const*& si, const char* se)
 				return open ? TagMathOpen : TagMathClose;
 			}
 		}
-		else if (0==std::memcmp( tgnam, "ref", si-tgnam))
+		else if (si-tgnam == 3 && 0==std::memcmp( tgnam, "sup", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
 			{
 				si = (sn+1);
+				return open ? TagSupOpen : TagSupClose;
+			}
+		}
+		else if (si-tgnam == 3 && 0==std::memcmp( tgnam, "ref", si-tgnam))
+		{
+			char const* sn = std::strchr( si, '>');
+			if (sn && sn < se)
+			{
+				si = (sn+1);
+				if (*(si-2) == '/') return TagComment;
 				return open ? TagRefOpen : TagRefClose;
 			}
 		}
-		else if (0==std::memcmp( tgnam, "blockquote", si-tgnam))
+		else if (si-tgnam == 10 && 0==std::memcmp( tgnam, "blockquote", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
@@ -166,7 +182,7 @@ static TagType parseTagType( char const*& si, const char* se)
 				return open ? TagBlockquoteOpen : TagBlockquoteClose;
 			}
 		}
-		else if (0==std::memcmp( tgnam, "span", si-tgnam))
+		else if (si-tgnam == 4 && 0==std::memcmp( tgnam, "span", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
@@ -175,7 +191,25 @@ static TagType parseTagType( char const*& si, const char* se)
 				return open ? TagSpanOpen : TagSpanClose;
 			}
 		}
-		else if (0==std::memcmp( tgnam, "small", si-tgnam))
+		else if (si-tgnam == 4 && 0==std::memcmp( tgnam, "abbr", si-tgnam))
+		{
+			char const* sn = std::strchr( si, '>');
+			if (sn && sn < se)
+			{
+				si = (sn+1);
+				return open ? TagAbbrOpen : TagAbbrClose;
+			}
+		}
+		else if (si-tgnam == 6 && (0==std::memcmp( tgnam, "center", si-tgnam)))
+		{
+			char const* sn = std::strchr( si, '>');
+			if (sn && sn < se)
+			{
+				si = (sn+1);
+				return open ? TagCenterOpen : TagCenterClose;
+			}
+		}
+		else if (si-tgnam == 5 && 0==std::memcmp( tgnam, "small", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
@@ -184,7 +218,7 @@ static TagType parseTagType( char const*& si, const char* se)
 				return open ? TagSmallOpen : TagSmallClose;
 			}
 		}
-		else if (0==std::memcmp( tgnam, "br", si-tgnam))
+		else if (si-tgnam == 2 && 0==std::memcmp( tgnam, "br", si-tgnam))
 		{
 			char const* sn = std::strchr( si, '>');
 			if (sn && sn < se)
@@ -265,7 +299,11 @@ std::string WikimediaLexer::tryParseURL()
 		while (ti < m_se && (!isSpace(*ti) && *ti != '|' && *ti != ']' && *ti != '[' && *ti != '}' && *ti != '{' && *ti != ')' && *ti != '(')) ++ti;
 		std::string linkid( m_si, ti-m_si);
 		m_si = ti;
-		while (m_si < m_se && isSpace(*m_si)) ++m_si;
+		if (m_si < m_se && isSpace(*m_si))
+		{
+			while (m_si < m_se && isSpace(*m_si)) ++m_si;
+			if (m_si < m_se && *m_si != '|' && *m_si != ']') --m_si;
+		}
 		return linkid;
 	}
 	return std::string();
@@ -281,11 +319,11 @@ bool WikimediaLexer::eatFollowChar( char expectChr)
 	return false;
 }
 
-static char const* skipStyle( char const* si, char const* se)
+static char const* skipStyle_( char const* si, char const* se)
 {
 	int sidx=0;
 	char const* start = si;
-	for (;si < se && *si > 0 && *si <= 32;++si){}
+	for (;si < se && (*si == ' '||*si == '\t');++si){}
 	for (;si < se && isAlpha(*si);++si,++sidx){}
 	if (si < se && sidx > 0 && (*si == '=' || *si == ':'))
 	{
@@ -297,7 +335,7 @@ static char const* skipStyle( char const* si, char const* se)
 			for (; si < se && *si != '\n' && *si != eb; ++si){}
 			if (si < se && *si == eb)
 			{
-				return skipStyle( si+1, se);
+				return skipStyle_( si+1, se);
 			}
 		}
 		else if (si < se && isAlphaNum(*si))
@@ -305,11 +343,23 @@ static char const* skipStyle( char const* si, char const* se)
 			for (;si < se && isAlphaNum(*si);++si){}
 			if (si < se)
 			{
-				return skipStyle( si, se);
+				return skipStyle_( si, se);
 			}
 		}
 	}
 	return start;
+}
+
+static char const* skipStyle( char const* si, char const* se)
+{
+	char const* sn = skipStyle_( si, se);
+	if (sn && sn != si)
+	{
+		si = sn;
+		for (;si < se && (*si == ' '||*si == '\t');++si){}
+		if (si < se && *si == '|') ++si;
+	}
+	return si;
 }
 
 static int countAndSkip( char const*& si, const char* se,  char ch, int maxcnt)
@@ -367,6 +417,10 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "math", m_si, m_se));
 				case TagMathClose:
 					break;
+				case TagSupOpen:
+					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sup", m_si, m_se));
+				case TagSupClose:
+					break;
 				case TagRefOpen:
 					return WikimediaLexem( WikimediaLexem::OpenRef);
 				case TagRefClose:
@@ -374,6 +428,14 @@ WikimediaLexem WikimediaLexer::next()
 				case TagSpanOpen:
 					return WikimediaLexem( WikimediaLexem::OpenSpan);
 				case TagSpanClose:
+					return WikimediaLexem( WikimediaLexem::CloseSpan);
+				case TagAbbrOpen:
+					return WikimediaLexem( WikimediaLexem::OpenSpan);
+				case TagAbbrClose:
+					return WikimediaLexem( WikimediaLexem::CloseSpan);
+				case TagCenterOpen:
+					return WikimediaLexem( WikimediaLexem::OpenSpan);
+				case TagCenterClose:
 					return WikimediaLexem( WikimediaLexem::CloseSpan);
 				case TagSmallOpen:
 					return WikimediaLexem( WikimediaLexem::OpenSmall);
@@ -477,14 +539,18 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::Error, 0, "illegal character in page link");
 				}
 			}
-			else if (isAlpha(*m_si) || isSpace(*m_si))
+			else if (isAlpha(*m_si) || isSpace(*m_si) || *m_si == '-' || *m_si == '+')
 			{
 				std::string linkid = tryParseURL();
 				if (linkid.empty())
 				{
-					return WikimediaLexem( WikimediaLexem::Text, 0, " [");
+					while (m_si < m_se && *m_si != ']' && (isAlphaNum(*m_si) || *m_si == '-' || *m_si == '_' || *m_si == '-' || *m_si == '+' || isSpace(*m_si) || (unsigned char)*m_si > 128))
+					{
+						++m_si;
+					}
+					if (m_si < m_se && *m_si == ']') ++m_si;
 				}
-				else if (m_si < m_se && (*m_si == ']' || *m_si == '|'))
+				else if (m_si < m_se && (*m_si == ']' || *m_si == '|' || *m_si == ' '))
 				{
 					if (*m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::OpenWWWLink, 0, linkid);
@@ -517,6 +583,7 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			else if (*m_si == '|')
 			{
+				++m_si;
 				m_si = skipStyle( m_si, m_se);
 				return WikimediaLexem( WikimediaLexem::OpenTable);
 			}

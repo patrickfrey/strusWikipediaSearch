@@ -294,6 +294,8 @@ public:
 	{
 		addSingleItem( Paragraph::Text, "", text, true/*joinText*/);
 	}
+	void clearOpenText();
+
 	void addMath( const std::string& text)
 	{
 		addSingleItem( Paragraph::Math, "", text, false/*joinText*/);
@@ -304,6 +306,7 @@ public:
 	}
 	void openRef()
 	{
+		closeAutoCloseItem( Paragraph::RefStart);
 		openStructure( Paragraph::RefStart, "ref", ++m_refCnt);
 	}
 	void closeRef()

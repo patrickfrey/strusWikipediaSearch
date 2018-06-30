@@ -153,8 +153,17 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.addTableRow();
 				break;
 			case strus::WikimediaLexem::TableColDelim:
-				if (doc.currentStructType() == strus::Paragraph::StructCitation
-				||  doc.currentStructType() == strus::Paragraph::StructAttribute)
+			{
+				strus::Paragraph::StructType tp = doc.currentStructType();
+				if (tp == strus::Paragraph::StructPageLink
+				||  tp == strus::Paragraph::StructWebLink)
+				{
+					doc.clearOpenText();
+					//... ignore last text and restart structure
+				}
+				else
+				if (tp == strus::Paragraph::StructCitation
+				||  tp == strus::Paragraph::StructAttribute)
 				{
 					doc.addAttribute( lexem.value);
 				}
@@ -163,9 +172,22 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 					doc.addTableCol();
 				}
 				break;
+			}
 			case strus::WikimediaLexem::ColDelim:
-				doc.addAttribute( lexem.value);
+			{
+				strus::Paragraph::StructType tp = doc.currentStructType();
+				if (tp == strus::Paragraph::StructPageLink
+				||  tp == strus::Paragraph::StructWebLink)
+				{
+					doc.clearOpenText();
+					//... ignore last text and restart structure
+				}
+				else
+				{
+					doc.addAttribute( lexem.value);
+				}
 				break;
+			}
 		}
 	}
 }
