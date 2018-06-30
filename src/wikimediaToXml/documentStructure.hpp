@@ -27,14 +27,28 @@ public:
 			EntityEnd,
 			QuotationStart,
 			QuotationEnd,
+			DoubleQuoteStart,
+			DoubleQuoteEnd,
+			BlockQuoteStart,
+			BlockQuoteEnd,
+			SpanStart,
+			SpanEnd,
+			SmallStart,
+			SmallEnd,
 			HeadingStart,
 			HeadingEnd,
 			ListItemStart,
 			ListItemEnd,
+			AttributeStart,
+			AttributeEnd,
 			CitationStart,
 			CitationEnd,
 			RefStart,
 			RefEnd,
+			PageLinkStart,
+			PageLinkEnd,
+			WebLinkStart,
+			WebLinkEnd,
 			TableStart,
 			TableEnd,
 			TableTitleStart,
@@ -45,12 +59,9 @@ public:
 			TableRowEnd,
 			TableColStart,
 			TableColEnd,
-			Attribute,
 			Text,
 			NoWiki,
 			Math,
-			PageLink,
-			WebLink,
 			CitationLink
 	};
 	static const char* typeName( Type tp)
@@ -61,14 +72,28 @@ public:
 			"EntityEnd",
 			"QuotationStart",
 			"QuotationEnd",
+			"DoubleQuoteStart",
+			"DoubleQuoteEnd",
+			"BlockQuoteStart",
+			"BlockQuoteEnd",
+			"SpanStart",
+			"SpanEnd",
+			"SmallStart",
+			"SmallEnd",
 			"HeadingStart",
 			"HeadingEnd",
 			"ListItemStart",
 			"ListItemEnd",
+			"AttributeStart",
+			"AttributeEnd",
 			"CitationStart",
 			"CitationEnd",
 			"RefStart",
 			"RefEnd",
+			"PageLinkStart",
+			"PageLinkEnd",
+			"WebLinkStart",
+			"WebLinkEnd",
 			"TableStart",
 			"TableEnd",
 			"TableTitleStart",
@@ -79,19 +104,36 @@ public:
 			"TableRowEnd",
 			"TableColStart",
 			"TableColEnd",
-			"Attribute",
 			"Text",
 			"NoWiki",
 			"Math",
-			"PageLink",
-			"WebLink",
 			"CitationLink",0};
 		return ar[tp];
 	}
-	enum StructType {StructNone,StructEntity,StructQuotation,StructHeading,StructList,StructCitation,StructRef,StructTable,StructTableTitle,StructTableHead,StructTableRow,StructTableCol};
+	enum StructType {
+			StructNone,
+			StructEntity,
+			StructQuotation,
+			StructDoubleQuote,
+			StructBlockQuote,
+			StructSpan,
+			StructSmall,
+			StructHeading,
+			StructList,
+			StructAttribute,
+			StructCitation,
+			StructRef,
+			StructPageLink,
+			StructWebLink,
+			StructTable,
+			StructTableTitle,
+			StructTableHead,
+			StructTableRow,
+			StructTableCol
+	};
 	static const char* structTypeName( StructType st)
 	{
-		static const char* ar[] = {"None","Entity","Quotation","Heading","List","Citation","Ref","Table","TableTitle","TableHead","TableRow","TableCol"};
+		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Span","Small","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableRow","TableCol"};
 		return ar[ st];
 	}
 	static StructType structType( Type ti)
@@ -102,14 +144,28 @@ public:
 			StructNone/*EntityEnd*/,
 			StructQuotation/*QuotationStart*/,
 			StructNone/*QuotationEnd*/,
+			StructDoubleQuote/*DoubleQuoteStart*/,
+			StructNone/*DoubleQuoteEnd*/,
+			StructBlockQuote/*BlockQuoteStart*/,
+			StructNone/*BlockQuoteEnd*/,
+			StructSpan/*SpanStart*/,
+			StructNone/*SpanEnd*/,
+			StructSmall/*SmallStart*/,
+			StructNone/*SmallEnd*/,
 			StructHeading/*HeadingStart*/,
 			StructNone/*HeadingEnd*/,
 			StructList/*ListItemStart*/,
 			StructNone/*ListItemEnd*/,
+			StructAttribute/*AttributeStart*/,
+			StructNone/*AttributeEnd*/,
 			StructCitation/*CitationStart*/,
 			StructNone/*CitationEnd*/,
 			StructRef/*RefStart*/,
 			StructNone/*RefEnd*/,
+			StructPageLink/*PageLinkStart*/,
+			StructNone/*PageLinkEnd*/,
+			StructWebLink/*WebLinkStart*/,
+			StructNone/*WebLinkEnd*/,
 			StructTable/*TableStart*/,
 			StructNone/*TableEnd*/,
 			StructTableTitle/*TableTitleStart*/,
@@ -120,7 +176,6 @@ public:
 			StructNone/*TableRowEnd*/,
 			StructTableCol/*TableColStart*/,
 			StructNone/*TableColEnd*/,
-			StructNone/*Attribute*/,
 			StructNone/*Text*/,
 			StructNone/*NoWiki*/,
 			StructNone/*Math*/,
@@ -137,14 +192,28 @@ public:
 			EntityStart/*EntityEnd*/,
 			QuotationEnd/*QuotationStart*/,
 			QuotationStart/*QuotationEnd*/,
+			DoubleQuoteEnd/*DoubleQuoteStart*/,
+			DoubleQuoteStart/*DoubleQuoteEnd*/,
+			BlockQuoteEnd/*BlockQuoteStart*/,
+			BlockQuoteStart/*BlockQuoteEnd*/,
+			SpanEnd/*SpanStart*/,
+			SpanStart/*SpanEnd*/,
+			SmallEnd/*SmallStart*/,
+			SmallStart/*SmallEnd*/,
 			HeadingEnd/*HeadingStart*/,
 			HeadingStart/*HeadingEnd*/,
 			ListItemEnd/*ListItemStart*/,
 			ListItemStart/*ListItemEnd*/,
+			AttributeEnd/*AttributeStart*/,
+			AttributeStart/*AttributeEnd*/,
 			CitationEnd/*CitationStart*/,
 			CitationStart/*CitationEnd*/,
 			RefEnd/*RefStart*/,
 			RefStart/*RefEnd*/,
+			PageLinkEnd/*PageLinkStart*/,
+			PageLinkStart/*PageLinkEnd*/,
+			WebLinkEnd/*WebLinkStart*/,
+			WebLinkStart/*WebLinkEnd*/,
 			TableEnd/*TableStart*/,
 			TableStart/*TableEnd*/,
 			TableTitleEnd/*TableTitleStart*/,
@@ -155,20 +224,12 @@ public:
 			TableRowStart/*TableRowEnd*/,
 			TableColEnd/*TableColStart*/,
 			TableColStart/*TableColEnd*/,
-			Attribute/*Attribute*/,
 			Text/*Text*/,
 			NoWiki/*NoWiki*/,
 			Math/*Math*/,
-			PageLink/*PageLink*/,
-			WebLink/*WebLink*/,
 			CitationLink/*CitationLink*/};
 		return ar[ti];
 	}
-	static bool structTypeIsAutoCloseOnEoln( StructType tp)
-	{
-		return (tp == StructList || tp == StructTableCol || tp == StructTableRow || tp == StructEntity);
-	}
-
 	StructType structType() const
 	{
 		return structType( m_type);
@@ -225,8 +286,10 @@ public:
 	{
 		return m_id;
 	}
+	Paragraph::StructType currentStructType() const;
 
 	void setTitle( const std::string& text);
+
 	void addText( const std::string& text)
 	{
 		addSingleItem( Paragraph::Text, "", text, true/*joinText*/);
@@ -247,6 +310,22 @@ public:
 	{
 		closeStructure( Paragraph::RefStart);
 	}
+	void openPageLink( const std::string& id)
+	{
+		openStructure( Paragraph::PageLinkStart, id.c_str(), 0);
+	}
+	void closePageLink()
+	{
+		closeStructure( Paragraph::PageLinkStart);
+	}
+	void openWebLink( const std::string& id)
+	{
+		openStructure( Paragraph::WebLinkStart, id.c_str(), 0);
+	}
+	void closeWebLink()
+	{
+		closeStructure( Paragraph::WebLinkStart);
+	}
 	void openHeading( int idx)
 	{
 		closeOpenStructures();
@@ -256,14 +335,6 @@ public:
 	{
 		closeAutoCloseItem( Paragraph::HeadingStart);
 	}
-	void addPageLink( const std::string& id, const std::string& text)
-	{
-		addSingleItem( Paragraph::PageLink, id, text, false/*joinText*/);
-	}
-	void addWebLink( const std::string& id, const std::string& text)
-	{
-		addSingleItem( Paragraph::WebLink, id, text, false/*joinText*/);
-	}
 	void addEntityMarker()
 	{
 		addQuoteItem( Paragraph::EntityStart);
@@ -271,6 +342,37 @@ public:
 	void addQuotationMarker()
 	{
 		addQuoteItem( Paragraph::QuotationStart);
+	}
+	void addDoubleQuoteMarker()
+	{
+		addQuoteItem( Paragraph::DoubleQuoteStart);
+	}
+	void openBlockQuote()
+	{
+		closeAutoCloseItem( Paragraph::BlockQuoteStart);
+		openStructure( Paragraph::BlockQuoteStart, "", 0);
+	}
+	void closeBlockQuote()
+	{
+		closeStructure( Paragraph::BlockQuoteStart);
+	}
+	void openSpan()
+	{
+		closeAutoCloseItem( Paragraph::SpanStart);
+		openStructure( Paragraph::SpanStart, "", 0);
+	}
+	void closeSpan()
+	{
+		closeStructure( Paragraph::SpanStart);
+	}
+	void openSmall()
+	{
+		closeAutoCloseItem( Paragraph::SmallStart);
+		openStructure( Paragraph::SmallStart, "", 0);
+	}
+	void closeSmall()
+	{
+		closeStructure( Paragraph::SmallStart);
 	}
 	void openTable()
 	{
@@ -302,13 +404,19 @@ public:
 	void addTableCol()
 	{
 		closeDanglingStructures( Paragraph::TableRowStart);
-		if (m_tableDefs.empty()) {addError("table open col without table defined"); return;}
+		if (m_tableDefs.empty()) {
+			addError("table open col without table defined"); return;
+		}
 		openAutoCloseItem( Paragraph::TableTitleStart, "col", ++m_tableDefs.back().coliter);
 	}
-	void addAttribute( const std::string& id, const std::string& text)
+	void addAttribute( const std::string& id)
 	{
-		if (currentStructType() != Paragraph::StructCitation) {addError("add attribute without context"); return;}
-		addSingleItem( Paragraph::Attribute, id, text, false/*joinText*/);
+		closeAutoCloseItem( Paragraph::AttributeStart);
+		if (currentStructType() != Paragraph::StructCitation)
+		{
+			addError("add attribute without context"); return;
+		}
+		openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0);
 	}
 	void openListItem( int lidx)
 	{
@@ -326,6 +434,7 @@ public:
 
 	void closeCitation()
 	{
+		closeAutoCloseItem( Paragraph::AttributeStart);
 		closeStructure( Paragraph::CitationStart);
 	}
 
@@ -344,6 +453,8 @@ public:
 	std::string tostring() const;
 	std::string statestring() const;
 
+	static std::string getInputXML( const std::string& title, const std::string& content);
+
 private:
 	void finishStructure( int structStartidx);
 	void openStructure( Paragraph::Type startType, const char* prefix, int lidx=0);
@@ -356,7 +467,6 @@ private:
 	void closeAutoCloseItem( Paragraph::Type startType);
 	void closeDanglingStructures( const Paragraph::Type& starttype);
 	void checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end);
-	Paragraph::StructType currentStructType() const;
 
 private:
 	struct StructRef

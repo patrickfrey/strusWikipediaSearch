@@ -15,69 +15,12 @@
 #include "textwolf/xmlprinter.hpp"
 #include "textwolf/charset_utf8.hpp"
 #include "strus/base/string_format.hpp"
+#include "strus/base/string_conv.hpp"
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
 
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinterBase;
-
-#ifdef UNUSED_FUNCTIONS
-static bool isSpace( char ch)
-{
-	return ((unsigned char)ch <= 32);
-}
-
-static bool isAlpha( char ch)
-{
-	return (ch|32) >= 'a' && (ch|32) <= 'z';
-}
-
-static bool isDigit( char ch)
-{
-	return (ch) >= '0' && (ch) <= '9';
-}
-
-static bool isAlphaNum( char ch)
-{
-	return isAlpha(ch) || isDigit(ch);
-}
-
-static bool isAttributeString( const std::string& src)
-{
-	if (src.size() > 80) return false;
-	std::string::const_iterator si = src.begin(), se = src.end();
-	for (; si != se && (*si == ' ' || *si == '-' || *si == '_' || isAlphaNum(*si)); ++si){}
-	return (si == se);
-}
-static bool isEmpty( const std::string& src)
-{
-	if (src.size() > 80) return false;
-	std::string::const_iterator si = src.begin(), se = src.end();
-	for (; si != se && isSpace(*si); ++si){}
-	return (si == se);
-}
-static std::string makeAttributeName( const std::string& src)
-{
-	std::string rt;
-	std::string::const_iterator si = src.begin(), se = src.end();
-	for (; si != se && (*si == ' ' || *si == '-' || *si == '_' || isAlphaNum(*si)); ++si)
-	{
-		if (isAlpha(*si))
-		{
-			rt.push_back( *si|32);
-		}
-		else if (isDigit(*si))
-		{
-			rt.push_back( *si);
-		}
-		else if (*si == '_' || *si == '-')
-		{
-			rt.push_back( '_');
-		}
-	}
-	return rt;
-}
-#endif
 
 /// \brief strus toplevel namespace
 using namespace strus;
@@ -171,12 +114,12 @@ public:
 	}
 };
 
-static std::string collectQuoteText( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+static std::string collectEntityText( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
 {
 	std::string rt;
 	for (; pi != pe && pi->type() != Paragraph::EntityEnd; ++pi)
 	{
-		if (pi->type() == Paragraph::PageLink || pi->type() == Paragraph::WebLink || pi->type() == Paragraph::Text || pi->type() == Paragraph::NoWiki || pi->type() == Paragraph::Math)
+		if (pi->type() == Paragraph::Text || pi->type() == Paragraph::NoWiki || pi->type() == Paragraph::Math)
 		{
 			rt.append( pi->text());
 		}
@@ -194,10 +137,17 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 		{
 			case Paragraph::EntityStart:
 			case Paragraph::QuotationStart:
+			case Paragraph::DoubleQuoteStart:
+			case Paragraph::BlockQuoteStart:
+			case Paragraph::SpanStart:
+			case Paragraph::SmallStart:
 			case Paragraph::HeadingStart:
 			case Paragraph::ListItemStart:
+			case Paragraph::AttributeStart:
 			case Paragraph::CitationStart:
 			case Paragraph::RefStart:
+			case Paragraph::PageLinkStart:
+			case Paragraph::WebLinkStart:
 			case Paragraph::TableStart:
 			case Paragraph::TableTitleStart:
 			case Paragraph::TableHeadStart:
@@ -207,10 +157,17 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				break;
 			case Paragraph::EntityEnd:
 			case Paragraph::QuotationEnd:
+			case Paragraph::DoubleQuoteEnd:
+			case Paragraph::BlockQuoteEnd:
+			case Paragraph::SpanEnd:
+			case Paragraph::SmallEnd:
 			case Paragraph::HeadingEnd:
 			case Paragraph::ListItemEnd:
+			case Paragraph::AttributeEnd:
 			case Paragraph::CitationEnd:
 			case Paragraph::RefEnd:
+			case Paragraph::PageLinkEnd:
+			case Paragraph::WebLinkEnd:
 			case Paragraph::TableEnd:
 			case Paragraph::TableTitleEnd:
 			case Paragraph::TableHeadEnd:
@@ -221,12 +178,9 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				stk.pop_back();
 				break;
 			case Paragraph::Title:
-			case Paragraph::Attribute:
 			case Paragraph::Text:
 			case Paragraph::NoWiki:
 			case Paragraph::Math:
-			case Paragraph::PageLink:
-			case Paragraph::WebLink:
 			case Paragraph::CitationLink:
 				break;
 		}
@@ -251,52 +205,72 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else if (para.type() == Paragraph::QuotationStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::DoubleQuoteStart)
+		{
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::BlockQuoteStart)
+		{
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::SpanStart)
+		{
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::SmallStart)
+		{
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::HeadingStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::ListItemStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::AttributeStart)
+		{
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::CitationStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::RefStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::PageLinkStart)
+		{
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::WebLinkStart)
+		{
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableStart)
 		{
-			if (starttype == Paragraph::TableRowStart || starttype == Paragraph::EntityStart) return;
+			if (starttype == Paragraph::TableRowStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableTitleStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableHeadStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableRowStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
+			if (starttype == Paragraph::TableColStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableColStart)
 		{
-			if (starttype == Paragraph::EntityStart) return;
 			finishStructure( startidx);
 		}
 		else
@@ -311,9 +285,12 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType)
 	Paragraph::Type endType = Paragraph::invType( startType);
 	if (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType)
 	{
-		m_parar[ m_structStack.back().start].setId( collectQuoteText( m_parar.begin() + m_structStack.back().start, m_parar.end()));
-		m_structStack.pop_back();
 		m_parar.push_back( Paragraph( endType, "", ""));
+		if (startType == Paragraph::EntityStart)
+		{
+			m_parar[ m_structStack.back().start].setId( collectEntityText( m_parar.begin() + m_structStack.back().start, m_parar.end()));
+		}
+		m_structStack.pop_back();
 	}
 	else
 	{
@@ -332,7 +309,14 @@ void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char
 		m_structStack.pop_back();
 	}
 	m_structStack.push_back( StructRef( lidx, m_parar.size()));
-	m_parar.push_back( Paragraph( startType, strus::string_format("%s%d", prefix, lidx), ""));
+	if (lidx > 0)
+	{
+		m_parar.push_back( Paragraph( startType, strus::string_format("%s%d", prefix, lidx), ""));
+	}
+	else
+	{
+		m_parar.push_back( Paragraph( startType, prefix, ""));
+	}
 }
 
 void DocumentStructure::closeAutoCloseItem( Paragraph::Type startType)
@@ -354,14 +338,28 @@ void DocumentStructure::openStructure( Paragraph::Type startType, const char* pr
 		m_tableDefs.push_back( TableDef( m_parar.size()));
 	}
 	m_structStack.push_back( StructRef( 0, m_parar.size()));
-	m_parar.push_back( Paragraph( startType, strus::string_format("%s%d", prefix, lidx), ""));
+	if (lidx > 0)
+	{
+		m_parar.push_back( Paragraph( startType, strus::string_format("%s%d", prefix, lidx), ""));
+	}
+	else
+	{
+		m_parar.push_back( Paragraph( startType, prefix, ""));
+	}
 }
 
 void DocumentStructure::finishStructure( int startidx)
 {
 	Paragraph para = m_parar[ startidx];
+	if (para.type() == Paragraph::PageLinkStart)
+	{
+		if (startidx == (int)m_parar.size()-1 && para.text().empty())
+		{
+			m_parar[ startidx].setText( para.id());
+		}
+	}
 	Paragraph::Type endType = Paragraph::invType( para.type());
-	m_parar.push_back( Paragraph( endType, para.id(), ""));
+	m_parar.push_back( Paragraph( endType, "", ""));
 	if (endType == Paragraph::CitationEnd)
 	{
 		m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
@@ -422,7 +420,7 @@ void DocumentStructure::closeOpenStructures()
 	m_citations.clear();
 }
 
-static std::string getIdentifier( const std::string& txt)
+static std::string getDocidFromTitle( const std::string& txt)
 {
 	std::string rt;
 	char const* si = txt.c_str();
@@ -435,7 +433,7 @@ static std::string getIdentifier( const std::string& txt)
 			while (*si && (unsigned char)*si <= 32) ++si;
 			rt.push_back( '_');
 		}
-		else if ((ch >= 'a' && ch <= 'z') || (*si >= '0' && *si <= '9') || *si == '-')
+		else if ((ch >= 'a' && ch <= 'z') || (*si >= '0' && *si <= '9') || *si == '-' || *si == '_')
 		{
 			rt.push_back( *si++);
 		}
@@ -445,7 +443,7 @@ static std::string getIdentifier( const std::string& txt)
 			while ((unsigned char)*si >= 128)
 			{
 				char buf[ 16];
-				std::snprintf( buf, sizeof(buf), "%02u", (unsigned int)(unsigned char)*si);
+				std::snprintf( buf, sizeof(buf), "%02x", (unsigned int)(unsigned char)*si);
 				rt.append( buf);
 				++si;
 			}
@@ -454,7 +452,7 @@ static std::string getIdentifier( const std::string& txt)
 		{
 			rt.push_back( '#');
 			char buf[ 16];
-			std::snprintf( buf, sizeof(buf), "%02u", (unsigned int)(unsigned char)*si);
+			std::snprintf( buf, sizeof(buf), "%02x", (unsigned int)(unsigned char)*si);
 			rt.append( buf);
 			++si;
 		}
@@ -463,7 +461,7 @@ static std::string getIdentifier( const std::string& txt)
 	return rt;
 }
 
-static std::string encodeString( const std::string& txt, bool encodeEoln)
+static std::string encodeXmlContentString( const std::string& txt, bool encodeEoln)
 {
 	std::string rt;
 	char const* si = txt.c_str();
@@ -499,7 +497,7 @@ static std::string encodeString( const std::string& txt, bool encodeEoln)
 
 void DocumentStructure::setTitle( const std::string& text)
 {
-	Paragraph para( Paragraph::Title, m_id = getIdentifier(text), text);
+	Paragraph para( Paragraph::Title, m_id = getDocidFromTitle( text), text);
 	if (!m_parar.empty() && m_parar[0].type() == Paragraph::Title)
 	{
 		m_parar[0] = para;
@@ -516,14 +514,24 @@ Paragraph::StructType DocumentStructure::currentStructType() const
 	return m_parar[ m_structStack.back().start].structType();
 }
 
+static bool isSpaceOnlyText( const std::string& text)
+{
+	char const* si = text.c_str();
+	for (; *si && (unsigned char)*si <= 32; ++si){}
+	return !*si;
+}
+
 void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText)
 {
-	if (!m_parar.empty())
+	if (joinText)
 	{
-		Paragraph::Type tp = m_parar.back().type();
-		if (tp == Paragraph::Text)
+		if (!m_parar.empty() && m_parar.back().type() == type)
 		{
 			m_parar.back().addText( text);
+		}
+		else if (isSpaceOnlyText( text))
+		{
+			//... ignore it
 		}
 		else
 		{
@@ -542,6 +550,48 @@ void DocumentStructure::finish()
 	checkStartEndSectionBalance( m_parar.begin(), m_parar.end());
 }
 
+std::string DocumentStructure::getInputXML( const std::string& title, const std::string& content)
+{
+	std::string rt;
+	std::vector<Paragraph::StructType> stk;
+	XmlPrinter output;
+	output.printHeader( rt);
+	output.printOpenTag( "mediawiki", rt);
+	output.printOpenTag( "page", rt);
+	output.printOpenTag( "title", rt);
+	output.printValue( title, rt);
+	output.printCloseTag(rt);//title
+	output.printOpenTag( "revision", rt);
+	output.printOpenTag( "text", rt);
+	output.printValue( content, rt);
+	output.printCloseTag(rt);//text
+	output.printCloseTag(rt);//revision
+	output.printCloseTag(rt);//page
+	output.printCloseTag(rt);//mediawiki
+	return rt;
+}
+
+static void printTagOpen( XmlPrinter& output, std::string& rt, const char* tagnam, const std::string& id, const std::string& text)
+{
+	output.printOpenTag( tagnam, rt);
+	if (!id.empty())
+	{
+		output.printAttribute( "id", rt);
+		output.printValue( id, rt);
+	}
+	output.switchToContent( rt);
+	if (!text.empty())
+	{
+		output.printValue( text, rt);
+	}
+}
+
+static void printTagContent( XmlPrinter& output, std::string& rt, const char* tagnam, const std::string& id, const std::string& text)
+{
+	printTagOpen( output, rt, tagnam, id, text);
+	output.printCloseTag( rt);
+}
+
 std::string DocumentStructure::toxml( bool beautified) const
 {
 	std::string rt;
@@ -556,40 +606,61 @@ std::string DocumentStructure::toxml( bool beautified) const
 		switch (pi->type())
 		{
 			case Paragraph::Title:
-				output.printOpenTag( "docid", rt);
-				output.printValue( pi->id(), rt);
-				output.printCloseTag( rt);
+				printTagContent( output, rt, "docid", "", pi->id());
 				if (beautified) output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
-				output.printOpenTag( "title", rt);
-				output.printValue( pi->text(), rt);
-				output.printCloseTag( rt);
+				printTagContent( output, rt, "title", "", pi->text());
 				break;
 			case Paragraph::EntityStart:
 				stk.push_back( Paragraph::StructEntity);
-				output.printOpenTag( "entity", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->text(), rt);
-				output.switchToContent( rt);
-				break;
-			case Paragraph::QuotationStart:
-				stk.push_back( Paragraph::StructQuotation);
-				output.printOpenTag( "quot", rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "entity", pi->id(), pi->text());
 				break;
 			case Paragraph::EntityEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
+			case Paragraph::QuotationStart:
+				stk.push_back( Paragraph::StructQuotation);
+				printTagOpen( output, rt, "quot", pi->id(), pi->text());
+				break;
 			case Paragraph::QuotationEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::DoubleQuoteStart:
+				stk.push_back( Paragraph::StructDoubleQuote);
+				printTagOpen( output, rt, "dquot", pi->id(), pi->text());
+				break;
+			case Paragraph::DoubleQuoteEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::BlockQuoteStart:
+				stk.push_back( Paragraph::StructBlockQuote);
+				printTagOpen( output, rt, "bquot", pi->id(), pi->text());
+				break;
+			case Paragraph::BlockQuoteEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::SpanStart:
+				stk.push_back( Paragraph::StructSpan);
+				printTagOpen( output, rt, "span", pi->id(), pi->text());
+				break;
+			case Paragraph::SpanEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::SmallStart:
+				stk.push_back( Paragraph::StructSmall);
+				printTagOpen( output, rt, "small", pi->id(), pi->text());
+				break;
+			case Paragraph::SmallEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::HeadingStart:
 				stk.push_back( Paragraph::StructHeading);
-				output.printOpenTag( "heading", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "heading", pi->id(), pi->text());
 				break;
 			case Paragraph::HeadingEnd:
 				stk.pop_back();
@@ -597,21 +668,23 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::ListItemStart:
 				stk.push_back( Paragraph::StructList);
-				output.printOpenTag( "list", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "list", pi->id(), pi->text());
 				break;
 			case Paragraph::ListItemEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
+			case Paragraph::AttributeStart:
+				stk.push_back( Paragraph::StructAttribute);
+				printTagOpen( output, rt, "attr", pi->id(), pi->text());
+				break;
+			case Paragraph::AttributeEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
 			case Paragraph::CitationStart:
 				stk.push_back( Paragraph::StructCitation);
-				output.printOpenTag( "citation", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "citation", pi->id(), pi->text());
 				break;
 			case Paragraph::CitationEnd:
 				stk.pop_back();
@@ -619,19 +692,31 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::RefStart:
 				stk.push_back( Paragraph::StructRef);
-				output.printOpenTag( "ref", rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "ref", pi->id(), pi->text());
 				break;
 			case Paragraph::RefEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
+			case Paragraph::PageLinkStart:
+				stk.push_back( Paragraph::StructPageLink);
+				printTagOpen( output, rt, "pagelink", pi->id(), pi->text());
+				break;
+			case Paragraph::PageLinkEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
+			case Paragraph::WebLinkStart:
+				stk.push_back( Paragraph::StructWebLink);
+				printTagOpen( output, rt, "weblink", pi->id(), pi->text());
+				break;
+			case Paragraph::WebLinkEnd:
+				stk.pop_back();
+				output.printCloseTag( rt);
+				break;
 			case Paragraph::TableStart:
 				stk.push_back( Paragraph::StructTable);
-				output.printOpenTag( "table", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "table", pi->id(), pi->text());
 				break;
 			case Paragraph::TableEnd:
 				stk.pop_back();
@@ -639,10 +724,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableTitleStart:
 				stk.push_back( Paragraph::StructTableTitle);
-				output.printOpenTag( "heading", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "heading", pi->id(), pi->text());
 				break;
 			case Paragraph::TableTitleEnd:
 				stk.pop_back();
@@ -650,10 +732,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableHeadStart:
 				stk.push_back( Paragraph::StructTableHead);
-				output.printOpenTag( "head", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "head", pi->id(), pi->text());
 				break;
 			case Paragraph::TableHeadEnd:
 				stk.pop_back();
@@ -661,10 +740,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableRowStart:
 				stk.push_back( Paragraph::StructTableRow);
-				output.printOpenTag( "row", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "row", pi->id(), pi->text());
 				break;
 			case Paragraph::TableRowEnd:
 				stk.pop_back();
@@ -672,29 +748,16 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableColStart:
 				stk.push_back( Paragraph::StructTableCol);
-				output.printOpenTag( "column", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
+				printTagOpen( output, rt, "column", pi->id(), pi->text());
 				break;
 			case Paragraph::TableColEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
-			case Paragraph::Attribute:
-				output.printOpenTag( "attr", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
-				output.printValue( pi->text(), rt);
-				output.printCloseTag( rt);
-				break;
 			case Paragraph::Text:
 				if (stk.empty())
 				{
-					output.printOpenTag( "text", rt);
-					output.printValue( pi->text(), rt);
-					output.printCloseTag( rt);
+					printTagContent( output, rt, "text", pi->id(), pi->text());
 				}
 				else
 				{
@@ -704,9 +767,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 			case Paragraph::NoWiki:
 				if (stk.empty())
 				{
-					output.printOpenTag( "nowiki", rt);
-					output.printValue( pi->text(), rt);
-					output.printCloseTag( rt);
+					printTagContent( output, rt, "nowiki", pi->id(), pi->text());
 				}
 				else
 				{
@@ -716,38 +777,15 @@ std::string DocumentStructure::toxml( bool beautified) const
 			case Paragraph::Math:
 				if (stk.empty())
 				{
-					output.printOpenTag( "math", rt);
-					output.printValue( pi->text(), rt);
-					output.printCloseTag( rt);
+					printTagContent( output, rt, "math", pi->id(), pi->text());
 				}
 				else
 				{
 					output.printValue( pi->text(), rt);
 				}
 				break;
-			case Paragraph::PageLink:
-				output.printOpenTag( "pagelink", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
-				output.printValue( pi->text().empty() ? pi->id() : pi->text(), rt);
-				output.printCloseTag( rt);
-				break;
-			case Paragraph::WebLink:
-				output.printOpenTag( "wwwlink", rt);
-				output.printAttribute( "href", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
-				output.printValue( pi->text().empty() ? pi->id() : pi->text(), rt);
-				output.printCloseTag( rt);
-				break;
 			case Paragraph::CitationLink:
-				output.printOpenTag( "citlink", rt);
-				output.printAttribute( "id", rt);
-				output.printValue( pi->id(), rt);
-				output.switchToContent( rt);
-				output.printValue( pi->text(), rt);
-				output.printCloseTag( rt);
+				printTagContent( output, rt, "citlink", pi->id(), pi->text());
 				break;
 		}
 	}
@@ -761,7 +799,7 @@ std::string DocumentStructure::tostring() const
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(; pi != pe; ++pi)
 	{
-		out << pi->typeName() << " " << encodeString( pi->id(), true) << " \"" << encodeString( pi->text(), true) << "\"\n";
+		out << pi->typeName() << " " << encodeXmlContentString( pi->id(), true) << " \"" << encodeXmlContentString( pi->text(), true) << "\"\n";
 	}
 	return out.str();
 }

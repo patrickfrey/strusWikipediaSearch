@@ -97,6 +97,12 @@ enum TagType {
 	TagMathClose,
 	TagRefOpen,
 	TagRefClose,
+	TagSpanOpen,
+	TagSpanClose,
+	TagSmallOpen,
+	TagSmallClose,
+	TagBlockquoteOpen,
+	TagBlockquoteClose,
 	TagComment,
 	TagBr,
 };
@@ -149,6 +155,33 @@ static TagType parseTagType( char const*& si, const char* se)
 			{
 				si = (sn+1);
 				return open ? TagRefOpen : TagRefClose;
+			}
+		}
+		else if (0==std::memcmp( tgnam, "blockquote", si-tgnam))
+		{
+			char const* sn = std::strchr( si, '>');
+			if (sn && sn < se)
+			{
+				si = (sn+1);
+				return open ? TagBlockquoteOpen : TagBlockquoteClose;
+			}
+		}
+		else if (0==std::memcmp( tgnam, "span", si-tgnam))
+		{
+			char const* sn = std::strchr( si, '>');
+			if (sn && sn < se)
+			{
+				si = (sn+1);
+				return open ? TagSpanOpen : TagSpanClose;
+			}
+		}
+		else if (0==std::memcmp( tgnam, "small", si-tgnam))
+		{
+			char const* sn = std::strchr( si, '>');
+			if (sn && sn < se)
+			{
+				si = (sn+1);
+				return open ? TagSmallOpen : TagSmallClose;
 			}
 		}
 		else if (0==std::memcmp( tgnam, "br", si-tgnam))
@@ -206,13 +239,14 @@ std::string WikimediaLexer::tryParseLinkId()
 	char const* ti = m_si;
 	while (ti < m_se && isSpace(*ti)) ++ti;
 	const char* start = ti;
-	while (ti < m_se && (isAlphaNum(*ti) || *ti == '&' || *ti == '(' || *ti == ')' || *ti == '!' || *ti == '?' || *ti == '.' || *ti == ','  || *ti == '#'|| *ti == ' ' || *ti == '-' || *ti == '_' || *ti == '\'' || *ti == '\"' || (unsigned char)*ti >= 128)) ++ti;
+	while (ti < m_se && (isAlphaNum(*ti) || *ti == ':' || *ti == '/' || *ti == '&' || *ti == '(' || *ti == ')' || *ti == '!' || *ti == '?' || *ti == '.' || *ti == ','  || *ti == '#'|| *ti == ' ' || *ti == '-' || *ti == '_' || *ti == '\'' || *ti == '\"' || (unsigned char)*ti >= 128)) ++ti;
 	const char* end = ti;
 	while (ti > start && *(ti-1) == ' ') --ti;
 	if (ti > start)
 	{
-		m_si = ti;
-		return std::string( start, end-start);
+		m_si = end;
+		while (m_si < m_se && *m_si == ' ') ++m_si;
+		return std::string( start, ti-start);
 	}
 	else
 	{
@@ -337,6 +371,18 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::OpenRef);
 				case TagRefClose:
 					return WikimediaLexem( WikimediaLexem::CloseRef);
+				case TagSpanOpen:
+					return WikimediaLexem( WikimediaLexem::OpenSpan);
+				case TagSpanClose:
+					return WikimediaLexem( WikimediaLexem::CloseSpan);
+				case TagSmallOpen:
+					return WikimediaLexem( WikimediaLexem::OpenSmall);
+				case TagSmallClose:
+					return WikimediaLexem( WikimediaLexem::CloseSmall);
+				case TagBlockquoteOpen:
+					return WikimediaLexem( WikimediaLexem::OpenBlockQuote);
+				case TagBlockquoteClose:
+					return WikimediaLexem( WikimediaLexem::CloseBlockQuote);
 				case TagComment:
 					break;
 				case TagBr:
@@ -386,7 +432,7 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
-		else if (m_si[0] == '\'' && m_si[2] == '\'' && m_si[2] == '\'')
+		else if (m_si[0] == '\'' && m_si[1] == '\'' && m_si[2] == '\'')
 		{
 			if (start != m_si)
 			{
@@ -394,6 +440,15 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			m_si += 3;
 			return WikimediaLexem( WikimediaLexem::EntityMarker);
+		}
+		else if (m_si[0] == '\'' && m_si[1] == '\'')
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			m_si += 2;
+			return WikimediaLexem( WikimediaLexem::DoubleQuoteMarker);
 		}
 		else if (*m_si == '[')
 		{
@@ -409,29 +464,36 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 				if (m_si < m_se && *m_si == '#')++m_si;
 				if (m_si < m_se && *m_si == ':')++m_si;
-				std::string linkclass = tryParseIdentifier( ':');
 				std::string linkid = tryParseLinkId();
-				std::string linkname;
-				if (!linkclass.empty())
+				if (!linkid.empty() && m_si < m_se && (*m_si == ']' || *m_si == '|'))
 				{
-					linkname = linkclass + ":" + linkid;
+					if (*m_si == '|') ++m_si;
+					return WikimediaLexem( WikimediaLexem::OpenPageLink, 0, linkid);
 				}
 				else
 				{
-					linkname = linkid;
+					while (m_si < m_se && *m_si != ']') ++m_si;
+					if (m_si < m_se && *m_si == ']') ++m_si;
+					return WikimediaLexem( WikimediaLexem::Error, 0, "illegal character in page link");
 				}
-				return WikimediaLexem( WikimediaLexem::OpenPageLink, 0, linkname);
 			}
 			else if (isAlpha(*m_si) || isSpace(*m_si))
 			{
 				std::string linkid = tryParseURL();
-				if (!linkid.empty())
+				if (linkid.empty())
 				{
+					return WikimediaLexem( WikimediaLexem::Text, 0, " [");
+				}
+				else if (m_si < m_se && (*m_si == ']' || *m_si == '|'))
+				{
+					if (*m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::OpenWWWLink, 0, linkid);
 				}
 				else
 				{
-					return WikimediaLexem( WikimediaLexem::Text, 0, " [");
+					while (m_si < m_se && *m_si != ']') ++m_si;
+					if (m_si < m_se && *m_si == ']') ++m_si;
+					return WikimediaLexem( WikimediaLexem::Error, 0, "illegal character in WWW link");
 				}
 			}
 			else
