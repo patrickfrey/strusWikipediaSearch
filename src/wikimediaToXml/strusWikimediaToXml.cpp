@@ -41,13 +41,18 @@ typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,t
 static void parseDocumentText( strus::DocumentStructure& doc, const char* src, std::size_t size)
 {
 	strus::WikimediaLexer lexer(src,size);
+	int lexemidx = 0;
 
 	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id != strus::WikimediaLexem::EoF; lexem = lexer.next())
 	{
 		if (g_verbosity >= 2)
 		{
-			std::cerr << "LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
+			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
 			std::cerr << "STATE " << doc.statestring() << std::endl;
+		}
+		if (lexemidx == 5133)
+		{
+			std::cerr << "HALLY GALLY" << std::endl;
 		}
 		switch (lexem.id)
 		{			
@@ -189,6 +194,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			}
 			case strus::WikimediaLexem::DoubleColDelim:
 			{
+				doc.closeOpenQuoteItems();
 				strus::Paragraph::StructType tp = doc.currentStructType();
 				if (tp == strus::Paragraph::StructTableHead)
 				{
@@ -235,6 +241,17 @@ static void writeWorkFile( int fileCounter, const std::string& docid, const std:
 	if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
 }
 
+static void removeWorkFile( int fileCounter, const std::string& docid, const std::string& extension)
+{
+	char dirnam[ 16];
+	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
+	int ec;
+
+	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), docid + extension));
+	ec = strus::removeFile( filename, false);
+	if (ec) std::cerr << "error removing file " << filename << ": " << std::strerror(ec) << std::endl;
+}
+
 static void writeErrorFile( int fileCounter, const std::string& docid, const std::string& errorstext)
 {
 	writeWorkFile( fileCounter, docid, ".err", errorstext);
@@ -255,7 +272,11 @@ static void writeLexerDumpFile( int fileCounter, const strus::DocumentStructure&
 static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& doc)
 {
 	writeWorkFile( fileCounter, doc.id(), ".xml", doc.toxml( g_beautified));
-	if (!doc.errors().empty())
+	if (doc.errors().empty())
+	{
+		removeWorkFile( fileCounter, doc.id(), ".err");
+	}
+	else
 	{
 		std::ostringstream errorstext;
 		std::vector<std::string>::const_iterator ei = doc.errors().begin(), ee = doc.errors().end();

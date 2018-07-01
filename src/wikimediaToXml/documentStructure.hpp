@@ -306,6 +306,7 @@ public:
 	}
 	void openRef()
 	{
+		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::RefStart);
 		openStructure( Paragraph::RefStart, "ref", ++m_refCnt);
 	}
@@ -352,6 +353,7 @@ public:
 	}
 	void openBlockQuote()
 	{
+		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::BlockQuoteStart);
 		openStructure( Paragraph::BlockQuoteStart, "", 0);
 	}
@@ -361,6 +363,7 @@ public:
 	}
 	void openSpan()
 	{
+		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::SpanStart);
 		openStructure( Paragraph::SpanStart, "", 0);
 	}
@@ -370,6 +373,7 @@ public:
 	}
 	void openSmall()
 	{
+		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::SmallStart);
 		openStructure( Paragraph::SmallStart, "", 0);
 	}
@@ -379,6 +383,7 @@ public:
 	}
 	void openTable()
 	{
+		closeOpenQuoteItems();
 		closeDanglingStructures( Paragraph::TableStart);
 		openStructure( Paragraph::TableStart, "table", ++m_tableCnt);
 	}
@@ -402,7 +407,7 @@ public:
 		closeDanglingStructures( Paragraph::TableStart);
 		if (m_tableDefs.empty()) {addError("table open row without table defined"); return;}
 		m_tableDefs.back().coliter = 0;
-		openAutoCloseItem( Paragraph::TableTitleStart, "row", ++m_tableDefs.back().rowiter);
+		openAutoCloseItem( Paragraph::TableRowStart, "row", ++m_tableDefs.back().rowiter);
 	}
 	void addTableCol()
 	{
@@ -410,7 +415,7 @@ public:
 		if (m_tableDefs.empty()) {
 			addError("table open col without table defined"); return;
 		}
-		openAutoCloseItem( Paragraph::TableTitleStart, "col", ++m_tableDefs.back().coliter);
+		openAutoCloseItem( Paragraph::TableColStart, "col", ++m_tableDefs.back().coliter);
 	}
 	void addAttribute( const std::string& id)
 	{
@@ -427,11 +432,15 @@ public:
 	}
 	void closeOpenEolnItem()
 	{
+		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::ListItemStart);
 		closeAutoCloseItem( Paragraph::HeadingStart);
 	}
+	void closeOpenQuoteItems();
+
 	void openCitation( const std::string& citclass)
 	{
+		closeOpenQuoteItems();
 		openStructure( Paragraph::CitationStart, "cit", ++m_citationCnt);
 		if (!citclass.empty())
 		{

@@ -85,10 +85,14 @@ enum TagType {
 	UnknwownTagType,
 	TagNoWikiOpen,
 	TagNoWikiClose,
+	TagCodeOpen,
+	TagCodeClose,
 	TagMathOpen,
 	TagMathClose,
 	TagSupOpen,
 	TagSupClose,
+	TagSubOpen,
+	TagSubClose,
 	TagRefOpen,
 	TagRefClose,
 	TagSpanOpen,
@@ -104,6 +108,24 @@ enum TagType {
 	TagComment,
 	TagBr,
 };
+
+static bool tryParseTag( const char* tagnam, char const*& si, const char* se)
+{
+	const char* start = si;
+	int ti = 0;
+	for (;si < se && tagnam[ti] == *si; ++si,++ti){}
+	if (!tagnam[ti] && !isAlphaNum(*si))
+	{
+		char const* sn = std::strchr( si, '>');
+		if (sn && sn < se)
+		{
+			si = sn+1;
+			return true;
+		}
+	}
+	si = start;
+	return false;
+}
 
 static TagType parseTagType( char const*& si, const char* se)
 {
@@ -126,99 +148,29 @@ static TagType parseTagType( char const*& si, const char* se)
 			open = false;
 			++si;
 		}
-		const char* tgnam = si;
-		while (si < se && isAlpha(*si)) ++si;
-		if (si-tgnam == 6 && 0==std::memcmp( tgnam, "nowiki", si-tgnam))
+		char const* sn = std::strchr( si, '>');
+		if (sn && sn < se)
 		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
+			if (*(sn-1) == '/')
 			{
-				si = (sn+1);
-				return open ? TagNoWikiOpen : TagNoWikiClose;
+				si = sn+1;
+				return TagComment;
+				//.... immediate close tags not encolsing any content are considered unimportant for text retrieval and thus marked as comments.
 			}
 		}
-		else if (si-tgnam == 4 && 0==std::memcmp( tgnam, "math", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagMathOpen : TagMathClose;
-			}
-		}
-		else if (si-tgnam == 3 && 0==std::memcmp( tgnam, "sup", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagSupOpen : TagSupClose;
-			}
-		}
-		else if (si-tgnam == 3 && 0==std::memcmp( tgnam, "ref", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				if (*(si-2) == '/') return TagComment;
-				return open ? TagRefOpen : TagRefClose;
-			}
-		}
-		else if (si-tgnam == 10 && 0==std::memcmp( tgnam, "blockquote", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagBlockquoteOpen : TagBlockquoteClose;
-			}
-		}
-		else if (si-tgnam == 4 && 0==std::memcmp( tgnam, "span", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagSpanOpen : TagSpanClose;
-			}
-		}
-		else if (si-tgnam == 4 && 0==std::memcmp( tgnam, "abbr", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagAbbrOpen : TagAbbrClose;
-			}
-		}
-		else if (si-tgnam == 6 && (0==std::memcmp( tgnam, "center", si-tgnam)))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagCenterOpen : TagCenterClose;
-			}
-		}
-		else if (si-tgnam == 5 && 0==std::memcmp( tgnam, "small", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = (sn+1);
-				return open ? TagSmallOpen : TagSmallClose;
-			}
-		}
-		else if (si-tgnam == 2 && 0==std::memcmp( tgnam, "br", si-tgnam))
-		{
-			char const* sn = std::strchr( si, '>');
-			if (sn && sn < se)
-			{
-				si = sn + 1;
-				return TagBr;
-			}
-		}
+		if (tryParseTag( "nowiki", si, se)) return open ? TagNoWikiOpen : TagNoWikiClose;
+		else if (tryParseTag( "code", si, se)) return open ? TagCodeOpen : TagCodeClose;
+		else if (tryParseTag( "math", si, se)) return open ? TagMathOpen : TagMathClose;
+		else if (tryParseTag( "sup", si, se)) return open ? TagSupOpen : TagSupClose;
+		else if (tryParseTag( "sub", si, se)) return open ? TagSubOpen : TagSubClose;
+		else if (tryParseTag( "ref", si, se)) return open ? TagRefOpen : TagRefClose;
+		else if (tryParseTag( "blockquote", si, se)) return open ? TagBlockquoteOpen : TagBlockquoteClose;
+		else if (tryParseTag( "span", si, se)) return open ? TagSpanOpen : TagSpanClose;
+		else if (tryParseTag( "abbr", si, se)) return open ? TagAbbrOpen : TagAbbrClose;
+		else if (tryParseTag( "span", si, se)) return open ? TagSpanOpen : TagSpanClose;
+		else if (tryParseTag( "center", si, se)) return open ? TagCenterOpen : TagCenterClose;
+		else if (tryParseTag( "small", si, se)) return open ? TagSmallOpen : TagSmallClose;
+		else if (tryParseTag( "br", si, se)) return open ? TagBr : TagBr;
 	}
 	si = start + 1;
 	return UnknwownTagType;
@@ -332,7 +284,7 @@ static char const* skipStyle_( char const* si, char const* se)
 		}
 		else if (si < se && isAlphaNum(*si))
 		{
-			for (;si < se && isAlphaNum(*si);++si){}
+			for (;si < se && (isAlphaNum(*si)||*si=='#'||*si==':'||*si=='-');++si){}
 			if (si < se)
 			{
 				return skipStyle_( si, se);
@@ -405,6 +357,10 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "nowiki", m_si, m_se));
 				case TagNoWikiClose:
 					break;
+				case TagCodeOpen:
+					return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "code", m_si, m_se));
+				case TagCodeClose:
+					break;
 				case TagMathOpen:
 					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "math", m_si, m_se));
 				case TagMathClose:
@@ -412,6 +368,10 @@ WikimediaLexem WikimediaLexer::next()
 				case TagSupOpen:
 					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sup", m_si, m_se));
 				case TagSupClose:
+					break;
+				case TagSubOpen:
+					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sub", m_si, m_se));
+				case TagSubClose:
 					break;
 				case TagRefOpen:
 					return WikimediaLexem( WikimediaLexem::OpenRef);
@@ -672,6 +632,7 @@ WikimediaLexem WikimediaLexer::next()
 				}
 				else
 				{
+					m_si = skipStyle( m_si, m_se);
 					std::string name = tryParseIdentifier( '=');
 					return WikimediaLexem( WikimediaLexem::TableColDelim);
 				}

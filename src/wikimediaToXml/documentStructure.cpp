@@ -119,19 +119,6 @@ public:
 	}
 };
 
-static std::string collectEntityText( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
-{
-	std::string rt;
-	for (; pi != pe && pi->type() != Paragraph::EntityEnd; ++pi)
-	{
-		if (pi->type() == Paragraph::Text || pi->type() == Paragraph::NoWiki || pi->type() == Paragraph::Math)
-		{
-			rt.append( pi->text());
-		}
-	}
-	return rt;
-}
-
 void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end)
 {
 	std::vector<Paragraph::Type> stk;
@@ -191,6 +178,23 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 		}
 	}
 	if (!stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ""));
+}
+
+void DocumentStructure::closeOpenQuoteItems()
+{
+	while (!m_structStack.empty())
+	{
+		int startidx = m_structStack.back().start;
+		Paragraph para = m_parar[ startidx];
+		if (para.type() == Paragraph::EntityStart || para.type() == Paragraph::QuotationStart || para.type() == Paragraph::DoubleQuoteStart)
+		{
+			finishStructure( startidx);
+		}
+		else
+		{
+			return;
+		}
+	}
 }
 
 void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttype)
@@ -291,10 +295,6 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType)
 	if (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType)
 	{
 		m_parar.push_back( Paragraph( endType, "", ""));
-		if (startType == Paragraph::EntityStart)
-		{
-			m_parar[ m_structStack.back().start].setId( collectEntityText( m_parar.begin() + m_structStack.back().start, m_parar.end()));
-		}
 		m_structStack.pop_back();
 	}
 	else
