@@ -32,6 +32,11 @@ public:
 	XmlPrinter()
 		:XmlPrinterBase(){}
 
+	bool isInTagDeclaration()
+	{
+		return (state() == XmlPrinterBase::TagElement);
+	}
+
 	void printHeader( std::string& buf)
 	{
 		if (!XmlPrinterBase::printHeader( "UTF-8", "yes", buf))
@@ -587,9 +592,9 @@ static void printTagOpen( XmlPrinter& output, std::string& rt, const char* tagna
 		output.printAttribute( "id", rt);
 		output.printValue( id, rt);
 	}
-	output.switchToContent( rt);
 	if (!text.empty())
 	{
+		output.switchToContent( rt);
 		output.printValue( text, rt);
 	}
 }
@@ -684,7 +689,22 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::AttributeStart:
 				stk.push_back( Paragraph::StructAttribute);
-				printTagOpen( output, rt, "attr", pi->id(), pi->text());
+				if (output.isInTagDeclaration())
+				{
+					if (pi->id().empty())
+					{
+						printTagOpen( output, rt, "attr", pi->id(), pi->text());
+					}
+					else if (!pi->text().empty())
+					{
+						output.printAttribute( pi->id(), rt);
+						output.printValue( pi->text(), rt);
+					}
+				}
+				else
+				{
+					printTagOpen( output, rt, "attr", pi->id(), pi->text());
+				}
 				break;
 			case Paragraph::AttributeEnd:
 				stk.pop_back();

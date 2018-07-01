@@ -55,7 +55,8 @@ struct WikimediaLexem
 		TableRowDelim,
 		TableColDelim,
 		TableHeadDelim,
-		ColDelim
+		ColDelim,
+		DoubleColDelim
 	};
 	static const char* idName( Id lexemId)
 	{
@@ -68,7 +69,7 @@ struct WikimediaLexem
 			"OpenCitation","CloseCitation",
 			"OpenWWWLink","CloseWWWLink","OpenPageLink","ClosePageLink",
 			"OpenTable", "CloseTable","TableTitle","TableRowDelim","TableColDelim",
-			"TableHeadDelim","ColDelim",0
+			"TableHeadDelim","ColDelim","DoubleColDelim",0
 		};
 		return ar[lexemId];
 	}

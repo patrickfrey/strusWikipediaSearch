@@ -278,9 +278,9 @@ class DocumentStructure
 {
 public:
 	explicit DocumentStructure()
-		:m_id(),m_parar(),m_citations(),m_structStack(),m_tableDefs(),m_errors(),m_citationCnt(0),m_refCnt(0){}
+		:m_id(),m_parar(),m_citations(),m_structStack(),m_tableDefs(),m_errors(),m_tableCnt(0),m_citationCnt(0),m_refCnt(0){}
 	DocumentStructure( const DocumentStructure& o)
-		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt){}
+		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt){}
 
 	const std::string& id() const
 	{
@@ -380,7 +380,7 @@ public:
 	void openTable()
 	{
 		closeDanglingStructures( Paragraph::TableStart);
-		openStructure( Paragraph::TableStart, "table", (int)m_tableDefs.size()+1);
+		openStructure( Paragraph::TableStart, "table", ++m_tableCnt);
 	}
 	void closeTable()
 	{
@@ -389,7 +389,7 @@ public:
 	void addTableTitle()
 	{
 		closeDanglingStructures( Paragraph::TableStart);
-		openAutoCloseItem( Paragraph::TableTitleStart, "table", (int)m_tableDefs.size());
+		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
 	}
 	void addTableHead()
 	{
@@ -430,9 +430,14 @@ public:
 		closeAutoCloseItem( Paragraph::ListItemStart);
 		closeAutoCloseItem( Paragraph::HeadingStart);
 	}
-	void openCitation()
+	void openCitation( const std::string& citclass)
 	{
 		openStructure( Paragraph::CitationStart, "cit", ++m_citationCnt);
+		if (!citclass.empty())
+		{
+			m_parar.push_back( Paragraph( Paragraph::AttributeStart, "class", citclass));
+			m_parar.push_back( Paragraph( Paragraph::AttributeEnd, "", ""));
+		}
 	}
 
 	void closeCitation()
@@ -502,6 +507,7 @@ private:
 	std::vector<StructRef> m_structStack;
 	std::vector<TableDef> m_tableDefs;
 	std::vector<std::string> m_errors;
+	int m_tableCnt;
 	int m_citationCnt;
 	int m_refCnt;
 };

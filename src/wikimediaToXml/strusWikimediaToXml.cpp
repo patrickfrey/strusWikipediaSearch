@@ -32,7 +32,6 @@
 #include <limits>
 
 static int g_verbosity = 0;
-static bool g_silent = false;
 static bool g_beautified = false;
 static bool g_dumps = false;
 static std::string g_outputdir;
@@ -120,7 +119,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.closeBlockQuote();
 				break;
 			case strus::WikimediaLexem::OpenCitation:
-				doc.openCitation();
+				doc.openCitation( lexem.value);
 				break;
 			case strus::WikimediaLexem::CloseCitation:
 				doc.closeCitation();
@@ -187,6 +186,30 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 					doc.addAttribute( lexem.value);
 				}
 				break;
+			}
+			case strus::WikimediaLexem::DoubleColDelim:
+			{
+				strus::Paragraph::StructType tp = doc.currentStructType();
+				if (tp == strus::Paragraph::StructTableHead)
+				{
+					doc.addTableHead();
+				}
+				else if (tp == strus::Paragraph::StructTableRow)
+				{
+					doc.addTableRow();
+				}
+				else if (tp == strus::Paragraph::StructTableCol)
+				{
+					doc.addTableCol();
+				}
+				else if (tp == strus::Paragraph::StructCitation || tp == strus::Paragraph::StructAttribute)
+				{
+					doc.addAttribute( lexem.value);
+				}
+				else
+				{
+					doc.addError( "unexpected token '||'");
+				}
 			}
 		}
 	}
@@ -450,11 +473,7 @@ int main( int argc, const char* argv[])
 
 		for (;argi < argc; ++argi)
 		{
-			if (0==std::strcmp(argv[argi],"-S"))
-			{
-				g_silent = true;
-			}
-			else if (0==std::strcmp(argv[argi],"-VV"))
+			if (0==std::strcmp(argv[argi],"-VV"))
 			{
 				g_verbosity += 2;
 			}
@@ -517,10 +536,10 @@ int main( int argc, const char* argv[])
 			std::cerr << "<inputfile>   :File to process or '-' for stdin" << std::endl;
 			std::cerr << "options:" << std::endl;
 			std::cerr << "    -h           :print this usage" << std::endl;
-			std::cerr << "    -S           :silent mode (suppress warnings)" << std::endl;
-			std::cerr << "    -V           :verbose mode (output every item processed to stderr)" << std::endl;
+			std::cerr << "    -V           :verbosity level 1 mode (output every processed document and its errors)" << std::endl;
+			std::cerr << "    -VV          :verbosity level 2 mode (output every item processed to stderr)" << std::endl;
 			std::cerr << "    -B           :beautified readable XML output" << std::endl;
-			std::cerr << "    -D           :write dumps always, not only in case of an error" << std::endl;
+			std::cerr << "    -D           :write dump files always, not only in case of an error" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
 			std::cerr << "    -n <ns>      :reduce output to namespace <ns> (0=article)" << std::endl;
 			std::cerr << "    -R           :collect redirects only" << std::endl;
@@ -650,7 +669,11 @@ int main( int argc, const char* argv[])
 					}
 					if (closedTag == TagPage)
 					{
-						if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
+						if (namespaceset && namespacemap.find( docAttributes.ns) == namespacemap.end())
+						{
+							//... ignore document but those with ns set to what is selected by option '-n'
+						}
+						else if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{
 							if (collectRedirects)
 							{
