@@ -50,7 +50,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
 			std::cerr << "STATE " << doc.statestring() << std::endl;
 		}
-		if (lexemidx == 5133)
+		if (lexemidx == 134)
 		{
 			std::cerr << "HALLY GALLY" << std::endl;
 		}
@@ -89,6 +89,9 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::CloseRef:
 				doc.closeRef();
 				break;
+			case strus::WikimediaLexem::HeadingItem:
+				doc.addHeadingItem();
+				break;
 			case strus::WikimediaLexem::ListItem:
 				doc.openListItem( (int)lexem.idx);
 				break;
@@ -111,11 +114,11 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::CloseSpan:
 				doc.closeSpan();
 				break;
-			case strus::WikimediaLexem::OpenSmall:
-				doc.openSmall();
+			case strus::WikimediaLexem::OpenFormat:
+				doc.openFormat();
 				break;
-			case strus::WikimediaLexem::CloseSmall:
-				doc.closeSmall();
+			case strus::WikimediaLexem::CloseFormat:
+				doc.closeFormat();
 				break;
 			case strus::WikimediaLexem::OpenBlockQuote:
 				doc.openBlockQuote();
@@ -167,6 +170,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				}
 				else
 				if (tp == strus::Paragraph::StructCitation
+				||  tp == strus::Paragraph::StructRef
 				||  tp == strus::Paragraph::StructAttribute)
 				{
 					doc.addAttribute( lexem.value);
@@ -258,6 +262,12 @@ static void writeErrorFile( int fileCounter, const std::string& docid, const std
 	if (g_verbosity >= 1) std::cerr << "got error:" << std::endl << errorstext << std::endl;
 }
 
+static void writeFatalErrorFile( int fileCounter, const std::string& docid, const std::string& errorstext)
+{
+	writeWorkFile( fileCounter, docid, ".fatal.err", errorstext);
+	if (g_verbosity >= 1) std::cerr << "got fatal error:" << std::endl << errorstext << std::endl;
+}
+
 static void writeInputFile( int fileCounter, const std::string& docid, const std::string& title, const std::string& content)
 {
 	std::string origxml = strus::DocumentStructure::getInputXML( title, content);
@@ -327,6 +337,7 @@ public:
 		{
 			writeLexerDumpFile( m_fileindex, doc);
 			writeErrorFile( m_fileindex, doc.id(), err.what());
+			writeFatalErrorFile( m_fileindex, doc.id(), err.what());
 			writeInputFile( m_fileindex, doc.id(), m_title, m_content);
 		}
 	}

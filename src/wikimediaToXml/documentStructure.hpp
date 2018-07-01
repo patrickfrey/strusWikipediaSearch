@@ -10,6 +10,7 @@
 /// \file documentStructure.hpp
 #ifndef _STRUS_WIKIPEDIA_DOCUMENT_STRUCTURE_HPP_INCLUDED
 #define _STRUS_WIKIPEDIA_DOCUMENT_STRUCTURE_HPP_INCLUDED
+#include "strus/base/string_format.hpp"
 #include <string>
 #include <map>
 #include <vector>
@@ -33,8 +34,8 @@ public:
 			BlockQuoteEnd,
 			SpanStart,
 			SpanEnd,
-			SmallStart,
-			SmallEnd,
+			FormatStart,
+			FormatEnd,
 			HeadingStart,
 			HeadingEnd,
 			ListItemStart,
@@ -78,8 +79,8 @@ public:
 			"BlockQuoteEnd",
 			"SpanStart",
 			"SpanEnd",
-			"SmallStart",
-			"SmallEnd",
+			"FormatStart",
+			"FormatEnd",
 			"HeadingStart",
 			"HeadingEnd",
 			"ListItemStart",
@@ -117,7 +118,7 @@ public:
 			StructDoubleQuote,
 			StructBlockQuote,
 			StructSpan,
-			StructSmall,
+			StructFormat,
 			StructHeading,
 			StructList,
 			StructAttribute,
@@ -133,7 +134,7 @@ public:
 	};
 	static const char* structTypeName( StructType st)
 	{
-		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Span","Small","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableRow","TableCol"};
+		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableRow","TableCol"};
 		return ar[ st];
 	}
 	static StructType structType( Type ti)
@@ -150,8 +151,8 @@ public:
 			StructNone/*BlockQuoteEnd*/,
 			StructSpan/*SpanStart*/,
 			StructNone/*SpanEnd*/,
-			StructSmall/*SmallStart*/,
-			StructNone/*SmallEnd*/,
+			StructFormat/*FormatStart*/,
+			StructNone/*FormatEnd*/,
 			StructHeading/*HeadingStart*/,
 			StructNone/*HeadingEnd*/,
 			StructList/*ListItemStart*/,
@@ -198,8 +199,8 @@ public:
 			BlockQuoteStart/*BlockQuoteEnd*/,
 			SpanEnd/*SpanStart*/,
 			SpanStart/*SpanEnd*/,
-			SmallEnd/*SmallStart*/,
-			SmallStart/*SmallEnd*/,
+			FormatEnd/*FormatStart*/,
+			FormatStart/*FormatEnd*/,
 			HeadingEnd/*HeadingStart*/,
 			HeadingStart/*HeadingEnd*/,
 			ListItemEnd/*ListItemStart*/,
@@ -278,9 +279,9 @@ class DocumentStructure
 {
 public:
 	explicit DocumentStructure()
-		:m_id(),m_parar(),m_citations(),m_structStack(),m_tableDefs(),m_errors(),m_tableCnt(0),m_citationCnt(0),m_refCnt(0){}
+		:m_id(),m_parar(),m_citations(),m_structStack(),m_tableDefs(),m_errors(),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
 	DocumentStructure( const DocumentStructure& o)
-		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt){}
+		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
 
 	const std::string& id() const
 	{
@@ -312,7 +313,7 @@ public:
 	}
 	void closeRef()
 	{
-		closeStructure( Paragraph::RefStart);
+		closeStructure( Paragraph::RefStart, "");
 	}
 	void openPageLink( const std::string& id)
 	{
@@ -320,7 +321,7 @@ public:
 	}
 	void closePageLink()
 	{
-		closeStructure( Paragraph::PageLinkStart);
+		closeStructure( Paragraph::PageLinkStart, "");
 	}
 	void openWebLink( const std::string& id)
 	{
@@ -328,12 +329,18 @@ public:
 	}
 	void closeWebLink()
 	{
-		closeStructure( Paragraph::WebLinkStart);
+		closeStructure( Paragraph::WebLinkStart, "]");
 	}
 	void openHeading( int idx)
 	{
+		m_lastHeadingIdx = idx;
 		closeOpenStructures();
 		openAutoCloseItem( Paragraph::HeadingStart, "h", idx);
+	}
+	void addHeadingItem()
+	{
+		closeOpenStructures();
+		openAutoCloseItem( Paragraph::HeadingStart, "h", m_lastHeadingIdx+1);
 	}
 	void closeHeading()
 	{
@@ -359,7 +366,7 @@ public:
 	}
 	void closeBlockQuote()
 	{
-		closeStructure( Paragraph::BlockQuoteStart);
+		closeStructure( Paragraph::BlockQuoteStart, "");
 	}
 	void openSpan()
 	{
@@ -369,17 +376,17 @@ public:
 	}
 	void closeSpan()
 	{
-		closeStructure( Paragraph::SpanStart);
+		closeStructure( Paragraph::SpanStart, "");
 	}
-	void openSmall()
+	void openFormat()
 	{
 		closeOpenQuoteItems();
-		closeAutoCloseItem( Paragraph::SmallStart);
-		openStructure( Paragraph::SmallStart, "", 0);
+		closeAutoCloseItem( Paragraph::FormatStart);
+		openStructure( Paragraph::FormatStart, "", 0);
 	}
-	void closeSmall()
+	void closeFormat()
 	{
-		closeStructure( Paragraph::SmallStart);
+		closeStructure( Paragraph::FormatStart, "");
 	}
 	void openTable()
 	{
@@ -389,45 +396,83 @@ public:
 	}
 	void closeTable()
 	{
-		closeStructure( Paragraph::TableStart);
+		if (m_tableDefs.empty())
+		{
+			addError("table close without table defined");
+		}
+		else
+		{
+			closeStructure( Paragraph::TableStart, "");
+		}
 	}
 	void addTableTitle()
 	{
 		closeDanglingStructures( Paragraph::TableStart);
-		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
+		if (m_tableDefs.empty())
+		{
+			addError("table add title without table defined");
+			openListItem( 1);
+		}
+		else
+		{
+			openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
+		}
 	}
 	void addTableHead()
 	{
 		closeDanglingStructures( Paragraph::TableStart);
-		if (m_tableDefs.empty()) {addError("table open head without table defined"); return;}
-		openAutoCloseItem( Paragraph::TableHeadStart, "head", ++m_tableDefs.back().headitr);
+		if (m_tableDefs.empty())
+		{
+			addError("table open head without table defined");
+			openListItem( 1);
+		}
+		else
+		{
+			openAutoCloseItem( Paragraph::TableHeadStart, "head", ++m_tableDefs.back().headitr);
+		}
 	}
 	void addTableRow()
 	{
 		closeDanglingStructures( Paragraph::TableStart);
-		if (m_tableDefs.empty()) {addError("table open row without table defined"); return;}
-		m_tableDefs.back().coliter = 0;
-		openAutoCloseItem( Paragraph::TableRowStart, "row", ++m_tableDefs.back().rowiter);
+		if (m_tableDefs.empty())
+		{
+			addError("table open row without table defined");
+			openListItem( 1);
+		}
+		else
+		{
+			m_tableDefs.back().coliter = 0;
+			openAutoCloseItem( Paragraph::TableRowStart, "row", ++m_tableDefs.back().rowiter);
+		}
 	}
 	void addTableCol()
 	{
 		closeDanglingStructures( Paragraph::TableRowStart);
-		if (m_tableDefs.empty()) {
-			addError("table open col without table defined"); return;
+		if (m_tableDefs.empty())
+		{
+			addError("table open col without table defined");
+			openListItem( 1);
 		}
-		openAutoCloseItem( Paragraph::TableColStart, "col", ++m_tableDefs.back().coliter);
+		else
+		{
+			openAutoCloseItem( Paragraph::TableColStart, "col", ++m_tableDefs.back().coliter);
+		}
 	}
 	void addAttribute( const std::string& id)
 	{
 		closeAutoCloseItem( Paragraph::AttributeStart);
-		if (currentStructType() != Paragraph::StructCitation)
+		if (currentStructType() == Paragraph::StructCitation || currentStructType() == Paragraph::StructRef)
 		{
-			addError("add attribute without context"); return;
+			openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0);
 		}
-		openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0);
+		else
+		{
+			addError( strus::string_format( "add attribute without context: '%s'", id.c_str()));
+		}
 	}
 	void openListItem( int lidx)
 	{
+		closeOpenEolnItem();
 		openAutoCloseItem( Paragraph::ListItemStart, "l", lidx);
 	}
 	void closeOpenEolnItem()
@@ -452,7 +497,7 @@ public:
 	void closeCitation()
 	{
 		closeAutoCloseItem( Paragraph::AttributeStart);
-		closeStructure( Paragraph::CitationStart);
+		closeStructure( Paragraph::CitationStart, "");
 	}
 
 	void addError( const std::string& msg)
@@ -475,7 +520,7 @@ public:
 private:
 	void finishStructure( int structStartidx);
 	void openStructure( Paragraph::Type startType, const char* prefix, int lidx=0);
-	void closeStructure( Paragraph::Type startType);
+	void closeStructure( Paragraph::Type startType, const std::string& alt_text);
 	void closeOpenStructures();
 
 	void addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText);
@@ -519,6 +564,7 @@ private:
 	int m_tableCnt;
 	int m_citationCnt;
 	int m_refCnt;
+	int m_lastHeadingIdx;
 };
 
 }//namespace

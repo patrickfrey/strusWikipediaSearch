@@ -132,7 +132,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::DoubleQuoteStart:
 			case Paragraph::BlockQuoteStart:
 			case Paragraph::SpanStart:
-			case Paragraph::SmallStart:
+			case Paragraph::FormatStart:
 			case Paragraph::HeadingStart:
 			case Paragraph::ListItemStart:
 			case Paragraph::AttributeStart:
@@ -152,7 +152,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::DoubleQuoteEnd:
 			case Paragraph::BlockQuoteEnd:
 			case Paragraph::SpanEnd:
-			case Paragraph::SmallEnd:
+			case Paragraph::FormatEnd:
 			case Paragraph::HeadingEnd:
 			case Paragraph::ListItemEnd:
 			case Paragraph::AttributeEnd:
@@ -222,14 +222,17 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else if (para.type() == Paragraph::BlockQuoteStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::SpanStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
-		else if (para.type() == Paragraph::SmallStart)
+		else if (para.type() == Paragraph::FormatStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::HeadingStart)
@@ -238,6 +241,7 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else if (para.type() == Paragraph::ListItemStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::AttributeStart)
@@ -246,14 +250,17 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else if (para.type() == Paragraph::CitationStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::RefStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::PageLinkStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::WebLinkStart)
@@ -262,24 +269,29 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else if (para.type() == Paragraph::TableStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			if (starttype == Paragraph::TableRowStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableTitleStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableHeadStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableRowStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			if (starttype == Paragraph::TableColStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableColStart)
 		{
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else
@@ -396,7 +408,7 @@ void DocumentStructure::finishStructure( int startidx)
 	m_structStack.pop_back();
 }
 
-void DocumentStructure::closeStructure( Paragraph::Type startType)
+void DocumentStructure::closeStructure( Paragraph::Type startType, const std::string& alt_text)
 {
 	closeDanglingStructures( startType);
 	if (m_structStack.empty())
@@ -410,11 +422,15 @@ void DocumentStructure::closeStructure( Paragraph::Type startType)
 	{
 		finishStructure( startidx);
 	}
-	else
+	else if (alt_text.empty())
 	{
 		const char* stnam = Paragraph::structTypeName( Paragraph::structType( para.type()));
 		m_errors.push_back( strus::string_format( "close of %s structure called without open (%s)", Paragraph::structTypeName( Paragraph::structType( startType)), stnam));
 		return;
+	}
+	else
+	{
+		addSingleItem( Paragraph::Text, "", alt_text, true);
 	}
 }
 
@@ -663,11 +679,11 @@ std::string DocumentStructure::toxml( bool beautified) const
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
-			case Paragraph::SmallStart:
-				stk.push_back( Paragraph::StructSmall);
-				printTagOpen( output, rt, "small", pi->id(), pi->text());
+			case Paragraph::FormatStart:
+				stk.push_back( Paragraph::StructFormat);
+				printTagOpen( output, rt, "format", pi->id(), pi->text());
 				break;
-			case Paragraph::SmallEnd:
+			case Paragraph::FormatEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;

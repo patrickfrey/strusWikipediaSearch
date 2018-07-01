@@ -103,8 +103,20 @@ enum TagType {
 	TagCenterClose,
 	TagSmallOpen,
 	TagSmallClose,
+	TagBigOpen,
+	TagBigClose,
+	TagUOpen,
+	TagUClose,
+	TagSOpen,
+	TagSClose,
+	TagGalleryOpen,
+	TagGalleryClose,
 	TagBlockquoteOpen,
 	TagBlockquoteClose,
+	TagPoemOpen,
+	TagPoemClose,
+	TagDivOpen,
+	TagDivClose,
 	TagComment,
 	TagBr,
 };
@@ -113,7 +125,7 @@ static bool tryParseTag( const char* tagnam, char const*& si, const char* se)
 {
 	const char* start = si;
 	int ti = 0;
-	for (;si < se && tagnam[ti] == *si; ++si,++ti){}
+	for (;si < se && tagnam[ti] && (tagnam[ti]|32) == *si; ++si,++ti){}
 	if (!tagnam[ti] && !isAlphaNum(*si))
 	{
 		char const* sn = std::strchr( si, '>');
@@ -165,12 +177,23 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "sub", si, se)) return open ? TagSubOpen : TagSubClose;
 		else if (tryParseTag( "ref", si, se)) return open ? TagRefOpen : TagRefClose;
 		else if (tryParseTag( "blockquote", si, se)) return open ? TagBlockquoteOpen : TagBlockquoteClose;
+		else if (tryParseTag( "poem", si, se)) return open ? TagPoemOpen : TagPoemClose;
+		else if (tryParseTag( "div", si, se)) return open ? TagDivOpen : TagDivClose;
 		else if (tryParseTag( "span", si, se)) return open ? TagSpanOpen : TagSpanClose;
 		else if (tryParseTag( "abbr", si, se)) return open ? TagAbbrOpen : TagAbbrClose;
 		else if (tryParseTag( "span", si, se)) return open ? TagSpanOpen : TagSpanClose;
 		else if (tryParseTag( "center", si, se)) return open ? TagCenterOpen : TagCenterClose;
 		else if (tryParseTag( "small", si, se)) return open ? TagSmallOpen : TagSmallClose;
+		else if (tryParseTag( "big", si, se)) return open ? TagBigOpen : TagBigClose;
+		else if (tryParseTag( "u", si, se)) return open ? TagUOpen : TagUClose;
+		else if (tryParseTag( "s", si, se)) return open ? TagSOpen : TagSClose;
+		else if (tryParseTag( "gallery", si, se)) return open ? TagGalleryOpen : TagGalleryClose;
 		else if (tryParseTag( "br", si, se)) return open ? TagBr : TagBr;
+		else if (tryParseTag( "expand", si, se)) return TagComment;
+		else if (tryParseTag( "hiero", si, se)) return TagComment;
+		else if (tryParseTag( "onlyinclude", si, se)) return TagComment;
+		else if (tryParseTag( "score", si, se)) {(void)parseTagContent( "timeline", si, se); return TagComment;}
+		else if (tryParseTag( "timeline", si, se)) {(void)parseTagContent( "timeline", si, se); return TagComment;}
 	}
 	si = start + 1;
 	return UnknwownTagType;
@@ -240,7 +263,7 @@ std::string WikimediaLexer::tryParseURL()
 	if (ti+2 < m_se && ti[0] == ':' && ti[1] == '/' && ti[2] == '/')
 	{
 		ti += 3;
-		while (ti < m_se && (!isSpace(*ti) && *ti != '|' && *ti != ']' && *ti != '[' && *ti != '}' && *ti != '{' && *ti != ')' && *ti != '(')) ++ti;
+		while (ti < m_se && (!isSpace(*ti) && *ti != '|' && *ti != ']' && *ti != '[' && *ti != '}' && *ti != '{')) ++ti;
 		std::string linkid( m_si, ti-m_si);
 		m_si = ti;
 		if (m_si < m_se && isSpace(*m_si))
@@ -342,6 +365,10 @@ WikimediaLexem WikimediaLexer::next()
 				m_curHeading = tcnt;
 				return WikimediaLexem( WikimediaLexem::CloseHeading, tcnt, "");
 			}
+			else
+			{
+				++m_si;
+			}
 		}
 		if (*m_si == '<')
 		{
@@ -349,59 +376,90 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
-			switch (parseTagType( m_si, m_se))
+			if (m_si+1 < m_se && (isAlpha( m_si[1]) || m_si[1] == '/' || m_si[1] == '!'))
 			{
-				case UnknwownTagType:
-					return WikimediaLexem( WikimediaLexem::Error, 0, std::string("unknown tag ") + outputLineString( m_si-1, m_se, 40));
-				case TagNoWikiOpen:
-					return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "nowiki", m_si, m_se));
-				case TagNoWikiClose:
-					break;
-				case TagCodeOpen:
-					return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "code", m_si, m_se));
-				case TagCodeClose:
-					break;
-				case TagMathOpen:
-					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "math", m_si, m_se));
-				case TagMathClose:
-					break;
-				case TagSupOpen:
-					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sup", m_si, m_se));
-				case TagSupClose:
-					break;
-				case TagSubOpen:
-					return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sub", m_si, m_se));
-				case TagSubClose:
-					break;
-				case TagRefOpen:
-					return WikimediaLexem( WikimediaLexem::OpenRef);
-				case TagRefClose:
-					return WikimediaLexem( WikimediaLexem::CloseRef);
-				case TagSpanOpen:
-					return WikimediaLexem( WikimediaLexem::OpenSpan);
-				case TagSpanClose:
-					return WikimediaLexem( WikimediaLexem::CloseSpan);
-				case TagAbbrOpen:
-					return WikimediaLexem( WikimediaLexem::OpenSpan);
-				case TagAbbrClose:
-					return WikimediaLexem( WikimediaLexem::CloseSpan);
-				case TagCenterOpen:
-					return WikimediaLexem( WikimediaLexem::OpenSpan);
-				case TagCenterClose:
-					return WikimediaLexem( WikimediaLexem::CloseSpan);
-				case TagSmallOpen:
-					return WikimediaLexem( WikimediaLexem::OpenSmall);
-				case TagSmallClose:
-					return WikimediaLexem( WikimediaLexem::CloseSmall);
-				case TagBlockquoteOpen:
-					return WikimediaLexem( WikimediaLexem::OpenBlockQuote);
-				case TagBlockquoteClose:
-					return WikimediaLexem( WikimediaLexem::CloseBlockQuote);
-				case TagComment:
-					break;
-				case TagBr:
-					return WikimediaLexem( WikimediaLexem::Text, 0, "\n");
-			};
+				switch (parseTagType( m_si, m_se))
+				{
+					case UnknwownTagType:
+						return WikimediaLexem( WikimediaLexem::Error, 0, std::string("unknown tag ") + outputLineString( m_si-1, m_se, 40));
+					case TagNoWikiOpen:
+						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "nowiki", m_si, m_se));
+					case TagNoWikiClose:
+						break;
+					case TagCodeOpen:
+						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "code", m_si, m_se));
+					case TagCodeClose:
+						break;
+					case TagMathOpen:
+						return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "math", m_si, m_se));
+					case TagMathClose:
+						break;
+					case TagSupOpen:
+						return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sup", m_si, m_se));
+					case TagSupClose:
+						break;
+					case TagSubOpen:
+						return WikimediaLexem( WikimediaLexem::Math, 0, parseTagContent( "sub", m_si, m_se));
+					case TagSubClose:
+						break;
+					case TagGalleryOpen:
+						return WikimediaLexem( WikimediaLexem::OpenRef);
+					case TagGalleryClose:
+						return WikimediaLexem( WikimediaLexem::CloseRef);
+					case TagRefOpen:
+						return WikimediaLexem( WikimediaLexem::OpenRef);
+					case TagRefClose:
+						return WikimediaLexem( WikimediaLexem::CloseRef);
+					case TagSpanOpen:
+						return WikimediaLexem( WikimediaLexem::OpenSpan);
+					case TagSpanClose:
+						return WikimediaLexem( WikimediaLexem::CloseSpan);
+					case TagAbbrOpen:
+						return WikimediaLexem( WikimediaLexem::OpenSpan);
+					case TagAbbrClose:
+						return WikimediaLexem( WikimediaLexem::CloseSpan);
+					case TagCenterOpen:
+						return WikimediaLexem( WikimediaLexem::OpenSpan);
+					case TagCenterClose:
+						return WikimediaLexem( WikimediaLexem::CloseSpan);
+					case TagSmallOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagSmallClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagBigOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagBigClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagUOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagUClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagSOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagSClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagBlockquoteOpen:
+						return WikimediaLexem( WikimediaLexem::OpenBlockQuote);
+					case TagBlockquoteClose:
+						return WikimediaLexem( WikimediaLexem::CloseBlockQuote);
+					case TagPoemOpen:
+						return WikimediaLexem( WikimediaLexem::OpenBlockQuote);
+					case TagPoemClose:
+						return WikimediaLexem( WikimediaLexem::CloseBlockQuote);
+					case TagDivOpen:
+						return WikimediaLexem( WikimediaLexem::OpenBlockQuote);
+					case TagDivClose:
+						return WikimediaLexem( WikimediaLexem::CloseBlockQuote);
+					case TagComment:
+						break;
+					case TagBr:
+						return WikimediaLexem( WikimediaLexem::Text, 0, "\n");
+				}
+			}
+			else
+			{
+				++m_si;
+			}
 		}
 		else if (m_si[0] == '"')
 		{
@@ -496,7 +554,7 @@ WikimediaLexem WikimediaLexer::next()
 				std::string linkid = tryParseURL();
 				if (linkid.empty())
 				{
-					while (m_si < m_se && *m_si != ']' && (isAlphaNum(*m_si) || *m_si == '.' || *m_si == '-' || *m_si == '_' || *m_si == '-' || *m_si == '+' || isSpace(*m_si) || (unsigned char)*m_si > 128))
+					while (m_si < m_se && *m_si != ']' && (isAlphaNum(*m_si) || *m_si == '.' || *m_si == ',' || *m_si == '-' || *m_si == '_' || *m_si == '-' || *m_si == '+' || isSpace(*m_si) || (unsigned char)*m_si > 128))
 					{
 						++m_si;
 					}
@@ -640,11 +698,20 @@ WikimediaLexem WikimediaLexer::next()
 			else if (*m_si == '*')
 			{
 				int lidx = countAndSkip( m_si, m_se, '*', 5);
-				if (lidx > 1)
+				if (lidx >= 1)
 				{
 					return WikimediaLexem( WikimediaLexem::ListItem, lidx, "");
 				}
-				++m_si;
+			}
+			else if (m_si+2 < m_se && m_si[0] == ':' && m_si[1] == ';')
+			{
+				m_si += 2;
+				return WikimediaLexem( WikimediaLexem::HeadingItem);
+			}
+			else if (m_si+2 < m_se && m_si[0] == ':' && m_si[1] == '#')
+			{
+				m_si += 2;
+				return WikimediaLexem( WikimediaLexem::ListItem, 1, "");
 			}
 			else if (*m_si == '=')
 			{
