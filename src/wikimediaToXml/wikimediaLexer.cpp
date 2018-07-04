@@ -133,6 +133,10 @@ enum TagType {
 	TagPClose,
 	TagLiOpen,
 	TagLiClose,
+	TagTrOpen,
+	TagTrClose,
+	TagTdOpen,
+	TagTdClose,
 	TagSOpen,
 	TagSClose,
 	TagQOpen,
@@ -227,14 +231,22 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "q", si, se)) return open ? TagQOpen : TagQClose;
 		else if (tryParseTag( "i", si, se)) return open ? TagIOpen : TagIClose;
 		else if (tryParseTag( "p", si, se)) return open ? TagPOpen : TagPClose;
+		else if (tryParseTag( "em", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "samp", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "sic", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "font", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "year", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseTag( "gallery", si, se)) return open ? TagGalleryOpen : TagGalleryClose;
 		else if (tryParseTag( "br", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "ol", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "ul", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "li", si, se)) return open ? TagLiOpen : TagLiClose;
+		else if (tryParseTag( "tr", si, se)) return open ? TagTrOpen : TagTrClose;
+		else if (tryParseTag( "td", si, se)) return open ? TagTrOpen : TagTdClose;
 		else if (tryParseTag( "expand", si, se)) return TagComment;
 		else if (tryParseTag( "hiero", si, se)) return TagComment;
 		else if (tryParseTag( "onlyinclude", si, se)) return TagComment;
+		else if (tryParseTag( "includeonly", si, se)) return TagComment;
 		else if (tryParseTag( "noinclude", si, se)) {(void)parseTagContent( "noinclude", si, se); return TagComment;}
 		else if (tryParseTag( "score", si, se)) {(void)parseTagContent( "score", si, se); return TagComment;}
 		else if (tryParseTag( "timeline", si, se)) {(void)parseTagContent( "timeline", si, se); return TagComment;}
@@ -528,6 +540,14 @@ WikimediaLexem WikimediaLexer::next()
 					case TagLiOpen:
 						return WikimediaLexem( WikimediaLexem::ListItem);
 					case TagLiClose:
+						return WikimediaLexem( WikimediaLexem::EndOfLine);
+					case TagTrOpen:
+						return WikimediaLexem( WikimediaLexem::TableRowDelim);
+					case TagTrClose:
+						return WikimediaLexem( WikimediaLexem::EndOfLine);
+					case TagTdOpen:
+						return WikimediaLexem( WikimediaLexem::TableColDelim);
+					case TagTdClose:
 						return WikimediaLexem( WikimediaLexem::EndOfLine);
 					case TagSOpen:
 						return WikimediaLexem( WikimediaLexem::OpenFormat);
