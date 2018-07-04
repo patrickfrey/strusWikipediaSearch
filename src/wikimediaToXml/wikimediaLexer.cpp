@@ -18,6 +18,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <iostream>
+#include <cstdio>
 
 /// \brief strus toplevel namespace
 using namespace strus;
