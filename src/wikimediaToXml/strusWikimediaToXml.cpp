@@ -554,6 +554,9 @@ static int getIntOptionArg( int argi, int argc, const char* argv[])
 	}
 }
 
+enum TagId {TagIgnored,TagPage,TagNs,TagTitle,TagText,TagRedirect};
+
+
 int main( int argc, const char* argv[])
 {
 	int rt = 0;
@@ -684,7 +687,6 @@ int main( int argc, const char* argv[])
 		DocAttributes docAttributes;
 		int workeridx = 0;
 		int docCounter = 0;
-		enum TagId {TagIgnored,TagPage,TagNs,TagTitle,TagText,TagRedirect};
 		TagId lastTag = TagIgnored;
 		std::vector<TagId> tagstack;
 
