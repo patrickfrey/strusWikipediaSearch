@@ -87,6 +87,8 @@ enum TagType {
 	UnknwownTagType,
 	TagNoWikiOpen,
 	TagNoWikiClose,
+	TagVarOpen,
+	TagVarClose,
 	TagCodeOpen,
 	TagCodeClose,
 	TagTtOpen,
@@ -105,6 +107,12 @@ enum TagType {
 	TagSupClose,
 	TagSubOpen,
 	TagSubClose,
+	TagPreOpen,
+	TagPreClose,
+	TagInsOpen,
+	TagInsClose,
+	TagImageMapOpen,
+	TagImageMapClose,
 	TagRefOpen,
 	TagRefClose,
 	TagSpanOpen,
@@ -119,10 +127,16 @@ enum TagType {
 	TagBigClose,
 	TagUOpen,
 	TagUClose,
+	TagIOpen,
+	TagIClose,
+	TagPOpen,
+	TagPClose,
 	TagLiOpen,
 	TagLiClose,
 	TagSOpen,
 	TagSClose,
+	TagQOpen,
+	TagQClose,
 	TagGalleryOpen,
 	TagGalleryClose,
 	TagBlockquoteOpen,
@@ -186,6 +200,7 @@ static TagType parseTagType( char const*& si, const char* se)
 		}
 		if (tryParseTag( "nowiki", si, se)) return open ? TagNoWikiOpen : TagNoWikiClose;
 		else if (tryParseTag( "code", si, se)) return open ? TagCodeOpen : TagCodeClose;
+		else if (tryParseTag( "var", si, se)) return open ? TagVarOpen : TagVarClose;
 		else if (tryParseTag( "tt", si, se)) return open ? TagTtOpen : TagTtClose;
 		else if (tryParseTag( "syntaxhighlight", si, se)) return open ? TagSyntaxHighlightOpen : TagSyntaxHighlightClose;
 		else if (tryParseTag( "source", si, se)) return open ? TagSourceOpen : TagSourceClose;
@@ -193,6 +208,9 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "chem", si, se)) return open ? TagChemOpen : TagChemClose;
 		else if (tryParseTag( "sup", si, se)) return open ? TagSupOpen : TagSupClose;
 		else if (tryParseTag( "sub", si, se)) return open ? TagSubOpen : TagSubClose;
+		else if (tryParseTag( "pre", si, se)) return open ? TagPreOpen : TagPreClose;
+		else if (tryParseTag( "ins", si, se)) return open ? TagInsOpen : TagInsClose;
+		else if (tryParseTag( "imagemap", si, se)) return open ? TagImageMapOpen : TagImageMapClose;
 		else if (tryParseTag( "ref", si, se)) return open ? TagRefOpen : TagRefClose;
 		else if (tryParseTag( "blockquote", si, se)) return open ? TagBlockquoteOpen : TagBlockquoteClose;
 		else if (tryParseTag( "cite", si, se)) return open ? TagCiteOpen : TagCiteClose;
@@ -206,9 +224,13 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "big", si, se)) return open ? TagBigOpen : TagBigClose;
 		else if (tryParseTag( "u", si, se)) return open ? TagUOpen : TagUClose;
 		else if (tryParseTag( "s", si, se)) return open ? TagSOpen : TagSClose;
+		else if (tryParseTag( "q", si, se)) return open ? TagQOpen : TagQClose;
+		else if (tryParseTag( "i", si, se)) return open ? TagIOpen : TagIClose;
+		else if (tryParseTag( "p", si, se)) return open ? TagPOpen : TagPClose;
 		else if (tryParseTag( "gallery", si, se)) return open ? TagGalleryOpen : TagGalleryClose;
 		else if (tryParseTag( "br", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "ol", si, se)) return open ? TagBr : TagBr;
+		else if (tryParseTag( "ul", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "li", si, se)) return open ? TagLiOpen : TagLiClose;
 		else if (tryParseTag( "expand", si, se)) return TagComment;
 		else if (tryParseTag( "hiero", si, se)) return TagComment;
@@ -431,6 +453,11 @@ WikimediaLexem WikimediaLexer::next()
 					case TagCodeClose:
 						start = m_si;
 						break;
+					case TagVarOpen:
+						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "var", m_si, m_se));
+					case TagVarClose:
+						start = m_si;
+						break;
 					case TagTtOpen:
 						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "tt", m_si, m_se));
 					case TagTtClose:
@@ -465,6 +492,10 @@ WikimediaLexem WikimediaLexer::next()
 					case TagGalleryOpen:
 						return WikimediaLexem( WikimediaLexem::OpenRef);
 					case TagGalleryClose:
+						return WikimediaLexem( WikimediaLexem::CloseRef);
+					case TagImageMapOpen:
+						return WikimediaLexem( WikimediaLexem::OpenRef);
+					case TagImageMapClose:
 						return WikimediaLexem( WikimediaLexem::CloseRef);
 					case TagRefOpen:
 						return WikimediaLexem( WikimediaLexem::OpenRef);
@@ -501,6 +532,26 @@ WikimediaLexem WikimediaLexer::next()
 					case TagSOpen:
 						return WikimediaLexem( WikimediaLexem::OpenFormat);
 					case TagSClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagQOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagQClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagPreOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagPreClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagInsOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagInsClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagIOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagIClose:
+						return WikimediaLexem( WikimediaLexem::CloseFormat);
+					case TagPOpen:
+						return WikimediaLexem( WikimediaLexem::OpenFormat);
+					case TagPClose:
 						return WikimediaLexem( WikimediaLexem::CloseFormat);
 					case TagBlockquoteOpen:
 						return WikimediaLexem( WikimediaLexem::OpenBlockQuote);
