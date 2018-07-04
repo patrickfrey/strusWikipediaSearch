@@ -18,6 +18,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <iostream>
+#include <cstdio>
 
 /// \brief strus toplevel namespace
 using namespace strus;
@@ -129,7 +130,7 @@ enum TagType {
 	TagDivOpen,
 	TagDivClose,
 	TagComment,
-	TagBr,
+	TagBr
 };
 
 static bool tryParseTag( const char* tagnam, char const*& si, const char* se)
