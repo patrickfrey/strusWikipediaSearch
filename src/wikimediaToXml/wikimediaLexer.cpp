@@ -135,6 +135,8 @@ enum TagType {
 	TagLiClose,
 	TagTrOpen,
 	TagTrClose,
+	TagHrOpen,
+	TagHrClose,
 	TagTdOpen,
 	TagTdClose,
 	TagSOpen,
@@ -231,18 +233,24 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "q", si, se)) return open ? TagQOpen : TagQClose;
 		else if (tryParseTag( "i", si, se)) return open ? TagIOpen : TagIClose;
 		else if (tryParseTag( "p", si, se)) return open ? TagPOpen : TagPClose;
+		else if (tryParseTag( "r", si, se)) return open ? TagPOpen : TagComment;
+		else if (tryParseTag( "del", si, se)) {(void)parseTagContent( "noinclude", si, se); return TagComment;}
 		else if (tryParseTag( "em", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseTag( "samp", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseTag( "sic", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseTag( "font", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseTag( "year", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "applet", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "object", si, se)) return open ? TagComment : TagComment;
+		else if (tryParseTag( "references", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseTag( "gallery", si, se)) return open ? TagGalleryOpen : TagGalleryClose;
 		else if (tryParseTag( "br", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "ol", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "ul", si, se)) return open ? TagBr : TagBr;
 		else if (tryParseTag( "li", si, se)) return open ? TagLiOpen : TagLiClose;
 		else if (tryParseTag( "tr", si, se)) return open ? TagTrOpen : TagTrClose;
-		else if (tryParseTag( "td", si, se)) return open ? TagTrOpen : TagTdClose;
+		else if (tryParseTag( "hr", si, se)) return open ? TagHrOpen : TagHrClose;
+		else if (tryParseTag( "td", si, se)) return open ? TagTdOpen : TagTdClose;
 		else if (tryParseTag( "expand", si, se)) return TagComment;
 		else if (tryParseTag( "hiero", si, se)) return TagComment;
 		else if (tryParseTag( "onlyinclude", si, se)) return TagComment;
@@ -544,6 +552,10 @@ WikimediaLexem WikimediaLexer::next()
 					case TagTrOpen:
 						return WikimediaLexem( WikimediaLexem::TableRowDelim);
 					case TagTrClose:
+						return WikimediaLexem( WikimediaLexem::EndOfLine);
+					case TagHrOpen:
+						return WikimediaLexem( WikimediaLexem::TableHeadDelim);
+					case TagHrClose:
 						return WikimediaLexem( WikimediaLexem::EndOfLine);
 					case TagTdOpen:
 						return WikimediaLexem( WikimediaLexem::TableColDelim);
