@@ -131,6 +131,8 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::QuotationStart:
 			case Paragraph::DoubleQuoteStart:
 			case Paragraph::BlockQuoteStart:
+			case Paragraph::DivStart:
+			case Paragraph::PoemStart:
 			case Paragraph::SpanStart:
 			case Paragraph::FormatStart:
 			case Paragraph::HeadingStart:
@@ -151,6 +153,8 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::QuotationEnd:
 			case Paragraph::DoubleQuoteEnd:
 			case Paragraph::BlockQuoteEnd:
+			case Paragraph::DivEnd:
+			case Paragraph::PoemEnd:
 			case Paragraph::SpanEnd:
 			case Paragraph::FormatEnd:
 			case Paragraph::HeadingEnd:
@@ -171,6 +175,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				break;
 			case Paragraph::Title:
 			case Paragraph::Text:
+			case Paragraph::Char:
 			case Paragraph::NoWiki:
 			case Paragraph::Math:
 			case Paragraph::CitationLink:
@@ -221,6 +226,11 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::BlockQuoteStart)
+		{
+			if (starttype == Paragraph::WebLinkStart) return;
+			finishStructure( startidx);
+		}
+		else if (para.type() == Paragraph::DivStart)
 		{
 			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
@@ -391,7 +401,7 @@ void DocumentStructure::finishStructure( int startidx)
 		}
 		else
 		{
-			m_errors.push_back( strus::string_format( "close of table called without table definition"));
+			addError( strus::string_format( "close of table called without table definition"));
 		}
 	}
 	else if (endType == Paragraph::TableRowEnd)
@@ -402,7 +412,7 @@ void DocumentStructure::finishStructure( int startidx)
 		}
 		else
 		{
-			m_errors.push_back( strus::string_format( "close of table row called without table definition"));
+			addError( strus::string_format( "close of table row called without table definition"));
 		}
 	}
 	m_structStack.pop_back();
@@ -413,7 +423,7 @@ void DocumentStructure::closeStructure( Paragraph::Type startType, const std::st
 	closeDanglingStructures( startType);
 	if (m_structStack.empty())
 	{
-		m_errors.push_back( strus::string_format( "close of %s structure called without open ()", Paragraph::structTypeName( Paragraph::structType( startType))));
+		addError( strus::string_format( "close of %s structure called without open ()", Paragraph::structTypeName( Paragraph::structType( startType))));
 		return;
 	}
 	int startidx = m_structStack.back().start;
@@ -425,7 +435,7 @@ void DocumentStructure::closeStructure( Paragraph::Type startType, const std::st
 	else if (alt_text.empty())
 	{
 		const char* stnam = Paragraph::structTypeName( Paragraph::structType( para.type()));
-		m_errors.push_back( strus::string_format( "close of %s structure called without open (%s)", Paragraph::structTypeName( Paragraph::structType( startType)), stnam));
+		addError( strus::string_format( "close of %s structure called without open (%s)", Paragraph::structTypeName( Paragraph::structType( startType)), stnam));
 		return;
 	}
 	else
@@ -439,6 +449,49 @@ void DocumentStructure::closeOpenStructures()
 	closeDanglingStructures( Paragraph::Title/*no match => remove all*/);
 	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
 	m_citations.clear();
+}
+
+void DocumentStructure::closeWebLink()
+{
+	std::vector<Paragraph>::const_iterator pi = m_parar.end(), pe = m_parar.begin();
+	for (; pi != pe; --pi)
+	{
+		const Paragraph& para = *(pi-1);
+		if (para.type() == Paragraph::Text)
+		{
+			if (!para.text().empty() && 0!=std::strchr( para.text().c_str(), '['))
+			{
+				char const* se = para.text().c_str();
+				char const* si = se + para.text().size();
+				char ch = 0;
+				for (; si != se; --si)
+				{
+					ch = *(si-1);
+					if (ch == '[' || ch == ']') break;
+				}
+				if (ch == '[')
+				{
+					addText( "]");
+					return;
+				}
+			}
+		}
+		else if (para.type() == Paragraph::Char)
+		{}
+		else if (para.type() == Paragraph::Math)
+		{}
+		else if (para.type() == Paragraph::EntityStart || para.type() == Paragraph::EntityEnd)
+		{}
+		else if (para.type() == Paragraph::QuotationStart || para.type() == Paragraph::QuotationEnd)
+		{}
+		else if (para.type() == Paragraph::DoubleQuoteStart || para.type() == Paragraph::DoubleQuoteEnd)
+		{}
+		else
+		{
+			break;
+		}
+	}
+	closeStructure( Paragraph::WebLinkStart, "]");
 }
 
 static std::string getDocidFromTitle( const std::string& txt)
@@ -665,27 +718,33 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::BlockQuoteStart:
 				stk.push_back( Paragraph::StructBlockQuote);
-				printTagOpen( output, rt, "bquot", pi->id(), pi->text());
 				break;
 			case Paragraph::BlockQuoteEnd:
 				stk.pop_back();
-				output.printCloseTag( rt);
+				break;
+			case Paragraph::DivStart:
+				stk.push_back( Paragraph::StructDiv);
+				break;
+			case Paragraph::DivEnd:
+				stk.pop_back();
+				break;
+			case Paragraph::PoemStart:
+				stk.push_back( Paragraph::StructPoem);
+				break;
+			case Paragraph::PoemEnd:
+				stk.pop_back();
 				break;
 			case Paragraph::SpanStart:
 				stk.push_back( Paragraph::StructSpan);
-				printTagOpen( output, rt, "span", pi->id(), pi->text());
 				break;
 			case Paragraph::SpanEnd:
 				stk.pop_back();
-				output.printCloseTag( rt);
 				break;
 			case Paragraph::FormatStart:
 				stk.push_back( Paragraph::StructFormat);
-				printTagOpen( output, rt, "format", pi->id(), pi->text());
 				break;
 			case Paragraph::FormatEnd:
 				stk.pop_back();
-				output.printCloseTag( rt);
 				break;
 			case Paragraph::HeadingStart:
 				stk.push_back( Paragraph::StructHeading);
@@ -807,6 +866,9 @@ std::string DocumentStructure::toxml( bool beautified) const
 				{
 					output.printValue( pi->text(), rt);
 				}
+				break;
+			case Paragraph::Char:
+				printTagContent( output, rt, "char", pi->id(), pi->text());
 				break;
 			case Paragraph::NoWiki:
 				if (stk.empty())

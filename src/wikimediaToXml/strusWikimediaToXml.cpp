@@ -15,6 +15,7 @@
 #include "strus/base/numstring.hpp"
 #include "strus/base/inputStream.hpp"
 #include "strus/base/string_format.hpp"
+#include "strus/base/atomic.hpp"
 #include "documentStructure.hpp"
 #include "outputString.hpp"
 #include "wikimediaLexer.hpp"
@@ -47,22 +48,40 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 	{
 		if (g_verbosity >= 2)
 		{
-			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
 			std::cerr << "STATE " << doc.statestring() << std::endl;
+			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
 		}
-		if (lexemidx == 134)
-		{
-			std::cerr << "HALLY GALLY" << std::endl;
-		}
+		/*[-]*/if (lexemidx == 2261)
+		/*[-]*/{
+			/*[-]*/std::cerr << "HALLY GALLY" << std::endl;
+		/*[-]*/}
 		switch (lexem.id)
 		{			
 			case strus::WikimediaLexem::EoF:
 				break;
 			case strus::WikimediaLexem::Error:
-				doc.addError( lexem.value);
+				doc.addError( strus::string_format("syntax error in document: %s", lexem.value.c_str()));
 				break;
 			case strus::WikimediaLexem::Text:
 				doc.addText( lexem.value);
+				break;
+			case strus::WikimediaLexem::String:
+				if (strus::Paragraph::StructQuotation == doc.currentStructType())
+				{
+					doc.closeOpenQuoteItems();
+					doc.addText( lexem.value);
+					doc.addQuotationMarker();
+				}
+				else
+				{
+					doc.closeOpenQuoteItems();
+					doc.addQuotationMarker();
+					doc.addText( lexem.value);
+					doc.addQuotationMarker();
+				}
+				break;
+			case strus::WikimediaLexem::Char:
+				doc.addChar( lexem.value);
 				break;
 			case strus::WikimediaLexem::Math:
 				doc.addText( lexem.value);
@@ -108,6 +127,12 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::DoubleQuoteMarker:
 				doc.addDoubleQuoteMarker();
 				break;
+			case strus::WikimediaLexem::OpenDoubleQuote:
+				doc.addDoubleQuoteMarker();
+				break;
+			case strus::WikimediaLexem::CloseDoubleQuote:
+				doc.addDoubleQuoteMarker();
+				break;
 			case strus::WikimediaLexem::OpenSpan:
 				doc.openSpan();
 				break;
@@ -125,6 +150,18 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				break;
 			case strus::WikimediaLexem::CloseBlockQuote:
 				doc.closeBlockQuote();
+				break;
+			case strus::WikimediaLexem::OpenDiv:
+				doc.openDiv();
+				break;
+			case strus::WikimediaLexem::CloseDiv:
+				doc.closeDiv();
+				break;
+			case strus::WikimediaLexem::OpenPoem:
+				doc.openPoem();
+				break;
+			case strus::WikimediaLexem::ClosePoem:
+				doc.closePoem();
 				break;
 			case strus::WikimediaLexem::OpenCitation:
 				doc.openCitation( lexem.value);
@@ -148,19 +185,24 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.openTable();
 				break;
 			case strus::WikimediaLexem::CloseTable:
+				doc.closeOpenEolnItem();
 				doc.closeTable();
 				break;
 			case strus::WikimediaLexem::TableTitle:
+				doc.closeOpenEolnItem();
 				doc.addTableTitle();
 				break;
 			case strus::WikimediaLexem::TableHeadDelim:
+				doc.closeOpenEolnItem();
 				doc.addTableHead();
 				break;
 			case strus::WikimediaLexem::TableRowDelim:
+				doc.closeOpenEolnItem();
 				doc.addTableRow();
 				break;
 			case strus::WikimediaLexem::TableColDelim:
 			{
+				doc.closeOpenEolnItem();
 				strus::Paragraph::StructType tp = doc.currentStructType();
 				if (tp == strus::Paragraph::StructPageLink
 				||  tp == strus::Paragraph::StructWebLink)
@@ -175,6 +217,10 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				{
 					doc.addAttribute( lexem.value);
 				}
+				else if (tp == strus::Paragraph::StructNone)
+				{
+					doc.openListItem( 1);
+				}
 				else
 				{
 					doc.addTableCol();
@@ -183,12 +229,30 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			}
 			case strus::WikimediaLexem::ColDelim:
 			{
+				doc.closeOpenQuoteItems();
 				strus::Paragraph::StructType tp = doc.currentStructType();
 				if (tp == strus::Paragraph::StructPageLink
 				||  tp == strus::Paragraph::StructWebLink)
 				{
 					doc.clearOpenText();
 					//... ignore last text and restart structure
+				}
+				else if (tp == strus::Paragraph::StructList)
+				{
+					doc.addText( " |");
+					//... ignore
+				}
+				else if (tp == strus::Paragraph::StructTableTitle)
+				{
+					doc.addTableTitle();
+				}
+				else if (tp == strus::Paragraph::StructTableRow)
+				{
+					doc.addTableRow();
+				}
+				else if (tp == strus::Paragraph::StructTableCol)
+				{
+					doc.addTableCol();
 				}
 				else
 				{
@@ -203,6 +267,10 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				if (tp == strus::Paragraph::StructTableHead)
 				{
 					doc.addTableHead();
+				}
+				else if (tp == strus::Paragraph::StructTableTitle)
+				{
+					doc.addTableTitle();
 				}
 				else if (tp == strus::Paragraph::StructTableRow)
 				{
@@ -353,7 +421,7 @@ class Worker
 {
 public:
 	Worker()
-		:m_thread(0),m_threadid(0),m_terminated(false),m_eof(true),m_writeDumpsAlways(g_dumps){}
+		:m_thread(0),m_threadid(0),m_terminated(false),m_eof(false),m_writeDumpsAlways(g_dumps){}
 	~Worker()
 	{
 		waitTermination();
@@ -367,16 +435,14 @@ public:
 	}
 	void terminate()
 	{
-		strus::unique_lock lock( m_queue_mutex);
-		m_terminated = true;
+		m_terminated.set( true);
 		m_cv.notify_all();
 	}
 	void waitTermination()
 	{
 		if (m_thread)
 		{
-			strus::unique_lock lock( m_queue_mutex);
-			m_eof = true;
+			m_eof.set( true);
 			m_cv.notify_all();
 			m_thread->join();
 			delete m_thread;
@@ -384,58 +450,55 @@ public:
 			if (g_verbosity >= 1) std::cerr << strus::string_format( "thread %d terminated\n", m_threadid) << std::flush;
 		}
 	}
-	bool waitSignal()
+	void waitSignal()
 	{
-		if (m_terminated) return false;
 		strus::unique_lock lock( m_cv_mutex);
 		m_cv.wait( lock);
-		return !m_terminated;
 	}
-	Work fetch()
+	bool fetch( Work& work)
 	{
-		Work rt;
 		strus::unique_lock lock( m_queue_mutex);
 		if (m_queue.empty())
 		{
-			if (m_eof) m_terminated = true;
+			if (m_eof.test())
+			{
+				m_terminated.set( true);
+			}
+			return false;
 		}
 		else
 		{
-			rt = m_queue.front();
+			work = m_queue.front();
 			m_queue.pop();
+			return true;
 		}
-		return rt;
 	}
 
 	void run()
 	{
 		if (g_verbosity >= 1) std::cerr << strus::string_format( "thread %d started\n", m_threadid) << std::flush;
-		while (waitSignal())
+		while (!m_terminated.test())
 		{
 			std::string title;
-			do
+			try
 			{
-				try
+				waitSignal();
+				Work work;
+				while (fetch( work))
 				{
-					title.clear();
-					Work work( fetch());
-					if (!work.title().empty())
-					{
-						title = work.title();
-						if (g_verbosity >= 1) std::cerr << strus::string_format( "thread %d process document '%s'\n", m_threadid, title.c_str()) << std::flush;
-						work.process();
-					}
-				} 
-				catch (const std::bad_alloc&)
-				{
-					std::cerr << "out of memory processing document " << title << std::endl;
-				}
-				catch (const std::runtime_error& err)
-				{
-					std::cerr << "error processing document " << title << ": " << err.what() << std::endl;
+					title = work.title();
+					if (g_verbosity >= 1) std::cerr << strus::string_format( "thread %d process document '%s'\n", m_threadid, title.c_str()) << std::flush;
+					work.process();
 				}
 			}
-			while (!title.empty());
+			catch (const std::bad_alloc&)
+			{
+				std::cerr << "out of memory processing document " << title << std::endl;
+			}
+			catch (const std::runtime_error& err)
+			{
+				std::cerr << "error processing document " << title << ": " << err.what() << std::endl;
+			}
 		}
 	}
 	void start( int threadid_)
@@ -452,8 +515,8 @@ private:
 	std::queue<Work> m_queue;
 	strus::thread* m_thread;
 	int m_threadid;
-	bool m_terminated;
-	bool m_eof;
+	strus::AtomicFlag m_terminated;
+	strus::AtomicFlag m_eof;
 	bool m_writeDumpsAlways;
 };
 
@@ -587,7 +650,7 @@ int main( int argc, const char* argv[])
 				:ar(ar_){}
 			~WorkerArray()
 			{
-				delete ar;
+				delete [] ar;
 			}
 			Worker* ar;
 		};

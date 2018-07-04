@@ -32,6 +32,10 @@ public:
 			DoubleQuoteEnd,
 			BlockQuoteStart,
 			BlockQuoteEnd,
+			DivStart,
+			DivEnd,
+			PoemStart,
+			PoemEnd,
 			SpanStart,
 			SpanEnd,
 			FormatStart,
@@ -61,6 +65,7 @@ public:
 			TableColStart,
 			TableColEnd,
 			Text,
+			Char,
 			NoWiki,
 			Math,
 			CitationLink
@@ -77,6 +82,10 @@ public:
 			"DoubleQuoteEnd",
 			"BlockQuoteStart",
 			"BlockQuoteEnd",
+			"DivStart",
+			"DivEnd",
+			"PoemStart",
+			"PoemEnd",
 			"SpanStart",
 			"SpanEnd",
 			"FormatStart",
@@ -106,6 +115,7 @@ public:
 			"TableColStart",
 			"TableColEnd",
 			"Text",
+			"Char",
 			"NoWiki",
 			"Math",
 			"CitationLink",0};
@@ -117,6 +127,8 @@ public:
 			StructQuotation,
 			StructDoubleQuote,
 			StructBlockQuote,
+			StructDiv,
+			StructPoem,
 			StructSpan,
 			StructFormat,
 			StructHeading,
@@ -134,7 +146,7 @@ public:
 	};
 	static const char* structTypeName( StructType st)
 	{
-		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableRow","TableCol"};
+		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Div","Poem","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableRow","TableCol"};
 		return ar[ st];
 	}
 	static StructType structType( Type ti)
@@ -149,6 +161,10 @@ public:
 			StructNone/*DoubleQuoteEnd*/,
 			StructBlockQuote/*BlockQuoteStart*/,
 			StructNone/*BlockQuoteEnd*/,
+			StructDiv/*DivStart*/,
+			StructNone/*DivEnd*/,
+			StructPoem/*BlockPoem*/,
+			StructNone/*BlockPoem*/,
 			StructSpan/*SpanStart*/,
 			StructNone/*SpanEnd*/,
 			StructFormat/*FormatStart*/,
@@ -197,6 +213,10 @@ public:
 			DoubleQuoteStart/*DoubleQuoteEnd*/,
 			BlockQuoteEnd/*BlockQuoteStart*/,
 			BlockQuoteStart/*BlockQuoteEnd*/,
+			DivEnd/*DivStart*/,
+			DivStart/*DivEnd*/,
+			PoemEnd/*PoemStart*/,
+			PoemStart/*PoemEnd*/,
 			SpanEnd/*SpanStart*/,
 			SpanStart/*SpanEnd*/,
 			FormatEnd/*FormatStart*/,
@@ -295,6 +315,10 @@ public:
 	{
 		addSingleItem( Paragraph::Text, "", text, true/*joinText*/);
 	}
+	void addChar( const std::string& text)
+	{
+		addSingleItem( Paragraph::Char, "", text, false/*joinText*/);
+	}
 	void clearOpenText();
 
 	void addMath( const std::string& text)
@@ -327,10 +351,8 @@ public:
 	{
 		openStructure( Paragraph::WebLinkStart, id.c_str(), 0);
 	}
-	void closeWebLink()
-	{
-		closeStructure( Paragraph::WebLinkStart, "]");
-	}
+	void closeWebLink();
+
 	void openHeading( int idx)
 	{
 		m_lastHeadingIdx = idx;
@@ -358,6 +380,15 @@ public:
 	{
 		addQuoteItem( Paragraph::DoubleQuoteStart);
 	}
+	void openDoubleQuote()
+	{
+		closeOpenQuoteItems();
+		openStructure( Paragraph::DoubleQuoteStart, "", 0);
+	}
+	void closeDoubleQuote()
+	{
+		closeStructure( Paragraph::DoubleQuoteStart, "");
+	}
 	void openBlockQuote()
 	{
 		closeOpenQuoteItems();
@@ -367,6 +398,25 @@ public:
 	void closeBlockQuote()
 	{
 		closeStructure( Paragraph::BlockQuoteStart, "");
+	}
+	void openDiv()
+	{
+		closeOpenQuoteItems();
+		openStructure( Paragraph::DivStart, "", 0);
+	}
+	void closeDiv()
+	{
+		closeStructure( Paragraph::DivStart, "");
+	}
+	void openPoem()
+	{
+		closeOpenQuoteItems();
+		closeAutoCloseItem( Paragraph::PoemStart);
+		openStructure( Paragraph::PoemStart, "", 0);
+	}
+	void closePoem()
+	{
+		closeStructure( Paragraph::PoemStart, "");
 	}
 	void openSpan()
 	{
@@ -381,7 +431,6 @@ public:
 	void openFormat()
 	{
 		closeOpenQuoteItems();
-		closeAutoCloseItem( Paragraph::FormatStart);
 		openStructure( Paragraph::FormatStart, "", 0);
 	}
 	void closeFormat()
@@ -461,7 +510,10 @@ public:
 	void addAttribute( const std::string& id)
 	{
 		closeAutoCloseItem( Paragraph::AttributeStart);
-		if (currentStructType() == Paragraph::StructCitation || currentStructType() == Paragraph::StructRef)
+		Paragraph::StructType tp = currentStructType();
+		if (tp == Paragraph::StructCitation
+		||  tp == Paragraph::StructRef
+		||  tp == Paragraph::StructAttribute)
 		{
 			openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0);
 		}
@@ -502,7 +554,7 @@ public:
 
 	void addError( const std::string& msg)
 	{
-		m_errors.push_back( msg);
+		m_errors.push_back( msg + " [state " + Paragraph::structTypeName( currentStructType()) + "]");
 	}
 
 	const std::vector<std::string>& errors() const
