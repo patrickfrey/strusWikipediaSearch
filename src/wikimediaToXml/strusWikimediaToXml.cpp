@@ -87,7 +87,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.addText( lexem.value);
 				break;
 			case strus::WikimediaLexem::NoWiki:
-				doc.addText( lexem.value);
+				doc.addNoWiki( lexem.value);
 				break;
 			case strus::WikimediaLexem::Url:
 				doc.openWebLink( lexem.value);
@@ -190,14 +190,17 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				break;
 			case strus::WikimediaLexem::TableTitle:
 				doc.closeOpenEolnItem();
+				doc.implicitOpenTableIfUndefined();
 				doc.addTableTitle();
 				break;
 			case strus::WikimediaLexem::TableHeadDelim:
 				doc.closeOpenEolnItem();
+				doc.implicitOpenTableIfUndefined();
 				doc.addTableHead();
 				break;
 			case strus::WikimediaLexem::TableRowDelim:
 				doc.closeOpenEolnItem();
+				doc.implicitOpenTableIfUndefined();
 				doc.addTableRow();
 				break;
 			case strus::WikimediaLexem::TableColDelim:
@@ -264,7 +267,13 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			{
 				doc.closeOpenQuoteItems();
 				strus::Paragraph::StructType tp = doc.currentStructType();
-				if (tp == strus::Paragraph::StructTableHead)
+				if (tp == strus::Paragraph::StructPageLink
+				||  tp == strus::Paragraph::StructWebLink)
+				{
+					doc.clearOpenText();
+					//... ignore last text and restart structure
+				}
+				else if (tp == strus::Paragraph::StructTableHead)
 				{
 					doc.addTableHead();
 				}

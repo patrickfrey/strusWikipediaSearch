@@ -93,6 +93,8 @@ enum TagType {
 	TagTtClose,
 	TagSourceOpen,
 	TagSourceClose,
+	TagSyntaxHighlightOpen,
+	TagSyntaxHighlightClose,
 	TagMathOpen,
 	TagMathClose,
 	TagCiteOpen,
@@ -185,6 +187,7 @@ static TagType parseTagType( char const*& si, const char* se)
 		if (tryParseTag( "nowiki", si, se)) return open ? TagNoWikiOpen : TagNoWikiClose;
 		else if (tryParseTag( "code", si, se)) return open ? TagCodeOpen : TagCodeClose;
 		else if (tryParseTag( "tt", si, se)) return open ? TagTtOpen : TagTtClose;
+		else if (tryParseTag( "syntaxhighlight", si, se)) return open ? TagSyntaxHighlightOpen : TagSyntaxHighlightClose;
 		else if (tryParseTag( "source", si, se)) return open ? TagSourceOpen : TagSourceClose;
 		else if (tryParseTag( "math", si, se)) return open ? TagMathOpen : TagMathClose;
 		else if (tryParseTag( "chem", si, se)) return open ? TagChemOpen : TagChemClose;
@@ -396,6 +399,22 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
+			if (m_si+8 < m_se && 0==std::memcmp( m_si, "<http://", 8))
+			{
+				char const* start = m_si;
+				++m_si;
+				for (; m_si < m_se && *m_si != '>'; ++m_si){}
+				if (m_si < m_se)
+				{
+					std::string url( start+1, m_si-(start+1));
+					++m_si;
+					return WikimediaLexem( WikimediaLexem::Url, 0, url);
+				}
+				else
+				{
+					return WikimediaLexem( WikimediaLexem::Error, 0, std::string("unknown tag ") + outputLineString( m_si-1, m_se, 40));
+				}
+			}
 			if (m_si+1 < m_se && (isAlpha( m_si[1]) || m_si[1] == '/' || m_si[1] == '!'))
 			{
 				switch (parseTagType( m_si, m_se))
@@ -420,6 +439,11 @@ WikimediaLexem WikimediaLexer::next()
 					case TagSourceOpen:
 						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "source", m_si, m_se));
 					case TagSourceClose:
+						start = m_si;
+						break;
+					case TagSyntaxHighlightOpen:
+						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "syntaxhighlight", m_si, m_se));
+					case TagSyntaxHighlightClose:
 						start = m_si;
 						break;
 					case TagMathOpen:
@@ -650,7 +674,7 @@ WikimediaLexem WikimediaLexer::next()
 					}
 					if (m_si < m_se && *m_si == ']') ++m_si;
 				}
-				else if (m_si < m_se && (*m_si == ']' || *m_si == '|' || *m_si == ' '))
+				else if (m_si < m_se && (*m_si == ']' || *m_si == '|' || *m_si == ' ' || *m_si == '{'))
 				{
 					if (*m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::OpenWWWLink, 0, linkid);

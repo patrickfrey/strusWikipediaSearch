@@ -68,7 +68,8 @@ public:
 			Char,
 			NoWiki,
 			Math,
-			CitationLink
+			CitationLink,
+			TableLink
 	};
 	static const char* typeName( Type tp)
 	{
@@ -118,7 +119,8 @@ public:
 			"Char",
 			"NoWiki",
 			"Math",
-			"CitationLink",0};
+			"CitationLink",
+			"TableLink", 0};
 		return ar[tp];
 	}
 	enum StructType {
@@ -198,7 +200,8 @@ public:
 			StructNone/*Math*/,
 			StructNone/*PageLink*/,
 			StructNone/*WebLink*/,
-			StructNone/*CitationLink*/};
+			StructNone/*CitationLink*/,
+			StructNone/*TableLink*/};
 		return ar[ti];
 	}
 	static Type invType( Type ti)
@@ -248,7 +251,9 @@ public:
 			Text/*Text*/,
 			NoWiki/*NoWiki*/,
 			Math/*Math*/,
-			CitationLink/*CitationLink*/};
+			CitationLink/*CitationLink*/,
+			TableLink/*TableLink*/
+			};
 		return ar[ti];
 	}
 	StructType structType() const
@@ -299,15 +304,16 @@ class DocumentStructure
 {
 public:
 	explicit DocumentStructure()
-		:m_id(),m_parar(),m_citations(),m_structStack(),m_tableDefs(),m_errors(),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
+		:m_id(),m_parar(),m_citations(),m_tables(),m_structStack(),m_tableDefs(),m_errors(),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
 	DocumentStructure( const DocumentStructure& o)
-		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
+		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
 
 	const std::string& id() const
 	{
 		return m_id;
 	}
 	Paragraph::StructType currentStructType() const;
+	int currentStructIndex() const;
 
 	void setTitle( const std::string& text);
 
@@ -437,6 +443,20 @@ public:
 	{
 		closeStructure( Paragraph::FormatStart, "");
 	}
+	void implicitOpenTableIfUndefined()
+	{
+		strus::Paragraph::StructType tp = currentStructType();
+
+		if (tp != strus::Paragraph::StructTable
+		&&  tp != strus::Paragraph::StructTableTitle
+		&&  tp != strus::Paragraph::StructTableHead
+		&&  tp != strus::Paragraph::StructTableRow
+		&&  tp != strus::Paragraph::StructTableCol)
+		{
+			openTable();
+		}
+	}
+
 	void openTable()
 	{
 		closeOpenQuoteItems();
@@ -571,6 +591,7 @@ public:
 
 private:
 	void finishStructure( int structStartidx);
+	void finishTable( int structStartidx);
 	void openStructure( Paragraph::Type startType, const char* prefix, int lidx=0);
 	void closeStructure( Paragraph::Type startType, const std::string& alt_text);
 	void closeOpenStructures();
@@ -610,6 +631,7 @@ private:
 	std::string m_id;
 	std::vector<Paragraph> m_parar;
 	std::vector<Paragraph> m_citations;
+	std::vector<Paragraph> m_tables;
 	std::vector<StructRef> m_structStack;
 	std::vector<TableDef> m_tableDefs;
 	std::vector<std::string> m_errors;

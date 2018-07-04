@@ -179,6 +179,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::NoWiki:
 			case Paragraph::Math:
 			case Paragraph::CitationLink:
+			case Paragraph::TableLink:
 				break;
 		}
 	}
@@ -375,6 +376,50 @@ void DocumentStructure::openStructure( Paragraph::Type startType, const char* pr
 	}
 }
 
+typedef std::pair<std::vector<Paragraph>::const_iterator,std::vector<Paragraph>::const_iterator> ParagraphRange;
+ParagraphRange findParagraphRange( const std::vector<Paragraph>::const_iterator& startitr, const std::vector<Paragraph>::const_iterator& enditr, Paragraph::Type starttype, Paragraph::Type endtype)
+{
+	ParagraphRange rt( enditr, enditr);
+	std::vector<Paragraph>::const_iterator pi = startitr, pe = enditr;
+	for (; pi != pe; ++pi)
+	{
+		if (pi->type() == starttype)
+		{
+			rt.first = pi;
+			++pi;
+			for (; pi != pe; ++pi)
+			{
+				if (pi->type() == endtype)
+				{
+					++pi;
+					rt.second = pi;
+					return rt;
+				}
+			}
+			break;
+		}
+	}
+	return ParagraphRange( enditr, enditr);
+}
+
+
+void DocumentStructure::finishTable( int startidx)
+{
+	m_tables.push_back( m_parar[ startidx]);
+	ParagraphRange titlerange = findParagraphRange( m_parar.begin() + startidx, m_parar.end(), Paragraph::TableTitleStart, Paragraph::TableTitleEnd);
+	m_tables.insert( m_tables.end(), titlerange.first, titlerange.second);
+	ParagraphRange headingrange = findParagraphRange( m_parar.begin() + startidx, m_parar.end(), Paragraph::TableHeadStart, Paragraph::TableHeadEnd);
+	m_tables.insert( m_tables.end(), headingrange.first, headingrange.second);
+	std::vector<Paragraph>::const_iterator ri = m_parar.begin() + startidx;
+	while (ri != m_parar.end())
+	{
+		ParagraphRange rowrange = findParagraphRange( ri, m_parar.end(), Paragraph::TableRowStart, Paragraph::TableRowEnd);
+		m_tables.insert( m_tables.end(), rowrange.first, rowrange.second);
+		ri = rowrange.second;
+	}
+	m_tables.push_back( Paragraph( Paragraph::TableEnd, "", ""));
+}
+
 void DocumentStructure::finishStructure( int startidx)
 {
 	Paragraph para = m_parar[ startidx];
@@ -403,6 +448,10 @@ void DocumentStructure::finishStructure( int startidx)
 		{
 			addError( strus::string_format( "close of table called without table definition"));
 		}
+		finishTable( startidx);
+		m_parar.resize( startidx);
+		m_parar.push_back( Paragraph( Paragraph::TableLink, para.id(), ""));
+		
 	}
 	else if (endType == Paragraph::TableRowEnd)
 	{
@@ -447,7 +496,9 @@ void DocumentStructure::closeStructure( Paragraph::Type startType, const std::st
 void DocumentStructure::closeOpenStructures()
 {
 	closeDanglingStructures( Paragraph::Title/*no match => remove all*/);
+	m_parar.insert( m_parar.end(), m_tables.begin(), m_tables.end());
 	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
+	m_tables.clear();
 	m_citations.clear();
 }
 
@@ -586,6 +637,12 @@ Paragraph::StructType DocumentStructure::currentStructType() const
 {
 	if (m_structStack.empty()) return Paragraph::StructNone;
 	return m_parar[ m_structStack.back().start].structType();
+}
+
+int DocumentStructure::currentStructIndex() const
+{
+	if (m_structStack.empty()) return 0;
+	return m_structStack.back().idx;
 }
 
 static bool isSpaceOnlyText( const std::string& text)
@@ -889,6 +946,9 @@ std::string DocumentStructure::toxml( bool beautified) const
 				{
 					output.printValue( pi->text(), rt);
 				}
+				break;
+			case Paragraph::TableLink:
+				printTagContent( output, rt, "tablink", pi->id(), pi->text());
 				break;
 			case Paragraph::CitationLink:
 				printTagContent( output, rt, "citlink", pi->id(), pi->text());
