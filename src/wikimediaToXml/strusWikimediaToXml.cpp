@@ -51,10 +51,6 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			std::cerr << "STATE " << doc.statestring() << std::endl;
 			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
 		}
-		/*[-]*/if (lexemidx == 2261)
-		/*[-]*/{
-			/*[-]*/std::cerr << "HALLY GALLY" << std::endl;
-		/*[-]*/}
 		switch (lexem.id)
 		{			
 			case strus::WikimediaLexem::EoF:
@@ -299,6 +295,11 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				}
 			}
 		}
+		if (doc.hasNewErrors())
+		{
+			doc.setErrorsSourceInfo( lexer.currentSourceExtract( 60));
+		}
+		
 	}
 }
 

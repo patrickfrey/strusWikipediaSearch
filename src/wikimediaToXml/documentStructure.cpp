@@ -179,6 +179,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::NoWiki:
 			case Paragraph::Math:
 			case Paragraph::CitationLink:
+			case Paragraph::RefLink:
 			case Paragraph::TableLink:
 				break;
 		}
@@ -420,6 +421,34 @@ void DocumentStructure::finishTable( int startidx)
 	m_tables.push_back( Paragraph( Paragraph::TableEnd, "", ""));
 }
 
+void DocumentStructure::finishRef( int startidx)
+{
+	std::vector<Paragraph>::const_iterator pi = m_parar.begin() + startidx + 1;
+	if (pi >= m_parar.end())
+	{
+		Paragraph para = m_parar[ startidx + 1];
+		if (para.type() == Paragraph::CitationLink || para.type() == Paragraph::RefLink || para.type() == Paragraph::TableLink)
+		{
+			m_parar.resize( startidx);
+			m_parar.push_back( para);
+		}
+		else
+		{
+			Paragraph para = m_parar[ startidx];
+			m_refs.insert( m_refs.end(), m_parar.begin() + startidx, m_parar.end());
+			m_parar.resize( startidx);
+			m_parar.push_back( Paragraph( Paragraph::RefLink, para.id(), ""));
+		}
+	}
+	else
+	{
+		Paragraph para = m_parar[ startidx];
+		m_refs.insert( m_refs.end(), m_parar.begin() + startidx, m_parar.end());
+		m_parar.resize( startidx);
+		m_parar.push_back( Paragraph( Paragraph::RefLink, para.id(), ""));
+	}
+}
+
 void DocumentStructure::finishStructure( int startidx)
 {
 	Paragraph para = m_parar[ startidx];
@@ -437,6 +466,10 @@ void DocumentStructure::finishStructure( int startidx)
 		m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
 		m_parar.resize( startidx);
 		m_parar.push_back( Paragraph( Paragraph::CitationLink, para.id(), ""));
+	}
+	if (endType == Paragraph::RefEnd)
+	{
+		finishRef( startidx);
 	}
 	else if (endType == Paragraph::TableEnd)
 	{
@@ -496,6 +529,7 @@ void DocumentStructure::closeStructure( Paragraph::Type startType, const std::st
 void DocumentStructure::closeOpenStructures()
 {
 	closeDanglingStructures( Paragraph::Title/*no match => remove all*/);
+	m_parar.insert( m_parar.end(), m_refs.begin(), m_refs.end());
 	m_parar.insert( m_parar.end(), m_tables.begin(), m_tables.end());
 	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
 	m_tables.clear();
@@ -660,17 +694,61 @@ void DocumentStructure::clearOpenText()
 	}
 }
 
+static bool isJoinLinkChar( unsigned char ch)
+{
+	if (ch >= 128) return true;
+	if (ch <= 32) return false;
+	if ((ch|32) >= 'a' && (ch|32) <= 'z') return true;
+	if (ch >= '0' && ch <= '9') return true;
+	if (ch == '-') return false;
+	if (ch == '_') return true;
+	return false;
+}
+
+static bool isJoinLinkText( const std::string& text)
+{
+	if (text.empty()) return true;
+	return isJoinLinkChar( (unsigned char)text[0]);
+}
+
+std::pair<std::string,std::string> splitJoinLinkWords( const std::string& text)
+{
+	std::pair<std::string,std::string> rt;
+	char const* si = text.c_str();
+	while (*si && isJoinLinkChar(*si)) ++si;
+	rt.first.append( text.c_str(), si - text.c_str());
+	rt.second.append( si);
+	return rt;
+}
+
 void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText)
 {
 	if (joinText)
 	{
-		if (!m_parar.empty() && m_parar.back().type() == type)
+		if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::NoWiki  || type == Paragraph::Math))
+		{
+			//... ignore it
+		}
+		else if (!m_parar.empty() && m_parar.back().type() == Paragraph::Text && type == Paragraph::Text)
 		{
 			m_parar.back().addText( text);
 		}
-		else if (isSpaceOnlyText( text))
+		else if (m_parar.size() >= 2
+		&&	(
+				(m_parar[ m_parar.size()-1].type() == Paragraph::PageLinkEnd
+				 && (m_parar[ m_parar.size()-2].type() == Paragraph::Text
+					|| m_parar[ m_parar.size()-2].type() == Paragraph::PageLinkStart)
+				 && type == Paragraph::Text && isJoinLinkText(text))
+
+			||	(m_parar[ m_parar.size()-1].type() == Paragraph::WebLinkEnd
+				 && (m_parar[ m_parar.size()-2].type() == Paragraph::Text
+					|| m_parar[ m_parar.size()-2].type() == Paragraph::PageLinkStart)
+				 && type == Paragraph::Text && isJoinLinkText(text))
+			))
 		{
-			//... ignore it
+			std::pair<std::string,std::string> sptext = splitJoinLinkWords( text);
+			m_parar[ m_parar.size()-2].addText( sptext.first);
+			m_parar.push_back( Paragraph( type, id, sptext.second));
 		}
 		else
 		{
@@ -915,43 +993,25 @@ std::string DocumentStructure::toxml( bool beautified) const
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::Text:
-				if (stk.empty())
-				{
-					printTagContent( output, rt, "text", pi->id(), pi->text());
-				}
-				else
-				{
-					output.printValue( pi->text(), rt);
-				}
+				printTagContent( output, rt, "text", pi->id(), pi->text());
 				break;
 			case Paragraph::Char:
 				printTagContent( output, rt, "char", pi->id(), pi->text());
 				break;
 			case Paragraph::NoWiki:
-				if (stk.empty())
-				{
-					printTagContent( output, rt, "nowiki", pi->id(), pi->text());
-				}
-				else
-				{
-					output.printValue( pi->text(), rt);
-				}
+				printTagContent( output, rt, "nowiki", pi->id(), pi->text());
 				break;
 			case Paragraph::Math:
-				if (stk.empty())
-				{
-					printTagContent( output, rt, "math", pi->id(), pi->text());
-				}
-				else
-				{
-					output.printValue( pi->text(), rt);
-				}
-				break;
-			case Paragraph::TableLink:
-				printTagContent( output, rt, "tablink", pi->id(), pi->text());
+				printTagContent( output, rt, "math", pi->id(), pi->text());
 				break;
 			case Paragraph::CitationLink:
 				printTagContent( output, rt, "citlink", pi->id(), pi->text());
+				break;
+			case Paragraph::RefLink:
+				printTagContent( output, rt, "reflink", pi->id(), pi->text());
+				break;
+			case Paragraph::TableLink:
+				printTagContent( output, rt, "tablink", pi->id(), pi->text());
 				break;
 		}
 	}
@@ -985,3 +1045,26 @@ std::string DocumentStructure::statestring() const
 	}
 	return rt;
 }
+
+void DocumentStructure::setErrorsSourceInfo( const std::string& msg)
+{
+	for (; m_nofErrors < (int)m_errors.size(); ++m_nofErrors)
+	{
+		std::string& err = m_errors[ m_nofErrors];
+		if (!err.empty() && err[ err.size()-1] == ']')
+		{
+			err[ err.size()-1] = ',';
+			err.push_back( ' ');
+		}
+		else
+		{
+			err.append( " [");
+		}
+		err.append( " source: (");
+		err.append( msg);
+		err.append( "...)]");
+	}
+	
+}
+
+

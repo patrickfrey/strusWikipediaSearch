@@ -106,7 +106,7 @@ public:
 
 	WikimediaLexem next();
 	std::string rest() const;
-	std::string currentSourceExtract() const;
+	std::string currentSourceExtract( int maxlen) const;
 	void unget()					{m_si = m_prev_si;}
 
 private:

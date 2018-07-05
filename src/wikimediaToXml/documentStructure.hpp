@@ -69,6 +69,7 @@ public:
 			NoWiki,
 			Math,
 			CitationLink,
+			RefLink,
 			TableLink
 	};
 	static const char* typeName( Type tp)
@@ -120,6 +121,7 @@ public:
 			"NoWiki",
 			"Math",
 			"CitationLink",
+			"RefLink",
 			"TableLink", 0};
 		return ar[tp];
 	}
@@ -196,11 +198,13 @@ public:
 			StructTableCol/*TableColStart*/,
 			StructNone/*TableColEnd*/,
 			StructNone/*Text*/,
+			StructNone/*Char*/,
 			StructNone/*NoWiki*/,
 			StructNone/*Math*/,
 			StructNone/*PageLink*/,
 			StructNone/*WebLink*/,
 			StructNone/*CitationLink*/,
+			StructNone/*RefLink*/,
 			StructNone/*TableLink*/};
 		return ar[ti];
 	}
@@ -249,9 +253,11 @@ public:
 			TableColEnd/*TableColStart*/,
 			TableColStart/*TableColEnd*/,
 			Text/*Text*/,
+			Char/*Char*/,
 			NoWiki/*NoWiki*/,
 			Math/*Math*/,
 			CitationLink/*CitationLink*/,
+			RefLink/*RefLink*/,
 			TableLink/*TableLink*/
 			};
 		return ar[ti];
@@ -304,9 +310,9 @@ class DocumentStructure
 {
 public:
 	explicit DocumentStructure()
-		:m_id(),m_parar(),m_citations(),m_tables(),m_structStack(),m_tableDefs(),m_errors(),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
+		:m_id(),m_parar(),m_citations(),m_tables(),m_refs(),m_structStack(),m_tableDefs(),m_errors(),m_nofErrors(0),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
 	DocumentStructure( const DocumentStructure& o)
-		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
+		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_refs(o.m_refs),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_nofErrors(o.m_nofErrors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
 
 	const std::string& id() const
 	{
@@ -489,16 +495,20 @@ public:
 	}
 	void addTableHead()
 	{
-		closeDanglingStructures( Paragraph::TableStart);
 		if (m_tableDefs.empty())
 		{
 			addError("table open head without table defined");
 			openListItem( 1);
+			return;
 		}
-		else
+		if (currentStructType() == Paragraph::StructTableRow && m_parar.back().type() == Paragraph::TableRowStart)
 		{
-			openAutoCloseItem( Paragraph::TableHeadStart, "head", ++m_tableDefs.back().headitr);
+			m_parar.pop_back();
+			m_structStack.pop_back();
+			--m_tableDefs.back().rowiter;
 		}
+		closeDanglingStructures( Paragraph::TableStart);
+		openAutoCloseItem( Paragraph::TableHeadStart, "head", ++m_tableDefs.back().headitr);
 	}
 	void addTableRow()
 	{
@@ -576,6 +586,11 @@ public:
 	{
 		m_errors.push_back( msg + " [state " + Paragraph::structTypeName( currentStructType()) + "]");
 	}
+	bool hasNewErrors() const
+	{
+		return (int)m_errors.size() > m_nofErrors;
+	}
+	void setErrorsSourceInfo( const std::string& msg);
 
 	const std::vector<std::string>& errors() const
 	{
@@ -592,6 +607,7 @@ public:
 private:
 	void finishStructure( int structStartidx);
 	void finishTable( int structStartidx);
+	void finishRef( int structStartidx);
 	void openStructure( Paragraph::Type startType, const char* prefix, int lidx=0);
 	void closeStructure( Paragraph::Type startType, const std::string& alt_text);
 	void closeOpenStructures();
@@ -632,9 +648,11 @@ private:
 	std::vector<Paragraph> m_parar;
 	std::vector<Paragraph> m_citations;
 	std::vector<Paragraph> m_tables;
+	std::vector<Paragraph> m_refs;
 	std::vector<StructRef> m_structStack;
 	std::vector<TableDef> m_tableDefs;
 	std::vector<std::string> m_errors;
+	int m_nofErrors;
 	int m_tableCnt;
 	int m_citationCnt;
 	int m_refCnt;
