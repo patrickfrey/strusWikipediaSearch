@@ -50,4 +50,10 @@ std::string strus::outputLineString( const char* si, const char* se, int maxlen)
 	return rt;
 }
 
+std::string strus::outputLineString( const std::string& str, int maxlen)
+{
+	return outputLineString( str.c_str(), str.c_str()+str.size(), maxlen);
+}
+
+
 

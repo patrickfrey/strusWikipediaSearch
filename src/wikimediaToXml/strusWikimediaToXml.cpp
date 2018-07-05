@@ -56,7 +56,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::EoF:
 				break;
 			case strus::WikimediaLexem::Error:
-				doc.addError( strus::string_format("syntax error in document: %s", lexem.value.c_str()));
+				doc.addError( std::string("syntax error in document: ") + strus::outputLineString( lexem.value.c_str()));
 				break;
 			case strus::WikimediaLexem::Text:
 				doc.addText( lexem.value);
