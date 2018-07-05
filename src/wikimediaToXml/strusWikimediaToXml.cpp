@@ -94,7 +94,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.closeWebLink();
 				break;
 			case strus::WikimediaLexem::Redirect:
-				throw std::runtime_error("unexpected redirect in document");
+				doc.addError( "unexpected redirect in document");
 				break;
 			case strus::WikimediaLexem::OpenHeading:
 				doc.openHeading( (int)lexem.idx);
@@ -414,7 +414,7 @@ public:
 		{
 			writeLexerDumpFile( m_fileindex, doc);
 			writeErrorFile( m_fileindex, doc.id(), err.what());
-			writeFatalErrorFile( m_fileindex, doc.id(), err.what());
+			writeFatalErrorFile( m_fileindex, doc.id(), std::string(err.what()) + "\n");
 			writeInputFile( m_fileindex, doc.id(), m_title, m_content);
 		}
 	}
