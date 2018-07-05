@@ -155,19 +155,29 @@ enum TagType {
 	TagBr
 };
 
+static bool findEndTag( char const*& si, const char* se, int maxlen)
+{
+	int ti = 0;
+	const char* start = si;
+
+	for (;si < se && *si != '<' && *si != '>' && ti < maxlen; ++si,++ti){}
+	if (si < se && *si == '>')
+	{
+		++si;
+		return true;
+	}
+	si = start;
+	return false;
+}
+
 static bool tryParseTag( const char* tagnam, char const*& si, const char* se)
 {
 	const char* start = si;
 	int ti = 0;
 	for (;si < se && tagnam[ti] && tagnam[ti] == (*si|32); ++si,++ti){}
-	if (!tagnam[ti] && !isAlphaNum(*si))
+	if (!tagnam[ti] && (*si == ' ' || *si == '/' || *si == '>') && findEndTag( si, se, 256))
 	{
-		char const* sn = std::strchr( si, '>');
-		if (sn && sn < se)
-		{
-			si = sn+1;
-			return true;
-		}
+		return true;
 	}
 	si = start;
 	return false;
@@ -178,14 +188,9 @@ static bool tryParseAnyTag( char const*& si, const char* se)
 	const char* start = si;
 	int ti = 0;
 	for (;si < se && isAlpha(*si) && ti < 40; ++si,++ti){}
-	if (si < se && ti < 40)
+	if (si < se && ti < 40 && findEndTag( si, se, 40))
 	{
-		char const* sn = std::strchr( si, '>');
-		if (sn && sn < se && sn-start < 40)
-		{
-			si = sn+1;
-			return true;
-		}
+		return true;
 	}
 	si = start;
 	return false;
@@ -212,12 +217,12 @@ static TagType parseTagType( char const*& si, const char* se)
 			open = false;
 			++si;
 		}
-		char const* sn = std::strchr( si, '>');
-		if (sn && sn < se)
+		char const* sn = si;
+		if (findEndTag( sn, se, 256))
 		{
-			if (*(sn-1) == '/')
+			if (*(sn-2) == '/')
 			{
-				si = sn+1;
+				si = sn;
 				return TagComment;
 				//.... immediate close tags not encolsing any content are considered unimportant for text retrieval and thus marked as comments.
 			}
