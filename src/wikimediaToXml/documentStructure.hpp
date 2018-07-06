@@ -480,18 +480,26 @@ public:
 			closeStructure( Paragraph::TableStart, "");
 		}
 	}
+	void closeOpenedEmptyRow()
+	{
+		if (currentStructType() == Paragraph::StructTableRow && m_parar.back().type() == Paragraph::TableRowStart)
+		{
+			m_parar.pop_back();
+			m_structStack.pop_back();
+			--m_tableDefs.back().rowiter;
+		}
+	}
 	void addTableTitle()
 	{
-		closeDanglingStructures( Paragraph::TableStart);
 		if (m_tableDefs.empty())
 		{
 			addError("table add title without table defined");
 			openListItem( 1);
+			return;
 		}
-		else
-		{
-			openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
-		}
+		closeOpenedEmptyRow();
+		closeDanglingStructures( Paragraph::TableStart);
+		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
 	}
 	void addTableHead()
 	{
@@ -501,12 +509,7 @@ public:
 			openListItem( 1);
 			return;
 		}
-		if (currentStructType() == Paragraph::StructTableRow && m_parar.back().type() == Paragraph::TableRowStart)
-		{
-			m_parar.pop_back();
-			m_structStack.pop_back();
-			--m_tableDefs.back().rowiter;
-		}
+		closeOpenedEmptyRow();
 		closeDanglingStructures( Paragraph::TableStart);
 		openAutoCloseItem( Paragraph::TableHeadStart, "head", ++m_tableDefs.back().headitr);
 	}

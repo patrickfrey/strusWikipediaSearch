@@ -281,13 +281,24 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else if (para.type() == Paragraph::TableStart)
 		{
-			if (starttype == Paragraph::WebLinkStart) return;
+			if (starttype == Paragraph::AttributeStart) return;
+			if (starttype == Paragraph::BlockQuoteStart) return;
+			if (starttype == Paragraph::DivStart) return;
+			if (starttype == Paragraph::SpanStart) return;
+			if (starttype == Paragraph::FormatStart) return;
+			if (starttype == Paragraph::TableTitleStart) return;
 			if (starttype == Paragraph::TableRowStart) return;
+			if (starttype == Paragraph::TableColStart) return;
+			if (starttype == Paragraph::RefStart) return;
+			if (starttype == Paragraph::CitationStart) return;
+			if (starttype == Paragraph::PageLinkStart) return;
+			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableTitleStart)
 		{
 			if (starttype == Paragraph::WebLinkStart) return;
+			if (starttype == Paragraph::AttributeStart) return;
 			finishStructure( startidx);
 		}
 		else if (para.type() == Paragraph::TableHeadStart)

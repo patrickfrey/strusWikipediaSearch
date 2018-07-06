@@ -535,6 +535,10 @@ WikimediaLexem WikimediaLexer::next()
 	{
 		if (*m_si == '=' && m_curHeading)
 		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
 			int tcnt = countAndSkip( m_si, m_se, '=', 7);
 			if (tcnt == m_curHeading)
 			{
