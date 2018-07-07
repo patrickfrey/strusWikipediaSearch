@@ -939,10 +939,6 @@ std::string DocumentStructure::toxml( bool beautified) const
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(int pidx=0; pi != pe; ++pi,++pidx)
 	{
-		/*[-]*/if (pidx==548)
-		/*[-]*/{
-		/*[-]*/	std::cerr << "HALLY GALLY" << std::endl;
-		/*[-]*/}
 		if (beautified && !output.isInTagDeclaration())
 		{
 			output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
