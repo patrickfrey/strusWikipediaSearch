@@ -343,6 +343,22 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				{
 					doc.addAttribute( lexem.value);
 				}
+				else if (tp == strus::Paragraph::StructTable)
+				{
+					int colspan = lexem.colspan();
+					if (colspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						colspan = 0;
+					}
+					int rowspan = lexem.rowspan();
+					if (rowspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						rowspan = 0;
+					}
+					doc.addTableCell( rowspan, colspan);
+				}
 				else
 				{
 					doc.addError( "unexpected token '||'");
