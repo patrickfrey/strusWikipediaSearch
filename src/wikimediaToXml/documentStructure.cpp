@@ -322,7 +322,7 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		}
 		else
 		{
-			throw std::runtime_error("internal: unknown structure");
+			throw std::runtime_error( strus::string_format( "internal: unknown structure %s", para.typeName()));
 		}
 	}
 }
