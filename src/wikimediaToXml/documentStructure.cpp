@@ -246,6 +246,11 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
+		else if (para.type() == Paragraph::PoemStart)
+		{
+			if (starttype == Paragraph::WebLinkStart) return;
+			finishStructure( startidx);
+		}
 		else if (para.type() == Paragraph::SpanStart)
 		{
 			if (starttype == Paragraph::WebLinkStart) return;
