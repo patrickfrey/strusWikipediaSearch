@@ -282,7 +282,7 @@ static bool tryParseTagDefStart( char const*& si, const char* se)
 	const char* start = si;
 	si = skipIdentifier( si, se);
 
-	if (si != start && si<se && *si == ' ') for (;;)
+	if (si && si<se && *si == ' ') for (;;)
 	{
 		si = skipSpaces( si, se);
 		if (!isAlpha(*si))
