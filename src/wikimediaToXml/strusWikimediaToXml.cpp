@@ -430,6 +430,8 @@ static void writeLexerDumpFile( int fileCounter, const strus::DocumentStructure&
 static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& doc)
 {
 	writeWorkFile( fileCounter, doc.id(), ".xml", doc.toxml( g_beautified));
+	std::string strange = doc.reportStrangeFeatures();
+	if (!strange.empty()) writeWorkFile( fileCounter, doc.id(), ".strange.txt", strange);
 	if (doc.errors().empty())
 	{
 		removeWorkFile( fileCounter, doc.id(), ".err");

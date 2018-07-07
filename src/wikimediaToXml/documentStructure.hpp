@@ -581,6 +581,7 @@ public:
 
 	std::string toxml( bool beautified) const;
 	std::string tostring() const;
+	std::string reportStrangeFeatures() const;
 	std::string statestring() const;
 
 	static std::string getInputXML( const std::string& title, const std::string& content);
