@@ -404,6 +404,7 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "noinclude", si, se)) {(void)parseTagContent( "noinclude", si, se); return TagComment;}
 		else if (tryParseTag( "score", si, se)) {(void)parseTagContent( "score", si, se); return TagComment;}
 		else if (tryParseTag( "timeline", si, se)) {(void)parseTagContent( "timeline", si, se); return TagComment;}
+		else if (tryParseTag( "please", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseAnyTag( si, se)) return TagBr;
 		else if (tryParseTagDefStart( si, se)) return TagBr;
 	}
