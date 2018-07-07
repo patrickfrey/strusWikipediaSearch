@@ -19,6 +19,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
+#include <set>
 
 typedef textwolf::XMLPrinter<textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlPrinterBase;
 
@@ -119,6 +120,16 @@ public:
 	}
 };
 
+bool DocumentStructure::checkTableDefExists( const char* action)
+{
+	if (m_tableDefs.empty())
+	{
+		addError( strus::string_format( "%s without table defined", action));
+		return false;
+	}
+	return true;
+}
+
 void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end)
 {
 	std::vector<Paragraph::Type> stk;
@@ -145,8 +156,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::TableStart:
 			case Paragraph::TableTitleStart:
 			case Paragraph::TableHeadStart:
-			case Paragraph::TableRowStart:
-			case Paragraph::TableColStart:
+			case Paragraph::TableCellStart:
 				stk.push_back( ii->type());
 				break;
 			case Paragraph::EntityEnd:
@@ -167,8 +177,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::TableEnd:
 			case Paragraph::TableTitleEnd:
 			case Paragraph::TableHeadEnd:
-			case Paragraph::TableRowEnd:
-			case Paragraph::TableColEnd:
+			case Paragraph::TableCellEnd:
 				if (stk.empty()) throw std::runtime_error( strus::string_format( "structure open/close not balanced: ...%s", ii->typeName()));
 				if (stk.back() != Paragraph::invType( ii->type())) throw std::runtime_error( strus::string_format( "structure open/close not balanced: %s...%s", Paragraph::typeName( stk.back()), ii->typeName()));
 				stk.pop_back();
@@ -287,8 +296,8 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 			if (starttype == Paragraph::SpanStart) return;
 			if (starttype == Paragraph::FormatStart) return;
 			if (starttype == Paragraph::TableTitleStart) return;
-			if (starttype == Paragraph::TableRowStart) return;
-			if (starttype == Paragraph::TableColStart) return;
+			if (starttype == Paragraph::TableHeadStart) return;
+			if (starttype == Paragraph::TableCellStart) return;
 			if (starttype == Paragraph::RefStart) return;
 			if (starttype == Paragraph::CitationStart) return;
 			if (starttype == Paragraph::PageLinkStart) return;
@@ -306,13 +315,7 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
 		}
-		else if (para.type() == Paragraph::TableRowStart)
-		{
-			if (starttype == Paragraph::WebLinkStart) return;
-			if (starttype == Paragraph::TableColStart) return;
-			finishStructure( startidx);
-		}
-		else if (para.type() == Paragraph::TableColStart)
+		else if (para.type() == Paragraph::TableCellStart)
 		{
 			if (starttype == Paragraph::WebLinkStart) return;
 			finishStructure( startidx);
@@ -371,6 +374,15 @@ void DocumentStructure::closeAutoCloseItem( Paragraph::Type startType)
 	}
 }
 
+void DocumentStructure::openTableCell( Paragraph::Type startType, int rowspan, int colspan)
+{
+	if (!checkTableDefExists( "table open cell")) return;
+	m_structStack.push_back( StructRef( 0, m_parar.size()));
+	m_tableDefs.back().defineCell( m_parar.size(), rowspan, colspan);
+	m_tableDefs.back().nextCol( colspan);
+	m_parar.push_back( Paragraph( startType, "", ""));
+}
+
 void DocumentStructure::openStructure( Paragraph::Type startType, const char* prefix, int lidx)
 {
 	if (startType == Paragraph::TableStart)
@@ -414,22 +426,97 @@ ParagraphRange findParagraphRange( const std::vector<Paragraph>::const_iterator&
 	return ParagraphRange( enditr, enditr);
 }
 
+void DocumentStructure::addTableCellIdentifierAttributes( const char* prefix, const std::vector<int>& indices)
+{
+	std::vector<int>::const_iterator ai = indices.begin(), ae = indices.end();
+	for (; ai != ae; ++ai)
+	{
+		m_tables.push_back( Paragraph( Paragraph::AttributeStart, "id", strus::string_format( "%s%d", prefix, *ai)));
+		m_tables.push_back( Paragraph( Paragraph::AttributeEnd, "", ""));
+	}
+}
 
 void DocumentStructure::finishTable( int startidx)
 {
+	if (!checkTableDefExists( "finish table")) return;
+	std::string tableid = m_parar[ startidx].id();
 	m_tables.push_back( m_parar[ startidx]);
+	const TableDef& tableDef = m_tableDefs.back();
+
 	ParagraphRange titlerange = findParagraphRange( m_parar.begin() + startidx, m_parar.end(), Paragraph::TableTitleStart, Paragraph::TableTitleEnd);
 	m_tables.insert( m_tables.end(), titlerange.first, titlerange.second);
-	ParagraphRange headingrange = findParagraphRange( m_parar.begin() + startidx, m_parar.end(), Paragraph::TableHeadStart, Paragraph::TableHeadEnd);
-	m_tables.insert( m_tables.end(), headingrange.first, headingrange.second);
-	std::vector<Paragraph>::const_iterator ri = m_parar.begin() + startidx;
-	while (ri != m_parar.end())
+
+	std::map<int,std::vector<int> > start2rowmap;
+	std::map<int,std::vector<int> > start2colmap;
+	std::set<int> dataRowSet;
+	CellPositionStartMap::const_iterator ci,ce;
+
+	ci = tableDef.cellmap.begin(), ce = tableDef.cellmap.end();
+	for (; ci != ce; ++ci)
 	{
-		ParagraphRange rowrange = findParagraphRange( ri, m_parar.end(), Paragraph::TableRowStart, Paragraph::TableRowEnd);
-		m_tables.insert( m_tables.end(), rowrange.first, rowrange.second);
-		ri = rowrange.second;
+		const Paragraph& para = m_parar[ ci->second];
+		if (para.type() == Paragraph::TableCellStart)
+		{
+			dataRowSet.insert( ci->first.row);
+		}
+	}
+	ci = tableDef.cellmap.begin(), ce = tableDef.cellmap.end();
+	for (; ci != ce; ++ci)
+	{
+		const Paragraph& para = m_parar[ ci->second];
+		if (para.type() == Paragraph::TableHeadStart)
+		{
+			if (dataRowSet.find( ci->first.row) == dataRowSet.end())
+			{
+				// ... row containing no data elements assumed to be a column heading element
+				start2colmap[ ci->second].push_back( ci->first.col);
+			}
+			else
+			{
+				// ... row containing at least one data element assumed to be a row heading element
+				start2rowmap[ ci->second].push_back( ci->first.row);
+			}
+		}
+		else if (para.type() == Paragraph::TableCellStart)
+		{
+			start2rowmap[ ci->second].push_back( ci->first.row);
+			start2colmap[ ci->second].push_back( ci->first.col);
+		}
+		else
+		{
+			throw std::runtime_error("internal: corrupt table data structures");
+		}
+	}
+	Paragraph::Type types[ 2] = {Paragraph::TableHeadStart, Paragraph::TableCellStart};
+	for (int ti = 0; ti < (int)((sizeof(types)/sizeof(types[0]))); ++ti)
+	{
+		std::vector<Paragraph>::const_iterator hi = m_parar.begin() + startidx + 1, he = m_parar.end();
+		for (int hidx=startidx + 1; hi != he; ++hi,++hidx)
+		{
+			if (hi->type() == types[ ti])
+			{
+				m_tables.push_back( *hi);
+	
+				std::map<int,std::vector<int> >::const_iterator xi;
+				xi = start2colmap.find( hidx);
+				if (xi != start2colmap.end())
+				{
+					addTableCellIdentifierAttributes( "C", xi->second);
+				}
+				xi = start2rowmap.find( hidx);
+				if (xi != start2rowmap.end())
+				{
+					addTableCellIdentifierAttributes( "R", xi->second);
+				}
+				ParagraphRange range = findParagraphRange( hi, m_parar.end(), types[ ti], Paragraph::invType( types[ti]));
+				m_tables.insert( m_tables.end(), range.first+1, range.second);
+			}
+		}
 	}
 	m_tables.push_back( Paragraph( Paragraph::TableEnd, "", ""));
+	m_parar.resize( startidx);
+	m_parar.push_back( Paragraph( Paragraph::TableLink, tableid, ""));
+	m_tableDefs.pop_back();
 }
 
 void DocumentStructure::finishRef( int startidx)
@@ -484,29 +571,7 @@ void DocumentStructure::finishStructure( int startidx)
 	}
 	else if (endType == Paragraph::TableEnd)
 	{
-		if (!m_tableDefs.empty())
-		{
-			m_tableDefs.pop_back();
-		}
-		else
-		{
-			addError( strus::string_format( "close of table called without table definition"));
-		}
 		finishTable( startidx);
-		m_parar.resize( startidx);
-		m_parar.push_back( Paragraph( Paragraph::TableLink, para.id(), ""));
-		
-	}
-	else if (endType == Paragraph::TableRowEnd)
-	{
-		if (!m_tableDefs.empty())
-		{
-			m_tableDefs.back().coliter = 0;
-		}
-		else
-		{
-			addError( strus::string_format( "close of table row called without table definition"));
-		}
 	}
 	m_structStack.pop_back();
 }
@@ -738,7 +803,17 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 	{
 		if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::NoWiki  || type == Paragraph::Math))
 		{
-			//... ignore it
+			if (!text.empty() && !m_parar.empty())
+			{
+				if (0!=std::strchr( text.c_str(), '\n'))
+				{
+					m_parar.back().addText( "\n");
+				}
+				else
+				{
+					m_parar.back().addText( " ");
+				}
+			}
 		}
 		else if (!m_parar.empty() && m_parar.back().type() == Paragraph::Text && type == Paragraph::Text)
 		{
@@ -830,7 +905,10 @@ std::string DocumentStructure::toxml( bool beautified) const
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(; pi != pe; ++pi)
 	{
-		if (beautified) output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
+		if (beautified && !output.isInTagDeclaration())
+		{
+			output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
+		}
 		switch (pi->type())
 		{
 			case Paragraph::Title:
@@ -915,6 +993,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 					if (pi->id().empty())
 					{
 						printTagOpen( output, rt, "attr", pi->id(), pi->text());
+						output.printCloseTag( rt);
 					}
 					else if (!pi->text().empty())
 					{
@@ -925,11 +1004,11 @@ std::string DocumentStructure::toxml( bool beautified) const
 				else
 				{
 					printTagOpen( output, rt, "attr", pi->id(), pi->text());
+					output.printCloseTag( rt);
 				}
 				break;
 			case Paragraph::AttributeEnd:
 				stk.pop_back();
-				output.printCloseTag( rt);
 				break;
 			case Paragraph::CitationStart:
 				stk.push_back( Paragraph::StructCitation);
@@ -973,7 +1052,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableTitleStart:
 				stk.push_back( Paragraph::StructTableTitle);
-				printTagOpen( output, rt, "heading", pi->id(), pi->text());
+				printTagOpen( output, rt, "description", pi->id(), pi->text());
 				break;
 			case Paragraph::TableTitleEnd:
 				stk.pop_back();
@@ -981,25 +1060,17 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableHeadStart:
 				stk.push_back( Paragraph::StructTableHead);
-				printTagOpen( output, rt, "head", pi->id(), pi->text());
+				printTagOpen( output, rt, "head", "", "");
 				break;
 			case Paragraph::TableHeadEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
-			case Paragraph::TableRowStart:
-				stk.push_back( Paragraph::StructTableRow);
-				printTagOpen( output, rt, "row", pi->id(), pi->text());
+			case Paragraph::TableCellStart:
+				stk.push_back( Paragraph::StructTableCell);
+				printTagOpen( output, rt, "cell", "", "");
 				break;
-			case Paragraph::TableRowEnd:
-				stk.pop_back();
-				output.printCloseTag( rt);
-				break;
-			case Paragraph::TableColStart:
-				stk.push_back( Paragraph::StructTableCol);
-				printTagOpen( output, rt, "column", pi->id(), pi->text());
-				break;
-			case Paragraph::TableColEnd:
+			case Paragraph::TableCellEnd:
 				stk.pop_back();
 				output.printCloseTag( rt);
 				break;
@@ -1034,9 +1105,9 @@ std::string DocumentStructure::tostring() const
 {
 	std::ostringstream out;
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
-	for(; pi != pe; ++pi)
+	for(int pidx=0; pi != pe; ++pi,++pidx)
 	{
-		out << pi->typeName() << " " << encodeXmlContentString( pi->id(), true) << " \"" << encodeXmlContentString( pi->text(), true) << "\"\n";
+		out << pidx << " " << pi->typeName() << " " << encodeXmlContentString( pi->id(), true) << " \"" << encodeXmlContentString( pi->text(), true) << "\"\n";
 	}
 	return out.str();
 }

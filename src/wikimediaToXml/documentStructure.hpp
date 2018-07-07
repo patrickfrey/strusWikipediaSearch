@@ -60,10 +60,8 @@ public:
 			TableTitleEnd,
 			TableHeadStart,
 			TableHeadEnd,
-			TableRowStart,
-			TableRowEnd,
-			TableColStart,
-			TableColEnd,
+			TableCellStart,
+			TableCellEnd,
 			Text,
 			Char,
 			NoWiki,
@@ -112,10 +110,8 @@ public:
 			"TableTitleEnd",
 			"TableHeadStart",
 			"TableHeadEnd",
-			"TableRowStart",
-			"TableRowEnd",
-			"TableColStart",
-			"TableColEnd",
+			"TableCellStart",
+			"TableCellEnd",
 			"Text",
 			"Char",
 			"NoWiki",
@@ -145,17 +141,17 @@ public:
 			StructTable,
 			StructTableTitle,
 			StructTableHead,
-			StructTableRow,
-			StructTableCol
+			StructTableCell
 	};
 	static const char* structTypeName( StructType st)
 	{
-		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Div","Poem","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableRow","TableCol"};
+		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Div","Poem","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableCell",0};
 		return ar[ st];
 	}
 	static StructType structType( Type ti)
 	{
 		static StructType ar[] = {
+
 			StructNone/*Title*/,
 			StructEntity/*EntityStart*/,
 			StructNone/*EntityEnd*/,
@@ -193,10 +189,9 @@ public:
 			StructNone/*TableTitleEnd*/,
 			StructTableHead/*TableHeadStart*/,
 			StructNone/*TableHeadEnd*/,
-			StructTableRow/*TableRowStart*/,
-			StructNone/*TableRowEnd*/,
-			StructTableCol/*TableColStart*/,
-			StructNone/*TableColEnd*/,
+			StructTableCell/*TableCellStart*/,
+			StructNone/*TableCellEnd*/,
+
 			StructNone/*Text*/,
 			StructNone/*Char*/,
 			StructNone/*NoWiki*/,
@@ -212,6 +207,7 @@ public:
 	{
 		static Type ar[] = {
 			Title/*Title*/,
+
 			EntityEnd/*EntityStart*/,
 			EntityStart/*EntityEnd*/,
 			QuotationEnd/*QuotationStart*/,
@@ -248,10 +244,9 @@ public:
 			TableTitleStart/*TableTitleEnd*/,
 			TableHeadEnd/*TableHeadStart*/,
 			TableHeadStart/*TableHeadEnd*/,
-			TableRowEnd/*TableRowStart*/,
-			TableRowStart/*TableRowEnd*/,
-			TableColEnd/*TableColStart*/,
-			TableColStart/*TableColEnd*/,
+			TableCellEnd/*TableCellStart*/,
+			TableCellStart/*TableCellEnd*/,
+
 			Text/*Text*/,
 			Char/*Char*/,
 			NoWiki/*NoWiki*/,
@@ -456,13 +451,11 @@ public:
 		if (tp != strus::Paragraph::StructTable
 		&&  tp != strus::Paragraph::StructTableTitle
 		&&  tp != strus::Paragraph::StructTableHead
-		&&  tp != strus::Paragraph::StructTableRow
-		&&  tp != strus::Paragraph::StructTableCol)
+		&&  tp != strus::Paragraph::StructTableCell)
 		{
 			openTable();
 		}
 	}
-
 	void openTable()
 	{
 		closeOpenQuoteItems();
@@ -480,65 +473,50 @@ public:
 			closeStructure( Paragraph::TableStart, "");
 		}
 	}
-	void closeOpenedEmptyRow()
+	bool closeOpenEmptyStruct( const Paragraph::Type& type)
 	{
-		if (currentStructType() == Paragraph::StructTableRow && m_parar.back().type() == Paragraph::TableRowStart)
+		if (currentStructType() == Paragraph::structType(type) && m_parar.back().type() == type)
 		{
 			m_parar.pop_back();
 			m_structStack.pop_back();
-			--m_tableDefs.back().rowiter;
+			return true;
 		}
+		return false;
 	}
 	void addTableTitle()
 	{
-		if (m_tableDefs.empty())
-		{
-			addError("table add title without table defined");
-			openListItem( 1);
-			return;
-		}
-		closeOpenedEmptyRow();
+		if (!checkTableDefExists( "table add title")) return;
 		closeDanglingStructures( Paragraph::TableStart);
 		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
 	}
-	void addTableHead()
+	void openTableCell( Paragraph::Type startType, int rowspan, int colspan);
+
+	void addTableHead( int rowspan, int colspan)
 	{
-		if (m_tableDefs.empty())
-		{
-			addError("table open head without table defined");
-			openListItem( 1);
-			return;
-		}
-		closeOpenedEmptyRow();
+		if (!checkTableDefExists( "table add head")) return;
 		closeDanglingStructures( Paragraph::TableStart);
-		openAutoCloseItem( Paragraph::TableHeadStart, "head", ++m_tableDefs.back().headitr);
+		openTableCell( Paragraph::TableHeadStart, rowspan, colspan);
+	}
+	void repeatTableCell( int rowspan, int colspan)
+	{
+		strus::Paragraph::StructType tp = currentStructType();
+		strus::Paragraph::Type reptype = (tp == Paragraph::StructTableHead) ? strus::Paragraph::TableHeadStart : strus::Paragraph::TableCellStart;
+
+		if (!checkTableDefExists( "table repeat cell")) return;
+		closeDanglingStructures( Paragraph::TableStart);
+		openTableCell( reptype, rowspan, colspan);
+	}
+
+	void addTableCell( int rowspan, int colspan)
+	{
+		closeDanglingStructures( Paragraph::TableStart);
+		openTableCell( Paragraph::TableCellStart, rowspan, colspan);
 	}
 	void addTableRow()
 	{
+		if (!checkTableDefExists( "table add head row")) return;
 		closeDanglingStructures( Paragraph::TableStart);
-		if (m_tableDefs.empty())
-		{
-			addError("table open row without table defined");
-			openListItem( 1);
-		}
-		else
-		{
-			m_tableDefs.back().coliter = 0;
-			openAutoCloseItem( Paragraph::TableRowStart, "row", ++m_tableDefs.back().rowiter);
-		}
-	}
-	void addTableCol()
-	{
-		closeDanglingStructures( Paragraph::TableRowStart);
-		if (m_tableDefs.empty())
-		{
-			addError("table open col without table defined");
-			openListItem( 1);
-		}
-		else
-		{
-			openAutoCloseItem( Paragraph::TableColStart, "col", ++m_tableDefs.back().coliter);
-		}
+		m_tableDefs.back().nextRow();
 	}
 	void addAttribute( const std::string& id)
 	{
@@ -621,6 +599,8 @@ private:
 	void closeAutoCloseItem( Paragraph::Type startType);
 	void closeDanglingStructures( const Paragraph::Type& starttype);
 	void checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end);
+	bool checkTableDefExists( const char* action);
+	void addTableCellIdentifierAttributes( const char* prefix, const std::vector<int>& indices);
 
 private:
 	struct StructRef
@@ -633,17 +613,63 @@ private:
 		StructRef( const StructRef& o)
 			:idx(o.idx),start(o.start){}
 	};
+	struct CellPosition
+	{
+		int row;
+		int col;
+
+		CellPosition()				:row(0),col(0){}
+		CellPosition( int row_, int col_)	:row(row_),col(col_){}
+		CellPosition( const CellPosition& o)	:row(o.row),col(o.col){}
+
+		bool operator < (const CellPosition& o) const
+		{
+			if (row < o.row) return true;
+			if (row > o.row) return false;
+			return (col < o.col);
+		}
+	};
+	typedef std::map<CellPosition,int> CellPositionStartMap;
+
 	struct TableDef
 	{
-		int headitr;
 		int rowiter;
 		int coliter;
 		int start;
+		CellPositionStartMap cellmap;
 
 		explicit TableDef( int start_)
-			:headitr(0),rowiter(0),coliter(0),start(start_){}
+			:rowiter(0),coliter(0),start(start_),cellmap(){}
 		TableDef( const TableDef& o)
-			:headitr(o.headitr),rowiter(o.rowiter),coliter(o.coliter),start(o.start){}
+			:rowiter(o.rowiter),coliter(o.coliter),start(o.start),cellmap(o.cellmap){}
+
+		void defineCell( int startidx, int rowspan, int colspan)
+		{
+			int ri = rowiter;
+			int ci = coliter;
+
+			CellPositionStartMap::const_iterator mi = cellmap.find( CellPosition( ri, ci));
+			for (; mi != cellmap.end(); mi = cellmap.find( CellPosition( ri, ++ci))){}
+			int rii = 0;
+			for (; rii < rowspan; ++rii)
+			{
+				int cii = 0;
+				for (; cii < colspan; ++cii)
+				{
+					cellmap[ CellPosition( ri+rii, ci+cii)] = startidx;
+				}
+			}
+		}
+
+		void nextRow()
+		{
+			++rowiter;
+			coliter = 0;
+		}
+		void nextCol( int colspan)
+		{
+			coliter += colspan;
+		}
 	};
 
 private:

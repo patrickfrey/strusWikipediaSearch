@@ -39,6 +39,18 @@ static std::string g_outputdir;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
+static std::string attributesToString( const strus::WikimediaLexem::AttributeMap& attributes)
+{
+	std::ostringstream out;
+	strus::WikimediaLexem::AttributeMap::const_iterator ai = attributes.begin(), ae = attributes.end();
+	for (int aidx=0; ai != ae; ++ai,++aidx)
+	{
+		if (aidx) out << ", ";
+		out << ai->first << "='" << ai->second << "'";
+	}
+	return out.str();
+}
+
 static void parseDocumentText( strus::DocumentStructure& doc, const char* src, std::size_t size)
 {
 	strus::WikimediaLexer lexer(src,size);
@@ -49,7 +61,9 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 		if (g_verbosity >= 2)
 		{
 			std::cerr << "STATE " << doc.statestring() << std::endl;
-			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size()) << std::endl;
+			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size());
+			if (!lexem.attributes.empty()) std::cerr << " " << attributesToString( lexem.attributes);
+			std::cerr << std::endl;
 		}
 		switch (lexem.id)
 		{			
@@ -80,7 +94,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.addChar( lexem.value);
 				break;
 			case strus::WikimediaLexem::Math:
-				doc.addText( lexem.value);
+				doc.addMath( lexem.value);
 				break;
 			case strus::WikimediaLexem::NoWiki:
 				doc.addNoWiki( lexem.value);
@@ -190,10 +204,24 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.addTableTitle();
 				break;
 			case strus::WikimediaLexem::TableHeadDelim:
+			{
 				doc.closeOpenEolnItem();
 				doc.implicitOpenTableIfUndefined();
-				doc.addTableHead();
+				int colspan = lexem.colspan();
+				if (colspan <= 0)
+				{
+					doc.addError( "invalid colspan attribute value");
+					colspan = 0;
+				}
+				int rowspan = lexem.rowspan();
+				if (rowspan <= 0)
+				{
+					doc.addError( "invalid colspan attribute value");
+					rowspan = 0;
+				}
+				doc.addTableHead( rowspan, colspan);
 				break;
+			}
 			case strus::WikimediaLexem::TableRowDelim:
 				doc.closeOpenEolnItem();
 				doc.implicitOpenTableIfUndefined();
@@ -222,7 +250,19 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				}
 				else
 				{
-					doc.addTableCol();
+					int colspan = lexem.colspan();
+					if (colspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						colspan = 0;
+					}
+					int rowspan = lexem.rowspan();
+					if (rowspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						rowspan = 0;
+					}
+					doc.addTableCell( rowspan, colspan);
 				}
 				break;
 			}
@@ -245,13 +285,22 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				{
 					doc.addTableTitle();
 				}
-				else if (tp == strus::Paragraph::StructTableRow)
+				else if (tp == strus::Paragraph::StructTableHead
+					|| tp == strus::Paragraph::StructTableCell)
 				{
-					doc.addTableRow();
-				}
-				else if (tp == strus::Paragraph::StructTableCol)
-				{
-					doc.addTableCol();
+					int colspan = lexem.colspan();
+					if (colspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						colspan = 0;
+					}
+					int rowspan = lexem.rowspan();
+					if (rowspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						rowspan = 0;
+					}
+					doc.repeatTableCell( rowspan, colspan);
 				}
 				else
 				{
@@ -269,21 +318,26 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 					doc.clearOpenText();
 					//... ignore last text and restart structure
 				}
-				else if (tp == strus::Paragraph::StructTableHead)
-				{
-					doc.addTableHead();
-				}
 				else if (tp == strus::Paragraph::StructTableTitle)
 				{
 					doc.addTableTitle();
 				}
-				else if (tp == strus::Paragraph::StructTableRow)
+				else if (tp == strus::Paragraph::StructTableHead
+					|| tp == strus::Paragraph::StructTableCell)
 				{
-					doc.addTableRow();
-				}
-				else if (tp == strus::Paragraph::StructTableCol)
-				{
-					doc.addTableCol();
+					int colspan = lexem.colspan();
+					if (colspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						colspan = 0;
+					}
+					int rowspan = lexem.rowspan();
+					if (rowspan <= 0)
+					{
+						doc.addError( "invalid colspan attribute value");
+						rowspan = 0;
+					}
+					doc.repeatTableCell( rowspan, colspan);
 				}
 				else if (tp == strus::Paragraph::StructCitation || tp == strus::Paragraph::StructAttribute)
 				{

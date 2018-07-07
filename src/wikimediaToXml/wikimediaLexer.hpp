@@ -10,8 +10,10 @@
 /// \file documentStructure.hpp
 #ifndef _STRUS_WIKIPEDIA_WIKIMEDIA_LEXER_HPP_INCLUDED
 #define _STRUS_WIKIPEDIA_WIKIMEDIA_LEXER_HPP_INCLUDED
+#include "strus/base/numstring.hpp"
 #include <string>
 #include <vector>
+#include <map>
 #include <utility>
 
 /// \brief strus toplevel namespace
@@ -84,17 +86,37 @@ struct WikimediaLexem
 		};
 		return ar[lexemId];
 	}
+	typedef std::map<std::string,std::string> AttributeMap;
 
-	WikimediaLexem( Id id_, int idx_, const std::string& value_)
-		:id(id_),idx(idx_),value(value_){}
+	WikimediaLexem( Id id_, int idx_, const std::string& value_, const AttributeMap& attributes_=AttributeMap())
+		:id(id_),idx(idx_),value(value_),attributes(attributes_){}
 	WikimediaLexem( Id id_)
-		:id(id_),idx(0),value(){}
+		:id(id_),idx(0),value(),attributes(){}
 	WikimediaLexem( const WikimediaLexem& o)
-		:id(o.id),idx(o.idx),value(o.value){}
+		:id(o.id),idx(o.idx),value(o.value),attributes(o.attributes){}
+
+	int attributeToInt( const std::string& name) const
+	{
+		AttributeMap::const_iterator ai = attributes.find( name);
+		if (ai == attributes.end()) return 1;
+		strus::NumParseError err = NumParseOk;
+		int rt = strus::uintFromString( ai->second, 1<<15, err);
+		return (err == NumParseOk) ? rt:-1;
+	}
+
+	int colspan() const
+	{
+		return attributeToInt( "colspan");
+	}
+	int rowspan() const
+	{
+		return attributeToInt( "rowspan");
+	}
 
 	Id id;
 	int idx;
 	std::string value;
+	AttributeMap attributes;
 };
 
 class WikimediaLexer
