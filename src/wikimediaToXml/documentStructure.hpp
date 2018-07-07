@@ -587,8 +587,9 @@ public:
 
 private:
 	void finishStructure( int structStartidx);
-	void finishTable( int structStartidx);
-	void finishRef( int structStartidx);
+	void finishTable( int structStartidx, const std::string& id);
+	void finishRef( int structStartidx, const std::string& id);
+	void finishCitation( int startidx, const std::string& id);
 	void openStructure( Paragraph::Type startType, const char* prefix, int lidx=0);
 	void closeStructure( Paragraph::Type startType, const std::string& alt_text);
 	void closeOpenStructures();

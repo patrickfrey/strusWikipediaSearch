@@ -436,13 +436,14 @@ void DocumentStructure::addTableCellIdentifierAttributes( const char* prefix, co
 	}
 }
 
-void DocumentStructure::finishTable( int startidx)
+void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 {
 	if (!checkTableDefExists( "finish table")) return;
-	std::string tableid = m_parar[ startidx].id();
+
 	m_tables.push_back( m_parar[ startidx]);
 	const TableDef& tableDef = m_tableDefs.back();
 
+	// Print table title elements first:
 	ParagraphRange titlerange = findParagraphRange( m_parar.begin() + startidx, m_parar.end(), Paragraph::TableTitleStart, Paragraph::TableTitleEnd);
 	m_tables.insert( m_tables.end(), titlerange.first, titlerange.second);
 
@@ -451,6 +452,7 @@ void DocumentStructure::finishTable( int startidx)
 	std::set<int> dataRowSet;
 	CellPositionStartMap::const_iterator ci,ce;
 
+	// Define set of cells with data elements, they are assumed to address rows:
 	ci = tableDef.cellmap.begin(), ce = tableDef.cellmap.end();
 	for (; ci != ce; ++ci)
 	{
@@ -460,6 +462,7 @@ void DocumentStructure::finishTable( int startidx)
 			dataRowSet.insert( ci->first.row);
 		}
 	}
+	// Create maps with cell identifiers:
 	ci = tableDef.cellmap.begin(), ce = tableDef.cellmap.end();
 	for (; ci != ce; ++ci)
 	{
@@ -487,6 +490,7 @@ void DocumentStructure::finishTable( int startidx)
 			throw std::runtime_error("internal: corrupt table data structures");
 		}
 	}
+	// Print table cells:
 	Paragraph::Type types[ 2] = {Paragraph::TableHeadStart, Paragraph::TableCellStart};
 	for (int ti = 0; ti < (int)((sizeof(types)/sizeof(types[0]))); ++ti)
 	{
@@ -508,42 +512,73 @@ void DocumentStructure::finishTable( int startidx)
 				{
 					addTableCellIdentifierAttributes( "R", xi->second);
 				}
-				ParagraphRange range = findParagraphRange( hi, m_parar.end(), types[ ti], Paragraph::invType( types[ti]));
+				ParagraphRange range = findParagraphRange( hi, m_parar.end(), hi->type(), Paragraph::invType( hi->type()));
 				m_tables.insert( m_tables.end(), range.first+1, range.second);
+				hi = range.second -1;
 			}
 		}
 	}
-	m_tables.push_back( Paragraph( Paragraph::TableEnd, "", ""));
-	m_parar.resize( startidx);
-	m_parar.push_back( Paragraph( Paragraph::TableLink, tableid, ""));
-	m_tableDefs.pop_back();
-}
-
-void DocumentStructure::finishRef( int startidx)
-{
-	std::vector<Paragraph>::const_iterator pi = m_parar.begin() + startidx + 1;
-	if (pi >= m_parar.end())
+	// Print elements ouside of table separately for not loosing any text:
+	std::vector<Paragraph> outsideTableItems;
+	std::vector<Paragraph>::const_iterator hi = m_parar.begin() + startidx + 1, he = m_parar.end();
+	while (hi != he)
 	{
-		Paragraph para = m_parar[ startidx + 1];
-		if (para.type() == Paragraph::CitationLink || para.type() == Paragraph::RefLink || para.type() == Paragraph::TableLink)
+		if (hi->type() == Paragraph::TableHeadStart || hi->type() == Paragraph::TableCellStart || hi->type() == Paragraph::TableTitleStart)
 		{
-			m_parar.resize( startidx);
-			m_parar.push_back( para);
+			ParagraphRange range = findParagraphRange( hi, m_parar.end(), hi->type(), Paragraph::invType( hi->type()));
+			hi = range.second;
+		}
+		else if (hi->type() == Paragraph::TableEnd)
+		{
+			break;
 		}
 		else
 		{
-			Paragraph para = m_parar[ startidx];
-			m_refs.insert( m_refs.end(), m_parar.begin() + startidx, m_parar.end());
-			m_parar.resize( startidx);
-			m_parar.push_back( Paragraph( Paragraph::RefLink, para.id(), ""));
+			outsideTableItems.push_back( *hi++);
 		}
+	}
+	m_tables.push_back( Paragraph( Paragraph::TableEnd, "", ""));
+	// Remove table written to buffer and add table link:
+	m_parar.resize( startidx);
+	m_parar.push_back( Paragraph( Paragraph::TableLink, tableid, ""));
+	m_parar.insert( m_parar.end(), outsideTableItems.begin(), outsideTableItems.end());
+	m_tableDefs.pop_back();
+}
+
+static bool isInternalLink( const Paragraph& para)
+{
+	return (para.type() == Paragraph::CitationLink || para.type() == Paragraph::RefLink || para.type() == Paragraph::TableLink);
+}
+
+void DocumentStructure::finishRef( int startidx, const std::string& refid)
+{
+	if ((std::size_t)startidx + 3 == m_parar.size() && isInternalLink( m_parar[ startidx + 1]))
+	{
+		Paragraph para = m_parar[ startidx + 1];
+		m_parar.resize( startidx);
+		m_parar.push_back( para);
 	}
 	else
 	{
-		Paragraph para = m_parar[ startidx];
 		m_refs.insert( m_refs.end(), m_parar.begin() + startidx, m_parar.end());
 		m_parar.resize( startidx);
-		m_parar.push_back( Paragraph( Paragraph::RefLink, para.id(), ""));
+		m_parar.push_back( Paragraph( Paragraph::RefLink, refid, ""));
+	}
+}
+
+void DocumentStructure::finishCitation( int startidx, const std::string& citid)
+{
+	if ((std::size_t)startidx + 3 == m_parar.size() && isInternalLink( m_parar[ startidx + 1]))
+	{
+		Paragraph para = m_parar[ startidx + 1];
+		m_parar.resize( startidx);
+		m_parar.push_back( para);
+	}
+	else
+	{
+		m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
+		m_parar.resize( startidx);
+		m_parar.push_back( Paragraph( Paragraph::CitationLink, citid, ""));
 	}
 }
 
@@ -559,19 +594,18 @@ void DocumentStructure::finishStructure( int startidx)
 	}
 	Paragraph::Type endType = Paragraph::invType( para.type());
 	m_parar.push_back( Paragraph( endType, "", ""));
+
 	if (endType == Paragraph::CitationEnd)
 	{
-		m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
-		m_parar.resize( startidx);
-		m_parar.push_back( Paragraph( Paragraph::CitationLink, para.id(), ""));
+		finishCitation( startidx, para.id());
 	}
 	if (endType == Paragraph::RefEnd)
 	{
-		finishRef( startidx);
+		finishRef( startidx, para.id());
 	}
 	else if (endType == Paragraph::TableEnd)
 	{
-		finishTable( startidx);
+		finishTable( startidx, para.id());
 	}
 	m_structStack.pop_back();
 }
@@ -903,8 +937,12 @@ std::string DocumentStructure::toxml( bool beautified) const
 	output.printHeader( rt);
 	output.printOpenTag( "doc", rt);
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
-	for(; pi != pe; ++pi)
+	for(int pidx=0; pi != pe; ++pi,++pidx)
 	{
+		/*[-]*/if (pidx==548)
+		/*[-]*/{
+		/*[-]*/	std::cerr << "HALLY GALLY" << std::endl;
+		/*[-]*/}
 		if (beautified && !output.isInTagDeclaration())
 		{
 			output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
