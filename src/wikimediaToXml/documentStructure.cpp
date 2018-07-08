@@ -781,7 +781,7 @@ static std::string encodeXmlContentString( const std::string& txt, bool encodeEo
 		{
 			rt.push_back( ' ');
 		}
-		if (*si == '\"')
+		else if (*si == '\"')
 		{
 			rt.append( "&quot;");
 		}
