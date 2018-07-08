@@ -974,6 +974,30 @@ static void printTagContent( XmlPrinter& output, std::string& rt, const char* ta
 	output.printCloseTag( rt);
 }
 
+static std::string collectIntagAttributeValue( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+{
+	std::string rt;
+	if (pi->type() == Paragraph::AttributeStart)
+	{
+		rt = pi->text();
+	}
+	++pi;
+	if (pi->type() == Paragraph::AttributeEnd)
+	{
+		return rt;
+	}
+	else
+	{
+		if (pi->type() == Paragraph::Text || pi->type() == Paragraph::BibRef)
+		{
+			rt = pi->text();
+		}
+		++pi;
+		if (pi->type() == Paragraph::AttributeEnd) return rt;
+	}
+	return std::string();
+}
+
 std::string DocumentStructure::toxml( bool beautified) const
 {
 	std::string rt;
@@ -1067,16 +1091,21 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::AttributeStart:
 			{
-				std::vector<Paragraph>::const_iterator pn = pi;
-				++pn;
-				if (pn != pe && pn->type() == Paragraph::AttributeEnd
-					&& output.isInTagDeclaration() && !pi->id().empty() && !pi->text().empty())
+				if (output.isInTagDeclaration() && !pi->id().empty())
 				{
-					output.printAttribute( pi->id(), rt);
-					output.printValue( string_conv::trim( pi->text()), rt);
-					++pi;
-					++pidx;
-					continue;
+					std::string attrid = pi->id();
+					std::string attrtext = string_conv::trim( collectIntagAttributeValue( pi, pe));
+					if (!attrtext.empty())
+					{
+						while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
+						output.printAttribute( attrid, rt);
+						output.printValue( attrtext, rt);
+					}
+					else
+					{
+						stk.push_back( Paragraph::StructAttribute);
+						printTagOpen( output, rt, "attr", pi->id(), pi->text());
+					}
 				}
 				else
 				{
