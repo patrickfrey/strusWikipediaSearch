@@ -64,6 +64,7 @@ public:
 			TableCellEnd,
 			Text,
 			Char,
+			BibRef,
 			NoWiki,
 			Math,
 			CitationLink,
@@ -114,6 +115,7 @@ public:
 			"TableCellEnd",
 			"Text",
 			"Char",
+			"BibRef",
 			"NoWiki",
 			"Math",
 			"CitationLink",
@@ -194,6 +196,7 @@ public:
 
 			StructNone/*Text*/,
 			StructNone/*Char*/,
+			StructNone/*BibRef*/,
 			StructNone/*NoWiki*/,
 			StructNone/*Math*/,
 			StructNone/*PageLink*/,
@@ -249,6 +252,7 @@ public:
 
 			Text/*Text*/,
 			Char/*Char*/,
+			BibRef/*BibRef*/,
 			NoWiki/*NoWiki*/,
 			Math/*Math*/,
 			CitationLink/*CitationLink*/,
@@ -339,6 +343,10 @@ public:
 	void addNoWiki( const std::string& text)
 	{
 		addSingleItem( Paragraph::NoWiki, "", text, false/*joinText*/);
+	}
+	void addBibRef( const std::string& text)
+	{
+		addSingleItem( Paragraph::BibRef, "", text, false/*joinText*/);
 	}
 	void openRef()
 	{

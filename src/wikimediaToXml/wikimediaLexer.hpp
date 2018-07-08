@@ -31,6 +31,7 @@ struct WikimediaLexem
 		Math,
 		NoWiki,
 		Url,
+		BibRef,
 		Redirect,
 		OpenHeading,
 		CloseHeading,
@@ -73,7 +74,8 @@ struct WikimediaLexem
 	{
 		static const char* ar[] =
 		{
-			"EOF","Error","Text","String","Char","Math","NoWiki","URL","Redirect","OpenHeading","CloseHeading",
+			"EOF","Error","Text","String","Char","Math","NoWiki","URL","BibRef",
+			"Redirect","OpenHeading","CloseHeading",
 			"OpenRef","CloseRef","HeadingItem","ListItem",
 			"EndOfLine","EntityMarker","QuotationMarker",
 			"DoubleQuoteMarker","OpenDoubleQuote","CloseDoubleQuote",
@@ -136,6 +138,8 @@ private:
 	std::string tryParseURLPath();
 	std::string tryParseURL();
 	std::string tryParseLinkId();
+	std::string tryParseBibRef();
+	std::string tryParseBookRef();
 	bool eatFollowChar( char expectChr);
 
 private:

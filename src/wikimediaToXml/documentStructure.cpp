@@ -185,6 +185,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::Title:
 			case Paragraph::Text:
 			case Paragraph::Char:
+			case Paragraph::BibRef:
 			case Paragraph::NoWiki:
 			case Paragraph::Math:
 			case Paragraph::CitationLink:
@@ -875,7 +876,7 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 {
 	if (joinText)
 	{
-		if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::NoWiki  || type == Paragraph::Math))
+		if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::BibRef || type == Paragraph::NoWiki || type == Paragraph::Math))
 		{
 			if (!text.empty() && !m_parar.empty())
 			{
@@ -1153,6 +1154,9 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::Char:
 				printTagContent( output, rt, "char", pi->id(), pi->text());
+				break;
+			case Paragraph::BibRef: 
+				printTagContent( output, rt, "bibref", pi->id(), pi->text());
 				break;
 			case Paragraph::NoWiki:
 				printTagContent( output, rt, "nowiki", pi->id(), pi->text());

@@ -103,6 +103,9 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::Math:
 				doc.addMath( lexem.value);
 				break;
+			case strus::WikimediaLexem::BibRef:
+				doc.addBibRef( lexem.value);
+				break;
 			case strus::WikimediaLexem::NoWiki:
 				doc.addNoWiki( lexem.value);
 				break;
