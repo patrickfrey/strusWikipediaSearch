@@ -133,6 +133,7 @@ public:
 
 private:
 	std::string tryParseIdentifier( char assignop);
+	std::string tryParseURLPath();
 	std::string tryParseURL();
 	std::string tryParseLinkId();
 	bool eatFollowChar( char expectChr);

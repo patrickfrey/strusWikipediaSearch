@@ -441,6 +441,18 @@ void DocumentStructure::addTableCellIdentifierAttributes( const char* prefix, co
 	}
 }
 
+std::string DocumentStructure::passageKey( const std::vector<Paragraph>::const_iterator& begin, const std::vector<Paragraph>::const_iterator& end)
+{
+	std::string rt;
+	std::vector<Paragraph>::const_iterator itr = begin;
+	for (; itr != end; ++itr)
+	{
+		rt.append( itr->tokey());
+		rt.push_back( '\2');
+	}
+	return rt;
+}
+
 void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 {
 	if (!checkTableDefExists( "finish table")) return;
@@ -565,9 +577,20 @@ void DocumentStructure::finishRef( int startidx, const std::string& refid)
 	}
 	else
 	{
-		m_refs.insert( m_refs.end(), m_parar.begin() + startidx, m_parar.end());
-		m_parar.resize( startidx);
-		m_parar.push_back( Paragraph( Paragraph::RefLink, refid, ""));
+		std::string key( passageKey( m_parar.begin() + startidx, m_parar.end()));
+		std::map<std::string,std::string>::const_iterator ki = m_refmap.find( key);
+		if (ki == m_refmap.end())
+		{
+			m_refs.insert( m_refs.end(), m_parar.begin() + startidx, m_parar.end());
+			m_refmap[ key] = refid;
+			m_parar.resize( startidx);
+			m_parar.push_back( Paragraph( Paragraph::RefLink, refid, ""));
+		}
+		else
+		{
+			m_parar.resize( startidx);
+			m_parar.push_back( Paragraph( Paragraph::RefLink, ki->second, ""));
+		}
 	}
 }
 
@@ -581,9 +604,20 @@ void DocumentStructure::finishCitation( int startidx, const std::string& citid)
 	}
 	else
 	{
-		m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
-		m_parar.resize( startidx);
-		m_parar.push_back( Paragraph( Paragraph::CitationLink, citid, ""));
+		std::string key( passageKey( m_parar.begin() + startidx, m_parar.end()));
+		std::map<std::string,std::string>::const_iterator ki = m_citationmap.find( key);
+		if (ki == m_citationmap.end())
+		{
+			m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
+			m_citationmap[ key] = citid;
+			m_parar.resize( startidx);
+			m_parar.push_back( Paragraph( Paragraph::CitationLink, citid, ""));
+		}
+		else
+		{
+			m_parar.resize( startidx);
+			m_parar.push_back( Paragraph( Paragraph::CitationLink, ki->second, ""));
+		}
 	}
 }
 
@@ -645,9 +679,10 @@ void DocumentStructure::closeOpenStructures()
 {
 	closeDanglingStructures( Paragraph::Title/*no match => remove all*/);
 	m_parar.insert( m_parar.end(), m_refs.begin(), m_refs.end());
+	m_refs.clear();
 	m_parar.insert( m_parar.end(), m_tables.begin(), m_tables.end());
-	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
 	m_tables.clear();
+	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
 	m_citations.clear();
 }
 
@@ -1026,28 +1061,28 @@ std::string DocumentStructure::toxml( bool beautified) const
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::AttributeStart:
-				stk.push_back( Paragraph::StructAttribute);
-				if (output.isInTagDeclaration())
+			{
+				std::vector<Paragraph>::const_iterator pn = pi;
+				++pn;
+				if (pn != pe && pn->type() == Paragraph::AttributeEnd
+					&& output.isInTagDeclaration() && !pi->id().empty() && !pi->text().empty())
 				{
-					if (pi->id().empty())
-					{
-						printTagOpen( output, rt, "attr", pi->id(), pi->text());
-						output.printCloseTag( rt);
-					}
-					else if (!pi->text().empty())
-					{
-						output.printAttribute( pi->id(), rt);
-						output.printValue( pi->text(), rt);
-					}
+					output.printAttribute( pi->id(), rt);
+					output.printValue( pi->text(), rt);
+					++pi;
+					++pidx;
+					continue;
 				}
 				else
 				{
+					stk.push_back( Paragraph::StructAttribute);
 					printTagOpen( output, rt, "attr", pi->id(), pi->text());
-					output.printCloseTag( rt);
 				}
 				break;
+			}
 			case Paragraph::AttributeEnd:
 				stk.pop_back();
+				output.printCloseTag( rt);
 				break;
 			case Paragraph::CitationStart:
 				stk.push_back( Paragraph::StructCitation);

@@ -35,6 +35,7 @@
 static int g_verbosity = 0;
 static bool g_beautified = false;
 static bool g_dumps = false;
+static int g_breakpoint = -1;
 static std::string g_outputdir;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
@@ -55,15 +56,21 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 {
 	strus::WikimediaLexer lexer(src,size);
 	int lexemidx = 0;
+	bool verboseOutput = (g_verbosity >= 2);
 
-	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id != strus::WikimediaLexem::EoF; lexem = lexer.next())
+	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id != strus::WikimediaLexem::EoF; lexem = lexer.next(),++lexemidx)
 	{
-		if (g_verbosity >= 2)
+		if (verboseOutput)
 		{
-			std::cerr << "STATE " << doc.statestring() << std::endl;
-			std::cerr << (++lexemidx) << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size());
-			if (!lexem.attributes.empty()) std::cerr << " " << attributesToString( lexem.attributes);
-			std::cerr << std::endl;
+			std::cout << "STATE " << doc.statestring() << std::endl;
+			std::cout << lexemidx << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size());
+			if (!lexem.attributes.empty()) std::cout << " -- " << attributesToString( lexem.attributes);
+			std::cout << std::endl;
+			if (lexemidx == g_breakpoint)
+			{
+				std::cout << "... verbose output stops here" << std::endl;
+				verboseOutput = false;
+			}
 		}
 		switch (lexem.id)
 		{			
@@ -624,11 +631,11 @@ private:
 	strus::InputStream m_impl;
 };
 
-static int getIntOptionArg( int argi, int argc, const char* argv[])
+static int getUIntOptionArg( int argi, int argc, const char* argv[])
 {
 	if (argv[argi+1])
 	{
-		return strus::numstring_conv::toint( argv[argi+1], std::numeric_limits<int>::max());
+		return strus::numstring_conv::touint( argv[argi+1], std::numeric_limits<int>::max());
 	}
 	else
 	{
@@ -677,15 +684,21 @@ int main( int argc, const char* argv[])
 			{
 				collectRedirects = true;
 			}
+			else if (0==std::memcmp(argv[argi],"-S",2))
+			{
+				if (g_breakpoint > 0) throw std::runtime_error("duplicated option -S <lexemid>");
+				g_breakpoint = getUIntOptionArg( argi, argc, argv);
+				++argi;
+			}
 			else if (0==std::memcmp(argv[argi],"-n",2))
 			{
 				namespaceset = true;
-				namespacemap.insert( getIntOptionArg( argi, argc, argv));
+				namespacemap.insert( getUIntOptionArg( argi, argc, argv));
 				++argi;
 			}
 			else if (0==std::memcmp(argv[argi],"-t",2))
 			{
-				nofThreads = getIntOptionArg( argi, argc, argv);
+				nofThreads = getUIntOptionArg( argi, argc, argv);
 				++argi;
 			}
 			else if (argv[argi][0] == '-' && argv[argi][1] == '-')
@@ -718,6 +731,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -h           :print this usage" << std::endl;
 			std::cerr << "    -V           :verbosity level 1 mode (output every processed document and its errors)" << std::endl;
 			std::cerr << "    -VV          :verbosity level 2 mode (output every item processed to stderr)" << std::endl;
+			std::cerr << "    -S <lexemid> :stop verbose output (option -VV) at lexem with index <lexemid> (continue processing)" << std::endl;
 			std::cerr << "    -B           :beautified readable XML output" << std::endl;
 			std::cerr << "    -D           :write dump files always, not only in case of an error" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
@@ -774,7 +788,7 @@ int main( int argc, const char* argv[])
 
 		for (; !terminated && itr!=end; ++itr)
 		{
-			if (g_verbosity >= 2) std::cerr << "ELEMENT " << itr->name() << " " << strus::outputLineString( itr->content(), itr->content()+itr->size(), 80) << std::endl;
+			if (g_verbosity >= 2) std::cout << "XML " << itr->name() << " " << strus::outputLineString( itr->content(), itr->content()+itr->size(), 80) << std::endl;
 			switch (itr->type())
 			{
 				case XmlScanner::None: break;

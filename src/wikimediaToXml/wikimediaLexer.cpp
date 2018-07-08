@@ -99,7 +99,7 @@ static bool parseString( std::string& res, char const*& si, char const* se)
 static char const* skipToken( char const* si, char const* se)
 {
 	int sidx=0;
-	for (;si < se && (isIdentifierChar(*si)||*si=='#'||*si==':');++si,++sidx){}
+	while (si < se && (!isSpace(*si) && *si != '|'  && *si != '>'  && *si != '<' && *si != ']'&& *si != '[' && *si != '}' && *si != '{')) {++si,++sidx;}
 	if (si < se && sidx)
 	{
 		return si;
@@ -469,23 +469,30 @@ std::string WikimediaLexer::tryParseLinkId()
 	}
 }
 
+std::string WikimediaLexer::tryParseURLPath()
+{
+	char const* ti = m_si;
+	while (ti < m_se && (!isSpace(*ti) && *ti != '|' && *ti != ']' && *ti != '[' && *ti != '}' && *ti != '{')) ++ti;
+	std::string linkid( m_si, ti-m_si);
+	m_si = ti;
+	if (m_si < m_se && isSpace(*m_si))
+	{
+		while (m_si < m_se && isSpace(*m_si)) ++m_si;
+		if (m_si < m_se && *m_si != '|' && *m_si != ']') --m_si;
+	}
+	return linkid;
+}
+
 std::string WikimediaLexer::tryParseURL()
 {
 	char const* ti = m_si;
 	while (ti < m_se && isSpace(*ti)) ++ti;
 	while (ti < m_se && isAlpha(*ti)) ++ti;
-	if (ti+2 < m_se && ti[0] == ':' && ti[1] == '/' && ti[2] == '/')
+	if (ti+3 < m_se && ti[0] == ':' && ti[1] == '/' && ti[2] == '/')
 	{
-		ti += 3;
-		while (ti < m_se && (!isSpace(*ti) && *ti != '|' && *ti != ']' && *ti != '[' && *ti != '}' && *ti != '{')) ++ti;
-		std::string linkid( m_si, ti-m_si);
-		m_si = ti;
-		if (m_si < m_se && isSpace(*m_si))
-		{
-			while (m_si < m_se && isSpace(*m_si)) ++m_si;
-			if (m_si < m_se && *m_si != '|' && *m_si != ']') --m_si;
-		}
-		return linkid;
+		char const* start = m_si;
+		m_si = ti + 3;
+		return std::string( start, m_si-start) + tryParseURLPath();
 	}
 	return std::string();
 }
@@ -785,7 +792,7 @@ WikimediaLexem WikimediaLexer::next()
 			char eb = *m_si;
 			m_si += 1;
 			char const* xi = m_si;
-			for (; xi+1 < m_se && *xi != eb && xi[0] != '<' && !(xi[0] == '[' && xi[1] == '[') && !(xi[0] == '{' && xi[1] == '{') && (unsigned char)*xi >= 32 && (xi-m_si) < 100; ++xi){}
+			for (; xi+1 < m_se && *xi != eb && xi[0] != '<' && !(xi[0] == '\'' && xi[1] == '\'') && !(xi[0] == '[' && xi[1] == '[') && !(xi[0] == '{' && xi[1] == '{') && (unsigned char)*xi >= 32 && (xi-m_si) < 100; ++xi){}
 			if (xi < m_se && *xi == eb)
 			{
 				std::string value( m_si, xi-m_si);
@@ -909,9 +916,19 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::Error, 0, "illegal character in page link");
 				}
 			}
-			else if (isAlphaNum(*m_si) || isSpace(*m_si) || *m_si == '.' || *m_si == '-' || *m_si == '+')
+			else if (isAlphaNum(*m_si) || isSpace(*m_si) || *m_si == '/' || *m_si == '.' || *m_si == '-' || *m_si == '+')
 			{
-				std::string linkid = tryParseURL();
+				m_si = skipSpaces( m_si, m_se);
+				std::string linkid;
+
+				if (m_si+2 < m_se && m_si[0] == '/' && m_si[1] == '/')
+				{
+					linkid = tryParseURLPath();
+				}
+				else
+				{
+					linkid = tryParseURL();
+				}
 				if (linkid.empty())
 				{
 					while (m_si < m_se && *m_si != ']' && (isAlphaNum(*m_si) || *m_si == '.' || *m_si == ',' || *m_si == '_' || *m_si == '-' || *m_si == '+' || isSpace(*m_si) || (unsigned char)*m_si > 128))
@@ -1144,12 +1161,12 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			return WikimediaLexem( WikimediaLexem::CloseWWWLink, 0, "]");
 		}
-		else if (m_si + 2 < m_se && m_si[0] == ':' && m_si[1] == '/' && m_si[2] == '/')
+		else if (m_si + 3 < m_se && m_si[0] == ':' && m_si[1] == '/' && m_si[2] == '/')
 		{
 			const char* si_bk = m_si;
 			char const* ti = m_si;
-			while (m_si - ti < 6 &&  ti > start && isAlpha(*(ti-1))) --ti;
-			if (m_si - ti >= 3 && m_si - ti < 6 && ti >= start)
+			while (m_si - ti < 7 &&  ti > start && isAlpha(*(ti-1))) --ti;
+			if (m_si - ti >= 3 && m_si - ti < 7 && ti >= start)
 			{
 				if (ti == start)
 				{
