@@ -514,12 +514,10 @@ std::string WikimediaLexer::tryParseFilePath()
 	std::string rt = tryParseURLPath();
 	if (!rt.empty())
 	{
-		char const* si = rt.c_str() + rt.size();
+		char const* si = rt.c_str() + rt.size() -1;
 		int sidx = 0;
-		for (; si > rt.c_str() && sidx <= 5 && isAlpha(*si); --si,++sidx)
-		{
-			if (*si == '.') return rt;
-		}
+		for (; si >= rt.c_str() && sidx <= 6 && isAlpha(*si); --si,++sidx){}
+		if (si >= rt.c_str() && *si == '.') return rt;
 	}
 	return std::string();
 }
@@ -981,7 +979,8 @@ WikimediaLexem WikimediaLexer::next()
 			char eb = *m_si;
 			m_si += 1;
 			char const* xi = m_si;
-			for (; xi+1 < m_se && *xi != eb && xi[0] != '<' && !(xi[0] == '\'' && xi[1] == '\'') && !(xi[0] == '[' && xi[1] == '[') && !(xi[0] == '{' && xi[1] == '{') && (unsigned char)*xi >= 32 && (xi-m_si) < 100; ++xi){}
+			for (; xi+1 < m_se && *xi != eb && xi[0] != '<' && !(xi[0] == ':' && xi[1] == '/' && xi[2] == '/') && !(xi[0] == '\'' && xi[1] == '\'') && !(xi[0] == '[' && xi[1] == '[') && !(xi[0] == '{' && xi[1] == '{') && (unsigned char)*xi >= 32 && (xi-m_si) < 128; ++xi)
+			{}
 			if (xi < m_se && *xi == eb)
 			{
 				std::string value( m_si, xi-m_si);
@@ -1433,9 +1432,10 @@ WikimediaLexem WikimediaLexer::next()
 				{
 					m_si = si_bk + 1;
 				}
-				else if (m_si > start)
+				else if (ti > start)
 				{
-					return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+					m_si = ti;
+					return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, ti - start));
 				}
 				else
 				{

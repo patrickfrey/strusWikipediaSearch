@@ -83,19 +83,10 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.addText( lexem.value);
 				break;
 			case strus::WikimediaLexem::String:
-				if (strus::Paragraph::StructQuotation == doc.currentStructType())
-				{
-					doc.closeOpenQuoteItems();
-					doc.addText( lexem.value);
-					doc.addQuotationMarker();
-				}
-				else
-				{
-					doc.closeOpenQuoteItems();
-					doc.addQuotationMarker();
-					doc.addText( lexem.value);
-					doc.addQuotationMarker();
-				}
+				doc.closeOpenQuoteItems();
+				doc.addQuotationMarker();
+				doc.addText( lexem.value);
+				doc.addQuotationMarker();
 				break;
 			case strus::WikimediaLexem::Char:
 				doc.addChar( lexem.value);
