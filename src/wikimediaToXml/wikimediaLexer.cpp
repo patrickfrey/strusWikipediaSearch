@@ -490,15 +490,36 @@ std::string WikimediaLexer::tryParseURLPath()
 
 std::string WikimediaLexer::tryParseURL()
 {
+	char const* start = m_si;
 	char const* ti = m_si;
 	while (ti < m_se && isSpace(*ti)) ++ti;
 	while (ti < m_se && isAlpha(*ti)) ++ti;
 	if (ti+3 < m_se && ti[0] == ':' && ti[1] == '/' && ti[2] == '/')
 	{
-		char const* start = m_si;
+		char const* pathstart = m_si;
 		m_si = ti + 3;
-		char const* end = m_si;
-		return std::string( start, end-start) + tryParseURLPath();
+		char const* pathend = m_si;
+		std::string path = tryParseURLPath();
+		if (!path.empty())
+		{
+			return std::string( pathstart, pathend-pathstart) + path;
+		}
+	}
+	m_si = start;
+	return std::string();
+}
+
+std::string WikimediaLexer::tryParseFilePath()
+{
+	std::string rt = tryParseURLPath();
+	if (!rt.empty())
+	{
+		char const* si = rt.c_str() + rt.size();
+		int sidx = 0;
+		for (; si > rt.c_str() && sidx <= 5 && isAlpha(*si); --si,++sidx)
+		{
+			if (*si == '.') return rt;
+		}
 	}
 	return std::string();
 }
@@ -530,7 +551,7 @@ static bool isBookRefCandidate( char const* si, const char* se)
 	{
 		si += hc+1;
 		hc = decNumCount( si, se);
-		return (hc >= 4 && si < se && si[hc] == '/' && isAlpha( si[hc+1]));
+		return (hc >= 4 && si < se && si[hc] == '/' && isAlphaNum( si[hc+1]));
 	}
 	return false;
 }
@@ -1091,11 +1112,17 @@ WikimediaLexem WikimediaLexer::next()
 
 				if (m_si+2 < m_se && m_si[0] == '/' && m_si[1] == '/')
 				{
-					linkid = tryParseURLPath();
+					std::string urlpath = tryParseURLPath();
+					if (!urlpath.empty()) linkid = std::string("http:") + urlpath;
 				}
 				else
 				{
 					linkid = tryParseURL();
+					if (linkid.empty())
+					{
+						std::string filepath = tryParseFilePath();
+						if (!filepath.empty()) linkid = std::string("file://") + filepath;
+					}
 				}
 				if (linkid.empty())
 				{
@@ -1105,7 +1132,7 @@ WikimediaLexem WikimediaLexer::next()
 					}
 					if (m_si < m_se && *m_si == ']') ++m_si;
 				}
-				else if (m_si < m_se && (*m_si == ']' || *m_si == '|' || *m_si == ' ' || *m_si == '{'))
+				else if (m_si < m_se && (isTokenDelimiter(*m_si) || isSpace(*m_si)))
 				{
 					if (*m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::OpenWWWLink, 0, linkid);
@@ -1387,6 +1414,33 @@ WikimediaLexem WikimediaLexer::next()
 			if (!bibref.empty())
 			{
 				return WikimediaLexem( WikimediaLexem::BibRef, 0, bibref);
+			}
+			else
+			{
+				++m_si;
+			}
+		}
+		else if (m_si < m_se && *m_si == '/')
+		{
+			const char* si_bk = m_si;
+			char const* ti = m_si;
+			while (m_si - ti < 15 &&  ti > start && isAlpha(*(ti-1))) --ti;
+			if (m_si - ti < 15 && ti >= start)
+			{
+				m_si = ti;
+				std::string filepath = tryParseFilePath();
+				if (filepath.empty())
+				{
+					m_si = si_bk + 1;
+				}
+				else if (m_si > start)
+				{
+					return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+				}
+				else
+				{
+					return WikimediaLexem( WikimediaLexem::Url, 0, std::string("file:") + filepath);
+				}
 			}
 			else
 			{

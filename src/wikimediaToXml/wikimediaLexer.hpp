@@ -137,6 +137,7 @@ private:
 	std::string tryParseIdentifier( char assignop);
 	std::string tryParseURLPath();
 	std::string tryParseURL();
+	std::string tryParseFilePath();
 	std::string tryParseLinkId();
 	std::string tryParseBibRef();
 	std::string tryParseBookRef();

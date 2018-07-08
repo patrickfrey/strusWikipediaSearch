@@ -1200,34 +1200,37 @@ std::string DocumentStructure::reportStrangeFeatures() const
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(int pidx=0; pi != pe; ++pi,++pidx)
 	{
-		char const* si = pi->text().c_str();
-		while (*si)
+		if (pi->type() == Paragraph::Text)
 		{
-			for (; *si && (unsigned char)*si <= 32; ++si){}
-			int sidx = 0;
-			char cls = 0;
-			char prev_cls = 0;
-			int cls_chg = 0;
-			char const* start = si;
-			for (; *si; ++si,++sidx)
+			char const* si = pi->text().c_str();
+			while (*si)
 			{
-				prev_cls = cls;
-
-				if ((*si|32) <= 'z' && (*si|32) >= 'a') cls = 'a';
-				else if (*si >= '0' && *si <= '9') cls = 'd';
-				else break;
-
-				if (prev_cls != cls)
+				for (; *si && (unsigned char)*si <= 32; ++si){}
+				int sidx = 0;
+				char cls = 0;
+				char prev_cls = 0;
+				int cls_chg = 0;
+				char const* start = si;
+				for (; *si; ++si,++sidx)
 				{
-					cls_chg += 1;
+					prev_cls = cls;
+	
+					if ((*si|32) <= 'z' && (*si|32) >= 'a') cls = 'a';
+					else if (*si >= '0' && *si <= '9') cls = 'd';
+					else break;
+	
+					if (prev_cls != cls)
+					{
+						cls_chg += 1;
+					}
 				}
+				if (sidx * cls_chg > 48)
+				{
+					std::string feat( start, si-start);
+					out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+				}
+				if (*si) ++si;
 			}
-			if (sidx * cls_chg > 48)
-			{
-				std::string feat( start, si-start);
-				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
-			}
-			if (*si) ++si;
 		}
 	}
 	return out.str();
