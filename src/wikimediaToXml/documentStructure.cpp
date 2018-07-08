@@ -354,7 +354,7 @@ void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char
 	while (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType && m_structStack.back().idx <= lidx)
 	{
 		Paragraph para = m_parar[ m_structStack.back().start];
-		m_parar.push_back( Paragraph( endType, para.id(), para.text()));
+		m_parar.push_back( Paragraph( endType, "", ""));
 		m_structStack.pop_back();
 	}
 	m_structStack.push_back( StructRef( lidx, m_parar.size()));
@@ -375,7 +375,7 @@ void DocumentStructure::closeAutoCloseItem( Paragraph::Type startType)
 	Paragraph para = m_parar[ m_structStack.back().start];
 	if (para.type() == startType)
 	{
-		m_parar.push_back( Paragraph( endType, para.id(), para.text()));
+		m_parar.push_back( Paragraph( endType, "", ""));
 		m_structStack.pop_back();
 	}
 }
@@ -876,7 +876,11 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 {
 	if (joinText)
 	{
-		if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::BibRef || type == Paragraph::NoWiki || type == Paragraph::Math))
+		if (!m_parar.empty() && m_parar.back().type() == Paragraph::AttributeStart && type == Paragraph::Text)
+		{
+			m_parar.back().addText( text);
+		}
+		else if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::BibRef || type == Paragraph::NoWiki || type == Paragraph::Math))
 		{
 			if (!text.empty() && !m_parar.empty())
 			{
@@ -1069,7 +1073,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 					&& output.isInTagDeclaration() && !pi->id().empty() && !pi->text().empty())
 				{
 					output.printAttribute( pi->id(), rt);
-					output.printValue( pi->text(), rt);
+					output.printValue( string_conv::trim( pi->text()), rt);
 					++pi;
 					++pidx;
 					continue;

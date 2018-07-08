@@ -497,7 +497,8 @@ std::string WikimediaLexer::tryParseURL()
 	{
 		char const* start = m_si;
 		m_si = ti + 3;
-		return std::string( start, m_si-start) + tryParseURLPath();
+		char const* end = m_si;
+		return std::string( start, end-start) + tryParseURLPath();
 	}
 	return std::string();
 }
