@@ -943,7 +943,7 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 {
 	const char* start = si;
 	si = skipSpaces( si, se);
-	if (si < se && (*si == endMarker || *si == altEndMarker)) return;
+	if (si == se || *si == endMarker || *si == altEndMarker) return;
 
 	for (;;)
 	{
@@ -959,7 +959,12 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 			si = skipSpaces( si, se);
 			if (si < se && (*si == '"' || *si == '\''))
 			{
-				if (!parseString( value, si, se, true)) goto REWIND;
+				while (si < se && (*si == '"' || *si == '\''))
+				{
+					if (!value.empty()) value.push_back(' ');
+					if (!parseString( value, si, se, true)) goto REWIND;
+					si = skipSpaces( si, se);
+				}
 			}
 			else if (si < se && (*si == '#' || isIdentifierChar(*si, true/*with dash*/)))
 			{
