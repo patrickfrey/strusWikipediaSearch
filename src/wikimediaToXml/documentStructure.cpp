@@ -1154,6 +1154,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 					std::string text = collectAttributeText( pi, pe);
 					if (!text.empty())
 					{
+						while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
 						printTagContent( output, rt, "text", pi->id(), text);
 					}
 					else
