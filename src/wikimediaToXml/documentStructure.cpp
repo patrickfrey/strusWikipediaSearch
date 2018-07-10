@@ -995,9 +995,44 @@ static std::string collectIntagAttributeValue( std::vector<Paragraph>::const_ite
 	}
 	else
 	{
+		if (!pi->id().empty()) return std::string();
 		if (pi->type() == Paragraph::Text || pi->type() == Paragraph::BibRef || pi->type() == Paragraph::Timestamp)
 		{
+			if (!rt.empty()) return std::string();
 			rt = pi->text();
+		}
+		else
+		{
+			return std::string();
+		}
+		++pi;
+		if (pi->type() == Paragraph::AttributeEnd) return rt;
+	}
+	return std::string();
+}
+
+static std::string collectAttributeText( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+{
+	std::string rt;
+	if (pi->type() == Paragraph::AttributeStart)
+	{
+		rt = pi->text();
+	}
+	++pi;
+	if (pi->type() == Paragraph::AttributeEnd)
+	{
+		return rt;
+	}
+	else
+	{
+		if (!pi->id().empty()) return std::string();
+		if (pi->type() == Paragraph::Text)
+		{
+			rt.append( pi->text());
+		}
+		else
+		{
+			return std::string();
 		}
 		++pi;
 		if (pi->type() == Paragraph::AttributeEnd) return rt;
@@ -1116,8 +1151,16 @@ std::string DocumentStructure::toxml( bool beautified) const
 				}
 				else
 				{
-					stk.push_back( Paragraph::StructAttribute);
-					printTagOpen( output, rt, "attr", pi->id(), pi->text());
+					std::string text = collectAttributeText( pi, pe);
+					if (!text.empty())
+					{
+						printTagContent( output, rt, "text", pi->id(), text);
+					}
+					else
+					{
+						stk.push_back( Paragraph::StructAttribute);
+						printTagOpen( output, rt, "attr", pi->id(), pi->text());
+					}
 				}
 				break;
 			}
