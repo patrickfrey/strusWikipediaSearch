@@ -931,10 +931,10 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, st
 			{
 				goto REWIND;
 			}
-			si = skipSpaces( si, se);
-			if (si < se && *si!= endMarker) goto REWIND;
-
 			attributes[ name] = value;
+
+			si = skipSpaces( si, se);
+			if (si == se || *si == endMarker) return;
 		}
 		else
 		{
@@ -1510,8 +1510,8 @@ WikimediaLexem WikimediaLexer::next()
 				{
 					while (*m_si == '-') ++m_si;
 					std::map<std::string,std::string> attributes;
-					parseAttributes( m_si, m_se, '|', attributes);
-					if (m_si < m_se && *m_si == '|') ++m_si;
+					parseAttributes( m_si, m_se, '\n', attributes);
+					if (m_si < m_se && *m_si == '\n') ++m_si;
 					return WikimediaLexem( WikimediaLexem::TableRowDelim, 0, "", attributes);
 				}
 				else if (*m_si == '+')
