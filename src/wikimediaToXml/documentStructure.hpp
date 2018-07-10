@@ -66,7 +66,9 @@ public:
 			Char,
 			BibRef,
 			NoWiki,
+			Code,
 			Math,
+			Timestamp,
 			CitationLink,
 			RefLink,
 			TableLink
@@ -117,7 +119,9 @@ public:
 			"Char",
 			"BibRef",
 			"NoWiki",
+			"Code",
 			"Math",
+			"Timestamp",
 			"CitationLink",
 			"RefLink",
 			"TableLink", 0};
@@ -198,9 +202,9 @@ public:
 			StructNone/*Char*/,
 			StructNone/*BibRef*/,
 			StructNone/*NoWiki*/,
+			StructNone/*Code*/,
 			StructNone/*Math*/,
-			StructNone/*PageLink*/,
-			StructNone/*WebLink*/,
+			StructNone/*Timestamp*/,
 			StructNone/*CitationLink*/,
 			StructNone/*RefLink*/,
 			StructNone/*TableLink*/};
@@ -254,7 +258,9 @@ public:
 			Char/*Char*/,
 			BibRef/*BibRef*/,
 			NoWiki/*NoWiki*/,
+			Code/*Code*/,
 			Math/*Math*/,
+			Timestamp/*Timestamp*/,
 			CitationLink/*CitationLink*/,
 			RefLink/*RefLink*/,
 			TableLink/*TableLink*/
@@ -343,6 +349,14 @@ public:
 	void addNoWiki( const std::string& text)
 	{
 		addSingleItem( Paragraph::NoWiki, "", text, false/*joinText*/);
+	}
+	void addCode( const std::string& text)
+	{
+		addSingleItem( Paragraph::Code, "", text, false/*joinText*/);
+	}
+	void addTimestamp( const std::string& text)
+	{
+		addSingleItem( Paragraph::Timestamp, "", text, false/*joinText*/);
 	}
 	void addBibRef( const std::string& text)
 	{

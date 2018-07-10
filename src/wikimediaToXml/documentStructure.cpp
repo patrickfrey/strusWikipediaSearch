@@ -187,7 +187,9 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::Char:
 			case Paragraph::BibRef:
 			case Paragraph::NoWiki:
+			case Paragraph::Code:
 			case Paragraph::Math:
+			case Paragraph::Timestamp:
 			case Paragraph::CitationLink:
 			case Paragraph::RefLink:
 			case Paragraph::TableLink:
@@ -880,7 +882,7 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 		{
 			m_parar.back().addText( text);
 		}
-		else if (isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::BibRef || type == Paragraph::NoWiki || type == Paragraph::Math))
+		else if (m_parar.back().type() == Paragraph::Text && isSpaceOnlyText( text) && (type == Paragraph::Text || type == Paragraph::Char || type == Paragraph::BibRef || type == Paragraph::NoWiki || type == Paragraph::Math || type == Paragraph::Timestamp))
 		{
 			if (!text.empty() && !m_parar.empty())
 			{
@@ -988,7 +990,7 @@ static std::string collectIntagAttributeValue( std::vector<Paragraph>::const_ite
 	}
 	else
 	{
-		if (pi->type() == Paragraph::Text || pi->type() == Paragraph::BibRef)
+		if (pi->type() == Paragraph::Text || pi->type() == Paragraph::BibRef || pi->type() == Paragraph::Timestamp)
 		{
 			rt = pi->text();
 		}
@@ -1194,8 +1196,14 @@ std::string DocumentStructure::toxml( bool beautified) const
 			case Paragraph::NoWiki:
 				printTagContent( output, rt, "nowiki", pi->id(), pi->text());
 				break;
+			case Paragraph::Code:
+				printTagContent( output, rt, "code", pi->id(), pi->text());
+				break;
 			case Paragraph::Math:
 				printTagContent( output, rt, "math", pi->id(), pi->text());
+				break;
+			case Paragraph::Timestamp:
+				printTagContent( output, rt, "time", pi->id(), pi->text());
 				break;
 			case Paragraph::CitationLink:
 				printTagContent( output, rt, "citlink", pi->id(), pi->text());
@@ -1232,7 +1240,25 @@ std::string DocumentStructure::reportStrangeFeatures() const
 		if (pi->type() == Paragraph::Text)
 		{
 			char const* si = pi->text().c_str();
-			while (*si)
+			if (0!=std::strstr( si, "bgcolor="))
+			{
+				const char* featptr = std::strstr( si, "bgcolor=");
+				std::string feat( featptr, 8);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
+			else if (0!=std::strstr( si, "align="))
+			{
+				const char* featptr = std::strstr( si, "align=");
+				std::string feat( featptr, 8);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
+			else if (0!=std::strstr( si, "width="))
+			{
+				const char* featptr = std::strstr( si, "align=");
+				std::string feat( featptr, 8);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
+			else while (*si)
 			{
 				for (; *si && (unsigned char)*si <= 32; ++si){}
 				int sidx = 0;

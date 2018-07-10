@@ -19,6 +19,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <cstdio>
+#include <cstdarg>
 
 /// \brief strus toplevel namespace
 using namespace strus;
@@ -431,7 +432,7 @@ std::string WikimediaLexer::tryParseIdentifier( char assignop)
 			{
 				rt.push_back( ch|32);
 			}
-			else if (rt.size()>0 && rt[ rt.size()-1] != ' ')
+			else if (isSpace(ch) && rt.size()>0 && rt[ rt.size()-1] != ' ')
 			{
 				rt.push_back( ' ');
 			}
@@ -486,6 +487,13 @@ std::string WikimediaLexer::tryParseURLPath()
 		if (m_si < m_se && *m_si != '|' && *m_si != ']') --m_si;
 	}
 	return linkid;
+}
+
+static bool isUrlCandidate( char const* si, const char* se)
+{
+	int pcnt = 0;
+	for (; pcnt < 6 && si < se && isAlpha(*si); ++si, ++pcnt){}
+	return (si+3 < se && si[0] == ':' && si[1] == '/' && si[2] == '/');
 }
 
 std::string WikimediaLexer::tryParseURL()
@@ -684,6 +692,205 @@ std::string WikimediaLexer::tryParseBookRef()
 	}
 }
 
+static int parseKeyWord( const char*& si, const char* se, int nn, ...)
+{
+	int ii = 0;
+	va_list kl;
+	va_start( kl, nn);
+	for ( ii=0; ii<nn; ii++)
+	{
+		char const* ki = va_arg( kl, const char*);
+		char const* vi = si;
+		for (; vi<se && *vi == *ki; ++ki,++vi){}
+		if (!*ki && (vi == se || !isAlphaNum(*vi)))
+		{
+			si = vi;
+			return ii;
+		}
+	}
+	va_end( kl);
+	return -1;
+	
+}
+
+static bool isIsbnRefCandidate(  char const* si, const char* se)
+{
+	return (si+4 < se && ((si[0]|32) == 'i' || (si[0]|32) == 'a') && 0<=parseKeyWord( si, se, 2, "ISBN", "ASIN"));
+}
+
+std::string WikimediaLexer::tryParseIsbnRef()
+{
+	std::string rt;
+	int kw;
+	const char* start = m_si;
+	switch (kw=parseKeyWord( m_si, m_se, 2, "ISBN", "ASIN"))
+	{
+		case -1: break;
+		case 0:
+		case 1:
+		{
+			m_si = skipSpaces( m_si, m_se);
+			if (m_si && m_si < m_se && *m_si == ':') {++m_si;m_si = skipSpaces( m_si, m_se);}
+
+			char const* end = skipIdentifier( m_si, m_se);
+			if (end - m_si >= 10)
+			{
+				const char* idstart = m_si;
+				m_si = end;
+				return std::string((kw==0)?"ISBN":"ASIN") + " " + std::string( idstart, end-idstart);
+			}
+		}
+	}
+	m_si = start;
+	return std::string();
+}
+
+static bool isRepPatternCandidate( char const* si, const char* se)
+{
+	int df = 0;
+	int minlen = 16;
+	if (si + minlen < se)
+	{
+		if (si[0] == si[1]) df = 1;
+		else if (si[0] == si[2]) df = 2;
+		else if (si[0] == si[3]) df = 3;
+		else if (si[0] == si[4]) df = 4;
+		if (!df) return false;
+		for (int di=0; di<df; ++di) if (isSpace(si[di])) return false;
+
+		int ii=0;
+		for (; ii<minlen && si[ii] == si[ii+df]; ++ii){}
+		return ii == minlen;
+	}
+	return false;
+}
+
+std::string WikimediaLexer::tryParseRepPattern()
+{
+	std::string rt;
+
+	int df = 0;
+	int minlen = 16;
+	if (m_si + minlen < m_se)
+	{
+		if (m_si[0] == m_si[1]) df = 1;
+		else if (m_si[0] == m_si[2]) df = 2;
+		else if (m_si[0] == m_si[3]) df = 3;
+		if (!df) return std::string();
+		for (int di=0; di<df; ++di) if (isSpace(m_si[di])) return std::string();
+
+		int ii=0;
+		for (; m_si+ii+df<m_se && m_si[ii] == m_si[ii+df]; ++ii){}
+		if (ii >= minlen)
+		{
+			rt.append( m_si, ii+df);
+			m_si += ii+df;
+		}
+	}
+	return rt;
+}
+
+static bool isBigHexNumCandidate(  char const* si, const char* se)
+{
+	if (si+8 < se && si[0] == '0' && si[1] == 'x' && 6<hexNumCount( si+2,se)) return true;
+	if (si+7 < se && si[0] == '#' && 6<hexNumCount( si+1,se)) return true;
+	return false;
+}
+
+std::string WikimediaLexer::tryParseBigHexNum()
+{
+	std::string rt;
+	if (m_si+10 < m_se && m_si[0] == '0' && m_si[1] == 'x')
+	{
+		int hc = hexNumCount( m_si+2,m_se);
+		if (hc >= 6 && (m_si == m_se || !isAlpha( m_si[2+hc])))
+		{
+			const char* start = m_si+2;
+			m_si = m_si+2+hc;
+			return std::string( start, m_si-start);
+		}
+	}
+	else if (m_si+7 < m_se && m_si[0] == '#')
+	{
+		int hc = hexNumCount( m_si+1,m_se);
+		if (hc >= 6 && (m_si == m_se || !isAlpha( m_si[1+hc])))
+		{
+			const char* start = m_si+1;
+			m_si = m_si+1+hc;
+			return std::string( start, m_si-start);
+		}
+	}
+	return std::string();
+}
+
+static bool isTimestampCandidate( char const* si, const char* se)
+{
+	int dlen = decNumCount( si, se);
+	return (si+14 < se && dlen == 8 && si[dlen] == 'T');
+}
+
+std::string WikimediaLexer::tryParseTimestamp()
+{
+	std::string rt;
+	int dlen = decNumCount( m_si, m_se);
+	if (m_si+14 < m_se && dlen == 8 && m_si[dlen] == 'T')
+	{
+		int glen = decNumCount( m_si+dlen+1, m_se);
+		if (m_si[dlen+1+glen] == 'Z' && !isAlphaNum(m_si[dlen+1+glen+1]))
+		{
+			rt.append( m_si, dlen+1+glen+1);
+			m_si += dlen+1+glen+1;
+		}
+	}
+	return rt;
+}
+
+static int charClassChangeCount( char const* si, const char* se)
+{
+	int rt = 0;
+	int cl = 0;
+	int max_cl = 0;
+	for (int sidx=0; si < se; ++si,++sidx)
+	{
+		if ((unsigned char)*si < 32) return -1;
+		int prev_cl = cl;
+		if (*si >= 'A' && *si <= 'Z') cl = 1;
+		if (*si >= 'a' && *si <= 'z') cl = 2;
+		if (*si == '_') cl = 3;
+		if (*si >= '0' && *si <= '9') cl = 4;
+		if ((unsigned char)*si >= 128) cl = 5;
+
+		if (prev_cl != cl)
+		{
+			if (sidx == 1 && prev_cl == 1 && cl == 2) continue;
+			if (max_cl <= 2 && cl == 4) continue;
+			if (prev_cl <= 2 && cl == 5) continue;
+			if (prev_cl == 5 && cl <= 2) continue;
+			++rt;
+		}
+		if (cl > max_cl) max_cl = cl;
+	}
+	return rt;
+}
+
+static bool isCodeCandidate( char const* si, const char* se)
+{
+	return (se - si > 12 && 3 <= charClassChangeCount( si, si+12));
+}
+
+std::string WikimediaLexer::tryParseCode()
+{
+	std::string rt;
+	const char* tk = skipToken( m_si, m_se);
+	if (tk - m_si > 12 && 3 <= charClassChangeCount( m_si, tk))
+	{
+		rt.append( m_si, tk-m_si);
+		m_si = tk;
+		return rt;
+	}
+	return std::string();
+}
+
 bool WikimediaLexer::eatFollowChar( char expectChr)
 {
 	if (m_si < m_se && *m_si == expectChr)
@@ -696,20 +903,16 @@ bool WikimediaLexer::eatFollowChar( char expectChr)
 
 static void parseAttributes( char const*& si, char const* se, char endMarker, std::map<std::string,std::string>& attributes)
 {
+	const char* start = si;
+	si = skipSpaces( si, se);
+	if (si < se && *si == endMarker) return;
+
 	for (;;)
 	{
-		si = skipSpaces( si, se);
-		if (si < se && (*si == endMarker || *si == '\n')) return;
-
-		char const* start = si;
 		std::string name;
 		std::string value;
 
-		if (!parseIdentifier( name, si, se))
-		{
-			si = start;
-			return;
-		}
+		if (!parseIdentifier( name, si, se)) goto REWIND;
 		si = skipSpaces( si, se);
 
 		if (si < se && (*si == '=' || *si == ':'))
@@ -718,33 +921,63 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, st
 			si = skipSpaces( si, se);
 			if (si < se && (*si == '"' || *si == '\''))
 			{
-				if (!parseString( value, si, se))
-				{
-					si = start;
-					return;
-				}
+				if (!parseString( value, si, se)) goto REWIND;
 			}
 			else if (si < se && isIdentifierChar(*si))
 			{
-				if (!parseToken( value, si, se))
-				{
-					si = start;
-					return;
-				}
+				if (!parseToken( value, si, se)) goto REWIND;
 			}
 			else
 			{
-				si = start;
-				return;
+				goto REWIND;
 			}
+			si = skipSpaces( si, se);
+			if (si < se && *si!= endMarker) goto REWIND;
+
 			attributes[ name] = value;
 		}
 		else
 		{
-			si = start;
-			return;
+			goto REWIND;
 		}
 	}
+	return;
+
+REWIND:
+	attributes.clear();
+	si = start;
+}
+
+static const char* skipUrlParameters( char const* si, char const* se)
+{
+	char const* rt = 0;
+	while (si < se && *si == '&')
+	{
+		si++;
+		si = skipIdentifier( si, se);
+		if (!si) break;
+
+		if (si < se && *si == '=')
+		{
+			++si;
+			if (si < se && (*si == '"' || *si == '\''))
+			{
+				si = skipString( si, se);
+				if (!si) break;
+			}
+			else
+			{
+				int sidx=0;
+				while (si < se && !isSpace(*si) && *si != '&' && !isTokenDelimiter(*si)) {++si,++sidx;}
+			}
+		}
+		else
+		{
+			break;
+		}
+		rt = si;
+	}
+	return rt;
 }
 
 static int countAndSkip( char const*& si, const char* se,  char ch, int maxcnt)
@@ -985,7 +1218,14 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				std::string value( m_si, xi-m_si);
 				m_si = xi+1;
-				return WikimediaLexem( WikimediaLexem::String, 0, value);
+				if (charClassChangeCount( value.c_str(), value.c_str() + value.size()) >= 4)
+				{
+					return WikimediaLexem( WikimediaLexem::Code, 0, value);
+				}
+				else
+				{
+					return WikimediaLexem( WikimediaLexem::String, 0, value);
+				}
 			}
 			else
 			{
@@ -1091,17 +1331,27 @@ WikimediaLexem WikimediaLexer::next()
 				}
 				if (m_si < m_se && *m_si == '#')++m_si;
 				if (m_si < m_se && *m_si == ':')++m_si;
-				std::string linkid = tryParseLinkId();
-				if (!linkid.empty() && m_si < m_se && (*m_si == ']' || *m_si == '|'))
+				std::string linkid;
+				if (isUrlCandidate( m_si, m_se))
 				{
-					if (*m_si == '|') ++m_si;
-					return WikimediaLexem( WikimediaLexem::OpenPageLink, 0, linkid);
+					linkid = tryParseURL();
+					return WikimediaLexem( WikimediaLexem::OpenWWWLink, 0, linkid);
 				}
 				else
 				{
-					while (m_si < m_se && *m_si != ']') ++m_si;
-					if (m_si < m_se && *m_si == ']') ++m_si;
-					return WikimediaLexem( WikimediaLexem::Error, 0, "illegal character in page link");
+					linkid = tryParseLinkId();
+					if (!linkid.empty() && m_si < m_se && (*m_si == ']' || *m_si == '|'))
+					{
+						if (*m_si == '|') ++m_si;
+						return WikimediaLexem( WikimediaLexem::OpenPageLink, 0, linkid);
+					}
+					else
+					{
+						while (m_si < m_se && *m_si != ']') ++m_si;
+						if (m_si < m_se && *m_si == ']') ++m_si;
+						return WikimediaLexem( WikimediaLexem::Error, 0, "illegal character in page link");
+					}
+					
 				}
 			}
 			else if (isAlphaNum(*m_si) || isSpace(*m_si) || *m_si == '/' || *m_si == '.' || *m_si == '-' || *m_si == '+')
@@ -1114,7 +1364,7 @@ WikimediaLexem WikimediaLexer::next()
 					std::string urlpath = tryParseURLPath();
 					if (!urlpath.empty()) linkid = std::string("http:") + urlpath;
 				}
-				else
+				else if (isUrlCandidate( m_si, m_se))
 				{
 					linkid = tryParseURL();
 					if (linkid.empty())
@@ -1287,12 +1537,13 @@ WikimediaLexem WikimediaLexer::next()
 					std::map<std::string,std::string> attributes;
 					parseAttributes( m_si, m_se, '|', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
-					return WikimediaLexem( WikimediaLexem::TableColDelim, 0, "", attributes);
+					std::string name = tryParseIdentifier( '=');
+					return WikimediaLexem( WikimediaLexem::TableColDelim, 0, name, attributes);
 				}
 			}
 			else if (*m_si == '*')
 			{
-				int lidx = countAndSkip( m_si, m_se, '*', 6);
+				int lidx = countAndSkip( m_si, m_se, '*', 18);
 				if (lidx >= 1)
 				{
 					return WikimediaLexem( WikimediaLexem::ListItem, lidx, "");
@@ -1387,6 +1638,18 @@ WikimediaLexem WikimediaLexer::next()
 				m_si += 3;
 			}
 		}
+		else if (isTimestampCandidate( m_si, m_se))
+		{
+			std::string timestmp( tryParseTimestamp());
+			if (!timestmp.empty())
+			{
+				return WikimediaLexem( WikimediaLexem::Timestamp, 0, timestmp);
+			}
+			else
+			{
+				++m_si;
+			}
+		}
 		else if (isBibRefCandidate( m_si, m_se))
 		{
 			if (start != m_si)
@@ -1419,6 +1682,54 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
+		else if (isIsbnRefCandidate( m_si, m_se))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			std::string bibref = tryParseIsbnRef();
+			if (!bibref.empty())
+			{
+				return WikimediaLexem( WikimediaLexem::BibRef, 0, bibref);
+			}
+			else
+			{
+				++m_si;
+			}
+		}
+		else if (isBigHexNumCandidate( m_si, m_se))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			std::string bighexnum = tryParseBigHexNum();
+			if (!bighexnum.empty())
+			{
+				return WikimediaLexem( WikimediaLexem::Code, 0, bighexnum);
+			}
+			else
+			{
+				++m_si;
+			}
+		}
+		else if (isCodeCandidate( m_si, m_se))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			std::string code = tryParseCode();
+			if (!code.empty())
+			{
+				return WikimediaLexem( WikimediaLexem::Code, 0, code);
+			}
+			else
+			{
+				++m_si;
+			}
+		}
 		else if (m_si < m_se && *m_si == '/')
 		{
 			const char* si_bk = m_si;
@@ -1441,6 +1752,40 @@ WikimediaLexem WikimediaLexer::next()
 				{
 					return WikimediaLexem( WikimediaLexem::Url, 0, std::string("file:") + filepath);
 				}
+			}
+			else
+			{
+				++m_si;
+			}
+		}
+		else if (m_si+1 < m_se && m_si[0] == '&' && isAlpha( m_si[1]))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			const char* paramend = skipUrlParameters( m_si, m_se);
+			if (paramend)
+			{
+				const char* paramstart = m_si;
+				m_si = paramend;
+				return WikimediaLexem( WikimediaLexem::NoData, 0, std::string( paramstart, paramend - paramstart));
+			}
+			else
+			{
+				++m_si;
+			}
+		}
+		else if (m_si < m_se && !isSpace(*m_si) && isRepPatternCandidate( m_si, m_se))
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			std::string ptstr = tryParseRepPattern();
+			if (!ptstr.empty())
+			{
+				return WikimediaLexem( WikimediaLexem::NoData, 0, ptstr);
 			}
 			else
 			{

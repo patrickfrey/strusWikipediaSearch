@@ -100,6 +100,15 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::NoWiki:
 				doc.addNoWiki( lexem.value);
 				break;
+			case strus::WikimediaLexem::NoData:
+				doc.addError( std::string("lexem can not be treated as data: ") + strus::outputLineString( lexem.value.c_str()));
+				break;
+			case strus::WikimediaLexem::Code:
+				doc.addCode( lexem.value);
+				break;
+			case strus::WikimediaLexem::Timestamp:
+				doc.addTimestamp( lexem.value);
+				break;
 			case strus::WikimediaLexem::Url:
 				doc.openWebLink( lexem.value);
 				doc.closeWebLink();
