@@ -1815,7 +1815,7 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
-		else if (m_si+1 < m_se && m_si[0] == '&' && isAlpha( m_si[1]))
+		else if (m_si+1 < m_se && m_si[0] == '&' && isIdentifierChar( m_si[1], true/*with dash*/))
 		{
 			if (start != m_si)
 			{
