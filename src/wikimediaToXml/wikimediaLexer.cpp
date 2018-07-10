@@ -1484,9 +1484,10 @@ WikimediaLexem WikimediaLexer::next()
 
 				std::map<std::string,std::string> attributes;
 				std::map<std::string,std::string> aa;
-				bool more = false;
+				bool more;
 				do
 				{
+					more = false;
 					parseAttributes( m_si, m_se, '\n', '|', aa);
 					if (m_si < m_se && *m_si == '|') {more=true; ++m_si;}
 					attributes.insert( aa.begin(), aa.end());
