@@ -1480,6 +1480,8 @@ WikimediaLexem WikimediaLexer::next()
 			else if (*m_si == '|')
 			{
 				++m_si;
+				if (m_si < m_se && *m_si == '-') ++m_si;
+
 				std::map<std::string,std::string> attributes;
 				std::map<std::string,std::string> aa;
 				bool more = false;
@@ -1488,7 +1490,7 @@ WikimediaLexem WikimediaLexer::next()
 					parseAttributes( m_si, m_se, '\n', '|', aa);
 					if (m_si < m_se && *m_si == '|') {more=true; ++m_si;}
 					attributes.insert( aa.begin(), aa.end());
-				} while (!more);
+				} while (more);
 				return WikimediaLexem( WikimediaLexem::OpenTable, 0, "", attributes);
 			}
 		}
@@ -1562,7 +1564,7 @@ WikimediaLexem WikimediaLexer::next()
 				}
 				else if (*m_si == '+')
 				{
-					++m_si;
+					while (*m_si == '+') ++m_si;
 					std::map<std::string,std::string> attributes;
 					parseAttributes( m_si, m_se, '\n', '|', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
