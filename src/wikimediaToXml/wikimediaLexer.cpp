@@ -40,9 +40,9 @@ static bool isAlphaNum( char ch)
 	return isAlpha(ch) || isDigit(ch);
 }
 
-static bool isIdentifierChar( char ch)
+static bool isIdentifierChar( char ch, bool withDash)
 {
-	return isAlphaNum(ch) || ch == '_' || ch == '-';
+	return isAlphaNum(ch) || ch == '_' || (withDash && ch == '-');
 }
 
 static bool isSpace( char ch)
@@ -72,6 +72,12 @@ static const char* findPattern( char const* si, const char* se, const char* patt
 	}
 }
 
+static char const* skipToEoln( char const* si, char const* se)
+{
+	for (; si < se && *si != '\n'; ++si){}
+	return si;
+}
+
 static char const* skipString( char const* si, char const* se)
 {
 	char eb = *si;
@@ -81,10 +87,14 @@ static char const* skipString( char const* si, char const* se)
 	{
 		return si+1;
 	}
+	else
+	{
+		return si;
+	}
 	return NULL;
 }
 
-static bool parseString( std::string& res, char const*& si, char const* se)
+static bool parseString( std::string& res, char const*& si, char const* se, bool tolerant)
 {
 	char const* start = si+1;
 	char const* end = skipString( si, se);
@@ -93,6 +103,16 @@ static bool parseString( std::string& res, char const*& si, char const* se)
 		res = std::string( start, end-start-1);
 		si = end;
 		return true;
+	}
+	else if (tolerant)
+	{
+		end = skipToEoln( si, se);
+		if (end)
+		{
+			res = std::string( start, end-start);
+			si = end;
+			return true;
+		}
 	}
 	return false;
 }
@@ -132,17 +152,35 @@ static char const* skipSpaces( char const* si, char const* se)
 	return si;
 }
 
-static char const* skipIdentifier( char const* si, char const* se)
+static char const* skipSpacesAndComments( char const* si, char const* se)
+{
+	while (si < se)
+	{
+		si = skipSpaces( si, se);
+		if (si < se && si[0] == '<' && si[1] == '!' && si[2] == '-' && si[3] == '-')
+		{
+			const char* end = findPattern( si+4, se, "-->");
+			if (end) si = end; else return si;
+		}
+		else
+		{
+			return si;
+		}
+	}
+	return si;
+}
+
+static char const* skipIdentifier( char const* si, char const* se, bool withDash)
 {
 	int sidx=0;
-	for (;si < se && isIdentifierChar(*si);++si,++sidx){}
+	for (;si < se && isIdentifierChar(*si, withDash);++si,++sidx){}
 	return sidx ? si : NULL;
 }
 
-static bool parseIdentifier( std::string& res, char const*& si, char const* se)
+static bool parseIdentifier( std::string& res, char const*& si, char const* se, bool withDash)
 {
 	char const* start = si;
-	char const* end = skipIdentifier( si, se);
+	char const* end = skipIdentifier( si, se, withDash);
 	if (end)
 	{
 		res = std::string( start, end-start);
@@ -286,7 +324,7 @@ static bool tryParseTagDefStart( char const*& si, const char* se)
 {
 	int attrcnt = 0;
 	const char* start = si;
-	si = skipIdentifier( si, se);
+	si = skipIdentifier( si, se, true/*with dash*/);
 
 	if (si && si<se && *si == ' ') for (;;)
 	{
@@ -296,7 +334,7 @@ static bool tryParseTagDefStart( char const*& si, const char* se)
 			si=start;
 			return attrcnt>0;
 		}
-		si = skipIdentifier( si, se);
+		si = skipIdentifier( si, se, true/*with dash*/);
 		si = skipSpaces( si, se);
 	
 		if (si < se && (*si == '=' || *si == ':'))
@@ -313,7 +351,7 @@ static bool tryParseTagDefStart( char const*& si, const char* se)
 				++attrcnt;
 				start = si;
 			}
-			else if (si < se && (isIdentifierChar(*si) || *si == '#'))
+			else if (si < se && (isIdentifierChar(*si, true/*with dash*/) || *si == '#'))
 			{
 				si = skipToken( si, se);
 				if (!si)
@@ -425,7 +463,7 @@ std::string WikimediaLexer::tryParseIdentifier( char assignop)
 	while (ti < m_se && isSpace(*ti)) ++ti;
 	if (ti < m_se && isAlpha(*ti))
 	{
-		while (ti < m_se && (isIdentifierChar(*ti) || isSpace(*ti)))
+		while (ti < m_se && (isIdentifierChar(*ti,true/*with dash*/) || isSpace(*ti)))
 		{
 			char ch = *ti++;
 			if (isAlpha(ch))
@@ -732,7 +770,7 @@ std::string WikimediaLexer::tryParseIsbnRef()
 			m_si = skipSpaces( m_si, m_se);
 			if (m_si && m_si < m_se && *m_si == ':') {++m_si;m_si = skipSpaces( m_si, m_se);}
 
-			char const* end = skipIdentifier( m_si, m_se);
+			char const* end = skipIdentifier( m_si, m_se, true/*with dash*/);
 			if (end - m_si >= 10)
 			{
 				const char* idstart = m_si;
@@ -852,14 +890,13 @@ static int charClassChangeCount( char const* si, const char* se)
 	int max_cl = 0;
 	for (int sidx=0; si < se; ++si,++sidx)
 	{
-		if ((unsigned char)*si <= 32) return -1;
 		int prev_cl = cl;
 		if (*si >= 'A' && *si <= 'Z') cl = 1;
 		else if (*si >= 'a' && *si <= 'z') cl = 2;
 		else if (*si == '_') cl = 3;
 		else if (*si >= '0' && *si <= '9') cl = 4;
 		else if ((unsigned char)*si >= 128) cl = 5;
-		else cl = 6;
+		else return -1;
 
 		if (prev_cl && prev_cl != cl)
 		{
@@ -876,14 +913,14 @@ static int charClassChangeCount( char const* si, const char* se)
 
 static bool isCodeCandidate( char const* si, const char* se)
 {
-	return (se - si > 12 && 3 <= charClassChangeCount( si, si+12));
+	return (se - si > 12 && 4 <= charClassChangeCount( si, si+12));
 }
 
 std::string WikimediaLexer::tryParseCode()
 {
 	std::string rt;
-	const char* tk = skipToken( m_si, m_se);
-	if (tk - m_si > 12 && 3 <= charClassChangeCount( m_si, tk))
+	const char* tk = skipIdentifier( m_si, m_se, false/*with dash*/);
+	if (tk - m_si > 12 && 4 <= charClassChangeCount( m_si, tk))
 	{
 		rt.append( m_si, tk-m_si);
 		m_si = tk;
@@ -902,18 +939,18 @@ bool WikimediaLexer::eatFollowChar( char expectChr)
 	return false;
 }
 
-static void parseAttributes( char const*& si, char const* se, char endMarker, std::map<std::string,std::string>& attributes)
+static void parseAttributes( char const*& si, char const* se, char endMarker, char altEndMarker, std::map<std::string,std::string>& attributes)
 {
 	const char* start = si;
 	si = skipSpaces( si, se);
-	if (si < se && *si == endMarker) return;
+	if (si < se && (*si == endMarker || *si == altEndMarker)) return;
 
 	for (;;)
 	{
 		std::string name;
 		std::string value;
 
-		if (!parseIdentifier( name, si, se)) goto REWIND;
+		if (!parseIdentifier( name, si, se, true/*with dash*/)) goto REWIND;
 		si = skipSpaces( si, se);
 
 		if (si < se && (*si == '=' || *si == ':'))
@@ -922,9 +959,9 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, st
 			si = skipSpaces( si, se);
 			if (si < se && (*si == '"' || *si == '\''))
 			{
-				if (!parseString( value, si, se)) goto REWIND;
+				if (!parseString( value, si, se, true)) goto REWIND;
 			}
-			else if (si < se && isIdentifierChar(*si))
+			else if (si < se && (*si == '#' || isIdentifierChar(*si, true/*with dash*/)))
 			{
 				if (!parseToken( value, si, se)) goto REWIND;
 			}
@@ -934,8 +971,8 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, st
 			}
 			attributes[ name] = value;
 
-			si = skipSpaces( si, se);
-			if (si == se || *si == endMarker) return;
+			si = skipSpacesAndComments( si, se);
+			if (si == se || *si == endMarker || *si == altEndMarker) return;
 		}
 		else
 		{
@@ -955,7 +992,7 @@ static const char* skipUrlParameters( char const* si, char const* se)
 	while (si < se && *si == '&')
 	{
 		si++;
-		si = skipIdentifier( si, se);
+		si = skipIdentifier( si, se, true/*with dash*/);
 		if (!si) break;
 
 		if (si < se && *si == '=')
@@ -1443,7 +1480,8 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				++m_si;
 				std::map<std::string,std::string> attributes;
-				parseAttributes( m_si, m_se, '\n', attributes);
+				parseAttributes( m_si, m_se, '\n', '|', attributes);
+				if (m_si < m_se && *m_si == '|') ++m_si;
 				return WikimediaLexem( WikimediaLexem::OpenTable, 0, "", attributes);
 			}
 		}
@@ -1460,7 +1498,7 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				++m_si;
 				std::map<std::string,std::string> attributes;
-				parseAttributes( m_si, m_se, '|', attributes);
+				parseAttributes( m_si, m_se, '|', '|', attributes);
 				if (m_si+2 < m_se && m_si[0] == '|' && m_si[1] != '|') ++m_si;
 				return WikimediaLexem( WikimediaLexem::DoubleColDelim, 0, "", attributes);
 			}
@@ -1478,7 +1516,7 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			m_si += 2;
 			std::map<std::string,std::string> attributes;
-			parseAttributes( m_si, m_se, '|', attributes);
+			parseAttributes( m_si, m_se, '|', '|', attributes);
 			if (m_si < m_se && *m_si == '|') ++m_si;
 			return WikimediaLexem( WikimediaLexem::TableHeadDelim, 0, "", attributes);
 		}
@@ -1498,27 +1536,28 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				++m_si;
 				std::map<std::string,std::string> attributes;
-				parseAttributes( m_si, m_se, '|', attributes);
+				parseAttributes( m_si, m_se, '|', '\n', attributes);
 				if (m_si < m_se && *m_si == '|') ++m_si;
 				return WikimediaLexem( WikimediaLexem::TableHeadDelim, 0, "", attributes);
 			}
 			else if (*m_si == '|')
 			{
-				++m_si;
+				m_si = skipSpaces( m_si+1, m_se);
 				if (m_si >= m_se) break;
 
 				if (*m_si == '-')
 				{
 					while (*m_si == '-') ++m_si;
 					std::map<std::string,std::string> attributes;
-					parseAttributes( m_si, m_se, '\n', attributes);
+					parseAttributes( m_si, m_se, '\n', '|', attributes);
+					if (m_si < m_se && *m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::TableRowDelim, 0, "", attributes);
 				}
 				else if (*m_si == '+')
 				{
 					++m_si;
 					std::map<std::string,std::string> attributes;
-					parseAttributes( m_si, m_se, '|', attributes);
+					parseAttributes( m_si, m_se, '\n', '|', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::TableTitle, 0, "", attributes);
 				}
@@ -1535,7 +1574,7 @@ WikimediaLexem WikimediaLexer::next()
 				else
 				{
 					std::map<std::string,std::string> attributes;
-					parseAttributes( m_si, m_se, '|', attributes);
+					parseAttributes( m_si, m_se, '|', '\n', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
 					std::string name = tryParseIdentifier( '=');
 					return WikimediaLexem( WikimediaLexem::TableColDelim, 0, name, attributes);
