@@ -790,7 +790,7 @@ static bool isRepPatternCandidate( char const* si, const char* se)
 		else if (si[0] == si[3]) df = 3;
 		else if (si[0] == si[4]) df = 4;
 		if (!df) return false;
-		for (int di=0; di<df; ++di) if (isSpace(si[di])) return false;
+		for (int di=0; di<df; ++di) if (isSpace(si[di]) || isDigit(si[di])) return false;
 
 		int ii=0;
 		for (; ii<minlen && si[ii] == si[ii+df]; ++ii){}
