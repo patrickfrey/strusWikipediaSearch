@@ -37,6 +37,7 @@ static bool g_beautified = false;
 static bool g_dumps = false;
 static int g_breakpoint = -1;
 static std::string g_outputdir;
+static std::string g_origOutputPattern;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
@@ -487,17 +488,27 @@ public:
 
 	void process()
 	{
+		bool inputFileWritten = false;
 		strus::DocumentStructure doc;
 		doc.setTitle( m_title);
 		try
 		{
+			if (!g_origOutputPattern.empty() && 0!=std::strstr( m_title.c_str(), g_origOutputPattern.c_str()))
+			{
+				writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+				inputFileWritten = true;
+			}
 			parseDocumentText( doc, m_content.c_str(), m_content.size());
 			doc.finish();
 			writeOutputFiles( m_fileindex, doc);
 			if (m_writeDumpsAlways || !doc.errors().empty())
 			{
 				writeLexerDumpFile( m_fileindex, doc);
-				writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+				if (!inputFileWritten)
+				{
+					writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+					inputFileWritten = true;
+				}
 			}
 		}
 		catch (const std::runtime_error& err)
@@ -505,7 +516,11 @@ public:
 			writeLexerDumpFile( m_fileindex, doc);
 			writeErrorFile( m_fileindex, doc.id(), err.what());
 			writeFatalErrorFile( m_fileindex, doc.id(), std::string(err.what()) + "\n");
-			writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+			if (!inputFileWritten)
+			{
+				writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+				inputFileWritten = true;
+			}
 		}
 	}
 
@@ -700,6 +715,13 @@ int main( int argc, const char* argv[])
 				g_breakpoint = getUIntOptionArg( argi, argc, argv);
 				++argi;
 			}
+			else if (0==std::memcmp(argv[argi],"-O",2))
+			{
+				if (!g_origOutputPattern.empty()) throw std::runtime_error("duplicated option -O <substr>");
+				++argi;
+				if (argi == argc) throw std::runtime_error("option -O without argument");
+				g_origOutputPattern = argv[ argi];
+			}
 			else if (0==std::memcmp(argv[argi],"-n",2))
 			{
 				namespaceset = true;
@@ -742,6 +764,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -V           :verbosity level 1 mode (output every processed document and its errors)" << std::endl;
 			std::cerr << "    -VV          :verbosity level 2 mode (output every item processed to stderr)" << std::endl;
 			std::cerr << "    -S <lexemid> :stop verbose output (option -VV) at lexem with index <lexemid> (continue processing)" << std::endl;
+			std::cerr << "    -O <substr>  :write dump file for documents with a title containing <substr> as title sub string" << std::endl;
 			std::cerr << "    -B           :beautified readable XML output" << std::endl;
 			std::cerr << "    -D           :write dump files always, not only in case of an error" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
