@@ -434,9 +434,9 @@ ParagraphRange findParagraphRange( const std::vector<Paragraph>::const_iterator&
 	return ParagraphRange( enditr, enditr);
 }
 
-void DocumentStructure::addTableCellIdentifierAttributes( const char* prefix, const std::vector<int>& indices)
+void DocumentStructure::addTableCellIdentifierAttributes( const char* prefix, const std::set<int>& indices)
 {
-	std::vector<int>::const_iterator ai = indices.begin(), ae = indices.end();
+	std::set<int>::const_iterator ai = indices.begin(), ae = indices.end();
 	for (; ai != ae; ++ai)
 	{
 		m_tables.push_back( Paragraph( Paragraph::AttributeStart, "id", strus::string_format( "%s%d", prefix, *ai)));
@@ -467,8 +467,8 @@ void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 	ParagraphRange titlerange = findParagraphRange( m_parar.begin() + startidx, m_parar.end(), Paragraph::TableTitleStart, Paragraph::TableTitleEnd);
 	m_tables.insert( m_tables.end(), titlerange.first, titlerange.second);
 
-	std::map<int,std::vector<int> > start2rowmap;
-	std::map<int,std::vector<int> > start2colmap;
+	std::map<int,std::set<int> > start2rowmap;
+	std::map<int,std::set<int> > start2colmap;
 	std::set<int> dataRowSet;
 	CellPositionStartMap::const_iterator ci,ce;
 
@@ -492,18 +492,18 @@ void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 			if (dataRowSet.find( ci->first.row) == dataRowSet.end())
 			{
 				// ... row containing no data elements assumed to be a column heading element
-				start2colmap[ ci->second].push_back( ci->first.col);
+				start2colmap[ ci->second].insert( ci->first.col);
 			}
 			else
 			{
 				// ... row containing at least one data element assumed to be a row heading element
-				start2rowmap[ ci->second].push_back( ci->first.row);
+				start2rowmap[ ci->second].insert( ci->first.row);
 			}
 		}
 		else if (para.type() == Paragraph::TableCellStart)
 		{
-			start2rowmap[ ci->second].push_back( ci->first.row);
-			start2colmap[ ci->second].push_back( ci->first.col);
+			start2rowmap[ ci->second].insert( ci->first.row);
+			start2colmap[ ci->second].insert( ci->first.col);
 		}
 		else
 		{
@@ -521,7 +521,7 @@ void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 			{
 				m_tables.push_back( *hi);
 	
-				std::map<int,std::vector<int> >::const_iterator xi;
+				std::map<int,std::set<int> >::const_iterator xi;
 				xi = start2colmap.find( hidx);
 				if (xi != start2colmap.end())
 				{
@@ -533,8 +533,12 @@ void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 					addTableCellIdentifierAttributes( "R", xi->second);
 				}
 				ParagraphRange range = findParagraphRange( hi, m_parar.end(), hi->type(), Paragraph::invType( hi->type()));
+				if (hi != range.first) throw std::runtime_error("internal: corrupt table definition");
 				m_tables.insert( m_tables.end(), range.first+1, range.second);
-				hi = range.second -1;
+
+				int rangeSize = range.second - range.first;
+				hidx += rangeSize - 1;
+				hi += rangeSize -1;
 			}
 		}
 	}
@@ -546,6 +550,7 @@ void DocumentStructure::finishTable( int startidx, const std::string& tableid)
 		if (hi->type() == Paragraph::TableHeadStart || hi->type() == Paragraph::TableCellStart || hi->type() == Paragraph::TableTitleStart)
 		{
 			ParagraphRange range = findParagraphRange( hi, m_parar.end(), hi->type(), Paragraph::invType( hi->type()));
+			if (hi != range.first) throw std::runtime_error("internal: corrupt table definition");
 			hi = range.second;
 		}
 		else if (hi->type() == Paragraph::TableEnd)

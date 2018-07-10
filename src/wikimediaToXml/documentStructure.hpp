@@ -13,6 +13,7 @@
 #include "strus/base/string_format.hpp"
 #include <string>
 #include <map>
+#include <set>
 #include <vector>
 #include <utility>
 
@@ -628,7 +629,7 @@ private:
 	void closeDanglingStructures( const Paragraph::Type& starttype);
 	void checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end);
 	bool checkTableDefExists( const char* action);
-	void addTableCellIdentifierAttributes( const char* prefix, const std::vector<int>& indices);
+	void addTableCellIdentifierAttributes( const char* prefix, const std::set<int>& indices);
 	std::string passageKey( const std::vector<Paragraph>::const_iterator& begin, const std::vector<Paragraph>::const_iterator& end);
 
 private:

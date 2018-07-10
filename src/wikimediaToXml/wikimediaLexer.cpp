@@ -852,15 +852,16 @@ static int charClassChangeCount( char const* si, const char* se)
 	int max_cl = 0;
 	for (int sidx=0; si < se; ++si,++sidx)
 	{
-		if ((unsigned char)*si < 32) return -1;
+		if ((unsigned char)*si <= 32) return -1;
 		int prev_cl = cl;
 		if (*si >= 'A' && *si <= 'Z') cl = 1;
-		if (*si >= 'a' && *si <= 'z') cl = 2;
-		if (*si == '_') cl = 3;
-		if (*si >= '0' && *si <= '9') cl = 4;
-		if ((unsigned char)*si >= 128) cl = 5;
+		else if (*si >= 'a' && *si <= 'z') cl = 2;
+		else if (*si == '_') cl = 3;
+		else if (*si >= '0' && *si <= '9') cl = 4;
+		else if ((unsigned char)*si >= 128) cl = 5;
+		else cl = 6;
 
-		if (prev_cl != cl)
+		if (prev_cl && prev_cl != cl)
 		{
 			if (sidx == 1 && prev_cl == 1 && cl == 2) continue;
 			if (max_cl <= 2 && cl == 4) continue;
@@ -1511,7 +1512,6 @@ WikimediaLexem WikimediaLexer::next()
 					while (*m_si == '-') ++m_si;
 					std::map<std::string,std::string> attributes;
 					parseAttributes( m_si, m_se, '\n', attributes);
-					if (m_si < m_se && *m_si == '\n') ++m_si;
 					return WikimediaLexem( WikimediaLexem::TableRowDelim, 0, "", attributes);
 				}
 				else if (*m_si == '+')
