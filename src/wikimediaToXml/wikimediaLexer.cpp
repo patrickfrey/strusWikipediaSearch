@@ -87,10 +87,6 @@ static char const* skipString( char const* si, char const* se)
 	{
 		return si+1;
 	}
-	else
-	{
-		return si;
-	}
 	return NULL;
 }
 
@@ -962,7 +958,7 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 				while (si < se && (*si == '"' || *si == '\''))
 				{
 					if (!value.empty()) value.push_back(' ');
-					if (!parseString( value, si, se, true)) goto REWIND;
+					if (!parseString( value, si, se, true/*tolerant*/)) goto REWIND;
 					si = skipSpaces( si, se);
 				}
 			}
@@ -1352,7 +1348,7 @@ WikimediaLexem WikimediaLexer::next()
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
 			++m_si;
-			if (m_si >= m_se) break;
+			if (m_si == m_se) break;
 
 			if (*m_si == '[')
 			{
@@ -1460,7 +1456,7 @@ WikimediaLexem WikimediaLexer::next()
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
 			++m_si;
-			if (m_si >= m_se) break;
+			if (m_si == m_se) break;
 
 			if (*m_si == '{')
 			{
@@ -1548,7 +1544,7 @@ WikimediaLexem WikimediaLexer::next()
 			else if (*m_si == '|')
 			{
 				m_si = skipSpaces( m_si+1, m_se);
-				if (m_si >= m_se) break;
+				if (m_si == m_se) break;
 
 				if (*m_si == '-')
 				{

@@ -11,6 +11,7 @@
 #ifndef _STRUS_WIKIPEDIA_WIKIMEDIA_LEXER_HPP_INCLUDED
 #define _STRUS_WIKIPEDIA_WIKIMEDIA_LEXER_HPP_INCLUDED
 #include "strus/base/numstring.hpp"
+#include "strus/base/string_conv.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -100,8 +101,9 @@ struct WikimediaLexem
 	WikimediaLexem( const WikimediaLexem& o)
 		:id(o.id),idx(o.idx),value(o.value),attributes(o.attributes){}
 
-	int attributeToInt( const std::string& name) const
+	int attributeToInt( const std::string& name_) const
 	{
+		std::string name( string_conv::tolower( name_));
 		AttributeMap::const_iterator ai = attributes.find( name);
 		if (ai == attributes.end()) return 1;
 		strus::NumParseError err = NumParseOk;
