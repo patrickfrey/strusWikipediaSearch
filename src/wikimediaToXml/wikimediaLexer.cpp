@@ -211,6 +211,8 @@ enum TagType {
 	TagVarClose,
 	TagCodeOpen,
 	TagCodeClose,
+	TagTimestampOpen,
+	TagTimestampClose,
 	TagTtOpen,
 	TagTtClose,
 	TagSourceOpen,
@@ -405,6 +407,7 @@ static TagType parseTagType( char const*& si, const char* se)
 			}
 		}
 		if (tryParseTag( "nowiki", si, se)) return open ? TagNoWikiOpen : TagNoWikiClose;
+		else if (tryParseTag( "timestamp", si, se)) return open ? TagTimestampOpen : TagTimestampClose;
 		else if (tryParseTag( "code", si, se)) return open ? TagCodeOpen : TagCodeClose;
 		else if (tryParseTag( "var", si, se)) return open ? TagVarOpen : TagVarClose;
 		else if (tryParseTag( "tt", si, se)) return open ? TagTtOpen : TagTtClose;
@@ -828,12 +831,14 @@ static bool isBigHexNumCandidate(  char const* si, const char* se)
 {
 	if (si+8 < se && si[0] == '0' && si[1] == 'x' && 6<hexNumCount( si+2,se)) return true;
 	if (si+7 < se && si[0] == '#' && 6<hexNumCount( si+1,se)) return true;
+	if (si+12 < se && 6<hexNumCount( si+1,se)) return true;
 	return false;
 }
 
 std::string WikimediaLexer::tryParseBigHexNum()
 {
 	std::string rt;
+	
 	if (m_si+10 < m_se && m_si[0] == '0' && m_si[1] == 'x')
 	{
 		int hc = hexNumCount( m_si+2,m_se);
@@ -850,6 +855,16 @@ std::string WikimediaLexer::tryParseBigHexNum()
 		if (hc >= 6 && (m_si == m_se || !isAlpha( m_si[1+hc])))
 		{
 			const char* start = m_si+1;
+			m_si = m_si+1+hc;
+			return std::string( start, m_si-start);
+		}
+	}
+	else
+	{
+		int hc = hexNumCount( m_si+1,m_se);
+		if (hc >= 12 && (m_si == m_se || !isAlpha( m_si[1+hc])))
+		{
+			const char* start = m_si;
 			m_si = m_si+1+hc;
 			return std::string( start, m_si-start);
 		}
@@ -1095,6 +1110,11 @@ WikimediaLexem WikimediaLexer::next()
 					case TagNoWikiOpen:
 						return WikimediaLexem( WikimediaLexem::NoWiki, 0, parseTagContent( "nowiki", m_si, m_se));
 					case TagNoWikiClose:
+						start = m_si;
+						break;
+					case TagTimestampOpen:
+						return WikimediaLexem( WikimediaLexem::Timestamp, 0, parseTagContent( "timestamp", m_si, m_se));
+					case TagTimestampClose:
 						start = m_si;
 						break;
 					case TagCodeOpen:
