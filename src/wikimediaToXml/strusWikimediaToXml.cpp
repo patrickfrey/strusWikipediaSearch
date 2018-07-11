@@ -848,7 +848,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "     <text>             :Indexable text\n";
 			std::cerr << "     <char>             :Content is on or a sequence of special characters\n";
 			std::cerr << "     <code>             :Text descibing some sort of an Id not suitable for retrival\n";
-			std::cerr << "     <math>             :Text marked as latex math formula\n";
+			std::cerr << "     <math>             :Text marked as LaTeX syntax math formula\n";
 			std::cerr << "     <time>             :A timestimp of the form \"YYMMDDThhmmss<zone>\", <zone> = Z (UTC)\n";
 			std::cerr << "     <bibref>           :bibliographic reference\n";
 			std::cerr << "     <nowiki>           :information not to index\n";
@@ -959,7 +959,7 @@ int main( int argc, const char* argv[])
 					{
 						lastTag = TagPage;
 						docAttributes.clear();
-						if (docCounter % 1000 == 0)
+						if (docCounter % 1000 == 0 && !collectRedirects)
 						{
 							createOutputDir( docCounter);
 						}
@@ -1104,7 +1104,7 @@ int main( int argc, const char* argv[])
 		{
 			std::string linkoutfilename( strus::joinFilePath( g_outputdir, linkmapfilename));
 			std::cerr << "links are written to " << linkoutfilename << "..." << std::endl;
-			linkmap->write( linkmapfilename);
+			linkmap->write( linkoutfilename);
 		}
 		return rt;
 	}
