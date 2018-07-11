@@ -1500,7 +1500,9 @@ WikimediaLexem WikimediaLexer::next()
 			else if (*m_si == '|')
 			{
 				++m_si;
-				if (m_si < m_se && *m_si == '-') ++m_si;
+				while (m_si < m_se && *m_si == '-') ++m_si;
+				m_si = skipSpaces( m_si, m_se);
+				if (*m_si == '!') ++m_si;
 
 				std::map<std::string,std::string> attributes;
 				std::map<std::string,std::string> aa;
@@ -1577,7 +1579,9 @@ WikimediaLexem WikimediaLexer::next()
 
 				if (*m_si == '-')
 				{
-					while (*m_si == '-') ++m_si;
+					while (m_si < m_se && *m_si == '-') ++m_si;
+					m_si = skipSpaces( m_si, m_se);
+					if (*m_si == '!') ++m_si;
 					std::map<std::string,std::string> attributes;
 					parseAttributes( m_si, m_se, '\n', '|', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
