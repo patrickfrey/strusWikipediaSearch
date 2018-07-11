@@ -187,7 +187,7 @@ std::string LinkMapBuilder::transitiveValue( const std::vector<std::string>& val
 	std::set<std::string> vset( valuelist.begin(), valuelist.end());
 	std::vector<std::string> vl = valuelist;
 	int vidx = 0;
-	while (vidx < (int)vl.size())
+	for (; vidx < (int)vl.size(); ++vidx)
 	{
 		if (idset.find( vl[vidx]) != idset.end()) return vl[ vidx];
 		std::string normkey = LinkMap::normalizeKey( vl[vidx]);
