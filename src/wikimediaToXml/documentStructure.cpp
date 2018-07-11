@@ -16,6 +16,7 @@
 #include "textwolf/charset_utf8.hpp"
 #include "strus/base/string_format.hpp"
 #include "strus/base/string_conv.hpp"
+#include "strus/base/utf8.hpp"
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
@@ -754,21 +755,23 @@ static std::string getDocidFromTitle( const std::string& txt)
 		{
 			rt.push_back( *si++);
 		}
-		else if ((unsigned char)*si >= 128)
+		else if ((unsigned char)*si >= 128 || *si == '#' || *si == '%')
 		{
-			rt.push_back( '#');
-			while ((unsigned char)*si >= 128)
+			int ci = strus::utf8charlen( *si);
+			while (ci)
 			{
-				char buf[ 16];
+				rt.push_back( '%');
+				char buf[ 4];
 				std::snprintf( buf, sizeof(buf), "%02x", (unsigned int)(unsigned char)*si);
 				rt.append( buf);
 				++si;
+				--ci;
 			}
 		}
 		else
 		{
-			rt.push_back( '#');
-			char buf[ 16];
+			rt.push_back( '%');
+			char buf[ 4];
 			std::snprintf( buf, sizeof(buf), "%02x", (unsigned int)(unsigned char)*si);
 			rt.append( buf);
 			++si;
@@ -1389,73 +1392,4 @@ void DocumentStructure::setErrorsSourceInfo( const std::string& msg)
 	
 }
 
-std::string LinkMap::normalizeValue( const std::string& vv)
-{
-	std::string rt;
-	char const* vi = vv.c_str();
-
-	for (; *vi; ++vi)
-	{
-		char back = rt.empty() ? ' ' : rt[ rt.size()-1];
-		if ((unsigned char)*vi <= 32)
-		{
-			if (back != ' ') rt.push_back(' ');
-		}
-		else
-		{
-			rt.push_back( *vi);
-		}
-	}
-	char back = rt.empty() ? '\0' : rt[ rt.size()-1];
-	if (back == ' ') rt.resize( rt.size()-1);
-	return rt;
-}
-
-std::string LinkMap::normalizeKey( const std::string& kk)
-{
-	std::string rt;
-	char const* ki = kk.c_str();
-
-	for (; *ki; ++ki)
-	{
-		char ch = *ki | 32;
-		char back = rt.empty() ? ' ' : rt[ rt.size()-1];
-		if (*ki == '(' || *ki == '-')
-		{
-			if (back != ' ') rt.push_back(' ');
-			rt.push_back( *ki);
-		}
-		else if ((unsigned char)*ki <= 32)
-		{
-			if (back != ' ') rt.push_back(' ');
-		}
-		else if (ch >= 'a' && ch <= 'z')
-		{
-			if (back == ')' || back == '.' || back == ':' || back == '!' || back == ';' || back == '?')
-			{
-				rt.push_back( ' ');
-				rt.push_back( ch ^ 32);
-			}
-			else if (back == '(')
-			{
-				rt.push_back( ch ^ 32);
-			}
-			else if (back == ' ')
-			{
-				rt.push_back( ch ^ 32);
-			}
-			else
-			{
-				rt.push_back( ch);
-			}
-		}
-		else
-		{
-			rt.push_back( *ki);
-		}
-	}
-	char back = rt.empty() ? '\0' : rt[ rt.size()-1];
-	if (back == ' ') rt.resize( rt.size()-1);
-	return rt;
-}
 

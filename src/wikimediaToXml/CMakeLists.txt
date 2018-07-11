@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 # --------------------------------------
 set( source_files
 	outputString.cpp
+	linkMap.cpp
 	documentStructure.cpp
 	wikimediaLexer.cpp
 	strusWikimediaToXml.cpp

@@ -17,6 +17,7 @@
 #include "strus/base/string_format.hpp"
 #include "strus/base/atomic.hpp"
 #include "strus/base/local_ptr.hpp"
+#include "linkMap.hpp"
 #include "documentStructure.hpp"
 #include "outputString.hpp"
 #include "wikimediaLexer.hpp"
@@ -200,22 +201,23 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				break;
 			case strus::WikimediaLexem::OpenPageLink:
 			{
+				std::pair<std::string,std::string> lnk = strus::LinkMap::getLinkParts( lexem.value);
 				if (g_linkmap)
 				{
-					const char* val = g_linkmap->get( lexem.value);
+					const char* val = g_linkmap->get( lnk.first);
 					if (val)
 					{
-						doc.openPageLink( val);
+						doc.openPageLink( val, lnk.second);
 					}
 					else
 					{
 						doc.addError( strus::string_format( "failed to resolve page link '%s'", lexem.value.c_str()));
-						doc.openPageLink( lexem.value);
+						doc.openPageLink( lnk.first, lnk.second);
 					}
 				}
 				else
 				{
-					doc.openPageLink( lexem.value);
+					doc.openPageLink( lnk.first, lnk.second);
 				}
 				break;
 			}
@@ -862,6 +864,7 @@ int main( int argc, const char* argv[])
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
 		if (nofThreads <= 0) nofThreads = 0;
 		strus::local_ptr<strus::LinkMap> linkmap;
+		strus::LinkMapBuilder linkmapBuilder;
 		if (!linkmapfilename.empty())
 		{
 			linkmap.reset( new strus::LinkMap());
@@ -999,11 +1002,9 @@ int main( int argc, const char* argv[])
 						{
 							if (collectRedirects)
 							{
+								std::pair<std::string,std::string> redir_parts = strus::LinkMap::getLinkParts( docAttributes.redirect_title);
 								if (g_verbosity >= 1) std::cerr << strus::string_format( "%s => %s\n", docAttributes.title.c_str(), docAttributes.redirect_title.c_str());
-								if (!linkmap->set( docAttributes.title, docAttributes.redirect_title))
-								{
-									std::cerr << strus::string_format("failed to assign page link '%s' => '%s'", docAttributes.title.c_str(), docAttributes.redirect_title.c_str()) << std::endl;
-								}
+								linkmapBuilder.redirect( docAttributes.title, redir_parts.first);
 							}
 						}
 						else if (!docAttributes.title.empty() && !docAttributes.content.empty())
@@ -1011,10 +1012,7 @@ int main( int argc, const char* argv[])
 							if (collectRedirects)
 							{
 								if (g_verbosity >= 1) std::cerr << strus::string_format( "link %s => %s\n", docAttributes.title.c_str(), docAttributes.title.c_str());
-								if (!linkmap->set( docAttributes.title, docAttributes.title))
-								{
-									std::cerr << strus::string_format("failed to assign page link '%s' => '%s'", docAttributes.title.c_str(), docAttributes.title.c_str()) << std::endl;
-								}
+								linkmapBuilder.define( docAttributes.title);
 							}
 							else
 							{
@@ -1104,6 +1102,7 @@ int main( int argc, const char* argv[])
 		{
 			std::string linkoutfilename( strus::joinFilePath( g_outputdir, linkmapfilename));
 			std::cerr << "links are written to " << linkoutfilename << "..." << std::endl;
+			linkmap.reset( new strus::LinkMap( linkmapBuilder.build()));
 			linkmap->write( linkoutfilename);
 		}
 		return rt;
