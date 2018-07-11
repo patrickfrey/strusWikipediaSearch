@@ -16,6 +16,7 @@
 #include "strus/base/inputStream.hpp"
 #include "strus/base/string_format.hpp"
 #include "strus/base/atomic.hpp"
+#include "strus/base/local_ptr.hpp"
 #include "documentStructure.hpp"
 #include "outputString.hpp"
 #include "wikimediaLexer.hpp"
@@ -38,6 +39,7 @@ static bool g_dumps = false;
 static int g_breakpoint = -1;
 static std::string g_outputdir;
 static std::string g_origOutputPattern;
+static const strus::LinkMap* g_linkmap = NULL;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
@@ -197,8 +199,26 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.closeWebLink();
 				break;
 			case strus::WikimediaLexem::OpenPageLink:
-				doc.openPageLink( lexem.value);
+			{
+				if (g_linkmap)
+				{
+					const char* val = g_linkmap->get( lexem.value);
+					if (val)
+					{
+						doc.openPageLink( val);
+					}
+					else
+					{
+						doc.addError( strus::string_format( "failed to resolve page link '%s'", lexem.value.c_str()));
+						doc.openPageLink( lexem.value);
+					}
+				}
+				else
+				{
+					doc.openPageLink( lexem.value);
+				}
 				break;
+			}
 			case strus::WikimediaLexem::ClosePageLink:
 				doc.closePageLink();
 				break;
@@ -682,6 +702,7 @@ int main( int argc, const char* argv[])
 		bool namespaceset = false;
 		bool printusage = false;
 		bool collectRedirects = false;
+		std::string linkmapfilename;
 
 		for (;argi < argc; ++argi)
 		{
@@ -705,10 +726,6 @@ int main( int argc, const char* argv[])
 			{
 				printusage = true;
 			}
-			else if (0==std::strcmp(argv[argi],"-R"))
-			{
-				collectRedirects = true;
-			}
 			else if (0==std::memcmp(argv[argi],"-S",2))
 			{
 				if (g_breakpoint > 0) throw std::runtime_error("duplicated option -S <lexemid>");
@@ -721,6 +738,21 @@ int main( int argc, const char* argv[])
 				++argi;
 				if (argi == argc) throw std::runtime_error("option -O without argument");
 				g_origOutputPattern = argv[ argi];
+			}
+			else if (0==std::memcmp(argv[argi],"-L",2))
+			{
+				if (!linkmapfilename.empty()) throw std::runtime_error("duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
+				++argi;
+				if (argi == argc) throw std::runtime_error("option -L without argument");
+				linkmapfilename = argv[ argi];
+			}
+			else if (0==std::memcmp(argv[argi],"-R",2))
+			{
+				if (!linkmapfilename.empty()) throw std::runtime_error("duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
+				++argi;
+				if (argi == argc) throw std::runtime_error("option -R without argument");
+				linkmapfilename = argv[ argi];
+				collectRedirects = true;
 			}
 			else if (0==std::memcmp(argv[argi],"-n",2))
 			{
@@ -759,66 +791,87 @@ int main( int argc, const char* argv[])
 		{
 			std::cerr << "Usage: strusWikimediaToXml [options] <inputfile> [<outputdir>]" << std::endl;
 			std::cerr << "<inputfile>   :File to process or '-' for stdin" << std::endl;
+			std::cerr << "<outputdir>   :Directory where output files and directories are written to." << std::endl;
 			std::cerr << "options:" << std::endl;
 			std::cerr << "    -h           :print this usage" << std::endl;
-			std::cerr << "    -V           :verbosity level 1 mode (output every processed document and its errors)" << std::endl;
-			std::cerr << "    -VV          :verbosity level 2 mode (output every item processed to stderr)" << std::endl;
-			std::cerr << "    -S <lexemid> :stop verbose output (option -VV) at lexem with index <lexemid> (continue processing)" << std::endl;
-			std::cerr << "    -O <substr>  :write dump file for documents with a title containing <substr> as title sub string" << std::endl;
+			std::cerr << "    -V           :verbosity level 1 (output document title errors to stderr)" << std::endl;
+			std::cerr << "    -VV          :verbosity level 2 (output lexems found additional to level 1)" << std::endl;
+			std::cerr << "    -S <lexemid> :stop verbose output (option -VV) at lexem with\n";
+			std::cerr << "                  index <lexemid> (continue processing)" << std::endl;
+			std::cerr << "    -O <substr>  :write dump file for documents with a title\n";
+			std::cerr << "                  containing <substr> as title sub string" << std::endl;
 			std::cerr << "    -B           :beautified readable XML output" << std::endl;
 			std::cerr << "    -D           :write dump files always, not only in case of an error" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
 			std::cerr << "    -n <ns>      :reduce output to namespace <ns> (0=article)" << std::endl;
-			std::cerr << "    -R           :collect redirects only" << std::endl;
+			std::cerr << "    -R <lnkfile> :collect redirects only and write them to <lnkfile>" << std::endl;
+			std::cerr << "    -L <lnkfile> :Load link file <lnkfile> for verifying page links" << std::endl;
 			std::cerr << std::endl;
 			std::cerr << "Description:" << std::endl;
-			std::cerr << "  Takes a unpacked Wikipedia XML dump as input and tries to convert it to a set of valid XML files." << std::endl;
-			std::cerr << "  The produced output files have the extension .xml and are written in a subdirectory of <outputdir>." << std::endl;
-			std::cerr << "  The subdirectories for the output are enumerated in ascending order starting with 0000." << std::endl;
+			std::cerr << "  Takes a unpacked Wikipedia XML dump as input and tries to convert it to\n";
+			std::cerr << "    a set of XML files in a schema suitable for information retrieval." << std::endl;
+			std::cerr << "  The produced XML document files have the extension .xml and are written\n";
+			std::cerr << "    into a subdirectory of <outputdir>. The subdirectories for the output are\n";
+			std::cerr << "    enumerated with 4 digits in ascending order starting with 0000." << std::endl;
 			std::cerr << "  Each subdirectory contains at maximum 1000 <docid>.xml output files." << std::endl;
-			std::cerr << "  Each output file contains one document and has an identifier derived from the Wikipedia title." << std::endl;
-			std::cerr << "  Besides the <docid>.xml files, the following files are written in case of an error or if asked for:" << std::endl;
-			std::cerr << "    <docid>.err         :File with recoverable errors in the corresponding document" << std::endl;
+			std::cerr << "  Each output file contains one document and has an identifier derived\n";
+			std::cerr << "    from the Wikipedia title." << std::endl;
+			std::cerr << "  Besides the <docid>.xml files, the following files are written:" << std::endl;
+			std::cerr << "    <docid>.err         :File with recoverable errors in the document" << std::endl;
 			std::cerr << "    <docid>.fatal.err   :File with an exception thrown while processing" << std::endl;
-			std::cerr << "    <docid>.strange.txt :File listing some anomalic text elements" << std::endl;
-			std::cerr << "    <docid>.orig.xml    :File with a dump of the document processed" << std::endl;
+			std::cerr << "    <docid>.strange.txt :File listing some suspicious text elements\n";
+			std::cerr << "                         This list is useful for tracking classification\n";
+			std::cerr << "                         errors." << std::endl;
+			std::cerr << "    <docid>.orig.xml    :File with a dump of the document processed\n";
+			std::cerr << "                         (only written if required or on error)" << std::endl;
 			std::cerr << std::endl;
 			std::cerr << "Output XML format:" << std::endl;
 			std::cerr << "  The tag hierarchy is as best effort intendet to be as flat as possible.\n";
 			std::cerr << "  The following list explains the tags in the output:\n";
-			std::cerr << "     docid:  The content specifies a unique document identifier\n";
-			std::cerr << "             (the title with '_' instead of ' ' and some other encodings)\n";
-			std::cerr << "     entity: A marked entity in the Wikipedia collection\n";
-			std::cerr << "     quot:   A (\") string in the Wikipedia collection\n";
-			std::cerr << "     dquot:  A ('') string in the Wikipedia collection\n";
-			std::cerr << "     heading:A subtitle or heading in a document\n";
-			std::cerr << "     list:   A list item in a document\n";
-			std::cerr << "     text:   A text item in a document\n";
-			std::cerr << "     attr:   An attribute in a document\n";
-			std::cerr << "     citation:A citation in a document\n";
-			std::cerr << "     ref     :A reference structure in a document\n";
-			std::cerr << "     pagelink:A link to a page in the collection\n";
-			std::cerr << "     weblink :A web link to a page in the internet\n";
-			std::cerr << "     table   :A table implementation\n";
-			std::cerr << "     description :Sub-title text in the table\n";
-			std::cerr << "     head    :head cells of the table addressed by the attribute id\n";
-			std::cerr << "     cell    :Cells of the table addressed by the attribute id\n";
-			std::cerr << "     text    :Cells of the table addressed by the attribute id\n";
-			std::cerr << "     char    :Cells of the table addressed by the attribute id\n";
-			std::cerr << "     code    :text marked as code\n";
-			std::cerr << "     math    :text marked as code\n";
-			std::cerr << "     time    :containing a timestimp\n";
-			std::cerr << "     cell    :data cells of the table addressed by the attribute id\n";
-			std::cerr << "     bibref  :bibliographic reference\n";
-			std::cerr << "     nowiki  :information not to index\n";
-			std::cerr << "     citlink :internal link to a citation in this document\n";
-			std::cerr << "     reflink :internal link to a reference in this document\n";
+			std::cerr << "     <docid>            :The content specifies a unique document identifier\n";
+			std::cerr << "                         (the title with '_' instead of ' ' and some other encodings)\n";
+			std::cerr << "     <entity>           :A marked entity in the Wikipedia collection\n";
+			std::cerr << "     <quot>             :A quoted string in the Wikipedia collection\n";
+			std::cerr << "     <heading id='h#'>  :A subtitle or heading in a document\n";
+			std::cerr << "     <list id='l#'>     :A list item in a document\n";
+			std::cerr << "     <text>             :A text item in a document\n";
+			std::cerr << "     <attr>             :An attribute in a document\n";
+			std::cerr << "     <citation>         :A citation in a document\n";
+			std::cerr << "     <ref>              :A reference structure in a document\n";
+			std::cerr << "     <pagelink>         :A link to a page in the collection\n";
+			std::cerr << "     <weblink>          :A web link to a page in the internet\n";
+			std::cerr << "     <table>            :A table implementation\n";
+			std::cerr << "     <tabtitle>         :Sub-title text in the table\n";
+			std::cerr << "     <head id='C#'>     :head cells of a table adressing a column cell\n";
+			std::cerr << "     <head id='R#'>     :head cells of a table adressing a row cell\n";
+			std::cerr << "     <cell id='R#'>     :Data sells of a table with a list of identifiers making it addressable\n";
+			std::cerr << "     <text>             :Indexable text\n";
+			std::cerr << "     <char>             :Content is on or a sequence of special characters\n";
+			std::cerr << "     <code>             :Text descibing some sort of an Id not suitable for retrival\n";
+			std::cerr << "     <math>             :Text marked as latex math formula\n";
+			std::cerr << "     <time>             :A timestimp of the form \"YYMMDDThhmmss<zone>\", <zone> = Z (UTC)\n";
+			std::cerr << "     <bibref>           :bibliographic reference\n";
+			std::cerr << "     <nowiki>           :information not to index\n";
+			std::cerr << "     <citlink>          :internal link to a citation in this document\n";
+			std::cerr << "     <reflink>          :internal link to a reference in this document\n";
+			std::cerr << std::endl;
 			return rt;
 		}
 		IStream input( argv[argi]);
 		if (argi+1 < argc) g_outputdir = argv[argi+1];
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
 		if (nofThreads <= 0) nofThreads = 0;
+		strus::local_ptr<strus::LinkMap> linkmap;
+		if (!linkmapfilename.empty())
+		{
+			linkmap.reset( new strus::LinkMap());
+			if (!collectRedirects)
+			{
+				linkmap->load( strus::joinFilePath( g_outputdir, linkmapfilename));
+				g_linkmap = linkmap.get();
+			}
+		}
+
 		struct WorkerArray
 		{
 			WorkerArray( Worker* ar_)
@@ -946,17 +999,31 @@ int main( int argc, const char* argv[])
 						{
 							if (collectRedirects)
 							{
-								std::cout << strus::string_format( "%s\t%s\n", docAttributes.title.c_str(), docAttributes.redirect_title.c_str());
+								if (g_verbosity >= 1) std::cerr << strus::string_format( "%s => %s\n", docAttributes.title.c_str(), docAttributes.redirect_title.c_str());
+								if (!linkmap->set( docAttributes.title, docAttributes.redirect_title))
+								{
+									std::cerr << strus::string_format("failed to assign page link '%s' => '%s'", docAttributes.title.c_str(), docAttributes.redirect_title.c_str()) << std::endl;
+								}
 							}
 						}
 						else if (!docAttributes.title.empty() && !docAttributes.content.empty())
 						{
-							if (!collectRedirects)
+							if (collectRedirects)
 							{
+								if (g_verbosity >= 1) std::cerr << strus::string_format( "link %s => %s\n", docAttributes.title.c_str(), docAttributes.title.c_str());
+								if (!linkmap->set( docAttributes.title, docAttributes.title))
+								{
+									std::cerr << strus::string_format("failed to assign page link '%s' => '%s'", docAttributes.title.c_str(), docAttributes.title.c_str()) << std::endl;
+								}
+							}
+							else
+							{
+								const char* normtitle = g_linkmap ? g_linkmap->get( docAttributes.title) : 0;
+								if (!normtitle) normtitle = docAttributes.title.c_str();
 								if (nofThreads)
 								{
 									workeridx = docCounter % nofThreads;
-									workers.ar[ workeridx].push( docCounter, docAttributes.title, docAttributes.content);
+									workers.ar[ workeridx].push( docCounter, normtitle, docAttributes.content);
 									++docCounter;
 									if (docCounter % 1000 == 0)
 									{
@@ -967,7 +1034,7 @@ int main( int argc, const char* argv[])
 								{
 									try
 									{
-										Work work( docCounter, docAttributes.title, docAttributes.content, g_dumps);
+										Work work( docCounter, normtitle, docAttributes.content, g_dumps);
 										if (g_verbosity >= 1) std::cerr << strus::string_format( "process document '%s'\n", docAttributes.title.c_str()) << std::flush;
 										work.process();
 									} 
@@ -1032,6 +1099,12 @@ int main( int argc, const char* argv[])
 		for (int wi=0; wi < nofThreads; ++wi)
 		{
 			workers.ar[ wi].waitTermination();
+		}
+		if (collectRedirects)
+		{
+			std::string linkoutfilename( strus::joinFilePath( g_outputdir, linkmapfilename));
+			std::cerr << "links are written to " << linkoutfilename << "..." << std::endl;
+			linkmap->write( linkmapfilename);
 		}
 		return rt;
 	}

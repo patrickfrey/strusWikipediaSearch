@@ -1079,7 +1079,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::DoubleQuoteStart:
 				stk.push_back( Paragraph::StructDoubleQuote);
-				printTagOpen( output, rt, "dquot", pi->id(), pi->text());
+				printTagOpen( output, rt, "quot", pi->id(), pi->text());
 				break;
 			case Paragraph::DoubleQuoteEnd:
 				stk.pop_back();
@@ -1211,7 +1211,7 @@ std::string DocumentStructure::toxml( bool beautified) const
 				break;
 			case Paragraph::TableTitleStart:
 				stk.push_back( Paragraph::StructTableTitle);
-				printTagOpen( output, rt, "description", pi->id(), pi->text());
+				printTagOpen( output, rt, "tabtitle", pi->id(), pi->text());
 				break;
 			case Paragraph::TableTitleEnd:
 				stk.pop_back();
@@ -1389,4 +1389,73 @@ void DocumentStructure::setErrorsSourceInfo( const std::string& msg)
 	
 }
 
+std::string LinkMap::normalizeValue( const std::string& vv)
+{
+	std::string rt;
+	char const* vi = vv.c_str();
+
+	for (; *vi; ++vi)
+	{
+		char back = rt.empty() ? ' ' : rt[ rt.size()-1];
+		if ((unsigned char)*vi <= 32)
+		{
+			if (back != ' ') rt.push_back(' ');
+		}
+		else
+		{
+			rt.push_back( *vi);
+		}
+	}
+	char back = rt.empty() ? '\0' : rt[ rt.size()-1];
+	if (back == ' ') rt.resize( rt.size()-1);
+	return rt;
+}
+
+std::string LinkMap::normalizeKey( const std::string& kk)
+{
+	std::string rt;
+	char const* ki = kk.c_str();
+
+	for (; *ki; ++ki)
+	{
+		char ch = *ki | 32;
+		char back = rt.empty() ? ' ' : rt[ rt.size()-1];
+		if (*ki == '(' || *ki == '-')
+		{
+			if (back != ' ') rt.push_back(' ');
+			rt.push_back( *ki);
+		}
+		else if ((unsigned char)*ki <= 32)
+		{
+			if (back != ' ') rt.push_back(' ');
+		}
+		else if (ch >= 'a' && ch <= 'z')
+		{
+			if (back == ')' || back == '.' || back == ':' || back == '!' || back == ';' || back == '?')
+			{
+				rt.push_back( ' ');
+				rt.push_back( ch ^ 32);
+			}
+			else if (back == '(')
+			{
+				rt.push_back( ch ^ 32);
+			}
+			else if (back == ' ')
+			{
+				rt.push_back( ch ^ 32);
+			}
+			else
+			{
+				rt.push_back( ch);
+			}
+		}
+		else
+		{
+			rt.push_back( *ki);
+		}
+	}
+	char back = rt.empty() ? '\0' : rt[ rt.size()-1];
+	if (back == ' ') rt.resize( rt.size()-1);
+	return rt;
+}
 

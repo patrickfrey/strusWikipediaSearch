@@ -11,11 +11,15 @@
 #ifndef _STRUS_WIKIPEDIA_DOCUMENT_STRUCTURE_HPP_INCLUDED
 #define _STRUS_WIKIPEDIA_DOCUMENT_STRUCTURE_HPP_INCLUDED
 #include "strus/base/string_format.hpp"
+#include "strus/base/fileio.hpp"
 #include <string>
 #include <map>
 #include <set>
 #include <vector>
 #include <utility>
+#include <cstring>
+#include <sstream>
+#include <iostream>
 
 /// \brief strus toplevel namespace
 namespace strus {
@@ -314,7 +318,6 @@ private:
 	std::string m_id;
 	std::string m_text;
 };
-
 
 class DocumentStructure
 {
@@ -718,6 +721,71 @@ private:
 	int m_citationCnt;
 	int m_refCnt;
 	int m_lastHeadingIdx;
+};
+
+class LinkMap
+{
+public:
+	LinkMap(){}
+
+	void load( const std::string& filename)
+	{
+		std::string content;
+		int ec = strus::readFile( filename, content);
+		if (ec) throw std::runtime_error( strus::string_format( "error reading link map file %s: %s", filename.c_str(), ::strerror(ec)));
+		char const* li = content.c_str();
+		char const* ln = std::strchr( li, '\n');
+		for (; ln; li=ln+1,ln = std::strchr( li, '\n'))
+		{
+			if (ln-li>0) addLine( std::string( li, ln-li));
+		}
+		if (*li) addLine( li);
+	}
+	void write( const std::string& filename) const
+	{
+		std::ostringstream out;
+		std::map<std::string,std::string>::const_iterator mi = m_map.begin(), me = m_map.end();
+		for (; mi != me; ++mi)
+		{
+			out << mi->first << '\t' << mi->second << "\n";
+		}
+		int ec = strus::writeFile( filename, out.str());
+		if (ec) throw std::runtime_error( strus::string_format( "error writing link map file %s: %s", filename.c_str(), ::strerror(ec)));
+	}
+
+	const char* get( const std::string& key) const
+	{
+		std::string normkey = normalizeKey( key);
+		std::map<std::string,std::string>::const_iterator mi = m_map.find( normkey);
+		if (mi == m_map.end()) return 0;
+		return mi->second.c_str();
+	}
+
+	bool set( const std::string& key, const std::string& value)
+	{
+		std::string normkey = normalizeKey( key);
+		std::map<std::string,std::string>::const_iterator mi = m_map.find( normkey);
+		if (mi != m_map.end())
+		{
+			return (mi->second == value);
+		}
+		m_map[ normkey] = normalizeValue(value);
+		return true;
+	}
+
+private:
+	static std::string normalizeKey( const std::string& kk);
+	static std::string normalizeValue( const std::string& vv);
+
+	void addLine( const std::string& ln)
+	{
+		char const* mid = std::strchr( ln.c_str(), '\t');
+		if (!mid) throw std::runtime_error( strus::string_format("missing tab separator in linkmap file in line '%s'", ln.c_str()));
+		set( std::string( ln.c_str(), mid-ln.c_str()), mid+1);
+	}
+
+private:
+	std::map<std::string,std::string> m_map;
 };
 
 }//namespace
