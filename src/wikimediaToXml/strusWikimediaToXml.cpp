@@ -1093,10 +1093,18 @@ int main( int argc, const char* argv[])
 					terminated = true;
 					break;
 			}
+			if (collectRedirects && g_verbosity == 0 && docCounter % 100000 == 0)
+			{
+				std::cerr << "processed " << docCounter << " documents" << std::endl;
+			}
 		}
 		for (int wi=0; wi < nofThreads; ++wi)
 		{
 			workers.ar[ wi].waitTermination();
+		}
+		if (collectRedirects && g_verbosity == 0)
+		{
+			std::cerr << "processed " << docCounter << " documents" << std::endl;
 		}
 		if (collectRedirects)
 		{
