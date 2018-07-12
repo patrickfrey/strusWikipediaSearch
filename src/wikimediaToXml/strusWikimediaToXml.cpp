@@ -1058,7 +1058,7 @@ int main( int argc, const char* argv[])
 						{
 							std::cerr << "invalid document" << std::endl;
 						}
-						if (!counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
+						if (counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
 						{
 							std::cerr << "processed " << docCounter << " documents" << std::endl;
 						}
