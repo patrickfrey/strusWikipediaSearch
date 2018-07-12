@@ -1009,7 +1009,7 @@ int main( int argc, const char* argv[])
 							continue;
 						}
 						++docCounter;
-						else if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
+						if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{
 							if (collectRedirects)
 							{
