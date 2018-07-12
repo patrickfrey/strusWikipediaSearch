@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 2.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<link rel="icon" type="image/ico" href="images/strus.ico" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Documentation of the Wikipedia to XML conversion for Strus." />
+	<meta name="keywords" content="fulltext search engine on the Wikipedia collection (EN)" />
+	<meta name="author" content="Patrick Frey &lt;patrickpfrey (a) yahoo (dt) com&gt;" />
+	<link rel="stylesheet" type="text/css" href="text-profile.css" title="Text Profile" media="all" />
+	<title>Strus documentation</title>
+</head>
+
+<body>
+<div id="wrap">
+	<div id="content">
+		<h1>Wikipedia to XML conversion</h1>
+
+<h2>Intention</h2>
+<p class="description">
+<ol>
+<li><font color="#0066cc"><i>Pure XML format</i></font> of the documents in the Wikipedia collection for easier textual processing of its data.</li>
+<li><font color="#0066cc"><i>Simpler scheme</i></font> serving the needs of information retrieval and friends.</li>
+<li><font color="#0066cc"><i>One file per document</i></font> for parallel and incremental processing and easier debugging.</li>
+<li><font color="#0066cc"><i>Crystallize</i></font> some relations important <font color="#0066cc"><i>for textual information</i></font> processing, but hard to extract from the original format like relations in tables.</li>
+<li>Open a <font color="#0066cc"><i>discussion and share</i></font> efforts.</li>
+</ol>
+</p>
+
+<h2>Example XML document</h2>
+<p class="description">
+<a href="ExampleXML.html">This XML document</a> illustrates the output written.
+</p>
+
+<h2>Program</h2>
+<p class="description">
+<pre>
+Usage: strusWikimediaToXml [options] &lt;inputfile&gt; [&lt;outputdir&gt;]
+&lt;inputfile&gt;   :File to process or '-' for stdin
+&lt;outputdir&gt;   :Directory where output files and directories are written to.
+options:
+    -h           :print this usage
+    -V           :verbosity level 1 (output document title errors to stderr)
+    -VV          :verbosity level 2 (output lexems found additional to level 1)
+    -S &lt;lexemid&gt; :stop verbose output (option -VV) at lexem with
+                  index &lt;lexemid&gt; (continue processing)
+    -O &lt;substr&gt;  :write dump file for documents with a title
+                  containing &lt;substr&gt; as title sub string
+    -B           :beautified readable XML output
+    -P &lt;mod&gt;     :print progress counter modulo &lt;mod&gt; to stderr
+    -D           :write dump files always, not only in case of an error
+    -t &lt;threads&gt; :number of threads to use is &lt;threads&gt;
+    -n &lt;ns&gt;      :reduce output to namespace &lt;ns&gt; (0=article)
+    -R &lt;lnkfile&gt; :collect redirects only and write them to &lt;lnkfile&gt;
+    -L &lt;lnkfile&gt; :Load link file &lt;lnkfile&gt; for verifying page links
+</pre>
+</p>
+<h2>Description</h2>
+<p class="description">
+<ul>
+<li>Takes a unpacked Wikipedia XML dump as input and tries to convert it to
+    a set of XML files in a schema suitable for information retrieval.</li>
+<li>The XML documents produced are not valid XML because table cells and headings may
+    contain multiple 'id' attributes. We did not find yet another proper way to describe
+    heading to cell relations, that might be N to N.
+    See <a href="#processing">section "Processing the data for information retrieval"</a>.
+    Despite that, the XML documents produced are valid. Ideas are welcome.</li>
+<li>The produced XML document files have the extension .xml and are written
+    into a subdirectory of &lt;outputdir&gt;. The subdirectories for the output are
+    enumerated with 4 digits in ascending order starting with 0000.</li>
+<li>Each subdirectory contains at maximum 1000 &lt;docid&gt;.xml output files.</li>
+<li>Each output file contains one document and has an identifier derived
+    from the Wikipedia title.</li>
+</ul>
+Besides the &lt;docid&gt;.xml files, the following files are written:
+<ul>
+<li> &lt;docid&gt;.err         :File with recoverable errors in the document</li>
+<li> &lt;docid&gt;.fatal.err   :File with an exception thrown while processing
+<li> &lt;docid&gt;.strange.txt :File listing some suspicious text elements. This list is useful for tracking classification errors.</li>
+<li> &lt;docid&gt;.orig.xml    :File with a dump of the document processed (only written if required or on error)</li>
+</ul>
+</p>
+
+<h2>Output XML tags</h2>
+<p class="description">
+  The tag hierarchy is as best effort intendet to be as flat as possible.
+  The following list explains the tags in the output:
+<h3>Structural XML tags (tags marking a structure)</h3>
+<ul>
+     <li>&lt;quot&gt;             :a quoted string (any type of quote) in a document</li>
+     <li>&lt;heading id='h#'&gt;  :a subtitle or heading in a document</li>
+     <li>&lt;list id='l#'&gt;     :a list item in a document</li>
+     <li>&lt;attr&gt;             :an attribute in a document</li>
+     <li>&lt;entity&gt;           :a marked entity of the Wikipedia collection</li>
+     <li>&lt;citation&gt;         :a citation in a document</li>
+     <li>&lt;ref&gt;              :a reference structure in a document</li>
+     <li>&lt;pagelink&gt;         :a link to a page in the collection</li>
+     <li>&lt;weblink&gt;          :a web link to a page in the internet</li>
+     <li>&lt;table&gt;            :a table implementation</li>
+     <li>&lt;tabtitle&gt;         :sub-title text in the table</li>
+     <li>&lt;head id='C#'&gt;     :head cells of a table adressing a column cell</li>
+     <li>&lt;head id='R#'&gt;     :head cells of a table adressing a row cell</li>
+     <li>&lt;cell id='R#'&gt;     :data sells of a table with a list of identifiers making it addressable</li>
+     <li>&lt;tablink              :internal link to a table in this document
+     <li>&lt;citlink&gt;          :internal link to a citation in this document</li>
+     <li>&lt;reflink&gt;          :internal link to a reference in this document</li>
+</ul>
+<h3>Textual XML tags (tags marking a content)</h3>
+<ul>
+     <li>&lt;docid&gt;            :The content specifies a unique document identifier (the title with '_' instead of ' ' and some other encodings)</li>
+     <li>&lt;text&gt;             :A text passage in a document</li>
+     <li>&lt;char&gt;             :Content is on or a sequence of special characters</li>
+     <li>&lt;code&gt;             :Text descibing some sort of an Id not suitable for retrival</li>
+     <li>&lt;math&gt;             :Text marked as LaTeX syntax math formula</li>
+     <li>&lt;time&gt;             :A timestimp of the form "YYMMDDThhmmss&lt;zone&gt;", &lt;zone&gt; = Z (UTC)</li>
+     <li>&lt;bibref&gt;           :bibliographic reference</li>
+     <li>&lt;nowiki&gt;           :information not to index</li>
+</ul>
+</p>
+
+<a name="processing"/>
+<h2>Processing the data for information retrieval</h2>
+<p class="description">
+<ul>
+<li>Indexable text passages can be retrieved with //text, //char, //code and //math.
+</li>
+<li>Special identifiers are selected by //bibref //time //code
+</li>
+<li>Tables //table are defined with a title selected with //tabtitle and cell headings and cells.
+Cell headings and cells have attributes 'id' that relate headings to cells with a commonn value for the 'id' attribute.
+</li>
+<li>Tables, reference inclusions and citations are written as //table, //ref and //citation end of the section they appear and referenced in the text
+with //tablink, //reflink and //citlink. The idea behind this is avoid interruption of sentences. This makes part of speech tagging and
+retrieval with positional relations within sentences possible. You can use the 'id' attribute of the link and of the reference 
+that are identical for items related to relate entities with their context.
+</li>
+</ul>
+</p>
+
+</body>
+</html>
+
+
