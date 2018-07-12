@@ -170,6 +170,10 @@ void LinkMapBuilder::define( const std::string& key)
 
 void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 {
+	/*[-]*/if (key == "Bram Stoker")
+	/*[-]*/{
+	/*[-]*/	std::cerr << std::endl;
+	/*[-]*/}
 	std::string normkey = LinkMap::normalizeKey( key);
 	std::string normval = LinkMap::normalizeValue( value);
 	typedef std::multimap<std::string,std::string>::const_iterator insert_iterator;
