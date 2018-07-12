@@ -17,6 +17,7 @@
 #include "strus/base/string_format.hpp"
 #include "strus/base/atomic.hpp"
 #include "strus/base/local_ptr.hpp"
+#include "strus/base/string_conv.hpp"
 #include "linkMap.hpp"
 #include "documentStructure.hpp"
 #include "outputString.hpp"
@@ -54,6 +55,20 @@ static std::string attributesToString( const strus::WikimediaLexem::AttributeMap
 		out << ai->first << "='" << ai->second << "'";
 	}
 	return out.str();
+}
+
+static std::string getLinkDomainPrefix( const std::string& lnk)
+{
+	char const* si = lnk.c_str();
+	while ((*si|32) >= 'a' && (*si|32) <= 'z') ++si;
+	if (*si == ':')
+	{
+		return strus::string_conv::tolower( lnk.c_str(), si - lnk.c_str());
+	}
+	else
+	{
+		return std::string();
+	}
 }
 
 static void parseDocumentText( strus::DocumentStructure& doc, const char* src, std::size_t size)
@@ -204,15 +219,27 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				std::pair<std::string,std::string> lnk = strus::LinkMap::getLinkParts( lexem.value);
 				if (g_linkmap)
 				{
-					const char* val = g_linkmap->get( lnk.first);
-					if (val)
+					std::string prefix = getLinkDomainPrefix( lnk.first);
+					if (prefix == "wikipedia")
 					{
-						doc.openPageLink( val, lnk.second);
+						lnk.first = std::string( lnk.first.c_str() + prefix.size()+1);
+					}
+					if (prefix == "file")
+					{
+						doc.openPageLink( lnk.first, lnk.second);
 					}
 					else
 					{
-						doc.addError( strus::string_format( "failed to resolve page link '%s'", lexem.value.c_str()));
-						doc.openPageLink( lnk.first, lnk.second);
+						const char* val = g_linkmap->get( lnk.first);
+						if (val)
+						{
+							doc.openPageLink( val, lnk.second);
+						}
+						else
+						{
+							doc.addError( strus::string_format( "failed to resolve page link '%s'", lexem.value.c_str()));
+							doc.openPageLink( lnk.first, lnk.second);
+						}
 					}
 				}
 				else
@@ -1121,9 +1148,9 @@ int main( int argc, const char* argv[])
 			std::string linkoutfilename( strus::joinFilePath( g_outputdir, linkmapfilename));
 			std::string unresolved_outfilename = linkoutfilename + ".unresolved";
 			{
-				std::cerr << "links are written to " << linkoutfilename << "..." << std::endl;
 				linkmap.reset( new strus::LinkMap( linkmapBuilder.build()));
 				linkmap->write( linkoutfilename);
+				std::cerr << "links written to " << linkoutfilename << std::endl;
 			}{
 				std::string unresolvedstr;
 				std::vector<std::string> unresolved( linkmapBuilder.unresolved());
