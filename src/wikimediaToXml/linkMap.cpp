@@ -135,32 +135,6 @@ std::string LinkMap::normalizeKey( const std::string& kk)
 	return rt;
 }
 
-std::map<std::string,std::string> LinkMapBuilder::build()
-{
-	std::map<std::string,std::string> rt;
-	std::set<std::string> idset;
-	std::multimap<std::string,std::string>::const_iterator mi = m_map.begin(), me = m_map.end();
-	while (mi != me)
-	{
-		const std::string key = mi->first;
-		std::vector<std::string> valuelist;
-		for (; mi != me && key == mi->first; ++mi)
-		{
-			valuelist.push_back( mi->second);
-		}
-		std::string val = transitiveValue( valuelist, m_idset);
-		if (val.empty())
-		{
-			m_unresolved.insert( key);
-		}
-		else
-		{
-			rt[ key] = val;
-		}
-	}
-	return rt;
-}
-
 void LinkMapBuilder::define( const std::string& key)
 {
 	std::string normval = LinkMap::normalizeValue( key);
@@ -174,16 +148,8 @@ void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 	/*[-]*/{
 	/*[-]*/	std::cerr << std::endl;
 	/*[-]*/}
-	std::string normkey = LinkMap::normalizeKey( key);
-	std::string normval = LinkMap::normalizeValue( value);
-	typedef std::multimap<std::string,std::string>::const_iterator insert_iterator;
-	std::pair<insert_iterator,insert_iterator> irange = m_map.equal_range( normkey);
-	std::map<std::string,std::string>::const_iterator mi = irange.first, me = irange.second;
-	for (; mi != me && mi->second != normval; ++mi){}
-	if (mi == me)
-	{
-		m_map.insert( std::pair<std::string,std::string>( normkey, normval));
-	}
+	LnkDef lnkdef( LinkMap::normalizeKey( key), LinkMap::normalizeValue( value));
+	m_lnkdefmap.insert( lnkdef);
 }
 
 std::string LinkMapBuilder::transitiveValue( const std::vector<std::string>& valuelist, const std::set<std::string> idset) const
@@ -193,28 +159,53 @@ std::string LinkMapBuilder::transitiveValue( const std::vector<std::string>& val
 	int vidx = 0;
 	for (; vidx < (int)vl.size(); ++vidx)
 	{
-		if (idset.find( vl[vidx]) != idset.end()) return vl[ vidx];
-		std::string normkey = LinkMap::normalizeKey( vl[vidx]);
-
-		typedef std::multimap<std::string,std::string>::const_iterator insert_iterator;
-		std::pair<insert_iterator,insert_iterator> irange = m_map.equal_range( normkey);
-		std::map<std::string,std::string>::const_iterator mi = irange.first, me = irange.second;
-		for (; mi != me; ++mi)
+		if (m_idset.find( vl[vidx]) != m_idset.end()) return vl[ vidx];
+		
+		LnkDef lnkdef( LinkMap::normalizeKey( vl[vidx]), "");
+		LnkDefSet::const_iterator li = m_lnkdefmap.upper_bound( lnkdef);
+		LnkDefSet::const_iterator le = m_lnkdefmap.end();
+		for (; li != le && li->key == lnkdef.key; ++li)
 		{
-			if (vset.find( mi->second) == vset.end())
+			if (vset.find( li->val) == vset.end())
 			{
-				if (idset.find( mi->second) != idset.end())
+				if (m_idset.find( li->val) != m_idset.end())
 				{
-					return mi->second;
+					return li->val;
 				}
 				else
 				{
-					vl.push_back( mi->second);
-					vset.insert( mi->second);
+					vl.push_back( li->val);
+					vset.insert( li->val);
 				}
 			}
 		}
 	}
 	return std::string();
 }
+
+std::map<std::string,std::string> LinkMapBuilder::build()
+{
+	std::map<std::string,std::string> rt;
+	LnkDefSet::const_iterator li = m_lnkdefmap.begin(), le = m_lnkdefmap.end();
+	while (li != le)
+	{
+		const LnkDef& lnkdef = *li;
+		std::vector<std::string> valuelist;
+		for (; li != le && lnkdef.key == li->key; ++li)
+		{
+			valuelist.push_back( li->val);
+		}
+		std::string selectedval = transitiveValue( valuelist, m_idset);
+		if (selectedval.empty())
+		{
+			m_unresolved.insert( lnkdef.key);
+		}
+		else
+		{
+			rt[ lnkdef.key] = selectedval;
+		}
+	}
+	return rt;
+}
+
 

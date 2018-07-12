@@ -56,9 +56,7 @@ class LinkMapBuilder
 {
 public:
 	LinkMapBuilder( const LinkMapBuilder& o)
-		:m_map(o.m_map){}
-	LinkMapBuilder( const std::multimap<std::string,std::string>& map_)
-		:m_map(map_){}
+		:m_lnkdefmap(o.m_lnkdefmap),m_idset(o.m_idset),m_unresolved(o.m_unresolved){}
 	LinkMapBuilder(){}
 
 	std::map<std::string,std::string> build();
@@ -70,7 +68,30 @@ private:
 	std::string transitiveValue( const std::vector<std::string>& valuelist, const std::set<std::string> idset) const;
 
 private:
-	std::multimap<std::string,std::string> m_map;
+	struct LnkDef
+	{
+		std::string key;
+		std::string val;
+
+		LnkDef()
+			:key(),val(){}
+		LnkDef( const std::string& key_, const std::string& val_)
+			:key(key_),val(val_){}
+		LnkDef( const LnkDef& o)
+			:key(o.key),val(o.val){}
+
+		bool operator < ( const LnkDef& o) const
+		{
+			int cmp = std::strcmp( key.c_str(), o.key.c_str());
+			if (cmp < 0) return true;
+			if (cmp > 0) return false;
+			if (val.empty() && !o.val.empty()) return true;
+			return val < o.val;
+		}
+	};
+	typedef std::set<LnkDef> LnkDefSet;
+
+	LnkDefSet m_lnkdefmap;
 	std::set<std::string> m_idset;
 	std::set<std::string> m_unresolved;
 };
