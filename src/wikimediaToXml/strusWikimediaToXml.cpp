@@ -1048,6 +1048,11 @@ int main( int argc, const char* argv[])
 								std::pair<std::string,std::string> redir_parts = strus::LinkMap::getLinkParts( docAttributes.redirect_title);
 								if (g_verbosity >= 1) std::cerr << strus::string_format( "%s => %s\n", docAttributes.title.c_str(), docAttributes.redirect_title.c_str());
 								linkmapBuilder.redirect( docAttributes.title, redir_parts.first);
+
+								if (counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
+								{
+									std::cerr << "processed " << docCounter << " documents" << std::endl;
+								}
 							}
 						}
 						else if (!docAttributes.title.empty() && !docAttributes.content.empty())
@@ -1058,6 +1063,11 @@ int main( int argc, const char* argv[])
 								++docCounter;
 								if (g_verbosity >= 1) std::cerr << strus::string_format( "link %s => %s\n", docAttributes.title.c_str(), docAttributes.title.c_str());
 								linkmapBuilder.define( docAttributes.title);
+
+								if (counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
+								{
+									std::cerr << "processed " << docCounter << " documents" << std::endl;
+								}
 							}
 							else
 							{
@@ -1087,15 +1097,15 @@ int main( int argc, const char* argv[])
 										std::cerr << "error processing document " << docAttributes.title << ": " << err.what() << std::endl;
 									}
 								}
+								if (counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
+								{
+									std::cerr << "processed " << docCounter << " documents" << std::endl;
+								}
 							}
 						}
 						else
 						{
 							std::cerr << "invalid document" << std::endl;
-						}
-						if (counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
-						{
-							std::cerr << "processed " << docCounter << " documents" << std::endl;
 						}
 					}
 					break;
