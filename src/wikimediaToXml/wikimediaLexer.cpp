@@ -875,17 +875,17 @@ std::string WikimediaLexer::tryParseBigHexNum()
 static bool isTimestampCandidate( char const* si, const char* se)
 {
 	int dlen = decNumCount( si, se);
-	return (si+14 < se && dlen >= 6 && si[dlen] == 'T' && decNumCount( si+dlen+1, se) >= 6);
+	return (si+13 < se && dlen >= 8 && si[dlen] == 'T' && decNumCount( si+dlen+1, se) >= 4);
 }
 
 std::string WikimediaLexer::tryParseTimestamp()
 {
 	std::string rt;
 	int dlen = decNumCount( m_si, m_se);
-	if (m_si+14 < m_se && dlen == 8 && m_si[dlen] == 'T')
+	if (m_si+13 < m_se && dlen >= 8 && m_si[dlen] == 'T')
 	{
 		int glen = decNumCount( m_si+dlen+1, m_se);
-		if (m_si[dlen+1+glen] == 'Z' && !isAlphaNum(m_si[dlen+1+glen+1]))
+		if (glen >= 4 && m_si[dlen+1+glen] == 'Z' && !isAlphaNum(m_si[dlen+1+glen+1]))
 		{
 			rt.append( m_si, dlen+1+glen+1);
 			m_si += dlen+1+glen+1;

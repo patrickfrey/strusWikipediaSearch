@@ -1119,9 +1119,33 @@ int main( int argc, const char* argv[])
 		if (collectRedirects)
 		{
 			std::string linkoutfilename( strus::joinFilePath( g_outputdir, linkmapfilename));
-			std::cerr << "links are written to " << linkoutfilename << "..." << std::endl;
-			linkmap.reset( new strus::LinkMap( linkmapBuilder.build()));
-			linkmap->write( linkoutfilename);
+			std::string unresolved_outfilename = linkoutfilename + ".unresolved";
+			{
+				std::cerr << "links are written to " << linkoutfilename << "..." << std::endl;
+				linkmap.reset( new strus::LinkMap( linkmapBuilder.build()));
+				linkmap->write( linkoutfilename);
+			}{
+				std::string unresolvedstr;
+				std::vector<std::string> unresolved( linkmapBuilder.unresolved());
+				if (!unresolved.empty())
+				{
+					std::vector<std::string>::const_iterator ui = unresolved.begin(), ue = unresolved.end();
+					for (; ui != ue; ++ui)
+					{
+						unresolvedstr.append( *ui);
+						unresolvedstr.push_back( '\n');
+					}
+					int ec = strus::writeFile( unresolved_outfilename, unresolvedstr);
+					if (ec)
+					{
+						std::cerr << "error writing unresolved links file: " << std::strerror(ec) << std::endl;
+					}
+					else
+					{
+						std::cerr << "unresolved links written to " << unresolved_outfilename << std::endl;
+					}
+				}
+			}
 		}
 		return rt;
 	}

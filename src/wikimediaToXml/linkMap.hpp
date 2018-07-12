@@ -61,6 +61,11 @@ public:
 
 	std::map<std::string,std::string> build();
 
+	std::vector<std::string> unresolved() const
+	{
+		return std::vector<std::string>( m_unresolved.begin(), m_unresolved.end());
+	}
+
 	void redirect( const std::string& key, const std::string& value);
 	void define( const std::string& key);
 
