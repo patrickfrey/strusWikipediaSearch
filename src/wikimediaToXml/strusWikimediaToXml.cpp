@@ -827,6 +827,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "  Each subdirectory contains at maximum 1000 <docid>.xml output files." << std::endl;
 			std::cerr << "  Each output file contains one document and has an identifier derived\n";
 			std::cerr << "    from the Wikipedia title." << std::endl;
+			std::cerr << "    You are encouraged to use multiple threads (option -t) for faster conversion." << std::endl;
 			std::cerr << "  Besides the <docid>.xml files, the following files are written:" << std::endl;
 			std::cerr << "    <docid>.err         :File with recoverable errors in the document" << std::endl;
 			std::cerr << "    <docid>.fatal.err   :File with an exception thrown while processing" << std::endl;
