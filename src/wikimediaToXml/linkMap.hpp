@@ -65,7 +65,8 @@ public:
 	void define( const std::string& key);
 
 private:
-	std::string transitiveValue( const std::vector<std::string>& valuelist, const std::set<std::string> idset) const;
+	enum {TransitiveSearchDepth=6};
+	const std::string* transitiveFindValue( const std::string& value, int depth) const;
 
 private:
 	struct LnkDef

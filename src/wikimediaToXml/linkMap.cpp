@@ -148,35 +148,23 @@ void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 	m_lnkdefmap.insert( lnkdef);
 }
 
-std::string LinkMapBuilder::transitiveValue( const std::vector<std::string>& valuelist, const std::set<std::string> idset) const
+const std::string* LinkMapBuilder::transitiveFindValue( const std::string& value, int depth) const
 {
-	std::set<std::string> vset( valuelist.begin(), valuelist.end());
-	std::vector<std::string> vl = valuelist;
-	int vidx = 0;
-	for (; vidx < (int)vl.size(); ++vidx)
+	std::set<std::string>::const_iterator id = m_idset.find( value);
+	if (id != m_idset.end()) return &*id;
+
+	if (depth == 0) return NULL;
+
+	LnkDef lnkdef( LinkMap::normalizeKey( value), "");
+	LnkDefSet::const_iterator li = m_lnkdefmap.upper_bound( lnkdef);
+	LnkDefSet::const_iterator le = m_lnkdefmap.end();
+
+	for (; li != le && li->key == lnkdef.key; ++li)
 	{
-		if (m_idset.find( vl[vidx]) != m_idset.end()) return vl[ vidx];
-		
-		LnkDef lnkdef( LinkMap::normalizeKey( vl[vidx]), "");
-		LnkDefSet::const_iterator li = m_lnkdefmap.upper_bound( lnkdef);
-		LnkDefSet::const_iterator le = m_lnkdefmap.end();
-		for (; li != le && li->key == lnkdef.key; ++li)
-		{
-			if (vset.find( li->val) == vset.end())
-			{
-				if (m_idset.find( li->val) != m_idset.end())
-				{
-					return li->val;
-				}
-				else
-				{
-					vl.push_back( li->val);
-					vset.insert( li->val);
-				}
-			}
-		}
+		const std::string* rt = transitiveFindValue( li->val, depth-1);
+		if (rt) return rt;
 	}
-	return std::string();
+	return NULL;
 }
 
 std::map<std::string,std::string> LinkMapBuilder::build()
@@ -185,20 +173,22 @@ std::map<std::string,std::string> LinkMapBuilder::build()
 	LnkDefSet::const_iterator li = m_lnkdefmap.begin(), le = m_lnkdefmap.end();
 	while (li != le)
 	{
-		const LnkDef& lnkdef = *li;
-		std::vector<std::string> valuelist;
-		for (; li != le && lnkdef.key == li->key; ++li)
+		const std::string* selectedval = transitiveFindValue( li->val, TransitiveSearchDepth);
+		if (!selectedval)
 		{
-			valuelist.push_back( li->val);
-		}
-		std::string selectedval = transitiveValue( valuelist, m_idset);
-		if (selectedval.empty())
-		{
-			m_unresolved.insert( lnkdef.key);
+			const LnkDef& lnkdef = *li;
+			++li;
+			if (li->key != lnkdef.key)
+			{
+				m_unresolved.insert( li->key);
+			}
 		}
 		else
 		{
-			rt[ lnkdef.key] = selectedval;
+			rt[ li->key] = *selectedval;
+			const LnkDef& lnkdef = *li;
+			// Skip to the next key
+			for (++li; li != le && lnkdef.key == li->key; ++li){}
 		}
 	}
 	return rt;

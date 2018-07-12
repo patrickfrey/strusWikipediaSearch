@@ -803,19 +803,19 @@ int main( int argc, const char* argv[])
 			std::cerr << "<inputfile>   :File to process or '-' for stdin" << std::endl;
 			std::cerr << "<outputdir>   :Directory where output files and directories are written to." << std::endl;
 			std::cerr << "options:" << std::endl;
-			std::cerr << "    -h           :print this usage" << std::endl;
-			std::cerr << "    -V           :verbosity level 1 (output document title errors to stderr)" << std::endl;
-			std::cerr << "    -VV          :verbosity level 2 (output lexems found additional to level 1)" << std::endl;
-			std::cerr << "    -S <lexemid> :stop verbose output (option -VV) at lexem with\n";
+			std::cerr << "    -h           :Print this usage" << std::endl;
+			std::cerr << "    -V           :Verbosity level 1 (output document title errors to stderr)" << std::endl;
+			std::cerr << "    -VV          :Verbosity level 2 (output lexems found additional to level 1)" << std::endl;
+			std::cerr << "    -S <lexemid> :Stop verbose output (option -VV) at lexem with\n";
 			std::cerr << "                  index <lexemid> (continue processing)" << std::endl;
-			std::cerr << "    -O <substr>  :write dump file for documents with a title\n";
+			std::cerr << "    -O <substr>  :Write dump file for documents with a title\n";
 			std::cerr << "                  containing <substr> as title sub string" << std::endl;
-			std::cerr << "    -B           :beautified readable XML output" << std::endl;
-			std::cerr << "    -P <mod>     :print progress counter modulo <mod> to stderr" << std::endl;
-			std::cerr << "    -D           :write dump files always, not only in case of an error" << std::endl;
-			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
-			std::cerr << "    -n <ns>      :reduce output to namespace <ns> (0=article)" << std::endl;
-			std::cerr << "    -R <lnkfile> :collect redirects only and write them to <lnkfile>" << std::endl;
+			std::cerr << "    -B           :Beautified readable XML output" << std::endl;
+			std::cerr << "    -P <mod>     :Print progress counter modulo <mod> to stderr" << std::endl;
+			std::cerr << "    -D           :Write dump files always, not only in case of an error" << std::endl;
+			std::cerr << "    -t <threads> :Number of threads to use is <threads>" << std::endl;
+			std::cerr << "    -n <ns>      :Reduce output to namespace <ns> (0=article)" << std::endl;
+			std::cerr << "    -R <lnkfile> :Collect redirects only and write them to <lnkfile>" << std::endl;
 			std::cerr << "    -L <lnkfile> :Load link file <lnkfile> for verifying page links" << std::endl;
 			std::cerr << std::endl;
 			std::cerr << "Description:" << std::endl;
@@ -1012,11 +1012,12 @@ int main( int argc, const char* argv[])
 							//... ignore document but those with ns set to what is selected by option '-n'
 							continue;
 						}
-						++docCounter;
 						if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{
+							// ... is as Redirect
 							if (collectRedirects)
 							{
+								++docCounter;
 								std::pair<std::string,std::string> redir_parts = strus::LinkMap::getLinkParts( docAttributes.redirect_title);
 								if (g_verbosity >= 1) std::cerr << strus::string_format( "%s => %s\n", docAttributes.title.c_str(), docAttributes.redirect_title.c_str());
 								linkmapBuilder.redirect( docAttributes.title, redir_parts.first);
@@ -1024,13 +1025,16 @@ int main( int argc, const char* argv[])
 						}
 						else if (!docAttributes.title.empty() && !docAttributes.content.empty())
 						{
+							// ... is as Document
 							if (collectRedirects)
 							{
+								++docCounter;
 								if (g_verbosity >= 1) std::cerr << strus::string_format( "link %s => %s\n", docAttributes.title.c_str(), docAttributes.title.c_str());
 								linkmapBuilder.define( docAttributes.title);
 							}
 							else
 							{
+								++docCounter;
 								int docIndex = docCounter-1;
 								const char* normtitle = g_linkmap ? g_linkmap->get( docAttributes.title) : 0;
 								if (!normtitle) normtitle = docAttributes.title.c_str();
