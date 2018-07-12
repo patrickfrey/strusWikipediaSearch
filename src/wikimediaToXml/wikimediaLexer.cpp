@@ -875,7 +875,7 @@ std::string WikimediaLexer::tryParseBigHexNum()
 static bool isTimestampCandidate( char const* si, const char* se)
 {
 	int dlen = decNumCount( si, se);
-	return (si+14 < se && dlen == 8 && si[dlen] == 'T');
+	return (si+14 < se && dlen >= 6 && si[dlen] == 'T' && decNumCount( si+dlen+1, se) >= 6);
 }
 
 std::string WikimediaLexer::tryParseTimestamp()
