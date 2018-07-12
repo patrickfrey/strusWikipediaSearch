@@ -1007,6 +1007,7 @@ int main( int argc, const char* argv[])
 						if (namespaceset && namespacemap.find( docAttributes.ns) == namespacemap.end())
 						{
 							//... ignore document but those with ns set to what is selected by option '-n'
+							continue;
 						}
 						else if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{
