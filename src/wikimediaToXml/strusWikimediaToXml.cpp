@@ -700,6 +700,7 @@ int main( int argc, const char* argv[])
 	{
 		int argi = 1;
 		int nofThreads = 0;
+		int counterMod = 0;
 		std::set<int> namespacemap;
 		bool namespaceset = false;
 		bool printusage = false;
@@ -730,29 +731,36 @@ int main( int argc, const char* argv[])
 			}
 			else if (0==std::memcmp(argv[argi],"-S",2))
 			{
-				if (g_breakpoint > 0) throw std::runtime_error("duplicated option -S <lexemid>");
+				if (g_breakpoint > 0) throw std::runtime_error( "duplicated option -S <lexemid>");
 				g_breakpoint = getUIntOptionArg( argi, argc, argv);
+				++argi;
+			}
+			else if (0==std::memcmp(argv[argi],"-P",2))
+			{
+				if (g_breakpoint > 0) throw std::runtime_error( "duplicated option -P <mod>");
+				counterMod = getUIntOptionArg( argi, argc, argv);
+				if (!counterMod) throw std::runtime_error( "option -P requires positive integer as argument");
 				++argi;
 			}
 			else if (0==std::memcmp(argv[argi],"-O",2))
 			{
 				if (!g_origOutputPattern.empty()) throw std::runtime_error("duplicated option -O <substr>");
 				++argi;
-				if (argi == argc) throw std::runtime_error("option -O without argument");
+				if (argi == argc) throw std::runtime_error( "option -O without argument");
 				g_origOutputPattern = argv[ argi];
 			}
 			else if (0==std::memcmp(argv[argi],"-L",2))
 			{
 				if (!linkmapfilename.empty()) throw std::runtime_error("duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
 				++argi;
-				if (argi == argc) throw std::runtime_error("option -L without argument");
+				if (argi == argc) throw std::runtime_error( "option -L without argument");
 				linkmapfilename = argv[ argi];
 			}
 			else if (0==std::memcmp(argv[argi],"-R",2))
 			{
-				if (!linkmapfilename.empty()) throw std::runtime_error("duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
+				if (!linkmapfilename.empty()) throw std::runtime_error( "duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
 				++argi;
-				if (argi == argc) throw std::runtime_error("option -R without argument");
+				if (argi == argc) throw std::runtime_error( "option -R without argument");
 				linkmapfilename = argv[ argi];
 				collectRedirects = true;
 			}
@@ -803,6 +811,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -O <substr>  :write dump file for documents with a title\n";
 			std::cerr << "                  containing <substr> as title sub string" << std::endl;
 			std::cerr << "    -B           :beautified readable XML output" << std::endl;
+			std::cerr << "    -P <mod>     :print progress counter modulo <mod> to stderr" << std::endl;
 			std::cerr << "    -D           :write dump files always, not only in case of an error" << std::endl;
 			std::cerr << "    -t <threads> :number of threads to use is <threads>" << std::endl;
 			std::cerr << "    -n <ns>      :reduce output to namespace <ns> (0=article)" << std::endl;
@@ -994,6 +1003,7 @@ int main( int argc, const char* argv[])
 					}
 					if (closedTag == TagPage)
 					{
+						++docCounter;
 						if (namespaceset && namespacemap.find( docAttributes.ns) == namespacemap.end())
 						{
 							//... ignore document but those with ns set to what is selected by option '-n'
@@ -1016,23 +1026,19 @@ int main( int argc, const char* argv[])
 							}
 							else
 							{
+								int docIndex = docCounter-1;
 								const char* normtitle = g_linkmap ? g_linkmap->get( docAttributes.title) : 0;
 								if (!normtitle) normtitle = docAttributes.title.c_str();
 								if (nofThreads)
 								{
-									workeridx = docCounter % nofThreads;
-									workers.ar[ workeridx].push( docCounter, normtitle, docAttributes.content);
-									++docCounter;
-									if (docCounter % 1000 == 0)
-									{
-										std::cerr << "processed " << docCounter << " documents" << std::endl;
-									}
+									workeridx = docIndex % nofThreads;
+									workers.ar[ workeridx].push( docIndex, normtitle, docAttributes.content);
 								}
 								else
 								{
 									try
 									{
-										Work work( docCounter, normtitle, docAttributes.content, g_dumps);
+										Work work( docIndex, normtitle, docAttributes.content, g_dumps);
 										if (g_verbosity >= 1) std::cerr << strus::string_format( "process document '%s'\n", docAttributes.title.c_str()) << std::flush;
 										work.process();
 									} 
@@ -1044,17 +1050,16 @@ int main( int argc, const char* argv[])
 									{
 										std::cerr << "error processing document " << docAttributes.title << ": " << err.what() << std::endl;
 									}
-									++docCounter;
-									if (docCounter % 1000 == 0)
-									{
-										std::cerr << "processed " << docCounter << " documents" << std::endl;
-									}
 								}
 							}
 						}
 						else
 						{
 							std::cerr << "invalid document" << std::endl;
+						}
+						if (!counterMod && g_verbosity == 0 && docCounter % counterMod == 0)
+						{
+							std::cerr << "processed " << docCounter << " documents" << std::endl;
 						}
 					}
 					break;
@@ -1092,10 +1097,6 @@ int main( int argc, const char* argv[])
 				case XmlScanner::Exit:
 					terminated = true;
 					break;
-			}
-			if (collectRedirects && g_verbosity == 0 && docCounter % 100000 == 0)
-			{
-				std::cerr << "processed " << docCounter << " documents" << std::endl;
 			}
 		}
 		for (int wi=0; wi < nofThreads; ++wi)
