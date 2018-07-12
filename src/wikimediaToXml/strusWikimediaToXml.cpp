@@ -224,7 +224,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 					{
 						lnk.first = std::string( lnk.first.c_str() + prefix.size()+1);
 					}
-					if (prefix == "file")
+					if (prefix == "file" || prefix == "image")
 					{
 						doc.openPageLink( lnk.first, lnk.second);
 					}
