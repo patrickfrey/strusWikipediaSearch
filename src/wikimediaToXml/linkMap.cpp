@@ -144,10 +144,6 @@ void LinkMapBuilder::define( const std::string& key)
 
 void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 {
-	/*[-]*/if (key == "Bram Stoker")
-	/*[-]*/{
-	/*[-]*/	std::cerr << std::endl;
-	/*[-]*/}
 	LnkDef lnkdef( LinkMap::normalizeKey( key), LinkMap::normalizeValue( value));
 	m_lnkdefmap.insert( lnkdef);
 }
