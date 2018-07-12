@@ -87,7 +87,8 @@ Besides the &lt;docid&gt;.xml files, the following files are written:
 <p class="description">
   The tag hierarchy is as best effort intendet to be as flat as possible.
   The following list explains the tags in the output:
-<h3>Structural XML tags (tags marking a structure)</h3>
+
+<h3>Structural XML tags embeding a structure</h3>
 <ul>
      <li>&lt;quot&gt;             :a quoted string (any type of quote) in a document</li>
      <li>&lt;heading id='h#'&gt;  :a subtitle or heading in a document</li>
@@ -96,17 +97,24 @@ Besides the &lt;docid&gt;.xml files, the following files are written:
      <li>&lt;entity&gt;           :a marked entity of the Wikipedia collection</li>
      <li>&lt;citation&gt;         :a citation in a document</li>
      <li>&lt;ref&gt;              :a reference structure in a document</li>
-     <li>&lt;pagelink&gt;         :a link to a page in the collection</li>
-     <li>&lt;weblink&gt;          :a web link to a page in the internet</li>
      <li>&lt;table&gt;            :a table implementation</li>
      <li>&lt;tabtitle&gt;         :sub-title text in the table</li>
-     <li>&lt;head id='C#'&gt;     :head cells of a table adressing a column cell</li>
-     <li>&lt;head id='R#'&gt;     :head cells of a table adressing a row cell</li>
-     <li>&lt;cell id='R#'&gt;     :data sells of a table with a list of identifiers making it addressable</li>
+     <li>&lt;head id='C#'&gt;     :head cells of a table adressing a column cell. '#' represents a non negative number, e.g. "C#" ~ "C3".</li>
+     <li>&lt;head id='R#'&gt;     :head cells of a table adressing a row cell. '#' represents a non negative number here, e.g. "R#" ~ "R4".</li>
+     <li>&lt;cell id='R#'&gt;     :data sells of a table with a list of identifiers making it addressable. '#' represents a non negative number here, e.g. "R#" ~ "R0".</li>
+</ul>
+
+<h3>Structural XML tags describing links</h3>
+<ul>
+     <li>&lt;pagelink&gt;         :a link to a page in the collection</li>
+     <li>&lt;weblink&gt;          :a web link to a page in the internet</li>
      <li>&lt;tablink              :internal link to a table in this document
      <li>&lt;citlink&gt;          :internal link to a citation in this document</li>
      <li>&lt;reflink&gt;          :internal link to a reference in this document</li>
 </ul>
+
+<pagelink> :a link to a page in the collection
+<weblink> :a web link to a page in the internet
 <h3>Textual XML tags (tags marking a content)</h3>
 <ul>
      <li>&lt;docid&gt;            :The content specifies a unique document identifier (the title with '_' instead of ' ' and some other encodings)</li>
