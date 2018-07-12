@@ -1003,12 +1003,12 @@ int main( int argc, const char* argv[])
 					}
 					if (closedTag == TagPage)
 					{
-						++docCounter;
 						if (namespaceset && namespacemap.find( docAttributes.ns) == namespacemap.end())
 						{
 							//... ignore document but those with ns set to what is selected by option '-n'
 							continue;
 						}
+						++docCounter;
 						else if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{
 							if (collectRedirects)
