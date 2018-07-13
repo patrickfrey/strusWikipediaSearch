@@ -928,7 +928,8 @@ int main( int argc, const char* argv[])
 			linkmap.reset( new strus::LinkMap());
 			if (!collectRedirects)
 			{
-				linkmap->load( strus::joinFilePath( g_outputdir, linkmapfilename));
+				std::string linkmapfilepath( strus::isRelativePath( linkmapfilename) ? strus::joinFilePath( g_outputdir, linkmapfilename) : linkmapfilename);
+				linkmap->load( linkmapfilepath);
 				g_linkmap = linkmap.get();
 			}
 		}
@@ -1173,12 +1174,12 @@ int main( int argc, const char* argv[])
 		}
 		if (collectRedirects)
 		{
-			std::string linkoutfilename( strus::joinFilePath( g_outputdir, linkmapfilename));
-			std::string unresolved_outfilename = linkoutfilename + ".unresolved";
+			std::string linkmapfilepath( strus::isRelativePath( linkmapfilename) ? strus::joinFilePath( g_outputdir, linkmapfilename) : linkmapfilename);
+			std::string unresolved_outfilename = linkmapfilepath + ".mis";
 			{
 				linkmap.reset( new strus::LinkMap( linkmapBuilder.build()));
-				linkmap->write( linkoutfilename);
-				std::cerr << "links written to " << linkoutfilename << std::endl;
+				linkmap->write( linkmapfilepath);
+				std::cerr << "links written to " << linkmapfilepath << std::endl;
 			}{
 				std::string unresolvedstr;
 				std::vector<std::string> unresolved( linkmapBuilder.unresolved());
