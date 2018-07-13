@@ -472,36 +472,36 @@ static void writeErrorFile( int fileCounter, const std::string& docid, const std
 
 static void writeFatalErrorFile( int fileCounter, const std::string& docid, const std::string& errorstext)
 {
-	writeWorkFile( fileCounter, docid, ".fatal.err", errorstext);
+	writeWorkFile( fileCounter, docid, ".ftl", errorstext);
 	if (g_verbosity >= 1) std::cerr << "got fatal error:" << std::endl << errorstext << std::endl;
 }
 
 static void writeInputFile( int fileCounter, const std::string& docid, const std::string& title, const std::string& content)
 {
 	std::string origxml = strus::DocumentStructure::getInputXML( title, content);
-	writeWorkFile( fileCounter, docid, ".orig.xml", origxml);
+	writeWorkFile( fileCounter, docid, ".org", origxml);
 }
 
 static void writeLexerDumpFile( int fileCounter, const strus::DocumentStructure& doc)
 {
-	writeWorkFile( fileCounter, doc.id(), ".txt", doc.tostring());
+	writeWorkFile( fileCounter, doc.fileId(), ".txt", doc.tostring());
 }
 
 static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& doc)
 {
-	writeWorkFile( fileCounter, doc.id(), ".xml", doc.toxml( g_beautified));
+	writeWorkFile( fileCounter, doc.fileId(), ".xml", doc.toxml( g_beautified));
 	std::string strange = doc.reportStrangeFeatures();
 	if (strange.empty())
 	{
-		removeWorkFile( fileCounter, doc.id(), ".strange.txt");
+		removeWorkFile( fileCounter, doc.fileId(), ".wtf");
 	}
 	else
 	{
-		writeWorkFile( fileCounter, doc.id(), ".strange.txt", strange);
+		writeWorkFile( fileCounter, doc.fileId(), ".wtf", strange);
 	}
 	if (doc.errors().empty())
 	{
-		removeWorkFile( fileCounter, doc.id(), ".err");
+		removeWorkFile( fileCounter, doc.fileId(), ".err");
 	}
 	else
 	{
@@ -512,13 +512,13 @@ static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& d
 			errorstext << "[" << eidx << "] " << *ei << "\n";
 		}
 		std::string errdump( errorstext.str());
-		writeWorkFile( fileCounter, doc.id(), ".err", errdump);
+		writeWorkFile( fileCounter, doc.fileId(), ".err", errdump);
 		if (g_verbosity >= 1) std::cerr << "got errors:" << std::endl << errdump << std::endl;
 	}
 	std::vector<std::string> unresolved( doc.unresolved());
 	if (unresolved.empty())
 	{
-		removeWorkFile( fileCounter, doc.id(), ".mis");
+		removeWorkFile( fileCounter, doc.fileId(), ".mis");
 	}
 	else
 	{
@@ -529,7 +529,7 @@ static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& d
 			unresolvedtext << "[" << eidx << "] " << *ei << "\n";
 		}
 		std::string unresolveddump( unresolvedtext.str());
-		writeWorkFile( fileCounter, doc.id(), ".mis", unresolveddump);
+		writeWorkFile( fileCounter, doc.fileId(), ".mis", unresolveddump);
 		if (g_verbosity >= 1) std::cerr << "got " << (int)unresolved.size() << " unresolved page links:" << std::endl;
 	}
 }
@@ -561,7 +561,7 @@ public:
 		{
 			if (!g_origOutputPattern.empty() && 0!=std::strstr( m_title.c_str(), g_origOutputPattern.c_str()))
 			{
-				writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+				writeInputFile( m_fileindex, doc.fileId(), m_title, m_content);
 				inputFileWritten = true;
 			}
 			parseDocumentText( doc, m_content.c_str(), m_content.size());
@@ -572,7 +572,7 @@ public:
 				writeLexerDumpFile( m_fileindex, doc);
 				if (!inputFileWritten)
 				{
-					writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+					writeInputFile( m_fileindex, doc.fileId(), m_title, m_content);
 					inputFileWritten = true;
 				}
 			}
@@ -580,11 +580,11 @@ public:
 		catch (const std::runtime_error& err)
 		{
 			writeLexerDumpFile( m_fileindex, doc);
-			writeErrorFile( m_fileindex, doc.id(), err.what());
-			writeFatalErrorFile( m_fileindex, doc.id(), std::string(err.what()) + "\n");
+			writeErrorFile( m_fileindex, doc.fileId(), err.what());
+			writeFatalErrorFile( m_fileindex, doc.fileId(), std::string(err.what()) + "\n");
 			if (!inputFileWritten)
 			{
-				writeInputFile( m_fileindex, doc.id(), m_title, m_content);
+				writeInputFile( m_fileindex, doc.fileId(), m_title, m_content);
 				inputFileWritten = true;
 			}
 		}
@@ -874,12 +874,12 @@ int main( int argc, const char* argv[])
 			std::cerr << "    You are encouraged to use multiple threads (option -t) for faster conversion." << std::endl;
 			std::cerr << "  Besides the <docid>.xml files, the following files are written:" << std::endl;
 			std::cerr << "    <docid>.err         :File with recoverable errors in the document" << std::endl;
-			std::cerr << "    <docid>.mis         :File with unresolved page links in the document" << std::endl;
-			std::cerr << "    <docid>.fatal.err   :File with an exception thrown while processing" << std::endl;
-			std::cerr << "    <docid>.strange.txt :File listing some suspicious text elements\n";
+			std::cerr << "    <docid>.mis         :File with unresolvable page links in the document" << std::endl;
+			std::cerr << "    <docid>.ftl         :File with an exception thrown while processing" << std::endl;
+			std::cerr << "    <docid>.wtf        :File listing some suspicious text elements\n";
 			std::cerr << "                         This list is useful for tracking classification\n";
 			std::cerr << "                         errors." << std::endl;
-			std::cerr << "    <docid>.orig.xml    :File with a dump of the document processed\n";
+			std::cerr << "    <docid>.org        :File with a dump of the document processed\n";
 			std::cerr << "                         (only written if required or on error)" << std::endl;
 			std::cerr << std::endl;
 			std::cerr << "Output XML format:" << std::endl;

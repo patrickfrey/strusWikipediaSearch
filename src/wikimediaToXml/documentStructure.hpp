@@ -323,13 +323,13 @@ class DocumentStructure
 {
 public:
 	explicit DocumentStructure()
-		:m_id(),m_parar(),m_citations(),m_tables(),m_refs(),m_citationmap(),m_refmap(),m_structStack(),m_tableDefs(),m_errors(),m_nofErrors(0),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
+		:m_fileId(),m_parar(),m_citations(),m_tables(),m_refs(),m_citationmap(),m_refmap(),m_structStack(),m_tableDefs(),m_errors(),m_nofErrors(0),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
 	DocumentStructure( const DocumentStructure& o)
-		:m_id(o.m_id),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_refs(o.m_refs),m_citationmap(o.m_citationmap),m_refmap(o.m_refmap),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_nofErrors(o.m_nofErrors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
+		:m_fileId(o.m_fileId),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_refs(o.m_refs),m_citationmap(o.m_citationmap),m_refmap(o.m_refmap),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_nofErrors(o.m_nofErrors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
 
-	const std::string& id() const
+	const std::string& fileId() const
 	{
-		return m_id;
+		return m_fileId;
 	}
 	Paragraph::StructType currentStructType() const;
 	int currentStructIndex() const;
@@ -719,7 +719,7 @@ private:
 	};
 
 private:
-	std::string m_id;
+	std::string m_fileId;
 	std::vector<Paragraph> m_parar;
 	std::vector<Paragraph> m_citations;
 	std::vector<Paragraph> m_tables;

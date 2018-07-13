@@ -738,7 +738,7 @@ void DocumentStructure::closeWebLink()
 	closeStructure( Paragraph::WebLinkStart, "]");
 }
 
-static std::string getDocidFromTitle( const std::string& txt)
+static std::string getFileIdFromTitle( const std::string& txt)
 {
 	std::string rt;
 	char const* si = txt.c_str();
@@ -751,22 +751,9 @@ static std::string getDocidFromTitle( const std::string& txt)
 			while (*si && (unsigned char)*si <= 32) ++si;
 			rt.push_back( '_');
 		}
-		else if ((ch >= 'a' && ch <= 'z') || (*si >= '0' && *si <= '9') || *si == '-' || *si == '_')
+		else if ((ch >= 'a' && ch <= 'z') || (*si >= '0' && *si <= '9') || *si == '-' || *si == '_' || (unsigned char)*si >= 128)
 		{
 			rt.push_back( *si++);
-		}
-		else if ((unsigned char)*si >= 128 || *si == '#' || *si == '%')
-		{
-			int ci = strus::utf8charlen( *si);
-			while (ci)
-			{
-				rt.push_back( '%');
-				char buf[ 4];
-				std::snprintf( buf, sizeof(buf), "%02x", (unsigned int)(unsigned char)*si);
-				rt.append( buf);
-				++si;
-				--ci;
-			}
 		}
 		else
 		{
@@ -817,7 +804,8 @@ static std::string encodeXmlContentString( const std::string& txt, bool encodeEo
 
 void DocumentStructure::setTitle( const std::string& text)
 {
-	Paragraph para( Paragraph::Title, m_id = getDocidFromTitle( text), text);
+	m_fileId = getFileIdFromTitle( text);
+	Paragraph para( Paragraph::Title, m_fileId, text);
 	if (!m_parar.empty() && m_parar[0].type() == Paragraph::Title)
 	{
 		m_parar[0] = para;
