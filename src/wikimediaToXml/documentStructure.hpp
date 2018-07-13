@@ -602,6 +602,10 @@ public:
 	{
 		m_errors.push_back( msg + " [state " + Paragraph::structTypeName( currentStructType()) + "]");
 	}
+	void addUnresolved( const std::string& pglink)
+	{
+		m_unresolved.insert( pglink);
+	}
 	bool hasNewErrors() const
 	{
 		return (int)m_errors.size() > m_nofErrors;
@@ -611,6 +615,10 @@ public:
 	const std::vector<std::string>& errors() const
 	{
 		return m_errors;
+	}
+	std::vector<std::string> unresolved() const
+	{
+		return std::vector<std::string>( m_unresolved.begin(), m_unresolved.end());
 	}
 	void finish();
 
@@ -721,6 +729,7 @@ private:
 	std::vector<StructRef> m_structStack;
 	std::vector<TableDef> m_tableDefs;
 	std::vector<std::string> m_errors;
+	std::set<std::string> m_unresolved;
 	int m_nofErrors;
 	int m_tableCnt;
 	int m_citationCnt;

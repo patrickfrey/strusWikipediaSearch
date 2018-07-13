@@ -237,7 +237,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 						}
 						else
 						{
-							doc.addError( strus::string_format( "failed to resolve page link '%s'", lexem.value.c_str()));
+							doc.addUnresolved( lexem.value);
 							doc.openPageLink( lnk.first, lnk.second);
 						}
 					}
@@ -514,6 +514,23 @@ static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& d
 		std::string errdump( errorstext.str());
 		writeWorkFile( fileCounter, doc.id(), ".err", errdump);
 		if (g_verbosity >= 1) std::cerr << "got errors:" << std::endl << errdump << std::endl;
+	}
+	std::vector<std::string> unresolved( doc.unresolved());
+	if (unresolved.empty())
+	{
+		removeWorkFile( fileCounter, doc.id(), ".mis");
+	}
+	else
+	{
+		std::ostringstream unresolvedtext;
+		std::vector<std::string>::const_iterator ei = unresolved.begin(), ee = unresolved.end();
+		for (int eidx=1; ei != ee; ++ei,++eidx)
+		{
+			unresolvedtext << "[" << eidx << "] " << *ei << "\n";
+		}
+		std::string unresolveddump( unresolvedtext.str());
+		writeWorkFile( fileCounter, doc.id(), ".mis", unresolveddump);
+		if (g_verbosity >= 1) std::cerr << "got " << (int)unresolved.size() << " unresolved page links:" << std::endl;
 	}
 }
 
@@ -857,6 +874,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    You are encouraged to use multiple threads (option -t) for faster conversion." << std::endl;
 			std::cerr << "  Besides the <docid>.xml files, the following files are written:" << std::endl;
 			std::cerr << "    <docid>.err         :File with recoverable errors in the document" << std::endl;
+			std::cerr << "    <docid>.mis         :File with unresolved page links in the document" << std::endl;
 			std::cerr << "    <docid>.fatal.err   :File with an exception thrown while processing" << std::endl;
 			std::cerr << "    <docid>.strange.txt :File listing some suspicious text elements\n";
 			std::cerr << "                         This list is useful for tracking classification\n";
