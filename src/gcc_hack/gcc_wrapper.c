@@ -1,4 +1,4 @@
-# To build with "gcc -o build/gcc_wrapper src/gcc_hack/gcc_wrapper.c
+// To build with "gcc -o build/gcc_wrapper src/gcc_hack/gcc_wrapper.c
 
 #include <stdio.h>
 #include <string.h>
