@@ -870,6 +870,13 @@ std::pair<std::string,std::string> splitJoinLinkWords( const std::string& text)
 	return rt;
 }
 
+static bool isLastItemJoinableText( const std::vector<Paragraph>& parar, Paragraph::Type starttype, Paragraph::Type endtype)
+{
+	return (parar.size() >= 2
+	&& parar[ parar.size()-1].type() == endtype
+	&& (parar[ parar.size()-2].type() == Paragraph::Text || parar[ parar.size()-2].type() == starttype));
+}
+
 void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText)
 {
 	if (joinText)
@@ -897,17 +904,13 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 			m_parar.back().addText( text);
 		}
 		else if (m_parar.size() >= 2
-		&&	(
-				(m_parar[ m_parar.size()-1].type() == Paragraph::PageLinkEnd
-				 && (m_parar[ m_parar.size()-2].type() == Paragraph::Text
-					|| m_parar[ m_parar.size()-2].type() == Paragraph::PageLinkStart)
-				 && type == Paragraph::Text && isJoinLinkText(text))
-
-			||	(m_parar[ m_parar.size()-1].type() == Paragraph::WebLinkEnd
-				 && (m_parar[ m_parar.size()-2].type() == Paragraph::Text
-					|| m_parar[ m_parar.size()-2].type() == Paragraph::PageLinkStart)
-				 && type == Paragraph::Text && isJoinLinkText(text))
-			))
+		&&	(	isLastItemJoinableText( m_parar, Paragraph::PageLinkStart, Paragraph::PageLinkEnd)
+			||	isLastItemJoinableText( m_parar, Paragraph::WebLinkStart, Paragraph::WebLinkEnd)
+			||	isLastItemJoinableText( m_parar, Paragraph::EntityStart, Paragraph::EntityEnd)
+			||	isLastItemJoinableText( m_parar, Paragraph::QuotationStart, Paragraph::QuotationEnd)
+			||	isLastItemJoinableText( m_parar, Paragraph::DoubleQuoteStart, Paragraph::DoubleQuoteEnd)
+			)
+		&&	type == Paragraph::Text && isJoinLinkText(text))
 		{
 			std::pair<std::string,std::string> sptext = splitJoinLinkWords( text);
 			m_parar[ m_parar.size()-2].addText( sptext.first);
