@@ -848,7 +848,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "<outputdir>   :Directory where output files and directories are written to." << std::endl;
 			std::cerr << "options:" << std::endl;
 			std::cerr << "    -h           :Print this usage" << std::endl;
-			std::cerr << "    -V           :Verbosity level 1 (output document title errors to stderr)" << std::endl;
+			std::cerr << "    -V           :Verbosity level 1 (output document title and errors to stderr)" << std::endl;
 			std::cerr << "    -VV          :Verbosity level 2 (output lexems found additional to level 1)" << std::endl;
 			std::cerr << "    -S <lexemid> :Stop verbose output (option -VV) at lexem with\n";
 			std::cerr << "                  index <lexemid> (continue processing)" << std::endl;
@@ -857,7 +857,9 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -B           :Beautified readable XML output" << std::endl;
 			std::cerr << "    -P <mod>     :Print progress counter modulo <mod> to stderr" << std::endl;
 			std::cerr << "    -D           :Write dump files always, not only in case of an error" << std::endl;
-			std::cerr << "    -t <threads> :Number of threads to use is <threads>" << std::endl;
+			std::cerr << "    -t <threads> :Number of conversion threads to use is <threads>" << std::endl;
+			std::cerr << "                  Total number of threads is <threads> +1" << std::endl;
+			std::cerr << "                  (conversion threads + main thread)" << std::endl;
 			std::cerr << "    -n <ns>      :Reduce output to namespace <ns> (0=article)" << std::endl;
 			std::cerr << "    -R <lnkfile> :Collect redirects only and write them to <lnkfile>" << std::endl;
 			std::cerr << "    -L <lnkfile> :Load link file <lnkfile> for verifying page links" << std::endl;
@@ -918,7 +920,20 @@ int main( int argc, const char* argv[])
 			return rt;
 		}
 		IStream input( argv[argi]);
-		if (argi+1 < argc) g_outputdir = argv[argi+1];
+		if (argi+1 < argc)
+		{
+			if (collectRedirects) std::cerr << "output directory ignored if option -R is specified" << std::endl;
+			g_outputdir = argv[argi+1];
+		}
+		if (collectRedirects)
+		{
+			if (nofThreads != 0) std::cerr << "number of threads (option -t) ignored if option -R is specified" << std::endl;
+			if (g_beautified) std::cerr << "beautyfication (option -B) ignored if option -R is specified" << std::endl;
+			if (g_dumps) std::cerr << "write dumps allways (option -D) ignored if option -R is specified" << std::endl;
+			if (g_breakpoint) std::cerr << "stop verbose output at (option -S) ignored if option -R is specified" << std::endl;
+			if (!g_origOutputPattern.empty()) std::cerr << "write dump files for selected documents (option -O) ignored if option -R is specified" << std::endl;
+			if (!linkmapfilename.empty()) std::cerr << "option -L not compatiple with option -R" << std::endl;
+		}
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
 		if (nofThreads <= 0) nofThreads = 0;
 		strus::local_ptr<strus::LinkMap> linkmap;
