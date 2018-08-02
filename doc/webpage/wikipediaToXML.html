@@ -34,8 +34,8 @@
 
 <h2>Example calls</h2>
 <p class="description">
-You have to get a Wikipedia dump from <a href="https://dumps.wikimedia.org/enwiki/latest">.
-To get all articles and redirects, use the option -n 0 to restrict the extraction to namespace 0 documents (articles).
+You have to get a Wikipedia dump from <a href="https://dumps.wikimedia.org/enwiki/latest">here</a>.
+To get all articles and redirects, use the option -n 0 of the strusWikimediaToXml call to restrict the extraction to namespace 0 documents (articles).
 <pre>
 wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
 bunzip2 enwiki-latest-pages-articles.xml.bz2
@@ -96,7 +96,7 @@ Besides the &lt;docid&gt;.xml files, the following files are written:
 <ul>
 <li> &lt;docid&gt;.err         :File with recoverable errors in the document</li>
 <li> &lt;docid&gt;.mis         :File with unresolvable page links in the document</li>
-<li> &lt;docid&gt;.ftl         :File with an exception thrown while processing
+<li> &lt;docid&gt;.ftl         :File with an exception thrown while processing</li>
 <li> &lt;docid&gt;.wtf         :File listing some suspicious text elements. This list is useful for tracking classification errors.</li>
 <li> &lt;docid&gt;.org         :File with a dump of the document processed (only written if required or on error)</li>
 </ul>
@@ -154,12 +154,12 @@ Besides the &lt;docid&gt;.xml files, the following files are written:
 <li>Special identifiers are selected by //bibref //time //code
 </li>
 <li>Tables //table are defined with a title selected with //tabtitle and cell headings and cells.
-Cell headings and cells have attributes 'id' that relate headings to cells with a commonn value for the 'id' attribute.
+Cell headings and cells have attributes 'id' that relate headings to cells with a common value for the 'id' attribute.
 </li>
 <li>Tables, reference inclusions and citations are written as //table, //ref and //citation end of the section they appear and referenced in the text
-with //tablink, //reflink and //citlink. The idea behind this is avoid interruption of sentences. This makes part of speech tagging and
+with //tablink, //reflink and //citlink. The idea behind this is to avoid interruption of sentences. This makes part of speech tagging and
 retrieval with positional relations within sentences possible. You can use the 'id' attribute of the link and of the reference 
-that are identical for items related to relate entities with their context.
+with an identical value for items related to relate entities with their context.
 </li>
 </ul>
 </p>
