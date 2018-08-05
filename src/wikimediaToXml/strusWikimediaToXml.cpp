@@ -1141,7 +1141,7 @@ int main( int argc, const char* argv[])
 						}
 						else
 						{
-							std::cerr << "invalid document" << std::endl;
+							std::cerr << "invalid document '" << docAttributes.title << "'" << std::endl;
 						}
 					}
 					break;
