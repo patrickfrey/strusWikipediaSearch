@@ -776,13 +776,13 @@ int main( int argc, const char* argv[])
 			}
 			else if (0==std::memcmp(argv[argi],"-S",2))
 			{
-				if (g_breakpoint > 0) throw std::runtime_error( "duplicated option -S <lexemid>");
+				if (g_breakpoint >= 0) throw std::runtime_error( "duplicated option -S <lexemid>");
 				g_breakpoint = getUIntOptionArg( argi, argc, argv);
 				++argi;
 			}
 			else if (0==std::memcmp(argv[argi],"-P",2))
 			{
-				if (g_breakpoint > 0) throw std::runtime_error( "duplicated option -P <mod>");
+				if (g_breakpoint >= 0) throw std::runtime_error( "duplicated option -P <mod>");
 				counterMod = getUIntOptionArg( argi, argc, argv);
 				if (!counterMod) throw std::runtime_error( "option -P requires positive integer as argument");
 				++argi;
@@ -932,7 +932,7 @@ int main( int argc, const char* argv[])
 			if (nofThreads != 0) std::cerr << "number of threads (option -t) ignored if option -R is specified" << std::endl;
 			if (g_beautified) std::cerr << "beautyfication (option -B) ignored if option -R is specified" << std::endl;
 			if (g_dumps) std::cerr << "write dumps allways (option -D) ignored if option -R is specified" << std::endl;
-			if (g_breakpoint) std::cerr << "stop verbose output at (option -S) ignored if option -R is specified" << std::endl;
+			if (g_breakpoint >= 0) std::cerr << "stop verbose output at (option -S) ignored if option -R is specified" << std::endl;
 			if (!g_origOutputPattern.empty()) std::cerr << "write dump files for selected documents (option -O) ignored if option -R is specified" << std::endl;
 			if (loadRedirects) std::cerr << "option -L not compatiple with option -R" << std::endl;
 		}
