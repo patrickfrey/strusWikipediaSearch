@@ -40,13 +40,13 @@ To get all articles and redirects, use the option -n 0 of the strusWikimediaToXm
 wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
 bunzip2 enwiki-latest-pages-articles.xml.bz2
 mkdir xml
-strusWikimediaToXml -B -n 0 -t 12 enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -B -n 0  -P 10000 -t 12 enwiki-latest-pages-articles.xml xml
 </pre>
 If you want to resolve page links to redirect pages, you can run the program twice. First with option -R &lt;redirectfile&gt;
 and then with option -L &lt;redirectfile&gt;. In the extracting link mode (option -R specified) there are no converted XML documents written and the program runs single threaded.
 <pre>
-strusWikimediaToXml -n 0 -R redirects.txt enwiki-latest-pages-articles.xml xml
-strusWikimediaToXml -B -n 0 -t 12 -L redirects.txt enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -n 0 -P 10000 -R redirects.txt enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -B -n 0 -P 10000 -t 12 -L redirects.txt enwiki-latest-pages-articles.xml xml
 </pre>
 </p>
 

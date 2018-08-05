@@ -749,6 +749,7 @@ int main( int argc, const char* argv[])
 		bool namespaceset = false;
 		bool printusage = false;
 		bool collectRedirects = false;
+		bool loadRedirects = false;
 		std::string linkmapfilename;
 
 		for (;argi < argc; ++argi)
@@ -799,6 +800,7 @@ int main( int argc, const char* argv[])
 				++argi;
 				if (argi == argc) throw std::runtime_error( "option -L without argument");
 				linkmapfilename = argv[ argi];
+				loadRedirects = true;
 			}
 			else if (0==std::memcmp(argv[argi],"-R",2))
 			{
@@ -932,7 +934,7 @@ int main( int argc, const char* argv[])
 			if (g_dumps) std::cerr << "write dumps allways (option -D) ignored if option -R is specified" << std::endl;
 			if (g_breakpoint) std::cerr << "stop verbose output at (option -S) ignored if option -R is specified" << std::endl;
 			if (!g_origOutputPattern.empty()) std::cerr << "write dump files for selected documents (option -O) ignored if option -R is specified" << std::endl;
-			if (!linkmapfilename.empty()) std::cerr << "option -L not compatiple with option -R" << std::endl;
+			if (loadRedirects) std::cerr << "option -L not compatiple with option -R" << std::endl;
 		}
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
 		if (nofThreads <= 0) nofThreads = 0;
