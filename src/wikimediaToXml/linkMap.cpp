@@ -231,6 +231,7 @@ void LinkMapBuilder::build( LinkMap& res)
 		{
 			m_unresolved.insert( li->key);
 		}
+		li = next_li;
 	}
 }
 
