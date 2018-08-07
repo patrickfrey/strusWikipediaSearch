@@ -27,7 +27,7 @@ link_directories(
 # PROGRAMS
 # ------------------------------
 add_executable( strusWikimediaToXml ${source_files} )
-target_link_libraries( strusWikimediaToXml  strus_base ${Boost_LIBRARIES} ${Intl_LIBRARIES} )
+target_link_libraries( strusWikimediaToXml  strus_base strus_error ${Boost_LIBRARIES} ${Intl_LIBRARIES} )
 add_executable( validateXml validateXml.cpp outputString.cpp )
 target_link_libraries( validateXml strus_base ${Boost_LIBRARIES} ${Intl_LIBRARIES} )
 

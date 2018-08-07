@@ -10,8 +10,7 @@
 /// \file linkMap.hpp
 #ifndef _STRUS_WIKIPEDIA_LINK_MAP_HPP_INCLUDED
 #define _STRUS_WIKIPEDIA_LINK_MAP_HPP_INCLUDED
-#include "strus/base/string_format.hpp"
-#include "strus/base/fileio.hpp"
+#include "strus/base/symbolTable.hpp"
 #include <string>
 #include <map>
 #include <set>
@@ -23,83 +22,86 @@
 
 namespace strus {
 
+/// \brief Forward declaration
+class ErrorBufferInterface;
+
 class LinkMap
 {
 public:
-	LinkMap( const LinkMap& o)
-		:m_map(o.m_map){}
-	LinkMap( const std::map<std::string,std::string>& map_)
-		:m_map(map_){}
-	LinkMap(){}
+	
+	explicit LinkMap( ErrorBufferInterface* errorhnd_)
+		:m_errorhnd(errorhnd_),m_symtab(errorhnd_),m_map(){}
 
+	void init( const SymbolTable& symtab_, const std::map<int,int>& map_);
 	void load( const std::string& filename);
 
 	void write( const std::string& filename) const;
 
+	void define( const std::string& key, const std::string& value);
 	const char* get( const std::string& key) const;
-
-	static std::pair<std::string,std::string> getLinkParts( const std::string& linkid);
 
 public:
 	static std::string normalizeKey( const std::string& kk);
 	static std::string normalizeValue( const std::string& vv);
+	static std::pair<std::string,std::string> getLinkParts( const std::string& linkid);
 
 private:
 	void addLine( const std::string& ln);
 
 private:
-	std::map<std::string,std::string> m_map;
+	ErrorBufferInterface* m_errorhnd;
+	SymbolTable m_symtab;
+	std::map<int,int> m_map;
 };
 
 
 class LinkMapBuilder
 {
 public:
-	LinkMapBuilder( const LinkMapBuilder& o)
-		:m_lnkdefmap(o.m_lnkdefmap),m_idset(o.m_idset),m_unresolved(o.m_unresolved){}
-	LinkMapBuilder(){}
+	explicit LinkMapBuilder( ErrorBufferInterface* errorhnd_)
+		:m_errorhnd(errorhnd_),m_symtab(errorhnd_),m_lnkdefmap(),m_idset(),m_unresolved(){}
 
-	std::map<std::string,std::string> build();
+	void build( LinkMap& res);
 
-	std::vector<std::string> unresolved() const
-	{
-		return std::vector<std::string>( m_unresolved.begin(), m_unresolved.end());
-	}
+	std::vector<const char*> unresolved() const;
 
 	void redirect( const std::string& key, const std::string& value);
 	void define( const std::string& key);
 
 private:
 	enum {TransitiveSearchDepth=6};
-	const std::string* transitiveFindValue( const std::string& value, int depth) const;
+	const char* transitiveFindValue( int keyidx, int validx, int depth) const;
 
 private:
 	struct LnkDef
 	{
-		std::string key;
-		std::string val;
+		int key;
+		int val;
+		int valkey;
 
 		LnkDef()
-			:key(),val(){}
-		LnkDef( const std::string& key_, const std::string& val_)
-			:key(key_),val(val_){}
+			:key(0),val(0),valkey(0){}
+		LnkDef( int key_, int val_, int valkey_)
+			:key(key_),val(val_),valkey(valkey_){}
 		LnkDef( const LnkDef& o)
-			:key(o.key),val(o.val){}
+			:key(o.key),val(o.val),valkey(o.valkey){}
 
 		bool operator < ( const LnkDef& o) const
 		{
-			int cmp = std::strcmp( key.c_str(), o.key.c_str());
-			if (cmp < 0) return true;
-			if (cmp > 0) return false;
-			if (val.empty() && !o.val.empty()) return true;
-			return val < o.val;
+			if (key < o.key) return true;
+			if (key > o.key) return false;
+			if (val < o.val) return true;
+			if (val > o.val) return false;
+			return valkey < o.valkey;
 		}
 	};
+	ErrorBufferInterface* m_errorhnd;
+	SymbolTable m_symtab;
 	typedef std::set<LnkDef> LnkDefSet;
 
 	LnkDefSet m_lnkdefmap;
-	std::set<std::string> m_idset;
-	std::set<std::string> m_unresolved;
+	std::set<int> m_idset;
+	std::set<int> m_unresolved;
 };
 
 }//namespace

@@ -24,7 +24,7 @@ each of these flags toggled to YES another section.
 	do
 	git clone https://github.com/patrickfrey/$strusprj $strusprj
 	cd $strusprj
-	cmake -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=/usr/local/lib .
+	cmake -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=lib .
 	make
 	make install
 	cd ..
@@ -50,7 +50,7 @@ each of these flags toggled to YES another section.
 	cd strusWikipediaSearch
 
 # Configure with GNU C/C++
-	cmake -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=/usr/local/lib .
+	cmake -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=lib .
 
 # Configure with Clang C/C++
 	Minimal build, only Lua bindings without Vector and Pattern and

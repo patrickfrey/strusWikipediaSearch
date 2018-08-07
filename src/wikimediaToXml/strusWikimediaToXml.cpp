@@ -9,6 +9,7 @@
 #include "textwolf/istreamiterator.hpp"
 #include "textwolf/xmlscanner.hpp"
 #include "textwolf/charset.hpp"
+#include "strus/lib/error.hpp"
 #include "strus/base/local_ptr.hpp"
 #include "strus/base/fileio.hpp"
 #include "strus/base/thread.hpp"
@@ -18,6 +19,7 @@
 #include "strus/base/atomic.hpp"
 #include "strus/base/local_ptr.hpp"
 #include "strus/base/string_conv.hpp"
+#include "strus/errorBufferInterface.hpp"
 #include "linkMap.hpp"
 #include "documentStructure.hpp"
 #include "outputString.hpp"
@@ -42,6 +44,7 @@ static int g_breakpoint = -1;
 static std::string g_outputdir;
 static std::string g_origOutputPattern;
 static const strus::LinkMap* g_linkmap = NULL;
+static strus::ErrorBufferInterface* g_errorhnd = NULL;
 
 typedef textwolf::XMLScanner<textwolf::IStreamIterator,textwolf::charset::UTF8,textwolf::charset::UTF8,std::string> XmlScanner;
 
@@ -938,11 +941,14 @@ int main( int argc, const char* argv[])
 		}
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
 		if (nofThreads <= 0) nofThreads = 0;
+		g_errorhnd = strus::createErrorBuffer_standard( NULL/*logfilehandle*/, nofThreads+2, NULL/*debugTrace*/);
+		if (!g_errorhnd) throw std::runtime_error("failed to create error buffer");
+
 		strus::local_ptr<strus::LinkMap> linkmap;
-		strus::LinkMapBuilder linkmapBuilder;
+		strus::LinkMapBuilder linkmapBuilder( g_errorhnd);
 		if (!linkmapfilename.empty())
 		{
-			linkmap.reset( new strus::LinkMap());
+			linkmap.reset( new strus::LinkMap( g_errorhnd));
 			if (!collectRedirects)
 			{
 				std::string linkmapfilepath( strus::isRelativePath( linkmapfilename) ? strus::joinFilePath( g_outputdir, linkmapfilename) : linkmapfilename);
@@ -1194,15 +1200,17 @@ int main( int argc, const char* argv[])
 			std::string linkmapfilepath( strus::isRelativePath( linkmapfilename) ? strus::joinFilePath( g_outputdir, linkmapfilename) : linkmapfilename);
 			std::string unresolved_outfilename = linkmapfilepath + ".mis";
 			{
-				linkmap.reset( new strus::LinkMap( linkmapBuilder.build()));
+				linkmap.reset( new strus::LinkMap( g_errorhnd));
+				if (!linkmap.get()) throw std::runtime_error("failed to create link map");
+				linkmapBuilder.build( *linkmap);
 				linkmap->write( linkmapfilepath);
 				std::cerr << "links written to " << linkmapfilepath << std::endl;
 			}{
 				std::string unresolvedstr;
-				std::vector<std::string> unresolved( linkmapBuilder.unresolved());
+				std::vector<const char*> unresolved( linkmapBuilder.unresolved());
 				if (!unresolved.empty())
 				{
-					std::vector<std::string>::const_iterator ui = unresolved.begin(), ue = unresolved.end();
+					std::vector<const char*>::const_iterator ui = unresolved.begin(), ue = unresolved.end();
 					for (; ui != ue; ++ui)
 					{
 						unresolvedstr.append( *ui);
@@ -1220,6 +1228,7 @@ int main( int argc, const char* argv[])
 				}
 			}
 		}
+		if (g_errorhnd) delete g_errorhnd;
 		return rt;
 	}
 	catch (const std::runtime_error& e)
@@ -1230,6 +1239,7 @@ int main( int argc, const char* argv[])
 	{
 		std::cerr << "EXCEPTION " << e.what() << std::endl;
 	}
+	if (g_errorhnd) delete g_errorhnd;
 	return -1;
 }
 
