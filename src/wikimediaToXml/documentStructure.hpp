@@ -541,7 +541,6 @@ public:
 		closeDanglingStructures( Paragraph::TableStart);
 		openTableCell( reptype, rowspan, colspan);
 	}
-
 	void addTableCell( int rowspan, int colspan)
 	{
 		closeDanglingStructures( Paragraph::TableStart);
@@ -622,7 +621,7 @@ public:
 	}
 	void finish();
 
-	std::string toxml( bool beautified) const;
+	std::string toxml( bool beautified, bool singleIdAttribute) const;
 	std::string tostring() const;
 	std::string reportStrangeFeatures() const;
 	std::string statestring() const;

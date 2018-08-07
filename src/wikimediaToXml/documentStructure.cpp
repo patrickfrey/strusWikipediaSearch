@@ -1034,7 +1034,7 @@ static std::string collectAttributeText( std::vector<Paragraph>::const_iterator 
 	return std::string();
 }
 
-std::string DocumentStructure::toxml( bool beautified) const
+std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) const
 {
 	std::string rt;
 	std::vector<Paragraph::StructType> stk;
@@ -1133,9 +1133,28 @@ std::string DocumentStructure::toxml( bool beautified) const
 					std::string attrtext = string_conv::trim( collectIntagAttributeValue( pi, pe));
 					if (!attrtext.empty())
 					{
-						while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
-						output.printAttribute( attrid, rt);
-						output.printValue( attrtext, rt);
+						if (singleIdAttribute)
+						{
+							while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
+							++pi;
+							while (pi != pe && pi->type() == Paragraph::AttributeStart && pi->id() == attrid)
+							{
+								attrtext.push_back(',');
+								attrtext.append( string_conv::trim( collectIntagAttributeValue( pi, pe)));
+								++pidx;
+								while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
+								++pi;
+							}
+							--pi;
+							output.printAttribute( attrid, rt);
+							output.printValue( attrtext, rt);
+						}
+						else
+						{
+							while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
+							output.printAttribute( attrid, rt);
+							output.printValue( attrtext, rt);
+						}
 					}
 					else
 					{

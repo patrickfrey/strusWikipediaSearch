@@ -41,6 +41,7 @@ static int g_verbosity = 0;
 static bool g_beautified = false;
 static bool g_dumps = false;
 static int g_breakpoint = -1;
+static bool g_singleIdAttribute = true;
 static std::string g_outputdir;
 static std::string g_origOutputPattern;
 static const strus::LinkMap* g_linkmap = NULL;
@@ -492,7 +493,7 @@ static void writeLexerDumpFile( int fileCounter, const strus::DocumentStructure&
 
 static void writeOutputFiles( int fileCounter, const strus::DocumentStructure& doc)
 {
-	writeWorkFile( fileCounter, doc.fileId(), ".xml", doc.toxml( g_beautified));
+	writeWorkFile( fileCounter, doc.fileId(), ".xml", doc.toxml( g_beautified, g_singleIdAttribute));
 	std::string strange = doc.reportStrangeFeatures();
 	if (strange.empty())
 	{
@@ -773,6 +774,10 @@ int main( int argc, const char* argv[])
 			{
 				g_dumps = true;
 			}
+			else if (0==std::strcmp(argv[argi],"-I"))
+			{
+				g_singleIdAttribute = false;
+			}
 			else if (0==std::strcmp(argv[argi],"-h"))
 			{
 				printusage = true;
@@ -866,6 +871,10 @@ int main( int argc, const char* argv[])
 			std::cerr << "                  Total number of threads is <threads> +1" << std::endl;
 			std::cerr << "                  (conversion threads + main thread)" << std::endl;
 			std::cerr << "    -n <ns>      :Reduce output to namespace <ns> (0=article)" << std::endl;
+			std::cerr << "    -I           :Produce one 'id' attribute per table cell reference," << std::endl;
+			std::cerr << "                  instead of one with the ids separated by commas (e.g. id='C1,R2')." << std::endl;
+			std::cerr << "                  One 'id' attribute per table cell reference is non valid XML," << std::endl;
+			std::cerr << "                  but you should use this format if you process the XML with strus." << std::endl;
 			std::cerr << "    -R <lnkfile> :Collect redirects only and write them to <lnkfile>" << std::endl;
 			std::cerr << "    -L <lnkfile> :Load link file <lnkfile> for verifying page links" << std::endl;
 			std::cerr << std::endl;
