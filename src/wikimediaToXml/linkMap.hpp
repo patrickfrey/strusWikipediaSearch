@@ -69,7 +69,7 @@ public:
 
 private:
 	enum {TransitiveSearchDepth=6};
-	const char* transitiveFindValue( int validx, int depth) const;
+	const char* transitiveFindValue( int validx, int depth, bool check) const;
 
 private:
 	struct LnkDef

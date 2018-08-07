@@ -168,11 +168,12 @@ void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 	m_lnkdefmap.insert( lnkdef);
 }
 
-const char* LinkMapBuilder::transitiveFindValue( int validx, int depth) const
+const char* LinkMapBuilder::transitiveFindValue( int validx, int depth, bool check) const
 {
 	std::map<int,const char*>::const_iterator itr = m_idset.find( validx);
 	if (itr != m_idset.end()) return itr->second;
 
+	/*[-]*/if (check) std::cout << "NOT A TITLE" << std::endl;
 	if (depth <= 0) return NULL;
 
 	int keyidx = validx;
@@ -182,10 +183,23 @@ const char* LinkMapBuilder::transitiveFindValue( int validx, int depth) const
 
 	for (; li != le && li->key == keyidx; ++li)
 	{
-		const char* rt = transitiveFindValue( li->val, depth-1);
+		/*[-]*/if (check) std::cout << "SEARCH '" << m_symtab.key( li->val) << "'" << std::endl;
+		const char* rt = transitiveFindValue( li->val, depth-1, check);
 		if (rt) return rt;
 	}
 	return NULL;
+}
+
+static bool isEqual( const char* aa, const char* bb)
+{
+	char const* ai = aa;
+	char const* bi = bb;
+	while (*ai && (unsigned char)*ai <= 32) ++ai;
+	while (*bi && (unsigned char)*bi <= 32) ++bi;
+	while (*ai && *bi && (*ai|32) == (*bi|32)) {++ai; ++bi;}
+	while (*ai && (unsigned char)*ai <= 32) ++ai;
+	while (*bi && (unsigned char)*bi <= 32) ++bi;
+	return (*ai == 0 && *bi == 0);
 }
 
 void LinkMapBuilder::build( LinkMap& res)
@@ -194,12 +208,19 @@ void LinkMapBuilder::build( LinkMap& res)
 	while (li != le)
 	{
 		LnkDefSet::const_iterator next_li = li;
-		for (++next_li; next_li->key == li->key; ++next_li){}
+		for (++next_li; next_li != le && next_li->key == li->key; ++next_li){}
 
 		const char* keystr = m_symtab.key( li->key);
+		/*[-]*/bool doCheck = false;
+		/*[-]*/if (isEqual("Claude Cat", keystr))
+		/*[-]*/{
+		/*[-]*/	std::cout << "GOT '" << keystr << "'" << std::endl;
+		/*[-]*/	doCheck = true;
+		/*[-]*/}
 		for (; li != next_li; ++li)
 		{
-			const char* selectedval = transitiveFindValue( li->key, TransitiveSearchDepth);
+			/*[-]*/if (doCheck) std::cout << "CHECK '" << m_symtab.key(li->key) << "' '" << m_symtab.key(li->val) << "'" << std::endl;
+			const char* selectedval = transitiveFindValue( li->key, TransitiveSearchDepth, doCheck);
 			if (selectedval)
 			{
 				res.define( keystr, selectedval);
@@ -208,7 +229,8 @@ void LinkMapBuilder::build( LinkMap& res)
 		}
 		if (li == next_li)
 		{
-			m_unresolved.insert( m_symtab.key( li->key));
+			/*[-]*/if (m_idset.find( li->key) != m_idset.end()) std::cerr << "KEY '" << keystr << "'" << std::endl;
+			m_unresolved.insert( keystr);
 		}
 		li = next_li;
 	}
