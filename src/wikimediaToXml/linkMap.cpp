@@ -155,6 +155,7 @@ void LinkMapBuilder::define( const std::string& key)
 	int origvalidx = m_symtab.getOrCreate( key);
 	if (!validx) throw std::runtime_error(_TXT("failed to create symbol"));
 	m_idset[ validx] =  m_symtab.key( origvalidx);
+	redirect( key, key);
 }
 
 void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
