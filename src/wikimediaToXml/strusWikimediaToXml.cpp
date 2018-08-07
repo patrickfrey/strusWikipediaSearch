@@ -1124,18 +1124,16 @@ int main( int argc, const char* argv[])
 							{
 								++docCounter;
 								int docIndex = docCounter-1;
-								const char* normtitle = g_linkmap ? g_linkmap->get( docAttributes.title) : 0;
-								if (!normtitle) normtitle = docAttributes.title.c_str();
 								if (nofThreads)
 								{
 									workeridx = docIndex % nofThreads;
-									workers.ar[ workeridx].push( docIndex, normtitle, docAttributes.content);
+									workers.ar[ workeridx].push( docIndex, docAttributes.title, docAttributes.content);
 								}
 								else
 								{
 									try
 									{
-										Work work( docIndex, normtitle, docAttributes.content, g_dumps);
+										Work work( docIndex, docAttributes.title, docAttributes.content, g_dumps);
 										if (g_verbosity >= 1) std::cerr << strus::string_format( "process document '%s'\n", docAttributes.title.c_str()) << std::flush;
 										work.process();
 									} 

@@ -95,6 +95,22 @@ std::pair<std::string,std::string> LinkMap::getLinkParts( const std::string& lin
 	}
 }
 
+static bool isEqualWord( const char* start, const char* word)
+{
+	char const* si = start;
+	char const* wi = word;
+	while (*si == *wi) {++si;++wi;}
+	return *wi == '\0' && ((unsigned char)*si <= 32);
+}
+
+static bool isUnimportantWord( const char* start)
+{
+	static const char* ar[] = {"the","a","an","aboard","about","above","across","after","against","along","amid","among","anti","around","as","at","before","behind","below","beneath","beside","besides","between","beyond","but","by","concerning","considering","despite","down","during","except","excepting","excluding","following","for","from","in","inside","into","like","minus","near","of","off","on","onto","opposite","outside","over","past","per","plus","regarding","round","save","since","than","through","to","toward","towards","under","underneath","unlike","until","up","upon","versus","via","with","within","without",0};
+	int ai=0;
+	for (; ar[ai] && !isEqualWord( start, ar[ai]); ++ai){}
+	return !!ar[ai];
+}
+
 std::string LinkMap::normalizeValue( const std::string& vv)
 {
 	std::string rt;
@@ -106,6 +122,17 @@ std::string LinkMap::normalizeValue( const std::string& vv)
 		if ((unsigned char)*vi <= 32)
 		{
 			if (back != ' ') rt.push_back(' ');
+		}
+		else if (back == ' ' && *vi >= 'a' && *vi <= 'z')
+		{
+			if (isUnimportantWord( vi))
+			{
+				rt.push_back( *vi);
+			}
+			else
+			{
+				rt.push_back( *vi ^ 32);
+			}
 		}
 		else
 		{
