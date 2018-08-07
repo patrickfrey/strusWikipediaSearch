@@ -223,13 +223,18 @@ void LinkMapBuilder::build( LinkMap& res)
 			const char* selectedval = transitiveFindValue( li->key, TransitiveSearchDepth, doCheck);
 			if (selectedval)
 			{
+				/*[-]*/if (doCheck) std::cout << "DEFINE '" << keystr << "' '" << selectedval << "'" << std::endl;
 				res.define( keystr, selectedval);
 				break;
 			}
 		}
 		if (li == next_li)
 		{
-			/*[-]*/if (m_idset.find( li->key) != m_idset.end()) std::cerr << "KEY '" << keystr << "'" << std::endl;
+			/*[-]*/if (doCheck)
+			/*[-]*/{
+			/*[-]*/	if (m_idset.find( li->key) != m_idset.end()) std::cerr << "*";
+			/*[-]*/	std::cout << "UNRESOLVED '" << keystr << "'" << std::endl;
+			/*[-]*/}
 			m_unresolved.insert( keystr);
 		}
 		li = next_li;
