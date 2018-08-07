@@ -1154,6 +1154,10 @@ int main( int argc, const char* argv[])
 								}
 							}
 						}
+						else if (docAttributes.content.empty())
+						{
+							std::cerr << "empty document '" << docAttributes.title << "'" << std::endl;
+						}
 						else
 						{
 							std::cerr << "invalid document '" << docAttributes.title << "'" << std::endl;
