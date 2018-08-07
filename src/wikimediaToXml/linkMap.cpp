@@ -198,7 +198,7 @@ void LinkMapBuilder::build( LinkMap& res)
 		const char* keystr = m_symtab.key( li->key);
 		for (; li != next_li; ++li)
 		{
-			const char* selectedval = transitiveFindValue( li->val, TransitiveSearchDepth);
+			const char* selectedval = transitiveFindValue( li->key, TransitiveSearchDepth);
 			if (selectedval)
 			{
 				res.define( keystr, selectedval);
