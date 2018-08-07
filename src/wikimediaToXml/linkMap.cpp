@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (c) 2018 Patrick P. Frey
 *
 * This Source Code Form is subject to the terms of the Mozilla Public
@@ -152,8 +152,9 @@ void LinkMapBuilder::define( const std::string& key)
 {
 	std::string normval = LinkMap::normalizeValue( key);
 	int validx = m_symtab.getOrCreate( normval);
+	int origvalidx = m_symtab.getOrCreate( key);
 	if (!validx) throw std::runtime_error(_TXT("failed to create symbol"));
-	m_idset.insert( validx);
+	m_idset[ validx] =  m_symtab.key( origvalidx);
 }
 
 void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
@@ -168,8 +169,8 @@ void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 
 const char* LinkMapBuilder::transitiveFindValue( int validx, int depth) const
 {
-	std::set<int>::const_iterator id = m_idset.find( validx);
-	if (id != m_idset.end()) return m_symtab.key( validx);
+	std::map<int,const char*>::const_iterator itr = m_idset.find( validx);
+	if (itr != m_idset.end()) return itr->second;
 
 	if (depth <= 0) return NULL;
 
@@ -206,7 +207,7 @@ void LinkMapBuilder::build( LinkMap& res)
 		}
 		if (li == next_li)
 		{
-			m_unresolved.insert( li->key);
+			m_unresolved.insert( m_symtab.key( li->key));
 		}
 		li = next_li;
 	}
@@ -214,14 +215,6 @@ void LinkMapBuilder::build( LinkMap& res)
 
 std::vector<const char*> LinkMapBuilder::unresolved() const
 {
-	std::vector<const char*> rt;
-	std::set<int>::const_iterator ui = m_unresolved.begin(), ue = m_unresolved.end();
-	for (; ui != ue; ++ui)
-	{
-		const char* key = m_symtab.key( *ui);
-		if (!key) throw std::runtime_error(_TXT("internal: corrupt key in unresolved list"));
-		rt.push_back( key);
-	}
-	return rt;
+	return std::vector<const char*>( m_unresolved.begin(), m_unresolved.end());
 }
 

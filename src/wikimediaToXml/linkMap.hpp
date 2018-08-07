@@ -96,8 +96,8 @@ private:
 	typedef std::set<LnkDef> LnkDefSet;
 
 	LnkDefSet m_lnkdefmap;
-	std::set<int> m_idset;
-	std::set<int> m_unresolved;
+	std::map<int,const char*> m_idset;
+	std::set<const char*> m_unresolved;
 };
 
 }//namespace
