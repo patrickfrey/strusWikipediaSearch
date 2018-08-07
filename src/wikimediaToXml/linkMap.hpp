@@ -41,7 +41,6 @@ public:
 	const char* get( const std::string& key) const;
 
 public:
-	static std::string normalizeKey( const std::string& kk);
 	static std::string normalizeValue( const std::string& vv);
 	static std::pair<std::string,std::string> getLinkParts( const std::string& linkid);
 
@@ -70,29 +69,26 @@ public:
 
 private:
 	enum {TransitiveSearchDepth=6};
-	const char* transitiveFindValue( int keyidx, int validx, int depth) const;
+	const char* transitiveFindValue( int validx, int depth) const;
 
 private:
 	struct LnkDef
 	{
 		int key;
 		int val;
-		int valkey;
 
 		LnkDef()
-			:key(0),val(0),valkey(0){}
-		LnkDef( int key_, int val_, int valkey_)
-			:key(key_),val(val_),valkey(valkey_){}
+			:key(0),val(0){}
+		LnkDef( int key_, int val_)
+			:key(key_),val(val_){}
 		LnkDef( const LnkDef& o)
-			:key(o.key),val(o.val),valkey(o.valkey){}
+			:key(o.key),val(o.val){}
 
 		bool operator < ( const LnkDef& o) const
 		{
 			if (key < o.key) return true;
 			if (key > o.key) return false;
-			if (val < o.val) return true;
-			if (val > o.val) return false;
-			return valkey < o.valkey;
+			return val < o.val;
 		}
 	};
 	ErrorBufferInterface* m_errorhnd;

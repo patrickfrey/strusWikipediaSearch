@@ -75,7 +75,7 @@ void LinkMap::define( const std::string& key, const std::string& value)
 
 const char* LinkMap::get( const std::string& key) const
 {
-	int keyidx = m_symtab.get( normalizeKey( key));
+	int keyidx = m_symtab.get( normalizeValue( key));
 	if (!keyidx) return 0;
 	std::map<int,int>::const_iterator mi = m_map.find( keyidx);
 	if (mi == m_map.end()) return 0;
@@ -121,89 +121,39 @@ std::string LinkMap::normalizeValue( const std::string& vv)
 	return rt;
 }
 
-std::string LinkMap::normalizeKey( const std::string& kk)
-{
-	std::string rt;
-	char const* ki = kk.c_str();
-
-	for (; *ki; ++ki)
-	{
-		char ch = *ki | 32;
-		char back = rt.empty() ? ' ' : rt[ rt.size()-1];
-		if (*ki == '(' || *ki == '-')
-		{
-			if (back != ' ') rt.push_back(' ');
-			rt.push_back( *ki);
-		}
-		else if ((unsigned char)*ki <= 32)
-		{
-			if (back != ' ') rt.push_back(' ');
-		}
-		else if (ch >= 'a' && ch <= 'z')
-		{
-			if (back == ')' || back == '.' || back == ':' || back == '!' || back == ';' || back == '?')
-			{
-				rt.push_back( ' ');
-				rt.push_back( ch ^ 32);
-			}
-			else if (back == '(')
-			{
-				rt.push_back( ch ^ 32);
-			}
-			else if (back == ' ')
-			{
-				rt.push_back( ch ^ 32);
-			}
-			else
-			{
-				rt.push_back( ch);
-			}
-		}
-		else
-		{
-			rt.push_back( *ki);
-		}
-	}
-	char back = rt.empty() ? '\0' : rt[ rt.size()-1];
-	if (back == ' ') rt.resize( rt.size()-1);
-	return rt;
-}
-
 void LinkMapBuilder::define( const std::string& key)
 {
 	std::string normval = LinkMap::normalizeValue( key);
 	int validx = m_symtab.getOrCreate( normval);
 	if (!validx) throw std::runtime_error(_TXT("failed to create symbol"));
 	m_idset.insert( validx);
-	redirect( key, key);
 }
 
 void LinkMapBuilder::redirect( const std::string& key, const std::string& value)
 {
-	std::string normkey = LinkMap::normalizeKey( key);
+	std::string normkey = LinkMap::normalizeValue( key);
 	std::string normval = LinkMap::normalizeValue( value);
-	std::string normvalkey = LinkMap::normalizeKey( value);
 	int keyidx = m_symtab.getOrCreate( normkey);
 	int validx = m_symtab.getOrCreate( normval);
-	int valkeyidx = m_symtab.getOrCreate( normvalkey);
-	LnkDef lnkdef( keyidx, validx, valkeyidx);
+	LnkDef lnkdef( keyidx, validx);
 	m_lnkdefmap.insert( lnkdef);
 }
 
-const char* LinkMapBuilder::transitiveFindValue( int keyidx, int validx, int depth) const
+const char* LinkMapBuilder::transitiveFindValue( int validx, int depth) const
 {
 	std::set<int>::const_iterator id = m_idset.find( validx);
 	if (id != m_idset.end()) return m_symtab.key( validx);
 
 	if (depth <= 0) return NULL;
 
-	LnkDef lnkdef( keyidx, 0, 0);
+	int keyidx = validx;
+	LnkDef lnkdef( keyidx, 0/*val base*/);
 	LnkDefSet::const_iterator li = m_lnkdefmap.upper_bound( lnkdef);
 	LnkDefSet::const_iterator le = m_lnkdefmap.end();
 
-	for (; li != le && li->key == lnkdef.key; ++li)
+	for (; li != le && li->key == keyidx; ++li)
 	{
-		const char* rt = transitiveFindValue( li->valkey, li->val, depth-1);
+		const char* rt = transitiveFindValue( li->val, depth-1);
 		if (rt) return rt;
 	}
 	return NULL;
@@ -220,7 +170,7 @@ void LinkMapBuilder::build( LinkMap& res)
 		const char* keystr = m_symtab.key( li->key);
 		for (; li != next_li; ++li)
 		{
-			const char* selectedval = transitiveFindValue( li->valkey, li->val, TransitiveSearchDepth);
+			const char* selectedval = transitiveFindValue( li->val, TransitiveSearchDepth);
 			if (selectedval)
 			{
 				res.define( keystr, selectedval);
