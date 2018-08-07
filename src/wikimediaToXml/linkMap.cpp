@@ -227,7 +227,7 @@ void LinkMapBuilder::build( LinkMap& res)
 				break;
 			}
 		}
-		if (li != next_li)
+		if (li == next_li)
 		{
 			m_unresolved.insert( li->key);
 		}
