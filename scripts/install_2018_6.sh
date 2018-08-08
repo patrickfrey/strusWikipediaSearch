@@ -20,12 +20,18 @@ USER=patrick:patrick
 
 sudo mkdir /srv/wikipedia
 sudo chown $USER /srv/wikipedia
-sudo mkdir /srv/wikipedia/raw		# Wikipedia dump converted to XML
+sudo mkdir /srv/wikipedia/
 
-wget -q -O - http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2 \
-	| bzip2 -d -c | iconv -c -f utf-8 -t utf-8 - > /srv/wikipedia/dump.wikimedia.xml
-	
-strusWikimediaToXml -f "/srv/wikipedia/raw/wikipedia%04u.xml,10M" -n0 -s /srv/wikipedia/dump.wikimedia.xml
+cd /srv/wikipedia/
+wget http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
+bunzip2 enwiki-latest-pages-articles.xml.bz2
 
+mkdir -p xml
+strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
+
+strusPosTagger -I -e //pagelink() -e //text() -e //attr() -p //attr~:" " 
+!!!!! POS TAGGER SHOULD DEFINE PUNCTUATION STRING PER EXPRESSION
+!!!!! USE CONTENT ANALYSIS OF WEBSERVICE
 
 

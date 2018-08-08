@@ -45,8 +45,29 @@ strusWikimediaToXml -I -B -n 0  -P 10000 -t 12 enwiki-latest-pages-articles.xml 
 If you want to resolve page links to redirect pages, you can run the program twice. First with option -R &lt;redirectfile&gt;
 and then with option -L &lt;redirectfile&gt;. In the extracting link mode (option -R specified) there are no converted XML documents written and the program runs single threaded.
 <pre>
-strusWikimediaToXml -n 0 -P 10000 -R redirects.txt enwiki-latest-pages-articles.xml xml
-strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L redirects.txt enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
+</pre>
+</p>
+<p class="description">
+The option -I for the conversion generates more than attribute with the same name per tag.
+For example a table cell my look like &lt;cell id="C1" id="R2"&gt; if called with -I. Unfortunately this is not valid XML.
+Without -I the same tag will be printed as &lt;cell id="C1,R2"&gt;. 
+</p>
+
+<h2>Resources needed</h2>
+<p class="description">
+You need less than 8 GB RAM. 
+Conversion on a Intel(R) Core(TM) i7-6800K CPU @ 3.40GHz, 12 Threads and strusWikimediaToXml called with Option -t 12:
+
+<pre>
+Command being timed: "strusWikimediaToXml -I -B -n 0 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml doc"
+        User time (seconds): 10381.37
+        System time (seconds): 405.87
+        Percent of CPU this job got: 764%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 23:30.65
+        Maximum resident set size (kbytes): 2682604
+        Exit status: 0
 </pre>
 </p>
 
@@ -58,19 +79,26 @@ Usage: strusWikimediaToXml [options] &lt;inputfile&gt; [&lt;outputdir&gt;]
 &lt;inputfile&gt;   :File to process or '-' for stdin
 &lt;outputdir&gt;   :Directory where output files and directories are written to.
 options:
-    -h           :print this usage
-    -V           :verbosity level 1 (output document title errors to stderr)
-    -VV          :verbosity level 2 (output lexems found additional to level 1)
-    -S &lt;lexemid&gt; :stop verbose output (option -VV) at lexem with
+    -h           :Print this usage
+    -V           :Verbosity level 1 (output document title and errors to stderr)
+    -VV          :Verbosity level 2 (output lexems found additional to level 1)
+    -S &lt;lexemid&gt; :Stop verbose output (option -VV) at lexem with
                   index &lt;lexemid&gt; (continue processing)
-    -O &lt;substr&gt;  :write dump file for documents with a title
+    -O &lt;substr&gt;  :Write dump file for documents with a title
                   containing &lt;substr&gt; as title sub string
-    -B           :beautified readable XML output
-    -P &lt;mod&gt;     :print progress counter modulo &lt;mod&gt; to stderr
-    -D           :write dump files always, not only in case of an error
-    -t &lt;threads&gt; :number of threads to use is &lt;threads&gt;
-    -n &lt;ns&gt;      :reduce output to namespace &lt;ns&gt; (0=article)
-    -R &lt;lnkfile&gt; :collect redirects only and write them to &lt;lnkfile&gt;
+    -B           :Beautified readable XML output
+    -P &lt;mod&gt;     :Print progress counter modulo &lt;mod&gt; to stderr
+    -D           :Write dump files always, not only in case of an error
+    -K &lt;filename&gt;:Write dump file to file &lt;filename&gt; before processing it.
+    -t &lt;threads&gt; :Number of conversion threads to use is &lt;threads&gt;
+                  Total number of threads is &lt;threads&gt; +1
+                  (conversion threads + main thread)
+    -n &lt;ns&gt;      :Reduce output to namespace &lt;ns&gt; (0=article)
+    -I           :Produce one 'id' attribute per table cell reference,
+                  instead of one with the ids separated by commas (e.g. id='C1,R2').
+                  One 'id' attribute per table cell reference is non valid XML,
+                  but you should use this format if you process the XML with strus.
+    -R &lt;lnkfile&gt; :Collect redirects only and write them to &lt;lnkfile&gt;
     -L &lt;lnkfile&gt; :Load link file &lt;lnkfile&gt; for verifying page links
 </pre>
 </p>

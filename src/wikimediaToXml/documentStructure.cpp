@@ -954,6 +954,31 @@ std::string DocumentStructure::getInputXML( const std::string& title, const std:
 	return rt;
 }
 
+static std::string normalizeAttributeName( const std::string& name)
+{
+	std::string rt;
+	std::string::const_iterator si = name.begin(), se = name.end();
+	for (; si != se && (unsigned char)*si <= 32; ++si){}
+	for (; si != se; ++si)
+	{
+		if ((unsigned char)*si <= 32)
+		{
+			for (; si != se && (unsigned char)*si <= 32; ++si){}
+			if (si == se) break;
+			rt.push_back( '_');
+		}
+		else
+		{
+			rt.push_back( *si);
+		}
+	}
+	if (rt == "id")
+	{
+		return "_id";
+	}
+	return rt;
+}
+
 static void printTagOpen( XmlPrinter& output, std::string& rt, const char* tagnam, const std::string& id, const std::string& text)
 {
 	output.printOpenTag( tagnam, rt);
@@ -1043,19 +1068,6 @@ static void stack_pop_back( std::vector<Paragraph::StructType>& stk, const char*
 	stk.pop_back();
 }
 
-//[-] void printFollow( std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe)
-//[-] {
-//[-] 	std::cout << ">> ";
-//[-] 	enum {NN=20};
-//[-] 	int cnt = NN;
-//[-] 	for (; pi != pe && cnt > 0; ++pi,--cnt)
-//[-] 	{
-//[-] 		if (cnt < (int)NN) std::cout << ", ";
-//[-] 		std::cout << pi->typeName() << " " << pi->id() << "='" << pi->text() << "'";
-//[-] 	}
-//[-] 	std::cout << std::endl;
-//[-] }
-
 std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) const
 {
 	std::string rt;
@@ -1066,8 +1078,6 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 	std::vector<Paragraph>::const_iterator pi = m_parar.begin(), pe = m_parar.end();
 	for(int pidx=0; pi != pe; ++pi,++pidx)
 	{
-		//[-] std::cout << "STK[" << (int)stk.size() << "] ELEM " << pi->typeName() << " " << pi->id() << "='" << pi->text() << "'" << std::endl;
-		//[-] printFollow( pi, pe);
 		if (beautified && !output.isInTagDeclaration())
 		{
 			output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
@@ -1157,25 +1167,33 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				{
 					if (collectAttributeText( attrtext, pidx, pi, pe, true/*inTag*/, singleIdAttribute/*joinSameAttrName*/))
 					{
-						output.printAttribute( attrid, rt);
+						output.printAttribute( normalizeAttributeName(attrid), rt);
 						output.printValue( attrtext, rt);
 					}
 					else
 					{
 						stk.push_back( Paragraph::StructAttribute);
-						printTagOpen( output, rt, "attr", pi->id(), pi->text());
+						printTagOpen( output, rt, "attr", pi->id(), "");
+						if (!pi->text().empty())
+						{
+							printTagContent( output, rt, "text", "", pi->text());
+						}
 					}
 				}
 				else
 				{
 					if (collectAttributeText( attrtext, pidx, pi, pe, false/*inTag*/, false/*joinSameAttrName*/))
 					{
-						printTagContent( output, rt, "text", attrid, attrtext);
+						printTagContent( output, rt, "attr", attrid, attrtext);
 					}
 					else
 					{
 						stk.push_back( Paragraph::StructAttribute);
-						printTagOpen( output, rt, "attr", pi->id(), pi->text());
+						printTagOpen( output, rt, "attr", pi->id(), "");
+						if (!pi->text().empty())
+						{
+							printTagContent( output, rt, "text", "", pi->text());
+						}
 					}
 				}
 				break;
