@@ -755,6 +755,7 @@ int main( int argc, const char* argv[])
 		bool collectRedirects = false;
 		bool loadRedirects = false;
 		std::string linkmapfilename;
+		std::string dumpfilename;
 
 		for (;argi < argc; ++argi)
 		{
@@ -773,6 +774,13 @@ int main( int argc, const char* argv[])
 			else if (0==std::strcmp(argv[argi],"-D"))
 			{
 				g_dumps = true;
+			}
+			else if (0==std::strcmp(argv[argi],"-K"))
+			{
+				if (!dumpfilename.empty()) throw std::runtime_error("duplicated option -K <filename>");
+				++argi;
+				if (argi == argc) throw std::runtime_error( "option -K without argument");
+				dumpfilename = argv[ argi];
 			}
 			else if (0==std::strcmp(argv[argi],"-I"))
 			{
@@ -867,6 +875,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -B           :Beautified readable XML output" << std::endl;
 			std::cerr << "    -P <mod>     :Print progress counter modulo <mod> to stderr" << std::endl;
 			std::cerr << "    -D           :Write dump files always, not only in case of an error" << std::endl;
+			std::cerr << "    -K <filename>:Write dump file to file <filename> before processing it." << std::endl;
 			std::cerr << "    -t <threads> :Number of conversion threads to use is <threads>" << std::endl;
 			std::cerr << "                  Total number of threads is <threads> +1" << std::endl;
 			std::cerr << "                  (conversion threads + main thread)" << std::endl;
@@ -1122,6 +1131,11 @@ int main( int argc, const char* argv[])
 							}
 							else
 							{
+								if (!dumpfilename.empty())
+								{
+									int ec = strus::writeFile( dumpfilename, docAttributes.content);
+									if (ec) std::cerr << "failed to write dump file " << dumpfilename << ": " << ::strerror(ec) << std::endl;
+								}
 								++docCounter;
 								int docIndex = docCounter-1;
 								if (nofThreads)

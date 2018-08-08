@@ -1142,7 +1142,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 								attrtext.push_back(',');
 								attrtext.append( string_conv::trim( collectIntagAttributeValue( pi, pe)));
 								++pidx;
-								while (pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
+								while (pi != pe && pi->type() != Paragraph::AttributeEnd) {++pi,++pidx;}
 								++pi;
 							}
 							--pi;
