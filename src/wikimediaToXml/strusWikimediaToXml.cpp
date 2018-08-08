@@ -446,13 +446,25 @@ static void createOutputDir( int fileCounter)
 	if (ec) std::cerr << "error creating directory " << dirpath << ": " << std::strerror(ec) << std::endl;
 }
 
+static std::string getFilenameFromDocid( int fileCounter, const std::string& docid)
+{
+	if (docid.size() < 120)
+	{
+		return docid;
+	}
+	else
+	{
+		return std::string( docid.c_str(), 110) + "__" + strus::string_format( "%d", fileCounter);
+	}
+}
+
 static void writeWorkFile( int fileCounter, const std::string& docid, const std::string& extension, const std::string& content)
 {
 	char dirnam[ 16];
 	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
 	int ec;
 
-	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), docid + extension));
+	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), getFilenameFromDocid( fileCounter, docid) + extension));
 	ec = strus::writeFile( filename, content);
 	if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
 }
@@ -463,7 +475,7 @@ static void removeWorkFile( int fileCounter, const std::string& docid, const std
 	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
 	int ec;
 
-	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), docid + extension));
+	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), getFilenameFromDocid( fileCounter, docid) + extension));
 	ec = strus::removeFile( filename, false);
 	if (ec) std::cerr << "error removing file " << filename << ": " << std::strerror(ec) << std::endl;
 }
