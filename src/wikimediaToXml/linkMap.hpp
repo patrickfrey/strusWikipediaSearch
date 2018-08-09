@@ -35,6 +35,7 @@ public:
 	void init( const SymbolTable& symtab_, const std::map<int,int>& map_);
 	void load( const std::string& filename);
 
+	void write( std::ostream& out) const;
 	void write( const std::string& filename) const;
 
 	void define( const std::string& key, const std::string& value);

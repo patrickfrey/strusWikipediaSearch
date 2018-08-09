@@ -42,6 +42,10 @@ static bool g_beautified = false;
 static bool g_dumps = false;
 static int g_breakpoint = -1;
 static bool g_singleIdAttribute = true;
+static bool g_dumpStdout = false;
+static bool g_doTest = false;
+static std::string g_testExpectedFilename;
+static std::string g_testOutput;
 static std::string g_outputdir;
 static std::string g_origOutputPattern;
 static const strus::LinkMap* g_linkmap = NULL;
@@ -464,13 +468,34 @@ static void writeWorkFile( int fileCounter, const std::string& docid, const std:
 	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
 	int ec;
 
-	std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), getFilenameFromDocid( fileCounter, docid) + extension));
-	ec = strus::writeFile( filename, content);
-	if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
+	if (g_dumpStdout || g_doTest)
+	{
+		std::string filename( strus::joinFilePath( dirnam, getFilenameFromDocid( fileCounter, docid) + extension));
+		if (g_dumpStdout)
+		{
+			std::cout << "## " << filename << std::endl;
+			std::cout << content << std::endl << std::endl;
+		}
+		else
+		{
+			std::ostringstream out;
+			out << "## " << filename << std::endl;
+			out << content << std::endl << std::endl;
+			g_testOutput.append( out.str());
+		}
+	}
+	else
+	{
+		std::string filename( strus::joinFilePath( strus::joinFilePath( g_outputdir, dirnam), getFilenameFromDocid( fileCounter, docid) + extension));
+		ec = strus::writeFile( filename, content);
+		if (ec) std::cerr << "error writing file " << filename << ": " << std::strerror(ec) << std::endl;
+	}
 }
 
 static void removeWorkFile( int fileCounter, const std::string& docid, const std::string& extension)
 {
+	if (g_dumpStdout || g_doTest) return;
+
 	char dirnam[ 16];
 	std::snprintf( dirnam, sizeof(dirnam), "%04u", fileCounter / 1000);
 	int ec;
@@ -791,7 +816,7 @@ int main( int argc, const char* argv[])
 			{
 				if (!dumpfilename.empty()) throw std::runtime_error("duplicated option -K <filename>");
 				++argi;
-				if (argi == argc) throw std::runtime_error( "option -K without argument");
+				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option -K without argument");
 				dumpfilename = argv[ argi];
 			}
 			else if (0==std::strcmp(argv[argi],"-I"))
@@ -819,14 +844,14 @@ int main( int argc, const char* argv[])
 			{
 				if (!g_origOutputPattern.empty()) throw std::runtime_error("duplicated option -O <substr>");
 				++argi;
-				if (argi == argc) throw std::runtime_error( "option -O without argument");
+				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option -O without argument");
 				g_origOutputPattern = argv[ argi];
 			}
 			else if (0==std::memcmp(argv[argi],"-L",2))
 			{
 				if (!linkmapfilename.empty()) throw std::runtime_error("duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
 				++argi;
-				if (argi == argc) throw std::runtime_error( "option -L without argument");
+				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option -L without argument");
 				linkmapfilename = argv[ argi];
 				loadRedirects = true;
 			}
@@ -834,7 +859,7 @@ int main( int argc, const char* argv[])
 			{
 				if (!linkmapfilename.empty()) throw std::runtime_error( "duplicate or conflicting option -L <linkmapfile> or -R <linkmapfile>");
 				++argi;
-				if (argi == argc) throw std::runtime_error( "option -R without argument");
+				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option -R without argument");
 				linkmapfilename = argv[ argi];
 				collectRedirects = true;
 			}
@@ -848,6 +873,18 @@ int main( int argc, const char* argv[])
 			{
 				nofThreads = getUIntOptionArg( argi, argc, argv);
 				++argi;
+			}
+			else if (0==std::strcmp(argv[argi],"--stdout"))
+			{
+				g_dumpStdout = true;
+			}
+			else if (0==std::strcmp(argv[argi],"--test"))
+			{
+				if (!g_testExpectedFilename.empty()) throw std::runtime_error( "duplicate or option --test <expected file name>");
+				++argi;
+				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option --test without argument");
+				g_testExpectedFilename = argv[ argi];
+				g_doTest = true;
 			}
 			else if (argv[argi][0] == '-' && argv[argi][1] == '-')
 			{
@@ -898,6 +935,9 @@ int main( int argc, const char* argv[])
 			std::cerr << "                  but you should use this format if you process the XML with strus." << std::endl;
 			std::cerr << "    -R <lnkfile> :Collect redirects only and write them to <lnkfile>" << std::endl;
 			std::cerr << "    -L <lnkfile> :Load link file <lnkfile> for verifying page links" << std::endl;
+			std::cerr << "    --stdout     :Write all output to stdout" << std::endl;
+			std::cerr << "    --test <EXP> :Write all output to a string and compare it with the content" << std::endl;
+			std::cerr << "                  of the file <EXP> (single threaded only)" << std::endl;
 			std::cerr << std::endl;
 			std::cerr << "Description:" << std::endl;
 			std::cerr << "  Takes a unpacked Wikipedia XML dump as input and tries to convert it to\n";
@@ -960,6 +1000,11 @@ int main( int argc, const char* argv[])
 			if (collectRedirects) std::cerr << "output directory ignored if option -R is specified" << std::endl;
 			g_outputdir = argv[argi+1];
 		}
+		if (g_doTest)
+		{
+			if (nofThreads != 0) std::cerr << "number of threads (option -t) ignored if option --test is specified" << std::endl;
+			nofThreads = 0;
+		}
 		if (collectRedirects)
 		{
 			if (nofThreads != 0) std::cerr << "number of threads (option -t) ignored if option -R is specified" << std::endl;
@@ -981,8 +1026,7 @@ int main( int argc, const char* argv[])
 			linkmap.reset( new strus::LinkMap( g_errorhnd));
 			if (!collectRedirects)
 			{
-				std::string linkmapfilepath( strus::isRelativePath( linkmapfilename) ? strus::joinFilePath( g_outputdir, linkmapfilename) : linkmapfilename);
-				linkmap->load( linkmapfilepath);
+				linkmap->load( linkmapfilename);
 				g_linkmap = linkmap.get();
 			}
 		}
@@ -1234,14 +1278,33 @@ int main( int argc, const char* argv[])
 		}
 		if (collectRedirects)
 		{
-			std::string linkmapfilepath( strus::isRelativePath( linkmapfilename) ? strus::joinFilePath( g_outputdir, linkmapfilename) : linkmapfilename);
-			std::string unresolved_outfilename = linkmapfilepath + ".mis";
+			std::string unresolved_outfilename = linkmapfilename + ".mis";
 			{
 				linkmap.reset( new strus::LinkMap( g_errorhnd));
 				if (!linkmap.get()) throw std::runtime_error("failed to create link map");
 				linkmapBuilder.build( *linkmap);
-				linkmap->write( linkmapfilepath);
-				std::cerr << "links written to " << linkmapfilepath << std::endl;
+				if (g_dumpStdout || g_doTest)
+				{
+					if (g_dumpStdout)
+					{
+						std::cout << "## LINKS" << std::endl;
+						std::cout << std::endl;
+						linkmap->write( std::cout);
+					}
+					else
+					{
+						std::ostringstream out;
+						out << "## LINKS" << std::endl;
+						linkmap->write( out);
+						out << std::endl;
+						g_testOutput.append( out.str());
+					}
+				}
+				else
+				{
+					linkmap->write( linkmapfilename);
+					std::cerr << "links written to " << linkmapfilename << std::endl;
+				}
 			}{
 				std::string unresolvedstr;
 				std::vector<const char*> unresolved( linkmapBuilder.unresolved());
@@ -1253,16 +1316,65 @@ int main( int argc, const char* argv[])
 						unresolvedstr.append( *ui);
 						unresolvedstr.push_back( '\n');
 					}
-					int ec = strus::writeFile( unresolved_outfilename, unresolvedstr);
-					if (ec)
+					if (g_dumpStdout || g_doTest)
 					{
-						std::cerr << "error writing unresolved links file: " << std::strerror(ec) << std::endl;
+						if (g_dumpStdout)
+						{
+							std::cout << "## UNRESOLVED" << std::endl << unresolvedstr << std::endl << std::endl;
+						}
+						else
+						{
+							std::ostringstream out;
+							out << "## UNRESOLVED" << std::endl << unresolvedstr << std::endl << std::endl;
+							g_testOutput.append( out.str());
+						}
 					}
 					else
 					{
-						std::cerr << "unresolved links written to " << unresolved_outfilename << std::endl;
+						int ec = strus::writeFile( unresolved_outfilename, unresolvedstr);
+						if (ec)
+						{
+							std::cerr << "error writing unresolved links file: " << std::strerror(ec) << std::endl;
+						}
+						else
+						{
+							std::cerr << "unresolved links written to " << unresolved_outfilename << std::endl;
+						}
 					}
 				}
+			}
+		}
+		if (g_doTest)
+		{
+			std::string expected;
+			int ec = strus::readFile( g_testExpectedFilename, expected);
+			if (ec) throw std::runtime_error( strus::string_format( "failed to read expected file '%s' for testing (option --test <expected file>): %s", g_testExpectedFilename.c_str(), ::strerror(ec)));
+			char const* ei = expected.c_str();
+			char const* oi = g_testOutput.c_str();
+			int line = 1;
+			while (*ei && *oi)
+			{
+				if ((*ei == '\r' || *ei == '\n') && (*oi == '\r' || *oi == '\n'))
+				{
+					if (*ei == '\r') ++ei;
+					if (*ei == '\n') ++ei;
+					if (*oi == '\r') ++oi;
+					if (*oi == '\n') ++oi;
+					++line;
+				}
+				else if (*ei != *oi)
+				{
+					break;
+				}
+				else
+				{
+					++ei;
+					++oi;
+				}
+			}
+			if (*ei || *oi)
+			{
+				throw std::runtime_error( strus::string_format( "test outputs differ at line %d", line));
 			}
 		}
 		if (g_errorhnd) delete g_errorhnd;

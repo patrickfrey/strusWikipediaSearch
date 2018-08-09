@@ -67,6 +67,7 @@ public:
 			TableHeadEnd,
 			TableCellStart,
 			TableCellEnd,
+			TableCellReference,
 			Text,
 			Char,
 			BibRef,
@@ -120,6 +121,7 @@ public:
 			"TableHeadEnd",
 			"TableCellStart",
 			"TableCellEnd",
+			"TableCellReference",
 			"Text",
 			"Char",
 			"BibRef",
@@ -203,6 +205,7 @@ public:
 			StructTableCell/*TableCellStart*/,
 			StructNone/*TableCellEnd*/,
 
+			StructNone/*TableCellReference*/,
 			StructNone/*Text*/,
 			StructNone/*Char*/,
 			StructNone/*BibRef*/,
@@ -259,6 +262,7 @@ public:
 			TableCellEnd/*TableCellStart*/,
 			TableCellStart/*TableCellEnd*/,
 
+			TableCellReference/*TableCellReference*/,
 			Text/*Text*/,
 			Char/*Char*/,
 			BibRef/*BibRef*/,

@@ -50,9 +50,8 @@ void LinkMap::load( const std::string& filename)
 	if (*li) addLine( li);
 }
 
-void LinkMap::write( const std::string& filename) const
+void LinkMap::write( std::ostream& out) const
 {
-	std::ostringstream out;
 	std::map<int,int>::const_iterator mi = m_map.begin(), me = m_map.end();
 	for (; mi != me; ++mi)
 	{
@@ -60,6 +59,12 @@ void LinkMap::write( const std::string& filename) const
 		const char* val = m_symtab.key( mi->second);
 		out << key << '\t' << val << "\n";
 	}
+}
+
+void LinkMap::write( const std::string& filename) const
+{
+	std::ostringstream out;
+	write( out);
 	int ec = strus::writeFile( filename, out.str());
 	if (ec) throw std::runtime_error( strus::string_format( _TXT("error writing link map file %s: %s"), filename.c_str(), ::strerror(ec)));
 }

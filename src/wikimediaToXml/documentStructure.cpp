@@ -184,6 +184,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				stk.pop_back();
 				break;
 			case Paragraph::Title:
+			case Paragraph::TableCellReference:
 			case Paragraph::Text:
 			case Paragraph::Char:
 			case Paragraph::BibRef:
@@ -440,8 +441,7 @@ void DocumentStructure::addTableCellIdentifierAttributes( const char* prefix, co
 	std::set<int>::const_iterator ai = indices.begin(), ae = indices.end();
 	for (; ai != ae; ++ai)
 	{
-		m_tables.push_back( Paragraph( Paragraph::AttributeStart, "id", strus::string_format( "%s%d", prefix, *ai)));
-		m_tables.push_back( Paragraph( Paragraph::AttributeEnd, "", ""));
+		m_tables.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "%s%d", prefix, *ai)));
 	}
 }
 
@@ -1265,6 +1265,10 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 			case Paragraph::TableCellEnd:
 				stack_pop_back( stk, pi->typeName());
 				output.printCloseTag( rt);
+				break;
+			case Paragraph::TableCellReference:
+				output.printAttribute( pi->id(), rt);
+				output.printValue( pi->text(), rt);
 				break;
 			case Paragraph::Text:
 				printTagContent( output, rt, "text", pi->id(), pi->text());
