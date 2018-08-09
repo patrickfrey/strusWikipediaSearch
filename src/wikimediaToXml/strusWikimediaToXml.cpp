@@ -746,7 +746,11 @@ class IStream
 {
 public:
 	explicit IStream( const std::string& docpath)
-		:m_impl(docpath){}
+		:m_impl(docpath)
+	{
+		int ec = m_impl.error();
+		if (ec) throw std::runtime_error( strus::string_format("failed to read input file '%s': %s", docpath.c_str(), ::strerror(ec)));
+	}
 	virtual ~IStream(){}
 
 	virtual std::size_t read( void* buf, std::size_t bufsize)
@@ -1118,7 +1122,7 @@ int main( int argc, const char* argv[])
 					{
 						lastTag = TagPage;
 						docAttributes.clear();
-						if (docCounter % 1000 == 0 && !collectRedirects)
+						if (docCounter % 1000 == 0 && !collectRedirects && !g_dumpStdout && !g_doTest)
 						{
 							createOutputDir( docCounter);
 						}

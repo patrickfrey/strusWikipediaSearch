@@ -1000,17 +1000,23 @@ static void printTagContent( XmlPrinter& output, std::string& rt, const char* ta
 	output.printCloseTag( rt);
 }
 
-static bool collectAttributeText( std::string& res, int& pidx, std::vector<Paragraph>::const_iterator& pi, const std::vector<Paragraph>::const_iterator& pe, bool inTag, bool joinSameAttrName)
+static bool collectAttributeText(
+		std::string& res,
+		int& pidx,
+		std::vector<Paragraph>::const_iterator& pi,
+		const std::vector<Paragraph>::const_iterator& pe,
+		bool inTag)
 {
 	std::vector<Paragraph>::const_iterator pi_start = pi;
 	int pidx_start = pidx;
 	if (pi->type() != Paragraph::AttributeStart) return false;
-AGAIN:
-	res.append( pi->text());
+
+	res = pi->text();
 	++pi; ++pidx;
 	if (pi->type() == Paragraph::AttributeEnd)
 	{
-		goto ATTREND;
+		res = string_conv::trim( res);
+		return true;
 	}
 	else
 	{
@@ -1025,38 +1031,58 @@ AGAIN:
 		else if (inTag && (pi->type() == Paragraph::BibRef || pi->type() == Paragraph::Timestamp) && res.empty())
 		{
 			res = pi->text();
+			++pi; ++pidx;
+		}
+		else if (inTag && pi->type() == Paragraph::WebLinkStart && res.empty())
+		{
+			std::vector<Paragraph>::const_iterator pi_next = pi;
+			++pi_next;
+			if (pi_next->type() == Paragraph::WebLinkEnd && !pi->id().empty() && pi->text().empty())
+			{
+				res = pi->id();
+			}
+			pi+=2; pidx+=2;
 		}
 		else
 		{
-			goto FAILED;
+			res.clear();
+			pi = pi_start;
+			pidx = pidx_start;
+			return false;
 		}
 		if (pi->type() == Paragraph::AttributeEnd)
 		{
-			goto ATTREND;
+			res = string_conv::trim( res);
+			return true;
 		}
 	}
-	FAILED:
-		res.clear();
-		pi = pi_start;
-		pidx = pidx_start;
-		return false;
-	ATTREND:
-		if (joinSameAttrName)
-		{
-			++pi; ++pidx;
-			if (pi->type() == Paragraph::AttributeStart && pi->id() == pi_start->id())
-			{
-				res = string_conv::trim( res);
-				if (!res.empty()) res.push_back(',');
-				goto AGAIN;
-			}
-			else
-			{
-				--pi; --pidx;
-			}
-		}
-		res = string_conv::trim( res);
-		return true;
+	res.clear();
+	pi = pi_start;
+	pidx = pidx_start;
+	return false;
+}
+
+static bool collectMultiAttributeText(
+		std::string& res,
+		int& pidx,
+		std::vector<Paragraph>::const_iterator& pi,
+		const std::vector<Paragraph>::const_iterator& pe,
+		bool inTag)
+{
+	bool rt = false;
+	std::string attrid = pi->id();
+	std::string elem;
+	res.clear();
+
+	while (attrid == pi->id() && collectAttributeText( elem, pidx, pi, pe, inTag))
+	{
+		if (!res.empty() && res[ res.size()-1] != ',') res.push_back(',');
+		res.append( string_conv::trim( elem));
+		++pi; ++pidx;
+		rt = true;
+	}
+	if (rt) {--pi;--pidx;}
+	return rt;
 }
 
 static void stack_pop_back( std::vector<Paragraph::StructType>& stk, const char* ctx)
@@ -1161,11 +1187,20 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::AttributeStart:
 			{
+				if (pi->id().empty() && pi->text().empty())
+				{
+					++pi;
+					if (pi->type() == Paragraph::AttributeEnd) break;
+					--pi;
+				}
 				std::string attrid = pi->id();
 				std::string attrtext;
 				if (output.isInTagDeclaration() && !attrid.empty())
 				{
-					if (collectAttributeText( attrtext, pidx, pi, pe, true/*inTag*/, singleIdAttribute/*joinSameAttrName*/))
+					bool cr = singleIdAttribute
+						?collectMultiAttributeText( attrtext, pidx, pi, pe, true/*inTag*/)
+						:collectAttributeText( attrtext, pidx, pi, pe, true/*inTag*/);
+					if (cr)
 					{
 						output.printAttribute( normalizeAttributeName(attrid), rt);
 						output.printValue( attrtext, rt);
@@ -1182,7 +1217,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				}
 				else
 				{
-					if (collectAttributeText( attrtext, pidx, pi, pe, false/*inTag*/, false/*joinSameAttrName*/))
+					if (collectAttributeText( attrtext, pidx, pi, pe, output.isInTagDeclaration()/*inTag*/))
 					{
 						printTagContent( output, rt, "attr", attrid, attrtext);
 					}
@@ -1267,8 +1302,24 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::TableCellReference:
-				output.printAttribute( pi->id(), rt);
-				output.printValue( pi->text(), rt);
+				if (output.isInTagDeclaration() && singleIdAttribute)
+				{
+					std::string attrtext = pi->text();
+					std::string attrid = pi->id();
+					for (++pi,++pidx; pi->type() == Paragraph::TableCellReference && attrid == pi->id(); ++pi,++pidx)
+					{
+						if (!attrtext.empty() && attrtext[ attrtext.size()-1] != ',') attrtext.push_back(',');
+						attrtext.append( string_conv::trim( pi->text()));
+					}
+					output.printAttribute( attrid, rt);
+					output.printValue( attrtext, rt);
+					--pi; --pidx;
+				}
+				else
+				{
+					output.printAttribute( pi->id(), rt);
+					output.printValue( pi->text(), rt);
+				}
 				break;
 			case Paragraph::Text:
 				printTagContent( output, rt, "text", pi->id(), pi->text());
