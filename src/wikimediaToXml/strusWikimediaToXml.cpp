@@ -40,14 +40,12 @@
 static int g_verbosity = 0;
 static bool g_beautified = false;
 static bool g_dumps = false;
-static int g_breakpoint = -1;
 static bool g_singleIdAttribute = true;
 static bool g_dumpStdout = false;
 static bool g_doTest = false;
 static std::string g_testExpectedFilename;
 static std::string g_testOutput;
 static std::string g_outputdir;
-static std::string g_origOutputPattern;
 static const strus::LinkMap* g_linkmap = NULL;
 static strus::ErrorBufferInterface* g_errorhnd = NULL;
 
@@ -93,11 +91,6 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			std::cout << lexemidx << " LEXEM " << strus::WikimediaLexem::idName( lexem.id) << " " << strus::outputLineString( lexem.value.c_str(), lexem.value.c_str() + lexem.value.size());
 			if (!lexem.attributes.empty()) std::cout << " -- " << attributesToString( lexem.attributes);
 			std::cout << std::endl;
-			if (lexemidx == g_breakpoint)
-			{
-				std::cout << "... verbose output stops here" << std::endl;
-				verboseOutput = false;
-			}
 		}
 		switch (lexem.id)
 		{			
@@ -600,11 +593,6 @@ public:
 		doc.setTitle( m_title);
 		try
 		{
-			if (!g_origOutputPattern.empty() && 0!=std::strstr( m_title.c_str(), g_origOutputPattern.c_str()))
-			{
-				writeInputFile( m_fileindex, doc.fileId(), m_title, m_content);
-				inputFileWritten = true;
-			}
 			parseDocumentText( doc, m_content.c_str(), m_content.size());
 			doc.finish();
 			writeOutputFiles( m_fileindex, doc);
@@ -797,6 +785,7 @@ int main( int argc, const char* argv[])
 		bool loadRedirects = false;
 		std::string linkmapfilename;
 		std::string dumpfilename;
+		std::vector<std::string> selectDocumentPattern;
 
 		for (;argi < argc; ++argi)
 		{
@@ -831,25 +820,18 @@ int main( int argc, const char* argv[])
 			{
 				printusage = true;
 			}
-			else if (0==std::memcmp(argv[argi],"-S",2))
-			{
-				if (g_breakpoint >= 0) throw std::runtime_error( "duplicated option -S <lexemid>");
-				g_breakpoint = getUIntOptionArg( argi, argc, argv);
-				++argi;
-			}
 			else if (0==std::memcmp(argv[argi],"-P",2))
 			{
-				if (g_breakpoint >= 0) throw std::runtime_error( "duplicated option -P <mod>");
+				if (counterMod >= 0) throw std::runtime_error( "duplicated option -P <mod>");
 				counterMod = getUIntOptionArg( argi, argc, argv);
 				if (!counterMod) throw std::runtime_error( "option -P requires positive integer as argument");
 				++argi;
 			}
-			else if (0==std::memcmp(argv[argi],"-O",2))
+			else if (0==std::memcmp(argv[argi],"-S",2))
 			{
-				if (!g_origOutputPattern.empty()) throw std::runtime_error("duplicated option -O <substr>");
 				++argi;
-				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option -O without argument");
-				g_origOutputPattern = argv[ argi];
+				if (argi == argc || (argv[argi][0] == '-' && argv[argi][1] != '\0')) throw std::runtime_error( "option -S without argument");
+				selectDocumentPattern.push_back( argv[ argi]);
 			}
 			else if (0==std::memcmp(argv[argi],"-L",2))
 			{
@@ -921,10 +903,7 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -h           :Print this usage" << std::endl;
 			std::cerr << "    -V           :Verbosity level 1 (output document title and errors to stderr)" << std::endl;
 			std::cerr << "    -VV          :Verbosity level 2 (output lexems found additional to level 1)" << std::endl;
-			std::cerr << "    -S <lexemid> :Stop verbose output (option -VV) at lexem with\n";
-			std::cerr << "                  index <lexemid> (continue processing)" << std::endl;
-			std::cerr << "    -O <substr>  :Write dump file for documents with a title\n";
-			std::cerr << "                  containing <substr> as title sub string" << std::endl;
+			std::cerr << "    -S <doc>     :Select processed documents containing <doc> as title sub string" << std::endl;
 			std::cerr << "    -B           :Beautified readable XML output" << std::endl;
 			std::cerr << "    -P <mod>     :Print progress counter modulo <mod> to stderr" << std::endl;
 			std::cerr << "    -D           :Write dump files always, not only in case of an error" << std::endl;
@@ -1014,8 +993,6 @@ int main( int argc, const char* argv[])
 			if (nofThreads != 0) std::cerr << "number of threads (option -t) ignored if option -R is specified" << std::endl;
 			if (g_beautified) std::cerr << "beautyfication (option -B) ignored if option -R is specified" << std::endl;
 			if (g_dumps) std::cerr << "write dumps allways (option -D) ignored if option -R is specified" << std::endl;
-			if (g_breakpoint >= 0) std::cerr << "stop verbose output at (option -S) ignored if option -R is specified" << std::endl;
-			if (!g_origOutputPattern.empty()) std::cerr << "write dump files for selected documents (option -O) ignored if option -R is specified" << std::endl;
 			if (loadRedirects) std::cerr << "option -L not compatiple with option -R" << std::endl;
 		}
 		textwolf::IStreamIterator inputiterator( &input, 1<<16/*buffer size*/);
@@ -1158,6 +1135,12 @@ int main( int argc, const char* argv[])
 						{
 							//... ignore document but those with ns set to what is selected by option '-n'
 							continue;
+						}
+						if (!selectDocumentPattern.empty())
+						{
+							std::vector<std::string>::const_iterator si = selectDocumentPattern.begin(), se = selectDocumentPattern.end();
+							for (; si != se && 0==std::strstr( docAttributes.title.c_str(), si->c_str()); ++si){}
+							if (si == se) continue;
 						}
 						if (!docAttributes.redirect_title.empty() && docAttributes.content.size() < 1000)
 						{

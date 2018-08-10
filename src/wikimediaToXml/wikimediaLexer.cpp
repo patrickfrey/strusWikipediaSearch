@@ -1325,24 +1325,6 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
-		else if (m_si[0] == '\'' && m_si[1] == '\'' && m_si[2] == ']')
-		{
-			if (start != m_si)
-			{
-				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
-			}
-			m_si += 3;
-			return WikimediaLexem( WikimediaLexem::OpenDoubleQuote);
-		}
-		else if (m_si[0] == '[' && m_si[1] == '\'' && m_si[2] == '\'')
-		{
-			if (start != m_si)
-			{
-				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
-			}
-			m_si += 3;
-			return WikimediaLexem( WikimediaLexem::CloseDoubleQuote);
-		}
 		else if (m_si[0] == '\'' && m_si[1] == '\'' && m_si[2] == '\'')
 		{
 			if (start != m_si)
@@ -1357,6 +1339,19 @@ WikimediaLexem WikimediaLexer::next()
 			if (start != m_si)
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			if (m_si[2] == ']')
+			{
+				char const* ci = m_si+2;
+				int cnt = 20;
+				while (ci < m_se && --cnt>=0 && (unsigned char)*ci > 32 && !isTokenDelimiter(*ci) && *ci != '\"') ++ci;
+				if (ci < m_se && ci[0] == ']' && ci[1] == '\'' && ci[2] == '\'')
+				{
+					const char* tkstart = m_si+2;
+					int tksize = ci - tkstart;
+					m_si = ci + 2;
+					return WikimediaLexem( WikimediaLexem::Char, 0, std::string( tkstart, tksize));
+				}
 			}
 			m_si += 2;
 			return WikimediaLexem( WikimediaLexem::DoubleQuoteMarker);

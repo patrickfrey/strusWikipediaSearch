@@ -47,8 +47,8 @@ struct WikimediaLexem
 		EntityMarker,
 		QuotationMarker,
 		DoubleQuoteMarker,
-		OpenDoubleQuote,
-		CloseDoubleQuote,
+		OpenDoubleQuote,/*UNUSED*/
+		CloseDoubleQuote,/*UNUSED*/
 		OpenSpan,
 		CloseSpan,
 		OpenFormat,
