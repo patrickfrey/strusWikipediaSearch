@@ -81,6 +81,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 {
 	strus::WikimediaLexer lexer(src,size);
 	int lexemidx = 0;
+	int lastHeading = 1;
 	bool verboseOutput = (g_verbosity >= 2);
 
 	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id != strus::WikimediaLexem::EoF; lexem = lexer.next(),++lexemidx)
@@ -136,8 +137,11 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::Redirect:
 				doc.addError( "unexpected redirect in document");
 				break;
+			case strus::WikimediaLexem::Markup:
+				doc.addMarkup( lexem.value);
+				break;
 			case strus::WikimediaLexem::OpenHeading:
-				doc.openHeading( (int)lexem.idx);
+				doc.openHeading( lastHeading = (int)lexem.idx);
 				break;
 			case strus::WikimediaLexem::CloseHeading:
 				doc.closeHeading();
@@ -165,12 +169,6 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.addQuotationMarker();
 				break;
 			case strus::WikimediaLexem::DoubleQuoteMarker:
-				doc.addDoubleQuoteMarker();
-				break;
-			case strus::WikimediaLexem::OpenDoubleQuote:
-				doc.addDoubleQuoteMarker();
-				break;
-			case strus::WikimediaLexem::CloseDoubleQuote:
 				doc.addDoubleQuoteMarker();
 				break;
 			case strus::WikimediaLexem::OpenSpan:

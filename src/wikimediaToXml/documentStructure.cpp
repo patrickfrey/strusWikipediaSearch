@@ -185,6 +185,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				break;
 			case Paragraph::Title:
 			case Paragraph::TableCellReference:
+			case Paragraph::Markup:
 			case Paragraph::Text:
 			case Paragraph::Char:
 			case Paragraph::BibRef:
@@ -603,6 +604,190 @@ void DocumentStructure::finishRef( int startidx, const std::string& refid)
 	}
 }
 
+static std::vector<Paragraph>::const_iterator skipAttributeContent( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+{
+	int acnt = 1;
+	for (++pi; pi != pe && acnt != 0; ++pi)
+	{
+		if (pi->type() == Paragraph::AttributeStart)
+		{
+			++acnt;
+		}
+		else if (pi->type() == Paragraph::AttributeEnd)
+		{
+			--acnt;
+		}
+	}
+	if (acnt != 0) throw std::runtime_error("internal: unbalanced attribute tags in citation");
+	return --pi;
+}
+
+static bool getAttributeContent( std::string& content, std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+{
+	content.append( strus::string_conv::trim( pi->text()));
+	for (++pi; pi != pe; ++pi)
+	{
+		if (pi->type() == Paragraph::AttributeStart)
+		{
+			return false;
+		}
+		else if (pi->type() == Paragraph::AttributeEnd)
+		{
+			return true;
+		}
+		else if (pi->type() == Paragraph::Text)
+		{
+			std::string txt = strus::string_conv::trim( pi->text());
+			if (!content.empty() && !txt.empty())
+			{
+				content.push_back( ' ');
+			}
+			content.append( txt);
+		}
+	}
+	return false;
+}
+
+static std::string normalizeCellHeadingName( const std::string& name)
+{
+	std::string rt;
+	std::string::const_iterator ni = name.begin(), ne = name.end();
+	for (; ni != ne; ++ni)
+	{
+		if (*ni == '_')
+		{
+			if (!rt.empty()) rt.push_back(' ');
+		}
+		else
+		{
+			rt.push_back(*ni);
+		}
+	}
+	while (!rt.empty() && rt[rt.size()-1] == '_') rt.resize(rt.size()-1);
+	return rt;
+}
+
+void DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe)
+{
+	std::vector<Paragraph>::const_iterator start = pi;
+	std::vector<Paragraph>::const_iterator end = pe;
+	if (pi == pe || pi->type() != Paragraph::CitationStart) throw std::runtime_error("internal: illegal call of convert citation to table: start of citation missing");
+	++pi;
+	if (pi == pe) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
+	--pe;
+	if (pi == pe || pe->type() != Paragraph::CitationEnd) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
+	typedef std::pair<std::vector<Paragraph>::const_iterator,std::vector<Paragraph>::const_iterator> SourceRange;
+	std::vector<SourceRange> attrlist;
+	int nof_noncit_attributes = 0;
+	std::string attr_class;
+	while (pi != pe)
+	{
+		if (pi->type() == Paragraph::AttributeStart)
+		{
+			if (pi->id().empty())
+			{
+				if (strus::string_conv::trim( pi->text()).empty())
+				{
+					pi = skipAttributeContent( pi, pe);
+					++pi;
+					continue;
+				}
+				else
+				{
+					dest.insert( dest.end(), start, end);
+					return; //... insert as citation and not as table
+				}
+			}
+			if (pi->id() == "colwidth" || pi->id() == "width" || pi->id() == "color")
+			{
+				//... ignore
+				pi = skipAttributeContent( pi, pe);
+				++pi;
+				continue;
+			}
+			std::string txt;
+			if (getAttributeContent( txt, pi, pe))
+			{
+				if (txt.empty())
+				{
+					//... ignore
+					pi = skipAttributeContent( pi, pe);
+					++pi;
+					continue;
+				}
+			}
+			if (!(pi->id() == "class" || pi->id() == "date" || pi->id() == "url" || pi->id() == "id"))
+			{
+				++nof_noncit_attributes;
+			}
+			SourceRange range( pi, skipAttributeContent( pi, pe));
+			pi = range.second;
+			++pi;
+			if (range.first->id() == "class" && attr_class.empty() && range.second - range.first == 1)
+			{
+				attr_class = range.first->text();
+			}
+			else
+			{
+				attrlist.push_back( range);
+			}
+		}
+		else if (pi->type() == Paragraph::Text)
+		{
+			if (pi->text().empty())
+			{
+				++pi;
+				continue;
+			}
+			else
+			{
+				dest.insert( dest.end(), start, end);
+				return; //... insert as citation and not as table
+			}
+		}
+		else
+		{
+			throw std::runtime_error( strus::string_format("internal: unexpected element in citation: %s", pi->typeName()));
+		}
+	}
+	if (nof_noncit_attributes == 0)
+	{
+		dest.insert( dest.end(), start, end);
+		return; //... insert as citation and not as table
+	}
+	dest.push_back( *start);
+	dest.push_back( Paragraph( Paragraph::TableStart, strus::string_format("table%d", ++m_tableCnt), ""));
+	if (!attr_class.empty())
+	{
+		dest.push_back( Paragraph( Paragraph::TableTitleStart, "", ""));
+		dest.push_back( Paragraph( Paragraph::Text, "", attr_class));
+		dest.push_back( Paragraph( Paragraph::TableTitleEnd, "", ""));
+	}
+	std::vector<SourceRange>::const_iterator ai = attrlist.begin(), ae = attrlist.end();
+	int aidx = 0;
+	for (; ai!=ae; ++ai,++aidx)
+	{
+		dest.push_back( Paragraph( Paragraph::TableHeadStart, "", ""));
+		dest.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "C%d", aidx)));
+		dest.push_back( Paragraph( Paragraph::Text, "",  normalizeCellHeadingName( ai->first->id())));
+		dest.push_back( Paragraph( Paragraph::TableHeadEnd, "", ""));
+		dest.push_back( Paragraph( Paragraph::TableCellStart, "", ""));
+		dest.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "C%d", aidx)));
+		if (!ai->first->text().empty())
+		{
+			dest.push_back( Paragraph( Paragraph::Text, "", strus::string_conv::trim( ai->first->text())));
+		}
+		std::vector<Paragraph>::const_iterator ci = ai->first;
+		for (++ci; ci != ai->second; ++ci)
+		{
+			dest.push_back( *ci);
+		}
+		dest.push_back( Paragraph( Paragraph::TableCellEnd, "", ""));
+	}
+	dest.push_back( Paragraph( Paragraph::TableEnd, "", ""));
+	dest.push_back( *pe);
+}
+
 void DocumentStructure::finishCitation( int startidx, const std::string& citid)
 {
 	if ((std::size_t)startidx + 3 == m_parar.size() && isInternalLink( m_parar[ startidx + 1]))
@@ -617,7 +802,7 @@ void DocumentStructure::finishCitation( int startidx, const std::string& citid)
 		std::map<std::string,std::string>::const_iterator ki = m_citationmap.find( key);
 		if (ki == m_citationmap.end())
 		{
-			m_citations.insert( m_citations.end(), m_parar.begin() + startidx, m_parar.end());
+			processParsedCitation( m_citations, m_parar.begin() + startidx, m_parar.end());
 			m_citationmap[ key] = citid;
 			m_parar.resize( startidx);
 			m_parar.push_back( Paragraph( Paragraph::CitationLink, citid, ""));
@@ -1343,6 +1528,9 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 					output.printAttribute( pi->id(), rt);
 					output.printValue( pi->text(), rt);
 				}
+				break;
+			case Paragraph::Markup:
+				printTagContent( output, rt, "mark", pi->id(), pi->text());
 				break;
 			case Paragraph::Text:
 				printTagContent( output, rt, "text", pi->id(), pi->text());

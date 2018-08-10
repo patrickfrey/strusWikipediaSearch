@@ -37,6 +37,7 @@ struct WikimediaLexem
 		Url,
 		BibRef,
 		Redirect,
+		Markup,
 		OpenHeading,
 		CloseHeading,
 		OpenRef,
@@ -47,8 +48,6 @@ struct WikimediaLexem
 		EntityMarker,
 		QuotationMarker,
 		DoubleQuoteMarker,
-		OpenDoubleQuote,/*UNUSED*/
-		CloseDoubleQuote,/*UNUSED*/
 		OpenSpan,
 		CloseSpan,
 		OpenFormat,
@@ -79,10 +78,9 @@ struct WikimediaLexem
 		static const char* ar[] =
 		{
 			"EOF","Error","Text","String","Char","Math","NoWiki","NoData","Code","Timestamp","URL","BibRef",
-			"Redirect","OpenHeading","CloseHeading",
+			"Redirect","Markup","OpenHeading","CloseHeading",
 			"OpenRef","CloseRef","HeadingItem","ListItem",
-			"EndOfLine","EntityMarker","QuotationMarker",
-			"DoubleQuoteMarker","OpenDoubleQuote","CloseDoubleQuote",
+			"EndOfLine","EntityMarker","QuotationMarker","DoubleQuoteMarker",
 			"OpenSpan","CloseSpan","OpenFormat","CloseFormat","OpenBlockQuote","CloseBlockQuote",
 			"OpenDiv","CloseDiv",
 			"OpenPoem","ClosePoem","OpenCitation","CloseCitation",

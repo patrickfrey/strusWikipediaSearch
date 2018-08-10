@@ -583,8 +583,18 @@ static int decNumCount( char const* si, const char* se)
 
 static bool isBibRefCandidate( char const* si, const char* se)
 {
+	int mb_cnt = 0;
+	int hc_sum = 0;
 	int hc = hexNumCount( si, se);
-	return hc >= 1 && si < se && si[hc] == '-' && hexNumCount( si+hc+1, se) >= 2;
+	while (hc >= 1 && si < se)
+	{
+		si += hc;
+		if (si[hc] == '-') si += 1;
+		hc = hexNumCount( si, se);
+		hc_sum += hc;
+		mb_cnt += 1;
+	}
+	return mb_cnt >= 2 && hc_sum >= 5;
 }
 
 static bool isBookRefCandidate( char const* si, const char* se)
@@ -1476,6 +1486,15 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				++m_si;
 				const char* start = m_si;
+				
+				for (; m_si != m_se && !isTokenDelimiter( *m_si); ++m_si){}
+				if (m_si +1 < m_se && m_si[0] == '}' && m_si[1] == '}')
+				{
+					std::string title( strus::string_conv::trim( std::string( start, m_si - start)));
+					m_si += 2;
+					return WikimediaLexem( WikimediaLexem::Markup, 0, title);
+				}
+				m_si = start;
 				while (m_si < m_se && *m_si != '}' && *m_si != '|' && (isAlphaNum(*m_si) || *m_si == '_' || *m_si == '-' || isSpace(*m_si)))
 				{
 					++m_si;

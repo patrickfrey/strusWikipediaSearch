@@ -68,6 +68,7 @@ public:
 			TableCellStart,
 			TableCellEnd,
 			TableCellReference,
+			Markup,
 			Text,
 			Char,
 			BibRef,
@@ -122,6 +123,7 @@ public:
 			"TableCellStart",
 			"TableCellEnd",
 			"TableCellReference",
+			"Markup",
 			"Text",
 			"Char",
 			"BibRef",
@@ -206,6 +208,7 @@ public:
 			StructNone/*TableCellEnd*/,
 
 			StructNone/*TableCellReference*/,
+			StructNone/*Markup*/,
 			StructNone/*Text*/,
 			StructNone/*Char*/,
 			StructNone/*BibRef*/,
@@ -263,6 +266,7 @@ public:
 			TableCellStart/*TableCellEnd*/,
 
 			TableCellReference/*TableCellReference*/,
+			Markup/*Markup*/,
 			Text/*Text*/,
 			Char/*Char*/,
 			BibRef/*BibRef*/,
@@ -340,6 +344,10 @@ public:
 
 	void setTitle( const std::string& text);
 
+	void addMarkup( const std::string& text)
+	{
+		addSingleItem( Paragraph::Markup, "", text, false/*joinText*/);
+	}
 	void addText( const std::string& text)
 	{
 		addSingleItem( Paragraph::Text, "", text, true/*joinText*/);
@@ -650,6 +658,7 @@ private:
 	bool checkTableDefExists( const char* action);
 	void addTableCellIdentifierAttributes( const char* prefix, const std::set<int>& indices);
 	std::string passageKey( const std::vector<Paragraph>::const_iterator& begin, const std::vector<Paragraph>::const_iterator& end);
+	void processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe);
 
 private:
 	struct StructRef
