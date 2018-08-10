@@ -822,7 +822,7 @@ int main( int argc, const char* argv[])
 			}
 			else if (0==std::memcmp(argv[argi],"-P",2))
 			{
-				if (counterMod >= 0) throw std::runtime_error( "duplicated option -P <mod>");
+				if (counterMod > 0) throw std::runtime_error( "duplicated option -P <mod>");
 				counterMod = getUIntOptionArg( argi, argc, argv);
 				if (!counterMod) throw std::runtime_error( "option -P requires positive integer as argument");
 				++argi;
