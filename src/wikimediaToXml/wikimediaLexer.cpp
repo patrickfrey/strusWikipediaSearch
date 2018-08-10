@@ -786,18 +786,17 @@ static bool isRepPatternCandidate( char const* si, const char* se)
 {
 	int df = 0;
 	int minlen = 16;
-	if (si + minlen < se)
+	if ((unsigned char)*si < 128 && si + minlen < se)
 	{
 		if (si[0] == si[1]) df = 1;
 		else if (si[0] == si[2]) df = 2;
 		else if (si[0] == si[3]) df = 3;
-		else if (si[0] == si[4]) df = 4;
 		if (!df) return false;
-		for (int di=0; di<df; ++di) if (isSpace(si[di]) || isDigit(si[di])) return false;
+		for (int di=0; di<df; ++di) if (isSpace(si[di]) || isDigit(si[di] || (unsigned char)*si >= 128)) return false;
 
 		int ii=0;
 		for (; ii<minlen && si[ii] == si[ii+df]; ++ii){}
-		return ii == minlen;
+		return ii >= minlen;
 	}
 	return false;
 }
@@ -808,13 +807,13 @@ std::string WikimediaLexer::tryParseRepPattern()
 
 	int df = 0;
 	int minlen = 16;
-	if (m_si + minlen < m_se)
+	if ((unsigned char)*m_si < 128 && m_si + minlen < m_se)
 	{
 		if (m_si[0] == m_si[1]) df = 1;
 		else if (m_si[0] == m_si[2]) df = 2;
 		else if (m_si[0] == m_si[3]) df = 3;
 		if (!df) return std::string();
-		for (int di=0; di<df; ++di) if (isSpace(m_si[di])) return std::string();
+		for (int di=0; di<df; ++di) if (isSpace(m_si[di]) || isDigit(m_si[di] || (unsigned char)*m_si >= 128)) return std::string();
 
 		int ii=0;
 		for (; m_si+ii+df<m_se && m_si[ii] == m_si[ii+df]; ++ii){}

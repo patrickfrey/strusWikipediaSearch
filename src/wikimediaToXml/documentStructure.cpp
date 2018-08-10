@@ -966,6 +966,7 @@ static std::string normalizeAttributeName( const std::string& name)
 			for (; si != se && (unsigned char)*si <= 32; ++si){}
 			if (si == se) break;
 			rt.push_back( '_');
+			--si;
 		}
 		else
 		{
@@ -1062,6 +1063,26 @@ static bool collectAttributeText(
 	return false;
 }
 
+static void skipEmptyAttributes(
+		int& pidx,
+		std::vector<Paragraph>::const_iterator& pi,
+		const std::vector<Paragraph>::const_iterator& pe)
+{
+	while (pi->type() == Paragraph::AttributeStart && pi->id().empty() && pi->text().empty())
+	{
+		++pi; ++pidx;
+		if (pi->type() == Paragraph::AttributeEnd)
+		{
+			++pi; ++pidx;
+		}
+		else
+		{
+			--pi; --pidx;
+			break;
+		}
+	}
+}
+
 static bool collectMultiAttributeText(
 		std::string& res,
 		int& pidx,
@@ -1079,6 +1100,7 @@ static bool collectMultiAttributeText(
 		if (!res.empty() && res[ res.size()-1] != ',') res.push_back(',');
 		res.append( string_conv::trim( elem));
 		++pi; ++pidx;
+		skipEmptyAttributes( pidx, pi, pe);
 		rt = true;
 	}
 	if (rt) {--pi;--pidx;}
@@ -1219,6 +1241,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				{
 					if (collectAttributeText( attrtext, pidx, pi, pe, output.isInTagDeclaration()/*inTag*/))
 					{
+						if (attrtext.empty() && attrid.empty()) continue;
 						printTagContent( output, rt, "attr", attrid, attrtext);
 					}
 					else
