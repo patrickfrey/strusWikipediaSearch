@@ -658,7 +658,7 @@ private:
 	bool checkTableDefExists( const char* action);
 	void addTableCellIdentifierAttributes( const char* prefix, const std::set<int>& indices);
 	std::string passageKey( const std::vector<Paragraph>::const_iterator& begin, const std::vector<Paragraph>::const_iterator& end);
-	void processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe);
+	bool processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe);
 
 private:
 	struct StructRef

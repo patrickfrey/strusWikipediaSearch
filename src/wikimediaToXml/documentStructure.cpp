@@ -16,6 +16,7 @@
 #include "textwolf/charset_utf8.hpp"
 #include "strus/base/string_format.hpp"
 #include "strus/base/string_conv.hpp"
+#include "strus/base/numstring.hpp"
 #include "strus/base/utf8.hpp"
 #include <stdexcept>
 #include <iostream>
@@ -648,6 +649,31 @@ static bool getAttributeContent( std::string& content, std::vector<Paragraph>::c
 	return false;
 }
 
+static bool isAttributeEmpty( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+{
+	if (!strus::isEmptyString( pi->text())) return false;
+	for (++pi; pi != pe; ++pi)
+	{
+		if (pi->type() == Paragraph::AttributeStart)
+		{
+			return false;
+		}
+		else if (pi->type() == Paragraph::AttributeEnd)
+		{
+			return true;
+		}
+		else if (pi->type() == Paragraph::Text)
+		{
+			if (!strus::isEmptyString( pi->text())) return false;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 static std::string normalizeCellHeadingName( const std::string& name)
 {
 	std::string rt;
@@ -667,7 +693,139 @@ static std::string normalizeCellHeadingName( const std::string& name)
 	return rt;
 }
 
-void DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe)
+struct VisualAttributeTable
+{
+public:
+	VisualAttributeTable()
+	{
+		m_set.insert( "colwidth");
+		m_set.insert( "width");
+		m_set.insert( "color");
+		m_set.insert( "display");
+		m_set.insert( "df");
+		m_set.insert( "style");
+		m_set.insert( "leftright");
+		m_set.insert( "fullwidth");
+		m_set.insert( "cols");
+		m_set.insert( "rows");
+		m_set.insert( "image_size");
+		m_set.insert( "image");
+		m_set.insert( "size");
+	}
+
+	bool isMember( const std::string& name)
+	{
+		return m_set.find( string_conv::tolower(name)) != m_set.end();
+	}
+
+private:
+	std::set<std::string> m_set;
+};
+static VisualAttributeTable g_visualAttributeTable;
+
+typedef std::pair<std::vector<Paragraph>::const_iterator,std::vector<Paragraph>::const_iterator> SourceRange;
+typedef std::vector<SourceRange> TextList;
+
+static void printTextList( std::vector<Paragraph>& dest, const std::vector<SourceRange>& textlist, int level=1)
+{
+	std::vector<SourceRange>::const_iterator si = textlist.begin(), se = textlist.end();
+	for (; si != se; ++si)
+	{
+		if (textlist.size() > 1)
+		{
+			dest.push_back( Paragraph( Paragraph::ListItemStart, strus::string_format("l%d", level), ""));
+		}
+		std::vector<Paragraph>::const_iterator ti = si->first;
+		for (; ti != si->second; ++ti)
+		{
+			dest.push_back( *ti);
+		}
+		dest.push_back( *ti);
+		if (textlist.size() > 1)
+		{
+			dest.push_back( Paragraph( Paragraph::ListItemEnd, "", ""));
+		}
+	}
+}
+
+enum CitationClass
+{
+	Ignore,
+	Text,
+	PlainText,
+	WikiTable,
+	InfoBox,
+	InfoLink,
+	OrderedList,
+	UnorderedList,
+	AlignedTable
+};
+
+static CitationClass getCitationClassFromName( const std::string& name)
+{
+	std::string ac = string_conv::tolower( name);
+	if (std::strstr( ac.c_str(), "infobox"))
+	{
+		return InfoBox;
+	}
+	else if (ac.size() > 4 && 0==std::memcmp( ac.c_str(), "cite ", 5))
+	{
+		return InfoBox;
+	}
+	else if (ac == "wikitable")
+	{
+		return WikiTable;
+	}
+	else if (ac == "coord" || ac == "birth date" || ac == "death date" || ac == "death date and age")
+	{
+		return PlainText;
+	}
+	else if (ac == "isbn")
+	{
+		return InfoLink;
+	}
+	else if (ac == "aligned table")
+	{
+		return AlignedTable;
+	}
+	else if (ac == "ordered list")
+	{
+		return OrderedList;
+	}
+	else if (ac == "unordered list" || ac == "defn")
+	{
+		return UnorderedList;
+	}
+	else if (ac == "term")
+	{
+		return Text;
+	}
+	else if (ac == "reflist" || ac == "nowrap")
+	{
+		return Ignore;
+	}
+	return Text;
+}
+
+static void printTextTextList( std::vector<Paragraph>& dest, const std::vector<TextList>& textlistlist, int level=1)
+{
+	std::vector<TextList>::const_iterator li = textlistlist.begin(), le = textlistlist.end();
+	for (; li != le; ++li)
+	{
+		if (textlistlist.size() > 1)
+		{
+			dest.push_back( Paragraph( Paragraph::ListItemStart, strus::string_format("l%d", level), ""));
+			printTextList( dest, *li, level+1);
+			dest.push_back( Paragraph( Paragraph::ListItemEnd, "", ""));
+		}
+		else
+		{
+			printTextList( dest, *li, level+1);
+		}
+	}
+}
+
+bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe)
 {
 	std::vector<Paragraph>::const_iterator start = pi;
 	std::vector<Paragraph>::const_iterator end = pe;
@@ -676,17 +834,40 @@ void DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 	if (pi == pe) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
 	--pe;
 	if (pi == pe || pe->type() != Paragraph::CitationEnd) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
-	typedef std::pair<std::vector<Paragraph>::const_iterator,std::vector<Paragraph>::const_iterator> SourceRange;
-	std::vector<SourceRange> attrlist;
+	struct Attribute
+	{
+		std::string id;
+		SourceRange range;
+
+		Attribute( const std::string& id_, const SourceRange& range_)
+			:id(id_),range(range_){}
+		Attribute( const Attribute& o)
+			:id(o.id),range(o.range){}
+	};
+
+	CitationClass citationClass = WikiTable;
+
+	std::string text;
+	std::vector<SourceRange> textlist;
+	std::vector<TextList> textlistlist;
+	std::vector<Attribute> attrlist;
 	int nof_noncit_attributes = 0;
 	std::string attr_class;
+	int columns = 0;
+	int emptyAttribCnt = 0;
+	if (pi->type() == Paragraph::Text)
+	{
+		attr_class = strus::string_conv::trim( pi->text());
+		citationClass = getCitationClassFromName( attr_class);
+		++pi;
+	}
 	while (pi != pe)
 	{
 		if (pi->type() == Paragraph::AttributeStart)
 		{
 			if (pi->id().empty())
 			{
-				if (strus::string_conv::trim( pi->text()).empty())
+				if (strus::isEmptyString( pi->text()))
 				{
 					pi = skipAttributeContent( pi, pe);
 					++pi;
@@ -694,29 +875,69 @@ void DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 				}
 				else
 				{
-					dest.insert( dest.end(), start, end);
-					return; //... insert as citation and not as table
+					SourceRange range( pi, skipAttributeContent( pi, pe));
+					pi = range.second;
+					++pi;
+					switch (citationClass)
+					{
+						case Ignore:
+							break;
+						case Text:
+						case InfoBox:
+						case InfoLink:
+						case WikiTable:
+						case OrderedList:							
+						case UnorderedList:
+							textlist.push_back( range);
+							break;
+						case PlainText:
+						{
+							std::string content;
+							if (getAttributeContent( content, range.first, pe))
+							{
+								if (!text.empty() && !content.empty()) text.push_back( ' ');
+								text.append( content);
+							}
+							break;
+						}
+						case AlignedTable:
+							if (columns == 0)
+							{
+								textlist.push_back( range);
+							}
+							else
+							{
+								if (emptyAttribCnt++ % columns == 0)
+								{
+									textlistlist.push_back( TextList());
+								}
+								textlistlist.back().push_back( range);
+							}
+							break;
+					};
+					continue;
 				}
 			}
-			if (pi->id() == "colwidth" || pi->id() == "width" || pi->id() == "color")
+			std::string content;
+			if (pi->id() == "cols" && getAttributeContent( content, pi, pe))
+			{
+				columns = strus::numstring_conv::toint( content, 255);
+			}
+			if (g_visualAttributeTable.isMember(pi->id()) ||  (!attr_class.empty() && pi->id() == "class"))
 			{
 				//... ignore
 				pi = skipAttributeContent( pi, pe);
 				++pi;
 				continue;
 			}
-			std::string txt;
-			if (getAttributeContent( txt, pi, pe))
+			if (isAttributeEmpty( pi, pe))
 			{
-				if (txt.empty())
-				{
-					//... ignore
-					pi = skipAttributeContent( pi, pe);
-					++pi;
-					continue;
-				}
+				//... ignore
+				pi = skipAttributeContent( pi, pe);
+				++pi;
+				continue;
 			}
-			if (!(pi->id() == "class" || pi->id() == "date" || pi->id() == "url" || pi->id() == "id"))
+			if (!(pi->id() == "class" || pi->id() == "link" || pi->id() == "date" || pi->id() == "url" || pi->id() == "id"))
 			{
 				++nof_noncit_attributes;
 			}
@@ -725,67 +946,94 @@ void DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 			++pi;
 			if (range.first->id() == "class" && attr_class.empty() && range.second - range.first == 1)
 			{
-				attr_class = range.first->text();
+				attr_class = strus::string_conv::trim( range.first->text());
+				citationClass = getCitationClassFromName( attr_class);
 			}
 			else
 			{
-				attrlist.push_back( range);
+				attrlist.push_back( Attribute( range.first->id(), range));
 			}
 		}
 		else if (pi->type() == Paragraph::Text)
 		{
-			if (pi->text().empty())
-			{
-				++pi;
-				continue;
-			}
-			else
-			{
-				dest.insert( dest.end(), start, end);
-				return; //... insert as citation and not as table
-			}
+			std::vector<Paragraph>::const_iterator text_start = pi;
+			textlist.push_back( SourceRange( text_start, text_start));
+			++pi;
 		}
 		else
 		{
 			throw std::runtime_error( strus::string_format("internal: unexpected element in citation: %s", pi->typeName()));
 		}
 	}
-	if (nof_noncit_attributes == 0)
+	if (citationClass != Ignore)
 	{
-		dest.insert( dest.end(), start, end);
-		return; //... insert as citation and not as table
-	}
-	dest.push_back( *start);
-	dest.push_back( Paragraph( Paragraph::TableStart, strus::string_format("table%d", ++m_tableCnt), ""));
-	if (!attr_class.empty())
-	{
-		dest.push_back( Paragraph( Paragraph::TableTitleStart, "", ""));
-		dest.push_back( Paragraph( Paragraph::Text, "", attr_class));
-		dest.push_back( Paragraph( Paragraph::TableTitleEnd, "", ""));
-	}
-	std::vector<SourceRange>::const_iterator ai = attrlist.begin(), ae = attrlist.end();
-	int aidx = 0;
-	for (; ai!=ae; ++ai,++aidx)
-	{
-		dest.push_back( Paragraph( Paragraph::TableHeadStart, "", ""));
-		dest.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "C%d", aidx)));
-		dest.push_back( Paragraph( Paragraph::Text, "",  normalizeCellHeadingName( ai->first->id())));
-		dest.push_back( Paragraph( Paragraph::TableHeadEnd, "", ""));
-		dest.push_back( Paragraph( Paragraph::TableCellStart, "", ""));
-		dest.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "C%d", aidx)));
-		if (!ai->first->text().empty())
+		dest.push_back( *start);
+		if (nof_noncit_attributes == 0)
 		{
-			dest.push_back( Paragraph( Paragraph::Text, "", strus::string_conv::trim( ai->first->text())));
+			if (!attr_class.empty())
+			{
+				dest.push_back( Paragraph( Paragraph::AttributeStart, "class", attr_class));
+				dest.push_back( Paragraph( Paragraph::AttributeEnd, "", ""));
+			}
+			std::vector<Attribute>::const_iterator ai = attrlist.begin(), ae = attrlist.end();
+			for (; ai != ae; ++ai)
+			{
+				std::vector<Paragraph>::const_iterator ti = ai->range.first;
+				dest.push_back( Paragraph( Paragraph::AttributeStart, ai->id, ti->text()));
+				for (++ti; ti != ai->range.second; ++ti)
+				{
+					dest.push_back( *ti);
+				}
+				dest.push_back( *ti);
+			}
 		}
-		std::vector<Paragraph>::const_iterator ci = ai->first;
-		for (++ci; ci != ai->second; ++ci)
+		else if (!attrlist.empty())
 		{
-			dest.push_back( *ci);
+			dest.push_back( Paragraph( Paragraph::TableStart, strus::string_format("table%d", ++m_tableCnt), ""));
+			if (!attr_class.empty())
+			{
+				dest.push_back( Paragraph( Paragraph::TableTitleStart, "", ""));
+				dest.push_back( Paragraph( Paragraph::Text, "", attr_class));
+				dest.push_back( Paragraph( Paragraph::TableTitleEnd, "", ""));
+			}
+			std::vector<Attribute>::const_iterator ai = attrlist.begin(), ae = attrlist.end();
+			int aidx = 0;
+			for (; ai!=ae; ++ai,++aidx)
+			{
+				dest.push_back( Paragraph( Paragraph::TableHeadStart, "", ""));
+				dest.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "C%d", aidx)));
+				dest.push_back( Paragraph( Paragraph::Text, "",  normalizeCellHeadingName( ai->id)));
+				dest.push_back( Paragraph( Paragraph::TableHeadEnd, "", ""));
+				dest.push_back( Paragraph( Paragraph::TableCellStart, "", ""));
+				dest.push_back( Paragraph( Paragraph::TableCellReference, "id", strus::string_format( "C%d", aidx)));
+				if (!strus::isEmptyString( ai->range.first->text()))
+				{
+					dest.push_back( Paragraph( Paragraph::Text, "", strus::string_conv::trim( ai->range.first->text())));
+				}
+				std::vector<Paragraph>::const_iterator ci = ai->range.first;
+				for (++ci; ci != ai->range.second; ++ci)
+				{
+					dest.push_back( *ci);
+				}
+				dest.push_back( Paragraph( Paragraph::TableCellEnd, "", ""));
+			}
+			dest.push_back( Paragraph( Paragraph::TableEnd, "", ""));
 		}
-		dest.push_back( Paragraph( Paragraph::TableCellEnd, "", ""));
+		if (!text.empty())
+		{
+			dest.push_back( Paragraph( Paragraph::AttributeStart, attr_class, text));
+			dest.push_back( Paragraph( Paragraph::AttributeEnd, "", ""));
+		}
+		printTextList( dest, textlist);
+		printTextTextList( dest, textlistlist);
+	
+		dest.push_back( *pe);
+		return true;
 	}
-	dest.push_back( Paragraph( Paragraph::TableEnd, "", ""));
-	dest.push_back( *pe);
+	else
+	{
+		return false;
+	}
 }
 
 void DocumentStructure::finishCitation( int startidx, const std::string& citid)
@@ -802,10 +1050,10 @@ void DocumentStructure::finishCitation( int startidx, const std::string& citid)
 		std::map<std::string,std::string>::const_iterator ki = m_citationmap.find( key);
 		if (ki == m_citationmap.end())
 		{
-			processParsedCitation( m_citations, m_parar.begin() + startidx, m_parar.end());
 			m_citationmap[ key] = citid;
+			bool ppc = processParsedCitation( m_citations, m_parar.begin() + startidx, m_parar.end());
 			m_parar.resize( startidx);
-			m_parar.push_back( Paragraph( Paragraph::CitationLink, citid, ""));
+			if (ppc) m_parar.push_back( Paragraph( Paragraph::CitationLink, citid, ""));
 		}
 		else
 		{
@@ -1152,6 +1400,10 @@ static std::string normalizeAttributeName( const std::string& name)
 			if (si == se) break;
 			rt.push_back( '_');
 			--si;
+		}
+		else if (*si >= 'A' && *si <= 'Z')
+		{
+			rt.push_back( *si | 32);
 		}
 		else
 		{
