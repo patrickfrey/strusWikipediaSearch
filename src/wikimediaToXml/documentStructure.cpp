@@ -839,7 +839,6 @@ struct Attribute
 bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe)
 {
 	std::vector<Paragraph>::const_iterator start = pi;
-	std::vector<Paragraph>::const_iterator end = pe;
 	if (pi == pe || pi->type() != Paragraph::CitationStart) throw std::runtime_error("internal: illegal call of convert citation to table: start of citation missing");
 	++pi;
 	if (pi == pe) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
