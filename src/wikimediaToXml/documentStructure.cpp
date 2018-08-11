@@ -825,6 +825,17 @@ static void printTextTextList( std::vector<Paragraph>& dest, const std::vector<T
 	}
 }
 
+struct Attribute
+{
+	std::string id;
+	SourceRange range;
+
+	Attribute( const std::string& id_, const SourceRange& range_)
+		:id(id_),range(range_){}
+	Attribute( const Attribute& o)
+		:id(o.id),range(o.range){}
+};
+
 bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std::vector<Paragraph>::const_iterator pi, std::vector<Paragraph>::const_iterator pe)
 {
 	std::vector<Paragraph>::const_iterator start = pi;
@@ -834,16 +845,6 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 	if (pi == pe) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
 	--pe;
 	if (pi == pe || pe->type() != Paragraph::CitationEnd) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
-	struct Attribute
-	{
-		std::string id;
-		SourceRange range;
-
-		Attribute( const std::string& id_, const SourceRange& range_)
-			:id(id_),range(range_){}
-		Attribute( const Attribute& o)
-			:id(o.id),range(o.range){}
-	};
 
 	CitationClass citationClass = WikiTable;
 
