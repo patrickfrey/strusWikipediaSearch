@@ -1071,7 +1071,12 @@ WikimediaLexem WikimediaLexer::next()
 	{
 	while (m_si < m_se)
 	{
-		if (*m_si == '=' && m_curHeading)
+		if ((unsigned char)*m_si >= 128)
+		{
+			int chlen = strus::utf8charlen( *m_si);
+			m_si += chlen;
+		}
+		else if (*m_si == '=' && m_curHeading)
 		{
 			if (start != m_si)
 			{
@@ -1088,7 +1093,7 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
-		if (*m_si == '<')
+		else if (*m_si == '<')
 		{
 			if (start != m_si)
 			{
