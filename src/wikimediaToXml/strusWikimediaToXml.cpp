@@ -162,14 +162,11 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				doc.closeOpenEolnItem();
 				doc.addText( "\n");
 				break;
-			case strus::WikimediaLexem::EntityMarker:
-				doc.addEntityMarker();
-				break;
 			case strus::WikimediaLexem::QuotationMarker:
 				doc.addQuotationMarker();
 				break;
-			case strus::WikimediaLexem::DoubleQuoteMarker:
-				doc.addDoubleQuoteMarker();
+			case strus::WikimediaLexem::MultiQuoteMarker:
+				doc.addMultiQuoteMarker( (int)lexem.idx);
 				break;
 			case strus::WikimediaLexem::OpenSpan:
 				doc.openSpan();

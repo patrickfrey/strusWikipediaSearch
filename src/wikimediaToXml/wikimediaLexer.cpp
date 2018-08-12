@@ -1339,21 +1339,13 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
-		else if (m_si[0] == '\'' && m_si[1] == '\'' && m_si[2] == '\'')
-		{
-			if (start != m_si)
-			{
-				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
-			}
-			m_si += 3;
-			return WikimediaLexem( WikimediaLexem::EntityMarker);
-		}
 		else if (m_si[0] == '\'' && m_si[1] == '\'')
 		{
 			if (start != m_si)
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
+			int sidx = 0;
 			if (m_si[2] == ']')
 			{
 				char const* ci = m_si+2;
@@ -1367,8 +1359,12 @@ WikimediaLexem WikimediaLexer::next()
 					return WikimediaLexem( WikimediaLexem::Char, 0, std::string( tkstart, tksize));
 				}
 			}
-			m_si += 2;
-			return WikimediaLexem( WikimediaLexem::DoubleQuoteMarker);
+			for (; m_si < m_se && *m_si == '\''; ++sidx,++m_si){}
+			if (sidx >= 6)
+			{
+				return WikimediaLexem( WikimediaLexem::NoData, 0, std::string(start,sidx));
+			}
+			return WikimediaLexem( WikimediaLexem::MultiQuoteMarker, sidx, "");
 		}
 		else if (*m_si == '[')
 		{

@@ -140,9 +140,8 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 	{
 		switch (ii->type())
 		{
-			case Paragraph::EntityStart:
 			case Paragraph::QuotationStart:
-			case Paragraph::DoubleQuoteStart:
+			case Paragraph::MultiQuoteStart:
 			case Paragraph::BlockQuoteStart:
 			case Paragraph::DivStart:
 			case Paragraph::PoemStart:
@@ -161,9 +160,8 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::TableCellStart:
 				stk.push_back( ii->type());
 				break;
-			case Paragraph::EntityEnd:
 			case Paragraph::QuotationEnd:
-			case Paragraph::DoubleQuoteEnd:
+			case Paragraph::MultiQuoteEnd:
 			case Paragraph::BlockQuoteEnd:
 			case Paragraph::DivEnd:
 			case Paragraph::PoemEnd:
@@ -185,6 +183,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 				stk.pop_back();
 				break;
 			case Paragraph::Title:
+			case Paragraph::DanglingQuotes:
 			case Paragraph::TableCellReference:
 			case Paragraph::Markup:
 			case Paragraph::Text:
@@ -209,7 +208,7 @@ void DocumentStructure::closeOpenQuoteItems()
 	{
 		int startidx = m_structStack.back().start;
 		Paragraph para = m_parar[ startidx];
-		if (para.type() == Paragraph::EntityStart || para.type() == Paragraph::QuotationStart || para.type() == Paragraph::DoubleQuoteStart)
+		if (para.type() == Paragraph::QuotationStart || para.type() == Paragraph::MultiQuoteStart)
 		{
 			finishStructure( startidx);
 		}
@@ -230,16 +229,11 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 		{
 			return;
 		}
-		else if (para.type() == Paragraph::EntityStart)
-		{
-			m_parar[ m_structStack.back().start] = Paragraph( Paragraph::Text, "", "\"");
-			m_structStack.pop_back();
-		}
 		else if (para.type() == Paragraph::QuotationStart)
 		{
 			finishStructure( startidx);
 		}
-		else if (para.type() == Paragraph::DoubleQuoteStart)
+		else if (para.type() == Paragraph::MultiQuoteStart)
 		{
 			finishStructure( startidx);
 		}
@@ -339,18 +333,39 @@ void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttyp
 	}
 }
 
-void DocumentStructure::addQuoteItem( Paragraph::Type startType)
+void DocumentStructure::addQuoteItem( Paragraph::Type startType, int count)
 {
 	Paragraph::Type endType = Paragraph::invType( startType);
-	if (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType)
+	std::string id;
+	if (count) id = strus::string_format( "%d", count);
+	if (!m_structStack.empty())
 	{
-		m_parar.push_back( Paragraph( endType, "", ""));
-		m_structStack.pop_back();
+		if (m_parar[ m_structStack.back().start].type() == startType)
+		{
+			m_parar.push_back( Paragraph( endType, "", ""));
+			m_structStack.pop_back();
+		}
+		else
+		{
+			std::vector<StructRef>::iterator si = m_structStack.end(), se = m_structStack.end();
+			while( se != si)
+			{
+				--se;
+				if (m_parar[ se->start].type() == startType)
+				{
+					m_parar[ se->start].setType( Paragraph::DanglingQuotes);
+					m_structStack.erase( se);
+					break;
+				}
+			}
+			m_structStack.push_back( StructRef( 0, m_parar.size()));
+			m_parar.push_back( Paragraph( startType, id, ""));
+		}
 	}
 	else
 	{
 		m_structStack.push_back( StructRef( 0, m_parar.size()));
-		m_parar.push_back( Paragraph( startType, "", ""));
+		m_parar.push_back( Paragraph( startType, id, ""));
 	}
 }
 
@@ -1157,11 +1172,9 @@ void DocumentStructure::closeWebLink()
 		{}
 		else if (para.type() == Paragraph::Math)
 		{}
-		else if (para.type() == Paragraph::EntityStart || para.type() == Paragraph::EntityEnd)
-		{}
 		else if (para.type() == Paragraph::QuotationStart || para.type() == Paragraph::QuotationEnd)
 		{}
-		else if (para.type() == Paragraph::DoubleQuoteStart || para.type() == Paragraph::DoubleQuoteEnd)
+		else if (para.type() == Paragraph::MultiQuoteStart || para.type() == Paragraph::MultiQuoteEnd)
 		{}
 		else
 		{
@@ -1339,9 +1352,8 @@ void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& 
 		else if (m_parar.size() >= 2
 		&&	(	isLastItemJoinableText( m_parar, Paragraph::PageLinkStart, Paragraph::PageLinkEnd)
 			||	isLastItemJoinableText( m_parar, Paragraph::WebLinkStart, Paragraph::WebLinkEnd)
-			||	isLastItemJoinableText( m_parar, Paragraph::EntityStart, Paragraph::EntityEnd)
 			||	isLastItemJoinableText( m_parar, Paragraph::QuotationStart, Paragraph::QuotationEnd)
-			||	isLastItemJoinableText( m_parar, Paragraph::DoubleQuoteStart, Paragraph::DoubleQuoteEnd)
+			||	isLastItemJoinableText( m_parar, Paragraph::MultiQuoteStart, Paragraph::MultiQuoteEnd)
 			)
 		&&	type == Paragraph::Text && isJoinLinkText(text))
 		{
@@ -1574,13 +1586,9 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				if (beautified) output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
 				printTagContent( output, rt, "title", "", pi->text());
 				break;
-			case Paragraph::EntityStart:
-				stk.push_back( Paragraph::StructEntity);
-				printTagOpen( output, rt, "entity", pi->id(), pi->text());
-				break;
-			case Paragraph::EntityEnd:
-				stack_pop_back( stk, pi->typeName());
-				output.printCloseTag( rt);
+			case Paragraph::DanglingQuotes:
+				output.switchToContent( rt);
+				output.printValue( pi->id().empty() ? std::string(" ") : pi->id(), rt);
 				break;
 			case Paragraph::QuotationStart:
 				stk.push_back( Paragraph::StructQuotation);
@@ -1590,11 +1598,11 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				stack_pop_back( stk, pi->typeName());
 				output.printCloseTag( rt);
 				break;
-			case Paragraph::DoubleQuoteStart:
-				stk.push_back( Paragraph::StructDoubleQuote);
-				printTagOpen( output, rt, "quot", pi->id(), pi->text());
+			case Paragraph::MultiQuoteStart:
+				stk.push_back( Paragraph::StructMultiQuote);
+				printTagOpen( output, rt, "entity", pi->id(), pi->text());
 				break;
-			case Paragraph::DoubleQuoteEnd:
+			case Paragraph::MultiQuoteEnd:
 				stack_pop_back( stk, pi->typeName());
 				output.printCloseTag( rt);
 				break;

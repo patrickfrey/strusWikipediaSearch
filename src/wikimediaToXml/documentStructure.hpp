@@ -29,12 +29,11 @@ class Paragraph
 public:
 	enum Type {
 			Title,
-			EntityStart,
-			EntityEnd,
+			DanglingQuotes,
 			QuotationStart,
 			QuotationEnd,
-			DoubleQuoteStart,
-			DoubleQuoteEnd,
+			MultiQuoteStart,
+			MultiQuoteEnd,
 			BlockQuoteStart,
 			BlockQuoteEnd,
 			DivStart,
@@ -84,12 +83,11 @@ public:
 	{
 		static const char* ar[] = {
 			"Title",
-			"EntityStart",
-			"EntityEnd",
+			"DanglingQuotes",
 			"QuotationStart",
 			"QuotationEnd",
-			"DoubleQuoteStart",
-			"DoubleQuoteEnd",
+			"MultiQuoteStart",
+			"MultiQuoteEnd",
 			"BlockQuoteStart",
 			"BlockQuoteEnd",
 			"DivStart",
@@ -138,9 +136,8 @@ public:
 	}
 	enum StructType {
 			StructNone,
-			StructEntity,
 			StructQuotation,
-			StructDoubleQuote,
+			StructMultiQuote,
 			StructBlockQuote,
 			StructDiv,
 			StructPoem,
@@ -160,20 +157,18 @@ public:
 	};
 	static const char* structTypeName( StructType st)
 	{
-		static const char* ar[] = {"None","Entity","Quotation","DoubleQuote","BlockQuote","Div","Poem","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableCell",0};
+		static const char* ar[] = {"None","Quotation","MultiQuote","BlockQuote","Div","Poem","Span","Format","Heading","List","Attribute","Citation","Ref","PageLink","WebLink","Table","TableTitle","TableHead","TableCell",0};
 		return ar[ st];
 	}
 	static StructType structType( Type ti)
 	{
 		static StructType ar[] = {
-
 			StructNone/*Title*/,
-			StructEntity/*EntityStart*/,
-			StructNone/*EntityEnd*/,
+			StructNone/*DanglingQuotes*/,
 			StructQuotation/*QuotationStart*/,
 			StructNone/*QuotationEnd*/,
-			StructDoubleQuote/*DoubleQuoteStart*/,
-			StructNone/*DoubleQuoteEnd*/,
+			StructMultiQuote/*MultiQuoteStart*/,
+			StructNone/*MultiQuoteEnd*/,
 			StructBlockQuote/*BlockQuoteStart*/,
 			StructNone/*BlockQuoteEnd*/,
 			StructDiv/*DivStart*/,
@@ -225,13 +220,11 @@ public:
 	{
 		static Type ar[] = {
 			Title/*Title*/,
-
-			EntityEnd/*EntityStart*/,
-			EntityStart/*EntityEnd*/,
+			DanglingQuotes/*DanglingQuotes*/,
 			QuotationEnd/*QuotationStart*/,
 			QuotationStart/*QuotationEnd*/,
-			DoubleQuoteEnd/*DoubleQuoteStart*/,
-			DoubleQuoteStart/*DoubleQuoteEnd*/,
+			MultiQuoteEnd/*MultiQuoteStart*/,
+			MultiQuoteStart/*MultiQuoteEnd*/,
 			BlockQuoteEnd/*BlockQuoteStart*/,
 			BlockQuoteStart/*BlockQuoteEnd*/,
 			DivEnd/*DivStart*/,
@@ -304,6 +297,10 @@ public:
 	const std::string& id() const				{return m_id;}
 	const std::string& text() const				{return m_text;}
 
+	void setType( Type tp)
+	{
+		m_type = tp;
+	}
 	void setId( const std::string& id_)
 	{
 		m_id = id_;
@@ -422,26 +419,13 @@ public:
 	{
 		closeAutoCloseItem( Paragraph::HeadingStart);
 	}
-	void addEntityMarker()
-	{
-		addQuoteItem( Paragraph::EntityStart);
-	}
 	void addQuotationMarker()
 	{
-		addQuoteItem( Paragraph::QuotationStart);
+		addQuoteItem( Paragraph::QuotationStart, 0);
 	}
-	void addDoubleQuoteMarker()
+	void addMultiQuoteMarker( int count)
 	{
-		addQuoteItem( Paragraph::DoubleQuoteStart);
-	}
-	void openDoubleQuote()
-	{
-		closeOpenQuoteItems();
-		openStructure( Paragraph::DoubleQuoteStart, "", 0);
-	}
-	void closeDoubleQuote()
-	{
-		closeStructure( Paragraph::DoubleQuoteStart, "");
+		addQuoteItem( Paragraph::MultiQuoteStart, count);
 	}
 	void openBlockQuote()
 	{
@@ -650,7 +634,7 @@ private:
 	void closeOpenStructures();
 
 	void addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText);
-	void addQuoteItem( Paragraph::Type startType);
+	void addQuoteItem( Paragraph::Type startType, int count);
 	void openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx);
 	void closeAutoCloseItem( Paragraph::Type startType);
 	void closeDanglingStructures( const Paragraph::Type& starttype);
