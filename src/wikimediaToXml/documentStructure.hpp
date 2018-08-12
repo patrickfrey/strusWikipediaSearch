@@ -328,9 +328,15 @@ class DocumentStructure
 {
 public:
 	explicit DocumentStructure()
-		:m_fileId(),m_parar(),m_citations(),m_tables(),m_refs(),m_citationmap(),m_refmap(),m_structStack(),m_tableDefs(),m_errors(),m_nofErrors(0),m_tableCnt(0),m_citationCnt(0),m_refCnt(0),m_lastHeadingIdx(0){}
+		:m_fileId(),m_parar(),m_citations(),m_tables(),m_refs(),m_citationmap()
+		,m_refmap(),m_structStack(),m_tableDefs(),m_errors(),m_unresolved()
+		,m_nofErrors(0),m_tableCnt(0),m_citationCnt(0),m_refCnt(0)
+		,m_lastHeadingIdx(0),m_maxStructureDepthReported(false){}
 	DocumentStructure( const DocumentStructure& o)
-		:m_fileId(o.m_fileId),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_refs(o.m_refs),m_citationmap(o.m_citationmap),m_refmap(o.m_refmap),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_nofErrors(o.m_nofErrors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt),m_lastHeadingIdx(o.m_lastHeadingIdx){}
+		:m_fileId(o.m_fileId),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_refs(o.m_refs),m_citationmap(o.m_citationmap)
+		,m_refmap(o.m_refmap),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_unresolved(o.m_unresolved)
+		,m_nofErrors(o.m_nofErrors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt)
+		,m_lastHeadingIdx(o.m_lastHeadingIdx),m_maxStructureDepthReported(o.m_maxStructureDepthReported){}
 
 	const std::string& fileId() const
 	{
@@ -625,6 +631,9 @@ public:
 	static std::string getInputXML( const std::string& title, const std::string& content);
 
 private:
+	enum {MaxStructureDepth=12};
+	void checkStructureDepth();
+
 	void finishStructure( int structStartidx);
 	void finishTable( int structStartidx, const std::string& id);
 	void finishRef( int structStartidx, const std::string& id);
@@ -731,6 +740,7 @@ private:
 	int m_citationCnt;
 	int m_refCnt;
 	int m_lastHeadingIdx;
+	bool m_maxStructureDepthReported;
 };
 
 

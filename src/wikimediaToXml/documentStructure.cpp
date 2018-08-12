@@ -367,6 +367,7 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType, int count)
 		m_structStack.push_back( StructRef( 0, m_parar.size()));
 		m_parar.push_back( Paragraph( startType, id, ""));
 	}
+	checkStructureDepth();
 }
 
 void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx)
@@ -387,6 +388,7 @@ void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char
 	{
 		m_parar.push_back( Paragraph( startType, prefix, ""));
 	}
+	checkStructureDepth();
 }
 
 void DocumentStructure::closeAutoCloseItem( Paragraph::Type startType)
@@ -408,6 +410,23 @@ void DocumentStructure::openTableCell( Paragraph::Type startType, int rowspan, i
 	m_tableDefs.back().defineCell( m_parar.size(), rowspan, colspan);
 	m_tableDefs.back().nextCol( colspan);
 	m_parar.push_back( Paragraph( startType, "", ""));
+	checkStructureDepth();
+}
+
+void DocumentStructure::checkStructureDepth()
+{
+	if (!m_maxStructureDepthReported && (int)m_structStack.size() == (int)MaxStructureDepth)
+	{
+		std::string structpath;
+		std::vector<StructRef>::const_iterator ci = m_structStack.begin(), ce = m_structStack.end();
+		for (; ci != ce; ++ci)
+		{
+			structpath.push_back( '/');
+			structpath.append( m_parar[ ci->start].structTypeName());
+		}
+		addError( strus::string_format( "very deep structure: %s", structpath.c_str()));
+		m_maxStructureDepthReported = true;
+	}
 }
 
 void DocumentStructure::openStructure( Paragraph::Type startType, const char* prefix, int lidx)
@@ -425,6 +444,7 @@ void DocumentStructure::openStructure( Paragraph::Type startType, const char* pr
 	{
 		m_parar.push_back( Paragraph( startType, prefix, ""));
 	}
+	checkStructureDepth();
 }
 
 typedef std::pair<std::vector<Paragraph>::const_iterator,std::vector<Paragraph>::const_iterator> ParagraphRange;
