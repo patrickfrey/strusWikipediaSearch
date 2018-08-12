@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "--- Analyze document contents ---"
-TRANSACTION=`curl -H "Accept: text/plain" -X POST "$SERVER/contentstats/wikipedia/transaction"
+TRANSACTION=`curl -H "Accept: text/plain" -X POST "${SERVER_ADDR}/contentstats/wikipedia/transaction"`
 cd /srv/wikipedia/doc
 # for ii in 0 1 2 3 4 5 6 7 8 9; do
 for ii in 0; do
