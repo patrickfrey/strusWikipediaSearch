@@ -26,7 +26,23 @@ find_strus_package( rpc )
 find_strus_package( bindings )
 
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
-set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
+
+if( APPLE OR WIN32 )
+	set( PROJECT_BIN_AFFIX "${CMAKE_BUILD_TYPE}/" )
+else( APPLE OR WIN32 )
+	set( PROJECT_BIN_AFFIX "" )
+endif( APPLE OR WIN32 )
+
+# Module path:
+if (NOT STRUS_MODULE_PATH)
+set( STRUS_MODULE_PATH  "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/strus/modules" )
+endif (NOT STRUS_MODULE_PATH)
+MESSAGE( STATUS  "Strus module path: ${STRUS_MODULE_PATH}" )
+
+set( STRUS_GETTEXT_PACKAGE "strus-dom" )	#... 1st parameter of bindtextdomain(...)
+set( STRUS_GETTEXT_LOCALEDIR "" )			#... 2nd parameter of bindtextdomain(...)
+
+configure_file( "${PROJECT_SOURCE_DIR}/config/config.js.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/config.js"  @ONLY )
 
 enable_testing()
 
