@@ -640,16 +640,23 @@ void DocumentStructure::finishRef( int startidx, const std::string& refid)
 	}
 }
 
-static std::vector<Paragraph>::const_iterator skipAttributeContent( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
+static std::vector<Paragraph>::const_iterator skipStructureContent( std::vector<Paragraph>::const_iterator pi, const std::vector<Paragraph>::const_iterator& pe)
 {
 	int acnt = 1;
+	Paragraph::Type starttype = pi->type();
+	Paragraph::Type endtype = Paragraph::invType( pi->type());
+	if (pi->structType() == Paragraph::StructNone)
+	{
+		if (endtype != pi->type()) throw std::runtime_error("expected start of structure or single element in skip structure content");
+		return pi;
+	}
 	for (++pi; pi != pe && acnt != 0; ++pi)
 	{
-		if (pi->type() == Paragraph::AttributeStart)
+		if (pi->type() == starttype)
 		{
 			++acnt;
 		}
-		else if (pi->type() == Paragraph::AttributeEnd)
+		else if (pi->type() == endtype)
 		{
 			--acnt;
 		}
@@ -878,7 +885,7 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 	++pi;
 	if (pi == pe) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
 	--pe;
-	if (pi == pe || pe->type() != Paragraph::CitationEnd) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
+	if (pe->type() != Paragraph::CitationEnd) throw std::runtime_error("internal: illegal call of convert citation to table: end of citation missing");
 
 	CitationClass citationClass = WikiTable;
 
@@ -904,13 +911,13 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 			{
 				if (strus::isEmptyString( pi->text()))
 				{
-					pi = skipAttributeContent( pi, pe);
+					pi = skipStructureContent( pi, pe);
 					++pi;
 					continue;
 				}
 				else
 				{
-					SourceRange range( pi, skipAttributeContent( pi, pe));
+					SourceRange range( pi, skipStructureContent( pi, pe));
 					pi = range.second;
 					++pi;
 					switch (citationClass)
@@ -961,14 +968,14 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 			if (g_visualAttributeTable.isMember(pi->id()) ||  (!attr_class.empty() && pi->id() == "class"))
 			{
 				//... ignore
-				pi = skipAttributeContent( pi, pe);
+				pi = skipStructureContent( pi, pe);
 				++pi;
 				continue;
 			}
 			if (isAttributeEmpty( pi, pe))
 			{
 				//... ignore
-				pi = skipAttributeContent( pi, pe);
+				pi = skipStructureContent( pi, pe);
 				++pi;
 				continue;
 			}
@@ -976,7 +983,7 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 			{
 				++nof_noncit_attributes;
 			}
-			SourceRange range( pi, skipAttributeContent( pi, pe));
+			SourceRange range( pi, skipStructureContent( pi, pe));
 			pi = range.second;
 			++pi;
 			if (range.first->id() == "class" && attr_class.empty() && range.second - range.first == 1)
@@ -989,15 +996,12 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 				attrlist.push_back( Attribute( range.first->id(), range));
 			}
 		}
-		else if (pi->type() == Paragraph::Text)
-		{
-			std::vector<Paragraph>::const_iterator text_start = pi;
-			textlist.push_back( SourceRange( text_start, text_start));
-			++pi;
-		}
 		else
 		{
-			throw std::runtime_error( strus::string_format("internal: unexpected element in citation: %s", pi->typeName()));
+			SourceRange range( pi, skipStructureContent( pi, pe));
+			pi = range.second;
+			++pi;
+			textlist.push_back( range);
 		}
 	}
 	if (citationClass != Ignore)
@@ -1073,7 +1077,12 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 
 void DocumentStructure::finishCitation( int startidx, const std::string& citid)
 {
-	if ((std::size_t)startidx + 3 == m_parar.size() && isInternalLink( m_parar[ startidx + 1]))
+	if ((std::size_t)startidx + 2 == m_parar.size())
+	{
+		m_parar.resize( startidx);
+		return;
+	}
+	else if ((std::size_t)startidx + 3 == m_parar.size() && isInternalLink( m_parar[ startidx + 1]))
 	{
 		Paragraph para = m_parar[ startidx + 1];
 		m_parar.resize( startidx);
