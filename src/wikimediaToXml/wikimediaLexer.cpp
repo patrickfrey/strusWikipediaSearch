@@ -195,6 +195,19 @@ static std::string parseTagContent( const char* tagname, char const*& si, const 
 		const char* end = findPattern( si, se, buf);
 		if (end)
 		{
+			const char* tg = (const char*)std::memchr( si + (tagnamelen-1), '<', end-si-(tagnamelen-1));
+			if (tg && tg < end)
+			{
+				++tg;
+				if (*tg == '/') ++tg;
+				while (*tg && isAlpha(*tg)) ++tg;
+				if (*tg == '/') ++tg;
+				if (*tg == '>')
+				{
+					si += (tagnamelen-1);
+					return std::string();
+				}
+			}
 			std::string rt( si, (end - si) - tagnamelen);
 			si = end;
 			return rt;

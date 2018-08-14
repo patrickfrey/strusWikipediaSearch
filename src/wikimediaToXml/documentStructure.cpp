@@ -373,11 +373,30 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType, int count)
 void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx)
 {
 	Paragraph::Type endType = Paragraph::invType( startType);
-	while (!m_structStack.empty() && m_parar[ m_structStack.back().start].type() == startType && m_structStack.back().idx <= lidx)
+	int stuidx = m_structStack.size()-1;
+	int ii = 3;
+	while (ii > 0 && stuidx >= 0)
 	{
-		Paragraph para = m_parar[ m_structStack.back().start];
-		m_parar.push_back( Paragraph( endType, "", ""));
-		m_structStack.pop_back();
+		int start = m_structStack[ stuidx].start;
+		int idx = m_structStack[ stuidx].idx;
+		if (m_parar[ start].type() == startType)
+		{
+			if (idx >= lidx)
+			{
+				int si = m_structStack.size()-1;
+				for (; si > stuidx; --si)
+				{
+					finishStructure( m_structStack[ si].start);
+				}
+				Paragraph para = m_parar[ m_structStack.back().start];
+				m_parar.push_back( Paragraph( endType, "", ""));
+				m_structStack.pop_back();
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
 	m_structStack.push_back( StructRef( lidx, m_parar.size()));
 	if (lidx > 0)
