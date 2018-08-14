@@ -374,8 +374,8 @@ void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char
 {
 	Paragraph::Type endType = Paragraph::invType( startType);
 	int stuidx = m_structStack.size()-1;
-	int ii = 3;
-	while (ii > 0 && stuidx >= 0)
+	int ii = 5;
+	for (; ii > 0 && stuidx >= 0; --ii,--stuidx)
 	{
 		int start = m_structStack[ stuidx].start;
 		int idx = m_structStack[ stuidx].idx;
