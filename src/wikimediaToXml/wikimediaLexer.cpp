@@ -196,7 +196,7 @@ static std::string parseTagContent( const char* tagname, char const*& si, const 
 		if (end)
 		{
 			const char* tg = (const char*)std::memchr( si + (tagnamelen-1), '<', end-si-(tagnamelen-1));
-			if (tg && tg < end)
+			if (tg && tg < end - tagnamelen)
 			{
 				++tg;
 				if (*tg == '/') ++tg;

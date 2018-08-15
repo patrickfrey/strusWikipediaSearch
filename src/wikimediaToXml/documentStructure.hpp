@@ -414,12 +414,12 @@ public:
 	{
 		m_lastHeadingIdx = idx;
 		closeOpenStructures();
-		openAutoCloseItem( Paragraph::HeadingStart, "h", idx);
+		openAutoCloseItem( Paragraph::HeadingStart, "h", idx, 1/*depth*/);
 	}
 	void addHeadingItem()
 	{
 		closeOpenStructures();
-		openAutoCloseItem( Paragraph::HeadingStart, "h", m_lastHeadingIdx+1);
+		openAutoCloseItem( Paragraph::HeadingStart, "h", m_lastHeadingIdx+1, 1/*depth*/);
 	}
 	void closeHeading()
 	{
@@ -524,7 +524,7 @@ public:
 	{
 		if (!checkTableDefExists( "table add title")) return;
 		closeDanglingStructures( Paragraph::TableStart);
-		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0);
+		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0/*idx*/, 1/*depth*/);
 	}
 	void openTableCell( Paragraph::Type startType, int rowspan, int colspan);
 
@@ -562,7 +562,7 @@ public:
 		||  tp == Paragraph::StructRef
 		||  tp == Paragraph::StructAttribute)
 		{
-			openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0);
+			openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0/*idx*/, 1/*depth*/);
 		}
 		else
 		{
@@ -572,7 +572,7 @@ public:
 	void openListItem( int lidx)
 	{
 		closeOpenEolnItem();
-		openAutoCloseItem( Paragraph::ListItemStart, "l", lidx);
+		openAutoCloseItem( Paragraph::ListItemStart, "l", lidx, 2/*depth*/);
 	}
 	void closeOpenEolnItem()
 	{
@@ -644,7 +644,7 @@ private:
 
 	void addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText);
 	void addQuoteItem( Paragraph::Type startType, int count);
-	void openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx);
+	void openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx, int depth);
 	void closeAutoCloseItem( Paragraph::Type startType);
 	void closeDanglingStructures( const Paragraph::Type& starttype);
 	void checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end);

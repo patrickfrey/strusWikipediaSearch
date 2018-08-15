@@ -370,11 +370,11 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType, int count)
 	checkStructureDepth();
 }
 
-void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx)
+void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx, int depth)
 {
 	Paragraph::Type endType = Paragraph::invType( startType);
 	int stuidx = m_structStack.size()-1;
-	int ii = 5;
+	int ii = depth;
 	for (; ii > 0 && stuidx >= 0; --ii,--stuidx)
 	{
 		int start = m_structStack[ stuidx].start;
@@ -392,10 +392,7 @@ void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char
 				m_parar.push_back( Paragraph( endType, "", ""));
 				m_structStack.pop_back();
 			}
-			else
-			{
-				break;
-			}
+			break;
 		}
 	}
 	m_structStack.push_back( StructRef( lidx, m_parar.size()));
@@ -1143,7 +1140,7 @@ void DocumentStructure::finishStructure( int startidx)
 	{
 		finishCitation( startidx, para.id());
 	}
-	if (endType == Paragraph::RefEnd)
+	else if (endType == Paragraph::RefEnd)
 	{
 		finishRef( startidx, para.id());
 	}
