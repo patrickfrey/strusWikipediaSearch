@@ -67,6 +67,7 @@ public:
 			TableCellStart,
 			TableCellEnd,
 			TableCellReference,
+			WebLink,
 			Markup,
 			Text,
 			Char,
@@ -121,6 +122,7 @@ public:
 			"TableCellStart",
 			"TableCellEnd",
 			"TableCellReference",
+			"WebLink",
 			"Markup",
 			"Text",
 			"Char",
@@ -203,6 +205,7 @@ public:
 			StructNone/*TableCellEnd*/,
 
 			StructNone/*TableCellReference*/,
+			StructNone/*WebLink*/,
 			StructNone/*Markup*/,
 			StructNone/*Text*/,
 			StructNone/*Char*/,
@@ -259,6 +262,7 @@ public:
 			TableCellStart/*TableCellEnd*/,
 
 			TableCellReference/*TableCellReference*/,
+			WebLink/*WebLink*/,
 			Markup/*Markup*/,
 			Text/*Text*/,
 			Char/*Char*/,
@@ -349,6 +353,7 @@ public:
 
 	void addMarkup( const std::string& text)
 	{
+		closeWebLinkIfOpen();
 		addSingleItem( Paragraph::Markup, "", text, false/*joinText*/);
 	}
 	void addText( const std::string& text)
@@ -383,12 +388,14 @@ public:
 	}
 	void openRef()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::RefStart);
 		openStructure( Paragraph::RefStart, "ref", ++m_refCnt);
 	}
 	void closeRef()
 	{
+		closeWebLinkIfOpen();
 		closeStructure( Paragraph::RefStart, "");
 	}
 	void openPageLink( const std::string& pageid, const std::string& anchorid)
@@ -404,8 +411,10 @@ public:
 	{
 		closeStructure( Paragraph::PageLinkStart, "");
 	}
+	void closeWebLinkIfOpen();
 	void openWebLink( const std::string& id)
 	{
+		closeWebLinkIfOpen();
 		openStructure( Paragraph::WebLinkStart, id.c_str(), 0);
 	}
 	void closeWebLink();
@@ -413,11 +422,13 @@ public:
 	void openHeading( int idx)
 	{
 		m_lastHeadingIdx = idx;
+		closeWebLinkIfOpen();
 		closeOpenStructures();
 		openAutoCloseItem( Paragraph::HeadingStart, "h", idx, 1/*depth*/);
 	}
 	void addHeadingItem()
 	{
+		closeWebLinkIfOpen();
 		closeOpenStructures();
 		openAutoCloseItem( Paragraph::HeadingStart, "h", m_lastHeadingIdx+1, 1/*depth*/);
 	}
@@ -445,40 +456,48 @@ public:
 	}
 	void openDiv()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		openStructure( Paragraph::DivStart, "", 0);
 	}
 	void closeDiv()
 	{
+		closeWebLinkIfOpen();
 		closeStructure( Paragraph::DivStart, "");
 	}
 	void openPoem()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::PoemStart);
 		openStructure( Paragraph::PoemStart, "", 0);
 	}
 	void closePoem()
 	{
+		closeWebLinkIfOpen();
 		closeStructure( Paragraph::PoemStart, "");
 	}
 	void openSpan()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::SpanStart);
 		openStructure( Paragraph::SpanStart, "", 0);
 	}
 	void closeSpan()
 	{
+		closeWebLinkIfOpen();
 		closeStructure( Paragraph::SpanStart, "");
 	}
 	void openFormat()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		openStructure( Paragraph::FormatStart, "", 0);
 	}
 	void closeFormat()
 	{
+		closeWebLinkIfOpen();
 		closeStructure( Paragraph::FormatStart, "");
 	}
 	void implicitOpenTableIfUndefined()
@@ -495,12 +514,14 @@ public:
 	}
 	void openTable()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeDanglingStructures( Paragraph::TableStart);
 		openStructure( Paragraph::TableStart, "table", ++m_tableCnt);
 	}
 	void closeTable()
 	{
+		closeWebLinkIfOpen();
 		if (m_tableDefs.empty())
 		{
 			addError("table close without table defined");
@@ -522,6 +543,7 @@ public:
 	}
 	void addTableTitle()
 	{
+		closeWebLinkIfOpen();
 		if (!checkTableDefExists( "table add title")) return;
 		closeDanglingStructures( Paragraph::TableStart);
 		openAutoCloseItem( Paragraph::TableTitleStart, "title", 0/*idx*/, 1/*depth*/);
@@ -530,12 +552,14 @@ public:
 
 	void addTableHead( int rowspan, int colspan)
 	{
+		closeWebLinkIfOpen();
 		if (!checkTableDefExists( "table add head")) return;
 		closeDanglingStructures( Paragraph::TableStart);
 		openTableCell( Paragraph::TableHeadStart, rowspan, colspan);
 	}
 	void repeatTableCell( int rowspan, int colspan)
 	{
+		closeWebLinkIfOpen();
 		strus::Paragraph::StructType tp = currentStructType();
 		strus::Paragraph::Type reptype = (tp == Paragraph::StructTableHead) ? strus::Paragraph::TableHeadStart : strus::Paragraph::TableCellStart;
 
@@ -545,17 +569,20 @@ public:
 	}
 	void addTableCell( int rowspan, int colspan)
 	{
+		closeWebLinkIfOpen();
 		closeDanglingStructures( Paragraph::TableStart);
 		openTableCell( Paragraph::TableCellStart, rowspan, colspan);
 	}
 	void addTableRow()
 	{
+		closeWebLinkIfOpen();
 		if (!checkTableDefExists( "table add head row")) return;
 		closeDanglingStructures( Paragraph::TableStart);
 		m_tableDefs.back().nextRow();
 	}
 	void addAttribute( const std::string& id)
 	{
+		closeWebLinkIfOpen();
 		closeAutoCloseItem( Paragraph::AttributeStart);
 		Paragraph::StructType tp = currentStructType();
 		if (tp == Paragraph::StructCitation
@@ -571,11 +598,13 @@ public:
 	}
 	void openListItem( int lidx)
 	{
+		closeWebLinkIfOpen();
 		closeOpenEolnItem();
 		openAutoCloseItem( Paragraph::ListItemStart, "l", lidx, 2/*depth*/);
 	}
 	void closeOpenEolnItem()
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::ListItemStart);
 		closeAutoCloseItem( Paragraph::HeadingStart);
@@ -584,6 +613,7 @@ public:
 
 	void openCitation( const std::string& citclass)
 	{
+		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		openStructure( Paragraph::CitationStart, "cit", ++m_citationCnt);
 		if (!citclass.empty())
@@ -595,6 +625,7 @@ public:
 
 	void closeCitation()
 	{
+		closeWebLinkIfOpen();
 		closeAutoCloseItem( Paragraph::AttributeStart);
 		closeStructure( Paragraph::CitationStart, "");
 	}

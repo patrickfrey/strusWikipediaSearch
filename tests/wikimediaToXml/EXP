@@ -23078,19 +23078,19 @@ Research Society 2: 27-42</text>
 <entity id="3"><text>HMS Surinam</text>
   </entity>
 <text/>
-<entity id="5"><text> was a </text>
-  <pagelink id="Cruizer class brig-sloop"><entity id="2"><text>Cruizer</text>
-      </entity>
-    <text>-class brig-sloop</text>
-    </pagelink>
-  <text> built by Obadiah Ayles at </text>
-  <pagelink id="Topsham, Devon"><text>Topsham</text>
-    </pagelink>
-  <text>, </text>
-  <pagelink id="Exeter">Exeter
-    </pagelink>
-  <text> and launched in 1805.</text>
-  </entity>
+ 
+<text> was a </text>
+<pagelink id="Cruizer class brig-sloop"><entity id="2"><text>Cruizer</text>
+    </entity>
+  <text>-class brig-sloop</text>
+  </pagelink>
+<text> built by Obadiah Ayles at </text>
+<pagelink id="Topsham, Devon"><text>Topsham</text>
+  </pagelink>
+<text>, </text>
+<pagelink id="Exeter">Exeter
+  </pagelink>
+<text> and launched in 1805.</text>
 <reflink id="ref3"/>
 <text> She captured one privateer during her twenty-year career and took part in two campaigns before she was broken up in 1825. </text>
 <ref id="ref3"><text>Winfield (2008), p.292.</text>

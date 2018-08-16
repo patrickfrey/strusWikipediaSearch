@@ -185,6 +185,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::Title:
 			case Paragraph::DanglingQuotes:
 			case Paragraph::TableCellReference:
+			case Paragraph::WebLink:
 			case Paragraph::Markup:
 			case Paragraph::Text:
 			case Paragraph::Char:
@@ -347,7 +348,7 @@ void DocumentStructure::addQuoteItem( Paragraph::Type startType, int count)
 		}
 		else
 		{
-			std::vector<StructRef>::iterator si = m_structStack.end(), se = m_structStack.end();
+			std::vector<StructRef>::iterator si = m_structStack.begin(), se = m_structStack.end();
 			while( se != si)
 			{
 				--se;
@@ -1179,6 +1180,7 @@ void DocumentStructure::closeStructure( Paragraph::Type startType, const std::st
 
 void DocumentStructure::closeOpenStructures()
 {
+	closeWebLinkIfOpen();
 	closeDanglingStructures( Paragraph::Title/*no match => remove all*/);
 	m_parar.insert( m_parar.end(), m_refs.begin(), m_refs.end());
 	m_refs.clear();
@@ -1186,6 +1188,32 @@ void DocumentStructure::closeOpenStructures()
 	m_tables.clear();
 	m_parar.insert( m_parar.end(), m_citations.begin(), m_citations.end());
 	m_citations.clear();
+}
+
+void DocumentStructure::closeWebLinkIfOpen()
+{
+	if (m_structStack.empty()) return;
+
+	int startidx = m_structStack.back().start;
+	const Paragraph& para = m_parar[ startidx];
+	if (para.type() == Paragraph::WebLinkStart)
+	{
+		finishStructure( Paragraph::WebLinkStart);
+	}
+	else
+	{
+		std::vector<StructRef>::iterator si = m_structStack.begin(), se = m_structStack.end();
+		while( se != si)
+		{
+			--se;
+			if (m_parar[ se->start].type() == Paragraph::WebLinkStart)
+			{
+				m_parar[ se->start].setType( Paragraph::WebLink);
+				m_structStack.erase( se);
+				break;
+			}
+		}
+	}
 }
 
 void DocumentStructure::closeWebLink()
@@ -1633,7 +1661,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::DanglingQuotes:
 				output.switchToContent( rt);
-				output.printValue( pi->id().empty() ? std::string(" ") : pi->id(), rt);
+				output.printValue( pi->text().empty() ? std::string(" ") : pi->text(), rt);
 				break;
 			case Paragraph::QuotationStart:
 				stk.push_back( Paragraph::StructQuotation);
@@ -1833,6 +1861,10 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 					output.printAttribute( pi->id(), rt);
 					output.printValue( pi->text(), rt);
 				}
+				break;
+			case Paragraph::WebLink:
+				printTagOpen( output, rt, "weblink", pi->id(), pi->text());
+				output.printCloseTag( rt);
 				break;
 			case Paragraph::Markup:
 				printTagContent( output, rt, "mark", pi->id(), pi->text());
