@@ -992,7 +992,8 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 			si = skipSpaces( si, se);
 			if (si < se && (*si == '"' || *si == '\''))
 			{
-				while (si < se && (*si == '"' || *si == '\''))
+				++si;
+				while (si < se && (*si != '\n' && *si != endMarker && *si != altEndMarker && *si != '"' && *si != '\''))
 				{
 					if (!value.empty()) value.push_back(' ');
 					if (!parseString( value, si, se, true/*tolerant*/)) goto REWIND;
