@@ -1167,12 +1167,14 @@ void DocumentStructure::finishStructure( int startidx)
 
 void DocumentStructure::closeStructure( Paragraph::Type startType, const std::string& alt_text)
 {
+	checkStructures();
 	closeDanglingStructures( startType);
 	if (m_structStack.empty())
 	{
 		addError( strus::string_format( "close of %s structure called without open ()", Paragraph::structTypeName( Paragraph::structType( startType))));
 		return;
 	}
+	checkStructures();
 	int startidx = m_structStack.back().start;
 	const Paragraph& para = m_parar[ startidx];
 	if (para.type() == startType)
