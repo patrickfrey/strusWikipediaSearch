@@ -204,13 +204,16 @@ static std::string parseTagContent( const char* tagname, char const*& si, const 
 				if (*tg == '/') ++tg;
 				if (*tg == '>')
 				{
-					si += (tagnamelen-1);
 					return std::string();
 				}
 			}
 			std::string rt( si, (end - si) - tagnamelen);
 			si = end;
 			return rt;
+		}
+		else
+		{
+			return std::string();
 		}
 	}
 	throw std::runtime_error( std::string("unclosed tag '") + tagname + "': " + outputString( si, se));
@@ -992,8 +995,7 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 			si = skipSpaces( si, se);
 			if (si < se && (*si == '"' || *si == '\''))
 			{
-				++si;
-				while (si < se && (*si != '\n' && *si != endMarker && *si != altEndMarker && *si != '"' && *si != '\''))
+				while (si < se && (*si == '"' || *si == '\''))
 				{
 					if (!value.empty()) value.push_back(' ');
 					if (!parseString( value, si, se, true/*tolerant*/)) goto REWIND;
@@ -1003,6 +1005,10 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 			else if (si < se && (*si == '#' || isIdentifierChar(*si, true/*with dash*/)))
 			{
 				if (!parseToken( value, si, se)) goto REWIND;
+			}
+			else if (si < se && (*si == endMarker || *si == altEndMarker))
+			{
+				return;
 			}
 			else
 			{
@@ -1538,7 +1544,7 @@ WikimediaLexem WikimediaLexer::next()
 				do
 				{
 					more = false;
-					parseAttributes( m_si, m_se, '\n', '|', aa);
+					parseAttributes( m_si, m_se,  '|', '\n', aa);
 					if (m_si < m_se && *m_si == '|') {more=true; ++m_si;}
 					attributes.insert( aa.begin(), aa.end());
 				} while (more);
@@ -1558,7 +1564,7 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				++m_si;
 				std::map<std::string,std::string> attributes;
-				parseAttributes( m_si, m_se, '|', '|', attributes);
+				parseAttributes( m_si, m_se,  '|', '\n', attributes);
 				if (m_si+2 < m_se && m_si[0] == '|' && m_si[1] != '|') ++m_si;
 				return WikimediaLexem( WikimediaLexem::DoubleColDelim, 0, "", attributes);
 			}
@@ -1576,7 +1582,7 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			m_si += 2;
 			std::map<std::string,std::string> attributes;
-			parseAttributes( m_si, m_se, '|', '|', attributes);
+			parseAttributes( m_si, m_se,  '|', '\n', attributes);
 			if (m_si < m_se && *m_si == '|') ++m_si;
 			return WikimediaLexem( WikimediaLexem::TableHeadDelim, 0, "", attributes);
 		}
@@ -1611,7 +1617,7 @@ WikimediaLexem WikimediaLexer::next()
 					m_si = skipSpaces( m_si, m_se);
 					if (*m_si == '!') ++m_si;
 					std::map<std::string,std::string> attributes;
-					parseAttributes( m_si, m_se, '\n', '|', attributes);
+					parseAttributes( m_si, m_se,  '|', '\n', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::TableRowDelim, 0, "", attributes);
 				}
@@ -1619,7 +1625,7 @@ WikimediaLexem WikimediaLexer::next()
 				{
 					while (*m_si == '+') ++m_si;
 					std::map<std::string,std::string> attributes;
-					parseAttributes( m_si, m_se, '\n', '|', attributes);
+					parseAttributes( m_si, m_se,  '|', '\n', attributes);
 					if (m_si < m_se && *m_si == '|') ++m_si;
 					return WikimediaLexem( WikimediaLexem::TableTitle, 0, "", attributes);
 				}
