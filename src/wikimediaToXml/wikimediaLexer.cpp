@@ -886,11 +886,11 @@ std::string WikimediaLexer::tryParseBigHexNum()
 	}
 	else
 	{
-		int hc = hexNumCount( m_si+1,m_se);
-		if (hc >= 12 && (m_si == m_se || !isAlpha( m_si[1+hc])))
+		int hc = hexNumCount( m_si,m_se);
+		if (hc >= 12 && (m_si == m_se || !isAlpha( m_si[hc])))
 		{
 			const char* start = m_si;
-			m_si = m_si+1+hc;
+			m_si = m_si+hc;
 			return std::string( start, m_si-start);
 		}
 	}
