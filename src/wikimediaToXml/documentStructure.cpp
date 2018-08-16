@@ -389,7 +389,6 @@ void DocumentStructure::openAutoCloseItem( Paragraph::Type startType, const char
 				{
 					finishStructure( m_structStack[ si].start);
 				}
-				Paragraph para = m_parar[ m_structStack.back().start];
 				m_parar.push_back( Paragraph( endType, "", ""));
 				m_structStack.pop_back();
 			}
@@ -1213,7 +1212,7 @@ void DocumentStructure::closeWebLinkIfOpen()
 	const Paragraph& para = m_parar[ startidx];
 	if (para.type() == Paragraph::WebLinkStart)
 	{
-		finishStructure( Paragraph::WebLinkStart);
+		finishStructure( startidx);
 	}
 	else
 	{
