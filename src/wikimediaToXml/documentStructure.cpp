@@ -430,6 +430,18 @@ void DocumentStructure::openTableCell( Paragraph::Type startType, int rowspan, i
 	checkStructureDepth();
 }
 
+void DocumentStructure::checkStructures()
+{
+	std::vector<StructRef>::const_iterator ci = m_structStack.begin(), ce = m_structStack.end();
+	for (; ci != ce; ++ci)
+	{
+		if (ci->start >= (int)m_parar.size())
+		{
+			throw std::runtime_error("internal: corrupted data in structure references");
+		}
+	}
+}
+
 void DocumentStructure::checkStructureDepth()
 {
 	if (!m_maxStructureDepthReported && (int)m_structStack.size() == (int)MaxStructureDepth)
@@ -438,10 +450,6 @@ void DocumentStructure::checkStructureDepth()
 		std::vector<StructRef>::const_iterator ci = m_structStack.begin(), ce = m_structStack.end();
 		for (; ci != ce; ++ci)
 		{
-			if (ci->start >= (int)m_parar.size())
-			{
-				throw std::runtime_error("internal: corrupted data in structure references");
-			}
 			structpath.push_back( '/');
 			structpath.append( m_parar[ ci->start].structTypeName());
 		}
@@ -466,6 +474,7 @@ void DocumentStructure::openStructure( Paragraph::Type startType, const char* pr
 		m_parar.push_back( Paragraph( startType, prefix, ""));
 	}
 	checkStructureDepth();
+	checkStructures();
 }
 
 typedef std::pair<std::vector<Paragraph>::const_iterator,std::vector<Paragraph>::const_iterator> ParagraphRange;

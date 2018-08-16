@@ -664,6 +664,7 @@ public:
 private:
 	enum {MaxStructureDepth=12};
 	void checkStructureDepth();
+	void checkStructures();
 
 	void finishStructure( int structStartidx);
 	void finishTable( int structStartidx, const std::string& id);
