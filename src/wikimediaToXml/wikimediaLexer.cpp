@@ -188,40 +188,25 @@ static bool parseIdentifier( std::string& res, char const*& si, char const* se, 
 
 static std::string parseTagContent( const char* tagname, char const*& si, const char* se)
 {
-	char buf[ 128];
-	int tagnamelen = std::snprintf( buf, sizeof(buf), "</%s>", tagname);
-	if (tagnamelen < (int)sizeof(buf))
+	const char* end = (const char*)std::memchr( si, '<', se-si);
+	for (; end-si < 256 && end+1 < se; end = (const char*)std::memchr( end+1, '<', se-end-1))
 	{
-		const char* end = findPattern( si, se, buf);
-		if (end)
+		const char* tg = end+1;
+		if (*tg != '/') continue;
+		++tg;
+		while (*tg && isSpace(*tg)) ++tg;
+		const char* name = tg;
+		while (tg < se && isAlpha(*tg)) ++tg;
+		if (isEqual( tagname, name, tg-name))
 		{
-			const char* tg = si;
-			tg = (const char*)std::memchr( tg, '<', end-tg-tagnamelen);
-			for (; tg && tg < end - tagnamelen; tg = (const char*)std::memchr( tg, '<', end-tg-tagnamelen))
-			{
-				const char* nextTagStart = tg;
-				++tg;
-				if (*tg == '/') ++tg;
-				while (*tg && isAlpha(*tg)) ++tg;
-				while (*tg && isSpace(*tg)) ++tg;
-				if (*tg == '/') ++tg;
-				if (*tg == '>')
-				{
-					std::string rt( si, nextTagStart - si);
-					si = nextTagStart;
-					return rt;
-				}
-			}
-			std::string rt( si, (end - si) - tagnamelen);
-			si = end;
+			while (*tg && isSpace(*tg)) ++tg;
+			if (tg < se && *tg == '>') ++tg;
+			std::string rt( si, end-si);
+			si = tg;
 			return rt;
 		}
-		else
-		{
-			return std::string();
-		}
 	}
-	throw std::runtime_error( std::string("unclosed tag '") + tagname + "': " + outputString( si, se));
+	return std::string();
 }
 
 enum TagType {
@@ -465,9 +450,9 @@ static TagType parseTagType( char const*& si, const char* se)
 		else if (tryParseTag( "tr", si, se)) return open ? TagTrOpen : TagTrClose;
 		else if (tryParseTag( "hr", si, se)) return open ? TagHrOpen : TagHrClose;
 		else if (tryParseTag( "td", si, se)) return open ? TagTdOpen : TagTdClose;
-		else if (tryParseTag( "noinclude", si, se)) {(void)parseTagContent( "noinclude", si, se); return TagComment;}
-		else if (tryParseTag( "score", si, se)) {(void)parseTagContent( "score", si, se); return TagComment;}
-		else if (tryParseTag( "timeline", si, se)) {(void)parseTagContent( "timeline", si, se); return TagComment;}
+		else if (open && tryParseTag( "noinclude", si, se)) {(void)parseTagContent( "noinclude", si, se); return TagComment;}
+		else if (open && tryParseTag( "score", si, se)) {(void)parseTagContent( "score", si, se); return TagComment;}
+		else if (open && tryParseTag( "timeline", si, se)) {(void)parseTagContent( "timeline", si, se); return TagComment;}
 		else if (tryParseTag( "please", si, se)) return open ? TagComment : TagComment;
 		else if (tryParseAnyTag( si, se)) return TagBr;
 		else if (tryParseTagDefStart( si, se)) return TagBr;
