@@ -189,7 +189,7 @@ static bool parseIdentifier( std::string& res, char const*& si, char const* se, 
 static std::string parseTagContent( const char* tagname, char const*& si, const char* se)
 {
 	const char* end = (const char*)std::memchr( si, '<', se-si);
-	for (; end-si < 256 && end+1 < se; end = (const char*)std::memchr( end+1, '<', se-end-1))
+	for (; end && end-si < 256 && end+1 < se; end = (const char*)std::memchr( end+1, '<', se-end-1))
 	{
 		const char* tg = end+1;
 		if (*tg != '/') continue;
