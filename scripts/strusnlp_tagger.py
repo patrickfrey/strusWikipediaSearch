@@ -52,7 +52,7 @@ def mapTagValue( tagname):
         return "A" # [adjective/adverb] adverb or comparative or superlative
     if tagname == "RP":
         return ".." # [particle] particle
-    if tagname == "S" or tagname == "SBAR" or tagname == "SBARQ" or tagname == "SINV" or tagname == "SQ":
+    if tagname == "$" or tagname == "S" or tagname == "SBAR" or tagname == "SBARQ" or tagname == "SINV" or tagname == "SQ":
         return "" # [] declarative clause, question, etc.
     if tagname == "SYM":
         return "N" # symbol
@@ -67,7 +67,7 @@ tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
  "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP",
  "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")" 
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$" 
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
