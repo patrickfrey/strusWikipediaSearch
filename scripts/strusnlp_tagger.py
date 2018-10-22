@@ -86,21 +86,52 @@ def mapTag( tagname):
         return "?"
 
 
+def printStackElements( stk):
+    rt = ""
+    doPrintMapType = 0
+    if len(stk) > 1:
+        doPrintMapType = 1
+        if len(stk) <= 3:
+            for elem in stk:
+                if elem[1][0:3] != "NNP":
+                    doPrintMapType = 0
+    if doPrintMapType:
+        for elem in stk:
+            rt += elem[0] + "\t" + elem[1] + "\t" + elem[2] + "\n"
+    else:
+        for elem in stk:
+            rt += "\t" + elem[1] + "\t" + elem[2] + "\n"
+    return rt
+
+def isDelimiter( tagname):
+    if tagname == "." or tagname == ";" or tagname == ":":
+        return True
+    return False
+
 def tagContent( text):
-    text = re.sub( r"""[\s\'\"]+""", " ", text)
+    text = re.sub( r"""[\s\`\'\"]+""", " ", text)
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
     prev = ""
+    stk = []
     rt = ""
     for tt in tagged:
         type = tt[1]
         val = tt[0]
         maptype = mapTag( type)
+        if isDelimiter( type):
+            rt += printStackElements( stk)
+            stk = []
+            stk.append( [maptype, type, val] )
+            rt += printStackElements( stk)
+            stk = []
+        else:
+            stk.append( [maptype, type, val] )
         if type == prev:
             type = ".."
         else:
             prev = type
-        rt += maptype + "\t" + type + "\t" + val + "\n"
+    rt += printStackElements( stk)
     return rt
 
 doccnt = 0
