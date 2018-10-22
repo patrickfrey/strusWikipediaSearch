@@ -88,6 +88,7 @@ def mapTag( tagname):
 
 def printStackElements( stk):
     rt = ""
+    prev = ""
     doPrintMapType = 0
     if len(stk) > 1:
         doPrintMapType = 1
@@ -97,7 +98,16 @@ def printStackElements( stk):
                     doPrintMapType = 0
     if doPrintMapType:
         for elem in stk:
-            rt += elem[0] + "\t" + elem[1] + "\t" + elem[2] + "\n"
+            type = elem[1]
+            if type == "NNPS":
+                type = "NNP"
+            if type == "NNS":
+                type = "NN"
+            if type == prev:
+                type = ".."
+            else:
+                prev = type
+            rt += elem[0] + "\t" + type + "\t" + elem[2] + "\n"
     else:
         for elem in stk:
             rt += "\t" + elem[1] + "\t" + elem[2] + "\n"
@@ -112,7 +122,6 @@ def tagContent( text):
     text = re.sub( r"""[\s\`\'\"]+""", " ", text)
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
-    prev = ""
     stk = []
     rt = ""
     for tt in tagged:
@@ -127,10 +136,6 @@ def tagContent( text):
             stk = []
         else:
             stk.append( [maptype, type, val] )
-        if type == prev:
-            type = ".."
-        else:
-            prev = type
     rt += printStackElements( stk)
     return rt
 
