@@ -14,6 +14,8 @@ import sys
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
         return "." # [delimiter] sentence delimiter
+    if tagname == "(" or tagname == ")" or tagname == "," or tagname == ":":
+        return "" # [part delimiter] delimiter
     if tagname == "CC":
         return "" # coordinating conjunction
     if tagname == "CD":
@@ -65,12 +67,13 @@ tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
  "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP",
  "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", "."
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")" 
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
 
 def mapTag( tagname):
+    global tgmap
     if tagname in tgmap:
         return tgmap[ tagname]
     else:
@@ -97,6 +100,7 @@ def tagContent( text):
 doccnt = 0
 
 def printOutput( filename, content, result):
+    global doccnt
     doccnt += 1
     if doccnt % 10 == 0:
         sys.stderr.write( "\rprocessed %d\n" % doccnt)
