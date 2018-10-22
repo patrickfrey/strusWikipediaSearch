@@ -11,6 +11,8 @@ import nltk
 from pprint import pprint
 import sys
 import re
+from datetime import datetime
+import time
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
@@ -102,11 +104,16 @@ def tagContent( text):
     return rt
 
 doccnt = 0
+startTime = time.time()
 
 def printOutput( filename, content, result):
     global doccnt
+    global startTime
     doccnt += 1
-    sys.stderr.write( "\rprocessed %d\n" % doccnt)
+    elapsedTime = (time.time() - startTime) / doccnt
+    timeString = "%.3f" % (elapsedTime*1000.0)
+
+    sys.stderr.write( "\rprocessed %d documents  (%s)          " % (doccnt,timeString))
     print( "#FILE#%s\n" % filename)
     print( "%s" % tagContent( content))
 
