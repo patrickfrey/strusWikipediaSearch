@@ -25,18 +25,25 @@ def tagContent( text):
         rt += type + "\t" + val + "\n"
     return rt
 
-def process( content):
-    print( "--\n[%s]\n" % content)
+def printOutput( filename, content, result):
+    print( "#FILE#%s\n" % filename)
     print( "%s" % tagContent( content))
 
 content = ""
+result = ""
+filename = ""
 for line in sys.stdin:
-    content += line
-    if line == ".\n" or line == ";\n" or line == "\n":
-        process( content)
-        content = ""
+    if len(line) > 6 and line[0:6] == '#FILE#':
+        if content != "":
+            printOutput( filename, content, result)
+        filename = line[6:]
+    else:
+        content += line
+        if line == ".\n" or line == ";\n" or line == "\n":
+            result += tagContent( content) + "\n"
 
-process( content)
+printOutput( filename, content, result)
+
 
 
 
