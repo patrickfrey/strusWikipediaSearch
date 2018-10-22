@@ -10,11 +10,12 @@
 import nltk
 from pprint import pprint
 import sys
+import re
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
         return "." # [delimiter] sentence delimiter
-    if tagname == "(" or tagname == ")" or tagname == "," or tagname == ":":
+    if tagname == "(" or tagname == ")" or tagname == "," or tagname == ":" or tagname == '#':
         return "" # [part delimiter] delimiter
     if tagname == "CC":
         return "" # coordinating conjunction
@@ -59,7 +60,9 @@ def mapTagValue( tagname):
     if tagname == "VBD" or tagname == "VBG" or tagname == "VBN" or tagname == "VBP" or tagname == "VBZ" or tagname == "VB":
         return "V" # Verb, past tense or gerund or present participle or past participle or singular present
     if tagname == "WDT" or tagname == "WP" or tagname == "WP$" or tagname == "WRB":
-        return "W" # Verb, past tense or gerund or present participle or past participle or singular presen
+        return "W" # Verb, past tense or gerund or present participle or past participle or singular present
+    if tagname == "UH":
+        return "" # exclamation
     sys.stderr.write( "unknown NLP tag %s\n" % tagname)
     return "?"
 
@@ -67,7 +70,7 @@ tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
  "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP",
  "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$" 
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$" , "UH"
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
@@ -82,6 +85,7 @@ def mapTag( tagname):
 
 
 def tagContent( text):
+    text = re.sub( r"""[\s\'\"]+""", " ", text)
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
     prev = ""
