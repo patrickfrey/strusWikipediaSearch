@@ -106,8 +106,7 @@ doccnt = 0
 def printOutput( filename, content, result):
     global doccnt
     doccnt += 1
-    if doccnt % 10 == 0:
-        sys.stderr.write( "\rprocessed %d\n" % doccnt)
+    sys.stderr.write( "\rprocessed %d\n" % doccnt)
     print( "#FILE#%s\n" % filename)
     print( "%s" % tagContent( content))
 
