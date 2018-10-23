@@ -125,24 +125,26 @@ def isDelimiter( tagname):
 
 def tagContent( text):
     text = re.sub( r"""[\s\`\'\"]+""", " ", text)
-    tokens = nltk.word_tokenize( text)
-    tagged = nltk.pos_tag( tokens)
-    # "NP: {<RB>?<DT>?<JJ.*>*<NN.*>*}"
-    stk = []
-    rt = ""
-    for tt in tagged:
-        type = tt[1]
-        val = tt[0]
-        maptype = mapTag( type)
-        if isDelimiter( type):
-            rt += printStackElements( stk)
-            stk = []
-            stk.append( [maptype, type, val] )
-            rt += printStackElements( stk)
-            stk = []
-        else:
-            stk.append( [maptype, type, val] )
-    rt += printStackElements( stk)
+    sentences = nltk.sent_tokenize( text)
+    for sent in sentences:
+        tokens = nltk.word_tokenize( sent)
+        tagged = nltk.pos_tag( tokens)
+        # "NP: {<RB>?<DT>?<JJ.*>*<NN.*>*}"
+        stk = []
+        rt = ""
+        for tt in tagged:
+            type = tt[1]
+            val = tt[0]
+            maptype = mapTag( type)
+            if isDelimiter( type):
+                rt += printStackElements( stk)
+                stk = []
+                stk.append( [maptype, type, val] )
+                rt += printStackElements( stk)
+                stk = []
+            else:
+                stk.append( [maptype, type, val] )
+        rt += printStackElements( stk)
     return rt
 
 doccnt = 0
@@ -181,37 +183,11 @@ def parseProgramArguments( argv):
         printUsage()
         sys.exit(2)
 
-class StdinStream:
-    def __init__(self):
-        self._linebuf = None
-        self._backtrack = False
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if self._linebuf and self._backtrack:
-            rt = self._linebuf
-            self._linebuf = None
-            self._backtrack = False
-            return rt
-        else:
-            for line in sys.stdin:
-                self._linebuf = line
-                self._backtrack = False
-                return line
-            else:
-                raise StopIteration
-    def back(self):
-        if self._backtrack:
-            raise( RuntimeError( 'Cannot backtrack twice'))
-        self._backtrack = True
-
-
 def processStdin():
     content = ""
     result = ""
     filename = ""
-    input = StdinStream()
-    for line in input:
+    for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content != "":
                 printOutput( filename, content, result)
@@ -222,19 +198,33 @@ def processStdin():
                 result += tagContent( content + " .\n")
     printOutput( filename, content, result)
 
+linebuf = None
 def readChunkStdin( nofFiles):
     ii = 0
-    input = StdinStream()
     content = ""
-    for line in input:
+    global linebuf
+    if linebuf:
+        if len(linebuf) > 6 and linebuf[0:6] == '#FILE#':
+            ii += 1
+        else:
+            raise RuntimeError("unexpected line in buffer")
+        content += linebuf
+        linebuf = None
+    for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             ii += 1
             if ii > nofFiles:
-                 input.back()
-                 return content
+                linebuf = line
+                return content
         content += line
     return content
 
+def printContent( content):
+    for line in content.splitlines():
+        if len(line) > 30:
+            sys.stderr.write( "++ %s\n" % line[:30])
+        else:
+            sys.stderr.write( "++ %s\n" % line)
 
 if __name__ == "__main__":
     argmap = parseProgramArguments( sys.argv[ 1:])
@@ -243,10 +233,12 @@ if __name__ == "__main__":
         chunkSize = argmap[ 'C']
     if chunkSize > 0:
         content = readChunkStdin( chunkSize)
+        printContent( content)
         while content:
             result = subprocess.check_output([ os.path.abspath(__file__)], input=bytearray(content,"UTF-8")).decode("utf-8")
             print( result)
             content = readChunkStdin( chunkSize)
+            printContent( content)
     else:
         processStdin()
 
