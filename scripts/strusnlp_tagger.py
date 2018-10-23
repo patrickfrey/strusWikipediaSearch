@@ -11,8 +11,11 @@ import nltk
 from pprint import pprint
 import sys
 import re
-from datetime import datetime
 import time
+import getopt
+import os
+import stat
+import subprocess
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
@@ -62,9 +65,11 @@ def mapTagValue( tagname):
     if tagname == "VBD" or tagname == "VBG" or tagname == "VBN" or tagname == "VBP" or tagname == "VBZ" or tagname == "VB":
         return "V" # Verb, past tense or gerund or present participle or past participle or singular present
     if tagname == "WDT" or tagname == "WP" or tagname == "WP$" or tagname == "WRB":
-        return "W" # Verb, past tense or gerund or present participle or past participle or singular present
+        return "X" # Verb, past tense or gerund or present participle or past participle or singular present
     if tagname == "UH":
         return "" # exclamation
+    if tagname == "":
+        return "" # empty
     sys.stderr.write( "unknown NLP tag %s\n" % tagname)
     return "?"
 
@@ -72,7 +77,7 @@ tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
  "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP",
  "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$", "#" , "UH"
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$", "#" , "UH", ""
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
@@ -122,6 +127,7 @@ def tagContent( text):
     text = re.sub( r"""[\s\`\'\"]+""", " ", text)
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
+    # "NP: {<RB>?<DT>?<JJ.*>*<NN.*>*}"
     stk = []
     rt = ""
     for tt in tagged:
@@ -153,20 +159,96 @@ def printOutput( filename, content, result):
     print( "#FILE#%s\n" % filename)
     print( "%s" % tagContent( content))
 
-content = ""
-result = ""
-filename = ""
-for line in sys.stdin:
-    if len(line) > 6 and line[0:6] == '#FILE#':
-        if content != "":
-            printOutput( filename, content, result)
-        filename = line[6:]
-    else:
-        content += line
-        if line == ".\n" or line == ";\n" or line == "\n":
-            result += tagContent( content + " .\n") + "\n"
+def printUsage():
+    print( "%s [-h] [-C <chunksize> ]\n" % argv[0])
 
-printOutput( filename, content, result)
+def parseProgramArguments( argv):
+    rt = {}
+    try:
+        opts, args = getopt.getopt( argv,"hC:",["chunksize="])
+        for opt, arg in opts:
+            if opt == '-h':
+                printUsage()
+                sys.exit()
+            elif opt in ("-C", "--chunksize"):
+                ai = int(arg)
+                if ai <= 0:
+                    raise RuntimeError( "positive integer expected")
+                rt['C'] = ai
+        return rt
+    except getopt.GetoptError:
+        sys.stderr.write( "bad arguments\n")
+        printUsage()
+        sys.exit(2)
+
+class StdinStream:
+    def __init__(self):
+        self._linebuf = None
+        self._backtrack = False
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self._linebuf and self._backtrack:
+            rt = self._linebuf
+            self._linebuf = None
+            self._backtrack = False
+            return rt
+        else:
+            for line in sys.stdin:
+                self._linebuf = line
+                self._backtrack = False
+                return line
+            else:
+                raise StopIteration
+    def back(self):
+        if self._backtrack:
+            raise( RuntimeError( 'Cannot backtrack twice'))
+        self._backtrack = True
+
+
+def processStdin():
+    content = ""
+    result = ""
+    filename = ""
+    input = StdinStream()
+    for line in input:
+        if len(line) > 6 and line[0:6] == '#FILE#':
+            if content != "":
+                printOutput( filename, content, result)
+            filename = line[6:]
+        else:
+            content += line
+            if line == ".\n" or line == ";\n" or line == "\n":
+                result += tagContent( content + " .\n")
+    printOutput( filename, content, result)
+
+def readChunkStdin( nofFiles):
+    ii = 0
+    input = StdinStream()
+    content = ""
+    for line in input:
+        if len(line) > 6 and line[0:6] == '#FILE#':
+            ii += 1
+            if ii > nofFiles:
+                 input.back()
+                 return content
+        content += line
+    return content
+
+
+if __name__ == "__main__":
+    argmap = parseProgramArguments( sys.argv[ 1:])
+    chunkSize = 0
+    if 'C' in argmap:
+        chunkSize = argmap[ 'C']
+    if chunkSize > 0:
+        content = readChunkStdin( chunkSize)
+        while content:
+            result = subprocess.check_output([ os.path.abspath(__file__)], input=bytearray(content,"UTF-8")).decode("utf-8")
+            print( result)
+            content = readChunkStdin( chunkSize)
+    else:
+        processStdin()
 
 
 
