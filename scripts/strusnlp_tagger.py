@@ -125,26 +125,26 @@ def isDelimiter( tagname):
 
 def tagContent( text):
     text = re.sub( r"""[\s\`\'\"]+""", " ", text)
-    sentences = nltk.sent_tokenize( text)
-    for sent in sentences:
-        tokens = nltk.word_tokenize( sent)
-        tagged = nltk.pos_tag( tokens)
-        # "NP: {<RB>?<DT>?<JJ.*>*<NN.*>*}"
-        stk = []
-        rt = ""
-        for tt in tagged:
-            type = tt[1]
-            val = tt[0]
-            maptype = mapTag( type)
-            if isDelimiter( type):
-                rt += printStackElements( stk)
-                stk = []
-                stk.append( [maptype, type, val] )
-                rt += printStackElements( stk)
-                stk = []
-            else:
-                stk.append( [maptype, type, val] )
-        rt += printStackElements( stk)
+    tokens = nltk.word_tokenize( text)
+    for tk in tokens:
+        sys.stderr.write( "TOK %s\n" % tk)
+    tagged = nltk.pos_tag( tokens)
+    stk = []
+    rt = ""
+    for tt in tagged:
+        sys.stderr.write( "TAG %s %s\n" % (tt[0], tt[1]))
+        type = tt[1]
+        val = tt[0]
+        maptype = mapTag( type)
+        if isDelimiter( type):
+            rt += printStackElements( stk)
+            stk = []
+            stk.append( [maptype, type, val] )
+            rt += printStackElements( stk)
+            stk = []
+        else:
+            stk.append( [maptype, type, val] )
+    rt += printStackElements( stk)
     return rt
 
 doccnt = 0
