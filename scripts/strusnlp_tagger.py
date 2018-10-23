@@ -126,13 +126,10 @@ def isDelimiter( tagname):
 def tagContent( text):
     text = re.sub( r"""[\s\`\'\"]+""", " ", text)
     tokens = nltk.word_tokenize( text)
-    for tk in tokens:
-        sys.stderr.write( "TOK %s\n" % tk)
     tagged = nltk.pos_tag( tokens)
     stk = []
     rt = ""
     for tt in tagged:
-        sys.stderr.write( "TAG %s %s\n" % (tt[0], tt[1]))
         type = tt[1]
         val = tt[0]
         maptype = mapTag( type)
