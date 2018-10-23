@@ -57,7 +57,7 @@ def mapTagValue( tagname):
     if tagname == "RB" or tagname == "RBR" or tagname == "RBS":
         return "A" # [adjective/adverb] adverb or comparative or superlative
     if tagname == "RP":
-        return ".." # [particle] particle
+        return "_" # [particle] particle
     if tagname == "$" or tagname == "S" or tagname == "SBAR" or tagname == "SBARQ" or tagname == "SINV" or tagname == "SQ":
         return "" # [] declarative clause, question, etc.
     if tagname == "SYM":
@@ -65,7 +65,7 @@ def mapTagValue( tagname):
     if tagname == "VBD" or tagname == "VBG" or tagname == "VBN" or tagname == "VBP" or tagname == "VBZ" or tagname == "VB":
         return "V" # Verb, past tense or gerund or present participle or past participle or singular present
     if tagname == "WDT" or tagname == "WP" or tagname == "WP$" or tagname == "WRB":
-        return "X" # Verb, past tense or gerund or present participle or past participle or singular present
+        return "W" # determiner
     if tagname == "UH":
         return "" # exclamation
     if tagname == "":
@@ -104,15 +104,17 @@ def printStackElements( stk):
     if doPrintMapType:
         for elem in stk:
             type = elem[1]
+            maptype = elem[0]
             if type == "NNPS":
                 type = "NNP"
             if type == "NNS":
                 type = "NN"
             if type == prev:
-                type = ".."
+                type = "_"
+                maptype = "_";
             else:
                 prev = type
-            rt += elem[0] + "\t" + type + "\t" + elem[2] + "\n"
+            rt += maptype + "\t" + type + "\t" + elem[2] + "\n"
     else:
         for elem in stk:
             rt += "\t" + elem[1] + "\t" + elem[2] + "\n"
