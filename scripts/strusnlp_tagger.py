@@ -19,9 +19,9 @@ import subprocess
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
-        return "." # [delimiter] sentence delimiter
+        return "T" # [delimiter] sentence delimiter
     if tagname == "(" or tagname == ")" or tagname == "," or tagname == ":" or tagname == "#":
-        return "" # [part delimiter] delimiter
+        return "P" # [part delimiter] delimiter
     if tagname == "CC":
         return "" # coordinating conjunction
     if tagname == "CD":
@@ -37,7 +37,7 @@ def mapTagValue( tagname):
     if tagname == "JJ" or tagname == "JJR" or tagname == "JJS":
         return "A" # [adjective/adverb] adjective
     if tagname == "LS":
-        return "." # [delimiter] list item marker
+        return "T" # [delimiter] list item marker
     if tagname == "MD":
         return "m" # modal
     if tagname == "TO":
@@ -68,6 +68,8 @@ def mapTagValue( tagname):
         return "W" # determiner
     if tagname == "UH":
         return "" # exclamation
+    if tagname == "''":
+        return "" # empty
     if tagname == "":
         return "" # empty
     sys.stderr.write( "unknown NLP tag %s\n" % tagname)
@@ -77,7 +79,7 @@ tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
  "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP",
  "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$", "#" , "UH", ""
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$", "#" , "UH", "", "''"
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
@@ -147,26 +149,31 @@ def tagContent( text):
     return rt
 
 doccnt = 0
+statusLine = False
 startTime = time.time()
 
-def printOutput( filename, content, result):
+def printStatusLine( nofdocs):
     global doccnt
     global startTime
-    doccnt += 1
+    doccnt += nofdocs
     elapsedTime = (time.time() - startTime) / doccnt
     timeString = "%.3f" % (elapsedTime*1000.0)
-
     sys.stderr.write( "\rprocessed %d documents  (%s)          " % (doccnt,timeString))
+
+def printOutput( filename, result):
+    global statusLine
+    if statusLine:
+        printStatusLine( 1)
     print( "#FILE#%s\n" % filename)
-    print( "%s" % tagContent( content))
+    print( "%s" % result)
 
 def printUsage():
-    print( "%s [-h] [-C <chunksize> ]\n" % argv[0])
+    print( "%s [-h] [-V] [-C <chunksize> ]\n" % __file__)
 
 def parseProgramArguments( argv):
     rt = {}
     try:
-        opts, args = getopt.getopt( argv,"hC:",["chunksize="])
+        opts, args = getopt.getopt( argv,"hVSC:",["chunksize=","status","verbose"])
         for opt, arg in opts:
             if opt == '-h':
                 printUsage()
@@ -176,6 +183,10 @@ def parseProgramArguments( argv):
                 if ai <= 0:
                     raise RuntimeError( "positive integer expected")
                 rt['C'] = ai
+            elif opt in ("-V", "--verbose"):
+                rt['V'] = True
+            elif opt in ("-S", "--status"):
+                rt['S'] = True
         return rt
     except getopt.GetoptError:
         sys.stderr.write( "bad arguments\n")
@@ -188,14 +199,20 @@ def processStdin():
     filename = ""
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
-            if content != "":
-                printOutput( filename, content, result)
+            if content:
+                result += tagContent( content + "\n")
+                printOutput( filename, result)
+                result = ""
             filename = line[6:]
         else:
             content += line
             if line == ".\n" or line == ";\n" or line == "\n":
-                result += tagContent( content + " .\n")
-    printOutput( filename, content, result)
+                result += tagContent( content)
+                content = ""
+    if content:
+        result += tagContent( content + "\n")
+    if filename and result:
+        printOutput( filename, result)
 
 linebuf = None
 def readChunkStdin( nofFiles):
@@ -214,12 +231,12 @@ def readChunkStdin( nofFiles):
             ii += 1
             if ii > nofFiles:
                 linebuf = line
-                return content
+                return content, ii
         content += line
-    return content
+    return content, ii
 
 def printContent( content):
-    for line in content.splitlines():
+    for line in content.split("\n", 20):
         if len(line) > 30:
             sys.stderr.write( "++ %s\n" % line[:30])
         else:
@@ -228,16 +245,26 @@ def printContent( content):
 if __name__ == "__main__":
     argmap = parseProgramArguments( sys.argv[ 1:])
     chunkSize = 0
+    verbose = False
+
+    if 'V' in argmap:
+        verbose = True
     if 'C' in argmap:
         chunkSize = argmap[ 'C']
+    if 'S' in argmap:
+        statusLine = True
     if chunkSize > 0:
-        content = readChunkStdin( chunkSize)
-        printContent( content)
+        content, nofdocs = readChunkStdin( chunkSize)
+        if verbose:
+            printContent( content)
         while content:
             result = subprocess.check_output([ os.path.abspath(__file__)], input=bytearray(content,"UTF-8")).decode("utf-8")
+            if statusLine:
+                printStatusLine( nofdocs)
             print( result)
-            content = readChunkStdin( chunkSize)
-            printContent( content)
+            content, nofdocs = readChunkStdin( chunkSize)
+            if verbose:
+                printContent( content)
     else:
         processStdin()
 
