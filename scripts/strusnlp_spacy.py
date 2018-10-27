@@ -124,7 +124,8 @@ def printStackElements( stk):
                 hasEntitiesOnly = False
     if hasVerb or hasEntitiesOnly:
         for elem in stk:
-            utype = unifyType( elem.nlptag)
+            type = elem.nlptag
+            utype = unifyType( type)
             maptype = mapTag( type)
             if utype == prev:
                 type = "_"
