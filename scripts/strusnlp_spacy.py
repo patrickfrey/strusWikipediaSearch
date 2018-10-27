@@ -16,17 +16,14 @@ import getopt
 import os
 import stat
 import subprocess
-from nltk.parse.dependencygraph import DependencyGraph
-from nltk.parse.malt import MaltParser
-from nltk.parse.stanford import StanfordParser
-from collections import defaultdict
+import collections
 import spacy
 import en_core_web_sm
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
         return "T!" # [delimiter] sentence delimiter
-    if tagname == "(" or tagname == ")" or tagname == "," or tagname == ":" or tagname == "#":
+    if tagname == "-LRB-" or tagname == "-RRB-" or tagname == "," or tagname == ":" or tagname == "#":
         return "P!" # [part delimiter] delimiter
     if tagname == "CC":
         return "" # coordinating conjunction
@@ -64,6 +61,10 @@ def mapTagValue( tagname):
         return "A" # [adjective/adverb] adverb or comparative or superlative
     if tagname == "RP":
         return "_" # [particle] particle
+    if tagname == "HYPH":
+        return "" # empty
+    if tagname == "AFX":
+        return "A" # empty
     if tagname == "$" or tagname == "S" or tagname == "SBAR" or tagname == "SBARQ" or tagname == "SINV" or tagname == "SQ":
         return "" # [] declarative clause, question, etc.
     if tagname == "SYM":
@@ -76,16 +77,22 @@ def mapTagValue( tagname):
         return "" # exclamation
     if tagname == "''":
         return "" # empty
+    if tagname == "``":
+        return "" # empty
+    if tagname == "NFP":
+        return "" # empty
     if tagname == "":
+        return "" # empty
+    if tagname == "_SP":
         return "" # empty
     sys.stderr.write( "unknown NLP tag %s\n" % tagname)
     return "?"
 
 tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
- "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP",
+ "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP", "HYPH", "NFP",
  "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "(", ")", "$", "#" , "UH", "", "''"
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "-LRB-", "-RRB-", "$", "#" , "UH", "", "''", "``", "_SP"
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
@@ -98,26 +105,30 @@ def mapTag( tagname):
         sys.stderr.write( "unknown NLP tag %s\n" % tagname)
         return "?"
 
+def unifyType( type):
+    if type == "NNPS":
+        return "NNP"
+    if type == "NNS":
+        return "NN"
+    return type
 
 def printStackElements( stk):
     rt = ""
     prev = ""
     mapprev = ""
     doPrintMapType = 0
-    if len(stk) > 1:
-        doPrintMapType = 1
-        if len(stk) <= 3:
-            for elem in stk:
-                if elem[1][0:3] != "NNP":
-                    doPrintMapType = 0
-    if doPrintMapType:
+    hasVerb = False
+    hasEntitiesOnly = True
+    for elem in stk:
+        if elem.nlptag:
+            if elem.nlptag[0] == 'V':
+                hasVerb = True
+            elif elem.nlptag[:3] != 'NNP':
+                hasEntitiesOnly = False
+    if hasVerb or hasEntitiesOnly:
         for elem in stk:
-            type = elem[1]
-            maptype = elem[0]
-            if type == "NNPS":
-                type = "NNP"
-            if type == "NNS":
-                type = "NN"
+            type = unifyType( elem.nlptag)
+            maptype = mapTag( type)
             if type == prev:
                 type = "_"
                 maptype = "_";
@@ -126,45 +137,26 @@ def printStackElements( stk):
             else:
                 prev = type
                 mapprev = maptype
-            rt += maptype + "\t" + type + "\t" + elem[2] + "\n"
+            rt += maptype + "\t" + type + "\t" + elem.role + "\t" + elem.value + "\n"
     else:
         for elem in stk:
-            rt += "\t" + elem[1] + "\t" + elem[2] + "\n"
+            type = unifyType( elem.nlptag)
+            rt += "\t" + type + "\t\t" + elem.value + "\n"
     return rt
 
-def isDelimiter( tagname):
-    if tagname == "." or tagname == ";" or tagname == ":":
-        return True
-    return False
-
-# maltParser = MaltParser( "/etc/nltk/maltparser-1.9.1/", "/etc/nltk/maltparser-1.9.1/resources/engmalt.linear-1.7.mco")
 spacy_nlp = en_core_web_sm.load()
-
-def printTree( text):
-#    global maltParser
-    tg = spacy_nlp( text)
-    for node in tg:
-        print( "%s %s %s" % (node.dep_, node.tag_, node))
+NlpToken = collections.namedtuple('NlpToken', ['strustag','nlptag','role', 'value'])
 
 def tagContent( text):
-    printTree( text)
-    text = re.sub( r"""[\s\`\'\"]+""", " ", text)
-    tokens = nltk.word_tokenize( text)
-    tagged = nltk.pos_tag( tokens)
-    stk = []
     rt = ""
-    for tt in tagged:
-        type = tt[1]
-        val = tt[0]
-        maptype = mapTag( type)
-        if isDelimiter( type):
+    stk = []
+    tg = spacy_nlp( text)
+    for node in tg:
+        value = str(node)
+        stk.append( NlpToken( "", node.tag_, node.dep_, value))
+        if node.dep_ == "punct" and value in [';','.']:
             rt += printStackElements( stk)
             stk = []
-            stk.append( [maptype, type, val] )
-            rt += printStackElements( stk)
-            stk = []
-        else:
-            stk.append( [maptype, type, val] )
     rt += printStackElements( stk)
     return rt
 
@@ -188,14 +180,14 @@ def printOutput( filename, result):
     print( "%s" % result)
 
 def printUsage():
-    print( "%s [-h] [-V] [-C <chunksize> ]" % __file__)
+    print( "%s [-h|--help] [-V|--verbose] [-S|--status] [-C <chunksize> ]" % __file__)
 
 def parseProgramArguments( argv):
     rt = {}
     try:
         opts, args = getopt.getopt( argv,"hVSC:",["chunksize=","status","verbose"])
         for opt, arg in opts:
-            if opt == '-h':
+            if opt in ("-h", "--help"):
                 printUsage()
                 sys.exit()
             elif opt in ("-C", "--chunksize"):
