@@ -1,12 +1,5 @@
 #!/usr/bin/python3
 #
-# Do taggig of noun phrases
-# Read input from stdin
-#
-# This script requires resources to be installed:
-#    $ sudo mkdir /usr/share/nltk_data
-#    $ sudo python -m nltk.downloader -d /usr/share/nltk_data all
-#
 import nltk
 from pprint import pprint
 import sys
@@ -172,8 +165,8 @@ def printStatusLine( nofdocs):
     global doccnt
     global startTime
     doccnt += nofdocs
-    elapsedTime = (time.time() - startTime) / doccnt
-    timeString = "%.3f" % (elapsedTime*1000.0)
+    elapsedTime = (time.time() - startTime)
+    timeString = "%.3f seconds" % (elapsedTime*1000000.0)
     sys.stderr.write( "\rprocessed %d documents  (%s)          " % (doccnt,timeString))
 
 def printOutput( filename, result):
