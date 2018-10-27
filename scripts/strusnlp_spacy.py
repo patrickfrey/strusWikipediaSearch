@@ -49,6 +49,8 @@ def mapTagValue( tagname):
         return "N" # noun singular or plural
     if tagname == "NNP" or tagname == "NNPS":
         return "E" # [entity] proper noun, singular or plural
+    if tagname == "ADD":
+        return "U" # [URI]
     if tagname == "PDT":
         return "m" # [modal] pre determiner
     if tagname == "POS":
@@ -83,6 +85,8 @@ def mapTagValue( tagname):
         return "" # empty
     if tagname == "":
         return "" # empty
+    if tagname == "XX":
+        return "" # empty
     if tagname == "_SP":
         return "" # empty
     sys.stderr.write( "unknown NLP tag %s\n" % tagname)
@@ -90,9 +94,9 @@ def mapTagValue( tagname):
 
 tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
- "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP", "HYPH", "NFP",
- "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB",
- "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "-LRB-", "-RRB-", "$", "#" , "UH", "", "''", "``", "_SP"
+ "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP", "HYPH", "NFP", "AFX",
+ "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB", "ADD",
+ "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "-LRB-", "-RRB-", "$", "#" , "UH", "", "''", "``", "XX", "_SP"
 ]
 
 tgmap = {key: mapTagValue(key) for key in tgmaplist}
