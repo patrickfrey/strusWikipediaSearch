@@ -16,12 +16,18 @@ import getopt
 import os
 import stat
 import subprocess
+from nltk.parse.dependencygraph import DependencyGraph
+from nltk.parse.malt import MaltParser
+from nltk.parse.stanford import StanfordParser
+from collections import defaultdict
+import spacy
+import en_core_web_sm
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
-        return "T" # [delimiter] sentence delimiter
+        return "T!" # [delimiter] sentence delimiter
     if tagname == "(" or tagname == ")" or tagname == "," or tagname == ":" or tagname == "#":
-        return "P" # [part delimiter] delimiter
+        return "P!" # [part delimiter] delimiter
     if tagname == "CC":
         return "" # coordinating conjunction
     if tagname == "CD":
@@ -96,6 +102,7 @@ def mapTag( tagname):
 def printStackElements( stk):
     rt = ""
     prev = ""
+    mapprev = ""
     doPrintMapType = 0
     if len(stk) > 1:
         doPrintMapType = 1
@@ -114,8 +121,11 @@ def printStackElements( stk):
             if type == prev:
                 type = "_"
                 maptype = "_";
+            elif maptype == mapprev and maptype[-1:] == '!':
+                maptype = '_'
             else:
                 prev = type
+                mapprev = maptype
             rt += maptype + "\t" + type + "\t" + elem[2] + "\n"
     else:
         for elem in stk:
@@ -127,7 +137,20 @@ def isDelimiter( tagname):
         return True
     return False
 
+# maltParser = MaltParser( "/etc/nltk/maltparser-1.9.1/", "/etc/nltk/maltparser-1.9.1/resources/engmalt.linear-1.7.mco")
+spacy_nlp = en_core_web_sm.load()
+
+def printTree( text):
+#    global maltParser
+    sentences = nltk.sent_tokenize( text)
+    for se in sentences:
+        print( "-----\n")
+        tg = spacy_nlp( se)
+        for node in tg:
+            print( "%s %s %s" % (node.dep_, node.tag_, node))
+
 def tagContent( text):
+    printTree( text)
     text = re.sub( r"""[\s\`\'\"]+""", " ", text)
     tokens = nltk.word_tokenize( text)
     tagged = nltk.pos_tag( tokens)
@@ -164,11 +187,11 @@ def printOutput( filename, result):
     global statusLine
     if statusLine:
         printStatusLine( 1)
-    print( "#FILE#%s\n" % filename)
+    print( "#FILE#%s" % filename)
     print( "%s" % result)
 
 def printUsage():
-    print( "%s [-h] [-V] [-C <chunksize> ]\n" % __file__)
+    print( "%s [-h] [-V] [-C <chunksize> ]" % __file__)
 
 def parseProgramArguments( argv):
     rt = {}
@@ -231,7 +254,7 @@ def readChunkStdin( nofFiles):
             ii += 1
             if ii > nofFiles:
                 linebuf = line
-                return content, ii
+                return content, ii-1
         content += line
     return content, ii
 

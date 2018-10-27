@@ -17,6 +17,17 @@ each of these flags toggled to YES another section.
 
 # Strus prerequisite packages to install before
 	strusBase strus strusAnalyzer strusTrace strusModule strusRpc  
+## Python packages
+	nltk
+	numpy
+	setuptools
+	spacy (also available with Cuda support: https://spacy.io/usage)
+		pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz
+
+### NLTK resources
+	Malt Parser (http://www.maltparser.org/download.html)
+	Malt parser model engmalt.linear (http://www.maltparser.org/mco/english_parser/engmalt.linear-1.7.mco)
+	- (See http://www.maltparser.org/mco/english_parser/engmalt.html)
 
 # Configure build and install strus prerequisite packages with GNU C/C++
 	for strusprj in strusBase strus strusAnalyzer strusTrace \
