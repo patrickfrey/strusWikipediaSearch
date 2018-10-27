@@ -124,15 +124,15 @@ def printStackElements( stk):
                 hasEntitiesOnly = False
     if hasVerb or hasEntitiesOnly:
         for elem in stk:
-            type = unifyType( elem.nlptag)
+            utype = unifyType( elem.nlptag)
             maptype = mapTag( type)
-            if type == prev:
+            if utype == prev:
                 type = "_"
                 maptype = "_";
             elif maptype == mapprev and maptype[-1:] == '!':
                 maptype = '_'
             else:
-                prev = type
+                prev = utype
                 mapprev = maptype
             rt += maptype + "\t" + type + "\t" + elem.role + "\t" + elem.value + "\n"
     else:
@@ -166,7 +166,7 @@ def printStatusLine( nofdocs):
     global startTime
     doccnt += nofdocs
     elapsedTime = (time.time() - startTime)
-    timeString = "%.3f seconds" % (elapsedTime*1000000.0)
+    timeString = "%.3f seconds" % elapsedTime
     sys.stderr.write( "\rprocessed %d documents  (%s)          " % (doccnt,timeString))
 
 def printOutput( filename, result):
