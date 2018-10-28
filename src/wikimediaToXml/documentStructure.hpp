@@ -70,6 +70,7 @@ public:
 			WebLink,
 			Markup,
 			Text,
+			Break,
 			Char,
 			BibRef,
 			NoWiki,
@@ -125,6 +126,7 @@ public:
 			"WebLink",
 			"Markup",
 			"Text",
+			"Break",
 			"Char",
 			"BibRef",
 			"NoWiki",
@@ -208,6 +210,7 @@ public:
 			StructNone/*WebLink*/,
 			StructNone/*Markup*/,
 			StructNone/*Text*/,
+			StructNone/*Break*/,
 			StructNone/*Char*/,
 			StructNone/*BibRef*/,
 			StructNone/*NoWiki*/,
@@ -265,6 +268,7 @@ public:
 			WebLink/*WebLink*/,
 			Markup/*Markup*/,
 			Text/*Text*/,
+			Break/*Break*/,
 			Char/*Char*/,
 			BibRef/*BibRef*/,
 			NoWiki/*NoWiki*/,
@@ -385,6 +389,11 @@ public:
 	void addBibRef( const std::string& text)
 	{
 		addSingleItem( Paragraph::BibRef, "", text, false/*joinText*/);
+	}
+	void addBreak()
+	{
+		addSingleItem( Paragraph::Break, "", "", false/*joinText*/);
+		addText( "\n");
 	}
 	void openRef()
 	{

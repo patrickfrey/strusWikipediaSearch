@@ -188,6 +188,7 @@ void DocumentStructure::checkStartEndSectionBalance( const std::vector<Paragraph
 			case Paragraph::WebLink:
 			case Paragraph::Markup:
 			case Paragraph::Text:
+			case Paragraph::Break:
 			case Paragraph::Char:
 			case Paragraph::BibRef:
 			case Paragraph::NoWiki:
@@ -1252,6 +1253,8 @@ void DocumentStructure::closeWebLink()
 				}
 			}
 		}
+		else if (para.type() == Paragraph::Break)
+		{}
 		else if (para.type() == Paragraph::Char)
 		{}
 		else if (para.type() == Paragraph::Math)
@@ -1882,6 +1885,9 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::Text:
 				printTagContent( output, rt, "text", pi->id(), pi->text());
+				break;
+			case Paragraph::Break:
+				printTagContent( output, rt, "br", "", "");
 				break;
 			case Paragraph::Char:
 				printTagContent( output, rt, "char", pi->id(), pi->text());

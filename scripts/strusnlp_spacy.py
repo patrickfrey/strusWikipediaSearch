@@ -109,7 +109,51 @@ def unifyType( type):
         return "NN"
     return type
 
-def printStackElements( stk):
+def getSentenceSubjects( stk):
+    rt = []
+    nnp = ""
+    doShift = False
+    doShiftNext = False
+    hasVerb = False
+    for elem in stk:
+        if elem.nlptag[0] == 'V':
+            hasVerb = True
+    if not hasVerb:
+        return []
+    for elem in stk:
+        if elem.nlptag[:3] == 'NNP':
+            if nnp:
+                nnp += " "
+            nnp += elem.value
+            if elem.role == "nsubj":
+                doShift = True
+            if elem.role == "conj" and doShiftNext:
+                doShift = True
+        else:
+            if elem.role == "cc" and elem.nlptag == "CC":
+                doShiftNext = True
+            else:
+                doShiftNext = False
+            if doShift:
+                if nnp:
+                    rt.append( nnp)
+                    nnp = ""
+                doShift = False
+    return rt
+
+def findBestMatch( name, subjectMap):
+    rt = None
+    maxwe = 0
+    for kk in subjectMap:
+        if kk.find( name ) > 0:
+           if name == kk or kk.find( name + " " ) > 0 or kk.find( " " + name ):
+               we = subjectMap[ kk]
+               if we > maxwe:
+                   maxwe = we
+                   rt = kk
+    return rt
+
+def printSentence( stk, subjectMap, last_subjects):
     rt = ""
     prev = ""
     mapprev = ""
@@ -122,8 +166,18 @@ def printStackElements( stk):
                 hasVerb = True
             elif elem.nlptag[:3] != 'NNP':
                 hasEntitiesOnly = False
-    if hasVerb or hasEntitiesOnly:
+
+    if hasEntitiesOnly:
         for elem in stk:
+            rt += "E\t" + elem.nlptag + "\t\t" + elem.value + "\n"
+    elif hasVerb:
+        for eidx,elem in enumerate(stk):
+            refval = ""
+            if elem.nlptag[:3] == "NNP" and elem.role = "nsubj":
+                if eidx < len(stk) and stk[eidx+1].nlptag[:3] != "NNP":
+                    refval = findBestMatch( elem.value, subjectMap)
+            elif elem.nlptag[:3] == "PRP":
+                 !!!! HIE WIIITER
             type = elem.nlptag
             utype = unifyType( type)
             maptype = mapTag( type)
@@ -138,24 +192,37 @@ def printStackElements( stk):
             rt += maptype + "\t" + type + "\t" + elem.role + "\t" + elem.value + "\n"
     else:
         for elem in stk:
-            type = unifyType( elem.nlptag)
-            rt += "\t" + type + "\t\t" + elem.value + "\n"
+            rt += "\t" + elem.nlptag + "\t\t" + elem.value + "\n"
     return rt
 
 spacy_nlp = en_core_web_sm.load()
-NlpToken = collections.namedtuple('NlpToken', ['strustag','nlptag','role', 'value'])
+NlpToken = collections.namedtuple('NlpToken', ['strustag','nlptag','role', 'value', 'ref'])
 
-def tagContent( text):
+def tagDocument( text):
     rt = ""
     stk = []
+    last_subjects = []
+    subjectMap = {}
     tg = spacy_nlp( text)
     for node in tg:
         value = str(node)
-        stk.append( NlpToken( "", node.tag_, node.dep_, value))
+        stk.append( NlpToken( "", node.tag_, node.dep_, value, ""))
         if node.dep_ == "punct" and value in [';','.']:
-            rt += printStackElements( stk)
+            last_subjects = getSentenceSubjects( stk)
+            for sbj in last_subjects:
+                if sbj in subjectMap:
+                    subjectMap[ sbj] += 1
+                else:
+                    subjectMap[ sbj] = 1
+            rt += printSentence( stk, subjectMap, last_subjects)
             stk = []
-    rt += printStackElements( stk)
+    last_subjects = getSentenceSubjects( stk)
+    for sbj in last_subjects:
+        if sbj in subjectMap:
+            subjectMap[ sbj] += 1
+        else:
+            subjectMap[ sbj] = 1
+    rt += printSentence( stk, subjectMap, last_subjects)
     return rt
 
 doccnt = 0
@@ -210,17 +277,14 @@ def processStdin():
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
-                result += tagContent( content + "\n")
+                result += tagDocument( content)
                 printOutput( filename, result)
                 result = ""
             filename = line[6:]
         else:
             content += line
-            if line == ".\n" or line == ";\n" or line == "\n":
-                result += tagContent( content)
-                content = ""
     if content:
-        result += tagContent( content + "\n")
+        result += tagDocument( content)
     if filename and result:
         printOutput( filename, result)
 

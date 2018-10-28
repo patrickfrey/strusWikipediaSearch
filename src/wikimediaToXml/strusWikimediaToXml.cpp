@@ -160,7 +160,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				break;
 			case strus::WikimediaLexem::EndOfLine:
 				doc.closeOpenEolnItem();
-				doc.addText( "\n");
+				doc.addBreak();
 				break;
 			case strus::WikimediaLexem::QuotationMarker:
 				doc.addQuotationMarker();
