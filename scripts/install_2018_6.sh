@@ -44,6 +44,6 @@ done
 
 cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp_tagger.py -C 1 > /srv/wikipedia/tag/0000.txt
 DID=0000
-strusPosTagger -o odir -y A:A -y E:E -y N:N -y V:V -y W:W -y X:X -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//attr' -E '//attr~' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//quot' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -D '; ' /srv/wikipedia/doc/$DID /srv/wikipedia/pos/$DID.txt
+strusPosTagger -o odir -y A:A -y E:E -y N:N -y V:V -y W:W -y X:X -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//attr' -E '//attr~' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//quot' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' -D '; ' /srv/wikipedia/doc/$DID /srv/wikipedia/pos/$DID.txt
 
 strusPosTagger -o odir -y A:A -y E:E -y N:N -y V:V -y W:W -y X:X -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//attr' -E '//attr~' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//quot' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -D '; ' Analysis.xml t0000.txt

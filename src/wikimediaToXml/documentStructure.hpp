@@ -350,8 +350,13 @@ public:
 	{
 		return m_fileId;
 	}
+	Paragraph::StructType backStructType() const;
 	Paragraph::StructType currentStructType() const;
 	int currentStructIndex() const;
+	bool isParagraphType( const Paragraph::Type& type)
+	{
+		return !m_parar.empty() && m_parar.back().type() == type;
+	}
 
 	void setTitle( const std::string& text);
 
@@ -392,8 +397,21 @@ public:
 	}
 	void addBreak()
 	{
-		addSingleItem( Paragraph::Break, "", "", false/*joinText*/);
-		addText( "\n");
+		if (isParagraphType( Paragraph::Break)
+		||  isParagraphType( Paragraph::HeadingEnd)
+		||  isParagraphType( Paragraph::CitationEnd)
+		||  isParagraphType( Paragraph::TableEnd))
+		{}
+		else if (backStructType() != Paragraph::StructNone)
+		{}
+		else if (isParagraphType( Paragraph::Text))
+		{
+			addText( "\n");
+		}
+		else
+		{
+			addSingleItem( Paragraph::Break, "", "", false/*joinText*/);
+		}
 	}
 	void openRef()
 	{
@@ -542,7 +560,7 @@ public:
 	}
 	bool closeOpenEmptyStruct( const Paragraph::Type& type)
 	{
-		if (currentStructType() == Paragraph::structType(type) && m_parar.back().type() == type)
+		if (currentStructType() == Paragraph::structType(type) && !m_parar.empty() && m_parar.back().type() == type)
 		{
 			m_parar.pop_back();
 			m_structStack.pop_back();

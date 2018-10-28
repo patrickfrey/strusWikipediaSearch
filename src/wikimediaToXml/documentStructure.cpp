@@ -1355,6 +1355,12 @@ Paragraph::StructType DocumentStructure::currentStructType() const
 	return m_parar[ m_structStack.back().start].structType();
 }
 
+Paragraph::StructType DocumentStructure::backStructType() const
+{
+	if (m_structStack.empty()) return Paragraph::StructNone;
+	return m_parar.back().structType();
+}
+
 int DocumentStructure::currentStructIndex() const
 {
 	if (m_structStack.empty()) return 0;
