@@ -20,6 +20,7 @@ each of these flags toggled to YES another section.
 ## Python packages
 	nltk
 	numpy
+	recordtype
 	setuptools
 	spacy (also available with Cuda support: https://spacy.io/usage)
 		pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz
@@ -78,4 +79,5 @@ each of these flags toggled to YES another section.
 
 # Install
 	make install
+
 

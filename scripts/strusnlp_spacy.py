@@ -9,9 +9,13 @@ import getopt
 import os
 import stat
 import subprocess
-import collections
+from recordtype import recordtype
 import spacy
 import en_core_web_sm
+
+spacy_nlp = en_core_web_sm.load()
+NlpToken = recordtype('NlpToken', ['strustag','strusrole','nlptag','nlprole', 'value', 'ref'])
+Subject = recordtype('Subject', ['value', 'prp', 'occurrence', 'ref'])
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
@@ -109,53 +113,10 @@ def unifyType( type):
         return "NN"
     return type
 
-def getSentenceSubjects( stk):
+def tagSentenceStrusTags( stk):
     rt = []
-    nnp = []
-    doShift = False
-    doShiftNext = False
-    hasVerb = False
-    for elem in stk:
-        if elem.nlptag and elem.nlptag[0] == 'V':
-            hasVerb = True
-    if not hasVerb:
-        return []
-    for elem in stk:
-        if elem.nlptag[:3] == 'NNP':
-            nnp.append( elem.value)
-            if elem.role == "nsubj":
-                doShift = True
-            if elem.role == "conj" and doShiftNext:
-                doShift = True
-        else:
-            if elem.role == "cc" and elem.nlptag == "CC":
-                doShiftNext = True
-            else:
-                doShiftNext = False
-            if doShift:
-                if nnp:
-                    rt.append( nnp)
-                    nnp = []
-                doShift = False
-    return rt
-
-def findBestMatch( name, subjectMap):
-    rt = None
-    maxwe = 0
-    for kk in subjectMap:
-        if kk.find( name ) > 0:
-           if name == kk or kk.find( name + " " ) > 0 or kk.find( " " + name ):
-               we = subjectMap[ kk]
-               if we > maxwe:
-                   maxwe = we
-                   rt = kk
-    return rt
-
-def printSentence( stk, subjectMap, last_subjects):
-    rt = ""
     prev = ""
     mapprev = ""
-    doPrintMapType = 0
     hasVerb = False
     hasEntitiesOnly = True
     for elem in stk:
@@ -167,14 +128,11 @@ def printSentence( stk, subjectMap, last_subjects):
 
     if hasEntitiesOnly:
         for elem in stk:
-            rt += "E\t" + elem.nlptag + "\t\t" + elem.value + "\n"
+            elem.strustag = "N"
+            rt.append( elem)
+        return rt
     elif hasVerb:
         for eidx,elem in enumerate(stk):
-            refval = ""
-            if elem.nlptag[:3] == "NNP" and elem.role == "nsubj":
-                if eidx < len(stk) and stk[eidx+1].nlptag[:3] != "NNP":
-                    refval = findBestMatch( elem.value, subjectMap)
-
             type = elem.nlptag
             utype = unifyType( type)
             maptype = mapTag( type)
@@ -186,16 +144,63 @@ def printSentence( stk, subjectMap, last_subjects):
             else:
                 prev = utype
                 mapprev = maptype
-            rt += maptype + "\t" + type + "\t" + elem.role + "\t" + elem.value + "\n"
+            elem.strustag = maptype
+            elem.nlptag = type
+            rt.append( elem)
+        return rt
     else:
-        for elem in stk:
-            rt += "\t" + elem.nlptag + "\t\t" + elem.value + "\n"
+        return stk
+
+def tagSentenceSubjects( stk):
+    rt = []
+    doShift = False
+    doShiftNext = False
+    hasVerb = False
+    for elem in stk:
+        if elem.nlptag and elem.nlptag[0] == 'V':
+            hasVerb = True
+    if not hasVerb:
+        return stk
+    subjindices = []
+    startidx = -1
+    for eidx,elem in enumerate( stk):
+        if elem.nlptag[:3] == 'NNP':
+            startidx = eidx
+            if elem.nlprole == "nsubj":
+                doShift = True
+            if elem.nlprole == "conj" and doShiftNext:
+                doShift = True
+        else:
+            if elem.nlprole == "cc" and elem.nlptag == "CC":
+                doShiftNext = True
+            else:
+                doShiftNext = False
+            if doShift:
+                if startidx > 0:
+                    subjindices.append( startidx)
+                    startidx = -1
+                doShift = False
+    follow = False
+    for eidx,elem in enumerate( stk):
+        if eidx in subjindices:
+            elem.strusrole = "S"
+            follow = True
+        elif follow:
+            if elem.strustag == '_':
+                elem.strusrole = "_"
+        else:
+            follow = False
+        rt.append( elem)
     return rt
 
-spacy_nlp = en_core_web_sm.load()
-NlpToken = collections.namedtuple('NlpToken', ['strustag','nlptag','role', 'value', 'ref'])
-Sentence = collections.namedtuple('Sentence', ['tokens','subjects'])
-Subject = collections.namedtuple('Subject', ['value', 'prpcandidates', 'occurrence', 'ref'])
+def enrichSentenceTokens( stk):
+    return tagSentenceSubjects( tagSentenceStrusTags( stk))
+
+def printSentence( stk):
+    rt = ""
+    for elem in stk:
+        rt += "%s\t%s\t%s\n" ((elem.strustag or ""), (elem.nlptag or ""), (elem.value or ""))
+    return rt
 
 # return Sentence[]
 def getDocumentSentences( text):
@@ -205,13 +210,12 @@ def getDocumentSentences( text):
     tg = spacy_nlp( text)
     for node in tg:
         value = str(node)
-        tokens.append( NlpToken( "", node.tag_, node.dep_, value, ""))
+        tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
         if node.dep_ == "punct" and value in [';','.']:
-            last_subjects = getSentenceSubjects( tokens)
-            sentences.append( Sentence( tokens, last_subjects))
+            sentences.append( enrichSentenceTokens( tokens))
             tokens = []
     last_subjects = getSentenceSubjects( tokens)
-    sentences.append( Sentence( tokens, last_subjects))
+    sentences.append( enrichSentenceTokens( tokens))
     return sentences
 
 
@@ -236,7 +240,7 @@ def matchName( obj, candidate):
         return False
     return True
 
-# param sentences Sentence[]
+# param sentences NlpToken[][]
 # return Subject[]
 def getDocumentSubjects( title, sentences):
     rt = {}
@@ -245,19 +249,40 @@ def getDocumentSubjects( title, sentences):
     else:
         titlesubject = title
     sidx = 0
-    while sidx < len(sentences):
-        
+    lastSubject = None
+    sentSubjects = []
+    lastSentSubjects = []
+    for sent in sentences:
+        for tok in sent:
+            if tok.strusrole == 'S':
+                if lastSubject:
+                    sentSubjects.append( lastSubject)
+                lastSubject = [tok.value]
+            elif tok.strusrole == '_' and lastSubject:
+                sentSubjects.append( tok.value)
+            elif lastSubject:
+                sentSubjects.append( lastSubject)
+                lastSubject = None
+            if tok.nlprole[0:3] == "PRP":
+                if lastSentSubjects in rt:
+                    rt[ lastSentSubjects].prp.append( tok.value)
+                else:
+                    rt[ lastSentSubjects] = Subject( lastSentSubjects, [], 1, None)
+
+        if lastSubject:
+            sentSubjects.append( lastSubject)
+        lastSentSubjects = sentSubjects
     return rt
 
 def tagDocument( title, text):
     rt = ""
     sentences = getDocumentSentences( text)
-    subjects = getDocumentSubjects( title, text)
+    subjects = getDocumentSubjects( title, sentences)
     for sent in sentences:
         rt += printSentence( sent.tokens, subjectMap, sent.subjects)
     return rt
 
-def substPlaceholder( filename)
+def substFilename( filename):
     rt = ""
     fidx = 0
     while fidx < len(filename):
@@ -269,10 +294,10 @@ def substPlaceholder( filename)
             fidx += 1
     return rt
 
-def getTitleFromFileName( filename)
-    base=os.path.basename('/root/dir/sub/file.ext')
-    fnam = os.path.splitext( base)[0])
-    return substPlaceholder( filename)
+def getTitleFromFileName( filename):
+    base = os.path.basename( filename)
+    fnam = os.path.splitext( base)[0]
+    return substFilename( fnam)
 
 doccnt = 0
 statusLine = False
@@ -327,6 +352,7 @@ def processStdin():
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
                 title = getTitleFromFileName( filename)
+                sys.stderr.write( "title %s\n", title)
                 result += tagDocument( title, content)
                 printOutput( filename, result)
                 result = ""

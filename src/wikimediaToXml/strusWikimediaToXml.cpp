@@ -63,10 +63,10 @@ static std::string attributesToString( const strus::WikimediaLexem::AttributeMap
 	return out.str();
 }
 
-static std::string getLinkDomainPrefix( const std::string& lnk)
+static std::string getLinkDomainPrefix( const std::string& lnk, int maxsize)
 {
 	char const* si = lnk.c_str();
-	while ((*si|32) >= 'a' && (*si|32) <= 'z') ++si;
+	while (maxsize > 0 && (*si|32) >= 'a' && (*si|32) <= 'z') {++si;--maxsize;}
 	if (*si == ':')
 	{
 		return strus::string_conv::tolower( lnk.c_str(), si - lnk.c_str());
@@ -215,7 +215,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				std::pair<std::string,std::string> lnk = strus::LinkMap::getLinkParts( lexem.value);
 				if (g_linkmap)
 				{
-					std::string prefix = getLinkDomainPrefix( lnk.first);
+					std::string prefix = getLinkDomainPrefix( lnk.first, 12);
 					if (strus::caseInsensitiveEquals( prefix, "wikipedia"))
 					{
 						lnk.first = strus::string_conv::trim( lnk.first.c_str() + prefix.size()+1);

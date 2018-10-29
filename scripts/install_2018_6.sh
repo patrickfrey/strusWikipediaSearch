@@ -27,7 +27,7 @@ wget http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.
 bunzip2 enwiki-latest-pages-articles.xml.bz2
 
 mkdir -p xml
-strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml xml
+strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml
 strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
 
 for aa in 0 1 2 3 4 5 6 7 8 9; do
