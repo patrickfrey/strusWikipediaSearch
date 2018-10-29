@@ -111,20 +111,18 @@ def unifyType( type):
 
 def getSentenceSubjects( stk):
     rt = []
-    nnp = ""
+    nnp = []
     doShift = False
     doShiftNext = False
     hasVerb = False
     for elem in stk:
-        if elem.nlptag[0] == 'V':
+        if elem.nlptag and elem.nlptag[0] == 'V':
             hasVerb = True
     if not hasVerb:
         return []
     for elem in stk:
         if elem.nlptag[:3] == 'NNP':
-            if nnp:
-                nnp += " "
-            nnp += elem.value
+            nnp.append( elem.value)
             if elem.role == "nsubj":
                 doShift = True
             if elem.role == "conj" and doShiftNext:
@@ -137,7 +135,7 @@ def getSentenceSubjects( stk):
             if doShift:
                 if nnp:
                     rt.append( nnp)
-                    nnp = ""
+                    nnp = []
                 doShift = False
     return rt
 
@@ -173,11 +171,10 @@ def printSentence( stk, subjectMap, last_subjects):
     elif hasVerb:
         for eidx,elem in enumerate(stk):
             refval = ""
-            if elem.nlptag[:3] == "NNP" and elem.role = "nsubj":
+            if elem.nlptag[:3] == "NNP" and elem.role == "nsubj":
                 if eidx < len(stk) and stk[eidx+1].nlptag[:3] != "NNP":
                     refval = findBestMatch( elem.value, subjectMap)
-            elif elem.nlptag[:3] == "PRP":
-                 !!!! HIE WIIITER
+
             type = elem.nlptag
             utype = unifyType( type)
             maptype = mapTag( type)
@@ -197,33 +194,85 @@ def printSentence( stk, subjectMap, last_subjects):
 
 spacy_nlp = en_core_web_sm.load()
 NlpToken = collections.namedtuple('NlpToken', ['strustag','nlptag','role', 'value', 'ref'])
+Sentence = collections.namedtuple('Sentence', ['tokens','subjects'])
+Subject = collections.namedtuple('Subject', ['value', 'prpcandidates', 'occurrence', 'ref'])
 
-def tagDocument( text):
-    rt = ""
-    stk = []
+# return Sentence[]
+def getDocumentSentences( text):
+    tokens = []
+    sentences = []
     last_subjects = []
-    subjectMap = {}
     tg = spacy_nlp( text)
     for node in tg:
         value = str(node)
-        stk.append( NlpToken( "", node.tag_, node.dep_, value, ""))
+        tokens.append( NlpToken( "", node.tag_, node.dep_, value, ""))
         if node.dep_ == "punct" and value in [';','.']:
-            last_subjects = getSentenceSubjects( stk)
-            for sbj in last_subjects:
-                if sbj in subjectMap:
-                    subjectMap[ sbj] += 1
-                else:
-                    subjectMap[ sbj] = 1
-            rt += printSentence( stk, subjectMap, last_subjects)
-            stk = []
-    last_subjects = getSentenceSubjects( stk)
-    for sbj in last_subjects:
-        if sbj in subjectMap:
-            subjectMap[ sbj] += 1
+            last_subjects = getSentenceSubjects( tokens)
+            sentences.append( Sentence( tokens, last_subjects))
+            tokens = []
+    last_subjects = getSentenceSubjects( tokens)
+    sentences.append( Sentence( tokens, last_subjects))
+    return sentences
+
+
+def matchName( obj, candidate):
+    cd = candidate
+    for nam in obj:
+        if nam[ -1:] == '.':
+            prefix = nam[ :-1]
+            found = False
+            for eidx,elem in enumerate(cd):
+                if len(elem) > len(prefix) and elem[ :len(prefix)] == prefix:
+                    del cd[ eidx]
+                    found = True
+                    break
+            if found:
+                continue
+        if nam in cd:
+            del cd[ cd.index( nam)]
         else:
-            subjectMap[ sbj] = 1
-    rt += printSentence( stk, subjectMap, last_subjects)
+            return False
+    else:
+        return False
+    return True
+
+# param sentences Sentence[]
+# return Subject[]
+def getDocumentSubjects( title, sentences):
+    rt = {}
+    if title.find( '('):
+        titlesubject = tile[ :title.index('(')].split()
+    else:
+        titlesubject = title
+    sidx = 0
+    while sidx < len(sentences):
+        
     return rt
+
+def tagDocument( title, text):
+    rt = ""
+    sentences = getDocumentSentences( text)
+    subjects = getDocumentSubjects( title, text)
+    for sent in sentences:
+        rt += printSentence( sent.tokens, subjectMap, sent.subjects)
+    return rt
+
+def substPlaceholder( filename)
+    rt = ""
+    fidx = 0
+    while fidx < len(filename):
+        if filename[ fidx] == '%':
+            rt += chr( int( filename[fidx+1:fidx+3], 16))
+            fidx += 3
+        else:
+            rt += filename[ fidx]
+            fidx += 1
+    return rt
+
+def getTitleFromFileName( filename)
+    base=os.path.basename('/root/dir/sub/file.ext')
+    fnam = os.path.splitext( base)[0])
+    return substPlaceholder( filename)
 
 doccnt = 0
 statusLine = False
@@ -277,14 +326,16 @@ def processStdin():
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
-                result += tagDocument( content)
+                title = getTitleFromFileName( filename)
+                result += tagDocument( title, content)
                 printOutput( filename, result)
                 result = ""
             filename = line[6:]
         else:
             content += line
     if content:
-        result += tagDocument( content)
+        title = getTitleFromFileName( filename)
+        result += tagDocument( title, content)
     if filename and result:
         printOutput( filename, result)
 

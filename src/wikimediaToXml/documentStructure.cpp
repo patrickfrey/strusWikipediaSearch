@@ -1815,9 +1815,36 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::PageLinkStart:
+			{
 				stk.push_back( Paragraph::StructPageLink);
-				printTagOpen( output, rt, "pagelink", pi->id(), pi->text());
+				char const* cc = std::strchr( pi->id().c_str(), ':');
+				std::string prefix;
+				if (cc) prefix.append( pi->id().c_str(), cc - pi->id().c_str());
+				if (strus::caseInsensitiveEquals( prefix, "file"))
+				{
+					printTagOpen( output, rt, "filelink", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), pi->text());
+				}
+				else if (strus::caseInsensitiveEquals( prefix, "image"))
+				{
+					printTagOpen( output, rt, "imglink", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), pi->text());
+				}
+				else if (strus::caseInsensitiveEquals( prefix, "category"))
+				{
+					if (strus::caseInsensitiveStartsWith( pi->text(), prefix))
+					{
+						printTagOpen( output, rt, "category", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), strus::string_conv::trim( pi->text().c_str() + prefix.size() + 1));
+					}
+					else
+					{
+						printTagOpen( output, rt, "category", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), pi->text());
+					}
+				}
+				else
+				{
+					printTagOpen( output, rt, "pagelink", pi->id(), pi->text());
+				}
 				break;
+			}
 			case Paragraph::PageLinkEnd:
 				stack_pop_back( stk, pi->typeName());
 				output.printCloseTag( rt);

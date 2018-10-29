@@ -2,11 +2,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <doc><docid>Tilt_tray_sorter</docid>
 <title>Tilt tray sorter</title>
-<pagelink id="Image:Tilt-tray.jpg"><text>Drawing shows how the automatic tilt-tray sorter uses a simple mechanism to benefit from </text>
+<imglink id="Tilt-tray.jpg"><text>Drawing shows how the automatic tilt-tray sorter uses a simple mechanism to benefit from </text>
   <pagelink id="gravity">gravity
     </pagelink>
   <text> to separate various products going around in a conveyor.</text>
-  </pagelink>
+  </imglink>
 <br/>
 <text>A </text>
 <entity id="3"><text>tilt-tray sorter</text>
@@ -33,8 +33,8 @@
   </heading>
 <mark>reflist</mark>
 <br/>
-<pagelink id="Category:Industrial machinery">Category:Industrial machinery
-  </pagelink>
+<category id="Industrial machinery">Industrial machinery
+  </category>
 <br/>
 <mark>industry-stub</mark></doc>
 
@@ -176,10 +176,10 @@ Strahlenberg accompanied Messerschmidt during several expeditions and later publ
   </pagelink>
 <text> in 1735. 
 </text>
-<pagelink id="File:Messer0002.jpg"><entity id="2"><text>Cypripedium macranthon</text>
+<filelink id="Messer0002.jpg"><entity id="2"><text>Cypripedium macranthon</text>
     </entity>
   <text>, described by Messerschmidt</text>
-  </pagelink>
+  </filelink>
 <br/>
 <text>Messerschmidt’s notes and collections were, to the degree they were preserved, kept at the </text>
 <pagelink id="Russian Academy of Sciences"><text>Academy of Sciences</text>
@@ -390,68 +390,68 @@ Strahlenberg accompanied Messerschmidt during several expeditions and later publ
 <br/>
 <mark>DEFAULTSORT:Messerschmidt, Daniel Gottlieb</mark>
 <br/>
-<pagelink id="Category:1685 births">Category:1685 births
-  </pagelink>
+<category id="1685 births">1685 births
+  </category>
 <br/>
-<pagelink id="Category:1735 deaths">Category:1735 deaths
-  </pagelink>
+<category id="1735 deaths">1735 deaths
+  </category>
 <br/>
-<pagelink id="Category:17th-century German people">Category:17th-century German people
-  </pagelink>
+<category id="17th-century German people">17th-century German people
+  </category>
 <br/>
-<pagelink id="Category:18th-century German people">Category:18th-century German people
-  </pagelink>
+<category id="18th-century German people">18th-century German people
+  </category>
 <br/>
-<pagelink id="Category:18th-century Russian people">Category:18th-century Russian people
-  </pagelink>
+<category id="18th-century Russian people">18th-century Russian people
+  </category>
 <br/>
-<pagelink id="Category:18th-century explorers">Category:18th-century explorers
-  </pagelink>
+<category id="18th-century explorers">18th-century explorers
+  </category>
 <br/>
-<pagelink id="Category:18th-century German scientists">Category:18th-century German scientists
-  </pagelink>
+<category id="18th-century German scientists">18th-century German scientists
+  </category>
 <br/>
-<pagelink id="Category:18th-century geographers">Category:18th-century geographers
-  </pagelink>
+<category id="18th-century geographers">18th-century geographers
+  </category>
 <br/>
-<pagelink id="Category:Imperial Russian explorers">Category:Imperial Russian explorers
-  </pagelink>
+<category id="Imperial Russian explorers">Imperial Russian explorers
+  </category>
 <br/>
-<pagelink id="Category:Imperial Russian scientists">Category:Imperial Russian scientists
-  </pagelink>
+<category id="Imperial Russian scientists">Imperial Russian scientists
+  </category>
 <br/>
-<pagelink id="Category:Imperial Russian botanists">Category:Imperial Russian botanists
-  </pagelink>
+<category id="Imperial Russian botanists">Imperial Russian botanists
+  </category>
 <br/>
-<pagelink id="Category:Botanists active in Siberia">Category:Botanists active in Siberia
-  </pagelink>
+<category id="Botanists active in Siberia">Botanists active in Siberia
+  </category>
 <br/>
-<pagelink id="Category:Imperial Russian geographers">Category:Imperial Russian geographers
-  </pagelink>
+<category id="Imperial Russian geographers">Imperial Russian geographers
+  </category>
 <br/>
-<pagelink id="Category:German explorers">Category:German explorers
-  </pagelink>
+<category id="German explorers">German explorers
+  </category>
 <br/>
-<pagelink id="Category:German scientists">Category:German scientists
-  </pagelink>
+<category id="German scientists">German scientists
+  </category>
 <br/>
-<pagelink id="Category:German botanists">Category:German botanists
-  </pagelink>
+<category id="German botanists">German botanists
+  </category>
 <br/>
-<pagelink id="Category:German geographers">Category:German geographers
-  </pagelink>
+<category id="German geographers">German geographers
+  </category>
 <br/>
-<pagelink id="Category:History of Siberia">Category:History of Siberia
-  </pagelink>
+<category id="History of Siberia">History of Siberia
+  </category>
 <br/>
-<pagelink id="Category:German emigrants to the Russian Empire">Category:German emigrants to the Russian Empire
-  </pagelink>
+<category id="German emigrants to the Russian Empire">German emigrants to the Russian Empire
+  </category>
 <br/>
-<pagelink id="Category:People from Gdańsk">Category:People from Gdańsk
-  </pagelink>
+<category id="People from Gdańsk">People from Gdańsk
+  </category>
 <br/>
-<pagelink id="Category:18th-century Russian scientists">Category:18th-century Russian scientists
-  </pagelink></doc>
+<category id="18th-century Russian scientists">18th-century Russian scientists
+  </category></doc>
 
 
 ## 0000/Deer_in_the_Works.xml
@@ -624,14 +624,14 @@ In 1980 the story was made into a short film with a running length of 25 minutes
 <br/>
 <mark>DEFAULTSORT:Deer In The Works</mark>
 <br/>
-<pagelink id="Category:Short stories by Kurt Vonnegut">Category:Short stories by Kurt Vonnegut
-  </pagelink>
+<category id="Short stories by Kurt Vonnegut">Short stories by Kurt Vonnegut
+  </category>
 <br/>
-<pagelink id="Category:1955 short stories">Category:1955 short stories
-  </pagelink>
+<category id="1955 short stories">1955 short stories
+  </category>
 <br/>
-<pagelink id="Category:Works originally published in Esquire (magazine)">Category:Works originally published in Esquire (magazine)
-  </pagelink>
+<category id="Works originally published in Esquire (magazine)">Works originally published in Esquire (magazine)
+  </category>
 <br/>
 <mark>Short-story-stub</mark></doc>
 
@@ -810,23 +810,23 @@ His work appeared in </text>
 <br/>
 <mark>DEFAULTSORT:Butler, Charles E.</mark>
 <br/>
-<pagelink id="Category:20th-century American poets">Category:20th-century American poets
-  </pagelink>
+<category id="20th-century American poets">20th-century American poets
+  </category>
 <br/>
-<pagelink id="Category:1909 births">Category:1909 births
-  </pagelink>
+<category id="1909 births">1909 births
+  </category>
 <br/>
-<pagelink id="Category:American military personnel of World War II">Category:American military personnel of World War II
-  </pagelink>
+<category id="American military personnel of World War II">American military personnel of World War II
+  </category>
 <br/>
-<pagelink id="Category:Guggenheim Fellows">Category:Guggenheim Fellows
-  </pagelink>
+<category id="Guggenheim Fellows">Guggenheim Fellows
+  </category>
 <br/>
-<pagelink id="Category:Yale Younger Poets winners">Category:Yale Younger Poets winners
-  </pagelink>
+<category id="Yale Younger Poets winners">Yale Younger Poets winners
+  </category>
 <br/>
-<pagelink id="Category:Year of death missing">Category:Year of death missing
-  </pagelink></doc>
+<category id="Year of death missing">Year of death missing
+  </category></doc>
 
 
 ## 0000/Waseem_Mirza.xml
@@ -929,29 +929,29 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
 <br/>
 <mark>DEFAULTSORT:Mirza, Waseem</mark>
 <br/>
-<pagelink id="Category:BBC people">Category:BBC people
-  </pagelink>
+<category id="BBC people">BBC people
+  </category>
 <br/>
-<pagelink id="Category:BBC newsreaders and journalists">Category:BBC newsreaders and journalists
-  </pagelink>
+<category id="BBC newsreaders and journalists">BBC newsreaders and journalists
+  </category>
 <br/>
-<pagelink id="Category:British people of South Asian descent">Category:British people of South Asian descent
-  </pagelink>
+<category id="British people of South Asian descent">British people of South Asian descent
+  </category>
 <br/>
-<pagelink id="Category:British television newsreaders and news presenters">Category:British television newsreaders and news presenters
-  </pagelink>
+<category id="British television newsreaders and news presenters">British television newsreaders and news presenters
+  </category>
 <br/>
-<pagelink id="Category:British reporters and correspondents">Category:British reporters and correspondents
-  </pagelink>
+<category id="British reporters and correspondents">British reporters and correspondents
+  </category>
 <br/>
-<pagelink id="Category:1979 births">Category:1979 births
-  </pagelink>
+<category id="1979 births">1979 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:People from Peterborough">Category:People from Peterborough
-  </pagelink>
+<category id="People from Peterborough">People from Peterborough
+  </category>
 <br/>
 <mark>BBC-tv-bio-stub</mark>
 <br/>
@@ -1235,26 +1235,26 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
 <br/>
 <mark>Panama topics</mark>
 <br/>
-<pagelink id="Category:Panama City">Category:Panama City
-  </pagelink>
+<category id="Panama City">Panama City
+  </category>
 <br/>
-<pagelink id="Category:History of Panama City">Category:History of Panama City
-  </pagelink>
+<category id="History of Panama City">History of Panama City
+  </category>
 <br/>
-<pagelink id="Category:Historic districts">Category:Historic districts
-  </pagelink>
+<category id="Historic districts">Historic districts
+  </category>
 <br/>
-<pagelink id="Category:Populated places in Panamá Province">Category:Populated places in Panamá Province
-  </pagelink>
+<category id="Populated places in Panamá Province">Populated places in Panamá Province
+  </category>
 <br/>
-<pagelink id="Category:Spanish Colonial architecture">Category:Spanish Colonial architecture
-  </pagelink>
+<category id="Spanish Colonial architecture">Spanish Colonial architecture
+  </category>
 <br/>
-<pagelink id="Category:World Heritage Sites in Panama">Category:World Heritage Sites in Panama
-  </pagelink>
+<category id="World Heritage Sites in Panama">World Heritage Sites in Panama
+  </category>
 <br/>
-<pagelink id="Category:Tourist attractions in Panama City">Category:Tourist attractions in Panama City
-  </pagelink></doc>
+<category id="Tourist attractions in Panama City">Tourist attractions in Panama City
+  </category></doc>
 
 
 ## 0000/Alex_Angus.xml
@@ -1447,26 +1447,26 @@ He also played for the </text>
 <br/>
 <mark>DEFAULTSORT:Angus, Alex</mark>
 <br/>
-<pagelink id="Category:Scottish rugby union players">Category:Scottish rugby union players
-  </pagelink>
+<category id="Scottish rugby union players">Scottish rugby union players
+  </category>
 <br/>
-<pagelink id="Category:Scotland international rugby union players">Category:Scotland international rugby union players
-  </pagelink>
+<category id="Scotland international rugby union players">Scotland international rugby union players
+  </category>
 <br/>
-<pagelink id="Category:Scottish cricketers">Category:Scottish cricketers
-  </pagelink>
+<category id="Scottish cricketers">Scottish cricketers
+  </category>
 <br/>
-<pagelink id="Category:Watsonians RFC players">Category:Watsonians RFC players
-  </pagelink>
+<category id="Watsonians RFC players">Watsonians RFC players
+  </category>
 <br/>
-<pagelink id="Category:1889 births">Category:1889 births
-  </pagelink>
+<category id="1889 births">1889 births
+  </category>
 <br/>
-<pagelink id="Category:1947 deaths">Category:1947 deaths
-  </pagelink>
+<category id="1947 deaths">1947 deaths
+  </category>
 <br/>
-<pagelink id="Category:Scotland cricketers">Category:Scotland cricketers
-  </pagelink>
+<category id="Scotland cricketers">Scotland cricketers
+  </category>
 <br/>
 <mark>Scotland-rugbyunion-bio-stub</mark>
 <citation id="cit10" class="ISBN"><attr>1-905326-24-6</attr>
@@ -1757,47 +1757,47 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <br/>
 <mark>DEFAULTSORT:Rizo, Marco</mark>
 <br/>
-<pagelink id="Category:1920 births">Category:1920 births
-  </pagelink>
+<category id="1920 births">1920 births
+  </category>
 <br/>
-<pagelink id="Category:1998 deaths">Category:1998 deaths
-  </pagelink>
+<category id="1998 deaths">1998 deaths
+  </category>
 <br/>
-<pagelink id="Category:People from Santiago de Cuba">Category:People from Santiago de Cuba
-  </pagelink>
+<category id="People from Santiago de Cuba">People from Santiago de Cuba
+  </category>
 <br/>
-<pagelink id="Category:20th-century classical composers">Category:20th-century classical composers
-  </pagelink>
+<category id="20th-century classical composers">20th-century classical composers
+  </category>
 <br/>
-<pagelink id="Category:Cuban classical pianists">Category:Cuban classical pianists
-  </pagelink>
+<category id="Cuban classical pianists">Cuban classical pianists
+  </category>
 <br/>
-<pagelink id="Category:Cuban composers">Category:Cuban composers
-  </pagelink>
+<category id="Cuban composers">Cuban composers
+  </category>
 <br/>
-<pagelink id="Category:Cuban musicians">Category:Cuban musicians
-  </pagelink>
+<category id="Cuban musicians">Cuban musicians
+  </category>
 <br/>
-<pagelink id="Category:Cuban pianists">Category:Cuban pianists
-  </pagelink>
+<category id="Cuban pianists">Cuban pianists
+  </category>
 <br/>
-<pagelink id="Category:American military personnel of World War II">Category:American military personnel of World War II
-  </pagelink>
+<category id="American military personnel of World War II">American military personnel of World War II
+  </category>
 <br/>
-<pagelink id="Category:United States Army soldiers">Category:United States Army soldiers
-  </pagelink>
+<category id="United States Army soldiers">United States Army soldiers
+  </category>
 <br/>
-<pagelink id="Category:People from Manhattan">Category:People from Manhattan
-  </pagelink>
+<category id="People from Manhattan">People from Manhattan
+  </category>
 <br/>
-<pagelink id="Category:20th-century classical pianists">Category:20th-century classical pianists
-  </pagelink>
+<category id="20th-century classical pianists">20th-century classical pianists
+  </category>
 <br/>
-<pagelink id="Category:Contradanza">Category:Contradanza
-  </pagelink>
+<category id="Contradanza">Contradanza
+  </category>
 <br/>
-<pagelink id="Category:Male classical composers">Category:Male classical composers
-  </pagelink>
+<category id="Male classical composers">Male classical composers
+  </category>
 <citation id="cit7" class="IMDb name"><attr>nm3476752</attr>
   </citation></doc>
 
@@ -1808,8 +1808,8 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <title>Masonic Temple Building-Temple Theater</title>
 <citlink id="cit1"/>
 <br/>
-<pagelink id="File:Masonic Temple Building-Temple Theater 01.jpg"><text>The Landmark from a different angle</text>
-  </pagelink>
+<filelink id="Masonic Temple Building-Temple Theater 01.jpg"><text>The Landmark from a different angle</text>
+  </filelink>
 <br/>
 <text>The </text>
 <entity id="3"><text>Landmark Convention Center</text>
@@ -1929,32 +1929,32 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <br/>
 <mark>National Register of Historic Places</mark>
 <br/>
-<pagelink id="Category:National Register of Historic Places in Tacoma, Washington">Category:National Register of Historic Places in Tacoma, Washington
-  </pagelink>
+<category id="National Register of Historic Places in Tacoma, Washington">National Register of Historic Places in Tacoma, Washington
+  </category>
 <br/>
-<pagelink id="Category:Renaissance Revival architecture in Washington (state)">Category:Renaissance Revival architecture in Washington (state)
-  </pagelink>
+<category id="Renaissance Revival architecture in Washington (state)">Renaissance Revival architecture in Washington (state)
+  </category>
 <br/>
-<pagelink id="Category:Masonic buildings completed in 1927">Category:Masonic buildings completed in 1927
-  </pagelink>
+<category id="Masonic buildings completed in 1927">Masonic buildings completed in 1927
+  </category>
 <br/>
-<pagelink id="Category:Former Masonic buildings in Washington (state)">Category:Former Masonic buildings in Washington (state)
-  </pagelink>
+<category id="Former Masonic buildings in Washington (state)">Former Masonic buildings in Washington (state)
+  </category>
 <br/>
-<pagelink id="Category:Buildings and structures in Tacoma, Washington">Category:Buildings and structures in Tacoma, Washington
-  </pagelink>
+<category id="Buildings and structures in Tacoma, Washington">Buildings and structures in Tacoma, Washington
+  </category>
 <br/>
-<pagelink id="Category:Clubhouses on the National Register of Historic Places in Washington (state)">Category:Clubhouses on the National Register of Historic Places in Washington (state)
-  </pagelink>
+<category id="Clubhouses on the National Register of Historic Places in Washington (state)">Clubhouses on the National Register of Historic Places in Washington (state)
+  </category>
 <br/>
-<pagelink id="Category:Theatres on the National Register of Historic Places in Washington (state)">Category:Theatres on the National Register of Historic Places in Washington (state)
-  </pagelink>
+<category id="Theatres on the National Register of Historic Places in Washington (state)">Theatres on the National Register of Historic Places in Washington (state)
+  </category>
 <br/>
-<pagelink id="Category:Public venues with a theatre organ">Category:Public venues with a theatre organ
-  </pagelink>
+<category id="Public venues with a theatre organ">Public venues with a theatre organ
+  </category>
 <br/>
-<pagelink id="Category:1927 establishments in Washington (state)">Category:1927 establishments in Washington (state)
-  </pagelink>
+<category id="1927 establishments in Washington (state)">1927 establishments in Washington (state)
+  </category>
 <br/>
 <mark>Washington-NRHP-stub</mark></doc>
 
@@ -1990,8 +1990,8 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <br/>
 <mark>DEFAULTSORT:America Dourada</mark>
 <br/>
-<pagelink id="Category:Municipalities in Bahia">Category:Municipalities in Bahia
-  </pagelink>
+<category id="Municipalities in Bahia">Municipalities in Bahia
+  </category>
 <br/>
 <mark>Bahia-geo-stub</mark>
 <citation id="cit1" class="unreferenced" date="January 2010"/>
@@ -2079,8 +2079,8 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <br/>
 <citlink id="cit1"/>
 <br/>
-<pagelink id="Category:South Pacific cyclone disambiguation pages">Category:South Pacific cyclone disambiguation pages
-  </pagelink>
+<category id="South Pacific cyclone disambiguation pages">South Pacific cyclone disambiguation pages
+  </category>
 <citation id="cit1" class="storm index"><attr>Mick</attr>
   </citation></doc>
 
@@ -2359,20 +2359,20 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <br/>
 <citlink id="cit3"/>
 <br/>
-<pagelink id="Category:Vriesea"><text>friburgensis</text>
-  </pagelink>
+<category id="Vriesea"><text>friburgensis</text>
+  </category>
 <br/>
-<pagelink id="Category:Bromeliaceae species">Category:Bromeliaceae species
-  </pagelink>
+<category id="Bromeliaceae species">Bromeliaceae species
+  </category>
 <br/>
-<pagelink id="Category:Flora of South America">Category:Flora of South America
-  </pagelink>
+<category id="Flora of South America">Flora of South America
+  </category>
 <br/>
-<pagelink id="Category:Epiphytes">Category:Epiphytes
-  </pagelink>
+<category id="Epiphytes">Epiphytes
+  </category>
 <br/>
-<pagelink id="Category:Plants described in 1894">Category:Plants described in 1894
-  </pagelink>
+<category id="Plants described in 1894">Plants described in 1894
+  </category>
 <br/>
 <mark>Vriesea-stub</mark>
 <citation id="cit3"><table id="table2"><tabtitle><text>Taxonbar</text>
@@ -3534,26 +3534,26 @@ Smal was forced to miss the remainder of the </text>
 <br/>
 <mark>DEFAULTSORT:Smal, Gert</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:1961 births">Category:1961 births
-  </pagelink>
+<category id="1961 births">1961 births
+  </category>
 <br/>
-<pagelink id="Category:Ireland national rugby union team coaches">Category:Ireland national rugby union team coaches
-  </pagelink>
+<category id="Ireland national rugby union team coaches">Ireland national rugby union team coaches
+  </category>
 <br/>
-<pagelink id="Category:South African rugby union players">Category:South African rugby union players
-  </pagelink>
+<category id="South African rugby union players">South African rugby union players
+  </category>
 <br/>
-<pagelink id="Category:South African rugby union coaches">Category:South African rugby union coaches
-  </pagelink>
+<category id="South African rugby union coaches">South African rugby union coaches
+  </category>
 <br/>
-<pagelink id="Category:White South African people">Category:White South African people
-  </pagelink>
+<category id="White South African people">White South African people
+  </category>
 <br/>
-<pagelink id="Category:South Africa international rugby union players">Category:South Africa international rugby union players
-  </pagelink></doc>
+<category id="South Africa international rugby union players">South Africa international rugby union players
+  </category></doc>
 
 
 ## 0000/411th_Bombardment_Group.xml
@@ -3592,8 +3592,8 @@ Smal was forced to miss the remainder of the </text>
       </head>
     <cell id="C0"><text>411th Bombardment Group</text>
       
-        <pagelink id="File:Third Air Force Emblem - World War II.png"><text>60px</text>
-          </pagelink>
+        <filelink id="Third Air Force Emblem - World War II.png"><text>60px</text>
+          </filelink>
         
       </cell>
     <head id="C1"><text>caption</text>
@@ -4023,17 +4023,17 @@ However, standard military units, based on relatively inflexible </text>
 <br/>
 <mark>USAAF 3d Air Force World War II</mark>
 <br/>
-<pagelink id="Category:Bombardment groups of the United States Army Air Forces">Category:Bombardment groups of the United States Army Air Forces
-  </pagelink>
+<category id="Bombardment groups of the United States Army Air Forces">Bombardment groups of the United States Army Air Forces
+  </category>
 <br/>
-<pagelink id="Category:Military units and formations established in 1943">Category:Military units and formations established in 1943
-  </pagelink>
+<category id="Military units and formations established in 1943">Military units and formations established in 1943
+  </category>
 <br/>
-<pagelink id="Category:Military units and formations disestablished in 1944">Category:Military units and formations disestablished in 1944
-  </pagelink>
+<category id="Military units and formations disestablished in 1944">Military units and formations disestablished in 1944
+  </category>
 <br/>
-<pagelink id="Category:Military units and formations established in 1985">Category:Military units and formations established in 1985
-  </pagelink>
+<category id="Military units and formations established in 1985">Military units and formations established in 1985
+  </category>
 <citation id="cit12" class="commonscatinline"><attr>411th Bombardment Group (United States Army Air Forces)</attr>
   </citation></doc>
 
@@ -4230,35 +4230,35 @@ However, standard military units, based on relatively inflexible </text>
 <br/>
 <mark>DEFAULTSORT:Guthrie, James Kelley</mark>
 <br/>
-<pagelink id="Category:American conductors (music)">Category:American conductors (music)
-  </pagelink>
+<category id="American conductors (music)">American conductors (music)
+  </category>
 <br/>
-<pagelink id="Category:American newspaper publishers (people)">Category:American newspaper publishers (people)
-  </pagelink>
+<category id="American newspaper publishers (people)">American newspaper publishers (people)
+  </category>
 <br/>
-<pagelink id="Category:University of Redlands alumni">Category:University of Redlands alumni
-  </pagelink>
+<category id="University of Redlands alumni">University of Redlands alumni
+  </category>
 <br/>
-<pagelink id="Category:1914 births">Category:1914 births
-  </pagelink>
+<category id="1914 births">1914 births
+  </category>
 <br/>
-<pagelink id="Category:Place of birth missing">Category:Place of birth missing
-  </pagelink>
+<category id="Place of birth missing">Place of birth missing
+  </category>
 <br/>
-<pagelink id="Category:Musicians from San Bernardino, California">Category:Musicians from San Bernardino, California
-  </pagelink>
+<category id="Musicians from San Bernardino, California">Musicians from San Bernardino, California
+  </category>
 <br/>
-<pagelink id="Category:1996 deaths">Category:1996 deaths
-  </pagelink>
+<category id="1996 deaths">1996 deaths
+  </category>
 <br/>
-<pagelink id="Category:20th-century conductors (music)">Category:20th-century conductors (music)
-  </pagelink>
+<category id="20th-century conductors (music)">20th-century conductors (music)
+  </category>
 <br/>
-<pagelink id="Category:20th-century American musicians">Category:20th-century American musicians
-  </pagelink>
+<category id="20th-century American musicians">20th-century American musicians
+  </category>
 <br/>
-<pagelink id="Category:Journalists from California">Category:Journalists from California
-  </pagelink></doc>
+<category id="Journalists from California">Journalists from California
+  </category></doc>
 
 
 ## 0000/Fonissa.xml
@@ -4393,17 +4393,17 @@ However, standard military units, based on relatively inflexible </text>
   </heading>
 <mark>Reflist</mark>
 <br/>
-<pagelink id="Category:Landforms of Corinthia">Category:Landforms of Corinthia
-  </pagelink>
+<category id="Landforms of Corinthia">Landforms of Corinthia
+  </category>
 <br/>
-<pagelink id="Category:Rivers of Greece">Category:Rivers of Greece
-  </pagelink>
+<category id="Rivers of Greece">Rivers of Greece
+  </category>
 <br/>
-<pagelink id="Category:Rivers of Peloponnese (region)">Category:Rivers of Peloponnese (region)
-  </pagelink>
+<category id="Rivers of Peloponnese (region)">Rivers of Peloponnese (region)
+  </category>
 <br/>
-<pagelink id="Category:Drainage basins of the Gulf of Corinth">Category:Drainage basins of the Gulf of Corinth
-  </pagelink>
+<category id="Drainage basins of the Gulf of Corinth">Drainage basins of the Gulf of Corinth
+  </category>
 <br/>
 <mark>Greece-river-stub</mark></doc>
 
@@ -4547,23 +4547,23 @@ Regev has made significant contributions to the theory of </text>
 <br/>
 <mark>DEFAULTSORT:Regev, Amitai</mark>
 <br/>
-<pagelink id="Category:1940 births">Category:1940 births
-  </pagelink>
+<category id="1940 births">1940 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Israeli mathematicians">Category:Israeli mathematicians
-  </pagelink>
+<category id="Israeli mathematicians">Israeli mathematicians
+  </category>
 <br/>
-<pagelink id="Category:Jewish scientists">Category:Jewish scientists
-  </pagelink>
+<category id="Jewish scientists">Jewish scientists
+  </category>
 <br/>
-<pagelink id="Category:20th-century mathematicians">Category:20th-century mathematicians
-  </pagelink>
+<category id="20th-century mathematicians">20th-century mathematicians
+  </category>
 <br/>
-<pagelink id="Category:21st-century mathematicians">Category:21st-century mathematicians
-  </pagelink>
+<category id="21st-century mathematicians">21st-century mathematicians
+  </category>
 <citation id="cit2" class="MathGenealogy" _id="19354"/></doc>
 
 
@@ -4739,23 +4739,23 @@ The </text>
 <br/>
 <citlink id="cit10"/>
 <br/>
-<pagelink id="Category:Houses completed in 1922">Category:Houses completed in 1922
-  </pagelink>
+<category id="Houses completed in 1922">Houses completed in 1922
+  </category>
 <br/>
-<pagelink id="Category:National Register of Historic Places in Tacoma, Washington">Category:National Register of Historic Places in Tacoma, Washington
-  </pagelink>
+<category id="National Register of Historic Places in Tacoma, Washington">National Register of Historic Places in Tacoma, Washington
+  </category>
 <br/>
-<pagelink id="Category:Houses in Pierce County, Washington">Category:Houses in Pierce County, Washington
-  </pagelink>
+<category id="Houses in Pierce County, Washington">Houses in Pierce County, Washington
+  </category>
 <br/>
-<pagelink id="Category:Lakewood, Washington">Category:Lakewood, Washington
-  </pagelink>
+<category id="Lakewood, Washington">Lakewood, Washington
+  </category>
 <br/>
-<pagelink id="Category:Frederick Heath buildings">Category:Frederick Heath buildings
-  </pagelink>
+<category id="Frederick Heath buildings">Frederick Heath buildings
+  </category>
 <br/>
-<pagelink id="Category:Houses on the National Register of Historic Places in Washington (state)">Category:Houses on the National Register of Historic Places in Washington (state)
-  </pagelink>
+<category id="Houses on the National Register of Historic Places in Washington (state)">Houses on the National Register of Historic Places in Washington (state)
+  </category>
 <br/>
 <mark>Washington-struct-stub</mark>
 <citation id="cit10" class="coord" coord="47.15936 -122.53405"/></doc>
@@ -4769,14 +4769,14 @@ The </text>
 <br/>
 <citlink id="cit2"/>
 <br/>
-<pagelink id="File:Zaitokukai rally at Shinjuku on 24 January 2010.JPG"><text>Zaitokukai demonstrating in support of withholding the </text>
+<filelink id="Zaitokukai rally at Shinjuku on 24 January 2010.JPG"><text>Zaitokukai demonstrating in support of withholding the </text>
   <pagelink id="right of non-citizens to vote">right of non-citizens to vote
     </pagelink>
   <text> in </text>
   <pagelink id="Shinjuku, Tokyo"><text>Shinjuku</text>
     </pagelink>
   <text> on January 24, 2010</text>
-  </pagelink>
+  </filelink>
 <br/>
 <entity id="3"><text>Zaitokukai</text>
   </entity>
@@ -5226,7 +5226,7 @@ Several members of the group made donations to the political funding organizatio
   </citation>
 <heading id="h1"><text>Criticism</text>
   </heading>
-<pagelink id="File:2013-06-30 しばき隊と有田芳生参議院議員 目線入り.jpg"><text>Anti-Zaitokukai group facing off against the </text>
+<filelink id="2013-06-30 しばき隊と有田芳生参議院議員 目線入り.jpg"><text>Anti-Zaitokukai group facing off against the </text>
   <pagelink id="Riot Police Unit"><text>Riot Police</text>
     </pagelink>
   <text> was provoking the Zaitokukai with </text>
@@ -5236,10 +5236,10 @@ Several members of the group made donations to the political funding organizatio
   <pagelink id="Yoshifu Arita">Yoshifu Arita
     </pagelink>
   <text> </text>
-  </pagelink>
+  </filelink>
 <br/>
-<pagelink id="File:Ultra-left activists protest against anti-Korean rally on 31 March 2013 at Shin-Okubo 02.JPG"><text>Anti-Zaitokukai rally in Tokyo, 2013</text>
-  </pagelink>
+<filelink id="Ultra-left activists protest against anti-Korean rally on 31 March 2013 at Shin-Okubo 02.JPG"><text>Anti-Zaitokukai rally in Tokyo, 2013</text>
+  </filelink>
 <br/>
 <text>The group is criticized for its aggressive and racist behaviour towards non-citizen residents of Japan, mostly Zainichi Koreans. Its supporters have described Zainichi Koreans as </text>
 <quot><text>criminals</text>
@@ -5499,23 +5499,23 @@ They also take to the Internet, and in August 2014, Lee Sin (variously named as 
 <br/>
 <citlink id="cit17"/>
 <br/>
-<pagelink id="Category:Japanese nationalism">Category:Japanese nationalism
-  </pagelink>
+<category id="Japanese nationalism">Japanese nationalism
+  </category>
 <br/>
-<pagelink id="Category:Nationalist organizations">Category:Nationalist organizations
-  </pagelink>
+<category id="Nationalist organizations">Nationalist organizations
+  </category>
 <br/>
-<pagelink id="Category:Anti-communist organizations in Japan">Category:Anti-communist organizations in Japan
-  </pagelink>
+<category id="Anti-communist organizations in Japan">Anti-communist organizations in Japan
+  </category>
 <br/>
-<pagelink id="Category:Far-right politics in Japan">Category:Far-right politics in Japan
-  </pagelink>
+<category id="Far-right politics in Japan">Far-right politics in Japan
+  </category>
 <br/>
-<pagelink id="Category:Anti-Korean sentiment in Japan">Category:Anti-Korean sentiment in Japan
-  </pagelink>
+<category id="Anti-Korean sentiment in Japan">Anti-Korean sentiment in Japan
+  </category>
 <br/>
-<pagelink id="Category:Ethnic issues in Japan">Category:Ethnic issues in Japan
-  </pagelink>
+<category id="Ethnic issues in Japan">Ethnic issues in Japan
+  </category>
 <citation id="cit15" class="commons category"><attr>Zaitokukai</attr>
   </citation>
 <citation id="cit16" class="official website"/>
@@ -5560,8 +5560,8 @@ They also take to the Internet, and in August 2014, Lee Sin (variously named as 
 <br/>
 <mark>DEFAULTSORT:Barra do Mendes</mark>
 <br/>
-<pagelink id="Category:Municipalities in Bahia">Category:Municipalities in Bahia
-  </pagelink>
+<category id="Municipalities in Bahia">Municipalities in Bahia
+  </category>
 <br/>
 <mark>Bahia-geo-stub</mark>
 <citation id="cit1" class="unreferenced" date="January 2010"/>
@@ -5764,14 +5764,14 @@ The historian </text>
 <br/>
 <mark>DEFAULTSORT:Manlius Vulso, Gnaeus</mark>
 <br/>
-<pagelink id="Category:5th-century BC Romans">Category:5th-century BC Romans
-  </pagelink>
+<category id="5th-century BC Romans">5th-century BC Romans
+  </category>
 <br/>
-<pagelink id="Category:Roman Republican consuls">Category:Roman Republican consuls
-  </pagelink>
+<category id="Roman Republican consuls">Roman Republican consuls
+  </category>
 <br/>
-<pagelink id="Category:Manlii"><text>Vulso, Gnaeus</text>
-  </pagelink>
+<category id="Manlii"><text>Vulso, Gnaeus</text>
+  </category>
 <citation id="cit1"><table id="table1"><tabtitle><text>SmithDGRBM</text>
       </tabtitle>
     <head id="C0"><text>title</text>
@@ -6203,32 +6203,32 @@ Buford died on October 11, 2011, at the age of 81, in Minneapolis, after a long 
 <br/>
 <mark>DEFAULTSORT:Buford, George Mojo</mark>
 <br/>
-<pagelink id="Category:1929 births">Category:1929 births
-  </pagelink>
+<category id="1929 births">1929 births
+  </category>
 <br/>
-<pagelink id="Category:2011 deaths">Category:2011 deaths
-  </pagelink>
+<category id="2011 deaths">2011 deaths
+  </category>
 <br/>
-<pagelink id="Category:People from Hernando, Mississippi">Category:People from Hernando, Mississippi
-  </pagelink>
+<category id="People from Hernando, Mississippi">People from Hernando, Mississippi
+  </category>
 <br/>
-<pagelink id="Category:American blues harmonica players">Category:American blues harmonica players
-  </pagelink>
+<category id="American blues harmonica players">American blues harmonica players
+  </category>
 <br/>
-<pagelink id="Category:Harmonica blues musicians">Category:Harmonica blues musicians
-  </pagelink>
+<category id="Harmonica blues musicians">Harmonica blues musicians
+  </category>
 <br/>
-<pagelink id="Category:Blues musicians from Mississippi">Category:Blues musicians from Mississippi
-  </pagelink>
+<category id="Blues musicians from Mississippi">Blues musicians from Mississippi
+  </category>
 <br/>
-<pagelink id="Category:Musicians from Memphis, Tennessee">Category:Musicians from Memphis, Tennessee
-  </pagelink>
+<category id="Musicians from Memphis, Tennessee">Musicians from Memphis, Tennessee
+  </category>
 <br/>
-<pagelink id="Category:Musicians from Chicago">Category:Musicians from Chicago
-  </pagelink>
+<category id="Musicians from Chicago">Musicians from Chicago
+  </category>
 <br/>
-<pagelink id="Category:Musicians from Minneapolis">Category:Musicians from Minneapolis
-  </pagelink>
+<category id="Musicians from Minneapolis">Musicians from Minneapolis
+  </category>
 <citation id="cit10"><table id="table10"><tabtitle><text>Allmusic</text>
       </tabtitle>
     <head id="C0"><text>id</text>
@@ -6344,14 +6344,14 @@ Buford died on October 11, 2011, at the age of 81, in Minneapolis, after a long 
 <br/>
 <mark>DEFAULTSORT:Romance of Chastisement</mark>
 <br/>
-<pagelink id="Category:British pornography">Category:British pornography
-  </pagelink>
+<category id="British pornography">British pornography
+  </category>
 <br/>
-<pagelink id="Category:1866 short story collections">Category:1866 short story collections
-  </pagelink>
+<category id="1866 short story collections">1866 short story collections
+  </category>
 <br/>
-<pagelink id="Category:BDSM literature">Category:BDSM literature
-  </pagelink>
+<category id="BDSM literature">BDSM literature
+  </category>
 <br/>
 <mark>story-collection-stub</mark>
 <citation id="cit1" class="ISBN"><attr>0-8047-1842-3</attr>
@@ -6725,14 +6725,14 @@ After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position i
 <br/>
 <mark>DEFAULTSORT:Panova, Elena</mark>
 <br/>
-<pagelink id="Category:1979 births">Category:1979 births
-  </pagelink>
+<category id="1979 births">1979 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Russian female bodybuilders">Category:Russian female bodybuilders
-  </pagelink>
+<category id="Russian female bodybuilders">Russian female bodybuilders
+  </category>
 <br/>
 <mark>Russia-sport-bio-stub</mark>
 <br/>
@@ -7581,26 +7581,26 @@ http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 | title= 2008 WFF-WBBF 
   </heading>
 <citlink id="cit3"/>
 <br/>
-<pagelink id="Category:Pellaea"><text>calidirupium</text>
-  </pagelink>
+<category id="Pellaea"><text>calidirupium</text>
+  </category>
 <br/>
-<pagelink id="Category:Fern species">Category:Fern species
-  </pagelink>
+<category id="Fern species">Fern species
+  </category>
 <br/>
-<pagelink id="Category:Endemic flora of Australia">Category:Endemic flora of Australia
-  </pagelink>
+<category id="Endemic flora of Australia">Endemic flora of Australia
+  </category>
 <br/>
-<pagelink id="Category:Flora of Queensland">Category:Flora of Queensland
-  </pagelink>
+<category id="Flora of Queensland">Flora of Queensland
+  </category>
 <br/>
-<pagelink id="Category:Flora of Victoria (Australia)">Category:Flora of Victoria (Australia)
-  </pagelink>
+<category id="Flora of Victoria (Australia)">Flora of Victoria (Australia)
+  </category>
 <br/>
-<pagelink id="Category:Flora of Tasmania">Category:Flora of Tasmania
-  </pagelink>
+<category id="Flora of Tasmania">Flora of Tasmania
+  </category>
 <br/>
-<pagelink id="Category:Flora of New South Wales">Category:Flora of New South Wales
-  </pagelink>
+<category id="Flora of New South Wales">Flora of New South Wales
+  </category>
 <br/>
 <mark>fern-stub</mark>
 <citation id="cit3"><table id="table2"><tabtitle><text>Taxonbar</text>
@@ -7879,26 +7879,26 @@ http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 | title= 2008 WFF-WBBF 
 <br/>
 <mark>DEFAULTSORT:Beadle, James Prinsep</mark>
 <br/>
-<pagelink id="Category:1863 births">Category:1863 births
-  </pagelink>
+<category id="1863 births">1863 births
+  </category>
 <br/>
-<pagelink id="Category:1947 deaths">Category:1947 deaths
-  </pagelink>
+<category id="1947 deaths">1947 deaths
+  </category>
 <br/>
-<pagelink id="Category:19th-century English painters">Category:19th-century English painters
-  </pagelink>
+<category id="19th-century English painters">19th-century English painters
+  </category>
 <br/>
-<pagelink id="Category:English male painters">Category:English male painters
-  </pagelink>
+<category id="English male painters">English male painters
+  </category>
 <br/>
-<pagelink id="Category:20th-century English painters">Category:20th-century English painters
-  </pagelink>
+<category id="20th-century English painters">20th-century English painters
+  </category>
 <br/>
-<pagelink id="Category:British war artists">Category:British war artists
-  </pagelink>
+<category id="British war artists">British war artists
+  </category>
 <br/>
-<pagelink id="Category:British alumni of the École des Beaux-Arts">Category:British alumni of the École des Beaux-Arts
-  </pagelink></doc>
+<category id="British alumni of the École des Beaux-Arts">British alumni of the École des Beaux-Arts
+  </category></doc>
 
 
 ## 0000/Lake_Aurora.xml
@@ -8164,14 +8164,14 @@ http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 | title= 2008 WFF-WBBF 
     </weblink>
   </list>
 <br/>
-<pagelink id="Category:Disc golf courses">Category:Disc golf courses
-  </pagelink>
+<category id="Disc golf courses">Disc golf courses
+  </category>
 <br/>
-<pagelink id="Category:Lakes of Polk County, Florida"><text>Aurora</text>
-  </pagelink>
+<category id="Lakes of Polk County, Florida"><text>Aurora</text>
+  </category>
 <br/>
-<pagelink id="Category:Lake Wales, Florida">Category:Lake Wales, Florida
-  </pagelink></doc>
+<category id="Lake Wales, Florida">Lake Wales, Florida
+  </category></doc>
 
 
 ## 0000/Melbourne_Indoor.xml
@@ -8548,35 +8548,35 @@ http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 | title= 2008 WFF-WBBF 
     </weblink>
   </list>
 <br/>
-<pagelink id="Category:Carpet court tennis tournaments">Category:Carpet court tennis tournaments
-  </pagelink>
+<category id="Carpet court tennis tournaments">Carpet court tennis tournaments
+  </category>
 <br/>
-<pagelink id="Category:Grand Prix tennis circuit">Category:Grand Prix tennis circuit
-  </pagelink>
+<category id="Grand Prix tennis circuit">Grand Prix tennis circuit
+  </category>
 <br/>
-<pagelink id="Category:Indoor tennis tournaments">Category:Indoor tennis tournaments
-  </pagelink>
+<category id="Indoor tennis tournaments">Indoor tennis tournaments
+  </category>
 <br/>
-<pagelink id="Category:Sport in Melbourne">Category:Sport in Melbourne
-  </pagelink>
+<category id="Sport in Melbourne">Sport in Melbourne
+  </category>
 <br/>
-<pagelink id="Category:Tennis in Victoria (Australia)">Category:Tennis in Victoria (Australia)
-  </pagelink>
+<category id="Tennis in Victoria (Australia)">Tennis in Victoria (Australia)
+  </category>
 <br/>
-<pagelink id="Category:Defunct tennis tournaments in Australia">Category:Defunct tennis tournaments in Australia
-  </pagelink>
+<category id="Defunct tennis tournaments in Australia">Defunct tennis tournaments in Australia
+  </category>
 <br/>
-<pagelink id="Category:1980 establishments in Australia">Category:1980 establishments in Australia
-  </pagelink>
+<category id="1980 establishments in Australia">1980 establishments in Australia
+  </category>
 <br/>
-<pagelink id="Category:1985 disestablishments in Australia">Category:1985 disestablishments in Australia
-  </pagelink>
+<category id="1985 disestablishments in Australia">1985 disestablishments in Australia
+  </category>
 <br/>
-<pagelink id="Category:Recurring sporting events established in 1980">Category:Recurring sporting events established in 1980
-  </pagelink>
+<category id="Recurring sporting events established in 1980">Recurring sporting events established in 1980
+  </category>
 <br/>
-<pagelink id="Category:Recurring events disestablished in 1985">Category:Recurring events disestablished in 1985
-  </pagelink></doc>
+<category id="Recurring events disestablished in 1985">Recurring events disestablished in 1985
+  </category></doc>
 
 
 ## 0000/Mars_Exploration_Program_Analysis_Group.xml
@@ -8624,11 +8624,11 @@ The other forums created are the </text>
     </weblink>
   </list>
 <br/>
-<pagelink id="Category:Exploration of Mars">Category:Exploration of Mars
-  </pagelink>
+<category id="Exploration of Mars">Exploration of Mars
+  </category>
 <br/>
-<pagelink id="Category:NASA">Category:NASA
-  </pagelink>
+<category id="NASA">NASA
+  </category>
 <br/>
 <mark>Mars-stub</mark></doc>
 
@@ -8779,11 +8779,11 @@ The aircraft consisted of a </text>
   </pagelink>
 <text> central frame, onto which the main monoplane wing, the motor, the forward and rear booms and the ‘undercarriage’ (consisting of one wheel at each of the lower corners) were mounted. Between the upper front and rear posts of the frame were fitted two streamlined fuel tanks (clearly visible in the image above), one on each side of and above the pilot’s seat, with a combined capacity of six gallons (22.7 L.).
 </text>
-<pagelink id="File:PfitznerFlyer Control linkage FlightGlobalVoll II(9) p.182.jpg"><text>Image first published in </text>
+<filelink id="PfitznerFlyer Control linkage FlightGlobalVoll II(9) p.182.jpg"><text>Image first published in </text>
   <entity id="2"><text>Flight</text>
     </entity>
   <text> Vol. II(11) in 1910, from Flight Global archive</text>
-  </pagelink>
+  </filelink>
 <br/>
 <text>The pilot sat immediately forward of the wing and controlled the aircraft by a combination a movable column and a wheel mounted on that column. Pitch was controlled by fore and aft movement of the column, which, by means of wires, moved the elevator mounted at the forward end of the front boom. Yaw control was effected by twisting the column about its vertical axis (by means of pressure on the steering wheel), which turned the vertical rudder (mounted above the elevator) left or right. Lateral control was achieved by rotating the wheel: When the pilot turned the steering-wheel to port, the linkage (shown below and here</text>
 <reflink id="ref6"/>
@@ -8792,11 +8792,11 @@ The aircraft consisted of a </text>
   </quot>
 <text>. There was a fixed tail-plane surface with an area of 10.5 sq.ft. (0.98 sq.m.) at the end of the rear boom to provide  longitudinal stability.
 </text>
-<pagelink id="File:PfitznerFlyer Front view of wing trussing Flight Vol.II(11) FlightGlobal archive.jpg"><text>Image first published in </text>
+<filelink id="PfitznerFlyer Front view of wing trussing Flight Vol.II(11) FlightGlobal archive.jpg"><text>Image first published in </text>
   <entity id="2"><text>Flight</text>
     </entity>
   <text> Vol. II(11) in 1910, from Flight Global archive</text>
-  </pagelink>
+  </filelink>
 <br/>
 <text>The span of the main wing, which was set at an angle for incidence of 8°, was 31 ft., with a wingtip extension of </text>
 <citlink id="cit3"/>
@@ -9160,14 +9160,14 @@ Each of the wings consists of three detachable sections, each 5 ft. (1.5 m.) lon
   <text>.</text>
   </list>
 <br/>
-<pagelink id="Category:United States experimental aircraft 1910–1919">Category:United States experimental aircraft 1910–1919
-  </pagelink>
+<category id="United States experimental aircraft 1910–1919">United States experimental aircraft 1910–1919
+  </category>
 <br/>
-<pagelink id="Category:Curtiss aircraft">Category:Curtiss aircraft
-  </pagelink>
+<category id="Curtiss aircraft">Curtiss aircraft
+  </category>
 <br/>
-<pagelink id="Category:Single-engined pusher aircraft">Category:Single-engined pusher aircraft
-  </pagelink>
+<category id="Single-engined pusher aircraft">Single-engined pusher aircraft
+  </category>
 <citation id="cit16" class="commons category"><attr>Pfitzner Flyer</attr>
   </citation></doc>
 
@@ -9417,38 +9417,38 @@ He was also nominated by the British Fashion Council for </text>
 <br/>
 <mark>DEFAULTSORT:Moralioglu, Erdem</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:1977 births">Category:1977 births
-  </pagelink>
+<category id="1977 births">1977 births
+  </category>
 <br/>
-<pagelink id="Category:Alumni of the Royal College of Art">Category:Alumni of the Royal College of Art
-  </pagelink>
+<category id="Alumni of the Royal College of Art">Alumni of the Royal College of Art
+  </category>
 <br/>
-<pagelink id="Category:Canadian fashion designers">Category:Canadian fashion designers
-  </pagelink>
+<category id="Canadian fashion designers">Canadian fashion designers
+  </category>
 <br/>
-<pagelink id="Category:British fashion designers">Category:British fashion designers
-  </pagelink>
+<category id="British fashion designers">British fashion designers
+  </category>
 <br/>
-<pagelink id="Category:Turkish fashion designers">Category:Turkish fashion designers
-  </pagelink>
+<category id="Turkish fashion designers">Turkish fashion designers
+  </category>
 <br/>
-<pagelink id="Category:British people of Turkish descent">Category:British people of Turkish descent
-  </pagelink>
+<category id="British people of Turkish descent">British people of Turkish descent
+  </category>
 <br/>
-<pagelink id="Category:Canadian people of English descent">Category:Canadian people of English descent
-  </pagelink>
+<category id="Canadian people of English descent">Canadian people of English descent
+  </category>
 <br/>
-<pagelink id="Category:Canadian people of Turkish descent">Category:Canadian people of Turkish descent
-  </pagelink>
+<category id="Canadian people of Turkish descent">Canadian people of Turkish descent
+  </category>
 <br/>
-<pagelink id="Category:Ryerson University alumni">Category:Ryerson University alumni
-  </pagelink>
+<category id="Ryerson University alumni">Ryerson University alumni
+  </category>
 <br/>
-<pagelink id="Category:People from Montreal">Category:People from Montreal
-  </pagelink></doc>
+<category id="People from Montreal">People from Montreal
+  </category></doc>
 
 
 ## 0000/Gliese_1214.xml
@@ -9793,12 +9793,12 @@ The estimate for the stellar radius is 15% larger than predicted by theoretical 
 <br/>
 <mark>Orbitbox end</mark>
 <br/>
-<pagelink id="Image:GJ1214b (Artist’s impression).jpg"><text>This artist’s impression shows how the newly discovered super-Earth orbiting the nearby star GJ 1214 may look. Credit: </text>
+<imglink id="GJ1214b (Artist’s impression).jpg"><text>This artist’s impression shows how the newly discovered super-Earth orbiting the nearby star GJ 1214 may look. Credit: </text>
   <pagelink id="ESO">ESO
     </pagelink>
   <weblink id="file:/L."/>
   <text> Calçada</text>
-  </pagelink>
+  </imglink>
 <br/>
 <text>Discovered by the </text>
 <pagelink id="MEarth Project"><text>MEarth project</text>
@@ -10683,20 +10683,20 @@ No transit-time variations have yet been found for this transit. As of 2012, </t
 <br/>
 <mark>Stars of Ophiuchus</mark>
 <br/>
-<pagelink id="Category:Gliese and GJ objects"><text>1214</text>
-  </pagelink>
+<category id="Gliese and GJ objects"><text>1214</text>
+  </category>
 <br/>
-<pagelink id="Category:Ophiuchus (constellation)">Category:Ophiuchus (constellation)
-  </pagelink>
+<category id="Ophiuchus (constellation)">Ophiuchus (constellation)
+  </category>
 <br/>
-<pagelink id="Category:M-type main-sequence stars">Category:M-type main-sequence stars
-  </pagelink>
+<category id="M-type main-sequence stars">M-type main-sequence stars
+  </category>
 <br/>
-<pagelink id="Category:Planetary systems">Category:Planetary systems
-  </pagelink>
+<category id="Planetary systems">Planetary systems
+  </category>
 <br/>
-<pagelink id="Category:Planetary transit variables">Category:Planetary transit variables
-  </pagelink>
+<category id="Planetary transit variables">Planetary transit variables
+  </category>
 <citation id="cit41" class="Sky"><list id="l1"><attr>17</attr>
     </list>
   <list id="l1"><attr>15</attr>
@@ -10943,11 +10943,11 @@ No transit-time variations have yet been found for this transit. As of 2012, </t
   </heading>
 <mark>DEFAULTSORT:Concrete Jungle</mark>
 <br/>
-<pagelink id="Category:2009 debut albums">Category:2009 debut albums
-  </pagelink>
+<category id="2009 debut albums">2009 debut albums
+  </category>
 <br/>
-<pagelink id="Category:Scorcher (rapper) albums">Category:Scorcher (rapper) albums
-  </pagelink></doc>
+<category id="Scorcher (rapper) albums">Scorcher (rapper) albums
+  </category></doc>
 
 
 ## 0000/Hirth_F-23.xml
@@ -11333,14 +11333,14 @@ The F-23 produces </text>
 <br/>
 <mark>Hirth aeroengines</mark>
 <br/>
-<pagelink id="Category:Hirth aircraft engines">Category:Hirth aircraft engines
-  </pagelink>
+<category id="Hirth aircraft engines">Hirth aircraft engines
+  </category>
 <br/>
-<pagelink id="Category:Air-cooled aircraft piston engines">Category:Air-cooled aircraft piston engines
-  </pagelink>
+<category id="Air-cooled aircraft piston engines">Air-cooled aircraft piston engines
+  </category>
 <br/>
-<pagelink id="Category:Two-stroke aircraft piston engines">Category:Two-stroke aircraft piston engines
-  </pagelink>
+<category id="Two-stroke aircraft piston engines">Two-stroke aircraft piston engines
+  </category>
 <citation id="cit19" class="Official website"/></doc>
 
 
@@ -11494,35 +11494,35 @@ Farnell moved to </text>
 <br/>
 <mark>DEFAULTSORT:Farnell, Lisa</mark>
 <br/>
-<pagelink id="Category:Curlers from Ontario">Category:Curlers from Ontario
-  </pagelink>
+<category id="Curlers from Ontario">Curlers from Ontario
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Peterborough, Ontario">Category:Sportspeople from Peterborough, Ontario
-  </pagelink>
+<category id="Sportspeople from Peterborough, Ontario">Sportspeople from Peterborough, Ontario
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Toronto">Category:Sportspeople from Toronto
-  </pagelink>
+<category id="Sportspeople from Toronto">Sportspeople from Toronto
+  </category>
 <br/>
-<pagelink id="Category:1986 births">Category:1986 births
-  </pagelink>
+<category id="1986 births">1986 births
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from London">Category:Sportspeople from London
-  </pagelink>
+<category id="Sportspeople from London">Sportspeople from London
+  </category>
 <br/>
-<pagelink id="Category:Canadian women curlers">Category:Canadian women curlers
-  </pagelink>
+<category id="Canadian women curlers">Canadian women curlers
+  </category>
 <br/>
-<pagelink id="Category:English female curlers">Category:English female curlers
-  </pagelink>
+<category id="English female curlers">English female curlers
+  </category>
 <br/>
-<pagelink id="Category:Canadian expatriates in England">Category:Canadian expatriates in England
-  </pagelink>
+<category id="Canadian expatriates in England">Canadian expatriates in England
+  </category>
 <br/>
-<pagelink id="Category:Canadian expatriate sportspeople in the United Kingdom">Category:Canadian expatriate sportspeople in the United Kingdom
-  </pagelink></doc>
+<category id="Canadian expatriate sportspeople in the United Kingdom">Canadian expatriate sportspeople in the United Kingdom
+  </category></doc>
 
 
 ## 0000/Xunyang_River.xml
@@ -11557,8 +11557,8 @@ Jiujiang had ancient names like Chaisang (</text>
 </text>
 <citlink id="cit4"/>
 <br/>
-<pagelink id="Category:Rivers of Jiangxi">Category:Rivers of Jiangxi
-  </pagelink>
+<category id="Rivers of Jiangxi">Rivers of Jiangxi
+  </category>
 <citation id="cit1"><table id="table1"><tabtitle><text>zh</text>
       </tabtitle>
     <head id="C0"><text>c</text>
@@ -11671,17 +11671,17 @@ Jiujiang had ancient names like Chaisang (</text>
 <br/>
 <mark>DEFAULTSORT:Tesfamichael, Srafel</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
-<pagelink id="Category:Year of birth missing (living people)">Category:Year of birth missing (living people)
-  </pagelink>
+<category id="Year of birth missing (living people)">Year of birth missing (living people)
+  </category>
 <br/>
 <mark>Eritrea-footy-bio-stub</mark>
 <citation id="cit3" class="Use dmy dates" date="June 2011"/></doc>
@@ -12142,25 +12142,25 @@ position</text>
 <br/>
 <mark>Jermaine Jackson</mark>
 <br/>
-<pagelink id="Category:1989 albums">Category:1989 albums
-  </pagelink>
+<category id="1989 albums">1989 albums
+  </category>
 <br/>
-<pagelink id="Category:Jermaine Jackson albums">Category:Jermaine Jackson albums
-  </pagelink>
+<category id="Jermaine Jackson albums">Jermaine Jackson albums
+  </category>
 <br/>
-<pagelink id="Category:Albums produced by Rick Nowels">Category:Albums produced by Rick Nowels
-  </pagelink>
+<category id="Albums produced by Rick Nowels">Albums produced by Rick Nowels
+  </category>
 <br/>
-<pagelink id="Category:Arista Records albums">Category:Arista Records albums
-  </pagelink></doc>
+<category id="Arista Records albums">Arista Records albums
+  </category></doc>
 
 
 ## 0000/Oranienbaum_Bridgehead.xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <doc><docid>Oranienbaum_Bridgehead</docid>
 <title>Oranienbaum Bridgehead</title>
-<pagelink id="File:Siege of Leningrad, 1941-09-21.svg"><text>The front on 21 September 1941</text>
-  </pagelink>
+<filelink id="Siege of Leningrad, 1941-09-21.svg"><text>The front on 21 September 1941</text>
+  </filelink>
 <br/>
 <mark>Campaignbox Leningrad and Baltics 1941–1944</mark>
 <br/>
@@ -12281,17 +12281,17 @@ Later the garrison included the 48th Rifle Division, the </text>
 <br/>
 <citlink id="cit2"/>
 <br/>
-<pagelink id="Category:History of Saint Petersburg">Category:History of Saint Petersburg
-  </pagelink>
+<category id="History of Saint Petersburg">History of Saint Petersburg
+  </category>
 <br/>
-<pagelink id="Category:Baltic Sea operations of World War II">Category:Baltic Sea operations of World War II
-  </pagelink>
+<category id="Baltic Sea operations of World War II">Baltic Sea operations of World War II
+  </category>
 <br/>
-<pagelink id="Category:World War II aerial operations and battles of the Eastern Front">Category:World War II aerial operations and battles of the Eastern Front
-  </pagelink>
+<category id="World War II aerial operations and battles of the Eastern Front">World War II aerial operations and battles of the Eastern Front
+  </category>
 <br/>
-<pagelink id="Category:Military operations of World War II involving Germany">Category:Military operations of World War II involving Germany
-  </pagelink>
+<category id="Military operations of World War II involving Germany">Military operations of World War II involving Germany
+  </category>
 <citation id="cit2" class="coord missing"><attr>Russia</attr>
   </citation></doc>
 
@@ -12334,13 +12334,13 @@ Later the garrison included the 48th Rifle Division, the </text>
   </citation>
 <heading id="h1"><text>Route</text>
   </heading>
-<pagelink id="Image:Iberian Peninsula in 125-en.svg"><text>The Iberian peninsula in 125 CE, showing the </text>
+<imglink id="Iberian Peninsula in 125-en.svg"><text>The Iberian peninsula in 125 CE, showing the </text>
   <entity id="2"><text>Via Augusta</text>
     </entity>
   <text> by its other name, </text>
   <entity id="2"><text>Via Herculea</text>
     </entity>
-  </pagelink>
+  </imglink>
 <br/>
 <text>The route started in the </text>
 <pagelink id="Hellenistic civilization"><text>Hellenic</text>
@@ -12429,35 +12429,35 @@ Later the garrison included the 48th Rifle Division, the </text>
 <br/>
 <citlink id="cit2"/>
 <br/>
-<pagelink id="Category:Roman roads in Spain">Category:Roman roads in Spain
-  </pagelink>
+<category id="Roman roads in Spain">Roman roads in Spain
+  </category>
 <br/>
-<pagelink id="Category:Iron Age Europe">Category:Iron Age Europe
-  </pagelink>
+<category id="Iron Age Europe">Iron Age Europe
+  </category>
 <br/>
-<pagelink id="Category:Iron Age Spain">Category:Iron Age Spain
-  </pagelink>
+<category id="Iron Age Spain">Iron Age Spain
+  </category>
 <br/>
-<pagelink id="Category:European Cultural Routes">Category:European Cultural Routes
-  </pagelink>
+<category id="European Cultural Routes">European Cultural Routes
+  </category>
 <br/>
-<pagelink id="Category:Hiking trails in Europe">Category:Hiking trails in Europe
-  </pagelink>
+<category id="Hiking trails in Europe">Hiking trails in Europe
+  </category>
 <br/>
-<pagelink id="Category:Archaeological sites in Europe">Category:Archaeological sites in Europe
-  </pagelink>
+<category id="Archaeological sites in Europe">Archaeological sites in Europe
+  </category>
 <br/>
-<pagelink id="Category:Archaeological sites in Spain">Category:Archaeological sites in Spain
-  </pagelink>
+<category id="Archaeological sites in Spain">Archaeological sites in Spain
+  </category>
 <br/>
-<pagelink id="Category:Ancient Greek archaeological sites in Spain">Category:Ancient Greek archaeological sites in Spain
-  </pagelink>
+<category id="Ancient Greek archaeological sites in Spain">Ancient Greek archaeological sites in Spain
+  </category>
 <br/>
-<pagelink id="Category:Prehistoric sites in Spain">Category:Prehistoric sites in Spain
-  </pagelink>
+<category id="Prehistoric sites in Spain">Prehistoric sites in Spain
+  </category>
 <br/>
-<pagelink id="Category:Iron Age Portugal">Category:Iron Age Portugal
-  </pagelink>
+<category id="Iron Age Portugal">Iron Age Portugal
+  </category>
 <br/>
 <mark>AncientRome-struct-stub</mark>
 <br/>
@@ -12541,17 +12541,17 @@ Later the garrison included the 48th Rifle Division, the </text>
 <br/>
 <mark>DEFAULTSORT:Teklerb, Hermon</mark>
 <br/>
-<pagelink id="Category:1993 births">Category:1993 births
-  </pagelink>
+<category id="1993 births">1993 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
 <mark>Eritrea-footy-bio-stub</mark>
 <citation id="cit2" class="FIFA player"><attr>350488</attr>
@@ -12759,35 +12759,35 @@ Cornwall was one of the moving figures behind the growth of the </text>
 <br/>
 <mark>DEFAULTSORT:Cornwall, Marie</mark>
 <br/>
-<pagelink id="Category:1949 births">Category:1949 births
-  </pagelink>
+<category id="1949 births">1949 births
+  </category>
 <br/>
-<pagelink id="Category:Latter Day Saints from Minnesota">Category:Latter Day Saints from Minnesota
-  </pagelink>
+<category id="Latter Day Saints from Minnesota">Latter Day Saints from Minnesota
+  </category>
 <br/>
-<pagelink id="Category:American sociologists">Category:American sociologists
-  </pagelink>
+<category id="American sociologists">American sociologists
+  </category>
 <br/>
-<pagelink id="Category:Brigham Young University alumni">Category:Brigham Young University alumni
-  </pagelink>
+<category id="Brigham Young University alumni">Brigham Young University alumni
+  </category>
 <br/>
-<pagelink id="Category:Brigham Young University faculty">Category:Brigham Young University faculty
-  </pagelink>
+<category id="Brigham Young University faculty">Brigham Young University faculty
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:University of Minnesota alumni">Category:University of Minnesota alumni
-  </pagelink>
+<category id="University of Minnesota alumni">University of Minnesota alumni
+  </category>
 <br/>
-<pagelink id="Category:University of Utah alumni">Category:University of Utah alumni
-  </pagelink>
+<category id="University of Utah alumni">University of Utah alumni
+  </category>
 <br/>
-<pagelink id="Category:University of Utah faculty">Category:University of Utah faculty
-  </pagelink>
+<category id="University of Utah faculty">University of Utah faculty
+  </category>
 <br/>
-<pagelink id="Category:Latter Day Saints from Utah">Category:Latter Day Saints from Utah
-  </pagelink></doc>
+<category id="Latter Day Saints from Utah">Latter Day Saints from Utah
+  </category></doc>
 
 
 ## 0000/Synthalin.xml
@@ -13026,14 +13026,14 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
 <br/>
 <mark>-</mark>
 <br/>
-<pagelink id="Category:Guanidines">Category:Guanidines
-  </pagelink>
+<category id="Guanidines">Guanidines
+  </category>
 <br/>
-<pagelink id="Category:Hepatotoxins">Category:Hepatotoxins
-  </pagelink>
+<category id="Hepatotoxins">Hepatotoxins
+  </category>
 <br/>
-<pagelink id="Category:Withdrawn drugs">Category:Withdrawn drugs
-  </pagelink>
+<category id="Withdrawn drugs">Withdrawn drugs
+  </category>
 <citation id="cit16"><table id="table6"><tabtitle><text>cite journal</text>
       </tabtitle>
     <head id="C0"><text>author</text>
@@ -13171,20 +13171,20 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
     </pagelink>
   </list>
 <br/>
-<pagelink id="Category:Cuban people of Taíno descent">Category:Cuban people of Taíno descent
-  </pagelink>
+<category id="Cuban people of Taíno descent">Cuban people of Taíno descent
+  </category>
 <br/>
-<pagelink id="Category:People from Havana">Category:People from Havana
-  </pagelink>
+<category id="People from Havana">People from Havana
+  </category>
 <br/>
-<pagelink id="Category:Native American leaders">Category:Native American leaders
-  </pagelink>
+<category id="Native American leaders">Native American leaders
+  </category>
 <br/>
-<pagelink id="Category:Taíno people">Category:Taíno people
-  </pagelink>
+<category id="Taíno people">Taíno people
+  </category>
 <br/>
-<pagelink id="Category:Tribal chiefs of the Caribbean">Category:Tribal chiefs of the Caribbean
-  </pagelink>
+<category id="Tribal chiefs of the Caribbean">Tribal chiefs of the Caribbean
+  </category>
 <br/>
 <mark>Cuba-bio-stub</mark>
 <br/>
@@ -13334,17 +13334,17 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
 <br/>
 <mark>DEFAULTSORT:Cummins, Richie</mark>
 <br/>
-<pagelink id="Category:1991 births">Category:1991 births
-  </pagelink>
+<category id="1991 births">1991 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Gort hurlers">Category:Gort hurlers
-  </pagelink>
+<category id="Gort hurlers">Gort hurlers
+  </category>
 <br/>
-<pagelink id="Category:Galway hurlers">Category:Galway hurlers
-  </pagelink>
+<category id="Galway hurlers">Galway hurlers
+  </category>
 <br/>
 <mark>Connacht-hurling-bio-stub</mark>
 <citation id="cit4"><table id="table4"><tabtitle><text>succession box</text>
@@ -13604,32 +13604,32 @@ winning </text>
 <br/>
 <mark>DEFAULTSORT:Gebreselasie, Nevi</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrean expatriate footballers">Category:Eritrean expatriate footballers
-  </pagelink>
+<category id="Eritrean expatriate footballers">Eritrean expatriate footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
-<pagelink id="Category:Year of birth missing (living people)">Category:Year of birth missing (living people)
-  </pagelink>
+<category id="Year of birth missing (living people)">Year of birth missing (living people)
+  </category>
 <br/>
-<pagelink id="Category:White City FC players">Category:White City FC players
-  </pagelink>
+<category id="White City FC players">White City FC players
+  </category>
 <br/>
-<pagelink id="Category:FFSA Super League players">Category:FFSA Super League players
-  </pagelink>
+<category id="FFSA Super League players">FFSA Super League players
+  </category>
 <br/>
-<pagelink id="Category:Expatriate soccer players in Australia">Category:Expatriate soccer players in Australia
-  </pagelink>
+<category id="Expatriate soccer players in Australia">Expatriate soccer players in Australia
+  </category>
 <br/>
-<pagelink id="Category:Eritrean refugees">Category:Eritrean refugees
-  </pagelink>
+<category id="Eritrean refugees">Eritrean refugees
+  </category>
 <citation id="cit3" class="Use dmy dates" date="June 2011"/></doc>
 
 
@@ -13736,23 +13736,23 @@ Nesitanebetashru of the </text>
 <br/>
 <mark>DEFAULTSORT:Nesitanebetashru</mark>
 <br/>
-<pagelink id="Category:10th-century BC women">Category:10th-century BC women
-  </pagelink>
+<category id="10th-century BC women">10th-century BC women
+  </category>
 <br/>
-<pagelink id="Category:9th-century BC women">Category:9th-century BC women
-  </pagelink>
+<category id="9th-century BC women">9th-century BC women
+  </category>
 <br/>
-<pagelink id="Category:Queens consort of the Twenty-first Dynasty of Egypt">Category:Queens consort of the Twenty-first Dynasty of Egypt
-  </pagelink>
+<category id="Queens consort of the Twenty-first Dynasty of Egypt">Queens consort of the Twenty-first Dynasty of Egypt
+  </category>
 <br/>
-<pagelink id="Category:Queens consort of the Twenty-second Dynasty of Egypt">Category:Queens consort of the Twenty-second Dynasty of Egypt
-  </pagelink>
+<category id="Queens consort of the Twenty-second Dynasty of Egypt">Queens consort of the Twenty-second Dynasty of Egypt
+  </category>
 <br/>
-<pagelink id="Category:Ancient Egyptian mummies">Category:Ancient Egyptian mummies
-  </pagelink>
+<category id="Ancient Egyptian mummies">Ancient Egyptian mummies
+  </category>
 <br/>
-<pagelink id="Category:9th century BC in Egypt">Category:9th century BC in Egypt
-  </pagelink></doc>
+<category id="9th century BC in Egypt">9th century BC in Egypt
+  </category></doc>
 
 
 ## 0000/Melbourne_Outdoor.xml
@@ -14048,23 +14048,23 @@ Nesitanebetashru of the </text>
   </heading>
 <mark>reflist</mark>
 <br/>
-<pagelink id="Category:Defunct tennis tournaments in Australia">Category:Defunct tennis tournaments in Australia
-  </pagelink>
+<category id="Defunct tennis tournaments in Australia">Defunct tennis tournaments in Australia
+  </category>
 <br/>
-<pagelink id="Category:Sport in Melbourne">Category:Sport in Melbourne
-  </pagelink>
+<category id="Sport in Melbourne">Sport in Melbourne
+  </category>
 <br/>
-<pagelink id="Category:Grass court tennis tournaments">Category:Grass court tennis tournaments
-  </pagelink>
+<category id="Grass court tennis tournaments">Grass court tennis tournaments
+  </category>
 <br/>
-<pagelink id="Category:Grand Prix tennis circuit">Category:Grand Prix tennis circuit
-  </pagelink>
+<category id="Grand Prix tennis circuit">Grand Prix tennis circuit
+  </category>
 <br/>
-<pagelink id="Category:1983 establishments in Australia">Category:1983 establishments in Australia
-  </pagelink>
+<category id="1983 establishments in Australia">1983 establishments in Australia
+  </category>
 <br/>
-<pagelink id="Category:1985 disestablishments in Australia">Category:1985 disestablishments in Australia
-  </pagelink></doc>
+<category id="1985 disestablishments in Australia">1985 disestablishments in Australia
+  </category></doc>
 
 
 ## 0000/Yohannes_Tilahun.xml
@@ -14141,17 +14141,17 @@ Nesitanebetashru of the </text>
 <br/>
 <mark>DEFAULTSORT:Tilahun, Yohannes</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:1993 births">Category:1993 births
-  </pagelink>
+<category id="1993 births">1993 births
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
 <mark>Eritrea-footy-bio-stub</mark>
 <citation id="cit2"><table id="table2"><tabtitle><text>NFT player</text>
@@ -14588,17 +14588,17 @@ Best Film:
 <br/>
 <mark>TFCA Awards Chron</mark>
 <br/>
-<pagelink id="Category:Toronto Film Critics Association Awards"><text>2008</text>
-  </pagelink>
+<category id="Toronto Film Critics Association Awards"><text>2008</text>
+  </category>
 <br/>
-<pagelink id="Category:2009 film awards">Category:2009 film awards
-  </pagelink>
+<category id="2009 film awards">2009 film awards
+  </category>
 <br/>
-<pagelink id="Category:2009 in Canadian cinema"><text>Tor</text>
-  </pagelink>
+<category id="2009 in Canadian cinema"><text>Tor</text>
+  </category>
 <br/>
-<pagelink id="Category:2009 in Ontario">Category:2009 in Ontario
-  </pagelink></doc>
+<category id="2009 in Ontario">2009 in Ontario
+  </category></doc>
 
 
 ## 0000/Samuel_Tesfagabr.xml
@@ -15044,47 +15044,47 @@ Best Film:
 <br/>
 <mark>DEFAULTSORT:Tesfagabr, Samuel</mark>
 <br/>
-<pagelink id="Category:1985 births">Category:1985 births
-  </pagelink>
+<category id="1985 births">1985 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:People from Khartoum">Category:People from Khartoum
-  </pagelink>
+<category id="People from Khartoum">People from Khartoum
+  </category>
 <br/>
-<pagelink id="Category:Eritrean refugees">Category:Eritrean refugees
-  </pagelink>
+<category id="Eritrean refugees">Eritrean refugees
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrean expatriate footballers">Category:Eritrean expatriate footballers
-  </pagelink>
+<category id="Eritrean expatriate footballers">Eritrean expatriate footballers
+  </category>
 <br/>
-<pagelink id="Category:Association football defenders">Category:Association football defenders
-  </pagelink>
+<category id="Association football defenders">Association football defenders
+  </category>
 <br/>
-<pagelink id="Category:Gold Coast United FC players">Category:Gold Coast United FC players
-  </pagelink>
+<category id="Gold Coast United FC players">Gold Coast United FC players
+  </category>
 <br/>
-<pagelink id="Category:Adelaide Comets FC players">Category:Adelaide Comets FC players
-  </pagelink>
+<category id="Adelaide Comets FC players">Adelaide Comets FC players
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
-<pagelink id="Category:Expatriate soccer players in Australia">Category:Expatriate soccer players in Australia
-  </pagelink>
+<category id="Expatriate soccer players in Australia">Expatriate soccer players in Australia
+  </category>
 <br/>
-<pagelink id="Category:FFSA Super League players">Category:FFSA Super League players
-  </pagelink>
+<category id="FFSA Super League players">FFSA Super League players
+  </category>
 <br/>
-<pagelink id="Category:A-League players">Category:A-League players
-  </pagelink>
+<category id="A-League players">A-League players
+  </category>
 <br/>
-<pagelink id="Category:National Premier Leagues players">Category:National Premier Leagues players
-  </pagelink>
+<category id="National Premier Leagues players">National Premier Leagues players
+  </category>
 <citation id="cit12" class="Use dmy dates" date="June 2011"/></doc>
 
 
@@ -15243,26 +15243,26 @@ Best Film:
 <br/>
 <mark>DEFAULTSORT:Chikovani, Gocha</mark>
 <br/>
-<pagelink id="Category:1962 births">Category:1962 births
-  </pagelink>
+<category id="1962 births">1962 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Soviet footballers">Category:Soviet footballers
-  </pagelink>
+<category id="Soviet footballers">Soviet footballers
+  </category>
 <br/>
-<pagelink id="Category:Footballers from Georgia (country)">Category:Footballers from Georgia (country)
-  </pagelink>
+<category id="Footballers from Georgia (country)">Footballers from Georgia (country)
+  </category>
 <br/>
-<pagelink id="Category:Georgia (country) international footballers">Category:Georgia (country) international footballers
-  </pagelink>
+<category id="Georgia (country) international footballers">Georgia (country) international footballers
+  </category>
 <br/>
-<pagelink id="Category:FC Dinamo Tbilisi players">Category:FC Dinamo Tbilisi players
-  </pagelink>
+<category id="FC Dinamo Tbilisi players">FC Dinamo Tbilisi players
+  </category>
 <br/>
-<pagelink id="Category:FC Dinamo Batumi players">Category:FC Dinamo Batumi players
-  </pagelink>
+<category id="FC Dinamo Batumi players">FC Dinamo Batumi players
+  </category>
 <br/>
 <mark>Georgia-footy-bio-stub</mark>
 <citation id="cit4" class="use dmy dates" date="September 2011"/></doc>
@@ -15455,41 +15455,41 @@ Best Film:
 <br/>
 <mark>DEFAULTSORT:Abdu, Jemal</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Association football midfielders">Category:Association football midfielders
-  </pagelink>
+<category id="Association football midfielders">Association football midfielders
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrean expatriate footballers">Category:Eritrean expatriate footballers
-  </pagelink>
+<category id="Eritrean expatriate footballers">Eritrean expatriate footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
-<pagelink id="Category:Year of birth missing (living people)">Category:Year of birth missing (living people)
-  </pagelink>
+<category id="Year of birth missing (living people)">Year of birth missing (living people)
+  </category>
 <br/>
-<pagelink id="Category:FFSA Super League players">Category:FFSA Super League players
-  </pagelink>
+<category id="FFSA Super League players">FFSA Super League players
+  </category>
 <br/>
-<pagelink id="Category:Croydon Kings players">Category:Croydon Kings players
-  </pagelink>
+<category id="Croydon Kings players">Croydon Kings players
+  </category>
 <br/>
-<pagelink id="Category:Adelaide Comets FC players">Category:Adelaide Comets FC players
-  </pagelink>
+<category id="Adelaide Comets FC players">Adelaide Comets FC players
+  </category>
 <br/>
-<pagelink id="Category:Expatriate soccer players in Australia">Category:Expatriate soccer players in Australia
-  </pagelink>
+<category id="Expatriate soccer players in Australia">Expatriate soccer players in Australia
+  </category>
 <br/>
-<pagelink id="Category:Eritrean refugees">Category:Eritrean refugees
-  </pagelink>
+<category id="Eritrean refugees">Eritrean refugees
+  </category>
 <br/>
-<pagelink id="Category:National Premier Leagues players">Category:National Premier Leagues players
-  </pagelink>
+<category id="National Premier Leagues players">National Premier Leagues players
+  </category>
 <citation id="cit4" class="Use dmy dates" date="June 2011"/></doc>
 
 
@@ -15526,8 +15526,8 @@ Best Film:
 <br/>
 <mark>Mars-stub</mark>
 <br/>
-<pagelink id="Category:Exploration of Mars">Category:Exploration of Mars
-  </pagelink></doc>
+<category id="Exploration of Mars">Exploration of Mars
+  </category></doc>
 
 
 ## 0000/Temur_Kabisashvili.xml
@@ -15673,32 +15673,32 @@ Best Film:
 <br/>
 <mark>DEFAULTSORT:Kabisashvili, Temur</mark>
 <br/>
-<pagelink id="Category:1967 births">Category:1967 births
-  </pagelink>
+<category id="1967 births">1967 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Soviet footballers">Category:Soviet footballers
-  </pagelink>
+<category id="Soviet footballers">Soviet footballers
+  </category>
 <br/>
-<pagelink id="Category:Footballers from Georgia (country)">Category:Footballers from Georgia (country)
-  </pagelink>
+<category id="Footballers from Georgia (country)">Footballers from Georgia (country)
+  </category>
 <br/>
-<pagelink id="Category:Expatriate footballers from Georgia (country)">Category:Expatriate footballers from Georgia (country)
-  </pagelink>
+<category id="Expatriate footballers from Georgia (country)">Expatriate footballers from Georgia (country)
+  </category>
 <br/>
-<pagelink id="Category:Expatriate footballers in Russia">Category:Expatriate footballers in Russia
-  </pagelink>
+<category id="Expatriate footballers in Russia">Expatriate footballers in Russia
+  </category>
 <br/>
-<pagelink id="Category:Georgia (country) international footballers">Category:Georgia (country) international footballers
-  </pagelink>
+<category id="Georgia (country) international footballers">Georgia (country) international footballers
+  </category>
 <br/>
-<pagelink id="Category:FC Dinamo Tbilisi players">Category:FC Dinamo Tbilisi players
-  </pagelink>
+<category id="FC Dinamo Tbilisi players">FC Dinamo Tbilisi players
+  </category>
 <br/>
-<pagelink id="Category:FC Dynamo Barnaul players">Category:FC Dynamo Barnaul players
-  </pagelink>
+<category id="FC Dynamo Barnaul players">FC Dynamo Barnaul players
+  </category>
 <br/>
 <mark>Georgia-footy-bio-stub</mark>
 <citation id="cit5" class="use dmy dates" date="September 2011"/></doc>
@@ -16334,35 +16334,35 @@ Best Film:
 <br/>
 <mark>DEFAULTSORT:Gatzos, Steve</mark>
 <br/>
-<pagelink id="Category:1961 births">Category:1961 births
-  </pagelink>
+<category id="1961 births">1961 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Canadian ice hockey centres">Category:Canadian ice hockey centres
-  </pagelink>
+<category id="Canadian ice hockey centres">Canadian ice hockey centres
+  </category>
 <br/>
-<pagelink id="Category:Canadian people of Greek descent">Category:Canadian people of Greek descent
-  </pagelink>
+<category id="Canadian people of Greek descent">Canadian people of Greek descent
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Toronto">Category:Sportspeople from Toronto
-  </pagelink>
+<category id="Sportspeople from Toronto">Sportspeople from Toronto
+  </category>
 <br/>
-<pagelink id="Category:KHL Medveščak Zagreb players">Category:KHL Medveščak Zagreb players
-  </pagelink>
+<category id="KHL Medveščak Zagreb players">KHL Medveščak Zagreb players
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins players">Category:Pittsburgh Penguins players
-  </pagelink>
+<category id="Pittsburgh Penguins players">Pittsburgh Penguins players
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins draft picks">Category:Pittsburgh Penguins draft picks
-  </pagelink>
+<category id="Pittsburgh Penguins draft picks">Pittsburgh Penguins draft picks
+  </category>
 <br/>
-<pagelink id="Category:Sault Ste. Marie Greyhounds players">Category:Sault Ste. Marie Greyhounds players
-  </pagelink>
+<category id="Sault Ste. Marie Greyhounds players">Sault Ste. Marie Greyhounds players
+  </category>
 <br/>
-<pagelink id="Category:Ice hockey people from Ontario">Category:Ice hockey people from Ontario
-  </pagelink>
+<category id="Ice hockey people from Ontario">Ice hockey people from Ontario
+  </category>
 <br/>
 <mark>Canada-icehockey-centre-1960s-stub</mark>
 <citation id="cit3"><table id="table3"><tabtitle><text>icehockeystats</text>
@@ -16785,20 +16785,20 @@ and is therefore not subject to ageing and death.  Arnold describes
 <br/>
 <mark>DEFAULTSORT:Scholar Gipsy, The</mark>
 <br/>
-<pagelink id="Category:Poetry by Matthew Arnold">Category:Poetry by Matthew Arnold
-  </pagelink>
+<category id="Poetry by Matthew Arnold">Poetry by Matthew Arnold
+  </category>
 <br/>
-<pagelink id="Category:1853 poems">Category:1853 poems
-  </pagelink>
+<category id="1853 poems">1853 poems
+  </category>
 <br/>
-<pagelink id="Category:Vale of White Horse">Category:Vale of White Horse
-  </pagelink>
+<category id="Vale of White Horse">Vale of White Horse
+  </category>
 <br/>
-<pagelink id="Category:Culture in Oxford">Category:Culture in Oxford
-  </pagelink>
+<category id="Culture in Oxford">Culture in Oxford
+  </category>
 <br/>
-<pagelink id="Category:Fictional representations of Romani people">Category:Fictional representations of Romani people
-  </pagelink>
+<category id="Fictional representations of Romani people">Fictional representations of Romani people
+  </category>
 <citation id="cit4" class="wikisource"><attr>The Scholar-Gipsy</attr>
   </citation></doc>
 
@@ -17473,23 +17473,23 @@ and is therefore not subject to ageing and death.  Arnold describes
 <br/>
 <mark>DEFAULTSORT:Giffin, Lee</mark>
 <br/>
-<pagelink id="Category:1967 births">Category:1967 births
-  </pagelink>
+<category id="1967 births">1967 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Canadian ice hockey right wingers">Category:Canadian ice hockey right wingers
-  </pagelink>
+<category id="Canadian ice hockey right wingers">Canadian ice hockey right wingers
+  </category>
 <br/>
-<pagelink id="Category:People from Chatham-Kent">Category:People from Chatham-Kent
-  </pagelink>
+<category id="People from Chatham-Kent">People from Chatham-Kent
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins players">Category:Pittsburgh Penguins players
-  </pagelink>
+<category id="Pittsburgh Penguins players">Pittsburgh Penguins players
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins draft picks">Category:Pittsburgh Penguins draft picks
-  </pagelink>
+<category id="Pittsburgh Penguins draft picks">Pittsburgh Penguins draft picks
+  </category>
 <br/>
 <mark>Canada-icehockey-winger-1960s-stub</mark>
 <citation id="cit3"><table id="table3"><tabtitle><text>icehockeystats</text>
@@ -17618,10 +17618,10 @@ and is therefore not subject to ageing and death.  Arnold describes
   </entity>
 <text>. 
 </text>
-<pagelink id="File:Gedenktafel Opitzstr 8 Margret Boveri.JPG"><text>Memorial at Opitzstraße 8 in </text>
+<filelink id="Gedenktafel Opitzstr 8 Margret Boveri.JPG"><text>Memorial at Opitzstraße 8 in </text>
   <pagelink id="Berlin-Steglitz">Berlin-Steglitz
     </pagelink>
-  </pagelink>
+  </filelink>
 <br/>
 <text>After the war Boveri disapproved of the division of Germany by the </text>
 <pagelink id="Allies of World War II"><text>Allies</text>
@@ -17889,35 +17889,35 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
 <br/>
 <mark>DEFAULTSORT:Boveri, Margret</mark>
 <br/>
-<pagelink id="Category:1900 births">Category:1900 births
-  </pagelink>
+<category id="1900 births">1900 births
+  </category>
 <br/>
-<pagelink id="Category:1975 deaths">Category:1975 deaths
-  </pagelink>
+<category id="1975 deaths">1975 deaths
+  </category>
 <br/>
-<pagelink id="Category:German journalists">Category:German journalists
-  </pagelink>
+<category id="German journalists">German journalists
+  </category>
 <br/>
-<pagelink id="Category:German people of American descent">Category:German people of American descent
-  </pagelink>
+<category id="German people of American descent">German people of American descent
+  </category>
 <br/>
-<pagelink id="Category:German people of Irish descent">Category:German people of Irish descent
-  </pagelink>
+<category id="German people of Irish descent">German people of Irish descent
+  </category>
 <br/>
-<pagelink id="Category:German women writers">Category:German women writers
-  </pagelink>
+<category id="German women writers">German women writers
+  </category>
 <br/>
-<pagelink id="Category:People from Würzburg">Category:People from Würzburg
-  </pagelink>
+<category id="People from Würzburg">People from Würzburg
+  </category>
 <br/>
-<pagelink id="Category:Officers Crosses of the Order of Merit of the Federal Republic of Germany">Category:Officers Crosses of the Order of Merit of the Federal Republic of Germany
-  </pagelink>
+<category id="Officers Crosses of the Order of Merit of the Federal Republic of Germany">Officers Crosses of the Order of Merit of the Federal Republic of Germany
+  </category>
 <br/>
-<pagelink id="Category:20th-century women writers">Category:20th-century women writers
-  </pagelink>
+<category id="20th-century women writers">20th-century women writers
+  </category>
 <br/>
-<pagelink id="Category:20th-century German writers">Category:20th-century German writers
-  </pagelink>
+<category id="20th-century German writers">20th-century German writers
+  </category>
 <citation id="cit11" class="DNB portal"><attr>118514067</attr>
   </citation></doc>
 
@@ -18123,20 +18123,20 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
 <br/>
 <mark>DEFAULTSORT:Zeratsion, Yosief</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Eritrean footballers">Category:Eritrean footballers
-  </pagelink>
+<category id="Eritrean footballers">Eritrean footballers
+  </category>
 <br/>
-<pagelink id="Category:Eritrea international footballers">Category:Eritrea international footballers
-  </pagelink>
+<category id="Eritrea international footballers">Eritrea international footballers
+  </category>
 <br/>
-<pagelink id="Category:1990 births">Category:1990 births
-  </pagelink>
+<category id="1990 births">1990 births
+  </category>
 <br/>
-<pagelink id="Category:Association football goalkeepers">Category:Association football goalkeepers
-  </pagelink>
+<category id="Association football goalkeepers">Association football goalkeepers
+  </category>
 <br/>
 <mark>Eritrea-footy-bio-stub</mark>
 <citation id="cit7" class="Use dmy dates" date="November 2010"/>
@@ -18561,26 +18561,26 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
 <br/>
 <mark>DEFAULTSORT:Lyon, Steve</mark>
 <br/>
-<pagelink id="Category:1952 births">Category:1952 births
-  </pagelink>
+<category id="1952 births">1952 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Canadian ice hockey right wingers">Category:Canadian ice hockey right wingers
-  </pagelink>
+<category id="Canadian ice hockey right wingers">Canadian ice hockey right wingers
+  </category>
 <br/>
-<pagelink id="Category:Ice hockey people from Ontario">Category:Ice hockey people from Ontario
-  </pagelink>
+<category id="Ice hockey people from Ontario">Ice hockey people from Ontario
+  </category>
 <br/>
-<pagelink id="Category:Minnesota North Stars draft picks">Category:Minnesota North Stars draft picks
-  </pagelink>
+<category id="Minnesota North Stars draft picks">Minnesota North Stars draft picks
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins players">Category:Pittsburgh Penguins players
-  </pagelink>
+<category id="Pittsburgh Penguins players">Pittsburgh Penguins players
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Toronto">Category:Sportspeople from Toronto
-  </pagelink>
+<category id="Sportspeople from Toronto">Sportspeople from Toronto
+  </category>
 <br/>
 <mark>Canada-icehockey-defenceman-1950s-stub</mark>
 <citation id="cit4"><table id="table3"><tabtitle><text>icehockeystats</text>
@@ -18743,8 +18743,8 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
 <br/>
 <mark>DEFAULTSORT:Kulla (god)</mark>
 <br/>
-<pagelink id="Category:Mesopotamian gods">Category:Mesopotamian gods
-  </pagelink></doc>
+<category id="Mesopotamian gods">Mesopotamian gods
+  </category></doc>
 
 
 ## 0000/Dwight_Mathiasen.xml
@@ -19301,26 +19301,26 @@ Born in </text>
 <br/>
 <mark>DEFAULTSORT:Mathiasen, Dwight</mark>
 <br/>
-<pagelink id="Category:1963 births">Category:1963 births
-  </pagelink>
+<category id="1963 births">1963 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Canadian ice hockey right wingers">Category:Canadian ice hockey right wingers
-  </pagelink>
+<category id="Canadian ice hockey right wingers">Canadian ice hockey right wingers
+  </category>
 <br/>
-<pagelink id="Category:Ice hockey people from Manitoba">Category:Ice hockey people from Manitoba
-  </pagelink>
+<category id="Ice hockey people from Manitoba">Ice hockey people from Manitoba
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins players">Category:Pittsburgh Penguins players
-  </pagelink>
+<category id="Pittsburgh Penguins players">Pittsburgh Penguins players
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Brandon, Manitoba">Category:Sportspeople from Brandon, Manitoba
-  </pagelink>
+<category id="Sportspeople from Brandon, Manitoba">Sportspeople from Brandon, Manitoba
+  </category>
 <br/>
-<pagelink id="Category:Undrafted National Hockey League players">Category:Undrafted National Hockey League players
-  </pagelink>
+<category id="Undrafted National Hockey League players">Undrafted National Hockey League players
+  </category>
 <br/>
 <mark>Canada-icehockey-winger-1960s-stub</mark>
 <citation id="cit6"><table id="table6"><tabtitle><text>icehockeystats</text>
@@ -19896,8 +19896,8 @@ Born in </text>
 <br/>
 <citlink id="cit7"/>
 <br/>
-<pagelink id="Category:Polyceridae">Category:Polyceridae
-  </pagelink>
+<category id="Polyceridae">Polyceridae
+  </category>
 <citation id="cit5" class="Commons category"><attr>Tambja</attr>
   </citation>
 <citation id="cit6" class="Wikispecies"><attr>Tambja</attr>
@@ -20215,50 +20215,50 @@ Besides remaining a speaker Glotzer was active in the stenographers union, </tex
 <br/>
 <mark>DEFAULTSORT:Glotzer, Albert</mark>
 <br/>
-<pagelink id="Category:Members of Social Democrats USA">Category:Members of Social Democrats USA
-  </pagelink>
+<category id="Members of Social Democrats USA">Members of Social Democrats USA
+  </category>
 <br/>
-<pagelink id="Category:Members of the Socialist Party of America">Category:Members of the Socialist Party of America
-  </pagelink>
+<category id="Members of the Socialist Party of America">Members of the Socialist Party of America
+  </category>
 <br/>
-<pagelink id="Category:Members of the Workers Party of the United States">Category:Members of the Workers Party of the United States
-  </pagelink>
+<category id="Members of the Workers Party of the United States">Members of the Workers Party of the United States
+  </category>
 <br/>
-<pagelink id="Category:Members of the Workers Party (U.S.)">Category:Members of the Workers Party (U.S.)
-  </pagelink>
+<category id="Members of the Workers Party (U.S.)">Members of the Workers Party (U.S.)
+  </category>
 <br/>
-<pagelink id="Category:Members of the Communist League of America">Category:Members of the Communist League of America
-  </pagelink>
+<category id="Members of the Communist League of America">Members of the Communist League of America
+  </category>
 <br/>
-<pagelink id="Category:American labor leaders">Category:American labor leaders
-  </pagelink>
+<category id="American labor leaders">American labor leaders
+  </category>
 <br/>
-<pagelink id="Category:Imperial Russian emigrants to the United States">Category:Imperial Russian emigrants to the United States
-  </pagelink>
+<category id="Imperial Russian emigrants to the United States">Imperial Russian emigrants to the United States
+  </category>
 <br/>
-<pagelink id="Category:People from Pinsk">Category:People from Pinsk
-  </pagelink>
+<category id="People from Pinsk">People from Pinsk
+  </category>
 <br/>
-<pagelink id="Category:Belarusian Jews">Category:Belarusian Jews
-  </pagelink>
+<category id="Belarusian Jews">Belarusian Jews
+  </category>
 <br/>
-<pagelink id="Category:American people of Belarusian-Jewish descent">Category:American people of Belarusian-Jewish descent
-  </pagelink>
+<category id="American people of Belarusian-Jewish descent">American people of Belarusian-Jewish descent
+  </category>
 <br/>
-<pagelink id="Category:Jewish socialists">Category:Jewish socialists
-  </pagelink>
+<category id="Jewish socialists">Jewish socialists
+  </category>
 <br/>
-<pagelink id="Category:1908 births">Category:1908 births
-  </pagelink>
+<category id="1908 births">1908 births
+  </category>
 <br/>
-<pagelink id="Category:1999 deaths">Category:1999 deaths
-  </pagelink>
+<category id="1999 deaths">1999 deaths
+  </category>
 <br/>
-<pagelink id="Category:Court reporting">Category:Court reporting
-  </pagelink>
+<category id="Court reporting">Court reporting
+  </category>
 <br/>
-<pagelink id="Category:Stenographers">Category:Stenographers
-  </pagelink></doc>
+<category id="Stenographers">Stenographers
+  </category></doc>
 
 
 ## 0000/Our_Winning_Season.xml
@@ -20418,38 +20418,38 @@ His sister Cathy's boyfriend, Dean Berger, is a former track star who tries to a
 <br/>
 <mark>Joseph Ruben</mark>
 <br/>
-<pagelink id="Category:1978 films">Category:1978 films
-  </pagelink>
+<category id="1978 films">1978 films
+  </category>
 <br/>
-<pagelink id="Category:American coming-of-age films">Category:American coming-of-age films
-  </pagelink>
+<category id="American coming-of-age films">American coming-of-age films
+  </category>
 <br/>
-<pagelink id="Category:American films">Category:American films
-  </pagelink>
+<category id="American films">American films
+  </category>
 <br/>
-<pagelink id="Category:American International Pictures films">Category:American International Pictures films
-  </pagelink>
+<category id="American International Pictures films">American International Pictures films
+  </category>
 <br/>
-<pagelink id="Category:Films set in the 1960s">Category:Films set in the 1960s
-  </pagelink>
+<category id="Films set in the 1960s">Films set in the 1960s
+  </category>
 <br/>
-<pagelink id="Category:Films shot in Georgia (U.S. state)">Category:Films shot in Georgia (U.S. state)
-  </pagelink>
+<category id="Films shot in Georgia (U.S. state)">Films shot in Georgia (U.S. state)
+  </category>
 <br/>
-<pagelink id="Category:Films directed by Joseph Ruben">Category:Films directed by Joseph Ruben
-  </pagelink>
+<category id="Films directed by Joseph Ruben">Films directed by Joseph Ruben
+  </category>
 <br/>
-<pagelink id="Category:1970s drama films">Category:1970s drama films
-  </pagelink>
+<category id="1970s drama films">1970s drama films
+  </category>
 <br/>
-<pagelink id="Category:American drama films">Category:American drama films
-  </pagelink>
+<category id="American drama films">American drama films
+  </category>
 <br/>
-<pagelink id="Category:Films produced by Joe Roth">Category:Films produced by Joe Roth
-  </pagelink>
+<category id="Films produced by Joe Roth">Films produced by Joe Roth
+  </category>
 <br/>
-<pagelink id="Category:Running films">Category:Running films
-  </pagelink>
+<category id="Running films">Running films
+  </category>
 <br/>
 <mark>1970s-drama-film-stub</mark>
 <citation id="cit3" class="IMDb title"><attr>0078047</attr>
@@ -20553,32 +20553,32 @@ His sister Cathy's boyfriend, Dean Berger, is a former track star who tries to a
 <br/>
 <mark>DEFAULTSORT:McKenzie, Brian</mark>
 <br/>
-<pagelink id="Category:1988 births">Category:1988 births
-  </pagelink>
+<category id="1988 births">1988 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:American expatriate basketball people in Canada">Category:American expatriate basketball people in Canada
-  </pagelink>
+<category id="American expatriate basketball people in Canada">American expatriate basketball people in Canada
+  </category>
 <br/>
-<pagelink id="Category:American expatriate basketball people in Germany">Category:American expatriate basketball people in Germany
-  </pagelink>
+<category id="American expatriate basketball people in Germany">American expatriate basketball people in Germany
+  </category>
 <br/>
-<pagelink id="Category:American expatriate basketball people in the United Kingdom">Category:American expatriate basketball people in the United Kingdom
-  </pagelink>
+<category id="American expatriate basketball people in the United Kingdom">American expatriate basketball people in the United Kingdom
+  </category>
 <br/>
-<pagelink id="Category:Basketball players from New York (state)">Category:Basketball players from New York (state)
-  </pagelink>
+<category id="Basketball players from New York (state)">Basketball players from New York (state)
+  </category>
 <br/>
-<pagelink id="Category:Plymouth Raiders players">Category:Plymouth Raiders players
-  </pagelink>
+<category id="Plymouth Raiders players">Plymouth Raiders players
+  </category>
 <br/>
-<pagelink id="Category:Providence Friars men&apos;s basketball players">Category:Providence Friars men's basketball players
-  </pagelink>
+<category id="Providence Friars men&apos;s basketball players">Providence Friars men's basketball players
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Brooklyn">Category:Sportspeople from Brooklyn
-  </pagelink></doc>
+<category id="Sportspeople from Brooklyn">Sportspeople from Brooklyn
+  </category></doc>
 
 
 ## 0000/Rebecca_Young_%28politician%29.xml
@@ -20625,47 +20625,47 @@ His sister Cathy's boyfriend, Dean Berger, is a former track star who tries to a
 <br/>
 <mark>DEFAULTSORT:Young, Rebecca</mark>
 <br/>
-<pagelink id="Category:People from Clairton, Pennsylvania">Category:People from Clairton, Pennsylvania
-  </pagelink>
+<category id="People from Clairton, Pennsylvania">People from Clairton, Pennsylvania
+  </category>
 <br/>
-<pagelink id="Category:Politicians from Madison, Wisconsin">Category:Politicians from Madison, Wisconsin
-  </pagelink>
+<category id="Politicians from Madison, Wisconsin">Politicians from Madison, Wisconsin
+  </category>
 <br/>
-<pagelink id="Category:University of Michigan alumni">Category:University of Michigan alumni
-  </pagelink>
+<category id="University of Michigan alumni">University of Michigan alumni
+  </category>
 <br/>
-<pagelink id="Category:University of Wisconsin&amp;ndash;Madison alumni">Category:University of Wisconsin&amp;ndash;Madison alumni
-  </pagelink>
+<category id="University of Wisconsin&amp;ndash;Madison alumni">University of Wisconsin&amp;ndash;Madison alumni
+  </category>
 <br/>
-<pagelink id="Category:University of Wisconsin Law School alumni">Category:University of Wisconsin Law School alumni
-  </pagelink>
+<category id="University of Wisconsin Law School alumni">University of Wisconsin Law School alumni
+  </category>
 <br/>
-<pagelink id="Category:Members of the Wisconsin State Assembly">Category:Members of the Wisconsin State Assembly
-  </pagelink>
+<category id="Members of the Wisconsin State Assembly">Members of the Wisconsin State Assembly
+  </category>
 <br/>
-<pagelink id="Category:Women state legislators in Wisconsin">Category:Women state legislators in Wisconsin
-  </pagelink>
+<category id="Women state legislators in Wisconsin">Women state legislators in Wisconsin
+  </category>
 <br/>
-<pagelink id="Category:County supervisors in Wisconsin">Category:County supervisors in Wisconsin
-  </pagelink>
+<category id="County supervisors in Wisconsin">County supervisors in Wisconsin
+  </category>
 <br/>
-<pagelink id="Category:School board members in Wisconsin">Category:School board members in Wisconsin
-  </pagelink>
+<category id="School board members in Wisconsin">School board members in Wisconsin
+  </category>
 <br/>
-<pagelink id="Category:1934 births">Category:1934 births
-  </pagelink>
+<category id="1934 births">1934 births
+  </category>
 <br/>
-<pagelink id="Category:2008 deaths">Category:2008 deaths
-  </pagelink>
+<category id="2008 deaths">2008 deaths
+  </category>
 <br/>
-<pagelink id="Category:20th-century American politicians">Category:20th-century American politicians
-  </pagelink>
+<category id="20th-century American politicians">20th-century American politicians
+  </category>
 <br/>
-<pagelink id="Category:20th-century women politicians">Category:20th-century women politicians
-  </pagelink>
+<category id="20th-century women politicians">20th-century women politicians
+  </category>
 <br/>
-<pagelink id="Category:Lawyers from Madison, Wisconsin">Category:Lawyers from Madison, Wisconsin
-  </pagelink>
+<category id="Lawyers from Madison, Wisconsin">Lawyers from Madison, Wisconsin
+  </category>
 <br/>
 <mark>Wisconsin-WIAssembly-stub</mark></doc>
 
@@ -20842,44 +20842,44 @@ However, Millette's most significant work was in theatre: he was a major figure 
 <br/>
 <mark>DEFAULTSORT:Millette, Jean-Louis</mark>
 <br/>
-<pagelink id="Category:1935 births">Category:1935 births
-  </pagelink>
+<category id="1935 births">1935 births
+  </category>
 <br/>
-<pagelink id="Category:1999 deaths">Category:1999 deaths
-  </pagelink>
+<category id="1999 deaths">1999 deaths
+  </category>
 <br/>
-<pagelink id="Category:Male actors from Montreal">Category:Male actors from Montreal
-  </pagelink>
+<category id="Male actors from Montreal">Male actors from Montreal
+  </category>
 <br/>
-<pagelink id="Category:Writers from Montreal">Category:Writers from Montreal
-  </pagelink>
+<category id="Writers from Montreal">Writers from Montreal
+  </category>
 <br/>
-<pagelink id="Category:French Quebecers">Category:French Quebecers
-  </pagelink>
+<category id="French Quebecers">French Quebecers
+  </category>
 <br/>
-<pagelink id="Category:Canadian screenwriters in French">Category:Canadian screenwriters in French
-  </pagelink>
+<category id="Canadian screenwriters in French">Canadian screenwriters in French
+  </category>
 <br/>
-<pagelink id="Category:20th-century Canadian dramatists and playwrights">Category:20th-century Canadian dramatists and playwrights
-  </pagelink>
+<category id="20th-century Canadian dramatists and playwrights">20th-century Canadian dramatists and playwrights
+  </category>
 <br/>
-<pagelink id="Category:Canadian male television actors">Category:Canadian male television actors
-  </pagelink>
+<category id="Canadian male television actors">Canadian male television actors
+  </category>
 <br/>
-<pagelink id="Category:Canadian male voice actors">Category:Canadian male voice actors
-  </pagelink>
+<category id="Canadian male voice actors">Canadian male voice actors
+  </category>
 <br/>
-<pagelink id="Category:Canadian dramatists and playwrights in French">Category:Canadian dramatists and playwrights in French
-  </pagelink>
+<category id="Canadian dramatists and playwrights in French">Canadian dramatists and playwrights in French
+  </category>
 <br/>
-<pagelink id="Category:20th-century Canadian male actors">Category:20th-century Canadian male actors
-  </pagelink>
+<category id="20th-century Canadian male actors">20th-century Canadian male actors
+  </category>
 <br/>
-<pagelink id="Category:Canadian male dramatists and playwrights">Category:Canadian male dramatists and playwrights
-  </pagelink>
+<category id="Canadian male dramatists and playwrights">Canadian male dramatists and playwrights
+  </category>
 <br/>
-<pagelink id="Category:20th-century Canadian male writers">Category:20th-century Canadian male writers
-  </pagelink>
+<category id="20th-century Canadian male writers">20th-century Canadian male writers
+  </category>
 <br/>
 <mark>Quebec-bio-stub</mark>
 <br/>
@@ -21159,29 +21159,29 @@ However, Millette's most significant work was in theatre: he was a major figure 
 <br/>
 <mark>DEFAULTSORT:Meeker, Mike</mark>
 <br/>
-<pagelink id="Category:1958 births">Category:1958 births
-  </pagelink>
+<category id="1958 births">1958 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Canadian ice hockey right wingers">Category:Canadian ice hockey right wingers
-  </pagelink>
+<category id="Canadian ice hockey right wingers">Canadian ice hockey right wingers
+  </category>
 <br/>
-<pagelink id="Category:Ice hockey people from Ontario">Category:Ice hockey people from Ontario
-  </pagelink>
+<category id="Ice hockey people from Ontario">Ice hockey people from Ontario
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins players">Category:Pittsburgh Penguins players
-  </pagelink>
+<category id="Pittsburgh Penguins players">Pittsburgh Penguins players
+  </category>
 <br/>
-<pagelink id="Category:Wisconsin Badgers men&apos;s ice hockey players">Category:Wisconsin Badgers men's ice hockey players
-  </pagelink>
+<category id="Wisconsin Badgers men&apos;s ice hockey players">Wisconsin Badgers men's ice hockey players
+  </category>
 <br/>
-<pagelink id="Category:Sportspeople from Kingston, Ontario">Category:Sportspeople from Kingston, Ontario
-  </pagelink>
+<category id="Sportspeople from Kingston, Ontario">Sportspeople from Kingston, Ontario
+  </category>
 <br/>
-<pagelink id="Category:Pittsburgh Penguins draft picks">Category:Pittsburgh Penguins draft picks
-  </pagelink>
+<category id="Pittsburgh Penguins draft picks">Pittsburgh Penguins draft picks
+  </category>
 <br/>
 <mark>Canada-icehockey-winger-1950s-stub</mark>
 <citation id="cit1" class="hockeydb"><attr>8500</attr>
@@ -21296,11 +21296,11 @@ The game allows the player to choose to play as either </text>
   </citation>
 <heading id="h1"><text>Gameplay</text>
   </heading>
-<pagelink id="File:Bush vs Kerry Boxing screen.jpg"><text>The player fights </text>
+<filelink id="Bush vs Kerry Boxing screen.jpg"><text>The player fights </text>
   <pagelink id="Dick Cheney">Dick Cheney
     </pagelink>
   <text>.</text>
-  </pagelink>
+  </filelink>
 <br/>
 <entity id="2"><text>Bush vs. Kerry Boxing</text>
   </entity>
@@ -21449,35 +21449,35 @@ The game contains a national polling system, which tracks online how many times 
   </heading>
 <mark>reflist</mark>
 <br/>
-<pagelink id="Category:2004 video games">Category:2004 video games
-  </pagelink>
+<category id="2004 video games">2004 video games
+  </category>
 <br/>
-<pagelink id="Category:Boxing video games">Category:Boxing video games
-  </pagelink>
+<category id="Boxing video games">Boxing video games
+  </category>
 <br/>
-<pagelink id="Category:Mobile games">Category:Mobile games
-  </pagelink>
+<category id="Mobile games">Mobile games
+  </category>
 <br/>
-<pagelink id="Category:United States presidential election, 2004 in popular culture">Category:United States presidential election, 2004 in popular culture
-  </pagelink>
+<category id="United States presidential election, 2004 in popular culture">United States presidential election, 2004 in popular culture
+  </category>
 <br/>
-<pagelink id="Category:Video games developed in the United Kingdom">Category:Video games developed in the United Kingdom
-  </pagelink>
+<category id="Video games developed in the United Kingdom">Video games developed in the United Kingdom
+  </category>
 <br/>
-<pagelink id="Category:Cultural depictions of American people">Category:Cultural depictions of American people
-  </pagelink>
+<category id="Cultural depictions of American people">Cultural depictions of American people
+  </category>
 <br/>
-<pagelink id="Category:Cultural depictions of politicians">Category:Cultural depictions of politicians
-  </pagelink>
+<category id="Cultural depictions of politicians">Cultural depictions of politicians
+  </category>
 <br/>
-<pagelink id="Category:Cultural depictions of George W. Bush">Category:Cultural depictions of George W. Bush
-  </pagelink>
+<category id="Cultural depictions of George W. Bush">Cultural depictions of George W. Bush
+  </category>
 <br/>
-<pagelink id="Category:Cultural depictions of Hillary Clinton">Category:Cultural depictions of Hillary Clinton
-  </pagelink>
+<category id="Cultural depictions of Hillary Clinton">Cultural depictions of Hillary Clinton
+  </category>
 <br/>
-<pagelink id="Category:Video games based on real people">Category:Video games based on real people
-  </pagelink></doc>
+<category id="Video games based on real people">Video games based on real people
+  </category></doc>
 
 
 ## 0000/Michael_Cadnum.xml
@@ -21843,23 +21843,23 @@ The game contains a national polling system, which tracks online how many times 
 <br/>
 <mark>DEFAULTSORT:Cadnum, Michael</mark>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:American children&apos;s writers">Category:American children's writers
-  </pagelink>
+<category id="American children&apos;s writers">American children's writers
+  </category>
 <br/>
-<pagelink id="Category:1949 births">Category:1949 births
-  </pagelink>
+<category id="1949 births">1949 births
+  </category>
 <br/>
-<pagelink id="Category:University of California, Berkeley alumni">Category:University of California, Berkeley alumni
-  </pagelink>
+<category id="University of California, Berkeley alumni">University of California, Berkeley alumni
+  </category>
 <br/>
-<pagelink id="Category:San Francisco State University alumni">Category:San Francisco State University alumni
-  </pagelink>
+<category id="San Francisco State University alumni">San Francisco State University alumni
+  </category>
 <br/>
-<pagelink id="Category:Chapbook writers">Category:Chapbook writers
-  </pagelink></doc>
+<category id="Chapbook writers">Chapbook writers
+  </category></doc>
 
 
 ## 0000/Galeruca.xml
@@ -22041,11 +22041,11 @@ Research Society 2: 27-42</text>
 <br/>
 <citlink id="cit3"/>
 <br/>
-<pagelink id="Category:Chrysomelidae genera">Category:Chrysomelidae genera
-  </pagelink>
+<category id="Chrysomelidae genera">Chrysomelidae genera
+  </category>
 <br/>
-<pagelink id="Category:Galerucinae">Category:Galerucinae
-  </pagelink>
+<category id="Galerucinae">Galerucinae
+  </category>
 <citation id="cit3"><table id="table3"><tabtitle><text>Taxonbar</text>
       </tabtitle>
     <head id="C0"><text>from</text>
@@ -22102,8 +22102,8 @@ Research Society 2: 27-42</text>
       </tabtitle>
     <head id="C0"><text>ship image</text>
       </head>
-    <cell id="C0"><pagelink id="File:HMS Surinam struck by lightning.jpg"><text>HMS Surinam struck by lightning</text>
-        </pagelink>
+    <cell id="C0"><filelink id="HMS Surinam struck by lightning.jpg"><text>HMS Surinam struck by lightning</text>
+        </filelink>
       </cell>
     <head id="C1"><text>ship caption</text>
       </head>
@@ -22164,8 +22164,8 @@ Research Society 2: 27-42</text>
       </cell>
     <head id="C1"><text>ship flag</text>
       </head>
-    <cell id="C1"><pagelink id="File:Naval Ensign of the United Kingdom.svg"><text>Royal Navy Ensign</text>
-        </pagelink>
+    <cell id="C1"><filelink id="Naval Ensign of the United Kingdom.svg"><text>Royal Navy Ensign</text>
+        </filelink>
       </cell>
     <head id="C2"><text>ship name</text>
       </head>
@@ -23165,17 +23165,17 @@ In August 1812 </text>
 <br/>
 <mark>DEFAULTSORT:Surinam (1805)</mark>
 <br/>
-<pagelink id="Category:1805 ships">Category:1805 ships
-  </pagelink>
+<category id="1805 ships">1805 ships
+  </category>
 <br/>
-<pagelink id="Category:Cruizer-class brig-sloops">Category:Cruizer-class brig-sloops
-  </pagelink>
+<category id="Cruizer-class brig-sloops">Cruizer-class brig-sloops
+  </category>
 <br/>
-<pagelink id="Category:Maritime incidents in 1806">Category:Maritime incidents in 1806
-  </pagelink>
+<category id="Maritime incidents in 1806">Maritime incidents in 1806
+  </category>
 <br/>
-<pagelink id="Category:Ships built on the River Exe">Category:Ships built on the River Exe
-  </pagelink>
+<category id="Ships built on the River Exe">Ships built on the River Exe
+  </category>
 <citation id="cit39"><table id="table27"><tabtitle><text>cite book</text>
       </tabtitle>
     <head id="C0"><text>first</text>
@@ -23527,44 +23527,44 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
 <br/>
 <mark>DEFAULTSORT:Daraselia, Giorgi</mark>
 <br/>
-<pagelink id="Category:1968 births">Category:1968 births
-  </pagelink>
+<category id="1968 births">1968 births
+  </category>
 <br/>
-<pagelink id="Category:Living people">Category:Living people
-  </pagelink>
+<category id="Living people">Living people
+  </category>
 <br/>
-<pagelink id="Category:Soviet footballers">Category:Soviet footballers
-  </pagelink>
+<category id="Soviet footballers">Soviet footballers
+  </category>
 <br/>
-<pagelink id="Category:Footballers from Georgia (country)">Category:Footballers from Georgia (country)
-  </pagelink>
+<category id="Footballers from Georgia (country)">Footballers from Georgia (country)
+  </category>
 <br/>
-<pagelink id="Category:Expatriate footballers from Georgia (country)">Category:Expatriate footballers from Georgia (country)
-  </pagelink>
+<category id="Expatriate footballers from Georgia (country)">Expatriate footballers from Georgia (country)
+  </category>
 <br/>
-<pagelink id="Category:Georgia (country) international footballers">Category:Georgia (country) international footballers
-  </pagelink>
+<category id="Georgia (country) international footballers">Georgia (country) international footballers
+  </category>
 <br/>
-<pagelink id="Category:Israeli people of Georgian descent">Category:Israeli people of Georgian descent
-  </pagelink>
+<category id="Israeli people of Georgian descent">Israeli people of Georgian descent
+  </category>
 <br/>
-<pagelink id="Category:Erovnuli Liga players">Category:Erovnuli Liga players
-  </pagelink>
+<category id="Erovnuli Liga players">Erovnuli Liga players
+  </category>
 <br/>
-<pagelink id="Category:FC Dinamo Tbilisi players">Category:FC Dinamo Tbilisi players
-  </pagelink>
+<category id="FC Dinamo Tbilisi players">FC Dinamo Tbilisi players
+  </category>
 <br/>
-<pagelink id="Category:Hapoel Tel Aviv F.C. players">Category:Hapoel Tel Aviv F.C. players
-  </pagelink>
+<category id="Hapoel Tel Aviv F.C. players">Hapoel Tel Aviv F.C. players
+  </category>
 <br/>
-<pagelink id="Category:Hapoel Tzafririm Holon F.C. players">Category:Hapoel Tzafririm Holon F.C. players
-  </pagelink>
+<category id="Hapoel Tzafririm Holon F.C. players">Hapoel Tzafririm Holon F.C. players
+  </category>
 <br/>
-<pagelink id="Category:Hapoel Kfar Saba F.C. players">Category:Hapoel Kfar Saba F.C. players
-  </pagelink>
+<category id="Hapoel Kfar Saba F.C. players">Hapoel Kfar Saba F.C. players
+  </category>
 <br/>
-<pagelink id="Category:FC Zugdidi managers">Category:FC Zugdidi managers
-  </pagelink>
+<category id="FC Zugdidi managers">FC Zugdidi managers
+  </category>
 <citation id="cit6" class="Soccerway coach"><attr>giorgi-daraselia/265466</attr>
   </citation>
 <citation id="cit7" class="use dmy dates" date="September 2011"/></doc>
@@ -23617,14 +23617,14 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
     </weblink>
   </list>
 <br/>
-<pagelink id="Category:Candy bars">Category:Candy bars
-  </pagelink>
+<category id="Candy bars">Candy bars
+  </category>
 <br/>
-<pagelink id="Category:Polish desserts">Category:Polish desserts
-  </pagelink>
+<category id="Polish desserts">Polish desserts
+  </category>
 <br/>
-<pagelink id="Category:Brand name confectionery">Category:Brand name confectionery
-  </pagelink>
+<category id="Brand name confectionery">Brand name confectionery
+  </category>
 <br/>
 <mark>confection-stub</mark>
 <br/>
@@ -23635,11 +23635,11 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <doc><docid>Muma_%28Celtic_goddess%29</docid>
 <title>Muma (Celtic goddess)</title>
-<pagelink id="File:Gaul god Sucellus.jpg"><text>The Celtic god </text>
+<filelink id="Gaul god Sucellus.jpg"><text>The Celtic god </text>
   <pagelink id="Sucellus">Sucellus
     </pagelink>
   <text>.</text>
-  </pagelink>
+  </filelink>
 <br/>
 <entity id="3"><text>Muna</text>
   </entity>
@@ -23857,8 +23857,8 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
 <br/>
 <citlink id="cit10"/>
 <br/>
-<pagelink id="Category:Celtic mythology"><text> </text>
-  </pagelink>
+<category id="Celtic mythology"><text> </text>
+  </category>
 <citation id="cit8" class="commons category"><attr>Celtic deities</attr>
   </citation>
 <citation id="cit9"><table id="table1"><tabtitle><text>Celtic mythology topics</text>
@@ -23887,8 +23887,8 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
 <br/>
 <citlink id="cit2"/>
 <br/>
-<pagelink id="File:Robert Ker Porter.jpg"><text>Self portrait of Robert Ker Porter</text>
-  </pagelink>
+<filelink id="Robert Ker Porter.jpg"><text>Self portrait of Robert Ker Porter</text>
+  </filelink>
 <br/>
 <entity id="3"><text>Sir Robert Ker Porter</text>
   </entity>
@@ -23942,11 +23942,11 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
 <text>.</text>
 <heading id="h1"><text>Panoramas and historical paintings</text>
   </heading>
-<pagelink id="File:Death of Gen Sir Ralph Abercrombie by Sir Robert Ker Porter (detail).jpg"><text>Detail from the </text>
+<filelink id="Death of Gen Sir Ralph Abercrombie by Sir Robert Ker Porter (detail).jpg"><text>Detail from the </text>
   <quot><text>Death of Gen Sir Ralph Abercrombie</text>
     </quot>
   <text> by Sir Robert Ker Porter</text>
-  </pagelink>
+  </filelink>
 <br/>
 <text>In 1800 he obtained work as a scene-painter at the </text>
 <pagelink id="Lyceum Theatre, London"><text>Lyceum Theatre</text>
@@ -24016,11 +24016,11 @@ While in Sweden he had got to know General Sir John Moore, whom he accompanied t
   </entity>
 <text>.
 </text>
-<pagelink id="File:Tomb of Cyrus by Ker Porter.jpg"><text>Drawing of the </text>
+<filelink id="Tomb of Cyrus by Ker Porter.jpg"><text>Drawing of the </text>
   <pagelink id="tomb of Cyrus">tomb of Cyrus
     </pagelink>
   <text>, 1818</text>
-  </pagelink>
+  </filelink>
 <br/>
 <text>He had returned to England before the appearance of this book, and on 2 April 1813 he was knighted by the </text>
 <pagelink id="George IV of the United Kingdom"><text>Prince Regent</text>
@@ -24171,41 +24171,41 @@ While in Sweden he had got to know General Sir John Moore, whom he accompanied t
 <br/>
 <mark>DEFAULTSORT:Porter, Robert Ker</mark>
 <br/>
-<pagelink id="Category:1777 births">Category:1777 births
-  </pagelink>
+<category id="1777 births">1777 births
+  </category>
 <br/>
-<pagelink id="Category:1842 deaths">Category:1842 deaths
-  </pagelink>
+<category id="1842 deaths">1842 deaths
+  </category>
 <br/>
-<pagelink id="Category:18th-century English painters">Category:18th-century English painters
-  </pagelink>
+<category id="18th-century English painters">18th-century English painters
+  </category>
 <br/>
-<pagelink id="Category:English male painters">Category:English male painters
-  </pagelink>
+<category id="English male painters">English male painters
+  </category>
 <br/>
-<pagelink id="Category:19th-century English painters">Category:19th-century English painters
-  </pagelink>
+<category id="19th-century English painters">19th-century English painters
+  </category>
 <br/>
-<pagelink id="Category:English diplomats">Category:English diplomats
-  </pagelink>
+<category id="English diplomats">English diplomats
+  </category>
 <br/>
-<pagelink id="Category:British war artists">Category:British war artists
-  </pagelink>
+<category id="British war artists">British war artists
+  </category>
 <br/>
-<pagelink id="Category:Recipients of the Order of the Lion and the Sun">Category:Recipients of the Order of the Lion and the Sun
-  </pagelink>
+<category id="Recipients of the Order of the Lion and the Sun">Recipients of the Order of the Lion and the Sun
+  </category>
 <br/>
-<pagelink id="Category:Ambassadors of the United Kingdom to Venezuela">Category:Ambassadors of the United Kingdom to Venezuela
-  </pagelink>
+<category id="Ambassadors of the United Kingdom to Venezuela">Ambassadors of the United Kingdom to Venezuela
+  </category>
 <br/>
-<pagelink id="Category:Explorers of Iran">Category:Explorers of Iran
-  </pagelink>
+<category id="Explorers of Iran">Explorers of Iran
+  </category>
 <br/>
-<pagelink id="Category:19th-century war artists">Category:19th-century war artists
-  </pagelink>
+<category id="19th-century war artists">19th-century war artists
+  </category>
 <br/>
-<pagelink id="Category:Knights Commander of the Royal Guelphic Order">Category:Knights Commander of the Royal Guelphic Order
-  </pagelink>
+<category id="Knights Commander of the Royal Guelphic Order">Knights Commander of the Royal Guelphic Order
+  </category>
 <citation id="cit6" class="commonscat"><attr>Robert Ker Porter</attr>
   </citation></doc>
 

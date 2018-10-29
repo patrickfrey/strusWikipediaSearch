@@ -216,11 +216,13 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				if (g_linkmap)
 				{
 					std::string prefix = getLinkDomainPrefix( lnk.first);
-					if (prefix == "wikipedia")
+					if (strus::caseInsensitiveEquals( prefix, "wikipedia"))
 					{
-						lnk.first = std::string( lnk.first.c_str() + prefix.size()+1);
+						lnk.first = strus::string_conv::trim( lnk.first.c_str() + prefix.size()+1);
 					}
-					if (prefix == "file" || prefix == "image")
+					if (strus::caseInsensitiveEquals( prefix, "file")
+					||  strus::caseInsensitiveEquals( prefix, "image")
+					||  strus::caseInsensitiveEquals( prefix, "category"))
 					{
 						doc.openPageLink( lnk.first, lnk.second);
 					}
