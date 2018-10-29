@@ -242,6 +242,10 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				}
 				else
 				{
+					if (strus::caseInsensitiveStartsWith( lnk.first, "wikipedia:"))
+					{
+						lnk.first = strus::string_conv::trim( lnk.first.c_str() + 10/*strlen("wikipedia:")*/);
+					}
 					doc.openPageLink( lnk.first, lnk.second);
 				}
 				break;
