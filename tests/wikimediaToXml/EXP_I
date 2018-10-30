@@ -23742,3 +23742,2417 @@ While in Sweden he had got to know General Sir John Moore, whom he accompanied t
   </citation></doc>
 
 
+## 0000/The_The.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doc><docid>The_The</docid>
+<title>The The</title>
+<citlink id="cit1"/>
+<br/>
+<citlink id="cit2"/>
+<br/>
+<citlink id="cit3"/>
+<br/>
+<citlink id="cit4"/>
+<br/>
+<entity id="3"><text>The The</text>
+  </entity>
+<text> (</text>
+<citlink id="cit5"/>
+<text>)</text>
+<reflink id="ref1"/>
+<text> are an English </text>
+<pagelink id="post-punk">post-punk
+  </pagelink>
+<text> band. They have been active in various forms since 1979, with singer/songwriter </text>
+<pagelink id="Matt Johnson (singer)"><text>Matt Johnson</text>
+  </pagelink>
+<text> being the only constant band member. The The achieved critical acclaim and commercial success in the UK, with 15 chart singles (seven reaching the Top 40), and their most successful album, </text>
+<entity id="2"><pagelink id="Infected (The The album)"><text>Infected</text>
+    </pagelink>
+  </entity>
+<text> (1986), spent 30 weeks on the chart. They followed this with the Top Ten albums </text>
+<entity id="2"><pagelink id="Mind Bomb">Mind Bomb
+    </pagelink>
+  </entity>
+<text> (1989) and </text>
+<entity id="2"><pagelink id="Dusk (The The album)"><text>Dusk</text>
+    </pagelink>
+  </entity>
+<text> (1993).</text>
+<citlink id="cit6"/>
+<ref id="ref1"><text>Pronunciation heard in a conversation between Matt Johnson and Johnny Marr </text>
+  <weblink id="https://m.youtube.com/watch?v=GMzBboCJTC4"/>
+  </ref>
+<citation id="cit1" class="Refimprove" date="January 2017"/>
+<citation id="cit2" class="Use British English" date="April 2011"/>
+<citation id="cit3" class="Use dmy dates" date="April 2011"/>
+<citation id="cit4"><table id="table1"><tabtitle><text>Infobox musical artist</text>
+      </tabtitle>
+    <head id="C0"><text>name</text>
+      </head>
+    <cell id="C0"><text>The The</text>
+      </cell>
+    <head id="C1"><text>origin</text>
+      </head>
+    <cell id="C1"><pagelink id="London">London
+        </pagelink>
+      <text>, </text>
+      <pagelink id="England">England
+        </pagelink>
+      <text>, United Kingdom</text>
+      </cell>
+    <head id="C2"><text>genre</text>
+      </head>
+    <cell id="C2"><pagelink id="Post-punk">Post-punk
+        </pagelink>
+      <text>, </text>
+      <pagelink id="New wave music"><text>new wave</text>
+        </pagelink>
+      <text>, </text>
+      <pagelink id="alternative rock">alternative rock
+        </pagelink>
+      </cell>
+    <head id="C3"><text>label</text>
+      </head>
+    <cell id="C3"><pagelink id="4AD">4AD
+        </pagelink>
+      <text>, </text>
+      <pagelink id="Some Bizzare Records"><text>Some Bizzare</text>
+        </pagelink>
+      <text>, </text>
+      <pagelink id="Epic Records"><text>Epic</text>
+        </pagelink>
+      <text>, </text>
+      <pagelink id="Nothing Records"><text>Nothing</text>
+        </pagelink>
+      <text>/</text>
+      <pagelink id="Interscope Records"><text>Interscope</text>
+        </pagelink>
+      <text>, Lazarus/</text>
+      <pagelink id="Cineola">Cineola
+        </pagelink>
+      </cell>
+    <head id="C4"><text>website</text>
+      </head>
+    <cell id="C4"><weblink id="https://www.thethe.com"><text> thethe.com</text>
+        </weblink>
+      </cell>
+    <head id="C5"><text>current members</text>
+      </head>
+    <cell id="C5"><pagelink id="Matt Johnson (singer)"><text>Matt Johnson</text>
+        </pagelink>
+      </cell>
+    <head id="C6"><text>past members</text>
+      </head>
+    <cell id="C6"><pagelink id="Keith Laws">Keith LawsTom
+        </pagelink>
+      <text> Johnston</text>
+      <pagelink id="Peter Ashworth">Peter Ashworth
+        </pagelink>
+      <pagelink id="Colin Lloyd Tucker">Colin Lloyd Tucker
+        </pagelink>
+      <pagelink id="Simon Fisher Turner">Simon Fisher Turner
+        </pagelink>
+      <pagelink id="David Palmer (drummer)"><text>David Palmer</text>
+        </pagelink>
+      <pagelink id="Johnny Marr">Johnny Marr
+        </pagelink>
+      <pagelink id="James Eller">James Eller
+        </pagelink>
+      <pagelink id="D. C. Collard">D. C. Collard
+        </pagelink>
+      <pagelink id="Jim Fitting">Jim Fitting
+        </pagelink>
+      <pagelink id="Keith Joyner">Keith Joyner
+        </pagelink>
+      <pagelink id="Jared Michael Nickerson">Jared Michael Nickerson
+        </pagelink>
+      <pagelink id="Eric Schermerhorn">Eric Schermerhorn
+        </pagelink>
+      <pagelink id="Brian MacLeod (U.S. musician)"><text>Brian MacLeod</text>
+        </pagelink>
+      <pagelink id="Gail Ann Dorsey">Gail Ann Dorsey
+        </pagelink>
+      <pagelink id="Spencer Campbell">Spencer Campbell
+        </pagelink>
+      <pagelink id="Earl Harvin">Earl Harvin
+        </pagelink>
+      <pagelink id="Andrew Kubiszewski">Andrew Kubiszewski
+        </pagelink>
+      <br/>
+      </cell>
+    </table>
+  </citation>
+<citation id="cit5" class="IPAc-en"><list id="l1"><attr>ð</attr>
+    </list>
+  <list id="l1"><attr>ə</attr>
+    </list>
+  <list id="l1"><attr>_</attr>
+    </list>
+  <list id="l1"><attr>ð</attr>
+    </list>
+  <list id="l1"><attr>ə</attr>
+    </list>
+  </citation>
+<citation id="cit6"><table id="table2"><tabtitle><text>cite book</text>
+      </tabtitle>
+    <head id="C0"><text>editor</text>
+      </head>
+    <cell id="C0"><text>David Roberts</text>
+      </cell>
+    <head id="C1"><text>title</text>
+      </head>
+    <cell id="C1"><text>British Hit Singles and Albums</text>
+      </cell>
+    <head id="C2"><text>year</text>
+      </head>
+    <cell id="C2"><text>2006</text>
+      </cell>
+    <head id="C3"><text>page</text>
+      </head>
+    <cell id="C3"><text>555</text>
+      </cell>
+    <head id="C4"><text>publisher</text>
+      </head>
+    <cell id="C4"><text>Guinness World Records Limited</text>
+      </cell>
+    <head id="C5"><text>isbn</text>
+      </head>
+    <cell id="C5"><text>978-1904994107</text>
+      </cell>
+    </table>
+  </citation>
+<heading id="h1"><text>History</text>
+  </heading>
+<heading id="h2"><text>The early years (1977–1981)</text>
+  </heading>
+<text>In November 1977, Matt Johnson placed an </text>
+<pagelink id="advertising"><text>advertisement</text>
+  </pagelink>
+<text> in </text>
+<entity id="2"><pagelink id="NME">NME
+    </pagelink>
+  </entity>
+<text>, asking for </text>
+<quot><text>Bass/lead guitarist into </text>
+  <pagelink id="The Velvet Underground">The Velvet Underground
+    </pagelink>
+  <text>/</text>
+  <pagelink id="Syd Barrett">Syd Barrett
+    </pagelink>
+  </quot>
+<text>. Johnson later placed a second advertisement in the </text>
+<entity id="2"><text>NME</text>
+  </entity>
+<text>, stating his new influences as </text>
+<quot><pagelink id="The Residents">The Residents
+    </pagelink>
+  <text>/</text>
+  <pagelink id="Throbbing Gristle">Throbbing Gristle
+    </pagelink>
+  </quot>
+<text>.
+While trying to get his band going, in 1978 Johnson had recorded a demo solo </text>
+<pagelink id="album">album
+  </pagelink>
+<text> (</text>
+<entity id="2"><text>See Without Being Seen</text>
+  </entity>
+<text>) which he continued to sell at various underground gigs on cassettes. In 1979, working with Colin Lloyd-Tucker (a friend and colleague at </text>
+<pagelink id="De Wolfe Music">De Wolfe Music
+  </pagelink>
+<text>, the Soho music publisher/recording studio) Johnson recorded his first album proper, </text>
+<entity id="2"><text>Spirits</text>
+  </entity>
+<text>. This album remains unreleased, although the album track </text>
+<quot><text>What Stanley Saw</text>
+  </quot>
+<text> was later licensed to </text>
+<pagelink id="Cherry Red Records">Cherry Red Records
+  </pagelink>
+<text> for their </text>
+<entity id="2"><text>Perspectives &amp; Distortion</text>
+  </entity>
+<text> </text>
+<pagelink id="compilation album">compilation album
+  </pagelink>
+<text>, which also featured </text>
+<pagelink id="Virgin Prunes">Virgin Prunes
+  </pagelink>
+<text>, </text>
+<pagelink id="Lemon Kittens">Lemon Kittens
+  </pagelink>
+<text>, </text>
+<pagelink id="Thomas Leer">Thomas Leer
+  </pagelink>
+<text>, </text>
+<pagelink id="Kevin Coyne">Kevin Coyne
+  </pagelink>
+<text> and </text>
+<pagelink id="Mark Perry (musician)"><text>Mark Perry</text>
+  </pagelink>
+<text>.
+The The made their debut at London's Africa Centre on 11 May 1979,</text>
+<citlink id="cit7"/>
+<text> third on the bill to </text>
+<pagelink id="Scritti Politti">Scritti Politti
+  </pagelink>
+<text> and </text>
+<pagelink id="PragVEC">PragVEC
+  </pagelink>
+<text>, using backing tape tracks that Johnson created at his day job at De Wolfe studios for the drums and bass. The band at this point consisted of Johnson on vocal, electric piano, guitar and tapes and </text>
+<pagelink id="Keith Laws">Keith Laws
+  </pagelink>
+<text> on synthesiser and tapes. It was Keith Laws who suggested the name 'the The' to Matt Johnson.
+As the The was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios.
+</text>
+<pagelink id="Peter Ashworth">Peter Ashworth
+  </pagelink>
+<text>, then known as 'Triash' and later to become a noted photographer, became the The's drummer in 1980, and Tom Johnston (also managing The The at this point and later to become a cartoonist for the </text>
+<entity id="2"><pagelink id="Evening Standard">Evening Standard
+    </pagelink>
+  </entity>
+<text>, </text>
+<entity id="2"><pagelink id="Daily Mirror">Daily Mirror
+    </pagelink>
+  </entity>
+<text> and </text>
+<entity id="2"><pagelink id="The Sun (United Kingdom)"><text>The Sun</text>
+    </pagelink>
+  </entity>
+<text> newspapers) was added on bass.</text>
+<citlink id="cit8"/>
+<text> Although both Ashworth and Johnston were credited with appearing on The The's debut single (</text>
+<quot><text>Controversial Subject</text>
+  </quot>
+<text>/</text>
+<quot><text>Black and White</text>
+  </quot>
+<text>) on </text>
+<pagelink id="4AD"><text>4AD Records</text>
+  </pagelink>
+<text> neither actually played on the </text>
+<pagelink id="sound recording and reproduction"><text>recordings</text>
+  </pagelink>
+<text>, which were produced by </text>
+<pagelink id="Wire (band)"><text>Wire</text>
+  </pagelink>
+<text> members </text>
+<pagelink id="Bruce Gilbert">Bruce Gilbert
+  </pagelink>
+<text> and </text>
+<pagelink id="Graham Lewis">Graham Lewis
+  </pagelink>
+<text>. All </text>
+<pagelink id="musical instrument"><text>instruments</text>
+  </pagelink>
+<text> were played by Johnson and Laws. Johnston and Ashworth soon dropped out of the The and returned to their respective day jobs. As a duo (Johnson and Laws), The The began performing concerts with </text>
+<pagelink id="Wire (band)"><text>Wire</text>
+  </pagelink>
+<text>, </text>
+<pagelink id="Cabaret Voltaire (band)"><text>Cabaret Voltaire</text>
+  </pagelink>
+<text>, </text>
+<pagelink id="Deutsch Amerikanische Freundschaft"><text>DAF</text>
+  </pagelink>
+<text>, </text>
+<pagelink id="This Heat">This Heat
+  </pagelink>
+<text>, </text>
+<pagelink id="The Birthday Party (band)"><text>The Birthday Party</text>
+  </pagelink>
+<text> and </text>
+<pagelink id="Scritti Politti">Scritti Politti
+  </pagelink>
+<text>.
+In early 1981 The The also contributed the composition ‘Untitled’ to the </text>
+<pagelink id="Some Bizzare Album">Some Bizzare Album
+  </pagelink>
+<text>. In September of that year Johnson and Laws signed a deal with </text>
+<pagelink id="Some Bizzare Records">Some Bizzare Records
+  </pagelink>
+<text> and released the 7</text>
+<quot><text> single Cold</text>
+  </quot>
+<text> Spell Ahead</text>
+<quot><text>. By this stage Matt Johnson had begun playing all the instruments himself so Laws left to pursue his studies, leaving Johnson as a solo artist using a group moniker.</text>
+  </quot>
+<br/>
+<text>Johnson was signed up later in 1981 to 4AD Records by </text>
+<pagelink id="Ivo Watts-Russell">Ivo Watts-Russell
+  </pagelink>
+<text> to record a solo album, </text>
+<entity id="2"><pagelink id="Burning Blue Soul">Burning Blue Soul
+    </pagelink>
+  </entity>
+<text>. Although all of the instruments and vocals were performed by Johnson, the album featured various producers including Wire's </text>
+<pagelink id="Bruce Gilbert">Bruce Gilbert
+  </pagelink>
+<text> and </text>
+<pagelink id="Graham Lewis">Graham Lewis
+  </pagelink>
+<text>, Ivo and Johnson himself. Years later, owing to a request from Johnson, so that all of his albums would be in the same rack together, it would be re-issued and credited to The The.
+Towards the end of 1981, Colin Lloyd-Tucker and </text>
+<pagelink id="Simon Fisher-Turner">Simon Fisher-Turner
+  </pagelink>
+<text> joined the band for a series of stripped down The The acoustic concerts in London.</text>
+<citation id="cit7"><table id="table3"><tabtitle><text>cite web</text>
+      </tabtitle>
+    <head id="C0"><text>url</text>
+      </head>
+    <cell id="C0"><weblink id="http://www.thethe.com/sections/library/gigography/gigography.html"/>
+      </cell>
+    <head id="C1"><text>title</text>
+      </head>
+    <cell id="C1"><text>This Is The The Day – Library</text>
+      </cell>
+    <head id="C2"><text>publisher</text>
+      </head>
+    <cell id="C2"><text>Thethe.com</text>
+      </cell>
+    <head id="C3"><text>accessdate</text>
+      </head>
+    <cell id="C3"><text>2011-04-02</text>
+      </cell>
+    <head id="C4"><text>deadurl</text>
+      </head>
+    <cell id="C4"><text>yes</text>
+      </cell>
+    <head id="C5"><text>archiveurl</text>
+      </head>
+    <cell id="C5"><weblink id="https://web.archive.org/web/20110717040926/http://www.thethe.com/sections/library/gigography/gigography.html"/>
+      </cell>
+    <head id="C6"><text>archivedate</text>
+      </head>
+    <cell id="C6"><text>17 July 2011</text>
+      </cell>
+    </table>
+  </citation>
+<citation id="cit8"><table id="table4"><tabtitle><text>cite book</text>
+      </tabtitle>
+    <head id="C0"><text>last</text>
+      </head>
+    <cell id="C0"><text>Larkin</text>
+      </cell>
+    <head id="C1"><text>author-link</text>
+      </head>
+    <cell id="C1"><text>Colin Larkin (writer)</text>
+      </cell>
+    <head id="C2"><text>title</text>
+      </head>
+    <cell id="C2"><text>The Guinness encyclopedia of popular music</text>
+      </cell>
+    <head id="C3"><text>publisher</text>
+      </head>
+    <cell id="C3"><pagelink id="Guinness Publishing">Guinness Publishing
+        </pagelink>
+      </cell>
+    <head id="C4"><text>edition</text>
+      </head>
+    <cell id="C4"><text>2nd revised</text>
+      </cell>
+    </table>
+  </citation>
+<heading id="h2"><text>The solo years (1982–1987)</text>
+  </heading>
+<text>Now freed from the politics of a permanent group line-up, Johnson was able to take The The up to the next level, and spent the next few years collaborating with a diverse range of creative individuals, freely changing personnel from project to project.
+The The's next single was a retooling of </text>
+<quot><text>Cold Spell Ahead</text>
+  </quot>
+<text>, now entitled </text>
+<quot><text>Uncertain Smile</text>
+  </quot>
+<text>. Produced in New York by </text>
+<pagelink id="Mike Thorne">Mike Thorne
+  </pagelink>
+<text>; it reached No. 68 UK. This version is different from the more familiar album version, and featured sax and flute by session player </text>
+<pagelink id="Crispin Cioe">Crispin Cioe
+  </pagelink>
+<text> rather than (as on the album version) the piano of </text>
+<pagelink id="Squeeze (band)"><text>Squeeze</text>
+  </pagelink>
+<text>'s </text>
+<pagelink id="Jools Holland">Jools Holland
+  </pagelink>
+<text>.
+In 1982, the intended debut album by the The (</text>
+<entity id="2"><text>The Pornography of Despair</text>
+  </entity>
+<text>) was recorded, but was never officially mixed nor released.</text>
+<reflink id="ref5"/>
+<text> Johnson apparently ran off some cassette copies for friends, and several tracks were subsequently re-recorded and issued as b-sides, but the original album remains unmixed and unissued. </text>
+<pagelink id="Steve James Sherlock">Steve James Sherlock
+  </pagelink>
+<text> played flute and saxophone on the re-recordings of </text>
+<quot><text>Three Orange Kisses From Kazan</text>
+  </quot>
+<text> and </text>
+<quot><text>Waitin' For The Upturn</text>
+  </quot>
+<text>, two of the songs from the album which saw the light of day as b-sides.
+Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.  
+The The released their official album debut, the synth-noir classic </text>
+<entity id="2"><pagelink id="Soul Mining">Soul Mining
+    </pagelink>
+  </entity>
+<text>, in 1983. It featured the minor UK No. 71 hit </text>
+<quot><pagelink id="This Is the Day (song)"><text>This Is the Day</text>
+    </pagelink>
+  </quot>
+<text>, as well as a new recording of The the performing </text>
+<quot><text>Uncertain Smile</text>
+  </quot>
+<text>. Produced by Johnson and </text>
+<pagelink id="Paul Hardiman">Paul Hardiman
+  </pagelink>
+<text>, it featured guest appearances from </text>
+<pagelink id="Orange Juice (band)"><text>Orange Juice</text>
+  </pagelink>
+<text>'s drummer </text>
+<pagelink id="Zeke Manyika">Zeke Manyika
+  </pagelink>
+<text>, </text>
+<pagelink id="Jools Holland">Jools Holland
+  </pagelink>
+<text>, </text>
+<pagelink id="Thomas Leer">Thomas Leer
+  </pagelink>
+<text> and </text>
+<pagelink id="J. G. Thirlwell">J. G. Thirlwell
+  </pagelink>
+<text> (aka </text>
+<pagelink id="Foetus (band)"><text>Foetus</text>
+  </pagelink>
+<text>).
+During the The's more prolific period of releases, from </text>
+<entity id="2"><text>Soul Mining</text>
+  </entity>
+<text> (1983) to </text>
+<entity id="2"><text>Dusk</text>
+  </entity>
+<text> (1992), most artwork used on the albums and single releases was produced by Johnson's brother </text>
+<pagelink id="Andy Dog Johnson"><text>Andrew Johnson</text>
+  </pagelink>
+<text>, using the pseudonym Andy Dog. The artwork has a distinctive style, and sometimes courted controversy, most notably the initial release of the 1986 single </text>
+<quot><text>Infected</text>
+  </quot>
+<text> which featured a masturbating devil and was withdrawn from sale and re-issued with an edited version of the same drawing.
+For the 1986 album </text>
+<entity id="2"><pagelink id="Infected (The The album)"><text>Infected</text>
+    </pagelink>
+  </entity>
+<text>, the The still consisted only of Johnson, but was augmented by session musicians and featured friends such as Manyika and </text>
+<pagelink id="Rip Rig + Panic">Rip Rig + Panic
+  </pagelink>
+<text> singer </text>
+<pagelink id="Neneh Cherry">Neneh Cherry
+  </pagelink>
+<text> and </text>
+<pagelink id="Anna Domino">Anna Domino
+  </pagelink>
+<text>. This album spawned four charting singles in the UK, notably </text>
+<quot><text>Heartland</text>
+  </quot>
+<text>, which made the UK Top 30. It was also unusual for having a full-length accompanying film. Costing hundreds of thousands of pounds, </text>
+<entity id="2"><text>Infected: The Movie</text>
+  </entity>
+<text> was shot on locations in Bolivia, Peru and New York. Different songs were directed by different directors, mainly </text>
+<pagelink id="Tim Pope">Tim Pope
+  </pagelink>
+<text> and </text>
+<pagelink id="Peter Christopherson"><text>Peter 'Sleazy' Christopherson</text>
+  </pagelink>
+<text> (of </text>
+<pagelink id="Throbbing Gristle">Throbbing Gristle
+  </pagelink>
+<text>).
+Throughout 1986-1987 Johnson toured the world extensively with </text>
+<entity id="2"><text>Infected: The Movie</text>
+  </entity>
+<text>, showing the film in cinemas in place of performing live concerts. The film was also shown twice in its entirety on </text>
+<pagelink id="Channel 4">Channel 4
+  </pagelink>
+<text> in the UK and on </text>
+<pagelink id="MTV">MTV
+  </pagelink>
+<text>'s </text>
+<pagelink id="120 Minutes">120 Minutes
+  </pagelink>
+<text> in the </text>
+<pagelink id="United States"><text>US</text>
+  </pagelink>
+<text>.
+In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting </text>
+<entity id="2"><text>Infected: The Movie</text>
+  </entity>
+<text> in Australia he had a chance encounter with </text>
+<pagelink id="Billy Bragg">Billy Bragg
+  </pagelink>
+<text> who persuaded him to return to Britain and support </text>
+<pagelink id="Red Wedge">Red Wedge
+  </pagelink>
+<text>, a coalition of like-minded musicians supporting the British </text>
+<pagelink id="Labour Party (UK)"><text>Labour Party</text>
+  </pagelink>
+<text> in its election campaign. Johnson agreed and enrolled longtime friend and collaborator Manyika to join him in performing shows in London featuring stripped down versions of political The the songs such as </text>
+<quot><text>Heartland</text>
+  </quot>
+<text>. This experience convinced Johnson to put a band together once again.</text>
+<ref id="ref5"><weblink id="http://www.interzone23.com/thethe/albums.html"><text> The The Discography – Albums</text>
+    </weblink>
+  <text> </text>
+  <citlink id="cit9"/>
+  </ref>
+<citation id="cit9" class="webarchive" url="https://web.archive.org/web/20100107023657/http://www.interzone23.com/thethe/albums.html" date="7 January 2010"/>
+<heading id="h2"><text>Return to a full band (1988–2002)</text>
+  </heading>
+<text>By 1988, the The was an actual band again, Johnson having recruited ex-</text>
+<pagelink id="The Smiths"><text>Smiths</text>
+  </pagelink>
+<text> guitarist </text>
+<pagelink id="Johnny Marr">Johnny Marr
+  </pagelink>
+<text>, ex-</text>
+<pagelink id="Nick Lowe">Nick Lowe
+  </pagelink>
+<text> bassist </text>
+<pagelink id="James Eller">James Eller
+  </pagelink>
+<text> and ex-</text>
+<pagelink id="ABC (band)"><text>ABC</text>
+  </pagelink>
+<text> drummer </text>
+<pagelink id="David Palmer (drummer)"><text>David Palmer</text>
+  </pagelink>
+<text> as fully-fledged members. This line-up, plus guest singer </text>
+<pagelink id="Sinéad O&apos;Connor">Sinéad O'Connor
+  </pagelink>
+<text>, recorded the album </text>
+<entity id="2"><pagelink id="Mind Bomb">Mind Bomb
+    </pagelink>
+  </entity>
+<text>, which debuted at No. 4 in the </text>
+<pagelink id="UK Albums Chart">UK Albums Chart
+  </pagelink>
+<text> and featured the band's highest charting single to that time, </text>
+<quot><text>The Beat(en) Generation</text>
+  </quot>
+<text>, which peaked at No. 18 in the </text>
+<pagelink id="UK Singles Chart">UK Singles Chart
+  </pagelink>
+<text>. The first single from </text>
+<entity id="2"><pagelink id="Mind Bomb">Mind Bomb
+    </pagelink>
+  </entity>
+<text> was actually scheduled to be </text>
+<quot><text>Armageddon Days Are Here (again)</text>
+  </quot>
+<text> but with its chorus of </text>
+<quot><text>Islam is rising, the Christians mobilising</text>
+  </quot>
+<text> and sensitivities over the </text>
+<pagelink id="Salman Rushdie">Salman Rushdie
+  </pagelink>
+<text> affair that had recently erupted, this song was deemed unsuitable for release by </text>
+<weblink id="file:Epic/CBS."/>
+<br/>
+<text>Keyboardist </text>
+<pagelink id="D.C. Collard">D.C. Collard
+  </pagelink>
+<text> was added to the official line-up in 1989 (keyboard player </text>
+<pagelink id="Steve Hogarth">Steve Hogarth
+  </pagelink>
+<text>, who'd played on </text>
+<entity id="2"><pagelink id="Infected (The The album)"><text>Infected</text>
+    </pagelink>
+  </entity>
+<text>, had initially been asked to join but opted instead to become the new lead vocalist of </text>
+<pagelink id="Marillion">Marillion
+  </pagelink>
+<text>). The band embarked on a lengthy world tour in 1989–90 called </text>
+<entity id="2"><text>The The Versus The World</text>
+  </entity>
+<text>. The live film of the same name, directed by </text>
+<pagelink id="Tim Pope">Tim Pope
+  </pagelink>
+<text>, was filmed during the three nights The The performed at London's </text>
+<pagelink id="Royal Albert Hall">Royal Albert Hall
+  </pagelink>
+<text> at the end of the tour. Vocalist Melanie Redmond, who had just completed a world tour with Duran Duran, joined the tour during the European leg as a session musician.
+The studio EP </text>
+<entity id="2"><text>Shades of Blue</text>
+  </entity>
+<text> was released in 1990. This included cover versions of </text>
+<pagelink id="Fred Neil">Fred Neil
+  </pagelink>
+<text>'s </text>
+<quot><text>Dolphins</text>
+  </quot>
+<text> and </text>
+<pagelink id="Duke Ellington">Duke Ellington
+  </pagelink>
+<text>'s </text>
+<quot><text>Solitude</text>
+  </quot>
+<text> as well as a new original song </text>
+<quot><text>Jealous of Youth</text>
+  </quot>
+<text> and a live version of </text>
+<quot><text>Another Boy Drowning</text>
+  </quot>
+<text> from </text>
+<entity id="2"><text>Burning Blue Soul</text>
+  </entity>
+<text>. This and a later EP of remixes, 1993's </text>
+<entity id="2"><text>Dis-infected</text>
+  </entity>
+<text>, were compiled into a 1994 full-length album for the North American market called </text>
+<entity id="2"><text>Solitude</text>
+  </entity>
+<text>.
+In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album </text>
+<entity id="2"/>
+<entity id="2"><text>, which debuted at No. 2 in the UK and spun off three Top 40 singles in the UK, led by </text>
+  </entity>
+<quot><text>Dogs of Lust</text>
+  </quot>
+<text>. Another world tour followed, the </text>
+<entity id="2"><text>Lonely Planet</text>
+  </entity>
+<text> tour, at which point the band's line-up was reshuffled; Marr and Eller left, and were replaced by Atlanta-based guitarist </text>
+<pagelink id="Keith Joyner">Keith Joyner
+  </pagelink>
+<text> and New York bassist </text>
+<pagelink id="Jared Michael Nickerson">Jared Michael Nickerson
+  </pagelink>
+<text>, respectively after Johnson relocated the band to America. Also added was Boston harmonica player </text>
+<pagelink id="Jim Fitting">Jim Fitting
+  </pagelink>
+<text> (formerly of </text>
+<pagelink id="Treat Her Right">Treat Her Right
+  </pagelink>
+<text>), who auditioned in New York in early 1993. The version of their hit </text>
+<quot><text>This Is The Day</text>
+  </quot>
+<text> featuring Jim Fitting was often dubbed </text>
+<quot><entity id="2"><text>That Was</text>
+    </entity>
+  <text> The Day</text>
+  </quot>
+<text>. Palmer bowed out partway through the tour and was replaced by ex </text>
+<pagelink id="Stabbing Westward">Stabbing Westward
+  </pagelink>
+<text> drummer </text>
+<pagelink id="Andy Kubiszewski">Andy Kubiszewski
+  </pagelink>
+<text>. The band headlined the main stage at the 1993 </text>
+<pagelink id="Reading Festival">Reading Festival
+  </pagelink>
+<text>.
+Another full-length film, directed by longtime collaborator </text>
+<pagelink id="Tim Pope">Tim Pope
+  </pagelink>
+<text>, was made for this album. </text>
+<entity id="2"><text>From Dusk Til Dawn</text>
+  </entity>
+<text> was shot in New Orleans and New York, and along with Johnson and Johnny Marr also featured various characters from the New York underground scene such as sexologist </text>
+<pagelink id="Annie Sprinkle">Annie Sprinkle
+  </pagelink>
+<text>, writer and raconteur </text>
+<pagelink id="Quentin Crisp">Quentin Crisp
+  </pagelink>
+<text>, </text>
+<pagelink id="Guardian Angels">Guardian Angels
+  </pagelink>
+<text> founder </text>
+<pagelink id="Curtis Sliwa">Curtis Sliwa
+  </pagelink>
+<text>, and porn star Rick Savage amongst many other carnival characters.
+Now permanently relocated to New York, The The's next project was 1995's </text>
+<entity id="2"/>
+<entity id="2"><text>, an album that consisted entirely of </text>
+  <pagelink id="Hank Williams">Hank Williams
+    </pagelink>
+  <text> cover tunes. Hanky</text>
+  </entity>
+<text> Panky</text>
+<entity id="2"><text> was recorded by a new group consisting of Johnson, Collard, Fitting, ex </text>
+  <pagelink id="Iggy Pop">Iggy Pop
+    </pagelink>
+  <text> guitarist </text>
+  <pagelink id="Eric Schermerhorn">Eric Schermerhorn
+    </pagelink>
+  <text>, ex </text>
+  <pagelink id="David Bowie">David Bowie
+    </pagelink>
+  <text> bass guitarist </text>
+  <pagelink id="Gail Ann Dorsey">Gail Ann Dorsey
+    </pagelink>
+  <text> (billed as </text>
+  </entity>
+<quot><text>Hollywood</text>
+  </quot>
+<text> Dorsey), and drummer the </text>
+<quot><text>Reverend</text>
+  </quot>
+<text> </text>
+<pagelink id="Brian MacLeod (U.S. musician)"><text>Brian MacLeod</text>
+  </pagelink>
+<text>. Their cover version of </text>
+<quot><text>I Saw The Light</text>
+  </quot>
+<text> hit No. 31 UK.Released by Some Bizzare Label / Epic 
+An experimental album called </text>
+<entity id="2"><text>Gun Sluts</text>
+  </entity>
+<text> was recorded in 1997, but left unreleased by the band after it was rejected for being too uncommercial by their label. The The severed their eighteen-year relationship with Sony and moved to </text>
+<pagelink id="Interscope Records"><text>Interscope</text>
+  </pagelink>
+<text>, on </text>
+<pagelink id="Trent Reznor">Trent Reznor
+  </pagelink>
+<text>'s </text>
+<pagelink id="Nothing Records">Nothing Records
+  </pagelink>
+<text> imprint.
+In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released </text>
+<entity id="2"><pagelink id="NakedSelf">NakedSelf
+    </pagelink>
+  </entity>
+<text> and embarked on yet another lengthy world tour, the </text>
+<entity id="2"><text>Naked Tour</text>
+  </entity>
+<text>, this one lasting 14 months. Not counting soundtrack albums, </text>
+<entity id="2"><pagelink id="NakedSelf">NakedSelf
+    </pagelink>
+  </entity>
+<text> remains The The's final released studio album to date.
+This same line-up also recorded two new tracks, </text>
+<quot><text>Deep Down Truth</text>
+  </quot>
+<text>, featuring </text>
+<pagelink id="Angela McCluskey">Angela McCluskey
+  </pagelink>
+<text> on vocals and </text>
+<quot><text>Pillar Box Red</text>
+  </quot>
+<text>. Both songs were produced by </text>
+<pagelink id="Clive Langer">Clive Langer
+  </pagelink>
+<text> and </text>
+<pagelink id="Alan Winstanley">Alan Winstanley
+  </pagelink>
+<text> for the 2002 compilation album </text>
+<entity id="2"/>
+<entity id="2"/>
+<br/>
+<text>In June 2002 The The made a sole live appearance at the </text>
+<pagelink id="Meltdown Festival">Meltdown Festival
+  </pagelink>
+<text> at London's Royal Festival Hall as guests of </text>
+<pagelink id="David Bowie">David Bowie
+  </pagelink>
+<text>. At this point, the band consisted solely of Johnson and longtime friend and collaborator </text>
+<pagelink id="J. G. Thirlwell">J. G. Thirlwell
+  </pagelink>
+<text> aka </text>
+<pagelink id="Foetus (band)"><text>Foetus</text>
+  </pagelink>
+<text> on tapes and loops, and young film director </text>
+<pagelink id="Benn Northover">Benn Northover
+  </pagelink>
+<text> on film and video.
+This was the last live performance by The The for sixteen years; Johnson had stated on the official The The web site in the FAQ section that </text>
+<quot><text>There are no plans for one-off shows or tours in the near future but there will undoubtedly be another The The tour at some point.</text>
+  </quot>
+<citlink id="cit10"/>
+<citation id="cit10"><table id="table5"><tabtitle><text>cite web</text>
+      </tabtitle>
+    <head id="C0"><text>url</text>
+      </head>
+    <cell id="C0"><weblink id="http://www.thethe.com/forum/showthread.php?t=10"/>
+      </cell>
+    <head id="C1"><text>title</text>
+      </head>
+    <cell id="C1"><text>Thethe.com</text>
+      </cell>
+    <head id="C2"><text>publisher</text>
+      </head>
+    <cell id="C2"><text>Thethe.com</text>
+      </cell>
+    <head id="C3"><text>accessdate</text>
+      </head>
+    <cell id="C3"><text>2011-04-02</text>
+      </cell>
+    <head id="C4"><text>deadurl</text>
+      </head>
+    <cell id="C4"><text>yes</text>
+      </cell>
+    <head id="C5"><text>archiveurl</text>
+      </head>
+    <cell id="C5"><weblink id="https://web.archive.org/web/20110717043314/http://www.thethe.com/forum/showthread.php?t=10"/>
+      </cell>
+    <head id="C6"><text>archivedate</text>
+      </head>
+    <cell id="C6"><text>17 July 2011</text>
+      </cell>
+    </table>
+  </citation>
+<heading id="h2"><text>Hiatus (2003–2017)</text>
+  </heading>
+<text>Since 2003 the reclusive Johnson has kept well away from the public eye and has concentrated primarily on soundtrack work, scoring numerous documentaries, films and art installations.
+For Swedish filmmaker Johanna St Michaels this has included </text>
+<entity id="2"><text>Best Wishes Bernhard</text>
+  </entity>
+<text> (prize winning film of Dokumentär Films Premien Nordic Panorama 2003), </text>
+<entity id="2"><text>Snapshots From Reality</text>
+  </entity>
+<text> (Nominated for Best International Short at the </text>
+<pagelink id="Birds Eye View">Birds Eye View
+  </pagelink>
+<text> Film festival at London's </text>
+<pagelink id="Institute of Contemporary Arts"><text>ICA</text>
+  </pagelink>
+<text> 2007) </text>
+<entity id="2"><text>The Track</text>
+  </entity>
+<text> (2007), </text>
+<entity id="2"><text>Going Live</text>
+  </entity>
+<text> (2008), </text>
+<entity id="2"><text>The Island Amid the Worlds</text>
+  </entity>
+<text> (2010) and </text>
+<entity id="2"><text>Bilder av Dina</text>
+  </entity>
+<text> (2010). The latest collaboration between Johnson and St Michaels, </text>
+<entity id="2"><text>Penthouse North</text>
+  </entity>
+<text> premiered at the </text>
+<pagelink id="Hot Docs Canadian International Documentary Festival">Hot Docs Canadian International Documentary Festival
+  </pagelink>
+<text> in May 2014.
+In June 2009 it was announced that The The had created an original soundtrack to the </text>
+<entity id="2"><pagelink id="Gerard Johnson (director)"><text>Gerard Johnson</text>
+    </pagelink>
+  </entity>
+<text> debut feature film </text>
+<entity id="2"><pagelink id="Tony (2009 film)"><text>Tony</text>
+    </pagelink>
+  </entity>
+<text>. The film was released in February 2010 to critical acclaim; </text>
+<pagelink id="Sight &amp; Sound">Sight &amp; Sound
+  </pagelink>
+<text> said “If Mike Leigh remade Henry: Portrait of a Serial Killer... Remarkable</text>
+<quot><text>, </text>
+  <pagelink id="The Guardian">The Guardian
+    </pagelink>
+  <text> </text>
+  </quot>
+<quot><text>The perfect marriage of genre and style</text>
+  </quot>
+<text> and </text>
+<pagelink id="The Independent">The Independent
+  </pagelink>
+<text> “Grim, painful and uncomfortably funny”. The </text>
+<pagelink id="soundtrack">soundtrack
+  </pagelink>
+<text> was released on The The's Cineola imprint in March 2010, as volume one of several upcoming soundtrack and instrumental albums.
+In May 2014 The The completed an original soundtrack for </text>
+<pagelink id="Gerard Johnson (director)"><text>Gerard Johnson</text>
+  </pagelink>
+<text>'s latest film, Hyena. Starring </text>
+<pagelink id="Peter Ferdinando">Peter Ferdinando
+  </pagelink>
+<text>, </text>
+<pagelink id="Stephen Graham (actor)"><text>Stephen Graham</text>
+  </pagelink>
+<text> and </text>
+<pagelink id="Neil Maskell">Neil Maskell
+  </pagelink>
+<text>, this controversial crime thriller about people trafficking and corrupt elements within the UK police opens up 2014's </text>
+<pagelink id="Edinburgh International Film Festival">Edinburgh International Film Festival
+  </pagelink>
+<text>. The album was released on 6 March 2015 as the third part in the Cinéola series.
+For English director </text>
+<pagelink id="Nichola Bruce">Nichola Bruce
+  </pagelink>
+<text> it has included the documentary </text>
+<entity id="2"><text>One Man Show: Dramatic Art of Steven Berkoff</text>
+  </entity>
+<text> (1995) and a documentary feature film about the </text>
+<pagelink id="Apollo program"><text>Apollo moon landings</text>
+  </pagelink>
+<text>, </text>
+<entity id="2"><text>Moonbug</text>
+  </entity>
+<text>,</text>
+<citlink id="cit11"/>
+<text> which was completed in autumn 2010 and won the Special Jury Remi Award for Theatrical Feature Documentary at the 2011 Houston International Film Festival. The soundtrack was released in 2012 as volume 2 in the series of original soundtrack albums produced through Johnson's Cineola imprint.
+</text>
+<citation id="cit11"><table id="table6"><tabtitle><text>cite web</text>
+      </tabtitle>
+    <head id="C0"><text>url</text>
+      </head>
+    <cell id="C0"><weblink id="http://nicholabruce.com/moonbug.html"/>
+      </cell>
+    <head id="C1"><text>title</text>
+      </head>
+    <cell id="C1"><text>Nicholabruce.com</text>
+      </cell>
+    <head id="C2"><text>publisher</text>
+      </head>
+    <cell id="C2"><text>Nicholabruce.com</text>
+      </cell>
+    <head id="C3"><text>accessdate</text>
+      </head>
+    <cell id="C3"><text>2011-04-02</text>
+      </cell>
+    <head id="C4"><text>deadurl</text>
+      </head>
+    <cell id="C4"><text>yes</text>
+      </cell>
+    <head id="C5"><text>archiveurl</text>
+      </head>
+    <cell id="C5"><weblink id="https://web.archive.org/web/20100512163859/http://nicholabruce.com/moonbug.html"/>
+      </cell>
+    <head id="C6"><text>archivedate</text>
+      </head>
+    <cell id="C6"><text>12 May 2010</text>
+      </cell>
+    </table>
+  </citation></doc>
+
+
+## 0000/The_The.err
+[1] syntax error in document: illegal character in page link [state MultiQuote,  source: ([[Dusk ({{Not a typo|The The}}...;2 in the UK and spun off thre...)]
+[2] close of WebLink structure called without open () [state None,  source: (]'', which debuted at No.&nbsp...2 in the UK and spun off three...)]
+[3] syntax error in document: illegal character in page link [state MultiQuote,  source: ([[Hanky Panky ({{Not a typo|Th...ntirely of [[Hank Williams]] c...)]
+[4] close of WebLink structure called without open () [state None,  source: (]'', an album that consisted e...tirely of [[Hank Williams]] co...)]
+[5] syntax error in document: illegal character in page link [state MultiQuote,  source: ([[45 RPM: The Singles of {{Not...|The The}} made a sole live ap...)]
+[6] close of WebLink structure called without open () [state None,  source: (]''  In June 2002 {{Not a typo...The The}} made a sole live app...)]
+
+
+## 0000/The_The.txt
+0 Title The_The "The The"
+1 CitationLink cit1 ""
+2 Break  ""
+3 CitationLink cit2 ""
+4 Break  ""
+5 CitationLink cit3 ""
+6 Break  ""
+7 CitationLink cit4 ""
+8 Break  ""
+9 MultiQuoteStart 3 ""
+10 Text  "The The"
+11 MultiQuoteEnd  ""
+12 Text  " ("
+13 CitationLink cit5 ""
+14 Text  ")"
+15 RefLink ref1 ""
+16 Text  " are an English "
+17 PageLinkStart post-punk "post-punk"
+18 PageLinkEnd  ""
+19 Text  " band. They have been active in various forms since 1979, with singer/songwriter "
+20 PageLinkStart Matt Johnson (singer) ""
+21 Text  "Matt Johnson"
+22 PageLinkEnd  ""
+23 Text  " being the only constant band member. The The achieved critical acclaim and commercial success in the UK, with 15 chart singles (seven reaching the Top 40), and their most successful album, "
+24 MultiQuoteStart 2 ""
+25 PageLinkStart Infected (The The album) ""
+26 Text  "Infected"
+27 PageLinkEnd  ""
+28 MultiQuoteEnd  ""
+29 Text  " (1986), spent 30 weeks on the chart. They followed this with the Top Ten albums "
+30 MultiQuoteStart 2 ""
+31 PageLinkStart Mind Bomb "Mind Bomb"
+32 PageLinkEnd  ""
+33 MultiQuoteEnd  ""
+34 Text  " (1989) and "
+35 MultiQuoteStart 2 ""
+36 PageLinkStart Dusk (The The album) ""
+37 Text  "Dusk"
+38 PageLinkEnd  ""
+39 MultiQuoteEnd  ""
+40 Text  " (1993)."
+41 CitationLink cit6 ""
+42 RefStart ref1 ""
+43 Text  "Pronunciation heard in a conversation between Matt Johnson and Johnny Marr "
+44 WebLinkStart https://m.youtube.com/watch?v=GMzBboCJTC4 ""
+45 WebLinkEnd  ""
+46 RefEnd  ""
+47 CitationStart cit1 ""
+48 AttributeStart class "Refimprove"
+49 AttributeEnd  ""
+50 AttributeStart date " January 2017"
+51 AttributeEnd  ""
+52 CitationEnd  ""
+53 CitationStart cit2 ""
+54 AttributeStart class "Use British English"
+55 AttributeEnd  ""
+56 AttributeStart date "April 2011"
+57 AttributeEnd  ""
+58 CitationEnd  ""
+59 CitationStart cit3 ""
+60 AttributeStart class "Use dmy dates"
+61 AttributeEnd  ""
+62 AttributeStart date "April 2011"
+63 AttributeEnd  ""
+64 CitationEnd  ""
+65 CitationStart cit4 ""
+66 TableStart table1 ""
+67 TableTitleStart  ""
+68 Text  "Infobox musical artist"
+69 TableTitleEnd  ""
+70 TableHeadStart  ""
+71 TableCellReference id "C0"
+72 Text  "name"
+73 TableHeadEnd  ""
+74 TableCellStart  ""
+75 TableCellReference id "C0"
+76 Text  "The The"
+77 TableCellEnd  ""
+78 TableHeadStart  ""
+79 TableCellReference id "C1"
+80 Text  "origin"
+81 TableHeadEnd  ""
+82 TableCellStart  ""
+83 TableCellReference id "C1"
+84 PageLinkStart London "London"
+85 PageLinkEnd  ""
+86 Text  ", "
+87 PageLinkStart England "England"
+88 PageLinkEnd  ""
+89 Text  ", United Kingdom"
+90 TableCellEnd  ""
+91 TableHeadStart  ""
+92 TableCellReference id "C2"
+93 Text  "genre"
+94 TableHeadEnd  ""
+95 TableCellStart  ""
+96 TableCellReference id "C2"
+97 PageLinkStart Post-punk "Post-punk"
+98 PageLinkEnd  ""
+99 Text  ", "
+100 PageLinkStart New wave music ""
+101 Text  "new wave"
+102 PageLinkEnd  ""
+103 Text  ", "
+104 PageLinkStart alternative rock "alternative rock"
+105 PageLinkEnd  ""
+106 TableCellEnd  ""
+107 TableHeadStart  ""
+108 TableCellReference id "C3"
+109 Text  "label"
+110 TableHeadEnd  ""
+111 TableCellStart  ""
+112 TableCellReference id "C3"
+113 PageLinkStart 4AD "4AD"
+114 PageLinkEnd  ""
+115 Text  ", "
+116 PageLinkStart Some Bizzare Records ""
+117 Text  "Some Bizzare"
+118 PageLinkEnd  ""
+119 Text  ", "
+120 PageLinkStart Epic Records ""
+121 Text  "Epic"
+122 PageLinkEnd  ""
+123 Text  ", "
+124 PageLinkStart Nothing Records ""
+125 Text  "Nothing"
+126 PageLinkEnd  ""
+127 Text  "/"
+128 PageLinkStart Interscope Records ""
+129 Text  "Interscope"
+130 PageLinkEnd  ""
+131 Text  ", Lazarus/"
+132 PageLinkStart Cineola "Cineola"
+133 PageLinkEnd  ""
+134 TableCellEnd  ""
+135 TableHeadStart  ""
+136 TableCellReference id "C4"
+137 Text  "website"
+138 TableHeadEnd  ""
+139 TableCellStart  ""
+140 TableCellReference id "C4"
+141 WebLinkStart https://www.thethe.com ""
+142 Text  " thethe.com"
+143 WebLinkEnd  ""
+144 TableCellEnd  ""
+145 TableHeadStart  ""
+146 TableCellReference id "C5"
+147 Text  "current members"
+148 TableHeadEnd  ""
+149 TableCellStart  ""
+150 TableCellReference id "C5"
+151 PageLinkStart Matt Johnson (singer) ""
+152 Text  "Matt Johnson"
+153 PageLinkEnd  ""
+154 TableCellEnd  ""
+155 TableHeadStart  ""
+156 TableCellReference id "C6"
+157 Text  "past members"
+158 TableHeadEnd  ""
+159 TableCellStart  ""
+160 TableCellReference id "C6"
+161 PageLinkStart Keith Laws "Keith LawsTom"
+162 PageLinkEnd  ""
+163 Text  " Johnston"
+164 PageLinkStart Peter Ashworth "Peter Ashworth"
+165 PageLinkEnd  ""
+166 PageLinkStart Colin Lloyd Tucker "Colin Lloyd Tucker"
+167 PageLinkEnd  ""
+168 PageLinkStart Simon Fisher Turner "Simon Fisher Turner"
+169 PageLinkEnd  ""
+170 PageLinkStart David Palmer (drummer) ""
+171 Text  "David Palmer"
+172 PageLinkEnd  ""
+173 PageLinkStart Johnny Marr "Johnny Marr"
+174 PageLinkEnd  ""
+175 PageLinkStart James Eller "James Eller"
+176 PageLinkEnd  ""
+177 PageLinkStart D. C. Collard "D. C. Collard"
+178 PageLinkEnd  ""
+179 PageLinkStart Jim Fitting "Jim Fitting"
+180 PageLinkEnd  ""
+181 PageLinkStart Keith Joyner "Keith Joyner"
+182 PageLinkEnd  ""
+183 PageLinkStart Jared Michael Nickerson "Jared Michael Nickerson"
+184 PageLinkEnd  ""
+185 PageLinkStart Eric Schermerhorn "Eric Schermerhorn"
+186 PageLinkEnd  ""
+187 PageLinkStart Brian MacLeod (U.S. musician) ""
+188 Text  "Brian MacLeod"
+189 PageLinkEnd  ""
+190 PageLinkStart Gail Ann Dorsey "Gail Ann Dorsey"
+191 PageLinkEnd  ""
+192 PageLinkStart Spencer Campbell "Spencer Campbell"
+193 PageLinkEnd  ""
+194 PageLinkStart Earl Harvin "Earl Harvin"
+195 PageLinkEnd  ""
+196 PageLinkStart Andrew Kubiszewski "Andrew Kubiszewski"
+197 PageLinkEnd  ""
+198 Break  ""
+199 TableCellEnd  ""
+200 TableEnd  ""
+201 CitationEnd  ""
+202 CitationStart cit5 ""
+203 AttributeStart class "IPAc-en"
+204 AttributeEnd  ""
+205 ListItemStart l1 ""
+206 AttributeStart  "ð"
+207 AttributeEnd  ""
+208 ListItemEnd  ""
+209 ListItemStart l1 ""
+210 AttributeStart  "ə"
+211 AttributeEnd  ""
+212 ListItemEnd  ""
+213 ListItemStart l1 ""
+214 AttributeStart  "_"
+215 AttributeEnd  ""
+216 ListItemEnd  ""
+217 ListItemStart l1 ""
+218 AttributeStart  "ð"
+219 AttributeEnd  ""
+220 ListItemEnd  ""
+221 ListItemStart l1 ""
+222 AttributeStart  "ə"
+223 AttributeEnd  ""
+224 ListItemEnd  ""
+225 CitationEnd  ""
+226 CitationStart cit6 ""
+227 TableStart table2 ""
+228 TableTitleStart  ""
+229 Text  "cite book"
+230 TableTitleEnd  ""
+231 TableHeadStart  ""
+232 TableCellReference id "C0"
+233 Text  "editor"
+234 TableHeadEnd  ""
+235 TableCellStart  ""
+236 TableCellReference id "C0"
+237 Text  "David Roberts"
+238 TableCellEnd  ""
+239 TableHeadStart  ""
+240 TableCellReference id "C1"
+241 Text  "title"
+242 TableHeadEnd  ""
+243 TableCellStart  ""
+244 TableCellReference id "C1"
+245 Text  "British Hit Singles and Albums"
+246 TableCellEnd  ""
+247 TableHeadStart  ""
+248 TableCellReference id "C2"
+249 Text  "year"
+250 TableHeadEnd  ""
+251 TableCellStart  ""
+252 TableCellReference id "C2"
+253 Text  "2006"
+254 TableCellEnd  ""
+255 TableHeadStart  ""
+256 TableCellReference id "C3"
+257 Text  "page"
+258 TableHeadEnd  ""
+259 TableCellStart  ""
+260 TableCellReference id "C3"
+261 Text  "555"
+262 TableCellEnd  ""
+263 TableHeadStart  ""
+264 TableCellReference id "C4"
+265 Text  "publisher"
+266 TableHeadEnd  ""
+267 TableCellStart  ""
+268 TableCellReference id "C4"
+269 Text  "Guinness World Records Limited"
+270 TableCellEnd  ""
+271 TableHeadStart  ""
+272 TableCellReference id "C5"
+273 Text  "isbn"
+274 TableHeadEnd  ""
+275 TableCellStart  ""
+276 TableCellReference id "C5"
+277 Text  "978-1904994107"
+278 TableCellEnd  ""
+279 TableEnd  ""
+280 CitationEnd  ""
+281 HeadingStart h1 ""
+282 Text  "History"
+283 HeadingEnd  ""
+284 HeadingStart h2 ""
+285 Text  "The early years (1977–1981)"
+286 HeadingEnd  ""
+287 Text  "In November 1977, Matt Johnson placed an "
+288 PageLinkStart advertising ""
+289 Text  "advertisement"
+290 PageLinkEnd  ""
+291 Text  " in "
+292 MultiQuoteStart 2 ""
+293 PageLinkStart NME "NME"
+294 PageLinkEnd  ""
+295 MultiQuoteEnd  ""
+296 Text  ", asking for "
+297 QuotationStart  ""
+298 Text  "Bass/lead guitarist into "
+299 PageLinkStart The Velvet Underground "The Velvet Underground"
+300 PageLinkEnd  ""
+301 Text  "/"
+302 PageLinkStart Syd Barrett "Syd Barrett"
+303 PageLinkEnd  ""
+304 QuotationEnd  ""
+305 Text  ". Johnson later placed a second advertisement in the "
+306 MultiQuoteStart 2 ""
+307 Text  "NME"
+308 MultiQuoteEnd  ""
+309 Text  ", stating his new influences as "
+310 QuotationStart  ""
+311 PageLinkStart The Residents "The Residents"
+312 PageLinkEnd  ""
+313 Text  "/"
+314 PageLinkStart Throbbing Gristle "Throbbing Gristle"
+315 PageLinkEnd  ""
+316 QuotationEnd  ""
+317 Text  ". While trying to get his band going, in 1978 Johnson had recorded a demo solo "
+318 PageLinkStart album "album"
+319 PageLinkEnd  ""
+320 Text  " ("
+321 MultiQuoteStart 2 ""
+322 Text  "See Without Being Seen"
+323 MultiQuoteEnd  ""
+324 Text  ") which he continued to sell at various underground gigs on cassettes. In 1979, working with Colin Lloyd-Tucker (a friend and colleague at "
+325 PageLinkStart De Wolfe Music "De Wolfe Music"
+326 PageLinkEnd  ""
+327 Text  ", the Soho music publisher/recording studio) Johnson recorded his first album proper, "
+328 MultiQuoteStart 2 ""
+329 Text  "Spirits"
+330 MultiQuoteEnd  ""
+331 Text  ". This album remains unreleased, although the album track "
+332 QuotationStart  ""
+333 Text  "What Stanley Saw"
+334 QuotationEnd  ""
+335 Text  " was later licensed to "
+336 PageLinkStart Cherry Red Records "Cherry Red Records"
+337 PageLinkEnd  ""
+338 Text  " for their "
+339 MultiQuoteStart 2 ""
+340 Text  "Perspectives &amp; Distortion"
+341 MultiQuoteEnd  ""
+342 Text  " "
+343 PageLinkStart compilation album "compilation album"
+344 PageLinkEnd  ""
+345 Text  ", which also featured "
+346 PageLinkStart Virgin Prunes "Virgin Prunes"
+347 PageLinkEnd  ""
+348 Text  ", "
+349 PageLinkStart Lemon Kittens "Lemon Kittens"
+350 PageLinkEnd  ""
+351 Text  ", "
+352 PageLinkStart Thomas Leer "Thomas Leer"
+353 PageLinkEnd  ""
+354 Text  ", "
+355 PageLinkStart Kevin Coyne "Kevin Coyne"
+356 PageLinkEnd  ""
+357 Text  " and "
+358 PageLinkStart Mark Perry (musician) ""
+359 Text  "Mark Perry"
+360 PageLinkEnd  ""
+361 Text  ". The The made their debut at London's Africa Centre on 11 May 1979,"
+362 CitationLink cit7 ""
+363 Text  " third on the bill to "
+364 PageLinkStart Scritti Politti "Scritti Politti"
+365 PageLinkEnd  ""
+366 Text  " and "
+367 PageLinkStart PragVEC "PragVEC"
+368 PageLinkEnd  ""
+369 Text  ", using backing tape tracks that Johnson created at his day job at De Wolfe studios for the drums and bass. The band at this point consisted of Johnson on vocal, electric piano, guitar and tapes and "
+370 PageLinkStart Keith Laws "Keith Laws"
+371 PageLinkEnd  ""
+372 Text  " on synthesiser and tapes. It was Keith Laws who suggested the name 'the The' to Matt Johnson. As the The was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios. "
+373 PageLinkStart Peter Ashworth "Peter Ashworth"
+374 PageLinkEnd  ""
+375 Text  ", then known as 'Triash' and later to become a noted photographer, became the The's drummer in 1980, and Tom Johnston (also managing The The at this point and later to become a cartoonist for the "
+376 MultiQuoteStart 2 ""
+377 PageLinkStart Evening Standard "Evening Standard"
+378 PageLinkEnd  ""
+379 MultiQuoteEnd  ""
+380 Text  ", "
+381 MultiQuoteStart 2 ""
+382 PageLinkStart Daily Mirror "Daily Mirror"
+383 PageLinkEnd  ""
+384 MultiQuoteEnd  ""
+385 Text  " and "
+386 MultiQuoteStart 2 ""
+387 PageLinkStart The Sun (United Kingdom) ""
+388 Text  "The Sun"
+389 PageLinkEnd  ""
+390 MultiQuoteEnd  ""
+391 Text  " newspapers) was added on bass."
+392 CitationLink cit8 ""
+393 Text  " Although both Ashworth and Johnston were credited with appearing on The The's debut single ("
+394 QuotationStart  ""
+395 Text  "Controversial Subject"
+396 QuotationEnd  ""
+397 Text  "/"
+398 QuotationStart  ""
+399 Text  "Black and White"
+400 QuotationEnd  ""
+401 Text  ") on "
+402 PageLinkStart 4AD ""
+403 Text  "4AD Records"
+404 PageLinkEnd  ""
+405 Text  " neither actually played on the "
+406 PageLinkStart sound recording and reproduction ""
+407 Text  "recordings"
+408 PageLinkEnd  ""
+409 Text  ", which were produced by "
+410 PageLinkStart Wire (band) ""
+411 Text  "Wire"
+412 PageLinkEnd  ""
+413 Text  " members "
+414 PageLinkStart Bruce Gilbert "Bruce Gilbert"
+415 PageLinkEnd  ""
+416 Text  " and "
+417 PageLinkStart Graham Lewis "Graham Lewis"
+418 PageLinkEnd  ""
+419 Text  ". All "
+420 PageLinkStart musical instrument ""
+421 Text  "instruments"
+422 PageLinkEnd  ""
+423 Text  " were played by Johnson and Laws. Johnston and Ashworth soon dropped out of the The and returned to their respective day jobs. As a duo (Johnson and Laws), The The began performing concerts with "
+424 PageLinkStart Wire (band) ""
+425 Text  "Wire"
+426 PageLinkEnd  ""
+427 Text  ", "
+428 PageLinkStart Cabaret Voltaire (band) ""
+429 Text  "Cabaret Voltaire"
+430 PageLinkEnd  ""
+431 Text  ", "
+432 PageLinkStart Deutsch Amerikanische Freundschaft ""
+433 Text  "DAF"
+434 PageLinkEnd  ""
+435 Text  ", "
+436 PageLinkStart This Heat "This Heat"
+437 PageLinkEnd  ""
+438 Text  ", "
+439 PageLinkStart The Birthday Party (band) ""
+440 Text  "The Birthday Party"
+441 PageLinkEnd  ""
+442 Text  " and "
+443 PageLinkStart Scritti Politti "Scritti Politti"
+444 PageLinkEnd  ""
+445 Text  ". In early 1981 The The also contributed the composition ‘Untitled’ to the "
+446 PageLinkStart Some Bizzare Album "Some Bizzare Album"
+447 PageLinkEnd  ""
+448 Text  ". In September of that year Johnson and Laws signed a deal with "
+449 PageLinkStart Some Bizzare Records "Some Bizzare Records"
+450 PageLinkEnd  ""
+451 Text  " and released the 7"
+452 QuotationStart  ""
+453 Text  " single Cold"
+454 QuotationEnd  ""
+455 Text  " Spell Ahead"
+456 QuotationStart  ""
+457 Text  ". By this stage Matt Johnson had begun playing all the instruments himself so Laws left to pursue his studies, leaving Johnson as a solo artist using a group moniker."
+458 QuotationEnd  ""
+459 Break  ""
+460 Text  "Johnson was signed up later in 1981 to 4AD Records by "
+461 PageLinkStart Ivo Watts-Russell "Ivo Watts-Russell"
+462 PageLinkEnd  ""
+463 Text  " to record a solo album, "
+464 MultiQuoteStart 2 ""
+465 PageLinkStart Burning Blue Soul "Burning Blue Soul"
+466 PageLinkEnd  ""
+467 MultiQuoteEnd  ""
+468 Text  ". Although all of the instruments and vocals were performed by Johnson, the album featured various producers including Wire's "
+469 PageLinkStart Bruce Gilbert "Bruce Gilbert"
+470 PageLinkEnd  ""
+471 Text  " and "
+472 PageLinkStart Graham Lewis "Graham Lewis"
+473 PageLinkEnd  ""
+474 Text  ", Ivo and Johnson himself. Years later, owing to a request from Johnson, so that all of his albums would be in the same rack together, it would be re-issued and credited to The The. Towards the end of 1981, Colin Lloyd-Tucker and "
+475 PageLinkStart Simon Fisher-Turner "Simon Fisher-Turner"
+476 PageLinkEnd  ""
+477 Text  " joined the band for a series of stripped down The The acoustic concerts in London."
+478 CitationStart cit7 ""
+479 TableStart table3 ""
+480 TableTitleStart  ""
+481 Text  "cite web"
+482 TableTitleEnd  ""
+483 TableHeadStart  ""
+484 TableCellReference id "C0"
+485 Text  "url"
+486 TableHeadEnd  ""
+487 TableCellStart  ""
+488 TableCellReference id "C0"
+489 WebLinkStart http://www.thethe.com/sections/library/gigography/gigography.html ""
+490 WebLinkEnd  ""
+491 TableCellEnd  ""
+492 TableHeadStart  ""
+493 TableCellReference id "C1"
+494 Text  "title"
+495 TableHeadEnd  ""
+496 TableCellStart  ""
+497 TableCellReference id "C1"
+498 Text  "This Is The The Day – Library"
+499 TableCellEnd  ""
+500 TableHeadStart  ""
+501 TableCellReference id "C2"
+502 Text  "publisher"
+503 TableHeadEnd  ""
+504 TableCellStart  ""
+505 TableCellReference id "C2"
+506 Text  "Thethe.com"
+507 TableCellEnd  ""
+508 TableHeadStart  ""
+509 TableCellReference id "C3"
+510 Text  "accessdate"
+511 TableHeadEnd  ""
+512 TableCellStart  ""
+513 TableCellReference id "C3"
+514 Text  "2011-04-02"
+515 TableCellEnd  ""
+516 TableHeadStart  ""
+517 TableCellReference id "C4"
+518 Text  "deadurl"
+519 TableHeadEnd  ""
+520 TableCellStart  ""
+521 TableCellReference id "C4"
+522 Text  "yes"
+523 TableCellEnd  ""
+524 TableHeadStart  ""
+525 TableCellReference id "C5"
+526 Text  "archiveurl"
+527 TableHeadEnd  ""
+528 TableCellStart  ""
+529 TableCellReference id "C5"
+530 WebLinkStart https://web.archive.org/web/20110717040926/http://www.thethe.com/sections/library/gigography/gigography.html ""
+531 WebLinkEnd  ""
+532 TableCellEnd  ""
+533 TableHeadStart  ""
+534 TableCellReference id "C6"
+535 Text  "archivedate"
+536 TableHeadEnd  ""
+537 TableCellStart  ""
+538 TableCellReference id "C6"
+539 Text  "17 July 2011"
+540 TableCellEnd  ""
+541 TableEnd  ""
+542 CitationEnd  ""
+543 CitationStart cit8 ""
+544 TableStart table4 ""
+545 TableTitleStart  ""
+546 Text  "cite book"
+547 TableTitleEnd  ""
+548 TableHeadStart  ""
+549 TableCellReference id "C0"
+550 Text  "last"
+551 TableHeadEnd  ""
+552 TableCellStart  ""
+553 TableCellReference id "C0"
+554 Text  "Larkin"
+555 TableCellEnd  ""
+556 TableHeadStart  ""
+557 TableCellReference id "C1"
+558 Text  "author-link"
+559 TableHeadEnd  ""
+560 TableCellStart  ""
+561 TableCellReference id "C1"
+562 Text  "Colin Larkin (writer)"
+563 TableCellEnd  ""
+564 TableHeadStart  ""
+565 TableCellReference id "C2"
+566 Text  "title"
+567 TableHeadEnd  ""
+568 TableCellStart  ""
+569 TableCellReference id "C2"
+570 Text  "The Guinness encyclopedia of popular music"
+571 TableCellEnd  ""
+572 TableHeadStart  ""
+573 TableCellReference id "C3"
+574 Text  "publisher"
+575 TableHeadEnd  ""
+576 TableCellStart  ""
+577 TableCellReference id "C3"
+578 PageLinkStart Guinness Publishing "Guinness Publishing"
+579 PageLinkEnd  ""
+580 TableCellEnd  ""
+581 TableHeadStart  ""
+582 TableCellReference id "C4"
+583 Text  "edition"
+584 TableHeadEnd  ""
+585 TableCellStart  ""
+586 TableCellReference id "C4"
+587 Text  "2nd revised"
+588 TableCellEnd  ""
+589 TableEnd  ""
+590 CitationEnd  ""
+591 HeadingStart h2 ""
+592 Text  "The solo years (1982–1987)"
+593 HeadingEnd  ""
+594 Text  "Now freed from the politics of a permanent group line-up, Johnson was able to take The The up to the next level, and spent the next few years collaborating with a diverse range of creative individuals, freely changing personnel from project to project. The The's next single was a retooling of "
+595 QuotationStart  ""
+596 Text  "Cold Spell Ahead"
+597 QuotationEnd  ""
+598 Text  ", now entitled "
+599 QuotationStart  ""
+600 Text  "Uncertain Smile"
+601 QuotationEnd  ""
+602 Text  ". Produced in New York by "
+603 PageLinkStart Mike Thorne "Mike Thorne"
+604 PageLinkEnd  ""
+605 Text  "; it reached No. 68 UK. This version is different from the more familiar album version, and featured sax and flute by session player "
+606 PageLinkStart Crispin Cioe "Crispin Cioe"
+607 PageLinkEnd  ""
+608 Text  " rather than (as on the album version) the piano of "
+609 PageLinkStart Squeeze (band) ""
+610 Text  "Squeeze"
+611 PageLinkEnd  ""
+612 Text  "'s "
+613 PageLinkStart Jools Holland "Jools Holland"
+614 PageLinkEnd  ""
+615 Text  ". In 1982, the intended debut album by the The ("
+616 MultiQuoteStart 2 ""
+617 Text  "The Pornography of Despair"
+618 MultiQuoteEnd  ""
+619 Text  ") was recorded, but was never officially mixed nor released."
+620 RefLink ref5 ""
+621 Text  " Johnson apparently ran off some cassette copies for friends, and several tracks were subsequently re-recorded and issued as b-sides, but the original album remains unmixed and unissued. "
+622 PageLinkStart Steve James Sherlock "Steve James Sherlock"
+623 PageLinkEnd  ""
+624 Text  " played flute and saxophone on the re-recordings of "
+625 QuotationStart  ""
+626 Text  "Three Orange Kisses From Kazan"
+627 QuotationEnd  ""
+628 Text  " and "
+629 QuotationStart  ""
+630 Text  "Waitin' For The Upturn"
+631 QuotationEnd  ""
+632 Text  ", two of the songs from the album which saw the light of day as b-sides. Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.   The The released their official album debut, the synth-noir classic "
+633 MultiQuoteStart 2 ""
+634 PageLinkStart Soul Mining "Soul Mining"
+635 PageLinkEnd  ""
+636 MultiQuoteEnd  ""
+637 Text  ", in 1983. It featured the minor UK No. 71 hit "
+638 QuotationStart  ""
+639 PageLinkStart This Is the Day (song) ""
+640 Text  "This Is the Day"
+641 PageLinkEnd  ""
+642 QuotationEnd  ""
+643 Text  ", as well as a new recording of The the performing "
+644 QuotationStart  ""
+645 Text  "Uncertain Smile"
+646 QuotationEnd  ""
+647 Text  ". Produced by Johnson and "
+648 PageLinkStart Paul Hardiman "Paul Hardiman"
+649 PageLinkEnd  ""
+650 Text  ", it featured guest appearances from "
+651 PageLinkStart Orange Juice (band) ""
+652 Text  "Orange Juice"
+653 PageLinkEnd  ""
+654 Text  "'s drummer "
+655 PageLinkStart Zeke Manyika "Zeke Manyika"
+656 PageLinkEnd  ""
+657 Text  ", "
+658 PageLinkStart Jools Holland "Jools Holland"
+659 PageLinkEnd  ""
+660 Text  ", "
+661 PageLinkStart Thomas Leer "Thomas Leer"
+662 PageLinkEnd  ""
+663 Text  " and "
+664 PageLinkStart J. G. Thirlwell "J. G. Thirlwell"
+665 PageLinkEnd  ""
+666 Text  " (aka "
+667 PageLinkStart Foetus (band) ""
+668 Text  "Foetus"
+669 PageLinkEnd  ""
+670 Text  "). During the The's more prolific period of releases, from "
+671 MultiQuoteStart 2 ""
+672 Text  "Soul Mining"
+673 MultiQuoteEnd  ""
+674 Text  " (1983) to "
+675 MultiQuoteStart 2 ""
+676 Text  "Dusk"
+677 MultiQuoteEnd  ""
+678 Text  " (1992), most artwork used on the albums and single releases was produced by Johnson's brother "
+679 PageLinkStart Andy Dog Johnson ""
+680 Text  "Andrew Johnson"
+681 PageLinkEnd  ""
+682 Text  ", using the pseudonym Andy Dog. The artwork has a distinctive style, and sometimes courted controversy, most notably the initial release of the 1986 single "
+683 QuotationStart  ""
+684 Text  "Infected"
+685 QuotationEnd  ""
+686 Text  " which featured a masturbating devil and was withdrawn from sale and re-issued with an edited version of the same drawing. For the 1986 album "
+687 MultiQuoteStart 2 ""
+688 PageLinkStart Infected (The The album) ""
+689 Text  "Infected"
+690 PageLinkEnd  ""
+691 MultiQuoteEnd  ""
+692 Text  ", the The still consisted only of Johnson, but was augmented by session musicians and featured friends such as Manyika and "
+693 PageLinkStart Rip Rig + Panic "Rip Rig + Panic"
+694 PageLinkEnd  ""
+695 Text  " singer "
+696 PageLinkStart Neneh Cherry "Neneh Cherry"
+697 PageLinkEnd  ""
+698 Text  " and "
+699 PageLinkStart Anna Domino "Anna Domino"
+700 PageLinkEnd  ""
+701 Text  ". This album spawned four charting singles in the UK, notably "
+702 QuotationStart  ""
+703 Text  "Heartland"
+704 QuotationEnd  ""
+705 Text  ", which made the UK Top 30. It was also unusual for having a full-length accompanying film. Costing hundreds of thousands of pounds, "
+706 MultiQuoteStart 2 ""
+707 Text  "Infected: The Movie"
+708 MultiQuoteEnd  ""
+709 Text  " was shot on locations in Bolivia, Peru and New York. Different songs were directed by different directors, mainly "
+710 PageLinkStart Tim Pope "Tim Pope"
+711 PageLinkEnd  ""
+712 Text  " and "
+713 PageLinkStart Peter Christopherson ""
+714 Text  "Peter 'Sleazy' Christopherson"
+715 PageLinkEnd  ""
+716 Text  " (of "
+717 PageLinkStart Throbbing Gristle "Throbbing Gristle"
+718 PageLinkEnd  ""
+719 Text  "). Throughout 1986-1987 Johnson toured the world extensively with "
+720 MultiQuoteStart 2 ""
+721 Text  "Infected: The Movie"
+722 MultiQuoteEnd  ""
+723 Text  ", showing the film in cinemas in place of performing live concerts. The film was also shown twice in its entirety on "
+724 PageLinkStart Channel 4 "Channel 4"
+725 PageLinkEnd  ""
+726 Text  " in the UK and on "
+727 PageLinkStart MTV "MTV"
+728 PageLinkEnd  ""
+729 Text  "'s "
+730 PageLinkStart 120 Minutes "120 Minutes"
+731 PageLinkEnd  ""
+732 Text  " in the "
+733 PageLinkStart United States ""
+734 Text  "US"
+735 PageLinkEnd  ""
+736 Text  ". In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting "
+737 MultiQuoteStart 2 ""
+738 Text  "Infected: The Movie"
+739 MultiQuoteEnd  ""
+740 Text  " in Australia he had a chance encounter with "
+741 PageLinkStart Billy Bragg "Billy Bragg"
+742 PageLinkEnd  ""
+743 Text  " who persuaded him to return to Britain and support "
+744 PageLinkStart Red Wedge "Red Wedge"
+745 PageLinkEnd  ""
+746 Text  ", a coalition of like-minded musicians supporting the British "
+747 PageLinkStart Labour Party (UK) ""
+748 Text  "Labour Party"
+749 PageLinkEnd  ""
+750 Text  " in its election campaign. Johnson agreed and enrolled longtime friend and collaborator Manyika to join him in performing shows in London featuring stripped down versions of political The the songs such as "
+751 QuotationStart  ""
+752 Text  "Heartland"
+753 QuotationEnd  ""
+754 Text  ". This experience convinced Johnson to put a band together once again."
+755 RefStart ref5 ""
+756 WebLinkStart http://www.interzone23.com/thethe/albums.html ""
+757 Text  " The The Discography – Albums"
+758 WebLinkEnd  ""
+759 Text  " "
+760 CitationLink cit9 ""
+761 RefEnd  ""
+762 CitationStart cit9 ""
+763 AttributeStart class "webarchive"
+764 AttributeEnd  ""
+765 AttributeStart url ""
+766 WebLinkStart https://web.archive.org/web/20100107023657/http://www.interzone23.com/thethe/albums.html ""
+767 WebLinkEnd  ""
+768 AttributeEnd  ""
+769 AttributeStart date "7 January 2010 "
+770 AttributeEnd  ""
+771 CitationEnd  ""
+772 HeadingStart h2 ""
+773 Text  "Return to a full band (1988–2002)"
+774 HeadingEnd  ""
+775 Text  "By 1988, the The was an actual band again, Johnson having recruited ex-"
+776 PageLinkStart The Smiths ""
+777 Text  "Smiths"
+778 PageLinkEnd  ""
+779 Text  " guitarist "
+780 PageLinkStart Johnny Marr "Johnny Marr"
+781 PageLinkEnd  ""
+782 Text  ", ex-"
+783 PageLinkStart Nick Lowe "Nick Lowe"
+784 PageLinkEnd  ""
+785 Text  " bassist "
+786 PageLinkStart James Eller "James Eller"
+787 PageLinkEnd  ""
+788 Text  " and ex-"
+789 PageLinkStart ABC (band) ""
+790 Text  "ABC"
+791 PageLinkEnd  ""
+792 Text  " drummer "
+793 PageLinkStart David Palmer (drummer) ""
+794 Text  "David Palmer"
+795 PageLinkEnd  ""
+796 Text  " as fully-fledged members. This line-up, plus guest singer "
+797 PageLinkStart Sinéad O'Connor "Sinéad O'Connor"
+798 PageLinkEnd  ""
+799 Text  ", recorded the album "
+800 MultiQuoteStart 2 ""
+801 PageLinkStart Mind Bomb "Mind Bomb"
+802 PageLinkEnd  ""
+803 MultiQuoteEnd  ""
+804 Text  ", which debuted at No. 4 in the "
+805 PageLinkStart UK Albums Chart "UK Albums Chart"
+806 PageLinkEnd  ""
+807 Text  " and featured the band's highest charting single to that time, "
+808 QuotationStart  ""
+809 Text  "The Beat(en) Generation"
+810 QuotationEnd  ""
+811 Text  ", which peaked at No. 18 in the "
+812 PageLinkStart UK Singles Chart "UK Singles Chart"
+813 PageLinkEnd  ""
+814 Text  ". The first single from "
+815 MultiQuoteStart 2 ""
+816 PageLinkStart Mind Bomb "Mind Bomb"
+817 PageLinkEnd  ""
+818 MultiQuoteEnd  ""
+819 Text  " was actually scheduled to be "
+820 QuotationStart  ""
+821 Text  "Armageddon Days Are Here (again)"
+822 QuotationEnd  ""
+823 Text  " but with its chorus of "
+824 QuotationStart  ""
+825 Text  "Islam is rising, the Christians mobilising"
+826 QuotationEnd  ""
+827 Text  " and sensitivities over the "
+828 PageLinkStart Salman Rushdie "Salman Rushdie"
+829 PageLinkEnd  ""
+830 Text  " affair that had recently erupted, this song was deemed unsuitable for release by "
+831 WebLinkStart file:Epic/CBS. ""
+832 WebLinkEnd  ""
+833 Break  ""
+834 Text  "Keyboardist "
+835 PageLinkStart D.C. Collard "D.C. Collard"
+836 PageLinkEnd  ""
+837 Text  " was added to the official line-up in 1989 (keyboard player "
+838 PageLinkStart Steve Hogarth "Steve Hogarth"
+839 PageLinkEnd  ""
+840 Text  ", who'd played on "
+841 MultiQuoteStart 2 ""
+842 PageLinkStart Infected (The The album) ""
+843 Text  "Infected"
+844 PageLinkEnd  ""
+845 MultiQuoteEnd  ""
+846 Text  ", had initially been asked to join but opted instead to become the new lead vocalist of "
+847 PageLinkStart Marillion "Marillion"
+848 PageLinkEnd  ""
+849 Text  "). The band embarked on a lengthy world tour in 1989–90 called "
+850 MultiQuoteStart 2 ""
+851 Text  "The The Versus The World"
+852 MultiQuoteEnd  ""
+853 Text  ". The live film of the same name, directed by "
+854 PageLinkStart Tim Pope "Tim Pope"
+855 PageLinkEnd  ""
+856 Text  ", was filmed during the three nights The The performed at London's "
+857 PageLinkStart Royal Albert Hall "Royal Albert Hall"
+858 PageLinkEnd  ""
+859 Text  " at the end of the tour. Vocalist Melanie Redmond, who had just completed a world tour with Duran Duran, joined the tour during the European leg as a session musician. The studio EP "
+860 MultiQuoteStart 2 ""
+861 Text  "Shades of Blue"
+862 MultiQuoteEnd  ""
+863 Text  " was released in 1990. This included cover versions of "
+864 PageLinkStart Fred Neil "Fred Neil"
+865 PageLinkEnd  ""
+866 Text  "'s "
+867 QuotationStart  ""
+868 Text  "Dolphins"
+869 QuotationEnd  ""
+870 Text  " and "
+871 PageLinkStart Duke Ellington "Duke Ellington"
+872 PageLinkEnd  ""
+873 Text  "'s "
+874 QuotationStart  ""
+875 Text  "Solitude"
+876 QuotationEnd  ""
+877 Text  " as well as a new original song "
+878 QuotationStart  ""
+879 Text  "Jealous of Youth"
+880 QuotationEnd  ""
+881 Text  " and a live version of "
+882 QuotationStart  ""
+883 Text  "Another Boy Drowning"
+884 QuotationEnd  ""
+885 Text  " from "
+886 MultiQuoteStart 2 ""
+887 Text  "Burning Blue Soul"
+888 MultiQuoteEnd  ""
+889 Text  ". This and a later EP of remixes, 1993's "
+890 MultiQuoteStart 2 ""
+891 Text  "Dis-infected"
+892 MultiQuoteEnd  ""
+893 Text  ", were compiled into a 1994 full-length album for the North American market called "
+894 MultiQuoteStart 2 ""
+895 Text  "Solitude"
+896 MultiQuoteEnd  ""
+897 Text  ". In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album "
+898 MultiQuoteStart 2 ""
+899 MultiQuoteEnd  ""
+900 MultiQuoteStart 2 ""
+901 Text  ", which debuted at No. 2 in the UK and spun off three Top 40 singles in the UK, led by "
+902 MultiQuoteEnd  ""
+903 QuotationStart  ""
+904 Text  "Dogs of Lust"
+905 QuotationEnd  ""
+906 Text  ". Another world tour followed, the "
+907 MultiQuoteStart 2 ""
+908 Text  "Lonely Planet"
+909 MultiQuoteEnd  ""
+910 Text  " tour, at which point the band's line-up was reshuffled; Marr and Eller left, and were replaced by Atlanta-based guitarist "
+911 PageLinkStart Keith Joyner "Keith Joyner"
+912 PageLinkEnd  ""
+913 Text  " and New York bassist "
+914 PageLinkStart Jared Michael Nickerson "Jared Michael Nickerson"
+915 PageLinkEnd  ""
+916 Text  ", respectively after Johnson relocated the band to America. Also added was Boston harmonica player "
+917 PageLinkStart Jim Fitting "Jim Fitting"
+918 PageLinkEnd  ""
+919 Text  " (formerly of "
+920 PageLinkStart Treat Her Right "Treat Her Right"
+921 PageLinkEnd  ""
+922 Text  "), who auditioned in New York in early 1993. The version of their hit "
+923 QuotationStart  ""
+924 Text  "This Is The Day"
+925 QuotationEnd  ""
+926 Text  " featuring Jim Fitting was often dubbed "
+927 QuotationStart  ""
+928 MultiQuoteStart 2 ""
+929 Text  "That Was"
+930 MultiQuoteEnd  ""
+931 Text  " The Day"
+932 QuotationEnd  ""
+933 Text  ". Palmer bowed out partway through the tour and was replaced by ex "
+934 PageLinkStart Stabbing Westward "Stabbing Westward"
+935 PageLinkEnd  ""
+936 Text  " drummer "
+937 PageLinkStart Andy Kubiszewski "Andy Kubiszewski"
+938 PageLinkEnd  ""
+939 Text  ". The band headlined the main stage at the 1993 "
+940 PageLinkStart Reading Festival "Reading Festival"
+941 PageLinkEnd  ""
+942 Text  ". Another full-length film, directed by longtime collaborator "
+943 PageLinkStart Tim Pope "Tim Pope"
+944 PageLinkEnd  ""
+945 Text  ", was made for this album. "
+946 MultiQuoteStart 2 ""
+947 Text  "From Dusk Til Dawn"
+948 MultiQuoteEnd  ""
+949 Text  " was shot in New Orleans and New York, and along with Johnson and Johnny Marr also featured various characters from the New York underground scene such as sexologist "
+950 PageLinkStart Annie Sprinkle "Annie Sprinkle"
+951 PageLinkEnd  ""
+952 Text  ", writer and raconteur "
+953 PageLinkStart Quentin Crisp "Quentin Crisp"
+954 PageLinkEnd  ""
+955 Text  ", "
+956 PageLinkStart Guardian Angels "Guardian Angels"
+957 PageLinkEnd  ""
+958 Text  " founder "
+959 PageLinkStart Curtis Sliwa "Curtis Sliwa"
+960 PageLinkEnd  ""
+961 Text  ", and porn star Rick Savage amongst many other carnival characters. Now permanently relocated to New York, The The's next project was 1995's "
+962 MultiQuoteStart 2 ""
+963 MultiQuoteEnd  ""
+964 MultiQuoteStart 2 ""
+965 Text  ", an album that consisted entirely of "
+966 PageLinkStart Hank Williams "Hank Williams"
+967 PageLinkEnd  ""
+968 Text  " cover tunes. Hanky"
+969 MultiQuoteEnd  ""
+970 Text  " Panky"
+971 MultiQuoteStart 2 ""
+972 Text  " was recorded by a new group consisting of Johnson, Collard, Fitting, ex "
+973 PageLinkStart Iggy Pop "Iggy Pop"
+974 PageLinkEnd  ""
+975 Text  " guitarist "
+976 PageLinkStart Eric Schermerhorn "Eric Schermerhorn"
+977 PageLinkEnd  ""
+978 Text  ", ex "
+979 PageLinkStart David Bowie "David Bowie"
+980 PageLinkEnd  ""
+981 Text  " bass guitarist "
+982 PageLinkStart Gail Ann Dorsey "Gail Ann Dorsey"
+983 PageLinkEnd  ""
+984 Text  " (billed as "
+985 MultiQuoteEnd  ""
+986 QuotationStart  ""
+987 Text  "Hollywood"
+988 QuotationEnd  ""
+989 Text  " Dorsey), and drummer the "
+990 QuotationStart  ""
+991 Text  "Reverend"
+992 QuotationEnd  ""
+993 Text  " "
+994 PageLinkStart Brian MacLeod (U.S. musician) ""
+995 Text  "Brian MacLeod"
+996 PageLinkEnd  ""
+997 Text  ". Their cover version of "
+998 QuotationStart  ""
+999 Text  "I Saw The Light"
+1000 QuotationEnd  ""
+1001 Text  " hit No. 31 UK.Released by Some Bizzare Label / Epic  An experimental album called "
+1002 MultiQuoteStart 2 ""
+1003 Text  "Gun Sluts"
+1004 MultiQuoteEnd  ""
+1005 Text  " was recorded in 1997, but left unreleased by the band after it was rejected for being too uncommercial by their label. The The severed their eighteen-year relationship with Sony and moved to "
+1006 PageLinkStart Interscope Records ""
+1007 Text  "Interscope"
+1008 PageLinkEnd  ""
+1009 Text  ", on "
+1010 PageLinkStart Trent Reznor "Trent Reznor"
+1011 PageLinkEnd  ""
+1012 Text  "'s "
+1013 PageLinkStart Nothing Records "Nothing Records"
+1014 PageLinkEnd  ""
+1015 Text  " imprint. In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released "
+1016 MultiQuoteStart 2 ""
+1017 PageLinkStart NakedSelf "NakedSelf"
+1018 PageLinkEnd  ""
+1019 MultiQuoteEnd  ""
+1020 Text  " and embarked on yet another lengthy world tour, the "
+1021 MultiQuoteStart 2 ""
+1022 Text  "Naked Tour"
+1023 MultiQuoteEnd  ""
+1024 Text  ", this one lasting 14 months. Not counting soundtrack albums, "
+1025 MultiQuoteStart 2 ""
+1026 PageLinkStart NakedSelf "NakedSelf"
+1027 PageLinkEnd  ""
+1028 MultiQuoteEnd  ""
+1029 Text  " remains The The's final released studio album to date. This same line-up also recorded two new tracks, "
+1030 QuotationStart  ""
+1031 Text  "Deep Down Truth"
+1032 QuotationEnd  ""
+1033 Text  ", featuring "
+1034 PageLinkStart Angela McCluskey "Angela McCluskey"
+1035 PageLinkEnd  ""
+1036 Text  " on vocals and "
+1037 QuotationStart  ""
+1038 Text  "Pillar Box Red"
+1039 QuotationEnd  ""
+1040 Text  ". Both songs were produced by "
+1041 PageLinkStart Clive Langer "Clive Langer"
+1042 PageLinkEnd  ""
+1043 Text  " and "
+1044 PageLinkStart Alan Winstanley "Alan Winstanley"
+1045 PageLinkEnd  ""
+1046 Text  " for the 2002 compilation album "
+1047 MultiQuoteStart 2 ""
+1048 MultiQuoteEnd  ""
+1049 MultiQuoteStart 2 ""
+1050 MultiQuoteEnd  ""
+1051 Break  ""
+1052 Text  "In June 2002 The The made a sole live appearance at the "
+1053 PageLinkStart Meltdown Festival "Meltdown Festival"
+1054 PageLinkEnd  ""
+1055 Text  " at London's Royal Festival Hall as guests of "
+1056 PageLinkStart David Bowie "David Bowie"
+1057 PageLinkEnd  ""
+1058 Text  ". At this point, the band consisted solely of Johnson and longtime friend and collaborator "
+1059 PageLinkStart J. G. Thirlwell "J. G. Thirlwell"
+1060 PageLinkEnd  ""
+1061 Text  " aka "
+1062 PageLinkStart Foetus (band) ""
+1063 Text  "Foetus"
+1064 PageLinkEnd  ""
+1065 Text  " on tapes and loops, and young film director "
+1066 PageLinkStart Benn Northover "Benn Northover"
+1067 PageLinkEnd  ""
+1068 Text  " on film and video. This was the last live performance by The The for sixteen years; Johnson had stated on the official The The web site in the FAQ section that "
+1069 QuotationStart  ""
+1070 Text  "There are no plans for one-off shows or tours in the near future but there will undoubtedly be another The The tour at some point."
+1071 QuotationEnd  ""
+1072 CitationLink cit10 ""
+1073 CitationStart cit10 ""
+1074 TableStart table5 ""
+1075 TableTitleStart  ""
+1076 Text  "cite web"
+1077 TableTitleEnd  ""
+1078 TableHeadStart  ""
+1079 TableCellReference id "C0"
+1080 Text  "url"
+1081 TableHeadEnd  ""
+1082 TableCellStart  ""
+1083 TableCellReference id "C0"
+1084 WebLinkStart http://www.thethe.com/forum/showthread.php?t=10 ""
+1085 WebLinkEnd  ""
+1086 TableCellEnd  ""
+1087 TableHeadStart  ""
+1088 TableCellReference id "C1"
+1089 Text  "title"
+1090 TableHeadEnd  ""
+1091 TableCellStart  ""
+1092 TableCellReference id "C1"
+1093 Text  "Thethe.com"
+1094 TableCellEnd  ""
+1095 TableHeadStart  ""
+1096 TableCellReference id "C2"
+1097 Text  "publisher"
+1098 TableHeadEnd  ""
+1099 TableCellStart  ""
+1100 TableCellReference id "C2"
+1101 Text  "Thethe.com"
+1102 TableCellEnd  ""
+1103 TableHeadStart  ""
+1104 TableCellReference id "C3"
+1105 Text  "accessdate"
+1106 TableHeadEnd  ""
+1107 TableCellStart  ""
+1108 TableCellReference id "C3"
+1109 Text  "2011-04-02"
+1110 TableCellEnd  ""
+1111 TableHeadStart  ""
+1112 TableCellReference id "C4"
+1113 Text  "deadurl"
+1114 TableHeadEnd  ""
+1115 TableCellStart  ""
+1116 TableCellReference id "C4"
+1117 Text  "yes"
+1118 TableCellEnd  ""
+1119 TableHeadStart  ""
+1120 TableCellReference id "C5"
+1121 Text  "archiveurl"
+1122 TableHeadEnd  ""
+1123 TableCellStart  ""
+1124 TableCellReference id "C5"
+1125 WebLinkStart https://web.archive.org/web/20110717043314/http://www.thethe.com/forum/showthread.php?t=10 ""
+1126 WebLinkEnd  ""
+1127 TableCellEnd  ""
+1128 TableHeadStart  ""
+1129 TableCellReference id "C6"
+1130 Text  "archivedate"
+1131 TableHeadEnd  ""
+1132 TableCellStart  ""
+1133 TableCellReference id "C6"
+1134 Text  "17 July 2011"
+1135 TableCellEnd  ""
+1136 TableEnd  ""
+1137 CitationEnd  ""
+1138 HeadingStart h2 ""
+1139 Text  "Hiatus (2003–2017)"
+1140 HeadingEnd  ""
+1141 Text  "Since 2003 the reclusive Johnson has kept well away from the public eye and has concentrated primarily on soundtrack work, scoring numerous documentaries, films and art installations. For Swedish filmmaker Johanna St Michaels this has included "
+1142 MultiQuoteStart 2 ""
+1143 Text  "Best Wishes Bernhard"
+1144 MultiQuoteEnd  ""
+1145 Text  " (prize winning film of Dokumentär Films Premien Nordic Panorama 2003), "
+1146 MultiQuoteStart 2 ""
+1147 Text  "Snapshots From Reality"
+1148 MultiQuoteEnd  ""
+1149 Text  " (Nominated for Best International Short at the "
+1150 PageLinkStart Birds Eye View "Birds Eye View"
+1151 PageLinkEnd  ""
+1152 Text  " Film festival at London's "
+1153 PageLinkStart Institute of Contemporary Arts ""
+1154 Text  "ICA"
+1155 PageLinkEnd  ""
+1156 Text  " 2007) "
+1157 MultiQuoteStart 2 ""
+1158 Text  "The Track"
+1159 MultiQuoteEnd  ""
+1160 Text  " (2007), "
+1161 MultiQuoteStart 2 ""
+1162 Text  "Going Live"
+1163 MultiQuoteEnd  ""
+1164 Text  " (2008), "
+1165 MultiQuoteStart 2 ""
+1166 Text  "The Island Amid the Worlds"
+1167 MultiQuoteEnd  ""
+1168 Text  " (2010) and "
+1169 MultiQuoteStart 2 ""
+1170 Text  "Bilder av Dina"
+1171 MultiQuoteEnd  ""
+1172 Text  " (2010). The latest collaboration between Johnson and St Michaels, "
+1173 MultiQuoteStart 2 ""
+1174 Text  "Penthouse North"
+1175 MultiQuoteEnd  ""
+1176 Text  " premiered at the "
+1177 PageLinkStart Hot Docs Canadian International Documentary Festival "Hot Docs Canadian International Documentary Festival"
+1178 PageLinkEnd  ""
+1179 Text  " in May 2014. In June 2009 it was announced that The The had created an original soundtrack to the "
+1180 MultiQuoteStart 2 ""
+1181 PageLinkStart Gerard Johnson (director) ""
+1182 Text  "Gerard Johnson"
+1183 PageLinkEnd  ""
+1184 MultiQuoteEnd  ""
+1185 Text  " debut feature film "
+1186 MultiQuoteStart 2 ""
+1187 PageLinkStart Tony (2009 film) ""
+1188 Text  "Tony"
+1189 PageLinkEnd  ""
+1190 MultiQuoteEnd  ""
+1191 Text  ". The film was released in February 2010 to critical acclaim; "
+1192 PageLinkStart Sight &amp; Sound "Sight &amp; Sound"
+1193 PageLinkEnd  ""
+1194 Text  " said “If Mike Leigh remade Henry: Portrait of a Serial Killer... Remarkable"
+1195 QuotationStart  ""
+1196 Text  ", "
+1197 PageLinkStart The Guardian "The Guardian"
+1198 PageLinkEnd  ""
+1199 Text  " "
+1200 QuotationEnd  ""
+1201 QuotationStart  ""
+1202 Text  "The perfect marriage of genre and style"
+1203 QuotationEnd  ""
+1204 Text  " and "
+1205 PageLinkStart The Independent "The Independent"
+1206 PageLinkEnd  ""
+1207 Text  " “Grim, painful and uncomfortably funny”. The "
+1208 PageLinkStart soundtrack "soundtrack"
+1209 PageLinkEnd  ""
+1210 Text  " was released on The The's Cineola imprint in March 2010, as volume one of several upcoming soundtrack and instrumental albums. In May 2014 The The completed an original soundtrack for "
+1211 PageLinkStart Gerard Johnson (director) ""
+1212 Text  "Gerard Johnson"
+1213 PageLinkEnd  ""
+1214 Text  "'s latest film, Hyena. Starring "
+1215 PageLinkStart Peter Ferdinando "Peter Ferdinando"
+1216 PageLinkEnd  ""
+1217 Text  ", "
+1218 PageLinkStart Stephen Graham (actor) ""
+1219 Text  "Stephen Graham"
+1220 PageLinkEnd  ""
+1221 Text  " and "
+1222 PageLinkStart Neil Maskell "Neil Maskell"
+1223 PageLinkEnd  ""
+1224 Text  ", this controversial crime thriller about people trafficking and corrupt elements within the UK police opens up 2014's "
+1225 PageLinkStart Edinburgh International Film Festival "Edinburgh International Film Festival"
+1226 PageLinkEnd  ""
+1227 Text  ". The album was released on 6 March 2015 as the third part in the Cinéola series. For English director "
+1228 PageLinkStart Nichola Bruce "Nichola Bruce"
+1229 PageLinkEnd  ""
+1230 Text  " it has included the documentary "
+1231 MultiQuoteStart 2 ""
+1232 Text  "One Man Show: Dramatic Art of Steven Berkoff"
+1233 MultiQuoteEnd  ""
+1234 Text  " (1995) and a documentary feature film about the "
+1235 PageLinkStart Apollo program ""
+1236 Text  "Apollo moon landings"
+1237 PageLinkEnd  ""
+1238 Text  ", "
+1239 MultiQuoteStart 2 ""
+1240 Text  "Moonbug"
+1241 MultiQuoteEnd  ""
+1242 Text  ","
+1243 CitationLink cit11 ""
+1244 Text  " which was completed in autumn 2010 and won the Special Jury Remi Award for Theatrical Feature Documentary at the 2011 Houston International Film Festival. The soundtrack was released in 2012 as volume 2 in the series of original soundtrack albums produced through Johnson's Cineola imprint. "
+1245 CitationStart cit11 ""
+1246 TableStart table6 ""
+1247 TableTitleStart  ""
+1248 Text  "cite web"
+1249 TableTitleEnd  ""
+1250 TableHeadStart  ""
+1251 TableCellReference id "C0"
+1252 Text  "url"
+1253 TableHeadEnd  ""
+1254 TableCellStart  ""
+1255 TableCellReference id "C0"
+1256 WebLinkStart http://nicholabruce.com/moonbug.html ""
+1257 WebLinkEnd  ""
+1258 TableCellEnd  ""
+1259 TableHeadStart  ""
+1260 TableCellReference id "C1"
+1261 Text  "title"
+1262 TableHeadEnd  ""
+1263 TableCellStart  ""
+1264 TableCellReference id "C1"
+1265 Text  "Nicholabruce.com"
+1266 TableCellEnd  ""
+1267 TableHeadStart  ""
+1268 TableCellReference id "C2"
+1269 Text  "publisher"
+1270 TableHeadEnd  ""
+1271 TableCellStart  ""
+1272 TableCellReference id "C2"
+1273 Text  "Nicholabruce.com"
+1274 TableCellEnd  ""
+1275 TableHeadStart  ""
+1276 TableCellReference id "C3"
+1277 Text  "accessdate"
+1278 TableHeadEnd  ""
+1279 TableCellStart  ""
+1280 TableCellReference id "C3"
+1281 Text  "2011-04-02"
+1282 TableCellEnd  ""
+1283 TableHeadStart  ""
+1284 TableCellReference id "C4"
+1285 Text  "deadurl"
+1286 TableHeadEnd  ""
+1287 TableCellStart  ""
+1288 TableCellReference id "C4"
+1289 Text  "yes"
+1290 TableCellEnd  ""
+1291 TableHeadStart  ""
+1292 TableCellReference id "C5"
+1293 Text  "archiveurl"
+1294 TableHeadEnd  ""
+1295 TableCellStart  ""
+1296 TableCellReference id "C5"
+1297 WebLinkStart https://web.archive.org/web/20100512163859/http://nicholabruce.com/moonbug.html ""
+1298 WebLinkEnd  ""
+1299 TableCellEnd  ""
+1300 TableHeadStart  ""
+1301 TableCellReference id "C6"
+1302 Text  "archivedate"
+1303 TableHeadEnd  ""
+1304 TableCellStart  ""
+1305 TableCellReference id "C6"
+1306 Text  "12 May 2010"
+1307 TableCellEnd  ""
+1308 TableEnd  ""
+1309 CitationEnd  ""
+
+
+## 0000/The_The.org
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mediawiki><page><title>The The</title><revision><text>{{Refimprove
+| date = January 2017
+}}
+{{Use British English|date=April 2011}}
+{{Use dmy dates|date=April 2011}}
+{{Infobox musical artist &lt;!-- See Wikipedia:WikiProject_Musicians --&gt;
+| name             = {{Not a typo|The The}}
+| image            = 
+| caption          = 
+| image_size       = 
+| background       = group_or_band
+| origin           = [[London]], [[England]], United Kingdom
+| genre            = [[Post-punk]], [[New wave music|new wave]], [[alternative rock]]
+| years_active     = 1979–present
+| label            = [[4AD]], [[Some Bizzare Records|Some Bizzare]], [[Epic Records|Epic]], [[Nothing Records|Nothing]]/[[Interscope Records|Interscope]], Lazarus/[[Cineola]]
+| associated_acts  = 
+| website          = [https://www.thethe.com thethe.com]
+| current_members  = [[Matt Johnson (singer)|Matt Johnson]]
+| past_members     = [[Keith Laws]]&lt;br /&gt;Tom Johnston&lt;br /&gt;[[Peter Ashworth]]&lt;br /&gt;[[Colin Lloyd Tucker]]&lt;br /&gt;[[Simon Fisher Turner]]&lt;br /&gt;[[David Palmer (drummer)|David Palmer]]&lt;br /&gt;[[Johnny Marr]]&lt;br /&gt;[[James Eller]]&lt;br /&gt;[[D. C. Collard]]&lt;br /&gt;[[Jim Fitting]]&lt;br /&gt;[[Keith Joyner]]&lt;br /&gt;[[Jared Michael Nickerson]]&lt;br /&gt;[[Eric Schermerhorn]]&lt;br /&gt;[[Brian MacLeod (U.S. musician)|Brian MacLeod]]&lt;br /&gt;[[Gail Ann Dorsey]]&lt;br /&gt;[[Spencer Campbell]]&lt;br /&gt;[[Earl Harvin]]&lt;br /&gt;[[Andrew Kubiszewski]]
+}}
+
+'''{{Not a typo|The The}}''' ({{IPAc-en|ð|ə|_|ð|ə}})&lt;ref&gt;Pronunciation heard in a conversation between Matt Johnson and Johnny Marr https://m.youtube.com/watch?v=GMzBboCJTC4&lt;/ref&gt; are an English [[post-punk]] band. They have been active in various forms since 1979, with singer/songwriter [[Matt Johnson (singer)|Matt Johnson]] being the only constant band member. The The achieved critical acclaim and commercial success in the UK, with 15 chart singles (seven reaching the Top 40), and their most successful album, ''[[Infected (The The album)|Infected]]'' (1986), spent 30 weeks on the chart. They followed this with the Top Ten albums ''[[Mind Bomb]]'' (1989) and ''[[Dusk (The The album)|Dusk]]'' (1993).&lt;ref&gt;{{cite book |editor=David Roberts |title=British Hit Singles and Albums|year=2006|page=555|publisher=Guinness World Records Limited|isbn=978-1904994107}}&lt;/ref&gt;
+
+==History==
+
+===The early years (1977–1981)===
+In November 1977, Matt Johnson placed an [[advertising|advertisement]] in ''[[NME]]'', asking for "Bass/lead guitarist into [[The Velvet Underground]]/[[Syd Barrett]]". Johnson later placed a second advertisement in the ''NME'', stating his new influences as "[[The Residents]]/[[Throbbing Gristle]]".
+
+While trying to get his band going, in 1978 Johnson had recorded a demo solo [[album]] (''See Without Being Seen'') which he continued to sell at various underground gigs on cassettes. In 1979, working with Colin Lloyd-Tucker (a friend and colleague at [[De Wolfe Music]], the Soho music publisher/recording studio) Johnson recorded his first album proper, ''Spirits''. This album remains unreleased, although the album track "What Stanley Saw" was later licensed to [[Cherry Red Records]] for their ''Perspectives &amp; Distortion'' [[compilation album]], which also featured [[Virgin Prunes]], [[Lemon Kittens]], [[Thomas Leer]], [[Kevin Coyne]] and [[Mark Perry (musician)|Mark Perry]].
+
+{{Not a typo|The The}} made their debut at London's Africa Centre on 11 May 1979,&lt;ref name="autogenerated1"&gt;{{cite web |url=http://www.thethe.com/sections/library/gigography/gigography.html |title=This Is {{Not a typo|The The}} Day – Library |publisher=Thethe.com |date= |accessdate=2011-04-02 |deadurl=yes |archiveurl=https://web.archive.org/web/20110717040926/http://www.thethe.com/sections/library/gigography/gigography.html |archivedate=17 July 2011 |df=dmy-all }}&lt;/ref&gt; third on the bill to [[Scritti Politti]] and [[PragVEC]], using backing tape tracks that Johnson created at his day job at De Wolfe studios for the drums and bass. The band at this point consisted of Johnson on vocal, electric piano, guitar and tapes and [[Keith Laws]] on synthesiser and tapes. It was Keith Laws who suggested the name '{{not a typo|the The}}' to Matt Johnson.
+
+As {{Not a typo|the The}} was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios.
+
+[[Peter Ashworth]], then known as 'Triash' and later to become a noted photographer, became {{Not a typo|the The's}} drummer in 1980, and Tom Johnston (also managing {{Not a typo|The The}} at this point and later to become a cartoonist for the ''[[Evening Standard]]'', ''[[Daily Mirror]]'' and ''[[The Sun (United Kingdom)|The Sun]]'' newspapers) was added on bass.&lt;ref&gt;{{cite book
+ | last = Larkin
+ | first = Colin
+ | author-link = Colin Larkin (writer)
+ | title = The Guinness encyclopedia of popular music
+ | publisher = [[Guinness Publishing]]
+ | volume = 3
+ | edition = 2nd revised
+ | date = 1995
+ | page = 2190
+ | isbn = 354063293X
+ }}&lt;/ref&gt; Although both Ashworth and Johnston were credited with appearing on {{Not a typo|The The's}} debut single ("Controversial Subject"/"Black and White") on [[4AD|4AD Records]] neither actually played on the [[sound recording and reproduction|recordings]], which were produced by [[Wire (band)|Wire]] members [[Bruce Gilbert]] and [[Graham Lewis]]. All [[musical instrument|instruments]] were played by Johnson and Laws. Johnston and Ashworth soon dropped out of {{Not a typo|the The}} and returned to their respective day jobs. As a duo (Johnson and Laws), {{Not a typo|The The}} began performing concerts with [[Wire (band)|Wire]], [[Cabaret Voltaire (band)|Cabaret Voltaire]], [[Deutsch Amerikanische Freundschaft|DAF]], [[This Heat]], [[The Birthday Party (band)|The Birthday Party]] and [[Scritti Politti]].
+
+In early 1981 {{Not a typo|The The}} also contributed the composition ‘Untitled’ to the [[Some Bizzare Album]]. In September of that year Johnson and Laws signed a deal with [[Some Bizzare Records]] and released the 7" single "Cold Spell Ahead". By this stage Matt Johnson had begun playing all the instruments himself so Laws left to pursue his studies, leaving Johnson as a solo artist using a group moniker.
+
+Johnson was signed up later in 1981 to 4AD Records by [[Ivo Watts-Russell]] to record a solo album, ''[[Burning Blue Soul]]''. Although all of the instruments and vocals were performed by Johnson, the album featured various producers including Wire's [[Bruce Gilbert]] and [[Graham Lewis]], Ivo and Johnson himself. Years later, owing to a request from Johnson, so that all of his albums would be in the same rack together, it would be re-issued and credited to {{Not a typo|The The}}.
+
+Towards the end of 1981, Colin Lloyd-Tucker and [[Simon Fisher-Turner]] joined the band for a series of stripped down {{Not a typo|The The}} acoustic concerts in London.
+
+===The solo years (1982–1987)===
+Now freed from the politics of a permanent group line-up, Johnson was able to take {{Not a typo|The The}} up to the next level, and spent the next few years collaborating with a diverse range of creative individuals, freely changing personnel from project to project.
+
+{{Not a typo|The The's}} next single was a retooling of "Cold Spell Ahead", now entitled "Uncertain Smile". Produced in New York by [[Mike Thorne]]; it reached No.&amp;nbsp;68 UK. This version is different from the more familiar album version, and featured sax and flute by session player [[Crispin Cioe]] rather than (as on the album version) the piano of [[Squeeze (band)|Squeeze]]'s [[Jools Holland]].
+
+In 1982, the intended debut album by {{Not a typo|the The}} (''The Pornography of Despair'') was recorded, but was never officially mixed nor released.&lt;ref name="autogenerated3"&gt;[http://www.interzone23.com/thethe/albums.html {{Not a typo|The The}} Discography – Albums&lt;!-- Bot generated title --&gt;] {{webarchive|url=https://web.archive.org/web/20100107023657/http://www.interzone23.com/thethe/albums.html |date=7 January 2010 }}&lt;/ref&gt; Johnson apparently ran off some cassette copies for friends, and several tracks were subsequently re-recorded and issued as b-sides, but the original album remains unmixed and unissued. [[Steve James Sherlock]] played flute and saxophone on the re-recordings of "Three Orange Kisses From Kazan" and "Waitin' For The Upturn", two of the songs from the album which saw the light of day as b-sides.
+
+Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.  
+
+{{Not a typo|The The}} released their official album debut, the synth-noir classic ''[[Soul Mining]]'', in 1983. It featured the minor UK No.&amp;nbsp;71 hit "[[This Is the Day (song)|This Is the Day]]", as well as a new recording of {{Not a typo|The the}} performing "Uncertain Smile". Produced by Johnson and [[Paul Hardiman]], it featured guest appearances from [[Orange Juice (band)|Orange Juice]]'s drummer [[Zeke Manyika]], [[Jools Holland]], [[Thomas Leer]] and [[J. G. Thirlwell]] (aka [[Foetus (band)|Foetus]]).
+
+During {{Not a typo|the The's}} more prolific period of releases, from ''Soul Mining'' (1983) to ''Dusk'' (1992), most artwork used on the albums and single releases was produced by Johnson's brother [[Andy Dog Johnson|Andrew Johnson]], using the pseudonym Andy Dog. The artwork has a distinctive style, and sometimes courted controversy, most notably the initial release of the 1986 single "Infected" which featured a masturbating devil and was withdrawn from sale and re-issued with an edited version of the same drawing.
+
+For the 1986 album ''[[Infected (The The album)|Infected]]'', {{Not a typo|the The}} still consisted only of Johnson, but was augmented by session musicians and featured friends such as Manyika and [[Rip Rig + Panic]] singer [[Neneh Cherry]] and [[Anna Domino]]. This album spawned four charting singles in the UK, notably "Heartland", which made the UK Top 30.&lt;ref name=uk/&gt; It was also unusual for having a full-length accompanying film. Costing hundreds of thousands of pounds, ''Infected: The Movie'' was shot on locations in Bolivia, Peru and New York. Different songs were directed by different directors, mainly [[Tim Pope]] and [[Peter Christopherson|Peter 'Sleazy' Christopherson]] (of [[Throbbing Gristle]]).
+
+Throughout 1986-1987 Johnson toured the world extensively with ''Infected: The Movie'', showing the film in cinemas in place of performing live concerts. The film was also shown twice in its entirety on [[Channel 4]] in the UK and on [[MTV]]'s [[120 Minutes]] in the [[United States|US]].
+
+In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting ''Infected: The Movie'' in Australia he had a chance encounter with [[Billy Bragg]] who persuaded him to return to Britain and support [[Red Wedge]], a coalition of like-minded musicians supporting the British [[Labour Party (UK)|Labour Party]] in its election campaign. Johnson agreed and enrolled longtime friend and collaborator Manyika to join him in performing shows in London featuring stripped down versions of political {{Not a typo|The the}} songs such as "Heartland". This experience convinced Johnson to put a band together once again.
+
+===Return to a full band (1988–2002)===
+By 1988, {{Not a typo|the The}} was an actual band again, Johnson having recruited ex-[[The Smiths|Smiths]] guitarist [[Johnny Marr]], ex-[[Nick Lowe]] bassist [[James Eller]] and ex-[[ABC (band)|ABC]] drummer [[David Palmer (drummer)|David Palmer]] as fully-fledged members. This line-up, plus guest singer [[Sinéad O'Connor]], recorded the album ''[[Mind Bomb]]'', which debuted at No.&amp;nbsp;4 in the [[UK Albums Chart]] and featured the band's highest charting single to that time, "The Beat(en) Generation", which peaked at No.&amp;nbsp;18 in the [[UK Singles Chart]].&lt;ref name=uk/&gt; The first single from ''[[Mind Bomb]]'' was actually scheduled to be "Armageddon Days Are Here (again)" but with its chorus of "Islam is rising, the Christians mobilising" and sensitivities over the [[Salman Rushdie]] affair that had recently erupted, this song was deemed unsuitable for release by Epic/CBS.
+
+Keyboardist [[D.C. Collard]] was added to the official line-up in 1989 (keyboard player [[Steve Hogarth]], who'd played on ''[[Infected (The The album)|Infected]]'', had initially been asked to join but opted instead to become the new lead vocalist of [[Marillion]]). The band embarked on a lengthy world tour in 1989–90 called ''{{Not a typo|The The}} Versus The World''. The live film of the same name, directed by [[Tim Pope]], was filmed during the three nights {{Not a typo|The The}} performed at London's [[Royal Albert Hall]] at the end of the tour. Vocalist Melanie Redmond, who had just completed a world tour with Duran Duran, joined the tour during the European leg as a session musician.
+
+The studio EP ''Shades of Blue'' was released in 1990. This included cover versions of [[Fred Neil]]'s "Dolphins" and [[Duke Ellington]]'s "Solitude" as well as a new original song "Jealous of Youth" and a live version of "Another Boy Drowning" from ''Burning Blue Soul''. This and a later EP of remixes, 1993's ''Dis-infected'', were compiled into a 1994 full-length album for the North American market called ''Solitude''.
+
+In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album ''[[Dusk ({{Not a typo|The The}} album)|Dusk]]'', which debuted at No.&amp;nbsp;2 in the UK and spun off three Top 40 singles in the UK,&lt;ref name=uk/&gt; led by "Dogs of Lust". Another world tour followed, the ''Lonely Planet'' tour, at which point the band's line-up was reshuffled; Marr and Eller left, and were replaced by Atlanta-based guitarist [[Keith Joyner]] and New York bassist [[Jared Michael Nickerson]], respectively after Johnson relocated the band to America. Also added was Boston harmonica player [[Jim Fitting]] (formerly of [[Treat Her Right]]), who auditioned in New York in early 1993. The version of their hit "This Is The Day" featuring Jim Fitting was often dubbed "''That Was'' The Day". Palmer bowed out partway through the tour and was replaced by ex [[Stabbing Westward]] drummer [[Andy Kubiszewski]].&lt;ref name="autogenerated1" /&gt; The band headlined the main stage at the 1993 [[Reading Festival]].
+
+Another full-length film, directed by longtime collaborator [[Tim Pope]], was made for this album. ''From Dusk Til Dawn'' was shot in New Orleans and New York, and along with Johnson and Johnny Marr also featured various characters from the New York underground scene such as sexologist [[Annie Sprinkle]], writer and raconteur [[Quentin Crisp]], [[Guardian Angels]] founder [[Curtis Sliwa]], and porn star Rick Savage amongst many other carnival characters.
+
+Now permanently relocated to New York, {{Not a typo|The The's}} next project was 1995's ''[[Hanky Panky ({{Not a typo|The The}} album)|Hanky Panky]]'', an album that consisted entirely of [[Hank Williams]] cover tunes. ''Hanky Panky'' was recorded by a new group consisting of Johnson, Collard, Fitting, ex [[Iggy Pop]] guitarist [[Eric Schermerhorn]], ex [[David Bowie]] bass guitarist [[Gail Ann Dorsey]] (billed as "Hollywood" Dorsey), and drummer the "Reverend" [[Brian MacLeod (U.S. musician)|Brian MacLeod]]. Their cover version of "I Saw The Light" hit No.&amp;nbsp;31 UK.Released by Some Bizzare Label / Epic 
+
+An experimental album called ''Gun Sluts'' was recorded in 1997, but left unreleased by the band after it was rejected for being too uncommercial by their label.&lt;ref name="autogenerated3"/&gt; {{Not a typo|The The}} severed their eighteen-year relationship with Sony and moved to [[Interscope Records|Interscope]], on [[Trent Reznor]]'s [[Nothing Records]] imprint.
+
+In 2000, {{Not a typo|The The}}, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released ''[[NakedSelf]]'' and embarked on yet another lengthy world tour, the ''Naked Tour'', this one lasting 14 months. Not counting soundtrack albums, ''[[NakedSelf]]'' remains {{Not a typo|The The's}} final released studio album to date.
+
+This same line-up also recorded two new tracks, "Deep Down Truth", featuring [[Angela McCluskey]] on vocals and "Pillar Box Red". Both songs were produced by [[Clive Langer]] and [[Alan Winstanley]] for the 2002 compilation album ''[[45 RPM: The Singles of {{Not a typo|The The}}]]''
+
+In June 2002 {{Not a typo|The The}} made a sole live appearance at the [[Meltdown Festival]] at London's Royal Festival Hall as guests of [[David Bowie]]. At this point, the band consisted solely of Johnson and longtime friend and collaborator [[J. G. Thirlwell]] aka [[Foetus (band)|Foetus]] on tapes and loops, and young film director [[Benn Northover]] on film and video.&lt;ref name="autogenerated1" /&gt;
+
+This was the last live performance by {{Not a typo|The The}} for sixteen years; Johnson had stated on the official {{Not a typo|The The}} web site in the FAQ section that "There are no plans for one-off shows or tours in the near future but there will undoubtedly be another {{Not a typo|The The}} tour at some point."&lt;ref&gt;{{cite web |url=http://www.thethe.com/forum/showthread.php?t=10 |title=Thethe.com |publisher=Thethe.com |date= |accessdate=2011-04-02 |deadurl=yes |archiveurl=https://web.archive.org/web/20110717043314/http://www.thethe.com/forum/showthread.php?t=10 |archivedate=17 July 2011 |df=dmy-all }}&lt;/ref&gt;
+
+===Hiatus (2003–2017)===
+Since 2003 the reclusive Johnson has kept well away from the public eye and has concentrated primarily on soundtrack work, scoring numerous documentaries, films and art installations.
+
+For Swedish filmmaker Johanna St Michaels this has included ''Best Wishes Bernhard'' (prize winning film of Dokumentär Films Premien Nordic Panorama 2003), ''Snapshots From Reality'' (Nominated for Best International Short at the [[Birds Eye View]] Film festival at London's [[Institute of Contemporary Arts|ICA]] 2007) ''The Track'' (2007), ''Going Live'' (2008), ''The Island Amid the Worlds'' (2010) and ''Bilder av Dina'' (2010). The latest collaboration between Johnson and St Michaels, ''Penthouse North'' premiered at the [[Hot Docs Canadian International Documentary Festival]] in May 2014.
+
+In June 2009 it was announced that {{Not a typo|The The}} had created an original soundtrack to the ''[[Gerard Johnson (director)|Gerard Johnson]]'' debut feature film ''[[Tony (2009 film)|Tony]]''. The film was released in February 2010 to critical acclaim; [[Sight &amp; Sound]] said “If Mike Leigh remade Henry: Portrait of a Serial Killer... Remarkable", [[The Guardian]] "The perfect marriage of genre and style" and [[The Independent]] “Grim, painful and uncomfortably funny”. The [[soundtrack]] was released on {{Not a typo|The The's}} Cineola imprint in March 2010, as volume one of several upcoming soundtrack and instrumental albums.
+
+In May 2014 {{Not a typo|The The}} completed an original soundtrack for [[Gerard Johnson (director)|Gerard Johnson]]'s latest film, Hyena. Starring [[Peter Ferdinando]], [[Stephen Graham (actor)|Stephen Graham]] and [[Neil Maskell]], this controversial crime thriller about people trafficking and corrupt elements within the UK police opens up 2014's [[Edinburgh International Film Festival]]. The album was released on 6 March 2015 as the third part in the Cinéola series.
+
+For English director [[Nichola Bruce]] it has included the documentary ''One Man Show: Dramatic Art of Steven Berkoff'' (1995) and a documentary feature film about the [[Apollo program|Apollo moon landings]], ''Moonbug'',&lt;ref&gt;{{cite web |url=http://nicholabruce.com/moonbug.html |title=Nicholabruce.com |publisher=Nicholabruce.com |date= |accessdate=2011-04-02 |deadurl=yes |archiveurl=https://web.archive.org/web/20100512163859/http://nicholabruce.com/moonbug.html |archivedate=12 May 2010 |df=dmy-all }}&lt;/ref&gt; which was completed in autumn 2010 and won the Special Jury Remi Award for Theatrical Feature Documentary at the 2011 Houston International Film Festival. The soundtrack was released in 2012 as volume 2 in the series of original soundtrack albums produced through Johnson's Cineola imprint.
+</text></revision></page></mediawiki>
+
+

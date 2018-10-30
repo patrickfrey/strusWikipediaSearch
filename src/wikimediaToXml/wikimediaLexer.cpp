@@ -1499,6 +1499,21 @@ WikimediaLexem WikimediaLexer::next()
 				const char* start = m_si;
 				
 				for (; m_si != m_se && !isTokenDelimiter( *m_si); ++m_si){}
+				if (m_si < m_se && *m_si == '|')
+				{
+					std::string cls( strus::string_conv::trim( start, m_si-start));
+					if (strus::caseInsensitiveEquals( cls, "not a typo"))
+					{
+						char const* ti = m_si;
+						for (ti++; ti < m_se && !isTokenDelimiter( *ti); ++ti){}
+						if (ti+1 < m_se && ti[0] == '}' && ti[1] == '}')
+						{
+							std::string text( m_si+1, ti-m_si-1);
+							m_si = ti+2;
+							return WikimediaLexem( WikimediaLexem::Text, 0, text);
+						}
+					}
+				}
 				if (m_si +1 < m_se && m_si[0] == '}' && m_si[1] == '}')
 				{
 					std::string title( strus::string_conv::trim( std::string( start, m_si - start)));
