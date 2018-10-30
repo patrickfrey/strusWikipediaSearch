@@ -199,6 +199,7 @@ def enrichSentenceTokens( stk):
 def printSentence( stk):
     rt = ""
     for elem in stk:
+        pprint( elem)
         rt += "%s\t%s\t%s\n" ((elem.strustag or ""), (elem.nlptag or ""), (elem.value or ""))
     return rt
 
@@ -214,8 +215,8 @@ def getDocumentSentences( text):
         if node.dep_ == "punct" and value in [';','.']:
             sentences.append( enrichSentenceTokens( tokens))
             tokens = []
-    last_subjects = getSentenceSubjects( tokens)
-    sentences.append( enrichSentenceTokens( tokens))
+    if tokens:
+        sentences.append( enrichSentenceTokens( tokens))
     return sentences
 
 
@@ -244,8 +245,9 @@ def matchName( obj, candidate):
 # return Subject[]
 def getDocumentSubjects( title, sentences):
     rt = {}
-    if title.find( '('):
-        titlesubject = tile[ :title.index('(')].split()
+    endtitle = title.find('(')
+    if endtitle >= 0:
+        titlesubject = title[ :endtitle ].split()
     else:
         titlesubject = title
     sidx = 0
@@ -279,7 +281,7 @@ def tagDocument( title, text):
     sentences = getDocumentSentences( text)
     subjects = getDocumentSubjects( title, sentences)
     for sent in sentences:
-        rt += printSentence( sent.tokens, subjectMap, sent.subjects)
+        rt += printSentence( sent)
     return rt
 
 def substFilename( filename):

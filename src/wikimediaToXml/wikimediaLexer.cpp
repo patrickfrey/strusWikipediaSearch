@@ -1630,7 +1630,15 @@ WikimediaLexem WikimediaLexer::next()
 				else if (*m_si == '}')
 				{
 					++m_si;
-					return WikimediaLexem( WikimediaLexem::CloseTable);
+					if (m_si != m_se && *m_si == '}')
+					{
+						++m_si;
+						return WikimediaLexem( WikimediaLexem::CloseCitation);
+					}
+					else
+					{
+						return WikimediaLexem( WikimediaLexem::CloseTable);
+					}
 				}
 				else if (*m_si == '|')
 				{
