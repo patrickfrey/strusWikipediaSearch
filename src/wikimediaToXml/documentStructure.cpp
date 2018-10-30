@@ -238,7 +238,7 @@ void DocumentStructure::disableOpenQuotation()
 
 void DocumentStructure::disableOpenFormatAndQuotes()
 {
-	if (!m_structStack.empty())
+	while (!m_structStack.empty())
 	{
 		std::vector<StructRef>::iterator se = m_structStack.end();
 		--se;
@@ -252,6 +252,10 @@ void DocumentStructure::disableOpenFormatAndQuotes()
 		{
 			m_parar[ se->start].setType( Paragraph::DanglingQuotes);
 			m_structStack.erase( se);
+		}
+		else
+		{
+			break;
 		}
 	}
 }
