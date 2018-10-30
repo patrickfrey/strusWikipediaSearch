@@ -370,10 +370,16 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				}
 				break;
 			}
+			case strus::WikimediaLexem::DoubleColDelimNewLine:
 			case strus::WikimediaLexem::DoubleColDelim:
 			{
 				doc.disableOpenFormatAndQuotes();
 				strus::Paragraph::StructType tp = doc.currentStructType();
+				if (tp == strus::Paragraph::StructList && lexem.id == strus::WikimediaLexem::DoubleColDelimNewLine)
+				{
+					doc.closeAutoCloseItem( strus::Paragraph::ListItemStart);
+					tp = doc.currentStructType();
+				}
 				if (tp == strus::Paragraph::StructPageLink
 				||  tp == strus::Paragraph::StructWebLink)
 				{

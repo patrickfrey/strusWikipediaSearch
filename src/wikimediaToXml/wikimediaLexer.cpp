@@ -1643,7 +1643,7 @@ WikimediaLexem WikimediaLexer::next()
 				else if (*m_si == '|')
 				{
 					++m_si;
-					return WikimediaLexem( WikimediaLexem::DoubleColDelim);
+					return WikimediaLexem( WikimediaLexem::DoubleColDelimNewLine);
 				}
 				else
 				{

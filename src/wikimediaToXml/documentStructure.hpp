@@ -690,6 +690,7 @@ public:
 	std::string statestring() const;
 
 	static std::string getInputXML( const std::string& title, const std::string& content);
+	void closeAutoCloseItem( Paragraph::Type startType);
 
 private:
 	enum {MaxStructureDepth=12};
@@ -707,7 +708,6 @@ private:
 	void addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText);
 	void addQuoteItem( Paragraph::Type startType, int count);
 	void openAutoCloseItem( Paragraph::Type startType, const char* prefix, int lidx, int depth);
-	void closeAutoCloseItem( Paragraph::Type startType);
 	void closeDanglingStructures( const Paragraph::Type& starttype);
 	void checkStartEndSectionBalance( const std::vector<Paragraph>::const_iterator& start, const std::vector<Paragraph>::const_iterator& end);
 	bool checkTableDefExists( const char* action);
