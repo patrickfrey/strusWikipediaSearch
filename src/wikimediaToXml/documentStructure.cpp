@@ -221,6 +221,41 @@ void DocumentStructure::closeOpenQuoteItems()
 	}
 }
 
+void DocumentStructure::disableOpenQuotation()
+{
+	if (!m_structStack.empty())
+	{
+		std::vector<StructRef>::iterator se = m_structStack.end();
+		--se;
+		Paragraph::Type st = m_parar[ se->start].type();
+		if (st == Paragraph::QuotationStart)
+		{
+			m_parar[ se->start].setType( Paragraph::DanglingQuotes);
+			m_structStack.erase( se);
+		}
+	}
+}
+
+void DocumentStructure::disableOpenFormatAndQuotes()
+{
+	if (!m_structStack.empty())
+	{
+		std::vector<StructRef>::iterator se = m_structStack.end();
+		--se;
+		Paragraph::StructType st = m_parar[ se->start].structType();
+		if (st == Paragraph::StructQuotation
+		||  st == Paragraph::StructMultiQuote
+		||  st == Paragraph::StructDiv
+		||  st == Paragraph::StructPoem
+		||  st == Paragraph::StructSpan
+		||  st == Paragraph::StructFormat)
+		{
+			m_parar[ se->start].setType( Paragraph::DanglingQuotes);
+			m_structStack.erase( se);
+		}
+	}
+}
+
 void DocumentStructure::closeDanglingStructures( const Paragraph::Type& starttype)
 {
 	while (!m_structStack.empty())

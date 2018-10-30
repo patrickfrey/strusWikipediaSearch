@@ -372,7 +372,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			}
 			case strus::WikimediaLexem::DoubleColDelim:
 			{
-				doc.closeOpenQuoteItems();
+				doc.disableOpenFormatAndQuotes();
 				strus::Paragraph::StructType tp = doc.currentStructType();
 				if (tp == strus::Paragraph::StructPageLink
 				||  tp == strus::Paragraph::StructWebLink)

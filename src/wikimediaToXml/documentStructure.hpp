@@ -638,6 +638,9 @@ public:
 	}
 	void closeOpenQuoteItems();
 
+	void disableOpenFormatAndQuotes();
+	void disableOpenQuotation();
+
 	void openCitation( const std::string& citclass)
 	{
 		closeWebLinkIfOpen();
