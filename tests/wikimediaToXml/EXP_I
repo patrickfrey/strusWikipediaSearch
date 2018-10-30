@@ -2090,6 +2090,72 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <doc><docid>Vriesea_friburgensis</docid>
 <title>Vriesea friburgensis</title>
 <citlink id="cit1"/>
+<br/>
+<entity id="5"><text>Vriesea friburgensis</text>
+  </entity>
+<text> is a </text>
+<pagelink id="species (biology)"><text>species</text>
+  </pagelink>
+<text> in the </text>
+<pagelink id="genus (biology)"><text>genus</text>
+  </pagelink>
+<text> </text>
+<entity id="2"><pagelink id="Vriesea">Vriesea
+    </pagelink>
+  </entity>
+<text>. This species is an </text>
+<pagelink id="epiphyte">epiphyte
+  </pagelink>
+<text> </text>
+<pagelink id="Native plant"><text>native</text>
+  </pagelink>
+<text> to </text>
+<pagelink id="Bolivia">Bolivia
+  </pagelink>
+<text>, </text>
+<pagelink id="Paraguay">Paraguay
+  </pagelink>
+<text>, </text>
+<pagelink id="Argentina">Argentina
+  </pagelink>
+<text>, and </text>
+<pagelink id="Brazil">Brazil
+  </pagelink>
+<text>.</text>
+<reflink id="ref1"/>
+<reflink id="ref2"/>
+<reflink id="ref3"/>
+<br/>
+<text>Three varieties are recognized:
+#</text>
+<entity id="2"><text>Vriesea friburgensis</text>
+  </entity>
+<text> var. </text>
+<entity id="2"><text>friburgensis</text>
+  </entity>
+<text> - eastern + southern Brazil
+#</text>
+<entity id="2"><text>Vriesea friburgensis</text>
+  </entity>
+<text> var. </text>
+<entity id="2"><text>paludosa</text>
+  </entity>
+<text> </text>
+
+  <text>(L.B.Sm.) L.B.Sm.</text>
+  
+<text> - southeastern Brazil from São Paulo to Rio Grande do Sul
+#</text>
+<entity id="2"><text>Vriesea friburgensis</text>
+  </entity>
+<text> var. </text>
+<entity id="2"><text>tucumanensis</text>
+  </entity>
+<text> </text>
+
+  <text>(Mez) L.B.Sm.</text>
+  
+<text> - most of species range</text>
 <ref id="ref1"><weblink id="http://apps.kew.org/wcsp/namedetail.do?name_id=271819"><text> Kew Checklist of Selected Plant Families</text>
     </weblink>
   </ref>
@@ -2103,7 +2169,6 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
     </weblink>
   <text> retrieved 22 October 2009</text>
   </ref>
-<citation id="cit2" class="Webarchive" url="https://web.archive.org/web/20101129222456/http://www.selby.org/clientuploads/pdf_files/BoliviaBrom.pdf" date="2010-11-29"/>
 <citation id="cit1"><table id="table1"><tabtitle><text>taxobox</text>
       </tabtitle>
     <head id="C0"><text>regnum</text>
@@ -2192,76 +2257,10 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
           <text>Speg.</text>
           
         </list>
-      <text>}
-</text>
-      <entity id="5"><text>Vriesea friburgensis</text>
-        </entity>
-      <text> is a </text>
-      <pagelink id="species (biology)"><text>species</text>
-        </pagelink>
-      <text> in the </text>
-      <pagelink id="genus (biology)"><text>genus</text>
-        </pagelink>
-      <text> </text>
-      <entity id="2"><pagelink id="Vriesea">Vriesea
-          </pagelink>
-        </entity>
-      <text>. This species is an </text>
-      <pagelink id="epiphyte">epiphyte
-        </pagelink>
-      <text> </text>
-      <pagelink id="Native plant"><text>native</text>
-        </pagelink>
-      <text> to </text>
-      <pagelink id="Bolivia">Bolivia
-        </pagelink>
-      <text>, </text>
-      <pagelink id="Paraguay">Paraguay
-        </pagelink>
-      <text>, </text>
-      <pagelink id="Argentina">Argentina
-        </pagelink>
-      <text>, and </text>
-      <pagelink id="Brazil">Brazil
-        </pagelink>
-      <text>.</text>
-      <reflink id="ref1"/>
-      <reflink id="ref2"/>
-      <reflink id="ref3"/>
-      <br/>
-      <text>Three varieties are recognized:
-#</text>
-      <entity id="2"><text>Vriesea friburgensis</text>
-        </entity>
-      <text> var. </text>
-      <entity id="2"><text>friburgensis</text>
-        </entity>
-      <text> - eastern + southern Brazil
-#</text>
-      <entity id="2"><text>Vriesea friburgensis</text>
-        </entity>
-      <text> var. </text>
-      <entity id="2"><text>paludosa</text>
-        </entity>
-      <text> </text>
-      
-        <text>(L.B.Sm.) L.B.Sm.</text>
-        
-      <text> - southeastern Brazil from São Paulo to Rio Grande do Sul
-#</text>
-      <entity id="2"><text>Vriesea friburgensis</text>
-        </entity>
-      <text> var. </text>
-      <entity id="2"><text>tucumanensis</text>
-        </entity>
-      <text> </text>
-      
-        <text>(Mez) L.B.Sm.</text>
-        
-      <text> - most of species range</text>
       </cell>
     </table>
   </citation>
+<citation id="cit2" class="Webarchive" url="https://web.archive.org/web/20101129222456/http://www.selby.org/clientuploads/pdf_files/BoliviaBrom.pdf" date="2010-11-29"/>
 <heading id="h1"><text>Cultivars</text>
   </heading>
 <list id="l1"><text> </text>
@@ -2383,473 +2382,6 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
       </cell>
     </table>
   </citation></doc>
-
-
-## 0000/Vriesea_friburgensis.err
-[1] table close without table defined [state Attribute,  source: ( |}}  '''''Vriesea friburgensi...''' is a [[species (biology)|s...)]
-
-
-## 0000/Vriesea_friburgensis.txt
-0 Title Vriesea_friburgensis "Vriesea friburgensis"
-1 CitationLink cit1 ""
-2 RefStart ref1 ""
-3 WebLinkStart http://apps.kew.org/wcsp/namedetail.do?name_id=271819 ""
-4 Text  " Kew Checklist of Selected Plant Families"
-5 WebLinkEnd  ""
-6 RefEnd  ""
-7 RefStart ref2 ""
-8 WebLinkStart http://www.selby.org/clientuploads/pdf_files/BoliviaBrom.pdf ""
-9 Text  " Checklist of Bolivian Bromeliaceae"
-10 WebLinkEnd  ""
-11 Text  " "
-12 CitationLink cit2 ""
-13 Text  " Retrieved 21 October 2009"
-14 RefEnd  ""
-15 RefStart ref3 ""
-16 WebLinkStart http://www.dpi.inpe.br/referata/arq/22_Rafael_Bromelias/Bromelia_Mata_Atlantica.pdf ""
-17 Text  " BROMELIACEAE DA MATA ATLÂNTICA BRASILEIRA"
-18 WebLinkEnd  ""
-19 Text  " retrieved 22 October 2009"
-20 RefEnd  ""
-21 CitationStart cit2 ""
-22 AttributeStart class "Webarchive"
-23 AttributeEnd  ""
-24 AttributeStart url ""
-25 WebLinkStart https://web.archive.org/web/20101129222456/http://www.selby.org/clientuploads/pdf_files/BoliviaBrom.pdf ""
-26 WebLinkEnd  ""
-27 AttributeEnd  ""
-28 AttributeStart date "2010-11-29 "
-29 AttributeEnd  ""
-30 CitationEnd  ""
-31 CitationStart cit1 ""
-32 TableStart table1 ""
-33 TableTitleStart  ""
-34 Text  "taxobox"
-35 TableTitleEnd  ""
-36 TableHeadStart  ""
-37 TableCellReference id "C0"
-38 Text  "regnum"
-39 TableHeadEnd  ""
-40 TableCellStart  ""
-41 TableCellReference id "C0"
-42 PageLinkStart Plantae "Plantae"
-43 PageLinkEnd  ""
-44 TableCellEnd  ""
-45 TableHeadStart  ""
-46 TableCellReference id "C1"
-47 Text  "unranked divisio"
-48 TableHeadEnd  ""
-49 TableCellStart  ""
-50 TableCellReference id "C1"
-51 PageLinkStart Angiosperms "Angiosperms"
-52 PageLinkEnd  ""
-53 TableCellEnd  ""
-54 TableHeadStart  ""
-55 TableCellReference id "C2"
-56 Text  "unranked classis"
-57 TableHeadEnd  ""
-58 TableCellStart  ""
-59 TableCellReference id "C2"
-60 PageLinkStart Monocots "Monocots"
-61 PageLinkEnd  ""
-62 TableCellEnd  ""
-63 TableHeadStart  ""
-64 TableCellReference id "C3"
-65 Text  "unranked ordo"
-66 TableHeadEnd  ""
-67 TableCellStart  ""
-68 TableCellReference id "C3"
-69 PageLinkStart Commelinids "Commelinids"
-70 PageLinkEnd  ""
-71 TableCellEnd  ""
-72 TableHeadStart  ""
-73 TableCellReference id "C4"
-74 Text  "ordo"
-75 TableHeadEnd  ""
-76 TableCellStart  ""
-77 TableCellReference id "C4"
-78 PageLinkStart Poales "Poales"
-79 PageLinkEnd  ""
-80 TableCellEnd  ""
-81 TableHeadStart  ""
-82 TableCellReference id "C5"
-83 Text  "familia"
-84 TableHeadEnd  ""
-85 TableCellStart  ""
-86 TableCellReference id "C5"
-87 PageLinkStart Bromeliaceae "Bromeliaceae"
-88 PageLinkEnd  ""
-89 TableCellEnd  ""
-90 TableHeadStart  ""
-91 TableCellReference id "C6"
-92 Text  "subfamilia"
-93 TableHeadEnd  ""
-94 TableCellStart  ""
-95 TableCellReference id "C6"
-96 PageLinkStart Tillandsioideae "Tillandsioideae"
-97 PageLinkEnd  ""
-98 TableCellEnd  ""
-99 TableHeadStart  ""
-100 TableCellReference id "C7"
-101 Text  "genus"
-102 TableHeadEnd  ""
-103 TableCellStart  ""
-104 TableCellReference id "C7"
-105 MultiQuoteStart 2 ""
-106 PageLinkStart Vriesea "Vriesea"
-107 PageLinkEnd  ""
-108 MultiQuoteEnd  ""
-109 TableCellEnd  ""
-110 TableHeadStart  ""
-111 TableCellReference id "C8"
-112 Text  "binomial"
-113 TableHeadEnd  ""
-114 TableCellStart  ""
-115 TableCellReference id "C8"
-116 MultiQuoteStart 2 ""
-117 Text  "Vriesea friburgensis"
-118 MultiQuoteEnd  ""
-119 TableCellEnd  ""
-120 TableHeadStart  ""
-121 TableCellReference id "C9"
-122 Text  "synonyms"
-123 TableHeadEnd  ""
-124 TableCellStart  ""
-125 TableCellReference id "C9"
-126 Text  "*"
-127 MultiQuoteStart 2 ""
-128 Text  "Vriesea paludosa"
-129 MultiQuoteEnd  ""
-130 Text  " "
-131 FormatStart  ""
-132 Text  "L.B.Sm."
-133 FormatEnd  ""
-134 ListItemStart l1 ""
-135 MultiQuoteStart 2 ""
-136 Text  "Vriesea tucumanensis"
-137 MultiQuoteEnd  ""
-138 Text  " "
-139 FormatStart  ""
-140 Text  "Mez"
-141 FormatEnd  ""
-142 Text  " "
-143 ListItemEnd  ""
-144 ListItemStart l1 ""
-145 MultiQuoteStart 2 ""
-146 Text  "Vriesea caldasiana"
-147 MultiQuoteEnd  ""
-148 Text  " "
-149 FormatStart  ""
-150 Text  "Mez"
-151 FormatEnd  ""
-152 Text  " "
-153 ListItemEnd  ""
-154 ListItemStart l1 ""
-155 MultiQuoteStart 2 ""
-156 Text  "Vrieseida foetida"
-157 MultiQuoteEnd  ""
-158 Text  " "
-159 FormatStart  ""
-160 PageLinkStart Rojas Acosta "Rojas Acosta"
-161 PageLinkEnd  ""
-162 FormatEnd  ""
-163 ListItemEnd  ""
-164 ListItemStart l1 ""
-165 MultiQuoteStart 2 ""
-166 Text  "Vriesea argentinensis"
-167 MultiQuoteEnd  ""
-168 Text  " "
-169 FormatStart  ""
-170 Text  "Speg."
-171 FormatEnd  ""
-172 ListItemEnd  ""
-173 Text  "} "
-174 MultiQuoteStart 5 ""
-175 Text  "Vriesea friburgensis"
-176 MultiQuoteEnd  ""
-177 Text  " is a "
-178 PageLinkStart species (biology) ""
-179 Text  "species"
-180 PageLinkEnd  ""
-181 Text  " in the "
-182 PageLinkStart genus (biology) ""
-183 Text  "genus"
-184 PageLinkEnd  ""
-185 Text  " "
-186 MultiQuoteStart 2 ""
-187 PageLinkStart Vriesea "Vriesea"
-188 PageLinkEnd  ""
-189 MultiQuoteEnd  ""
-190 Text  ". This species is an "
-191 PageLinkStart epiphyte "epiphyte"
-192 PageLinkEnd  ""
-193 Text  " "
-194 PageLinkStart Native plant ""
-195 Text  "native"
-196 PageLinkEnd  ""
-197 Text  " to "
-198 PageLinkStart Bolivia "Bolivia"
-199 PageLinkEnd  ""
-200 Text  ", "
-201 PageLinkStart Paraguay "Paraguay"
-202 PageLinkEnd  ""
-203 Text  ", "
-204 PageLinkStart Argentina "Argentina"
-205 PageLinkEnd  ""
-206 Text  ", and "
-207 PageLinkStart Brazil "Brazil"
-208 PageLinkEnd  ""
-209 Text  "."
-210 RefLink ref1 ""
-211 RefLink ref2 ""
-212 RefLink ref3 ""
-213 Break  ""
-214 Text  "Three varieties are recognized: #"
-215 MultiQuoteStart 2 ""
-216 Text  "Vriesea friburgensis"
-217 MultiQuoteEnd  ""
-218 Text  " var. "
-219 MultiQuoteStart 2 ""
-220 Text  "friburgensis"
-221 MultiQuoteEnd  ""
-222 Text  " - eastern + southern Brazil #"
-223 MultiQuoteStart 2 ""
-224 Text  "Vriesea friburgensis"
-225 MultiQuoteEnd  ""
-226 Text  " var. "
-227 MultiQuoteStart 2 ""
-228 Text  "paludosa"
-229 MultiQuoteEnd  ""
-230 Text  " "
-231 FormatStart  ""
-232 Text  "(L.B.Sm.) L.B.Sm."
-233 FormatEnd  ""
-234 Text  " - southeastern Brazil from São Paulo to Rio Grande do Sul #"
-235 MultiQuoteStart 2 ""
-236 Text  "Vriesea friburgensis"
-237 MultiQuoteEnd  ""
-238 Text  " var. "
-239 MultiQuoteStart 2 ""
-240 Text  "tucumanensis"
-241 MultiQuoteEnd  ""
-242 Text  " "
-243 FormatStart  ""
-244 Text  "(Mez) L.B.Sm."
-245 FormatEnd  ""
-246 Text  " - most of species range"
-247 TableCellEnd  ""
-248 TableEnd  ""
-249 CitationEnd  ""
-250 HeadingStart h1 ""
-251 Text  "Cultivars"
-252 HeadingEnd  ""
-253 ListItemStart l1 ""
-254 Text  " "
-255 PageLinkStart Vriesea Jubilation ""
-256 MultiQuoteStart 2 ""
-257 Text  "Vriesea"
-258 MultiQuoteEnd  ""
-259 Text  " 'Jubilation'"
-260 PageLinkEnd  ""
-261 ListItemEnd  ""
-262 ListItemStart l1 ""
-263 Text  " "
-264 PageLinkStart Vriesea Little Dumplin' ""
-265 MultiQuoteStart 2 ""
-266 Text  "Vriesea"
-267 MultiQuoteEnd  ""
-268 Text  " 'Little Dumplin"
-269 MultiQuoteStart 2 ""
-270 MultiQuoteEnd  ""
-271 PageLinkEnd  ""
-272 ListItemEnd  ""
-273 ListItemStart l1 ""
-274 Text  " "
-275 PageLinkStart xVrieslandsia Red Dawn ""
-276 MultiQuoteStart 2 ""
-277 Text  "xVrieslandsia"
-278 MultiQuoteEnd  ""
-279 Text  " 'Red Dawn'"
-280 PageLinkEnd  ""
-281 RefLink ref4 ""
-282 ListItemEnd  ""
-283 RefStart ref4 ""
-284 WebLinkStart http://www.bsi.org/brom_info/cultivar/bcr.html ""
-285 Text  " BSI Cultivar Registry"
-286 WebLinkEnd  ""
-287 Text  " Retrieved 11 October 2009"
-288 RefEnd  ""
-289 HeadingStart h1 ""
-290 Text  "Ecology"
-291 HeadingEnd  ""
-292 Text  "The large "
-293 PageLinkStart infructescence "infructescences"
-294 PageLinkEnd  ""
-295 Text  " of the plant dry up and may remain standing for a year or more, during which time they are inhabited by a variety of insect species and other arthropods. Several species of "
-296 PageLinkStart ant "ants"
-297 PageLinkEnd  ""
-298 Text  ", "
-299 PageLinkStart termite "termites"
-300 PageLinkEnd  ""
-301 Text  ", and "
-302 PageLinkStart bee "bees"
-303 PageLinkEnd  ""
-304 Text  " build nests in the dry fruiting structure. Surveys have revealed the nests of ants in the genera "
-305 MultiQuoteStart 2 ""
-306 PageLinkStart Camponotus "Camponotus"
-307 PageLinkEnd  ""
-308 MultiQuoteEnd  ""
-309 Text  ", "
-310 MultiQuoteStart 2 ""
-311 PageLinkStart Pseudomyrmex "Pseudomyrmex"
-312 PageLinkEnd  ""
-313 MultiQuoteEnd  ""
-314 Text  ", and "
-315 MultiQuoteStart 2 ""
-316 PageLinkStart Solenopsis (ant) ""
-317 Text  "Solenopsis"
-318 PageLinkEnd  ""
-319 MultiQuoteEnd  ""
-320 Text  ", and termites of the genera "
-321 MultiQuoteStart 2 ""
-322 PageLinkStart Cortaritermes "Cortaritermes"
-323 PageLinkEnd  ""
-324 MultiQuoteEnd  ""
-325 Text  " and "
-326 MultiQuoteStart 2 ""
-327 PageLinkStart Velocitermes "Velocitermes"
-328 PageLinkEnd  ""
-329 MultiQuoteEnd  ""
-330 Text  ". Other inhabitants of the plant include "
-331 PageLinkStart Castniidae ""
-332 Text  "giant butterfly-moths"
-333 PageLinkEnd  ""
-334 Text  ", "
-335 PageLinkStart hoverfly ""
-336 Text  "hoverflies"
-337 PageLinkEnd  ""
-338 Text  ", "
-339 PageLinkStart beetle "beetles"
-340 PageLinkEnd  ""
-341 Text  ", "
-342 PageLinkStart pseudoscorpion "pseudoscorpions"
-343 PageLinkEnd  ""
-344 Text  ", "
-345 PageLinkStart springtail "springtails"
-346 PageLinkEnd  ""
-347 Text  ", and "
-348 PageLinkStart spider "spiders"
-349 PageLinkEnd  ""
-350 Text  "."
-351 RefLink ref5 ""
-352 RefStart ref5 ""
-353 Text  "Schmid, V. S., et al. (2014). "
-354 WebLinkStart http://www.hindawi.com/journals/psyche/2014/396095/ ""
-355 Text  " Inflorescences of the bromeliad "
-356 MultiQuoteStart 2 ""
-357 Text  "Vriesea friburgensis"
-358 MultiQuoteEnd  ""
-359 Text  " as nest sites and food resources for ants and other arthropods in Brazil."
-360 WebLinkEnd  ""
-361 Text  " "
-362 MultiQuoteStart 2 ""
-363 Text  "Psyche"
-364 MultiQuoteEnd  ""
-365 Text  " 2014 396095."
-366 RefEnd  ""
-367 HeadingStart h1 ""
-368 Text  "References"
-369 HeadingEnd  ""
-370 Markup  "Reflist"
-371 Break  ""
-372 CitationLink cit3 ""
-373 Break  ""
-374 PageLinkStart Category:Vriesea ""
-375 Text  "friburgensis"
-376 PageLinkEnd  ""
-377 Break  ""
-378 PageLinkStart Category:Bromeliaceae species "Category:Bromeliaceae species"
-379 PageLinkEnd  ""
-380 Break  ""
-381 PageLinkStart Category:Flora of South America "Category:Flora of South America"
-382 PageLinkEnd  ""
-383 Break  ""
-384 PageLinkStart Category:Epiphytes "Category:Epiphytes"
-385 PageLinkEnd  ""
-386 Break  ""
-387 PageLinkStart Category:Plants described in 1894 "Category:Plants described in 1894"
-388 PageLinkEnd  ""
-389 Break  ""
-390 Markup  "Vriesea-stub"
-391 CitationStart cit3 ""
-392 TableStart table2 ""
-393 TableTitleStart  ""
-394 Text  "Taxonbar"
-395 TableTitleEnd  ""
-396 TableHeadStart  ""
-397 TableCellReference id "C0"
-398 Text  "from"
-399 TableHeadEnd  ""
-400 TableCellStart  ""
-401 TableCellReference id "C0"
-402 Text  "Q7942914"
-403 TableCellEnd  ""
-404 TableEnd  ""
-405 CitationEnd  ""
-
-
-## 0000/Vriesea_friburgensis.org
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<mediawiki><page><title>Vriesea friburgensis</title><revision><text>{{taxobox
-|image = 
-|regnum = [[Plantae]]
-|unranked_divisio = [[Angiosperms]]
-|unranked_classis = [[Monocots]]
-|unranked_ordo = [[Commelinids]]
-|ordo = [[Poales]]
-|familia = [[Bromeliaceae]]
-|subfamilia = [[Tillandsioideae]]
-|genus = ''[[Vriesea]]''
-|species = '''''V. friburgensis'''''
-|binomial = ''Vriesea friburgensis''
-|binomial_authority = Mez
-|synonyms_ref=&lt;ref name=p/&gt;
-|synonyms=*''Vriesea paludosa'' &lt;small&gt;L.B.Sm.&lt;/small&gt;
-*''Vriesea tucumanensis'' &lt;small&gt;Mez&lt;/small&gt; 
-*''Vriesea caldasiana'' &lt;small&gt;Mez&lt;/small&gt; 
-*''Vrieseida foetida'' &lt;small&gt;[[Rojas Acosta]]&lt;/small&gt;
-*''Vriesea argentinensis'' &lt;small&gt;Speg.&lt;/small&gt;
-|}}
-
-'''''Vriesea friburgensis''''' is a [[species (biology)|species]] in the [[genus (biology)|genus]] ''[[Vriesea]]''. This species is an [[epiphyte]] [[Native plant|native]] to [[Bolivia]], [[Paraguay]], [[Argentina]], and [[Brazil]].&lt;ref name=p&gt;[http://apps.kew.org/wcsp/namedetail.do?name_id=271819 Kew Checklist of Selected Plant Families]&lt;/ref&gt;&lt;ref&gt;[http://www.selby.org/clientuploads/pdf_files/BoliviaBrom.pdf Checklist of Bolivian Bromeliaceae] {{Webarchive|url=https://web.archive.org/web/20101129222456/http://www.selby.org/clientuploads/pdf_files/BoliviaBrom.pdf |date=2010-11-29 }} Retrieved 21 October 2009&lt;/ref&gt;&lt;ref&gt;[http://www.dpi.inpe.br/referata/arq/22_Rafael_Bromelias/Bromelia_Mata_Atlantica.pdf BROMELIACEAE DA MATA ATLÂNTICA BRASILEIRA] retrieved 22 October 2009&lt;/ref&gt;
-
-Three varieties are recognized:&lt;ref name=p/&gt;
-
-#''Vriesea friburgensis'' var. ''friburgensis'' - eastern + southern Brazil
-#''Vriesea friburgensis'' var. ''paludosa'' &lt;small&gt;(L.B.Sm.) L.B.Sm.&lt;/small&gt; - southeastern Brazil from São Paulo to Rio Grande do Sul
-#''Vriesea friburgensis'' var. ''tucumanensis'' &lt;small&gt;(Mez) L.B.Sm.&lt;/small&gt; - most of species range
-
-==Cultivars==
-* [[Vriesea Jubilation|''Vriesea'' 'Jubilation']]&lt;ref name=j/&gt;
-* [[Vriesea Little Dumplin'|''Vriesea'' 'Little Dumplin'']]&lt;ref name=j/&gt;
-* [[xVrieslandsia Red Dawn|''xVrieslandsia'' 'Red Dawn']]&lt;ref name=j&gt;[http://www.bsi.org/brom_info/cultivar/bcr.html BSI Cultivar Registry] Retrieved 11 October 2009&lt;/ref&gt;
-
-==Ecology==
-The large [[infructescence]]s of the plant dry up and may remain standing for a year or more, during which time they are inhabited by a variety of insect species and other arthropods. Several species of [[ant]]s, [[termite]]s, and [[bee]]s build nests in the dry fruiting structure. Surveys have revealed the nests of ants in the genera ''[[Camponotus]]'', ''[[Pseudomyrmex]]'', and ''[[Solenopsis (ant)|Solenopsis]]'', and termites of the genera ''[[Cortaritermes]]'' and ''[[Velocitermes]]''. Other inhabitants of the plant include [[Castniidae|giant butterfly-moths]], [[hoverfly|hoverflies]], [[beetle]]s, [[pseudoscorpion]]s, [[springtail]]s, and [[spider]]s.&lt;ref&gt;Schmid, V. S., et al. (2014). [http://www.hindawi.com/journals/psyche/2014/396095/ Inflorescences of the bromeliad ''Vriesea friburgensis'' as nest sites and food resources for ants and other arthropods in Brazil.] ''Psyche'' 2014 396095.&lt;/ref&gt;
-
-==References==
-{{Reflist}}
-
-{{Taxonbar|from=Q7942914}}
-
-[[Category:Vriesea|friburgensis]]
-[[Category:Bromeliaceae species]]
-[[Category:Flora of South America]]
-[[Category:Epiphytes]]
-[[Category:Plants described in 1894]]
-
-
-{{Vriesea-stub}}</text></revision></page></mediawiki>
 
 
 ## 0000/Gert_Smal.xml
