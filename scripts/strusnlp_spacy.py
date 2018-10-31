@@ -164,32 +164,32 @@ def tagSentenceSubjects( stk):
     subjindices = []
     startidx = -1
     for eidx,elem in enumerate( stk):
-        if elem.nlptag[:3] == 'NNP':
+        if elem.nlptag[:2] == 'NN' or elem.nlptag == 'PRP':
             startidx = eidx
-            if elem.nlprole == "nsubj":
-                doShift = True
-            if elem.nlprole == "conj" and doShiftNext:
-                doShift = True
+        if elem.nlprole == "nsubj" or (elem.nlprole == "conj" and doShiftNext):
+            doShift = True
         else:
             if elem.nlprole == "cc" and elem.nlptag == "CC":
                 doShiftNext = True
             else:
                 doShiftNext = False
             if doShift:
-                if startidx > 0:
+                if startidx >= 0:
                     subjindices.append( startidx)
                     startidx = -1
                 doShift = False
+            if not (elem.nlptag[:2] == 'NN' or elem.nlptag == '_'):
+                startidx = -1
     follow = False
     for eidx,elem in enumerate( stk):
         if eidx in subjindices:
             elem.strusrole = "S"
             follow = True
-        elif follow:
+        if follow:
             if elem.strustag == '_':
                 elem.strusrole = "_"
-        else:
-            follow = False
+            else:
+                follow = False
         rt.append( elem)
     return rt
 
@@ -199,9 +199,22 @@ def enrichSentenceTokens( stk):
 def printSentence( stk):
     rt = ""
     for elem in stk:
-        pprint( elem)
-        rt += "%s\t%s\t%s\n" ((elem.strustag or ""), (elem.nlptag or ""), (elem.value or ""))
+        sr = (elem.strusrole or "")
+        nr = (elem.nlprole or "")
+        st = (elem.strustag or "")
+        nt = (elem.nlptag or "")
+        vv = (elem.value or "")
+        rt += ("%s (%s)\t%s\t%s\t%s\n" % (sr,nr,st,nt,vv))
     return rt
+
+def printSubject( subject):
+    vv = (subject.value or "")
+    pr = None
+    if subject.prp:
+        pr = ','.join( subject.prp)
+    oc = (subject.occurrence or "")
+    rf = (subject.ref or "")
+    return ("%s\t%s\t%s\t%s" % (vv,pr,oc,rf))
 
 # return Sentence[]
 def getDocumentSentences( text):
@@ -211,7 +224,8 @@ def getDocumentSentences( text):
     tg = spacy_nlp( text)
     for node in tg:
         value = str(node)
-        tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
+        if (value.strip()):
+            tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
         if node.dep_ == "punct" and value in [';','.']:
             sentences.append( enrichSentenceTokens( tokens))
             tokens = []
@@ -250,30 +264,40 @@ def getDocumentSubjects( title, sentences):
         titlesubject = title[ :endtitle ].split()
     else:
         titlesubject = title
+    print( "TITLE SUBJECT %s\n" % titlesubject)
     sidx = 0
-    lastSubject = None
-    sentSubjects = []
     lastSentSubjects = []
     for sent in sentences:
+        lastSubject = None
+        sentSubjects = []
+        print( "SENT:\n%s" % printSentence( sent))
         for tok in sent:
+            print( "TOK %s ROLE %s NLP %s" % (tok.value, tok.strusrole, tok.nlprole))
             if tok.strusrole == 'S':
                 if lastSubject:
                     sentSubjects.append( lastSubject)
                 lastSubject = [tok.value]
             elif tok.strusrole == '_' and lastSubject:
-                sentSubjects.append( tok.value)
+                lastSubject.append( tok.value)
             elif lastSubject:
                 sentSubjects.append( lastSubject)
                 lastSubject = None
-            if tok.nlprole[0:3] == "PRP":
-                if lastSentSubjects in rt:
-                    rt[ lastSentSubjects].prp.append( tok.value)
+            if tok.nlptag[0:3] == "PRP":
+                print( "PRP %s" % tok.value)
+                key = ""
+                for lss in lastSentSubjects:
+                    if key:
+                        key += ","
+                    key += '_'.join( lss)
+                if key in rt:
+                    rt[ key].prp.append( tok.value)
                 else:
-                    rt[ lastSentSubjects] = Subject( lastSentSubjects, [], 1, None)
-
+                    rt[ key] = Subject( lastSentSubjects, [], 1, None)
         if lastSubject:
             sentSubjects.append( lastSubject)
         lastSentSubjects = sentSubjects
+    for rtelem in rt:
+        print( "%s -> %s" % (rtelem, printSubject( rt[rtelem])))
     return rt
 
 def tagDocument( title, text):
@@ -282,6 +306,8 @@ def tagDocument( title, text):
     subjects = getDocumentSubjects( title, sentences)
     for sent in sentences:
         rt += printSentence( sent)
+    for subj in subjects:
+        rt += ("SUBJ %s -> %s\n" % (subj, printSubject( subjects[ subj])))
     return rt
 
 def substFilename( filename):

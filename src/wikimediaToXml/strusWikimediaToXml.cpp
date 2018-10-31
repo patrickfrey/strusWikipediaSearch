@@ -427,6 +427,10 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 					}
 					doc.addTableCell( rowspan, colspan);
 				}
+				else if (tp == strus::Paragraph::StructList)
+				{
+					doc.addBreak();
+				}
 				else
 				{
 					doc.addError( "unexpected token '||'");
