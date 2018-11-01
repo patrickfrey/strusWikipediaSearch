@@ -1166,6 +1166,10 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
   </list>
 <heading id="h1"><text>Gallery</text>
   </heading>
+<text>No Rep Pattern: 00000000000000
+Rep Pattern: 
+Rep Pattern: ?=-==-=
+</text>
 <reflink id="ref2"/>
 <ref id="ref2"><list id="l1"><pagelink id="Panama Canal Museum">Panama Canal Museum
       </pagelink>
@@ -1255,6 +1259,635 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
 <br/>
 <category id="Tourist attractions in Panama City">Tourist attractions in Panama City
   </category></doc>
+
+
+## 0000/Casco_Viejo%2c_Panama.err
+[1] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0||0||0||0...0||0||0|| Rep Pattern: -==-==-...)]
+[2] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0||0||0||0...0||0|| Rep Pattern: -==-==-==-...)]
+[3] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0||0||0||0...0|| Rep Pattern: -==-==-==-==-...)]
+[4] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0||0||0||0... Rep Pattern: -==-==-==-==-==-...)]
+[5] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0||0||0|| ...p Pattern: -==-==-==-==-==-==-...)]
+[6] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0||0|| Rep...attern: -==-==-==-==-==-==-==-...)]
+[7] unexpected token '||' [state None,  source: (||0||0||0||0||0||0||0|| Rep Pa...ern: -==-==-==-==-==-==-==-==-...)]
+[8] unexpected token '||' [state None,  source: (||0||0||0||0||0||0|| Rep Patte...: -==-==-==-==-==-==-==-==-==-...)]
+[9] unexpected token '||' [state None,  source: (||0||0||0||0||0|| Rep Pattern:...==-==-==-==-==-==-==-==-==-==-...)]
+[10] unexpected token '||' [state None,  source: (||0||0||0||0|| Rep Pattern: -=...==-==-==-==-==-==-==-==-==-= R...)]
+[11] unexpected token '||' [state None,  source: (||0||0||0|| Rep Pattern: -==-=...==-==-==-==-==-==-==-==-= Rep ...)]
+[12] unexpected token '||' [state None,  source: (||0||0|| Rep Pattern: -==-==-=...==-==-==-==-==-==-==-= Rep Pat...)]
+[13] unexpected token '||' [state None,  source: (||0|| Rep Pattern: -==-==-==-=...==-==-==-==-==-==-= Rep Patter...)]
+[14] unexpected token '||' [state None,  source: (|| Rep Pattern: -==-==-==-==-=...==-==-==-==-==-= Rep Pattern: ...)]
+[15] lexem can not be treated as data: -==-==-==-==-==-==-==-==-==-==-= [state None,  source: (-==-==-==-==-==-==-==-==-==-==...==-==-==-?=-==-= <gallery mode...)]
+[16] lexem can not be treated as data: -==-==-==-==-==-==-==-==- [state None,  source: (-==-==-==-==-==-==-==-==-?=-==...File:Museo del Canal.jpg|[[Pan...)]
+
+
+## 0000/Casco_Viejo%2c_Panama.txt
+0 Title Casco_Viejo%2c_Panama "Casco Viejo, Panama"
+1 CitationLink cit1 ""
+2 Break  ""
+3 CitationLink cit2 ""
+4 Break  ""
+5 MultiQuoteStart 3 ""
+6 Text  "Casco Viejo"
+7 MultiQuoteEnd  ""
+8 Text  " (Spanish for "
+9 MultiQuoteStart 2 ""
+10 Text  "Old Quarter"
+11 MultiQuoteEnd  ""
+12 Text  "), also known as "
+13 MultiQuoteStart 3 ""
+14 Text  "Casco Antiguo"
+15 MultiQuoteEnd  ""
+16 Text  " or "
+17 MultiQuoteStart 3 ""
+18 Text  "San Felipe"
+19 MultiQuoteEnd  ""
+20 Text  ", is the historic district of "
+21 PageLinkStart Panama City "Panama City"
+22 PageLinkEnd  ""
+23 Text  ". Completed and settled in 1673, it was built following the near-total destruction of the original Panamá city, "
+24 PageLinkStart Panamá Viejo "Panamá Viejo"
+25 PageLinkEnd  ""
+26 Text  " in 1671, when the latter was attacked by pirates. It was designated a World Heritage Site in 1997."
+27 CitationStart cit1 ""
+28 AttributeStart class "Expand Spanish"
+29 AttributeEnd  ""
+30 AttributeStart date "December 2011"
+31 AttributeEnd  ""
+32 AttributeStart  "Casco Antiguo de Panamá"
+33 AttributeEnd  ""
+34 CitationEnd  ""
+35 CitationStart cit3 ""
+36 AttributeStart class "coord"
+37 AttributeEnd  ""
+38 AttributeStart coord "8 57 09 N 79 32 06 W region:PA"
+39 AttributeEnd  ""
+40 CitationEnd  ""
+41 CitationStart cit4 ""
+42 TableStart table1 ""
+43 TableTitleStart  ""
+44 Text  "designation list"
+45 TableTitleEnd  ""
+46 TableHeadStart  ""
+47 TableCellReference id "C0"
+48 Text  "embed"
+49 TableHeadEnd  ""
+50 TableCellStart  ""
+51 TableCellReference id "C0"
+52 Text  "yes"
+53 TableCellEnd  ""
+54 TableHeadStart  ""
+55 TableCellReference id "C1"
+56 Text  "designation1 offname"
+57 TableHeadEnd  ""
+58 TableCellStart  ""
+59 TableCellReference id "C1"
+60 Text  "Archaeological Site of"
+61 PageLinkStart Panamá Viejo "Panamá Viejo"
+62 PageLinkEnd  ""
+63 Text  " and Historic District of Panamá"
+64 TableCellEnd  ""
+65 TableHeadStart  ""
+66 TableCellReference id "C2"
+67 Text  "designation1 date"
+68 TableHeadEnd  ""
+69 TableCellStart  ""
+70 TableCellReference id "C2"
+71 Text  "1997"
+72 FormatStart  ""
+73 Text  "(21st "
+74 PageLinkStart World Heritage Committee ""
+75 Text  "session"
+76 PageLinkEnd  ""
+77 Text  ")"
+78 FormatEnd  ""
+79 TableCellEnd  ""
+80 TableHeadStart  ""
+81 TableCellReference id "C3"
+82 Text  "designation1 criteria"
+83 TableHeadEnd  ""
+84 TableCellStart  ""
+85 TableCellReference id "C3"
+86 Text  "II, IV, VI"
+87 TableCellEnd  ""
+88 TableHeadStart  ""
+89 TableCellReference id "C4"
+90 Text  "designation1 number"
+91 TableHeadEnd  ""
+92 TableCellStart  ""
+93 TableCellReference id "C4"
+94 WebLinkStart http://whc.unesco.org/en/list/790 ""
+95 Text  " 790"
+96 WebLinkEnd  ""
+97 TableCellEnd  ""
+98 TableHeadStart  ""
+99 TableCellReference id "C5"
+100 Text  "designation1 free2name"
+101 TableHeadEnd  ""
+102 TableCellStart  ""
+103 TableCellReference id "C5"
+104 Text  "State Party"
+105 TableCellEnd  ""
+106 TableHeadStart  ""
+107 TableCellReference id "C6"
+108 Text  "designation1 free3value"
+109 TableHeadEnd  ""
+110 TableCellStart  ""
+111 TableCellReference id "C6"
+112 PageLinkStart List of World Heritage Sites in the Americas ""
+113 Text  "Latin America and the Caribbean"
+114 PageLinkEnd  ""
+115 Break  ""
+116 TableCellEnd  ""
+117 TableEnd  ""
+118 CitationEnd  ""
+119 CitationStart cit2 ""
+120 TableStart table2 ""
+121 TableTitleStart  ""
+122 Text  "Infobox settlement"
+123 TableTitleEnd  ""
+124 TableHeadStart  ""
+125 TableCellReference id "C0"
+126 Text  "name"
+127 TableHeadEnd  ""
+128 TableCellStart  ""
+129 TableCellReference id "C0"
+130 Text  "Casco Viejo"
+131 TableCellEnd  ""
+132 TableHeadStart  ""
+133 TableCellReference id "C1"
+134 Text  "settlement type"
+135 TableHeadEnd  ""
+136 TableCellStart  ""
+137 TableCellReference id "C1"
+138 Text  "Historic District of"
+139 PageLinkStart Panama City "Panama City"
+140 PageLinkEnd  ""
+141 TableCellEnd  ""
+142 TableHeadStart  ""
+143 TableCellReference id "C2"
+144 Text  "image skyline"
+145 TableHeadEnd  ""
+146 TableCellStart  ""
+147 TableCellReference id "C2"
+148 Text  "Calle Casco Viejo.jpg"
+149 TableCellEnd  ""
+150 TableHeadStart  ""
+151 TableCellReference id "C3"
+152 Text  "image caption"
+153 TableHeadEnd  ""
+154 TableCellStart  ""
+155 TableCellReference id "C3"
+156 Text  "Casco Viejo Street"
+157 TableCellEnd  ""
+158 TableHeadStart  ""
+159 TableCellReference id "C4"
+160 Text  "subdivision name"
+161 TableHeadEnd  ""
+162 TableCellStart  ""
+163 TableCellReference id "C4"
+164 PageLinkStart Panama "Panama"
+165 PageLinkEnd  ""
+166 TableCellEnd  ""
+167 TableHeadStart  ""
+168 TableCellReference id "C5"
+169 Text  "subdivision name1"
+170 TableHeadEnd  ""
+171 TableCellStart  ""
+172 TableCellReference id "C5"
+173 PageLinkStart Panamá Province ""
+174 Text  "Panamá"
+175 PageLinkEnd  ""
+176 TableCellEnd  ""
+177 TableHeadStart  ""
+178 TableCellReference id "C6"
+179 Text  "subdivision name2"
+180 TableHeadEnd  ""
+181 TableCellStart  ""
+182 TableCellReference id "C6"
+183 PageLinkStart Panamá District ""
+184 Text  "Panamá"
+185 PageLinkEnd  ""
+186 TableCellEnd  ""
+187 TableHeadStart  ""
+188 TableCellReference id "C7"
+189 Text  "subdivision name3"
+190 TableHeadEnd  ""
+191 TableCellStart  ""
+192 TableCellReference id "C7"
+193 PageLinkStart Panama City "Panama City"
+194 PageLinkEnd  ""
+195 TableCellEnd  ""
+196 TableHeadStart  ""
+197 TableCellReference id "C8"
+198 Text  "coordinates"
+199 TableHeadEnd  ""
+200 TableCellStart  ""
+201 TableCellReference id "C8"
+202 CitationLink cit3 ""
+203 TableCellEnd  ""
+204 TableHeadStart  ""
+205 TableCellReference id "C9"
+206 Text  "footnotes"
+207 TableHeadEnd  ""
+208 TableCellStart  ""
+209 TableCellReference id "C9"
+210 CitationLink cit4 ""
+211 Break  ""
+212 TableCellEnd  ""
+213 TableEnd  ""
+214 CitationEnd  ""
+215 HeadingStart h1 ""
+216 Text  "History"
+217 HeadingEnd  ""
+218 Text  "Panama city was founded on August 15, 1519 and it lasted one hundred and fifty-two years. In January 1671, the Governor Juan Perez de Guzman had it set on fire, before the attack and looting by the pirate Henry Morgan. In 1672, Antonio Fernández de Córdoba initiated the construction of a new city, which was then founded on January 21, 1673. This city was built on a peninsula completely isolated by the sea and a defensive system of walls."
+219 CitationLink cit5 ""
+220 Text  " Today this place preserves the first institutions and buildings of the modern city of Panama. It is known as "
+221 MultiQuoteStart 2 ""
+222 Text  "Casco Viejo"
+223 MultiQuoteEnd  ""
+224 Text  " (Spanish for Old Town)."
+225 CitationStart cit5 ""
+226 TableStart table3 ""
+227 TableTitleStart  ""
+228 Text  "cite book"
+229 TableTitleEnd  ""
+230 TableHeadStart  ""
+231 TableCellReference id "C0"
+232 Text  "last1"
+233 TableHeadEnd  ""
+234 TableCellStart  ""
+235 TableCellReference id "C0"
+236 Text  "Castillero"
+237 TableCellEnd  ""
+238 TableHeadStart  ""
+239 TableCellReference id "C1"
+240 Text  "first1"
+241 TableHeadEnd  ""
+242 TableCellStart  ""
+243 TableCellReference id "C1"
+244 Text  "Alfredo"
+245 TableCellEnd  ""
+246 TableHeadStart  ""
+247 TableCellReference id "C2"
+248 Text  "title"
+249 TableHeadEnd  ""
+250 TableCellStart  ""
+251 TableCellReference id "C2"
+252 Text  "UNESCO Guides: Panamá la Vieja and Casco Viejo"
+253 TableCellEnd  ""
+254 TableHeadStart  ""
+255 TableCellReference id "C3"
+256 Text  "year"
+257 TableHeadEnd  ""
+258 TableCellStart  ""
+259 TableCellReference id "C3"
+260 Text  "2004"
+261 TableCellEnd  ""
+262 TableHeadStart  ""
+263 TableCellReference id "C4"
+264 Text  "publisher"
+265 TableHeadEnd  ""
+266 TableCellStart  ""
+267 TableCellReference id "C4"
+268 Text  "UNESCO Publishing"
+269 TableCellEnd  ""
+270 TableHeadStart  ""
+271 TableCellReference id "C5"
+272 Text  "isbn"
+273 TableHeadEnd  ""
+274 TableCellStart  ""
+275 TableCellReference id "C5"
+276 Text  "92-3-103923-7"
+277 TableCellEnd  ""
+278 TableEnd  ""
+279 CitationEnd  ""
+280 HeadingStart h1 ""
+281 Text  "Main sights"
+282 HeadingEnd  ""
+283 ListItemStart l1 ""
+284 Text  "La Catedral Metropolitana is the main Catholic temple in Panama city."
+285 ListItemEnd  ""
+286 ListItemStart l1 ""
+287 PageLinkStart Palacio de las Garzas ""
+288 Text  "El Palacio de las Garzas"
+289 PageLinkEnd  ""
+290 Text  ", is the governmental office and residence of the "
+291 PageLinkStart List of Heads of State of Panama ""
+292 Text  "President of Panama"
+293 PageLinkEnd  ""
+294 Text  "."
+295 ListItemEnd  ""
+296 ListItemStart l1 ""
+297 Text  "Church and Convent of "
+298 PageLinkStart Saint Francis of Assisi "Saint Francis of Assisi"
+299 PageLinkEnd  ""
+300 Text  "."
+301 ListItemEnd  ""
+302 ListItemStart l1 ""
+303 Text  "Church of San José"
+304 ListItemEnd  ""
+305 ListItemStart l1 ""
+306 Text  "Church of La Merced"
+307 ListItemEnd  ""
+308 ListItemStart l1 ""
+309 Text  "Church and Convent of Santo Domingo: The Flat Arch"
+310 ListItemEnd  ""
+311 ListItemStart l1 ""
+312 Text  "Church and convent of the Society of Jesus."
+313 ListItemEnd  ""
+314 ListItemStart l1 ""
+315 Text  "Palacio Municipal, which dates from the beginning of the 20th century."
+316 ListItemEnd  ""
+317 ListItemStart l1 ""
+318 Text  "Palacio Nacional"
+319 ListItemEnd  ""
+320 ListItemStart l1 ""
+321 PageLinkStart National Theatre of Panama "National Theatre of Panama"
+322 PageLinkEnd  ""
+323 ListItemEnd  ""
+324 ListItemStart l1 ""
+325 PageLinkStart Panama Canal Museum "Panama Canal Museum"
+326 PageLinkEnd  ""
+327 ListItemEnd  ""
+328 ListItemStart l1 ""
+329 Text  "Palacio Bolívar"
+330 ListItemEnd  ""
+331 ListItemStart l1 ""
+332 Text  "Góngora House"
+333 ListItemEnd  ""
+334 ListItemStart l1 ""
+335 Text  "Plaza Bolívar"
+336 ListItemEnd  ""
+337 ListItemStart l1 ""
+338 Text  "Plaza Herrera"
+339 ListItemEnd  ""
+340 ListItemStart l1 ""
+341 Text  "Plaza de Francia"
+342 ListItemEnd  ""
+343 ListItemStart l1 ""
+344 Text  "Plaza de la Independencia"
+345 ListItemEnd  ""
+346 HeadingStart h1 ""
+347 Text  "Gallery"
+348 HeadingEnd  ""
+349 Text  "No Rep Pattern: 00000000000000 Rep Pattern:  Rep Pattern: ?=-==-= "
+350 RefLink ref2 ""
+351 RefStart ref2 ""
+352 ListItemStart l1 ""
+353 PageLinkStart Panama Canal Museum "Panama Canal Museum"
+354 PageLinkEnd  ""
+355 Text  "."
+356 ListItemEnd  ""
+357 ListItemStart l1 ""
+358 Text  "Plaza de la Independencia."
+359 ListItemEnd  ""
+360 ListItemStart l1 ""
+361 Text  "San Francisco Church"
+362 ListItemEnd  ""
+363 ListItemStart l1 ""
+364 Text  "National Theater"
+365 ListItemEnd  ""
+366 ListItemStart l1 ""
+367 Text  "Society of Jesus"
+368 ListItemEnd  ""
+369 ListItemStart l1 ""
+370 Text  "Convent of Santo Domingo"
+371 ListItemEnd  ""
+372 ListItemStart l1 ""
+373 Text  "Arch Chato"
+374 ListItemEnd  ""
+375 ListItemStart l1 ""
+376 Text  "San José Church"
+377 ListItemEnd  ""
+378 ListItemStart l1 ""
+379 Text  "Typical houses"
+380 ListItemEnd  ""
+381 ListItemStart l1 ""
+382 Text  "Palacio Nacional"
+383 ListItemEnd  ""
+384 ListItemStart l1 ""
+385 Text  "Palacio de las Garzas"
+386 ListItemEnd  ""
+387 ListItemStart l1 ""
+388 Text  "House Góngora"
+389 ListItemEnd  ""
+390 ListItemStart l1 ""
+391 Text  "Metropolitan Cathedral"
+392 ListItemEnd  ""
+393 ListItemStart l1 ""
+394 Text  "Map of Panama and its suburb in 1789."
+395 ListItemEnd  ""
+396 Break  ""
+397 RefEnd  ""
+398 HeadingStart h1 ""
+399 Text  " References "
+400 HeadingEnd  ""
+401 CitationStart cit7 ""
+402 TableStart table4 ""
+403 TableTitleStart  ""
+404 Text  "cite web"
+405 TableTitleEnd  ""
+406 TableHeadStart  ""
+407 TableCellReference id "C0"
+408 Text  "url"
+409 TableHeadEnd  ""
+410 TableCellStart  ""
+411 TableCellReference id "C0"
+412 WebLinkStart http://whc.unesco.org/en/list/790 ""
+413 WebLinkEnd  ""
+414 TableCellEnd  ""
+415 TableHeadStart  ""
+416 TableCellReference id "C1"
+417 Text  "title"
+418 TableHeadEnd  ""
+419 TableCellStart  ""
+420 TableCellReference id "C1"
+421 Text  "Archaeological Site of Panamá Viejo and Historic District of Panamá"
+422 TableCellEnd  ""
+423 TableHeadStart  ""
+424 TableCellReference id "C2"
+425 Text  "publisher"
+426 TableHeadEnd  ""
+427 TableCellStart  ""
+428 TableCellReference id "C2"
+429 PageLinkStart UNESCO "UNESCO"
+430 PageLinkEnd  ""
+431 Text  " World Heritage Centre"
+432 TableCellEnd  ""
+433 TableHeadStart  ""
+434 TableCellReference id "C3"
+435 Text  "accessdate"
+436 TableHeadEnd  ""
+437 TableCellStart  ""
+438 TableCellReference id "C3"
+439 Text  "27 May 2011"
+440 TableCellEnd  ""
+441 TableEnd  ""
+442 CitationEnd  ""
+443 HeadingStart h1 ""
+444 Text  " External links "
+445 HeadingEnd  ""
+446 ListItemStart l1 ""
+447 Text  " "
+448 Markup  "Official website"
+449 Text  " "
+450 Markup  "es icon"
+451 ListItemEnd  ""
+452 Break  ""
+453 Markup  "Spanish Colonial architecture"
+454 Break  ""
+455 Markup  "Panama topics"
+456 Break  ""
+457 PageLinkStart Category:Panama City "Category:Panama City"
+458 PageLinkEnd  ""
+459 Break  ""
+460 PageLinkStart Category:History of Panama City "Category:History of Panama City"
+461 PageLinkEnd  ""
+462 Break  ""
+463 PageLinkStart Category:Historic districts "Category:Historic districts"
+464 PageLinkEnd  ""
+465 Break  ""
+466 PageLinkStart Category:Populated places in Panamá Province "Category:Populated places in Panamá Province"
+467 PageLinkEnd  ""
+468 Break  ""
+469 PageLinkStart Category:Spanish Colonial architecture "Category:Spanish Colonial architecture"
+470 PageLinkEnd  ""
+471 Break  ""
+472 PageLinkStart Category:World Heritage Sites in Panama "Category:World Heritage Sites in Panama"
+473 PageLinkEnd  ""
+474 Break  ""
+475 PageLinkStart Category:Tourist attractions in Panama City "Category:Tourist attractions in Panama City"
+476 PageLinkEnd  ""
+
+
+## 0000/Casco_Viejo%2c_Panama.org
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mediawiki><page><title>Casco Viejo, Panama</title><revision><text>{{Expand Spanish|date=December 2011|Casco Antiguo de Panamá}}
+{{Infobox settlement
+| name                    = Casco Viejo
+| native_name             = 
+| settlement_type         = Historic District of [[Panama City]]
+| image_skyline           = Calle Casco Viejo.jpg
+| imagesize               = 
+| image_alt               = 
+| image_caption           = Casco Viejo Street
+|pushpin_map            =Panama
+|pushpin_mapsize        = 240
+|subdivision_type       = Country
+|subdivision_name       = [[Panama]]
+|subdivision_type1      = Province
+|subdivision_name1      = [[Panamá Province|Panamá]]
+|subdivision_type2      = District
+|subdivision_name2      = [[Panamá District|Panamá]]
+|subdivision_type3      = City
+|subdivision_name3      = [[Panama City]]
+|leader_title           = 
+|leader_name            = 
+|established_title      =  
+|established_date       = 
+|named_for              = 
+|seat_type              = 
+|seat                   =
+|area_total_km2         = 
+|area_footnotes         = 
+|population_as_of       = 
+|population_total       = 
+|population_density_km2 =
+|timezone               =
+|utc_offset             = 
+|timezone_DST           = 
+|utc_offset_DST         = 
+|coordinates            = {{coord|8|57|09|N|79|32|06|W|region:PA|display=inline,title}}
+|elevation_m            = 
+|area_code              = 
+|website                = 
+|footnotes = {{designation list | embed=yes
+   | designation1 = WHS
+   | designation1_offname = Archaeological Site of [[Panamá Viejo]] and Historic District of Panamá
+   | designation1_date = 1997 &lt;small&gt;(21st [[World Heritage Committee|session]])&lt;/small&gt;
+   | designation1_type = Cultural
+   | designation1_criteria = II, IV, VI
+   | designation1_number = [http://whc.unesco.org/en/list/790 790]
+   | designation1_free1name = Extension
+   | designation1_free1value = 2003
+   | designation1_free2name = State Party
+   | designation1_free2value = Panama
+   | designation1_free3name = Region
+   | designation1_free3value = [[List of World Heritage Sites in the Americas|Latin America and the Caribbean]]
+  }}
+}}
+
+'''Casco Viejo''' (Spanish for ''Old Quarter''), also known as '''Casco Antiguo''' or '''San Felipe''', is the historic district of [[Panama City]]. Completed and settled in 1673, it was built following the near-total destruction of the original Panamá city, [[Panamá Viejo]] in 1671, when the latter was attacked by pirates. It was designated a World Heritage Site in 1997.&lt;ref name="World Heritage" /&gt;
+
+==History==
+Panama city was founded on August 15, 1519 and it lasted one hundred and fifty-two years. In January 1671, the Governor Juan Perez de Guzman had it set on fire, before the attack and looting by the pirate Henry Morgan. In 1672, Antonio Fernández de Córdoba initiated the construction of a new city, which was then founded on January 21, 1673. This city was built on a peninsula completely isolated by the sea and a defensive system of walls.&lt;ref name=CASTILLERO&gt;{{cite book|last1=Castillero|first1=Alfredo|title=UNESCO Guides: Panamá la Vieja and Casco Viejo|year=2004|publisher=UNESCO Publishing|isbn=92-3-103923-7}}&lt;/ref&gt; Today this place preserves the first institutions and buildings of the modern city of Panama. It is known as ''Casco Viejo'' (Spanish for Old Town).
+
+==Main sights==
+*La Catedral Metropolitana is the main Catholic temple in Panama city.
+*[[Palacio de las Garzas|El Palacio de las Garzas]], is the governmental office and residence of the [[List of Heads of State of Panama|President of Panama]].
+*Church and Convent of [[Saint Francis of Assisi]].
+*Church of San José
+*Church of La Merced
+*Church and Convent of Santo Domingo: The Flat Arch
+*Church and convent of the Society of Jesus.
+*Palacio Municipal, which dates from the beginning of the 20th century.
+*Palacio Nacional
+*[[National Theatre of Panama]]
+*[[Panama Canal Museum]]
+*Palacio Bolívar
+*Góngora House
+*Plaza Bolívar
+*Plaza Herrera
+*Plaza de Francia
+*Plaza de la Independencia
+
+==Gallery==
+No Rep Pattern: 0||0||0||0||0||0||0||0||0||0||0||0||0||0||
+Rep Pattern: -==-==-==-==-==-==-==-==-==-==-=
+Rep Pattern: -==-==-==-==-==-==-==-==-?=-==-=
+&lt;gallery mode=packed&gt;
+File:Museo del Canal.jpg|[[Panama Canal Museum]].
+File:Plazadelaindependenciapanama.JPG|Plaza de la Independencia.
+File:Casco viejo de panama1.jpg|San Francisco Church
+File:Teatro Nacional Panamá.jpg|National Theater
+File:Compañia de jesus.jpg|Society of Jesus
+File:Convento Arco Chato Panama.jpg|Convent of Santo Domingo
+File:Arco chato panama.jpg|Arch Chato
+File:Altar de oro de San Jose.jpg|San José Church
+File:Casco viejo panama.jpg|Typical houses
+File:Edificio_del_Ministerio_de_Gobierno_y_Justicia_-_Casco_Viejo_de_la_Ciudad_de_Panamá.jpg|Palacio Nacional
+File:Palacio de las Garzas.jpg|Palacio de las Garzas
+File:CasaGóngoraCascoViejo.JPG|House Góngora
+File:Panama Catedral Metropolitana.jpg|Metropolitan Cathedral
+File:Plano Panamá 1789.jpg|Map of Panama and its suburb in 1789.
+&lt;/gallery&gt;
+
+== References ==
+{{Reflist|refs=
+
+&lt;ref name="World Heritage"&gt;{{cite web
+ | url=http://whc.unesco.org/en/list/790
+ | title=Archaeological Site of Panamá Viejo and Historic District of Panamá
+ | work=whc.unesco.org
+ | publisher=[[UNESCO]] World Heritage Centre
+ | accessdate=27 May 2011
+}}&lt;/ref&gt;
+
+}}
+
+== External links ==
+* {{Official website}} {{es icon}}
+
+{{Spanish Colonial architecture}}
+{{Panama topics}}
+
+[[Category:Panama City]]
+[[Category:History of Panama City]]
+[[Category:Historic districts]]
+[[Category:Populated places in Panamá Province]]
+[[Category:Spanish Colonial architecture]]
+[[Category:World Heritage Sites in Panama]]
+[[Category:Tourist attractions in Panama City]]</text></revision></page></mediawiki>
 
 
 ## 0000/Alex_Angus.xml
@@ -11478,7 +12111,7 @@ Jiujiang had ancient names like Chaisang (</text>
 <entity id="3"><text>B-side</text>
   </entity>
 <list id="l1"><text> </text>
-  <nowiki>''Spare the Rod, Love the Child'' (single "I'</nowiki>
+  <nowiki>''Spare the Rod, Love the Child'' (single "I'</nowiki>
   <text>d Like to Get to Know You</text>
   <quot><text>)</text>
     </quot>

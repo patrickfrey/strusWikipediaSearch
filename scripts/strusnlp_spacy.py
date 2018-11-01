@@ -123,15 +123,10 @@ def tagSentenceStrusTags( stk):
         if elem.nlptag:
             if elem.nlptag[0] == 'V':
                 hasVerb = True
-            elif elem.nlptag[:3] != 'NNP':
+            elif elem.nlptag[:3] != 'NNP' and elem.nlprole != "punct":
                 hasEntitiesOnly = False
 
-    if hasEntitiesOnly:
-        for elem in stk:
-            elem.strustag = "N"
-            rt.append( elem)
-        return rt
-    elif hasVerb:
+    if hasEntitiesOnly or hasVerb or len(stk) > 6:
         for eidx,elem in enumerate(stk):
             type = elem.nlptag
             utype = unifyType( type)
@@ -185,7 +180,7 @@ def tagSentenceSubjects( stk):
         if eidx in subjindices:
             elem.strusrole = "S"
             follow = True
-        if follow:
+        elif follow:
             if elem.strustag == '_':
                 elem.strusrole = "_"
             else:
@@ -261,12 +256,12 @@ def getDocumentSubjects( title, sentences):
     rt = {}
     endtitle = title.find('(')
     if endtitle >= 0:
-        titlesubject = title[ :endtitle ].split()
+        titlesubject = title[ :endtitle ].split(' ')[0]
     else:
         titlesubject = title
     print( "TITLE SUBJECT %s\n" % titlesubject)
     sidx = 0
-    lastSentSubjects = []
+    lastSentSubjects = titlesubject.split(' ')
     for sent in sentences:
         lastSubject = None
         sentSubjects = []
@@ -290,12 +285,16 @@ def getDocumentSubjects( title, sentences):
                         key += ","
                     key += '_'.join( lss)
                 if key in rt:
+                    print( "KEY %s ADD PRP %s" % (key,tok.value))
                     rt[ key].prp.append( tok.value)
                 else:
+                    print( "KEY %s ASSIGN PRP %s" % (key,tok.value))
                     rt[ key] = Subject( lastSentSubjects, [], 1, None)
         if lastSubject:
             sentSubjects.append( lastSubject)
         lastSentSubjects = sentSubjects
+        for lsb in lastSentSubjects:
+            print( "LAST SUBJ %s" % ' '.join(lsb))
     for rtelem in rt:
         print( "%s -> %s" % (rtelem, printSubject( rt[rtelem])))
     return rt

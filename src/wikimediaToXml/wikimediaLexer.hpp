@@ -147,7 +147,7 @@ private:
 	std::string tryParseIsbnRef();
 	std::string tryParseBigHexNum();
 	std::string tryParseTimestamp();
-	std::string tryParseRepPattern();
+	std::string tryParseRepPattern( int minlen);
 	std::string tryParseCode();
 	bool eatFollowChar( char expectChr);
 

@@ -20,6 +20,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdarg>
+#include <limits>
 
 /// \brief strus toplevel namespace
 using namespace strus;
@@ -798,47 +799,84 @@ std::string WikimediaLexer::tryParseIsbnRef()
 	return std::string();
 }
 
-static bool isRepPatternCandidate( char const* si, const char* se)
+static bool checkRepPatternCandidateIntervall( char const* si, int intervall, int len)
 {
-	int df = 0;
-	int minlen = 16;
-	if ((unsigned char)*si < 128 && si + minlen < se)
-	{
-		if (si[0] == si[1]) df = 1;
-		else if (si[0] == si[2]) df = 2;
-		else if (si[0] == si[3]) df = 3;
-		if (!df) return false;
-		for (int di=0; di<df; ++di) if (isSpace(si[di]) || isDigit(si[di] || (unsigned char)*si >= 128)) return false;
-
-		int ii=0;
-		for (; ii<minlen && si[ii] == si[ii+df]; ++ii){}
-		return ii >= minlen;
-	}
-	return false;
+	int ii = 0;
+	for (; ii+intervall<len && si[ii] == si[ii+intervall]; ii+=intervall){}
+	return ii+intervall >= len;
 }
 
-std::string WikimediaLexer::tryParseRepPattern()
+static int maxRepPatternCandidateIntervallLength( char const* si, const char* se, int intervall)
+{
+	int ii = 0;
+	int nn = se-si;
+	for (; ii+intervall<nn && si[ii] == si[ii+intervall]; ii+=intervall){}
+	return ii;
+}
+
+static bool checkRepPatternCandidate( char const* si, int minlen, int ptlen)
+{
+	for (int ii=0; ii<ptlen; ++ii)
+	{
+		if (!checkRepPatternCandidateIntervall( si+ii, ptlen, minlen-ii))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+static int repPatternCandidateLength( char const* si, const char* se, int minlen)
+{
+	enum {MaxIntervallSize=3};
+	if (se - si < minlen) return 0;
+	for (int ii=0; ii<MaxIntervallSize; ++ii)
+	{
+		unsigned char ch = si[ii];
+		if (isTokenDelimiter(ch) || isSpace(ch) || isDigit(ch) || ch >= 128)
+		{
+			return 0;
+		}
+	}
+	for (int ptlen=1; ptlen<=MaxIntervallSize; ++ptlen)
+	{
+		if (checkRepPatternCandidate( si, minlen, ptlen)) return ptlen;
+	}
+	return 0;
+}
+
+std::string WikimediaLexer::tryParseRepPattern( int minlen)
 {
 	std::string rt;
 
-	int df = 0;
-	int minlen = 16;
-	if ((unsigned char)*m_si < 128 && m_si + minlen < m_se)
+	int ptlen = repPatternCandidateLength( m_si, m_se, minlen);
+	if (ptlen <= 0) return std::string();
+	int len = std::numeric_limits<int>::max();
+	for (int pi=0; pi<ptlen; ++pi)
 	{
-		if (m_si[0] == m_si[1]) df = 1;
-		else if (m_si[0] == m_si[2]) df = 2;
-		else if (m_si[0] == m_si[3]) df = 3;
-		if (!df) return std::string();
-		for (int di=0; di<df; ++di) if (isSpace(m_si[di]) || isDigit(m_si[di] || (unsigned char)*m_si >= 128)) return std::string();
-
-		int ii=0;
-		for (; m_si+ii+df<m_se && m_si[ii] == m_si[ii+df]; ++ii){}
-		if (ii >= minlen)
+		int ilen = maxRepPatternCandidateIntervallLength( m_si+pi, m_se-pi, ptlen) + pi;
+		if (ilen+ptlen < len)
 		{
-			rt.append( m_si, ii+df);
-			m_si += ii+df;
+			// ... if it is smaller (equality not possible), then the new value is the new length
+			len = ilen;
+			if (pi)
+			{
+				pi = -1;
+				continue; //... start loop again
+			}
+		}
+		else
+		{
+			// ... if it is bigger, then the new length is one bigger that the value before
+			len += 1;
 		}
 	}
+	if (len < minlen)
+	{
+		throw std::runtime_error( "internal: logic error in parse rep pattern");
+	}
+	rt.append( m_si, len);
+	m_si += len;
 	return rt;
 }
 
@@ -1904,13 +1942,13 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
-		else if (m_si < m_se && !isSpace(*m_si) && isRepPatternCandidate( m_si, m_se))
+		else if (m_si < m_se && !isSpace(*m_si) && repPatternCandidateLength( m_si, m_se, 16))
 		{
 			if (start != m_si)
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
-			std::string ptstr = tryParseRepPattern();
+			std::string ptstr = tryParseRepPattern( 16);
 			if (!ptstr.empty())
 			{
 				return WikimediaLexem( WikimediaLexem::NoData, 0, ptstr);
