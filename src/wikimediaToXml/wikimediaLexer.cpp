@@ -854,7 +854,7 @@ std::string WikimediaLexer::tryParseRepPattern( int minlen)
 	int len = std::numeric_limits<int>::max();
 	for (int pi=0; pi<ptlen; ++pi)
 	{
-		int ilen = maxRepPatternCandidateIntervallLength( m_si+pi, m_se-pi, ptlen) + pi;
+		int ilen = maxRepPatternCandidateIntervallLength( m_si+pi, m_se, ptlen) + pi;
 		if (ilen+ptlen < len)
 		{
 			// ... if it is smaller (equality not possible), then the new value is the new length
