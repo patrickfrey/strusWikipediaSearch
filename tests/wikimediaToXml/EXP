@@ -1168,6 +1168,8 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
   </heading>
 <text>No Rep Pattern: 00000000000000
 Rep Pattern: 
+Rep Pattern: END
+Rep Pattern: END
 Rep Pattern: ?=-==-=
 </text>
 <reflink id="ref2"/>
@@ -1276,8 +1278,10 @@ Rep Pattern: ?=-==-=
 [12] unexpected token '||' [state None,  source: (||0||0|| Rep Pattern: -==-==-=...==-==-==-==-==-==-==-= Rep Pat...)]
 [13] unexpected token '||' [state None,  source: (||0|| Rep Pattern: -==-==-==-=...==-==-==-==-==-==-= Rep Patter...)]
 [14] unexpected token '||' [state None,  source: (|| Rep Pattern: -==-==-==-==-=...==-==-==-==-==-= Rep Pattern: ...)]
-[15] lexem can not be treated as data: -==-==-==-==-==-==-==-==-==-==-= [state None,  source: (-==-==-==-==-==-==-==-==-==-==...==-==-==-?=-==-= <gallery mode...)]
-[16] lexem can not be treated as data: -==-==-==-==-==-==-==-==- [state None,  source: (-==-==-==-==-==-==-==-==-?=-==...File:Museo del Canal.jpg|[[Pan...)]
+[15] lexem can not be treated as data: -==-==-==-==-==-==-==-==-==-==-= [state None,  source: (-==-==-==-==-==-==-==-==-==-==...-=-=-=-=-=-=-=-=-=-=-=-=-=END ...)]
+[16] lexem can not be treated as data: -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= [state None,  source: (-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=...-----------------------------E...)]
+[17] lexem can not be treated as data: ------------------------------------------ [state None,  source: (------------------------------...==-==-==-==-?=-==-= <gallery m...)]
+[18] lexem can not be treated as data: -==-==-==-==-==-==-==-==- [state None,  source: (-==-==-==-==-==-==-==-==-?=-==...File:Museo del Canal.jpg|[[Pan...)]
 
 
 ## 0000/Casco_Viejo%2c_Panama.txt
@@ -1630,7 +1634,7 @@ Rep Pattern: ?=-==-=
 346 HeadingStart h1 ""
 347 Text  "Gallery"
 348 HeadingEnd  ""
-349 Text  "No Rep Pattern: 00000000000000 Rep Pattern:  Rep Pattern: ?=-==-= "
+349 Text  "No Rep Pattern: 00000000000000 Rep Pattern:  Rep Pattern: END Rep Pattern: END Rep Pattern: ?=-==-= "
 350 RefLink ref2 ""
 351 RefStart ref2 ""
 352 ListItemStart l1 ""
@@ -1844,6 +1848,8 @@ Panama city was founded on August 15, 1519 and it lasted one hundred and fifty-t
 ==Gallery==
 No Rep Pattern: 0||0||0||0||0||0||0||0||0||0||0||0||0||0||
 Rep Pattern: -==-==-==-==-==-==-==-==-==-==-=
+Rep Pattern: -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=END
+Rep Pattern: ------------------------------------------END
 Rep Pattern: -==-==-==-==-==-==-==-==-?=-==-=
 &lt;gallery mode=packed&gt;
 File:Museo del Canal.jpg|[[Panama Canal Museum]].

@@ -811,7 +811,7 @@ static int maxRepPatternCandidateIntervallLength( char const* si, const char* se
 	int ii = 0;
 	int nn = se-si;
 	for (; ii+intervall<nn && si[ii] == si[ii+intervall]; ii+=intervall){}
-	return ii;
+	return ii+1;
 }
 
 static bool checkRepPatternCandidate( char const* si, int minlen, int ptlen)
@@ -829,7 +829,7 @@ static bool checkRepPatternCandidate( char const* si, int minlen, int ptlen)
 static int repPatternCandidateLength( char const* si, const char* se, int minlen)
 {
 	enum {MaxIntervallSize=3};
-	if (se - si < minlen) return 0;
+	if (se < si + minlen) return 0;
 	for (int ii=0; ii<MaxIntervallSize; ++ii)
 	{
 		unsigned char ch = si[ii];
@@ -854,25 +854,28 @@ std::string WikimediaLexer::tryParseRepPattern( int minlen)
 	int len = std::numeric_limits<int>::max();
 	for (int pi=0; pi<ptlen; ++pi)
 	{
-		int ilen = maxRepPatternCandidateIntervallLength( m_si+pi, m_se, ptlen) + pi;
-		if (ilen+ptlen < len)
+		int ilen = maxRepPatternCandidateIntervallLength( m_si+pi, m_se, ptlen)+pi;
+		if (ilen < len)
 		{
 			// ... if it is smaller (equality not possible), then the new value is the new length
-			len = ilen;
-			if (pi)
+			if (ilen + ptlen < len)
 			{
-				pi = -1;
-				continue; //... start loop again
+				len = ilen;
+				if (pi)
+				{
+					pi = -1;
+					continue; //... start loop again
+				}
 			}
 		}
-		else
+		else if (ilen > len)
 		{
-			// ... if it is bigger, then the new length is one bigger that the value before
 			len += 1;
 		}
 	}
 	if (len < minlen)
 	{
+		m_si += len;
 		throw std::runtime_error( "internal: logic error in parse rep pattern");
 	}
 	rt.append( m_si, len);
@@ -1966,7 +1969,20 @@ WikimediaLexem WikimediaLexer::next()
 	}
 	catch (const std::runtime_error& err)
 	{
-		return WikimediaLexem( WikimediaLexem::Error, 0, err.what());
+		if (start == m_si)
+		{
+			int chlen = strus::utf8charlen( *m_si);
+			m_si += chlen;
+
+			char msgbuf[ 1024];
+			std::snprintf( msgbuf, sizeof(msgbuf), "unrecoverable error in lexical analysis: %s", err.what());
+			msgbuf[ sizeof(msgbuf)-1] = 0;
+			throw std::runtime_error( msgbuf);
+		}
+		else
+		{
+			return WikimediaLexem( WikimediaLexem::Error, 0, err.what());
+		}
 	}
 	if (start != m_si)
 	{
