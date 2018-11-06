@@ -383,15 +383,20 @@ def printSentence( sent, complete):
             st = (elem.strustag or "")
             nt = (elem.nlptag or "")
             vv = (elem.value or "")
-            rr = (elem.ref or "")
+            if elem.ref:
+                rr = ' '.join( elem.ref)
+            else:
+                rr = ""
             rt += ("%s (%s)\t%s\t%s\t%s\t%s\n" % (sr,nr,st,nt,vv,rr))
     else:
         for elem in sent:
-            sr = (elem.strusrole or "")
             st = (elem.strustag or "")
             vv = (elem.value or "")
-            rr = (elem.ref or "")
-            rt += ("%s\t%s\t%s\t%s\n" % (sr,st,vv,rr))
+            if elem.ref:
+                rr = ' '.join( elem.ref)
+            else:
+                rr = ""
+            rt += ("%s\t%s\t%s\n" % (st,vv,rr))
     return rt
 
 # return Sentence[]
@@ -639,7 +644,7 @@ def processStdin( verbose, complete):
                 printOutput( filename, result)
                 result = ""
                 content = ""
-            filename = line[6:]
+            filename = line[6:].rstrip( "\r\n")
         else:
             content += line
     if content:

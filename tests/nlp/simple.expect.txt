@@ -40,8 +40,7 @@
 * Entity usage David Bowie # 1
 * Entity usage Rudolph William Louis Giuliani # 1
 #FILE#Rudy_Giuliani.txt
-
-S (compound)	E	NNP	Rudolph	['Rudy', 'Giuliani']
+S (compound)	E	NNP	Rudolph	Rudy Giuliani
 _ (compound)	_	_	William	
 _ (compound)	_	_	Louis	
 _ (nsubj)	_	_	Giuliani	
@@ -71,7 +70,7 @@ _ (nsubj)	_	_	Giuliani
  (prep)		IN	to	
  (pobj)	C	CD	2001	
  (punct)	T!	.	.	
-S (nsubj)	E	NNP	Giuliani	['Rudy', 'Giuliani']
+S (nsubj)	E	NNP	Giuliani	Rudy Giuliani
  (ROOT)	V	VBD	left	
  (dobj)	E	NNP	Bloomberg	
  (aux)		TO	to	
@@ -90,7 +89,7 @@ S (nsubj)	E	PRP	It
  (ROOT)	V	VBZ	s	
  (acomp)	A	JJ	unclear	
  (advmod)	W	WRB	how	
-S (nsubj)	E	PRP	he	['Rudy', 'Giuliani']
+S (nsubj)	E	PRP	he	Rudy Giuliani
  (aux)	m	MD	ll	
  (ccomp)	V	VB	be	
  (acomp)	A	JJ	able	
@@ -98,7 +97,7 @@ S (nsubj)	E	PRP	he	['Rudy', 'Giuliani']
  (xcomp)	V	VB	handle	
  (dobj)	E	PRP	it	
  (prep)		IN	during	
- (poss)	E	PRP$	his	['Rudy', 'Giuliani']
+ (poss)	E	PRP$	his	Rudy Giuliani
  (pobj)	N	NN	term	
  (punct)	T!	.	.	
  (ROOT)	V	VB	Let	
@@ -192,8 +191,7 @@ S (nsubj)	N	NN	album
 * Entity usage Rome # 1
 * Entity usage Royal Madrid Football Club # 1
 #FILE#/A%2eS%2e_Roma.xml
-
-S (compound)	E	NNP	Associazione	['A.', 'S.', 'Roma']
+S (compound)	E	NNP	Associazione	A. S. Roma
 _ (compound)	_	_	Sportiva	
 _ (nsubj)	_	_	Roma	
  (punct)	P!	-LRB-	(	
@@ -209,7 +207,7 @@ _ (nsubj)	_	_	Roma
  (prep)		IN	to	
  (prep)		IN	as	
  (advmod)	A	RB	simply	
- (pobj)	E	NNP	Roma	['A.', 'S.', 'Roma']
+ (pobj)	E	NNP	Roma	A. S. Roma
  (punct)	P!	,	,	
  (ROOT)	V	VBZ	is	
  (det)		DT	a	
