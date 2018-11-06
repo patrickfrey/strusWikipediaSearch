@@ -232,10 +232,10 @@ def tagSentenceStrusTags( tokens):
         type = elem.nlptag
         utype = unifyType( type)
         maptype = mapTag( type)
-        if utype == prev and prev[0] in ['N','E','V']:
+        if prev and utype == prev and prev[0] in ['N','E','V']:
             type = "_"
             maptype = "_";
-        elif maptype == mapprev and maptype[-1:] == '!':
+        elif maptype and maptype == mapprev and maptype[-1:] == '!':
             maptype = '_'
         else:
             prev = utype
