@@ -10,12 +10,12 @@ import os
 import stat
 import subprocess
 from recordtype import recordtype
+from copy import deepcopy
 import spacy
 import en_core_web_sm
 
 spacy_nlp = en_core_web_sm.load()
 NlpToken = recordtype('NlpToken', ['strustag','strusrole','nlptag','nlprole', 'value', 'ref'])
-Subject = recordtype('Subject', ['value', 'prp', 'occurrence', 'ref'])
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
@@ -113,127 +113,43 @@ def unifyType( type):
         return "NN"
     return type
 
-def tagSentenceStrusTags( stk):
+def splitAbbrev( name):
     rt = []
-    prev = ""
-    mapprev = ""
-    hasVerb = False
-    hasEntitiesOnly = True
-    for elem in stk:
-        if elem.nlptag:
-            if elem.nlptag[0] == 'V':
-                hasVerb = True
-            elif elem.nlptag[:3] != 'NNP' and elem.nlprole != "punct":
-                hasEntitiesOnly = False
+    while name.find('.') >= 0:
+        pi = name.index('.');
+        rt.append( name[ :pi+1])
+        name = name[ pi+1:]
+    if name:
+        rt.append( name)
+    return rt
 
-    if hasEntitiesOnly or hasVerb or len(stk) > 6:
-        for eidx,elem in enumerate(stk):
-            type = elem.nlptag
-            utype = unifyType( type)
-            maptype = mapTag( type)
-            if utype == prev:
-                type = "_"
-                maptype = "_";
-            elif maptype == mapprev and maptype[-1:] == '!':
-                maptype = '_'
-            else:
-                prev = utype
-                mapprev = maptype
-            elem.strustag = maptype
-            elem.nlptag = type
-            rt.append( elem)
-        return rt
-    else:
-        return stk
-
-def tagSentenceSubjects( stk):
-    rt = []
-    doShift = False
-    doShiftNext = False
-    hasVerb = False
-    for elem in stk:
-        if elem.nlptag and elem.nlptag[0] == 'V':
-            hasVerb = True
-    if not hasVerb:
-        return stk
-    subjindices = []
-    startidx = -1
-    for eidx,elem in enumerate( stk):
-        if elem.nlptag[:2] == 'NN' or elem.nlptag == 'PRP':
-            startidx = eidx
-        if elem.nlprole == "nsubj" or (elem.nlprole == "conj" and doShiftNext):
-            doShift = True
+def getSex( prp):
+    if isinstance( prp, list):
+        if len(prp) != 1:
+            return "P"
         else:
-            if elem.nlprole == "cc" and elem.nlptag == "CC":
-                doShiftNext = True
-            else:
-                doShiftNext = False
-            if doShift:
-                if startidx >= 0:
-                    subjindices.append( startidx)
-                    startidx = -1
-                doShift = False
-            if not (elem.nlptag[:2] == 'NN' or elem.nlptag == '_'):
-                startidx = -1
-    follow = False
-    for eidx,elem in enumerate( stk):
-        if eidx in subjindices:
-            elem.strusrole = "S"
-            follow = True
-        elif follow:
-            if elem.strustag == '_':
-                elem.strusrole = "_"
-            else:
-                follow = False
-        rt.append( elem)
-    return rt
+            prp = prp[0]
+    prp = prp.lower()
+    if prp == "he" or prp == "his":
+        return "M"
+    if prp == "she" or prp == "her":
+        return "W"
+    if prp == "it" or prp == "its":
+        return "N"
+    if prp == "they" or prp == "their":
+        return "P"
+    return None
 
-def enrichSentenceTokens( stk):
-    return tagSentenceSubjects( tagSentenceStrusTags( stk))
-
-def printSentence( stk):
-    rt = ""
-    for elem in stk:
-        sr = (elem.strusrole or "")
-        nr = (elem.nlprole or "")
-        st = (elem.strustag or "")
-        nt = (elem.nlptag or "")
-        vv = (elem.value or "")
-        rt += ("%s (%s)\t%s\t%s\t%s\n" % (sr,nr,st,nt,vv))
-    return rt
-
-def printSubject( subject):
-    vv = (subject.value or "")
-    pr = None
-    if subject.prp:
-        pr = ','.join( subject.prp)
-    oc = (subject.occurrence or "")
-    rf = (subject.ref or "")
-    return ("%s\t%s\t%s\t%s" % (vv,pr,oc,rf))
-
-# return Sentence[]
-def getDocumentSentences( text):
-    tokens = []
-    sentences = []
-    last_subjects = []
-    tg = spacy_nlp( text)
-    for node in tg:
-        value = str(node)
-        if (value.strip()):
-            tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
-        if node.dep_ == "punct" and value in [';','.']:
-            sentences.append( enrichSentenceTokens( tokens))
-            tokens = []
-    if tokens:
-        sentences.append( enrichSentenceTokens( tokens))
-    return sentences
-
-
-def matchName( obj, candidate):
-    cd = candidate
+def matchName( obj, candidate, relaxed):
+    cd = deepcopy(candidate)
+    if not obj:
+        return False
     for nam in obj:
-        if nam[ -1:] == '.':
-            prefix = nam[ :-1]
+        if relaxed or nam[ -1:] == '.':
+            if nam[ -1:] == '.':
+                prefix = nam[ :-1]
+            elif relaxed:
+                prefix = nam[0:2]
             found = False
             for eidx,elem in enumerate(cd):
                 if len(elem) > len(prefix) and elem[ :len(prefix)] == prefix:
@@ -246,74 +162,343 @@ def matchName( obj, candidate):
             del cd[ cd.index( nam)]
         else:
             return False
-    else:
-        return False
     return True
 
-# param sentences NlpToken[][]
-# return Subject[]
-def getDocumentSubjects( title, sentences):
-    rt = {}
+def sentenceHasVerb( tokens):
+    hasVerb = False
+    for elem in tokens:
+        if elem.nlptag and elem.nlptag[0] == 'V':
+            hasVerb = True
+    return hasVerb
+
+def sentenceHasEntitiesOnly( tokens):
+    hasEntitiesOnly = True
+    for elem in tokens:
+        if elem.nlptag[:3] != 'NNP' and elem.nlprole != "punct":
+            hasEntitiesOnly = False
+    return hasEntitiesOnly
+
+def getMapBestWeight( name2weightMap, name):
+    bestCd = None
+    bestWeight = 0
+    for cd,weight in name2weightMap.items():
+        thisCd = cd.split(' ')
+        if matchName( name, thisCd, False):
+            if weight > bestWeight or (weight == bestWeight and (not bestCd or len(bestCd) < len(thisCd))):
+                bestCd = thisCd
+                bestWeight = weight
+    return bestCd
+
+def getTitleSubject( title):
     endtitle = title.find('(')
     if endtitle >= 0:
-        titlesubject = title[ :endtitle ].split(' ')[0]
+        titleparts = title[ :endtitle ].split(' ')
     else:
-        titlesubject = title
-    print( "TITLE SUBJECT %s\n" % titlesubject)
-    sidx = 0
-    lastSentSubjects = titlesubject.split(' ')
+        titleparts = title.split(' ')
+    rt = []
+    for tp in titleparts:
+        rt += splitAbbrev( tp)
+    return rt
+
+def tagSentenceStrusTags( tokens):
+    prev = ""
+    mapprev = ""
+    for eidx,elem in enumerate(tokens):
+        type = elem.nlptag
+        utype = unifyType( type)
+        maptype = mapTag( type)
+        if utype == prev and prev[0] in ['N','E','V']:
+            type = "_"
+            maptype = "_";
+        elif maptype == mapprev and maptype[-1:] == '!':
+            maptype = '_'
+        else:
+            prev = utype
+            mapprev = maptype
+        elem.strustag = maptype
+        elem.nlptag = type
+
+def tagSentenceSubjects( tokens):
+    bracketCnt = 0
+    for eidx,elem in enumerate( tokens):
+        name = None
+        if elem.nlptag == "-LRB-" and elem.value == '(':
+            bracketCnt += 1
+        elif elem.nlptag == "-RRB-" and elem.value == ')' and bracketCnt > 0:
+            bracketCnt -= 1
+        elif bracketCnt > 0:
+            pass
+        elif elem.nlptag == 'PRP' and elem.nlprole == "nsubj":
+            elem.strusrole = "S"
+        elif elem.nlptag[:2] == 'NN':
+            if elem.nlprole == "conj" or elem.nlprole == "compound":
+                ei = eidx-1
+                while ei >= 0 and tokens[ei].nlprole == "compound":
+                    ei -= 1
+                while ei >= 0 and tokens[ei].nlprole == "amod":
+                    ei -= 1
+                while ei >= 0 and tokens[ei].nlprole == "cc":
+                    ei -= 1
+                if ei >= 0 and tokens[ei].nlprole == "nsubj":
+                    elem.strusrole = "S"
+            elif elem.nlprole == "nsubj":
+                elem.strusrole = "S"
+            if not elem.strusrole:
+                ei = eidx+1
+                while ei < len(tokens) and tokens[ei].nlptag == '_':
+                    if tokens[ei].nlprole == "nsubj":
+                        elem.strusrole = "S"
+                    ei += 1
+                if not elem.strusrole and eidx == 0:
+                    while ei < len(tokens):
+                       if tokens[ei].nlptag == "-LRB-" and tokens[ei].value == '(':
+                           while ei < len(tokens) and not (tokens[ei].nlptag == "-RRB-" and tokens[ei].value == ')'):
+                               ei += 1
+                           ei += 1
+                       elif tokens[ei].nlptag == "-LRB-" and tokens[ei].value == '[':
+                           while ei < len(tokens) and not (tokens[ei].nlptag == "-RRB-" and tokens[ei].value == ']'):
+                               ei += 1
+                           ei += 1
+                       elif tokens[ei].nlptag == "," and tokens[ei].value == ',':
+                           ei += 1
+                           if tokens[ei].nlptag == "RB":
+                               ei += 1
+                           if tokens[ei].nlptag == "VBN":
+                               ei += 1
+                               while ei < len(tokens) and not (tokens[ei].nlptag == "," and tokens[ei].value == ','):
+                                   ei += 1
+                               ei += 1
+                           else:
+                               break
+                       elif tokens[ei].nlprole == "ROOT" and (tokens[ei].nlptag == "VBZ" or tokens[ei].nlptag == "VBD"):
+                           elem.strusrole = "S"
+                           break
+                       else:
+                           break
+        if elem.strusrole == "S":
+            ei = eidx+1
+            while ei < len(tokens) and tokens[ei].nlptag == '_':
+                tokens[ei].strusrole = "_"
+                ei += 1
+
+def tagSentenceNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidates, sentenceIdx):
+    for eidx,elem in enumerate( tokens):
+        if elem.nlptag[:2] == 'NN':
+           name = [elem.value]
+           ei = eidx + 1
+           while tokens[ ei].nlptag == '_':
+               name.append( tokens[ ei].value)
+               ei += 1
+           if sentenceIdx == 0 and elem.nlptag[:3] == "NNP":
+               if matchName( titlesubject, name, True):
+                   elem.ref = titlesubject
+                   sentenceIdx = -1
+           if name in bestTitleMatches:
+               elem.ref = titlesubject
+           elem.ref = elem.ref or getMapBestWeight( nounCandidates, name)
+           if elem.ref:
+               key = ' '.join( elem.ref)
+               nounCandidates[ key] += 1
+               for cd in nounCandidates:
+                   nounCandidates[ key] *= 0.8
+
+def printSentence( sent, complete):
+    rt = ""
+    if complete:
+        for elem in sent:
+            sr = (elem.strusrole or "")
+            nr = (elem.nlprole or "")
+            st = (elem.strustag or "")
+            nt = (elem.nlptag or "")
+            vv = (elem.value or "")
+            rr = (elem.ref or "")
+            rt += ("%s (%s)\t%s\t%s\t%s\t%s\n" % (sr,nr,st,nt,vv,rr))
+    else:
+        for elem in sent:
+            sr = (elem.strusrole or "")
+            st = (elem.strustag or "")
+            vv = (elem.value or "")
+            rr = (elem.ref or "")
+            rt += ("%s\t%s\t%s\t%s\n" % (sr,st,vv,rr))
+    return rt
+
+# return Sentence[]
+def getDocumentSentences( text, verbose):
+    tokens = []
+    sentences = []
+    last_subjects = []
+    tg = spacy_nlp( text)
+    inBracketLevel = 0
+    inBracketToks = 0
+    for node in tg:
+        value = str(node).strip()
+        if value == '(' and node.tag_ == '-LRB-':
+            inBracketLevel += 1
+            inBracketToks = 0
+        elif value == ')' and node.tag_ == '-RRB-' and inBracketLevel > 0:
+            inBracketLevel -= 1
+            inBracketToks = 0
+        else:
+            inBracketToks += 1
+        if value:
+            if node.tag_[:3] == "NNP" and value.count('.') > 1:
+                for abr in splitAbbrev( value):
+                    tokens.append( NlpToken( None, None, node.tag_, node.dep_, abr, None))
+            else:
+                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
+        if node.dep_ == "punct":
+            if inBracketLevel == 0 and inBracketToks < 10:
+                if value in [';','.']:
+                    if verbose:
+                        print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
+                    sentences.append( tokens)
+                    tokens = []
+                    inBracketToks = 0
+                    inBracketLevel = 0
+            else:
+                if value == '.':
+                    if verbose:
+                        print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
+                    sentences.append( tokens)
+                    tokens = []
+                    inBracketToks = 0
+                    inBracketLevel = 0
+    if tokens:
+        sentences.append( tokens)
+    return sentences
+
+def getDocumentNlpTokCountMap( sentences, elements):
+    rt = {}
     for sent in sentences:
-        lastSubject = None
+        for tidx,tok in enumerate(sent):
+            if tok.nlptag in elements:
+                key = tok.value
+                ti = tidx + 1
+                while ti < len(sent) and sent[ti].nlptag == '_':
+                    key += " " + sent[ti].value
+                    ti += 1
+                if key in rt:
+                    rt[ key] += 1
+                else:
+                    rt[ key] = 1
+    return rt
+
+def getBestTitleMatches( titlesubject, tokCountMap):
+    maxTf = 0
+    bestName = None
+    for key,tf in tokCountMap.items():
+        name = key.split(' ')
+        if matchName( name, titlesubject, False) and (maxTf < tf or (maxTf == tf and len(key) < len(bestKey))):
+            maxTf = tf
+            bestName = name
+    rt = []
+    if bestName:
+        rt.append( bestName)
+        for key,tf in tokCountMap.items():
+            name = key.split(' ')
+            if matchName( name, titlesubject, False) and len(name) > len(bestName):
+                rt.append( name)
+    return rt
+
+# param sentences NlpToken[][]
+# return map NNP -> string[] = prp
+def getDocumentPrpMap( titlesubject, sentences):
+    rt = {}
+    sidx = 0
+    lastSentSubjects = [titlesubject]
+    for sent in sentences:
         sentSubjects = []
-        print( "SENT:\n%s" % printSentence( sent))
-        for tok in sent:
-            print( "TOK %s ROLE %s NLP %s" % (tok.value, tok.strusrole, tok.nlprole))
-            if tok.strusrole == 'S':
-                if lastSubject:
-                    sentSubjects.append( lastSubject)
-                lastSubject = [tok.value]
-            elif tok.strusrole == '_' and lastSubject:
-                lastSubject.append( tok.value)
-            elif lastSubject:
-                sentSubjects.append( lastSubject)
-                lastSubject = None
-            if tok.nlptag[0:3] == "PRP":
-                print( "PRP %s" % tok.value)
+        for tidx,tok in enumerate(sent):
+            if tok.strusrole == 'S' and tok.nlptag[0:2] == "NN":
+                subj = tok.ref
+                if not subj:
+                    subj = [tok.value]
+                    ti = tidx+1
+                    while ti < len(sent) and sent[ti].nlptag == '_':
+                        subj.append( sent[ti].value)
+                        ti += 1
+                sentSubjects.append( subj)
+            elif tok.nlptag[0:3] == "PRP":
                 key = ""
                 for lss in lastSentSubjects:
                     if key:
                         key += ","
-                    key += '_'.join( lss)
+                    key += ' '.join( lss)
                 if key in rt:
-                    print( "KEY %s ADD PRP %s" % (key,tok.value))
-                    rt[ key].prp.append( tok.value)
+                    rt[ key].append( tok.value)
                 else:
-                    print( "KEY %s ASSIGN PRP %s" % (key,tok.value))
-                    rt[ key] = Subject( lastSentSubjects, [], 1, None)
-        if lastSubject:
-            sentSubjects.append( lastSubject)
+                    rt[ key] = [tok.value]
         lastSentSubjects = sentSubjects
-        for lsb in lastSentSubjects:
-            print( "LAST SUBJ %s" % ' '.join(lsb))
-    for rtelem in rt:
-        print( "%s -> %s" % (rtelem, printSubject( rt[rtelem])))
     return rt
 
-def tagDocument( title, text):
+def getMaxSexCount( prplist):
+    cntmap = {'M':0, 'W':0, 'N':0, 'P':0}
+    for prp in prplist:
+        sex = getSex(prp)
+        if sex:
+            cntmap[ sex] += 1
+    max = 0
+    rt = None
+    for sex,cnt in cntmap.items():
+        if cnt > max:
+            max = cnt
+            rt = sex
+    return rt
+
+def getDocumentNnpSexMap( prpmap):
+    rt = {}
+    for nnp,prp in prpmap.items():
+        maxsex = getMaxSexCount( prp)
+        if maxsex:
+            rt[ nnp] = maxsex
+    return rt
+
+def tagDocument( title, text, verbose, complete):
     rt = ""
-    sentences = getDocumentSentences( text)
-    subjects = getDocumentSubjects( title, sentences)
+    titlesubject = getTitleSubject( title)
+    if verbose:
+        print( "* Document title %s" % ' '.join(titlesubject))
+    sentences = getDocumentSentences( text, verbose)
     for sent in sentences:
-        rt += printSentence( sent)
-    for subj in subjects:
-        rt += ("SUBJ %s -> %s\n" % (subj, printSubject( subjects[ subj])))
+        if sentenceHasVerb( sent) or sentenceHasEntitiesOnly( sent) or len(sent) > 6:
+            tagSentenceStrusTags( sent)
+    countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
+    countNn = getDocumentNlpTokCountMap( sentences, ["NN","NNS"])
+    bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
+    if verbose:
+        for bm in bestTitleMatches:
+            print( "* Best title match %s" % ' '.join(bm))
+    nounCandidates = {}
+    titlekey = ' '.join( titlesubject)
+    nounCandidates[ titlekey] = 5
+    for sidx,sent in enumerate(sentences):
+        if sentenceHasVerb( sent):
+            tagSentenceSubjects( sent)
+            tagSentenceNounReferences( sent, titlesubject, bestTitleMatches, nounCandidates, sidx)
+
+    prpmap = getDocumentPrpMap( titlesubject, sentences)
+    sexmap = getDocumentNnpSexMap( prpmap)
+    for sent in sentences:
+        rt += printSentence( sent, complete)
+    if verbose:
+        for subj,sex in sexmap.items():
+            print( "* Entity sex %s -> %s" % (subj, sex))
+        for subj,prp in prpmap.items():
+            print( "* Subject %s -> %s" % (subj, ','.join( prp)))
+        for key in countNn:
+            print( "* Noun usage %s # %d" % (key, countNn[ key]))
+        for key in countNnp:
+            print( "* Entity usage %s # %d" % (key, countNnp[ key]))
     return rt
 
 def substFilename( filename):
     rt = ""
     fidx = 0
     while fidx < len(filename):
-        if filename[ fidx] == '%':
+        if filename[ fidx] == '_':
+            rt += ' '
+            fidx += 1
+        elif filename[ fidx] == '%':
             rt += chr( int( filename[fidx+1:fidx+3], 16))
             fidx += 3
         else:
@@ -351,7 +536,7 @@ def printUsage():
 def parseProgramArguments( argv):
     rt = {}
     try:
-        opts, args = getopt.getopt( argv,"hVSC:",["chunksize=","status","verbose"])
+        opts, args = getopt.getopt( argv,"hTVKSC:",["chunksize=","status","verbose","complete","test"])
         for opt, arg in opts:
             if opt in ("-h", "--help"):
                 printUsage()
@@ -363,6 +548,10 @@ def parseProgramArguments( argv):
                 rt['C'] = ai
             elif opt in ("-V", "--verbose"):
                 rt['V'] = True
+            elif opt in ("-K", "--complete"):
+                rt['K'] = True
+            elif opt in ("-T", "--test"):
+                rt['T'] = True
             elif opt in ("-S", "--status"):
                 rt['S'] = True
         return rt
@@ -371,7 +560,7 @@ def parseProgramArguments( argv):
         printUsage()
         sys.exit(2)
 
-def processStdin():
+def processStdin( verbose, complete):
     content = ""
     result = ""
     filename = ""
@@ -379,16 +568,16 @@ def processStdin():
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
                 title = getTitleFromFileName( filename)
-                sys.stderr.write( "title %s\n", title)
-                result += tagDocument( title, content)
+                result += tagDocument( title, content, verbose, complete)
                 printOutput( filename, result)
                 result = ""
+                content = ""
             filename = line[6:]
         else:
             content += line
     if content:
         title = getTitleFromFileName( filename)
-        result += tagDocument( title, content)
+        result += tagDocument( title, content, verbose, complete)
     if filename and result:
         printOutput( filename, result)
 
@@ -416,17 +605,34 @@ def readChunkStdin( nofFiles):
 def printContent( content):
     for line in content.split("\n", 20):
         if len(line) > 30:
-            sys.stderr.write( "++ %s\n" % line[:30])
+            sys.stderr.write( "> %s\n" % line[:30])
         else:
-            sys.stderr.write( "++ %s\n" % line)
+            sys.stderr.write( "> %s\n" % line)
+
+def printTestResult( text, result):
+    if result:
+        resultstr = "OK"
+    else:
+        resultstr = "FAILED"
+    sys.stderr.write( "Run test %s %s\n" % (text,resultstr))
+
+def runTest():
+    printTestResult( "MATCH 1", matchName( ["Giuliani"], ["Rudy","Giuliani"], False))
+    printTestResult( "MATCH 2", matchName( ["Rudy","Giuliani"], ["Rudolph", "William", "Louis", "Giuliani"], True))
 
 if __name__ == "__main__":
     argmap = parseProgramArguments( sys.argv[ 1:])
     chunkSize = 0
     verbose = False
+    complete = False
 
     if 'V' in argmap:
         verbose = True
+    if 'K' in argmap:
+        complete = True
+    if 'T' in argmap:
+        runTest()
+        exit( 0)
     if 'C' in argmap:
         chunkSize = argmap[ 'C']
     if 'S' in argmap:
@@ -444,7 +650,7 @@ if __name__ == "__main__":
             if verbose:
                 printContent( content)
     else:
-        processStdin()
+        processStdin( verbose, complete)
 
 
 

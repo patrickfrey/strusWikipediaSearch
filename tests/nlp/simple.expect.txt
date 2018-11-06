@@ -1,0 +1,289 @@
+* Document title Rudy Giuliani
+* Sentence Rudolph William Louis Giuliani is an American politician , attorney , businessman and public speaker who served as the 107th Mayor of New York City from 1994 to 2001 .
+* Sentence Giuliani left Bloomberg to be mayor of a city with a big budget problem .
+* Sentence It s unclear how he ll be able to handle it during his term .
+* Sentence Let 's go to N. Y. .
+* Sentence Because of the bad weather , Erni and Bernd go to town .
+* Sentence The United States of America are a country .
+* Sentence The ninth album of David Bowie is a masterpiece .
+* Sentence This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
+* Best title match Giuliani
+* Entity sex Rudy Giuliani -> M
+* Subject Rudy Giuliani -> It,he,it,his
+* Subject  -> 's
+* Noun usage philosophy # 1
+* Noun usage politician # 1
+* Noun usage city # 1
+* Noun usage attorney # 1
+* Noun usage album # 1
+* Noun usage age # 1
+* Noun usage town # 1
+* Noun usage weather # 1
+* Noun usage term # 1
+* Noun usage country # 1
+* Noun usage businessman # 1
+* Noun usage mayor # 1
+* Noun usage speaker # 1
+* Noun usage masterpiece # 1
+* Noun usage budget problem # 1
+* Entity usage Mayor # 1
+* Entity usage Bernd # 1
+* Entity usage New York City # 1
+* Entity usage Erni # 1
+* Entity usage America # 1
+* Entity usage Ayer # 1
+* Entity usage N. Y. # 1
+* Entity usage United States # 1
+* Entity usage Bloomberg # 1
+* Entity usage Giuliani # 1
+* Entity usage David Bowie # 1
+* Entity usage Rudolph William Louis Giuliani # 1
+#FILE#Rudy_Giuliani.txt
+
+S (compound)	E	NNP	Rudolph	['Rudy', 'Giuliani']
+_ (compound)	_	_	William	
+_ (compound)	_	_	Louis	
+_ (nsubj)	_	_	Giuliani	
+ (ROOT)	V	VBZ	is	
+ (det)		DT	an	
+ (amod)	A	JJ	American	
+ (attr)	N	NN	politician	
+ (punct)	P!	,	,	
+ (conj)	N	NN	attorney	
+ (punct)	P!	,	,	
+ (conj)	N	NN	businessman	
+ (cc)		CC	and	
+ (amod)	A	JJ	public	
+ (conj)	N	NN	speaker	
+ (nsubj)	W	WP	who	
+ (relcl)	V	VBD	served	
+ (prep)		IN	as	
+ (det)		DT	the	
+ (amod)	A	JJ	107th	
+ (pobj)	E	NNP	Mayor	
+ (prep)		IN	of	
+ (compound)	E	NNP	New	
+ (compound)	_	_	York	
+ (pobj)	_	_	City	
+ (prep)		IN	from	
+ (pobj)	C	CD	1994	
+ (prep)		IN	to	
+ (pobj)	C	CD	2001	
+ (punct)	T!	.	.	
+S (nsubj)	E	NNP	Giuliani	['Rudy', 'Giuliani']
+ (ROOT)	V	VBD	left	
+ (dobj)	E	NNP	Bloomberg	
+ (aux)		TO	to	
+ (xcomp)	V	VB	be	
+ (attr)	N	NN	mayor	
+ (prep)		IN	of	
+ (det)		DT	a	
+ (pobj)	N	NN	city	
+ (prep)		IN	with	
+ (det)		DT	a	
+ (amod)	A	JJ	big	
+ (compound)	N	NN	budget	
+ (pobj)	_	_	problem	
+ (punct)	T!	.	.	
+S (nsubj)	E	PRP	It	
+ (ROOT)	V	VBZ	s	
+ (acomp)	A	JJ	unclear	
+ (advmod)	W	WRB	how	
+S (nsubj)	E	PRP	he	
+ (aux)	m	MD	ll	
+ (ccomp)	V	VB	be	
+ (acomp)	A	JJ	able	
+ (aux)		TO	to	
+ (xcomp)	V	VB	handle	
+ (dobj)	E	PRP	it	
+ (prep)		IN	during	
+ (poss)	E	PRP$	his	
+ (pobj)	N	NN	term	
+ (punct)	T!	.	.	
+ (ROOT)	V	VB	Let	
+S (nsubj)	E	PRP	's	
+ (ccomp)	V	VB	go	
+ (prep)		IN	to	
+ (pobj)	E	NNP	N.	
+ (pobj)	_	_	Y.	
+ (punct)	T!	.	.	
+ (prep)		IN	Because	
+ (pcomp)		IN	of	
+ (det)		DT	the	
+ (amod)	A	JJ	bad	
+ (pobj)	N	NN	weather	
+ (punct)	P!	,	,	
+S (nsubj)	E	NNP	Erni	
+ (cc)		CC	and	
+S (conj)	E	NNP	Bernd	
+ (ROOT)	V	VB	go	
+ (prep)		IN	to	
+ (pobj)	N	NN	town	
+ (punct)	T!	.	.	
+ (det)		DT	The	
+S (compound)	E	NNP	United	
+_ (nsubj)	_	_	States	
+ (prep)		IN	of	
+ (pobj)	E	NNP	America	
+ (ROOT)	V	VBP	are	
+ (det)		DT	a	
+ (attr)	N	NN	country	
+ (punct)	T!	.	.	
+ (det)		DT	The	
+ (amod)	A	JJ	ninth	
+S (nsubj)	N	NN	album	
+ (prep)		IN	of	
+ (compound)	E	NNP	David	
+ (pobj)	_	_	Bowie	
+ (ROOT)	V	VBZ	is	
+ (det)		DT	a	
+ (attr)	N	NN	masterpiece	
+ (punct)	T!	.	.	
+ (nsubj)		DT	This	
+ (ROOT)	V	VBD	made	
+ (dobj)	E	NNP	Ayer	
+ (prep)		IN	at	
+ (pobj)	N	NN	age	
+ (nummod)	C	CD	26	
+ (det)		DT	the	
+ (punct)		``	'	
+ (amod)	A	JJ	enfant	
+ (dobj)	A	JJ	terrible	
+ (punct)		''	'	
+ (prep)		IN	of	
+ (amod)	A	JJ	British	
+ (pobj)	N	NN	philosophy	
+ (punct)	T!	.	.	
+
+* Document title A. S. Roma
+* Sentence Associazione Sportiva Roma ( , ; Rome Sport Association ) , commonly referred to as simply Roma , is a professional Italian football club based in Rome .
+* Sentence Roma4 ;
+* Sentence 1927 ;
+* Sentence 6 ;
+* Sentence 7 ;
+* Sentence cite weburl ;
+* Sentence title ;
+* Sentence Stadi Serie A 2015–2016 ;
+* Sentence deadurl ;
+* Sentence yes ;
+* Sentence archiveurl ;
+* Sentence Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
+* Best title match Roma
+* Noun usage reˈal maˈðɾið ˈkluβ # 1
+* Noun usage ˈfuðβol # 1
+* Noun usage pronunciation # 1
+* Noun usage football club # 2
+* Noun usage archiveurl # 1
+* Noun usage weburl # 1
+* Noun usage title # 1
+* Noun usage deadurl # 1
+* Entity usage Associazione Sportiva Roma # 1
+* Entity usage Roma4 # 1
+* Entity usage Stadi # 1
+* Entity usage A # 1
+* Entity usage Real Madrid Club de Fútbol # 1
+* Entity usage Roma # 1
+* Entity usage Rome Sport Association # 1
+* Entity usage Madrid # 1
+* Entity usage Real Madrid # 1
+* Entity usage Spain # 1
+* Entity usage Serie # 1
+* Entity usage Rome # 1
+* Entity usage Royal Madrid Football Club # 1
+#FILE#/A%2eS%2e_Roma.xml
+
+S (compound)	E	NNP	Associazione	['A.', 'S.', 'Roma']
+_ (compound)	_	_	Sportiva	
+_ (nsubj)	_	_	Roma	
+ (punct)	P!	-LRB-	(	
+ (punct)	_	,	,	
+ (punct)	_	:	;	
+ (compound)	E	NNP	Rome	
+ (compound)	_	_	Sport	
+ (nsubj)	_	_	Association	
+ (punct)	P!	-RRB-	)	
+ (punct)	_	,	,	
+ (advmod)	A	RB	commonly	
+ (acl)	V	VBN	referred	
+ (prep)		IN	to	
+ (prep)		IN	as	
+ (advmod)	A	RB	simply	
+ (pobj)	E	NNP	Roma	['A.', 'S.', 'Roma']
+ (punct)	P!	,	,	
+ (ROOT)	V	VBZ	is	
+ (det)		DT	a	
+ (amod)	A	JJ	professional	
+ (amod)	A	JJ	Italian	
+ (compound)	N	NN	football	
+ (attr)	_	_	club	
+ (acl)	V	VBN	based	
+ (prep)		IN	in	
+ (pobj)	E	NNP	Rome	
+ (punct)	T!	.	.	
+ (nmod)	E	NNP	Roma4	
+ (punct)	P!	:	;	
+ (npadvmod)		CD	1927	
+ (punct)		:	;	
+ (appos)		CD	6	
+ (punct)		SYM	;	
+ (appos)		CD	7	
+ (punct)		:	;	
+ (conj)	V	VB	cite	
+ (dobj)	N	NN	weburl	
+ (punct)	P!	:	;	
+ (ROOT)		NN	title	
+ (punct)		:	;	
+ (compound)		NNP	Stadi	
+ (conj)		NNP	Serie	
+ (det)		NNP	A	
+ (dep)		CD	2015–2016	
+ (punct)		:	;	
+ (nsubj)		NN	deadurl	
+ (punct)		:	;	
+ (intj)		UH	yes	
+ (punct)		:	;	
+ (conj)		NN	archiveurl	
+ (punct)		:	;	
+S (amod)	E	NNP	Real	
+_ (compound)	_	_	Madrid	
+_ (nmod)	_	_	Club	
+_ (nmod)	_	_	de	
+_ (appos)	_	_	Fútbol	
+ (punct)	P!	-LRB-	(	
+ (amod)	A	JJ	Spanish	
+ (appos)	N	NN	pronunciation	
+ (punct)	P!	:	:	
+ (punct)	_	-LRB-	[	
+ (npadvmod)	N	NN	reˈal	
+ (amod)	_	_	maˈðɾið	
+ (compound)	_	_	ˈkluβ	
+ (compound)		IN	ðe	
+ (appos)	N	NN	ˈfuðβol	
+ (punct)	P!	-RRB-	]	
+ (punct)	_	:	;	
+ (punct)		``	"	
+ (compound)	E	NNP	Royal	
+ (compound)	_	_	Madrid	
+ (compound)	_	_	Football	
+ (conj)	_	_	Club	
+ (punct)		''	"	
+ (punct)	P!	-RRB-	)	
+ (punct)	_	,	,	
+ (advmod)	A	RB	commonly	
+ (acl)	V	VBN	known	
+ (prep)		IN	as	
+ (compound)	E	NNP	Real	
+ (pobj)	_	_	Madrid	
+ (punct)	P!	,	,	
+ (ROOT)	V	VBZ	is	
+ (det)		DT	a	
+ (amod)	A	JJ	professional	
+ (compound)	N	NN	football	
+ (attr)	_	_	club	
+ (acl)	V	VBN	based	
+ (prep)		IN	in	
+ (pobj)	E	NNP	Madrid	
+ (punct)	P!	,	,	
+ (appos)	E	NNP	Spain	
+ (punct)	T!	.	.	
+
