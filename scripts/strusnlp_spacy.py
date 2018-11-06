@@ -461,7 +461,7 @@ def getBestTitleMatches( titlesubject, tokCountMap):
     bestName = None
     for key,tf in tokCountMap.items():
         name = key.split(' ')
-        if matchName( name, titlesubject, False) and (maxTf < tf or (maxTf == tf and len(key) < len(bestKey))):
+        if matchName( name, titlesubject, False) and (maxTf < tf or (maxTf == tf and len(name) < len(bestName))):
             maxTf = tf
             bestName = name
     rt = []
