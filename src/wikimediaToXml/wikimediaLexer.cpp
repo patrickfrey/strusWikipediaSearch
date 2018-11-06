@@ -1319,7 +1319,7 @@ WikimediaLexem WikimediaLexer::next()
 						start = m_si;
 						break;
 					case TagBr:
-						return WikimediaLexem( WikimediaLexem::Text, 0, "\n");
+						return WikimediaLexem( WikimediaLexem::Break, 0, "\n");
 				}
 			}
 			else

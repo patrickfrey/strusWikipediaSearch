@@ -1166,7 +1166,21 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
   </list>
 <heading id="h1"><text>Gallery</text>
   </heading>
-<text>No Rep Pattern: 00000000000000
+<text>No Rep Pattern: 0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
 Rep Pattern: 
 Rep Pattern: END
 Rep Pattern: END
@@ -1634,7 +1648,7 @@ Rep Pattern: ?=-==-=
 346 HeadingStart h1 ""
 347 Text  "Gallery"
 348 HeadingEnd  ""
-349 Text  "No Rep Pattern: 00000000000000 Rep Pattern:  Rep Pattern: END Rep Pattern: END Rep Pattern: ?=-==-= "
+349 Text  "No Rep Pattern: 0 0 0 0 0 0 0 0 0 0 0 0 0 0  Rep Pattern:  Rep Pattern: END Rep Pattern: END Rep Pattern: ?=-==-= "
 350 RefLink ref2 ""
 351 RefStart ref2 ""
 352 ListItemStart l1 ""
@@ -5048,48 +5062,37 @@ Its membership is between 9,000 to over 15,000.</text>
       </head>
     <cell id="C5"><pagelink id="Fascism"><text>Ultranationalism</text>
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Japanese nationalism">Japanese nationalism
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Religious nationalism">Religious nationalism
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Ethnic nationalism">Ethnic nationalism
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Anti-immigration">Anti-immigration
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Anti-communism">Anti-communism
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Anti-Korean sentiment">Anti-Korean sentiment
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Anti-Chinese sentiment in Japan"><text>Anti-Chinese sentiment</text>
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Anti-Americanism">Anti-Americanism
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Irredentism" anchor="Japan"><text>Irredentism</text>
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Reactionary">Reactionary
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Historical negationism">Historical negationism
         </pagelink>
       </cell>
@@ -6607,8 +6610,7 @@ Buford died on October 11, 2011, at the age of 81, in Minneapolis, after a long 
       </cell>
     <head id="C5"><text>weight</text>
       </head>
-    <cell id="C5"><text>(In Season) 136-138 lbs. 
- (Off-Season) 174-176 lbs.</text>
+    <cell id="C5"><text>(In Season) 136-138 lbs.  (Off-Season) 174-176 lbs.</text>
       </cell>
     <head id="C6"><text>firstproshow</text>
       </head>
@@ -7032,7 +7034,7 @@ After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position i
 114 TableHeadEnd  ""
 115 TableCellStart  ""
 116 TableCellReference id "C5"
-117 Text  "(In Season) 136-138 lbs.   (Off-Season) 174-176 lbs."
+117 Text  "(In Season) 136-138 lbs.  (Off-Season) 174-176 lbs."
 118 TableCellEnd  ""
 119 TableHeadStart  ""
 120 TableCellReference id "C6"
@@ -13544,8 +13546,8 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
       </head>
     <cell id="C0"><pagelink id="Cillian Buckley">Cillian Buckley
         </pagelink>
-      <text>
-(</text>
+      <br/>
+      <text>(</text>
       <pagelink id="Kilkenny GAA"><text>Kilkenny</text>
         </pagelink>
       <text>)</text>
@@ -13554,8 +13556,8 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
       </head>
     <cell id="C1"><pagelink id="All-Ireland Minor Hurling Championship"><text>All-Ireland Minor Hurling Final</text>
         </pagelink>
-      <text>
-winning </text>
+      <br/>
+      <text>winning </text>
       <pagelink id="Captain (sport)"><text>captain</text>
         </pagelink>
       </cell>
@@ -13568,8 +13570,8 @@ winning </text>
       </head>
     <cell id="C3"><pagelink id="Thomas Breen (hurler)"><text>Thomas Breen</text>
         </pagelink>
-      <text>
-(</text>
+      <br/>
+      <text>(</text>
       <pagelink id="Kilkenny GAA"><text>Kilkenny</text>
         </pagelink>
       <text>)</text>
@@ -14345,9 +14347,7 @@ Nesitanebetashru of the </text>
     <entity id="3"><text>12th TFCA Awards</text>
       </entity>
     
-  <text>
-
-</text>
+  <br/>
   
     <text>December 16, 2009
 </text>
@@ -15922,8 +15922,7 @@ Best Film:
     <cell id="C2"><entity id="5"><pagelink id="National Hockey League"><text>NHL</text>
           </pagelink>
         </entity>
-      <text>
-</text>
+      <br/>
       <pagelink id="Pittsburgh Penguins">Pittsburgh Penguins
         </pagelink>
       </cell>
@@ -20473,8 +20472,7 @@ Besides remaining a speaker Glotzer was active in the stenographers union, </tex
       </head>
     <cell id="C3"><pagelink id="Samuel Z. Arkoff">Samuel Z. Arkoff
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Joe Roth">Joe Roth
         </pagelink>
       </cell>
@@ -20486,12 +20484,10 @@ Besides remaining a speaker Glotzer was active in the stenographers union, </tex
       </head>
     <cell id="C5"><pagelink id="Dennis Quaid">Dennis Quaid
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Scott Jacoby (actor)"><text>Scott Jacoby</text>
         </pagelink>
-      <text>
-</text>
+      <br/>
       <pagelink id="Joanna Cassidy">Joanna Cassidy
         </pagelink>
       </cell>
