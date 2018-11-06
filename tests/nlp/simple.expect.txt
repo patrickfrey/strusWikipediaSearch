@@ -9,6 +9,7 @@
 * Sentence This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
 * Best title match Giuliani
 * Entity sex Rudy Giuliani -> M
+* Entity sex  -> W
 * Subject Rudy Giuliani -> It,he,it,his
 * Subject  -> 's
 * Noun usage philosophy # 1
@@ -89,7 +90,7 @@ S (nsubj)	E	PRP	It
  (ROOT)	V	VBZ	s	
  (acomp)	A	JJ	unclear	
  (advmod)	W	WRB	how	
-S (nsubj)	E	PRP	he	
+S (nsubj)	E	PRP	he	['Rudy', 'Giuliani']
  (aux)	m	MD	ll	
  (ccomp)	V	VB	be	
  (acomp)	A	JJ	able	
@@ -97,7 +98,7 @@ S (nsubj)	E	PRP	he
  (xcomp)	V	VB	handle	
  (dobj)	E	PRP	it	
  (prep)		IN	during	
- (poss)	E	PRP$	his	
+ (poss)	E	PRP$	his	['Rudy', 'Giuliani']
  (pobj)	N	NN	term	
  (punct)	T!	.	.	
  (ROOT)	V	VB	Let	

@@ -16,6 +16,7 @@ import en_core_web_sm
 
 spacy_nlp = en_core_web_sm.load()
 NlpToken = recordtype('NlpToken', ['strustag','strusrole','nlptag','nlprole', 'value', 'ref'])
+Subject = recordtype('Subject', ['sex','strustag','value','sentidx'])
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
@@ -200,6 +201,30 @@ def getTitleSubject( title):
         rt += splitAbbrev( tp)
     return rt
 
+def getMultipartName( tokens, tidx):
+    rt = [tokens[tidx].value]
+    ti = tidx + 1
+    while ti < len(tokens) and tokens[ ti].nlptag == '_':
+        rt.append( tokens[ ti].value)
+        ti += 1
+    return rt
+
+def getMultipartNameStr( tokens, tidx):
+    rt = tokens[tidx].value
+    ti = tidx + 1
+    while ti < len(tokens) and tokens[ ti].nlptag == '_':
+        rt += " " + tokens[ ti].value
+        ti += 1
+    return rt
+
+def getStringListListKey( ar):
+    rt = ""
+    for ls in ar:
+        if rt:
+            rt += ","
+        rt += ' '.join( ls)
+    return rt
+
 def tagSentenceStrusTags( tokens):
     prev = ""
     mapprev = ""
@@ -284,11 +309,7 @@ def tagSentenceSubjects( tokens):
 def tagSentenceNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidates, sentenceIdx):
     for eidx,elem in enumerate( tokens):
         if elem.nlptag[:2] == 'NN':
-           name = [elem.value]
-           ei = eidx + 1
-           while tokens[ ei].nlptag == '_':
-               name.append( tokens[ ei].value)
-               ei += 1
+           name = getMultipartName( tokens, eidx)
            if sentenceIdx == 0 and elem.nlptag[:3] == "NNP":
                if matchName( titlesubject, name, True):
                    elem.ref = titlesubject
@@ -301,6 +322,57 @@ def tagSentenceNounReferences( tokens, titlesubject, bestTitleMatches, nounCandi
                nounCandidates[ key] += 1
                for cd in nounCandidates:
                    nounCandidates[ key] *= 0.8
+
+# param sexSubjectMap: map sex:string -> Subject
+def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap):
+    subjects = []
+    for eidx,elem in enumerate( tokens):
+        if elem.nlptag[:2] == 'NN' and elem.strusrole == "S":
+            name = elem.ref or getMultipartName( tokens, eidx)
+            namekey = ' '.join(name)
+            sex = None
+            if elem.nlptag == "NNPS" or elem.nlptag == "NNS":
+                sex = "P"
+            elif elem.nlptag == "NN":
+                if elem.value == "man":
+                    sex = "M"
+                elif elem.value == "woman":
+                    sex = "W"
+                else:
+                    sex = "N"
+            elif namekey in nnpSexMap:
+                sex = nnpSexMap[ namekey]
+            matchprev = False
+            if subjects:
+                for sb in subjects:
+                    if sb.sex == sex and sb.strustag == elem.strustag and (matchName( name, sb.value, False) or matchName( sb.value, name, False)):
+                        matchprev = True
+            if not matchprev:
+                subjects.append( Subject( sex, elem.strustag, name, sentidx))
+        elif elem.nlptag[:3] == 'PRP' and not elem.ref:
+           sex = getSex( elem.value)
+           if sex:
+               if sex in sexSubjectMap:
+                   subj = sexSubjectMap[ sex]
+                   if sentidx - subj.sentidx < 7:
+                       subj.sentidx = sentidx
+                       elem.ref = subj.value
+    if subjects:
+        if len(subjects) > 1:
+           combined = []
+           combinedtag = subjects[0].strustag
+           si = 1
+           while si < len(subjects):
+               combined.append( ',')
+               combined += subjects[ si].value
+               if combinedtag != subjects[0].strustag:
+                   combinedtag = None
+                   break
+               si += 1
+           sexSubjectMap[ 'P'] = Subject( 'P', combinedtag, combined, sentidx)
+        else:
+           sb = subjects[0]
+           sexSubjectMap[ sb.sex] = sb
 
 def printSentence( sent, complete):
     rt = ""
@@ -372,11 +444,7 @@ def getDocumentNlpTokCountMap( sentences, elements):
     for sent in sentences:
         for tidx,tok in enumerate(sent):
             if tok.nlptag in elements:
-                key = tok.value
-                ti = tidx + 1
-                while ti < len(sent) and sent[ti].nlptag == '_':
-                    key += " " + sent[ti].value
-                    ti += 1
+                key = getMultipartNameStr( sent, tidx)
                 if key in rt:
                     rt[ key] += 1
                 else:
@@ -400,8 +468,9 @@ def getBestTitleMatches( titlesubject, tokCountMap):
                 rt.append( name)
     return rt
 
+# param titlesubject string[]
 # param sentences NlpToken[][]
-# return map NNP -> string[] = prp
+# return map NNP -> string[] = PRP list
 def getDocumentPrpMap( titlesubject, sentences):
     rt = {}
     sidx = 0
@@ -410,20 +479,10 @@ def getDocumentPrpMap( titlesubject, sentences):
         sentSubjects = []
         for tidx,tok in enumerate(sent):
             if tok.strusrole == 'S' and tok.nlptag[0:2] == "NN":
-                subj = tok.ref
-                if not subj:
-                    subj = [tok.value]
-                    ti = tidx+1
-                    while ti < len(sent) and sent[ti].nlptag == '_':
-                        subj.append( sent[ti].value)
-                        ti += 1
+                subj = tok.ref or getMultipartName( sent, tidx)
                 sentSubjects.append( subj)
             elif tok.nlptag[0:3] == "PRP":
-                key = ""
-                for lss in lastSentSubjects:
-                    if key:
-                        key += ","
-                    key += ' '.join( lss)
+                key = getStringListListKey( lastSentSubjects)
                 if key in rt:
                     rt[ key].append( tok.value)
                 else:
@@ -440,7 +499,7 @@ def getMaxSexCount( prplist):
     max = 0
     rt = None
     for sex,cnt in cntmap.items():
-        if cnt > max:
+        if cnt > max or (cnt == max and sex in ["M","W"]):
             max = cnt
             rt = sex
     return rt
@@ -477,11 +536,19 @@ def tagDocument( title, text, verbose, complete):
             tagSentenceNounReferences( sent, titlesubject, bestTitleMatches, nounCandidates, sidx)
 
     prpmap = getDocumentPrpMap( titlesubject, sentences)
-    sexmap = getDocumentNnpSexMap( prpmap)
+    nnpSexMap = getDocumentNnpSexMap( prpmap)
+    sexSubjectMap = {}
+    titlesex = None
+    if titlekey in nnpSexMap:
+        titlesex = nnpSexMap[ titlekey]
+        sexSubjectMap[ titlesex] = Subject( titlesex, "E", titlesubject, 0)
+    for sidx,sent in enumerate(sentences):
+        if sentenceHasVerb( sent):
+            tagSentencePrpReferences( sent, sidx, sexSubjectMap, nnpSexMap)
     for sent in sentences:
         rt += printSentence( sent, complete)
     if verbose:
-        for subj,sex in sexmap.items():
+        for subj,sex in nnpSexMap.items():
             print( "* Entity sex %s -> %s" % (subj, sex))
         for subj,prp in prpmap.items():
             print( "* Subject %s -> %s" % (subj, ','.join( prp)))
