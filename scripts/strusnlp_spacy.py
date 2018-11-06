@@ -634,24 +634,22 @@ def parseProgramArguments( argv):
 
 def processStdin( verbose, complete):
     content = ""
-    result = ""
     filename = ""
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
                 title = getTitleFromFileName( filename)
-                result += tagDocument( title, content, verbose, complete)
+                result = tagDocument( title, content, verbose, complete)
                 printOutput( filename, result)
-                result = ""
                 content = ""
             filename = line[6:].rstrip( "\r\n")
         else:
             content += line
     if content:
         title = getTitleFromFileName( filename)
-        result += tagDocument( title, content, verbose, complete)
-    if filename and result:
+        result = tagDocument( title, content, verbose, complete)
         printOutput( filename, result)
+        content = ""
 
 linebuf = None
 def readChunkStdin( nofFiles):
