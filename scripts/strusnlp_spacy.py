@@ -141,32 +141,58 @@ def getSex( prp):
         return "P"
     return None
 
+def cutTrailingApos( nam):
+    ln = len(nam)
+    while ln and nam[ln-1] in ["'","’","`"]:
+        ln -= 1
+    return nam[ :ln]
+
 def matchName( obj, candidate, relaxed):
     cd = deepcopy(candidate)
     if not obj:
         return False
     for nam in obj:
-        if relaxed or nam[ -1:] == '.' or nam[ -1:] == "\'" or nam[ -1:] == "s":
+        nam = cutTrailingApos( nam)
+        if relaxed or nam[ -1:] in ['.']:
             prefix = nam
             if nam[ -1:] == '.':
                 prefix = nam[ :-1]
             elif relaxed:
                 prefix = nam[0:2]
-            elif nam[ -1:] == "\'":
+            else:
                 prefix = nam[ :-1]
-            if prefix and prefix[ -1:] == "s":
-                prefix = prefix[ :-1]
             found = False
             for eidx,elem in enumerate(cd):
-                if len(elem) > len(prefix) and elem[ :len(prefix)] == prefix:
+                elemnam = cutTrailingApos( elem)
+                if len(elemnam) > len(prefix) and elemnam[ :len(prefix)] == prefix:
                     del cd[ eidx]
                     found = True
                     break
-            if found:
-                continue
-        if nam in cd:
-            del cd[ cd.index( nam)]
+            if not found:
+                return False
         else:
+            found = False
+            for eidx,elem in enumerate(cd): 
+                if cutTrailingApos( nam) == cutTrailingApos( elem):
+                    del cd[ eidx]
+                    found = True
+                    break
+            if not found:
+                return False
+    return True
+
+def isEqualName( obj, candidate):
+    if not obj or len(obj) != len(candidate):
+        return False
+    cd = deepcopy(candidate)
+    for nam in obj:
+        found = False
+        for eidx,elem in enumerate(cd): 
+            if cutTrailingApos( nam) == cutTrailingApos( elem):
+                del cd[ eidx]
+                found = True
+                break
+        if not found:
             return False
     return True
 
@@ -195,6 +221,8 @@ def getMapBestWeight( name2weightMap, name):
     bestWeight = 0
     for cd,weight in name2weightMap.items():
         thisCd = cd.split(' ')
+        if name == "Spears’":
+            sys.stderr.write( "++ MATCH %.3f %s == %s\n" % (weight, name, cd)) 
         if matchName( name, thisCd, False):
             if weight > bestWeight or (weight == bestWeight and (not bestCd or len(bestCd) < len(thisCd))):
                 bestCd = thisCd
@@ -339,15 +367,16 @@ def tagSentenceNounReferences( tokens, titlesubject, bestTitleMatches, nounCandi
     for eidx,elem in enumerate( tokens):
         if elem.nlptag[:3] == 'NNP':
             name = getMultipartName( tokens, eidx)
-            if sentenceIdx == 0 and elem.nlptag[:3] == "NNP":
+            if sentenceIdx == 0:
                 if matchName( titlesubject, name, True):
                     elem.ref = titlesubject
                     sentenceIdx = -1
-            if name in bestTitleMatches:
-                elem.ref = titlesubject
+            for bt in bestTitleMatches:
+                if isEqualName( name, bt):
+                    elem.ref = titlesubject
             if not elem.ref:
                 elem.ref = getMapBestWeight( nounCandidates, name)
-            key = ' '.join( elem.ref or name).rstrip( "'\"\`")
+            key = cutTrailingApos( ' '.join( elem.ref or name))
             usedEntities.append( key)
     for key in usedEntities:
         if key in nounCandidates:
@@ -489,7 +518,7 @@ def getDocumentNlpTokCountMap( sentences, elements):
         for tidx,tok in enumerate(sent):
             if tok.nlptag in elements:
                 name = tok.ref or getMultipartName( sent, tidx)
-                key = ' '.join( name)
+                key = cutTrailingApos( ' '.join( name))
                 if key in rt:
                     rt[ key] += 1
                 else:
@@ -501,12 +530,13 @@ def getBestTitleMatches( titlesubject, tokCountMap):
     bestName = None
     for key,tf in tokCountMap.items():
         name = key.split(' ')
-        if tf > 20 and maxTf > 20 and len(name) < len(bestName) and tf * 2 > maxTf:
-            maxTf = tf
-            bestName = name
-        elif matchName( name, titlesubject, False) and (tf > maxTf or (maxTf == tf and len(name) < len(bestName))):
-            maxTf = tf
-            bestName = name
+        if matchName( name, titlesubject, False):
+            if tf > 20 and maxTf > 20 and len(name) < len(bestName) and tf * 2 > maxTf:
+                maxTf = tf
+                bestName = name
+            elif tf > maxTf or (maxTf == tf and len(name) < len(bestName)):
+                maxTf = tf
+                bestName = name
     rt = []
     if bestName:
         rt.append( bestName)
@@ -732,6 +762,7 @@ def printTestResult( text, result):
 def runTest():
     printTestResult( "MATCH 1", matchName( ["Giuliani"], ["Rudy","Giuliani"], False))
     printTestResult( "MATCH 2", matchName( ["Rudy","Giuliani"], ["Rudolph", "William", "Louis", "Giuliani"], True))
+    printTestResult( "NOT MATCH 1", not matchName( ["Hugo","Chavez"], ["Hurto", "Castro"], False))
 
 if __name__ == "__main__":
     argmap = parseProgramArguments( sys.argv[ 1:])
