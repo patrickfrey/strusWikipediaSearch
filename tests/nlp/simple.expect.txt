@@ -9,9 +9,7 @@
 * Sentence This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
 * Best title match Giuliani
 * Entity sex Rudy Giuliani -> M
-* Entity sex  -> W
-* Subject Rudy Giuliani -> It,he,it,his
-* Subject  -> 's
+* Subject Rudy Giuliani -> It,he,it,his,'s
 * Noun usage philosophy # 1
 * Noun usage politician # 1
 * Noun usage city # 1
@@ -101,10 +99,10 @@ S (nsubj)	E	PRP	he	Rudy Giuliani
  (pobj)	N	NN	term	
  (punct)	T!	.	.	
  (ROOT)	V	VB	Let	
-S (nsubj)	E	PRP	's	
+ (nsubj)		PRP	's	
  (ccomp)	V	VB	go	
  (prep)		IN	to	
- (pobj)	E	NNP	N.	
+ (pobj)	E	NNP	N.	New York City
  (pobj)	_	_	Y.	
  (punct)	T!	.	.	
  (prep)		IN	Because	
@@ -219,8 +217,8 @@ _ (nsubj)	_	_	Roma
  (prep)		IN	in	
  (pobj)	E	NNP	Rome	
  (punct)	T!	.	.	
- (nmod)	E	NNP	Roma4	
- (punct)	P!	:	;	
+ (none)	E	NNP	Roma4	
+ (punct)		:	;	
  (npadvmod)		CD	1927	
  (punct)		:	;	
  (appos)		CD	6	

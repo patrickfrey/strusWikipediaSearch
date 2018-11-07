@@ -146,11 +146,13 @@ def matchName( obj, candidate, relaxed):
     if not obj:
         return False
     for nam in obj:
-        if relaxed or nam[ -1:] == '.':
+        if relaxed or nam[ -1:] == '.' or nam[ -1:] == "\'":
             if nam[ -1:] == '.':
                 prefix = nam[ :-1]
             elif relaxed:
                 prefix = nam[0:2]
+            elif nam[ -1:] == "\'":
+                prefix = nam[ :-1]
             found = False
             for eidx,elem in enumerate(cd):
                 if len(elem) > len(prefix) and elem[ :len(prefix)] == prefix:
@@ -172,12 +174,18 @@ def sentenceHasVerb( tokens):
             hasVerb = True
     return hasVerb
 
-def sentenceHasEntitiesOnly( tokens):
-    hasEntitiesOnly = True
+def sentenceIsTitle( tokens):
     for elem in tokens:
-        if elem.nlptag[:3] != 'NNP' and elem.nlprole != "punct":
-            hasEntitiesOnly = False
-    return hasEntitiesOnly
+        if elem.nlptag:
+            if elem.nlptag[0] in ['J','N','P','R','W','M','C','F']:
+                if elem.value and elem.value[0].isupper():
+                    continue
+            elif elem.nlptag in ['T','D','I']:
+                continue
+        if elem.nlprole == "punct":
+            continue
+        return False
+    return True
 
 def getMapBestWeight( name2weightMap, name):
     bestCd = None
@@ -232,6 +240,9 @@ def tagSentenceStrusTags( tokens):
         type = elem.nlptag
         utype = unifyType( type)
         maptype = mapTag( type)
+        if type == 'PRP' or type == 'PRP$':
+            if not getSex( elem.value):
+                maptype = ""
         if prev and utype == prev and prev[0] in ['N','E','V']:
             type = "_"
             maptype = "_";
@@ -243,6 +254,20 @@ def tagSentenceStrusTags( tokens):
         elem.strustag = maptype
         elem.nlptag = type
 
+def tagEntitySequenceStrusTags( tokens):
+    eidx = 0
+    for elem in tokens:
+        if elem.nlprole == "punct":
+            eidx = 0
+        elif eidx == 0:
+            elem.strustag = 'E'
+            elem.nlptag = 'NNP'
+            elem.nlprole = 'none'
+        else:
+            elem.strustag = '_'
+            elem.nlptag = '_'
+            elem.nlprole = 'none'
+
 def tagSentenceSubjects( tokens):
     bracketCnt = 0
     for eidx,elem in enumerate( tokens):
@@ -253,7 +278,7 @@ def tagSentenceSubjects( tokens):
             bracketCnt -= 1
         elif bracketCnt > 0:
             pass
-        elif elem.nlptag == 'PRP' and elem.nlprole == "nsubj":
+        elif elem.nlptag == 'PRP' and elem.nlprole == "nsubj" and getSex(elem.value):
             elem.strusrole = "S"
         elif elem.nlptag[:2] == 'NN':
             if elem.nlprole == "conj" or elem.nlprole == "compound":
@@ -307,21 +332,32 @@ def tagSentenceSubjects( tokens):
                 ei += 1
 
 def tagSentenceNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidates, sentenceIdx):
+    usedEntities = []
     for eidx,elem in enumerate( tokens):
-        if elem.nlptag[:2] == 'NN':
-           name = getMultipartName( tokens, eidx)
-           if sentenceIdx == 0 and elem.nlptag[:3] == "NNP":
-               if matchName( titlesubject, name, True):
-                   elem.ref = titlesubject
-                   sentenceIdx = -1
-           if name in bestTitleMatches:
-               elem.ref = titlesubject
-           elem.ref = elem.ref or getMapBestWeight( nounCandidates, name)
-           if elem.ref:
-               key = ' '.join( elem.ref)
-               nounCandidates[ key] += 1
-               for cd in nounCandidates:
-                   nounCandidates[ key] *= 0.8
+        if elem.nlptag[:3] == 'NNP':
+            name = getMultipartName( tokens, eidx)
+            if sentenceIdx == 0 and elem.nlptag[:3] == "NNP":
+                if matchName( titlesubject, name, True):
+                    elem.ref = titlesubject
+                    sentenceIdx = -1
+            if name in bestTitleMatches:
+                elem.ref = titlesubject
+            if not elem.ref:
+                elem.ref = getMapBestWeight( nounCandidates, name)
+            key = ' '.join( elem.ref or name)
+            usedEntities.append( key)
+    for key in usedEntities:
+        if key in nounCandidates:
+            nounCandidates[ key] += (1/0.8)
+        else:
+            nounCandidates[ key] = (1/0.8)
+    expiredKeys = []
+    for key in nounCandidates:
+        nounCandidates[ key] *= 0.8
+        if nounCandidates[ key] < 0.3:
+            expiredKeys.append( key)
+    for key in expiredKeys:
+        del nounCandidates[ key]
 
 # param sexSubjectMap: map sex:string -> Subject
 def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap):
@@ -334,9 +370,9 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap):
             if elem.nlptag == "NNPS" or elem.nlptag == "NNS":
                 sex = "P"
             elif elem.nlptag == "NN":
-                if elem.value == "man":
+                if elem.value in ["man","father","boy"]:
                     sex = "M"
-                elif elem.value == "woman":
+                elif elem.value in ["woman","mother","girl"]:
                     sex = "W"
                 else:
                     sex = "N"
@@ -425,7 +461,7 @@ def getDocumentSentences( text, verbose):
                 tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
         if node.dep_ == "punct":
             if inBracketLevel == 0 and inBracketToks < 10:
-                if value in [';','.']:
+                if value in [':',';','.']:
                     if verbose:
                         print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
                     sentences.append( tokens)
@@ -461,7 +497,10 @@ def getBestTitleMatches( titlesubject, tokCountMap):
     bestName = None
     for key,tf in tokCountMap.items():
         name = key.split(' ')
-        if matchName( name, titlesubject, False) and (maxTf < tf or (maxTf == tf and len(name) < len(bestName))):
+        if tf > 20 and maxTf > 20 and len(name) < len(bestName) and tf * 2 > maxTf:
+            maxTf = tf
+            bestName = name
+        elif matchName( name, titlesubject, False) and (tf > maxTf or (maxTf == tf and len(name) < len(bestName))):
             maxTf = tf
             bestName = name
     rt = []
@@ -492,7 +531,8 @@ def getDocumentPrpMap( titlesubject, sentences):
                     rt[ key].append( tok.value)
                 else:
                     rt[ key] = [tok.value]
-        lastSentSubjects = sentSubjects
+        if sentSubjects:
+            lastSentSubjects = sentSubjects
     return rt
 
 def getMaxSexCount( prplist):
@@ -524,8 +564,10 @@ def tagDocument( title, text, verbose, complete):
         print( "* Document title %s" % ' '.join(titlesubject))
     sentences = getDocumentSentences( text, verbose)
     for sent in sentences:
-        if sentenceHasVerb( sent) or sentenceHasEntitiesOnly( sent) or len(sent) > 6:
+        if sentenceHasVerb( sent):
             tagSentenceStrusTags( sent)
+        if sentenceIsTitle( sent):
+            tagEntitySequenceStrusTags( sent)
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
     countNn = getDocumentNlpTokCountMap( sentences, ["NN","NNS"])
     bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
@@ -534,7 +576,6 @@ def tagDocument( title, text, verbose, complete):
             print( "* Best title match %s" % ' '.join(bm))
     nounCandidates = {}
     titlekey = ' '.join( titlesubject)
-    nounCandidates[ titlekey] = 5
     for sidx,sent in enumerate(sentences):
         if sentenceHasVerb( sent):
             tagSentenceSubjects( sent)

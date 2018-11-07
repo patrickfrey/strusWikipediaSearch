@@ -60,10 +60,10 @@ E	his	Rudy Giuliani
 N	term	
 T!	.	
 V	Let	
-E	's	
+	's	
 V	go	
 	to	
-E	N.	
+E	N.	New York City
 _	Y.	
 T!	.	
 	Because	
@@ -144,7 +144,7 @@ V	based
 E	Rome	
 T!	.	
 E	Roma4	
-P!	;	
+	;	
 	1927	
 	;	
 	6	
