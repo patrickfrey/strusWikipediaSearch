@@ -146,13 +146,16 @@ def matchName( obj, candidate, relaxed):
     if not obj:
         return False
     for nam in obj:
-        if relaxed or nam[ -1:] == '.' or nam[ -1:] == "\'":
+        if relaxed or nam[ -1:] == '.' or nam[ -1:] == "\'" or nam[ -1:] == "s":
+            prefix = nam
             if nam[ -1:] == '.':
                 prefix = nam[ :-1]
             elif relaxed:
                 prefix = nam[0:2]
             elif nam[ -1:] == "\'":
                 prefix = nam[ :-1]
+            if prefix and prefix[ -1:] == "s":
+                prefix = prefix[ :-1]
             found = False
             for eidx,elem in enumerate(cd):
                 if len(elem) > len(prefix) and elem[ :len(prefix)] == prefix:
@@ -344,7 +347,7 @@ def tagSentenceNounReferences( tokens, titlesubject, bestTitleMatches, nounCandi
                 elem.ref = titlesubject
             if not elem.ref:
                 elem.ref = getMapBestWeight( nounCandidates, name)
-            key = ' '.join( elem.ref or name)
+            key = ' '.join( elem.ref or name).rstrip( "'\"\`")
             usedEntities.append( key)
     for key in usedEntities:
         if key in nounCandidates:
@@ -485,7 +488,8 @@ def getDocumentNlpTokCountMap( sentences, elements):
     for sent in sentences:
         for tidx,tok in enumerate(sent):
             if tok.nlptag in elements:
-                key = getMultipartNameStr( sent, tidx)
+                name = tok.ref or getMultipartName( sent, tidx)
+                key = ' '.join( name)
                 if key in rt:
                     rt[ key] += 1
                 else:
@@ -569,11 +573,11 @@ def tagDocument( title, text, verbose, complete):
         if sentenceIsTitle( sent):
             tagEntitySequenceStrusTags( sent)
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
-    countNn = getDocumentNlpTokCountMap( sentences, ["NN","NNS"])
     bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
     if verbose:
         for bm in bestTitleMatches:
             print( "* Best title match %s" % ' '.join(bm))
+    countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
     nounCandidates = {}
     titlekey = ' '.join( titlesubject)
     for sidx,sent in enumerate(sentences):
@@ -598,8 +602,6 @@ def tagDocument( title, text, verbose, complete):
             print( "* Entity sex %s -> %s" % (subj, sex))
         for subj,prp in prpmap.items():
             print( "* Subject %s -> %s" % (subj, ','.join( prp)))
-        for key in countNn:
-            print( "* Noun usage %s # %d" % (key, countNn[ key]))
         for key in countNnp:
             print( "* Entity usage %s # %d" % (key, countNnp[ key]))
     return rt

@@ -10,21 +10,6 @@
 * Best title match Giuliani
 * Entity sex Rudy Giuliani -> M
 * Subject Rudy Giuliani -> It,he,it,his,'s
-* Noun usage philosophy # 1
-* Noun usage politician # 1
-* Noun usage city # 1
-* Noun usage attorney # 1
-* Noun usage album # 1
-* Noun usage age # 1
-* Noun usage town # 1
-* Noun usage weather # 1
-* Noun usage term # 1
-* Noun usage country # 1
-* Noun usage businessman # 1
-* Noun usage mayor # 1
-* Noun usage speaker # 1
-* Noun usage masterpiece # 1
-* Noun usage budget problem # 1
 * Entity usage Mayor # 1
 * Entity usage Bernd # 1
 * Entity usage New York City # 1
@@ -167,14 +152,6 @@ S (nsubj)	N	NN	album
 * Sentence archiveurl ;
 * Sentence Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
 * Best title match Roma
-* Noun usage reˈal maˈðɾið ˈkluβ # 1
-* Noun usage ˈfuðβol # 1
-* Noun usage pronunciation # 1
-* Noun usage football club # 2
-* Noun usage archiveurl # 1
-* Noun usage weburl # 1
-* Noun usage title # 1
-* Noun usage deadurl # 1
 * Entity usage Associazione Sportiva Roma # 1
 * Entity usage Roma4 # 1
 * Entity usage Stadi # 1
