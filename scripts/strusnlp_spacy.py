@@ -474,17 +474,12 @@ def getDocumentSentences( text, verbose):
     last_subjects = []
     tg = spacy_nlp( text)
     inBracketLevel = 0
-    inBracketToks = 0
     for node in tg:
         value = str(node).strip()
         if value == '(' and node.tag_ == '-LRB-':
             inBracketLevel += 1
-            inBracketToks = 0
         elif value == ')' and node.tag_ == '-RRB-' and inBracketLevel > 0:
             inBracketLevel -= 1
-            inBracketToks = 0
-        else:
-            inBracketToks += 1
         if value:
             if node.tag_[:3] == "NNP" and value.count('.') > 1:
                 for abr in splitAbbrev( value):
@@ -492,13 +487,12 @@ def getDocumentSentences( text, verbose):
             else:
                 tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
         if node.dep_ == "punct":
-            if inBracketLevel == 0 and inBracketToks < 10:
+            if inBracketLevel == 0:
                 if value in [':',';','.']:
                     if verbose:
                         print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
                     sentences.append( tokens)
                     tokens = []
-                    inBracketToks = 0
                     inBracketLevel = 0
             else:
                 if value == '.':
@@ -506,7 +500,6 @@ def getDocumentSentences( text, verbose):
                         print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
                     sentences.append( tokens)
                     tokens = []
-                    inBracketToks = 0
                     inBracketLevel = 0
     if tokens:
         sentences.append( tokens)
@@ -556,15 +549,16 @@ def getDocumentPrpMap( titlesubject, sentences):
     for sent in sentences:
         sentSubjects = []
         for tidx,tok in enumerate(sent):
-            if tok.strusrole == 'S' and tok.nlptag[0:2] == "NN":
+            if tok.strusrole == 'S' and tok.nlptag[0:3] == "NNP":
                 subj = tok.ref or getMultipartName( sent, tidx)
                 sentSubjects.append( subj)
             elif tok.nlptag[0:3] == "PRP":
-                key = getStringListListKey( lastSentSubjects)
-                if key in rt:
-                    rt[ key].append( tok.value)
-                else:
-                    rt[ key] = [tok.value]
+                if len(lastSentSubjects) == 1 or getSex(tok.value) == "P":
+                    key = getStringListListKey( lastSentSubjects)
+                    if key in rt:
+                        rt[ key].append( tok.value)
+                    else:
+                        rt[ key] = [tok.value]
         if sentSubjects:
             lastSentSubjects = sentSubjects
     return rt
