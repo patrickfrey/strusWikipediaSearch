@@ -9,7 +9,7 @@
 * Sentence This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
 * Best title match Giuliani
 * Entity sex Rudy Giuliani -> M
-* Subject Rudy Giuliani -> It,he,it,his,'s
+* Subject Rudy Giuliani -> {'M': 22, 'N': 11}
 * Entity usage Mayor # 1
 * Entity usage Bernd # 1
 * Entity usage New York City # 1

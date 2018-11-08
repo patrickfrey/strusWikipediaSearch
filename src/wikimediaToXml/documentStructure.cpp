@@ -1739,6 +1739,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::BlockQuoteStart:
+				printTagContent( output, rt, "br", "", "");
 				stk.push_back( Paragraph::StructBlockQuote);
 				break;
 			case Paragraph::BlockQuoteEnd:
