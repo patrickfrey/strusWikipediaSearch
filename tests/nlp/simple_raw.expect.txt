@@ -48,7 +48,7 @@ E	It
 V	s	
 A	unclear	
 W	how	
-E	he	Rudy Giuliani
+E	he	
 m	ll	
 V	be	
 A	able	
@@ -56,7 +56,7 @@ A	able
 V	handle	
 E	it	
 	during	
-E	his	Rudy Giuliani
+E	his	
 N	term	
 T!	.	
 V	Let	

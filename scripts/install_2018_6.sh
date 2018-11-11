@@ -32,14 +32,15 @@ strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-p
 
 for ext in err mis wtf org; do find xml -name "*.$ext" | xargs rm; done
 
-POSTAGGER_TAG_OPT="-e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' -D '; '"
+export PYTHONHASHSEED=123
+POSTAGGER_TAG_OPT="-D '; ' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br'"
 
 for aa in 0 1 2 3 4 5 6 7 8 9; do
 for bb in 0 1 2 3 4 5 6 7 8 9; do
 for cc in 0 1 2 3 4 5 6 7 8 9; do
 for dd in 0 1 2 3 4 5 6 7 8 9; do
 	DID=$aa$bb$cc$dd
-	strusPosTagger -I -x xml -C XML $POSTAGGER_TAG_OPT /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
+	strusPosTagger -I -x xml -C XML -D '; ' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
 done
 done
 done
