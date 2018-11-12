@@ -221,6 +221,33 @@ def skipMultipartName( tokens, tidx):
         ti += 1
     return ti
 
+def getTitleSubject( title):
+    if len(title) > 0 and title[0] == '(':
+        title = title.translate( str.maketrans( "", "", "()?.!/;:"))
+    else:
+        title = title.translate( str.maketrans( "", "", "?.!/;:"))
+    endtitle = title.find('(')
+    if endtitle >= 0:
+        titleparts = title[ :endtitle ].split(' ')
+    else:
+        titleparts = title.split(' ')
+    rt = []
+    for tp in titleparts:
+        rt += splitAbbrev( tp)
+    return rt
+
+def getFirstKeyMap( map):
+    rt = {}
+    for key in map:
+        keyelements = getTitleSubject( key)
+        if len(keyelements) >= 2:
+            fkey = keyelements[0]
+            if fkey in rt:
+                rt[ fkey].append( keyelements)
+            else:
+                rt[ fkey] = [keyelements]
+    return rt
+
 def getLongestTitleMatch( tokens, tidx, titlesubject, relaxed):
     name = getMultipartName( tokens, tidx)
     isSubject = (tokens[ tidx].nlprole[:5] == "nsubj")
@@ -313,17 +340,6 @@ def getMapBestWeight( name2weightMap, name):
                 bestWeight = weight
     return bestCd
 
-def getTitleSubject( title):
-    endtitle = title.find('(')
-    if endtitle >= 0:
-        titleparts = title[ :endtitle ].split(' ')
-    else:
-        titleparts = title.split(' ')
-    rt = []
-    for tp in titleparts:
-        rt += splitAbbrev( tp)
-    return rt
-
 def skipToOwnPrp( tokens, tidx):
     nidx = tidx
     while nidx<len(tokens) and tokens[nidx].nlptag[:2] == "RB":
@@ -373,6 +389,20 @@ def tagEntitySequenceToken( elem, eidx):
         elem.nlptag = '_'
         elem.nlprole = role
 
+def tagEntitySequenceTokenShift( toklist, tokidx, eidx):
+    if tokidx+1 < len(toklist):
+        if toklist[ tokidx+1].nlprole == '_':
+            if toklist[ tokidx].strusrole == '_':
+                toklist[ tokidx+1].nlprole = ""
+            else:
+                toklist[ tokidx+1].nlprole = toklist[ tokidx].nlprole
+        if toklist[ tokidx+1].strusrole == '_':
+            if toklist[ tokidx].strusrole == '_':
+                toklist[ tokidx+1].strusrole = ""
+            else:
+                toklist[ tokidx+1].strusrole = toklist[ tokidx].strusrole
+    tagEntitySequenceToken( toklist[tokidx], eidx)
+
 def tagEntitySequenceStrusTags( tokens, startidx, endidx):
     eidx = startidx
     ofs = 0
@@ -408,20 +438,31 @@ def tagEntitySequenceStrusTagsInBrackets( tokens):
         else:
             eidx += 1
 
-def tagSentenceTitleReferences( tokens, titlesubject):
+def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
     tidx = 0
     while tidx < len(tokens):
-        sidx = 0
-        while sidx < len(titlesubject) and tidx+sidx < len(tokens):
-            if tokens[tidx+sidx].value != titlesubject[sidx]:
-                break
-            sidx += 1
-        if sidx == len(titlesubject):
-            sidx = 0
-            while sidx < len(titlesubject):
-                tagEntitySequenceToken( tokens[tidx+sidx], sidx)
-                sidx += 1
-            tidx += sidx
+        if tokens[tidx].value in firstKeyLinkListMap:
+            candidateList = firstKeyLinkListMap[ tokens[tidx].value]
+            bestIdx = -1
+            bestLen = 0
+            for cidx,cd in enumerate( candidateList):
+                sidx = 0
+                while sidx < len(cd) and tidx+sidx < len(tokens):
+                    if tokens[tidx+sidx].value != cd[sidx] or tokens[tidx+sidx].nlprole == 'none' or tokens[tidx+sidx].nlptag in ["VBZ","VBD"]:
+                        break
+                    sidx += 1
+                if sidx == len(cd):
+                    if len(cd) > bestLen:
+                        bestLen = len(cd)
+                        bestIdx = cidx
+            if bestIdx >= 0:
+                sidx = 0
+                while sidx < bestLen:
+                    tagEntitySequenceTokenShift( tokens, tidx+sidx, sidx)
+                    sidx += 1
+                tidx += sidx
+            else:
+                tidx += 1
         else:
             tidx += 1
 
@@ -431,13 +472,13 @@ def tagSentenceNameReferences( tokens, names):
         for nam in names:
             sidx = 0
             while sidx < len(nam) and tidx+sidx < len(tokens):
-                if tokens[tidx+sidx].value != nam[sidx]:
+                if tokens[tidx+sidx].value != nam[sidx] or tokens[tidx+sidx].nlprole == 'none':
                     break
                 sidx += 1
             if sidx == len(nam):
                 sidx = 0
                 while sidx < len(nam):
-                    tagEntitySequenceToken( tokens[tidx+sidx], sidx)
+                    tagEntitySequenceTokenShift( tokens, tidx+sidx, sidx)
                     sidx += 1
                 tidx += sidx
                 break
@@ -696,14 +737,16 @@ def splitNlpTokCountMap( usageMap):
         accMap[ key] = usage
         eidx = key.rfind(' ', 0, len(key))
         while eidx >= 0:
-            skey = key[ :eidx]
-            if skey in accMap:
-                accMap[ skey] += usage
-            else:
-                accMap[ skey] = usage
+            skeys = [ key[ :eidx], key[ eidx+1:] ]
+            for skey in skeys:
+                if skey:
+                    if skey in accMap:
+                        accMap[ skey] += usage
+                    else:
+                        accMap[ skey] = usage
             eidx = key.rfind(' ', 0, eidx)
-    delkeys = []
-    done = True
+    done = False
+    changeMap = {}
     while not done:
         for key in usageMap:
             bestidx = -1
@@ -712,29 +755,33 @@ def splitNlpTokCountMap( usageMap):
             secusage = bestusage
             eidx = key.rfind(' ', 0, len(key))
             while eidx >= 0:
-                usage = accMap[ key[ :eidx]]
-                if usage > bestusage:
-                    secusage = bestusage
-                    secidx = bestidx
-                    bestusage = usage
-                    bestidx = eidx
-                elif usage > secusage:
-                    secusage = usage
-                    secidx = eidx
+                if key[ :eidx] in usageMap and key[ eidx+1:] in usageMap:
+                    usage = accMap[ key[ :eidx]]
+                    if usage > bestusage:
+                        secusage = bestusage
+                        secidx = bestidx
+                        bestusage = usage
+                        bestidx = eidx
+                    elif usage > secusage:
+                        secusage = usage
+                        secidx = eidx
                 eidx = key.rfind(' ', 0, eidx)
-            if bestidx >= 0 and bestusage > secusage * 10 and key[:eidx] in usageMap:
+            if bestidx >= 0 and bestusage > secusage * 10 and key[:bestidx] in usageMap:
                 keyusage = usageMap[ key]
-                w_1 = usageMap[ key[:eidx]] + keyusage
+                w_1 = usageMap[ key[:bestidx]] + keyusage
                 w_2 = keyusage
-                if key[eidx:] in usageMap:
-                    w_2 += usageMap[ key[eidx:]]
-                usageMap[ key[eidx:]] = w_2
-                usageMap[ key[:eidx]] = w_1
-                delkeys.append( key)
-        for key in delkeys:
-            done = False
-            del usageMap[ key]
-        delkeys = []
+                if key[bestidx+1:] in usageMap:
+                    w_2 += usageMap[ key[bestidx+1:]]
+                changeMap[ key[bestidx+1:]] = w_2
+                changeMap[ key[:bestidx]] = w_1
+                changeMap[ key] = 0
+        for key,value in changeMap.items():
+            if value:
+                usageMap[ key] = changeMap[ key]
+            else:
+                del usageMap[ key]
+        done = not changeMap
+        changeMap = {}
 
 def getMostUsedMultipartList( usageMap):
     selMap = {}
@@ -867,9 +914,11 @@ def getDocumentNnpSexMap( map):
             rt[ nnp] = maxsex
     return rt
 
-def tagDocument( title, text, verbose, complete):
+def tagDocument( title, text, entityMap, verbose, complete):
     rt = ""
     titlesubject = getTitleSubject( title)
+    entityFirstKeyMap = getFirstKeyMap( entityMap)
+    
     if verbose:
         print( "* Document title %s" % ' '.join(titlesubject))
     sentences = getDocumentSentences( text, verbose)
@@ -880,6 +929,7 @@ def tagDocument( title, text, verbose, complete):
             tagEntitySequenceStrusTags( sent, 0, len(sent))
         tagEntitySequenceStrusTagsInBrackets( sent)
         tagSentenceNameReferences( sent, [titlesubject])
+        tagSentenceLinkReferences( sent, entityFirstKeyMap)
 
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
     bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
@@ -921,6 +971,9 @@ def tagDocument( title, text, verbose, complete):
             print( "* Subject %s -> %s" % (subj, sc))
         for key in countNnp:
             print( "* Entity usage %s # %d" % (key, countNnp[ key]))
+        for key,linklist in entityFirstKeyMap.items():
+            for link in linklist:
+                print( "* Link '%s'" % ' '.join(link))
     return rt
 
 def substFilename( filename):
@@ -995,19 +1048,27 @@ def parseProgramArguments( argv):
 def processStdin( verbose, complete):
     content = ""
     filename = ""
+    entityMap = {}
+    entityReadState = False
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
                 title = getTitleFromFileName( filename)
-                result = tagDocument( title, content, verbose, complete)
+                result = tagDocument( title, content, entityMap, verbose, complete)
                 printOutput( filename, result)
                 content = ""
             filename = line[6:].rstrip( "\r\n")
+            entityReadState = True
+            entityMap = {}
         else:
-            content += line
+            if entityReadState and line[:2] == '##':
+                entityMap[ line[2:].strip("\n\r\t ")] = True
+            else:
+                entityReadState = False
+                content += line
     if content:
         title = getTitleFromFileName( filename)
-        result = tagDocument( title, content, verbose, complete)
+        result = tagDocument( title, content, entityMap, verbose, complete)
         printOutput( filename, result)
         content = ""
 
