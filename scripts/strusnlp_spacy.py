@@ -3,6 +3,7 @@
 import nltk
 from pprint import pprint
 import sys
+import math
 import re
 import time
 import getopt
@@ -142,19 +143,34 @@ def getPrpSex( prp):
         return "P"
     return None
 
-def cutTrailingApos( nam):
+def trimString( nam, ts):
+    nidx = 0
+    while len(nam) > len(ts)+nidx and nam[nidx:nidx+len(ts)] == ts:
+        nidx += len(ts)
+    eidx = len(nam)
+    while eidx > nidx and nam[ eidx-len(ts):eidx] == ts:
+        eidx -= len(ts)
+    if eidx > nidx:
+        return nam[nidx:eidx]
+    else:
+        return ""
+
+def trimApos( nam):
     ln = len(nam)
-    while ln and nam[ln-1] in ["'","’","`"]:
+    while ln and nam[ln-1] in ["'","’","`","\""]:
         ln -= 1
-    return nam[ :ln]
+    st = 0
+    while st < ln and nam[ st] in ["'","’","`","\""]:
+        st += 1
+    return trimString( nam[ st:ln], "—")
 
 def matchName( obj, candidate, relaxed):
     cd = deepcopy(candidate)
     if not obj:
         return False
     for nam in obj:
-        nam = cutTrailingApos( nam)
-        if relaxed or nam[ -1:] in ['.']:
+        nam = trimApos( nam)
+        if relaxed or (nam and nam[ -1:] in ['.']):
             if not nam or nam in [".", "..", "..."]:
                 continue
             prefix = nam
@@ -166,7 +182,7 @@ def matchName( obj, candidate, relaxed):
                 prefix = nam[ :-1]
             found = False
             for eidx,elem in enumerate(cd):
-                elemnam = cutTrailingApos( elem)
+                elemnam = trimApos( elem)
                 if len(elemnam) > len(prefix) and elemnam[ :len(prefix)] == prefix:
                     del cd[ eidx]
                     found = True
@@ -176,7 +192,7 @@ def matchName( obj, candidate, relaxed):
         else:
             found = False
             for eidx,elem in enumerate(cd): 
-                if cutTrailingApos( nam) == cutTrailingApos( elem):
+                if trimApos( nam) == trimApos( elem):
                     del cd[ eidx]
                     found = True
                     break
@@ -191,7 +207,7 @@ def isEqualName( obj, candidate):
     for nam in obj:
         found = False
         for eidx,elem in enumerate(cd):
-            if cutTrailingApos( nam) == cutTrailingApos( elem):
+            if trimApos( nam) == trimApos( elem):
                 del cd[ eidx]
                 found = True
                 break
@@ -203,7 +219,9 @@ def getMultipartName( tokens, tidx):
     rt = [tokens[tidx].value]
     ti = tidx + 1
     while ti < len(tokens) and tokens[ ti].nlptag == '_':
-        rt.append( tokens[ ti].value)
+        trnam = trimApos( tokens[ ti].value)
+        if trnam:
+            rt.append( trnam)
         ti += 1
     return rt
 
@@ -211,7 +229,9 @@ def getMultipartNameStr( tokens, tidx):
     rt = tokens[tidx].value
     ti = tidx + 1
     while ti < len(tokens) and tokens[ ti].nlptag == '_':
-        rt += " " + tokens[ ti].value
+        trnam = trimApos( tokens[ ti].value)
+        if trnam:
+            rt += " " + trnam
         ti += 1
     return rt
 
@@ -223,9 +243,9 @@ def skipMultipartName( tokens, tidx):
 
 def getTitleSubject( title):
     if len(title) > 0 and title[0] == '(':
-        title = title.translate( str.maketrans( "", "", "()?.!/;:"))
+        title = title.translate( str.maketrans( "", "", "’'\"()?!/;:"))
     else:
-        title = title.translate( str.maketrans( "", "", "?.!/;:"))
+        title = title.translate( str.maketrans( "", "", "’'\"?!/;:"))
     endtitle = title.find('(')
     if endtitle >= 0:
         titleparts = title[ :endtitle ].split(' ')
@@ -248,7 +268,43 @@ def getFirstKeyMap( map):
                 rt[ fkey] = [keyelements]
     return rt
 
-def getLongestTitleMatch( tokens, tidx, titlesubject, relaxed):
+def normalizedCountTokenValue( tok):
+    return tok.lower().translate( str.maketrans( "", "", "'\"()?!/;:\’"))
+
+def countTokens( toknctmap, toklist):
+    for tok in toklist:
+        tv = normalizedCountTokenValue( tok.value)
+        if tv:
+            if tv in toknctmap:
+                toknctmap[ tv] += 1
+            else:
+                toknctmap[ tv] = 1
+
+def calcTokenWeight( N, tf):
+    return 1.0 / math.log( (N - 0.5) / (tf + 0.5))
+
+def tokenCountToWeightMap( tokCntMap, tokCntTotal):
+    rt = {}
+    maxcnt = 1
+    maxkey = ""
+    for key,cnt in tokCntMap.items():
+        if int(cnt) > maxcnt:
+            maxcnt = int(cnt)
+            maxkey = key
+    wBase = calcTokenWeight( tokCntTotal, maxcnt)
+    mBase = calcTokenWeight( tokCntTotal, 1)
+    for key,cnt in tokCntMap.items():
+        rt[ key] = (calcTokenWeight( tokCntTotal, cnt) - mBase) / (wBase - mBase)
+    return rt
+
+def assignRef( tokens, tidx, ref):
+    ridx = 0
+    while ridx < len(ref) and tokens[ tidx+ridx].value == ref[ ridx]:
+        ridx += 1
+    if ridx != len(ref):
+        tokens[ tidx].ref = ref
+
+def tagLongestTitleMatch( tokens, tidx, titlesubject, relaxed):
     name = getMultipartName( tokens, tidx)
     isSubject = (tokens[ tidx].nlprole[:5] == "nsubj")
     matches = False
@@ -297,9 +353,9 @@ def getLongestTitleMatch( tokens, tidx, titlesubject, relaxed):
             tokens[ btidx].nlptag = '_'
             tokens[ btidx].ref = None
             btidx += 1
-        return name, btidx
+        return btidx
     else:
-        return name, -1
+        return -1
 
 def sentenceHasVerb( tokens):
     hasVerb = False
@@ -311,11 +367,13 @@ def sentenceHasVerb( tokens):
 def sentenceIsTitle( tokens):
     for elem in tokens:
         if elem.nlptag:
-            if elem.nlptag[0] in ['J','N','P','R','W','M','C','F']:
+            if elem.nlptag == "HYPH":
+                continue
+            if elem.strustag == '_':
+                continue
+            elif elem.nlptag[0] in ['J','N','P','R','W','M','C','F','T','D','I']:
                 if elem.value and elem.value[0].isupper():
                     continue
-            elif elem.nlptag in ['T','D','I']:
-                continue
         if elem.nlprole == "punct":
             continue
         return False
@@ -338,7 +396,7 @@ def getMapBestWeight( name2weightMap, name):
             if weight > bestWeight or (weight == bestWeight and (not bestCd or len(bestCd) < len(thisCd))):
                 bestCd = thisCd
                 bestWeight = weight
-    return bestCd
+    return bestCd,bestWeight
 
 def skipToOwnPrp( tokens, tidx):
     nidx = tidx
@@ -358,6 +416,10 @@ def tagSentenceStrusTags( tokens):
     prev = ""
     mapprev = ""
     for eidx,elem in enumerate(tokens):
+        if elem.nlprole == "none" or elem.strustag == '_':
+            prev = ""
+            mapprev = ""
+            continue
         type = elem.nlptag
         utype = unifyType( type)
         maptype = mapTag( type)
@@ -377,7 +439,7 @@ def tagSentenceStrusTags( tokens):
 
 def tagEntitySequenceToken( elem, eidx):
     if elem.nlprole[:5] == "nsubj":
-        role = "nsubj"
+        role = elem.nlprole
     else:
         role = "none"
     if eidx == 0:
@@ -391,28 +453,47 @@ def tagEntitySequenceToken( elem, eidx):
 
 def tagEntitySequenceTokenShift( toklist, tokidx, eidx):
     if tokidx+1 < len(toklist):
-        if toklist[ tokidx+1].nlprole == '_':
-            if toklist[ tokidx].strusrole == '_':
-                toklist[ tokidx+1].nlprole = ""
+        if toklist[ tokidx+1].nlptag == '_':
+            if toklist[ tokidx].nlptag == '_':
+                toklist[ tokidx+1].nlptag = ""
             else:
-                toklist[ tokidx+1].nlprole = toklist[ tokidx].nlprole
-        if toklist[ tokidx+1].strusrole == '_':
-            if toklist[ tokidx].strusrole == '_':
-                toklist[ tokidx+1].strusrole = ""
+                toklist[ tokidx+1].nlptag = toklist[ tokidx].nlptag
+                if toklist[ tokidx].nlprole[:5] == "nsubj":
+                    toklist[ tokidx+1].nlprole = toklist[ tokidx].nlprole
+                    toklist[ tokidx].nlprole = "none"
+        if toklist[ tokidx+1].strustag == '_':
+            if toklist[ tokidx].strustag == '_':
+                toklist[ tokidx+1].strustag = ""
             else:
-                toklist[ tokidx+1].strusrole = toklist[ tokidx].strusrole
+                toklist[ tokidx+1].strustag = toklist[ tokidx].strustag
     tagEntitySequenceToken( toklist[tokidx], eidx)
 
 def tagEntitySequenceStrusTags( tokens, startidx, endidx):
     eidx = startidx
     ofs = 0
     while eidx < endidx:
-        if tokens[eidx].nlprole == "punct":
+        if tokens[eidx].nlprole == "none" or  tokens[eidx].strustag == '_':
             ofs = 0
+            eidx += 1
+        elif tokens[eidx].nlprole == "punct" or tokens[eidx].nlptag == "HYPH":
+            ofs = 0
+            eidx += 1
         else:
-            tagEntitySequenceToken( tokens[eidx], ofs)
-            ofs += 1
-        eidx += 1
+            nidx = eidx
+            doSkip = False
+            while nidx < endidx and tokens[nidx].nlprole != "punct" and tokens[nidx].nlptag != "HYPH":
+                if tokens[nidx].nlprole == "none" or  tokens[nidx].strustag == '_':
+                    doSkip = True
+                    break
+                nidx += 1
+            if not doSkip:
+                while eidx < nidx:
+                    tagEntitySequenceTokenShift( tokens, eidx, ofs)
+                    ofs += 1
+                    eidx += 1
+                ofs = 0
+            else:
+                eidx = nidx
 
 def tagEntitySequenceStrusTagsInBrackets( tokens):
     eidx = 0
@@ -548,44 +629,77 @@ def tagSentenceSubjects( tokens):
                 tokens[ei].strusrole = "_"
                 ei += 1
 
-def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidates, sentenceIdx):
+def weightIncrOnNounMatch( weight):
+    rt = weight + weight / 3
+    if weight >= 3.0:
+        rt += weight / 3
+        if weight >= 6.0:
+            rt += weight / 3
+            if weight >= 9.0:
+                rt += math.sqrt( weight)
+    return rt
+
+def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidates, tokCntWeightMap, sentenceIdx):
     usedEntities = []
     eidx = 0
+    ref = None
     while eidx < len( tokens):
         if tokens[ eidx].nlptag[:2] == 'NN':
+            ref = tokens[ eidx].ref
             isEntity = False
             if tokens[ eidx].nlptag[:3] == 'NNP':
                 isEntity = True
+            elif tokens[ eidx].nlptag[:2] == 'NN' and tokens[ eidx].value[0].isupper():
+                isEntity = True
             if sentenceIdx == 0:
-                name, nidx = getLongestTitleMatch( tokens, eidx, titlesubject, True)
+                nidx = tagLongestTitleMatch( tokens, eidx, titlesubject, True)
                 if nidx >= 0:
                     sentenceIdx = -1
-                    isEntity = True
-            name = getMultipartName( tokens, eidx)
-            for bt in bestTitleMatches:
-                if isEqualName( name, bt):
                     tokens[ eidx].ref = titlesubject
+                    ref = titlesubject
                     isEntity = True
-            if not tokens[ eidx].ref:
-                tokens[ eidx].ref = getMapBestWeight( nounCandidates, name)
+            if isEntity and not ref:
+                name = getMultipartName( tokens, eidx)
+                for bt in bestTitleMatches:
+                    if isEqualName( name, bt):
+                        tokens[ eidx].ref = titlesubject
+                        ref = titlesubject
+                        isEntity = True
+            if isEntity and not ref:
+                item,weight = getMapBestWeight( nounCandidates, name)
+                if item:
+                    if len(name) == 1:
+                        normname = normalizedCountTokenValue( name[0])
+                        if normname in tokCntWeightMap:
+                            nameweight = tokCntWeightMap[ normname]
+                            if weight >= 0.1 + nameweight * 0.2:
+                                assignRef( tokens, eidx, item)
+                                ref = item
+                    else:
+                        assignRef( tokens, eidx, item)
+                        ref = item
+                if ref and tokens[ eidx].nlptag in ["NN","NNS"]:
+                    tokens[ eidx].nlptag = "NNP"
+                    if tokens[ eidx].strustag == "N":
+                        tokens[ eidx].strustag = "E"
             if isEntity:
-                key = cutTrailingApos( ' '.join( tokens[ eidx].ref or name))
+                key = trimApos( ' '.join( ref or name))
                 usedEntities.append( key)
-            elif tokens[ eidx].ref:
+            elif ref:
                 tokens[ eidx].strustag = 'E'
-                key = cutTrailingApos( ' '.join( tokens[ eidx].ref))
+                key = trimApos( ' '.join( ref or name))
                 usedEntities.append( key)
         eidx += 1
     for key in usedEntities:
         if key in nounCandidates:
-            weight = nounCandidates[ key] + 1
-            weight += weight / 4
+            weight = weightIncrOnNounMatch( nounCandidates[ key] + 1)
         else:
-            weight = (1/0.9)
+            weight = (1/0.8)
         nounCandidates[ key] = weight
     expiredKeys = []
     for key,weight in nounCandidates.items():
-        weight *= 0.9
+        weight *= 0.8
+        nounCandidates[ key] = weight
         if weight < 0.1:
             expiredKeys.append( key)
     for key in expiredKeys:
@@ -724,7 +838,7 @@ def getDocumentNlpTokCountMap( sentences, elements):
         for tidx,tok in enumerate(sent):
             if tok.nlptag in elements:
                 name = tok.ref or getMultipartName( sent, tidx)
-                key = cutTrailingApos( ' '.join( name))
+                key = trimApos( ' '.join( name))
                 if key in rt:
                     rt[ key] += 1
                 else:
@@ -866,12 +980,14 @@ def getDocumentNnpSexCountMap( titlesubject, sentences):
                         weightfactor = 3.0
                     else:
                         weightfactor = 2.5
-                    addToNnpSexCountMap( rt, name, sent[nidx].value, weightfactor)
+                    if name:
+                        addToNnpSexCountMap( rt, name, sent[nidx].value, weightfactor)
                     tidx = nidx + 1
                 if tok.strusrole == 'S':
                     if sentSubjects:
                         sentSubjects.append( ',')
-                    sentSubjects.extend( name)
+                    if name:
+                        sentSubjects.extend( name)
             elif tok.nlptag[0:3] == "PRP" and lastSentSubjects:
                 if tok.strusrole == 'S':
                     sentPrpRefsMap[ tok.value] = 5.0
@@ -918,19 +1034,25 @@ def tagDocument( title, text, entityMap, verbose, complete):
     rt = ""
     titlesubject = getTitleSubject( title)
     entityFirstKeyMap = getFirstKeyMap( entityMap)
-    
+    tokCntMap = {}
+    tokCntWeightMap = {}
+    tokCntTotal = 0
+
     if verbose:
         print( "* Document title %s" % ' '.join(titlesubject))
     sentences = getDocumentSentences( text, verbose)
     for sent in sentences:
+        countTokens( tokCntMap, sent)
+        tokCntTotal += len(sent)
+        tagSentenceLinkReferences( sent, entityFirstKeyMap)
         if sentenceHasVerb( sent):
             tagSentenceStrusTags( sent)
         if sentenceIsTitle( sent):
             tagEntitySequenceStrusTags( sent, 0, len(sent))
         tagEntitySequenceStrusTagsInBrackets( sent)
         tagSentenceNameReferences( sent, [titlesubject])
-        tagSentenceLinkReferences( sent, entityFirstKeyMap)
 
+    tokCntWeightMap = tokenCountToWeightMap( tokCntMap, tokCntTotal)
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
     bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
     if verbose:
@@ -942,7 +1064,7 @@ def tagDocument( title, text, entityMap, verbose, complete):
     for sidx,sent in enumerate(sentences):
         if sentenceHasVerb( sent):
             tagSentenceSubjects( sent)
-            tagSentenceCompleteNounReferences( sent, titlesubject, bestTitleMatches, nounCandidates, sidx)
+            tagSentenceCompleteNounReferences( sent, titlesubject, bestTitleMatches, nounCandidates, tokCntWeightMap, sidx)
 
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
     splitNlpTokCountMap( countNnp)
@@ -974,6 +1096,8 @@ def tagDocument( title, text, entityMap, verbose, complete):
         for key,linklist in entityFirstKeyMap.items():
             for link in linklist:
                 print( "* Link '%s'" % ' '.join(link))
+        for key,weight in tokCntWeightMap.items():
+            print( "* Token count %s # %.3f" % (key, weight))
     return rt
 
 def substFilename( filename):

@@ -3756,16 +3756,17 @@
 * Best title match Baby One More Time
 * Entity sex stats Crazy -> {'W': 2.5}
 * Entity sex stats Born to Make You Happy -> {'N': 0.04, 'W': 0.2}
-* Entity sex stats Britney Spears -> {'M': 0.2, 'P': 3.25, 'N': 1.7691666666666668, 'W': 44.601111111111116}
+* Entity sex stats Britney Spears -> {'M': 0.2, 'P': 3.25, 'N': 2.769166666666667, 'W': 50.101111111111116}
 * Entity sex stats Baby One More Time -> {'M': 0.25, 'N': 22.0, 'W': 3.75}
 * Entity sex stats Larry Rudolph -> {'M': 7.5, 'W': 5.0}
 * Entity sex stats Melissa Ruggieri , Britney Spears -> {'W': 5.0}
-* Entity sex stats Lynne Spears -> {'W': 1.0}
+* Entity sex stats Spears -> {'W': 1.5}
 * Entity sex stats Peter Gardiner , Britney Spears -> {'W': 1.0}
 * Entity sex stats Kyle Anderson -> {'W': 1.0}
-* Entity sex stats Allmusic -> {'W': 2.5}
+* Entity sex stats Lynne -> {'W': 1.0}
+* Entity sex stats Britney Spears , Max Martin , Max Martin -> {'W': 1.0}
 * Entity sex stats Daydream -> {'W': 2.5}
-* Entity sex stats Max Martin , Max Martin , Max Martin -> {'W': 1.0}
+* Entity sex stats Allmusic -> {'W': 2.5}
 * Entity sex stats Britney Spears , Lou Pearlman , Innosense -> {'W': 1.0}
 * Entity sex stats Baby One More Time , Baby One More Time -> {'N': 1.0}
 * Entity sex stats Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
@@ -3775,22 +3776,24 @@
 * Entity sex Baby One More Time -> N
 * Subject Crazy -> {'W': 2.5}
 * Subject Born to Make You Happy -> {'N': 0.04, 'W': 0.2}
-* Subject Britney Spears -> {'M': 0.2, 'P': 3.25, 'N': 1.7691666666666668, 'W': 44.601111111111116}
+* Subject Britney Spears -> {'M': 0.2, 'P': 3.25, 'N': 2.769166666666667, 'W': 50.101111111111116}
 * Subject Baby One More Time -> {'M': 0.25, 'N': 22.0, 'W': 3.75}
 * Subject Larry Rudolph -> {'M': 7.5, 'W': 5.0}
 * Subject Melissa Ruggieri , Britney Spears -> {'W': 5.0}
-* Subject Lynne Spears -> {'W': 1.0}
+* Subject Spears -> {'W': 1.5}
 * Subject Peter Gardiner , Britney Spears -> {'W': 1.0}
 * Subject Kyle Anderson -> {'W': 1.0}
-* Subject Allmusic -> {'W': 2.5}
+* Subject Lynne -> {'W': 1.0}
+* Subject Britney Spears , Max Martin , Max Martin -> {'W': 1.0}
 * Subject Daydream -> {'W': 2.5}
-* Subject Max Martin , Max Martin , Max Martin -> {'W': 1.0}
+* Subject Allmusic -> {'W': 2.5}
 * Subject Britney Spears , Lou Pearlman , Innosense -> {'W': 1.0}
 * Subject Baby One More Time , Baby One More Time -> {'N': 1.0}
 * Subject Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
 * Subject Chuck Taylor , Britney Spears -> {'W': 0.1111111111111111}
 * Subject Crazy , Melody -> {'N': 0.2}
-* Entity usage Tommy Hilfiger # 2
+* Entity usage Tommy Hilfiger # 1
+* Entity usage Swedish Albums # 1
 * Entity usage Amazon.fr # 2
 * Entity usage DVD # 1
 * Entity usage Swedishcharts.com # 1
@@ -3798,8 +3801,9 @@
 * Entity usage Janet # 1
 * Entity usage Italian Albums # 2
 * Entity usage Beth Sestanovich # 1
-* Entity usage Britney # 7
+* Entity usage Britney # 5
 * Entity usage Dutch # 3
+* Entity usage Aall # 1
 * Entity usage Track # 6
 * Entity usage AllMusic # 7
 * Entity usage Road # 1
@@ -3809,19 +3813,21 @@
 * Entity usage Shapiro # 1
 * Entity usage Trip hop # 1
 * Entity usage RZBD004 # 1
+* Entity usage Beat # 1
+* Entity usage Rhythm and blues # 1
 * Entity usage April 9–10 # 1
 * Entity usage Hot # 1
-* Entity usage Summer # 1
 * Entity usage IFPI Greece # 1
 * Entity usage Case # 1
 * Entity usage Chuck # 1
-* Entity usage L'Oréal Mall Tour # 3
+* Entity usage L'Oréal Mall Tour # 1
 * Entity usage Toronto Sun # 1
 * Entity usage Wallonia # 1
 * Entity usage Cher # 1
 * Entity usage GeoCities # 1
 * Entity usage Petch # 1
 * Entity usage Awards # 3
+* Entity usage Plans Summer Tour # 1
 * Entity usage Bubblegum pop # 1
 * Entity usage E # 6
 * Entity usage Tracks # 1
@@ -3833,7 +3839,7 @@
 * Entity usage Classement # 2
 * Entity usage Paul # 2
 * Entity usage New Zealand Music Charts # 1
-* Entity usage Polaroid i # 2
+* Entity usage Polaroid i # 1
 * Entity usage Steven Lunt # 1
 * Entity usage National Lottery # 1
 * Entity usage Peakposition # 1
@@ -3842,13 +3848,12 @@
 * Entity usage Sputnikmusic # 3
 * Entity usage The Tuscaloosa News # 2
 * Entity usage AustraliaCertification # 1
-* Entity usage tiger'— # 1
 * Entity usage BillboardURLbyNameartist # 1
 * Entity usage Alpha Media Group # 1
 * Entity usage Dean # 1
 * Entity usage Dancehall # 1
 * Entity usage Sheryl Crow # 1
-* Entity usage Pop # 3
+* Entity usage Pop # 2
 * Entity usage Danish Albums # 2
 * Entity usage Pink Vinyl # 1
 * Entity usage MTV News # 1
@@ -3860,25 +3865,25 @@
 * Entity usage CD # 7
 * Entity usage Finnish Albums Chart # 1
 * Entity usage Billboard Greatest # 1
+* Entity usage Rosie O'Donnell Show # 2
 * Entity usage Luv # 1
 * Entity usage Hedin # 1
 * Entity usage Mariah Carey # 1
 * Entity usage Drive Me Crazy # 2
 * Entity usage UK Chart History # 1
-* Entity usage Crazy # 16
+* Entity usage Crazy # 17
 * Entity usage Singles # 1
 * Entity usage Sheet Music # 2
 * Entity usage Jam # 2
-* Entity usage Spears # 6
-* Entity usage Billboard 200 # 23
+* Entity usage Spears # 9
+* Entity usage Billboard 200 # 18
 * Entity usage Enh # 2
 * Entity usage extra14 # 1
+* Entity usage Amazon.co.uk # 2
 * Entity usage One More Time # 1
 * Entity usage Variety # 2
 * Entity usage Legacy # 1
 * Entity usage Robert Dimery # 1
-* Entity usage Ultratop Wallonia # 3
-* Entity usage France # 3
 * Entity usage Knopper # 2
 * Entity usage James R. # 1
 * Entity usage Femme Fatale Tour # 1
@@ -3893,28 +3898,33 @@
 * Entity usage Honer # 1
 * Entity usage Industry # 1
 * Entity usage Standard # 3
+* Entity usage Britney Soars Over Oft # 1
 * Entity usage Entertainment # 1
 * Entity usage Swiss Charts # 1
 * Entity usage Bubble Gum # 1
+* Entity usage Back In Action # 1
 * Entity usage Nielsen SoundScan # 3
 * Entity usage Greek Albums # 1
 * Entity usage Book # 1
-* Entity usage Eric # 1
+* Entity usage Backstreet # 1
 * Entity usage des # 1
 * Entity usage Samantha Fox # 1
 * Entity usage Charts # 6
+* Entity usage Autumn Goodbye # 2
 * Entity usage New Zealand Albums # 2
-* Entity usage Piece # 1
+* Entity usage Next Level # 1
 * Entity usage EKG # 1
 * Entity usage Wade Robson # 2
-* Entity usage Pioneer Newspapers # 1
 * Entity usage Abuzz # 1
+* Entity usage Britney Still On Top # 1
 * Entity usage Mitchell Lane Publishers # 1
+* Entity usage End Of Year Charts # 1
 * Entity usage Las Vegas # 1
 * Entity usage Kristian Lundin # 1
 * Entity usage Japanese Main Albums Chart # 1
 * Entity usage March # 42
 * Entity usage Soda Pop # 3
+* Entity usage Offspring Up To No # 1
 * Entity usage These Words # 1
 * Entity usage Regnery Publishing # 1
 * Entity usage From the Bottom of My Broken Heart # 11
@@ -3927,13 +3937,12 @@
 * Entity usage UK # 2
 * Entity usage Allmusic # 3
 * Entity usage Charles # 1
+* Entity usage Ricki Lake # 1
 * Entity usage Japanese # 1
 * Entity usage Singlesname # 1
-* Entity usage Hit # 1
 * Entity usage Girl # 2
 * Entity usage TI Media # 1
 * Entity usage Essex # 1
-* Entity usage Readies # 1
 * Entity usage Greenwood Publishing Group # 1
 * Entity usage Top of the Pops # 1
 * Entity usage Philip # 2
@@ -3943,13 +3952,12 @@
 * Entity usage Peardon # 1
 * Entity usage Abbott # 1
 * Entity usage Flanders # 1
-* Entity usage Broken # 1
 * Entity usage url # 1
 * Entity usage Innosense # 2
 * Entity usage Various Artists # 1
 * Entity usage Only Hits # 1
 * Entity usage The New York Times Company # 1
-* Entity usage Barbara # 1
+* Entity usage The Stop # 1
 * Entity usage Crain Communications # 1
 * Entity usage Honolulu # 1
 * Entity usage Swiss Albums Chart # 1
@@ -3958,24 +3966,25 @@
 * Entity usage extra1 # 1
 * Entity usage Andy # 2
 * Entity usage Millennium # 1
+* Entity usage Karaoke # 1
 * Entity usage Film # 1
 * Entity usage Will Smith # 1
 * Entity usage Craig # 12
 * Entity usage July # 58
 * Entity usage Oricon # 4
 * Entity usage Christmas # 1
-* Entity usage Hitlisten # 3
+* Entity usage McDonald # 1
 * Entity usage United States # 12
 * Entity usage Chuck Taylor # 2
+* Entity usage Sets Top # 1
 * Entity usage Edition(s # 1
 * Entity usage Mail My Heart # 2
 * Entity usage Release # 2
-* Entity usage Action # 1
 * Entity usage Nielsen Business Media # 4
 * Entity usage Zone # 2
-* Entity usage Baby One More Time # 112
+* Entity usage Baby One More Time # 115
 * Entity usage Udarbejdet # 1
-* Entity usage Album # 16
+* Entity usage Album # 15
 * Entity usage Vena # 1
 * Entity usage Polish Society of the Phonographic Industry # 1
 * Entity usage Inc # 4
@@ -4001,6 +4010,7 @@
 * Entity usage Jim # 2
 * Entity usage X # 1
 * Entity usage Remix # 2
+* Entity usage Pop Songs # 1
 * Entity usage Spain # 3
 * Entity usage Folkard # 2
 * Entity usage Amazon.com # 2
@@ -4009,6 +4019,7 @@
 * Entity usage Juno Award # 1
 * Entity usage Soul Solution # 1
 * Entity usage Nirvana # 1
+* Entity usage Searchable Database # 1
 * Entity usage Swedish Albums Chart # 1
 * Entity usage Princess # 1
 * Entity usage First Installment # 1
@@ -4025,18 +4036,19 @@
 * Entity usage Australia # 7
 * Entity usage Certifications # 1
 * Entity usage Sweden # 6
+* Entity usage I # 1
 * Entity usage ALBUM # 2
 * Entity usage Canada # 5
 * Entity usage Teen Choice Awards # 2
-* Entity usage Britney Spears Flashback # 1
+* Entity usage Paul Verna # 1
 * Entity usage DJ # 1
 * Entity usage Entertainment Weekly # 3
 * Entity usage Janet Jackson # 1
-* Entity usage North America # 3
+* Entity usage North America # 2
 * Entity usage rev9score # 1
-* Entity usage Lynne Spears # 2
+* Entity usage From The Bottom Of My Broken Heart # 1
+* Entity usage Lynne Spears # 1
 * Entity usage Tomas # 1
-* Entity usage Soars # 1
 * Entity usage Blockbuster Entertainment Awards # 1
 * Entity usage first3 # 1
 * Entity usage Time # 2
@@ -4054,52 +4066,50 @@
 * Entity usage Hilton Hawaiian Village # 1
 * Entity usage Platinum+Gold # 1
 * Entity usage Career # 1
-* Entity usage Jive Records # 14
-* Entity usage Kyle # 1
+* Entity usage Jive Records # 13
+* Entity usage Denniz Pop # 4
 * Entity usage Rolling Stone # 12
 * Entity usage Jimmy # 1
 * Entity usage Davidson Ospina Club Mix # 1
-* Entity usage année # 1
 * Entity usage JIVE # 1
 * Entity usage Sverigetopplistan # 2
-* Entity usage Hungarian Albums Chart # 1
+* Entity usage Latham # 1
 * Entity usage Danmarks Officielle Hitliste # 1
 * Entity usage Regis # 2
 * Entity usage Schuster # 1
 * Entity usage Karger # 1
-* Entity usage Finnish # 1
 * Entity usage Hung Medien # 5
-* Entity usage Heart # 1
+* Entity usage Barbara Ellen # 1
 * Entity usage Musique # 1
 * Entity usage International).png # 1
 * Entity usage Amazon Music # 2
 * Entity usage Alanis Morissette # 1
-* Entity usage Digital Sheet Music # 1
+* Entity usage National # 3
+* Entity usage Digital Sheet Music # 2
 * Entity usage Angela # 1
 * Entity usage Basham # 1
 * Entity usage BritneySpears # 1
 * Entity usage January # 37
-* Entity usage Reid # 2
+* Entity usage Ultratop Wallonia # 3
 * Entity usage Vår # 1
-* Entity usage All Seeing I # 2
+* Entity usage All Seeing I # 1
 * Entity usage Sun Media # 1
 * Entity usage Australian Albums # 2
 * Entity usage End # 2
 * Entity usage VG # 8
 * Entity usage Jaws # 1
 * Entity usage United Kingdom # 5
-* Entity usage Teen pop ballad # 2
 * Entity usage References # 1
 * Entity usage Prometheus Global Media # 10
 * Entity usage Profile # 1
-* Entity usage Paul Verna # 1
+* Entity usage France # 3
 * Entity usage Ray W. Keziah # 1
 * Entity usage European # 1
-* Entity usage Backstreet # 1
+* Entity usage Eric # 1
 * Entity usage IFPI # 3
-* Entity usage All That # 1
+* Entity usage de # 3
 * Entity usage Peterson # 1
-* Entity usage Year # 11
+* Entity usage Year # 10
 * Entity usage 1001 Albums You Must Hear Before You Die # 2
 * Entity usage Culture # 1
 * Entity usage Topp # 1
@@ -4125,24 +4135,28 @@
 * Entity usage David Kreuger # 1
 * Entity usage Boy Wunder Radio Mix # 1
 * Entity usage Ekstra Bladet # 1
+* Entity usage Kyle # 1
 * Entity usage Fred # 1
 * Entity usage Bemis # 1
 * Entity usage BBC News # 1
 * Entity usage BMG # 3
 * Entity usage Norwegian # 5
 * Entity usage 42nd Annual Grammy Awards # 2
+* Entity usage Music Review # 1
 * Entity usage PR Newswire # 2
 * Entity usage AllStars # 1
-* Entity usage Barbara Ellen # 1
+* Entity usage All That # 1
 * Entity usage December # 38
 * Entity usage Liza # 1
 * Entity usage Amazon.de # 3
 * Entity usage Digital Deluxe Version # 1
 * Entity usage Michael Lydon # 1
 * Entity usage Jocelyn # 1
+* Entity usage Phones TRL To Announce U. S. Tour Dates # 1
 * Entity usage Geneva Films # 1
 * Entity usage Hawaii # 1
 * Entity usage Murphy # 1
+* Entity usage Hungarian Albums # 1
 * Entity usage Simon # 1
 * Entity usage British Phonographic Industry # 1
 * Entity usage Guinness World Records # 3
@@ -4157,18 +4171,18 @@
 * Entity usage Director # 1
 * Entity usage Cover Story # 2
 * Entity usage Smash Hits Poll Winners # 1
-* Entity usage Latham # 1
-* Entity usage Show # 1
+* Entity usage Quebecor # 1
+* Entity usage Show # 3
 * Entity usage Belgium # 2
-* Entity usage Tour # 4
+* Entity usage Tour # 3
 * Entity usage Records # 1
 * Entity usage PROMUSICAE # 1
 * Entity usage Discogs # 3
 * Entity usage lista # 2
-* Entity usage Plans # 1
 * Entity usage Single # 1
 * Entity usage Daly # 1
 * Entity usage Got Milk # 1
+* Entity usage Ryan # 2
 * Entity usage Hughes # 3
 * Entity usage Jason # 1
 * Entity usage Spice Girls # 1
@@ -4187,25 +4201,23 @@
 * Entity usage JAAROVERZICHTEN # 1
 * Entity usage Switzerland # 3
 * Entity usage Greatest Hits # 2
-* Entity usage Whitney Houston Karaoke # 2
+* Entity usage année # 1
 * Entity usage CRIA # 1
 * Entity usage note2 # 1
 * Entity usage Bennett # 2
 * Entity usage French Albums Chart # 2
 * Entity usage Selznick Associates # 1
-* Entity usage Dates # 1
-* Entity usage Swiss Albums # 3
+* Entity usage Melissa # 1
 * Entity usage Larry # 1
 * Entity usage Ultratop Flanders Singles # 1
-* Entity usage Korea Database # 1
+* Entity usage Howie Mandel # 1
 * Entity usage Reissue # 2
-* Entity usage Funky # 1
+* Entity usage The Herald Journal # 1
 * Entity usage Australian Annual Chart # 1
 * Entity usage Tonight # 1
 * Entity usage Gregory Dark # 2
 * Entity usage Baby # 4
 * Entity usage Jagged Little Pill # 1
-* Entity usage Backstage # 1
 * Entity usage Amazon.ca # 2
 * Entity usage Per Magnusson # 1
 * Entity usage Les # 1
@@ -4219,32 +4231,32 @@
 * Entity usage Girl Culture # 1
 * Entity usage rev10 # 1
 * Entity usage 1999-Now # 1
-* Entity usage Quebecor # 1
 * Entity usage GfK Entertainment Charts # 2
-* Entity usage Crazy 2k Tour # 3
+* Entity usage Crazy 2k Tour # 2
 * Entity usage Melissa Joan Hart # 2
 * Entity usage The Hamilton Spectator # 1
 * Entity usage Jennifer Lopez # 1
 * Entity usage Vanderbilt University Press # 1
 * Entity usage US CD Single # 1
 * Entity usage Mix # 1
-* Entity usage Syndicat National de l'Édition Phonographique # 4
+* Entity usage Syndicat National de l'Édition Phonographique # 1
 * Entity usage Rules # 1
 * Entity usage Gregoroff # 1
 * Entity usage Norwegian Albums Chart # 1
-* Entity usage Tiffany # 1
 * Entity usage Marks # 1
 * Entity usage Europe # 3
 * Entity usage Austria # 3
 * Entity usage writer4 # 1
 * Entity usage Synchs # 1
 * Entity usage Ultratop Flanders # 3
-* Entity usage Billboard # 25
+* Entity usage Billboard # 30
 * Entity usage September # 37
+* Entity usage Phonographique # 3
 * Entity usage Personnel # 1
 * Entity usage Hop # 1
 * Entity usage Daydream # 1
 * Entity usage Ruggieri # 1
+* Entity usage In Drag And On TV # 1
 * Entity usage Backstreet Boys # 3
 * Entity usage Billboard Hot 100 # 3
 * Entity usage VIBE # 1
@@ -4253,11 +4265,11 @@
 * Entity usage Devil # 1
 * Entity usage FOX # 1
 * Entity usage Richard A. # 1
+* Entity usage tiger' # 1
 * Entity usage Terra # 1
 * Entity usage ARIA Charts # 3
 * Entity usage Amazon.com Music # 1
 * Entity usage May # 28
-* Entity usage Britney Spears Billboard Charts # 1
 * Entity usage Delays # 1
 * Entity usage Bassie # 1
 * Entity usage Mouseketeer # 1
@@ -4268,6 +4280,7 @@
 * Entity usage TOP20.dk # 1
 * Entity usage Thinkin # 3
 * Entity usage Stephanie # 1
+* Entity usage UKBabyTableEntry # 1
 * Entity usage A&R # 1
 * Entity usage Dutch Albums Chart # 1
 * Entity usage David # 2
@@ -4278,15 +4291,13 @@
 * Entity usage Timothy # 1
 * Entity usage Stephen Thomas # 1
 * Entity usage Annual Nickelodeon # 1
-* Entity usage Baby One More Time Chart History # 1
 * Entity usage BBC # 1
 * Entity usage New York # 2
 * Entity usage Madrid # 1
 * Entity usage Bronson # 1
 * Entity usage OCC # 2
-* Entity usage Debut # 2
+* Entity usage Debut # 1
 * Entity usage Busacca # 1
-* Entity usage The Rosie O'Donnell Show # 2
 * Entity usage Parade # 1
 * Entity usage Platinum # 22
 * Entity usage Concert # 1
@@ -4299,11 +4310,11 @@
 * Entity usage Stephen Thomas Erlewine # 3
 * Entity usage Amanda # 1
 * Entity usage Sonny & Cher # 2
+* Entity usage Lynne # 1
 * Entity usage Tine # 1
 * Entity usage Bossa nova # 1
 * Entity usage Hess # 1
 * Entity usage Elerwine # 1
-* Entity usage Caulfield # 2
 * Entity usage Entryregion # 1
 * Entity usage Musik # 1
 * Entity usage Wenner Media # 2
@@ -4319,6 +4330,7 @@
 * Entity usage Jann Wenner # 4
 * Entity usage UKChartStats # 1
 * Entity usage New Zealand # 5
+* Entity usage Shoots For Fun With Video Debut # 1
 * Entity usage Ressufeiring # 1
 * Entity usage Spanish Albums # 1
 * Entity usage Background # 1
@@ -4326,15 +4338,14 @@
 * Entity usage Favorite CD # 1
 * Entity usage Lisa # 1
 * Entity usage Canadian Top Albums # 2
-* Entity usage Howie Mandel Show # 1
 * Entity usage Denmark # 1
 * Entity usage Canadian Albums Chart # 5
 * Entity usage RIANZ # 4
-* Entity usage Fun # 1
 * Entity usage Tours # 1
 * Entity usage Bantam Books # 2
 * Entity usage Robert Christgau # 2
 * Entity usage Toni Braxton # 2
+* Entity usage Pop rock # 1
 * Entity usage Rovi Corporation # 1
 * Entity usage Sellers # 1
 * Entity usage Japanese Albums # 2
@@ -4343,27 +4354,29 @@
 * Entity usage Albert # 1
 * Entity usage Sales # 1
 * Entity usage UK Albums Chart # 1
-* Entity usage Songs # 2
 * Entity usage Bibliography # 1
 * Entity usage Staff # 2
 * Entity usage Hip # 1
 * Entity usage Mail # 3
+* Entity usage Flashback # 1
 * Entity usage Claudia # 1
-* Entity usage Stop # 5
+* Entity usage Stop # 4
 * Entity usage Hermanson # 2
+* Entity usage Back On Top # 1
 * Entity usage Longplay # 1
 * Entity usage B00064AM62 # 1
 * Entity usage LP # 1
 * Entity usage New York City # 2
 * Entity usage NZBabyTableEntry # 1
-* Entity usage Jive # 3
+* Entity usage Debuts On Top # 1
+* Entity usage Jive # 4
+* Entity usage Oxoby # 1
 * Entity usage Istoé # 1
 * Entity usage Bonus # 2
 * Entity usage Baldwin # 1
 * Entity usage European Top 100 Albums # 2
 * Entity usage San Francisco Chronicle # 1
 * Entity usage Association of Hungarian Record Companies # 2
-* Entity usage Baby One More Time Music Review # 1
 * Entity usage Sync # 1
 * Entity usage Anderson # 1
 * Entity usage Mikey # 1
@@ -4379,17 +4392,16 @@
 * Entity usage Album Chart#1161 # 1
 * Entity usage Grammy Award # 1
 * Entity usage Parish # 2
-* Entity usage Max Martin # 10
-* Entity usage Rhythm and blues group # 1
+* Entity usage Max Martin # 9
 * Entity usage Usher # 1
 * Entity usage RCA # 2
 * Entity usage Keith # 2
 * Entity usage Salaverri # 1
 * Entity usage Petty # 2
+* Entity usage l'Édition # 3
 * Entity usage November # 20
 * Entity usage Mayfield # 1
 * Entity usage Sometimes Chart History # 1
-* Entity usage Britney Spears Sets Top # 1
 * Entity usage writer6 # 1
 * Entity usage Date # 1
 * Entity usage Champ # 1
@@ -4400,14 +4412,13 @@
 * Entity usage Ventes # 1
 * Entity usage TLC # 2
 * Entity usage Buzzmarketing # 1
-* Entity usage S. # 2
-* Entity usage Women # 1
-* Entity usage Albums # 22
-* Entity usage Phones # 1
+* Entity usage S. # 1
+* Entity usage Women # 2
+* Entity usage Albums # 20
 * Entity usage Mikey Bassie # 2
 * Entity usage Nana # 1
 * Entity usage German # 5
-* Entity usage Melissa # 1
+* Entity usage Swiss Albums # 3
 * Entity usage FR # 1
 * Entity usage Domestic violence # 1
 * Entity usage Belgian Albums # 6
@@ -4416,7 +4427,7 @@
 * Entity usage Mitchell # 3
 * Entity usage McCartney # 1
 * Entity usage Answering Machine Message # 1
-* Entity usage Teen pop # 2
+* Entity usage Teen pop # 4
 * Entity usage October # 41
 * Entity usage Clive Calder # 1
 * Entity usage Mexico # 1
@@ -4424,28 +4435,27 @@
 * Entity usage Taylor # 1
 * Entity usage This Morning # 1
 * Entity usage Tribune Media # 1
-* Entity usage Next Level # 1
+* Entity usage Piece # 1
 * Entity usage French Albums # 2
-* Entity usage Britney Spears # 178
+* Entity usage Britney Spears # 198
 * Entity usage RPM # 5
 * Entity usage NVPI # 1
 * Entity usage Bille Woodruff # 1
 * Entity usage Result # 1
-* Entity usage Searchable Database # 1
-* Entity usage Hungarian # 1
-* Entity usage The Herald Journal # 1
+* Entity usage Times # 1
+* Entity usage Caulfield # 2
 * Entity usage Copenhagen # 1
 * Entity usage RIANZ Albums Chart # 1
 * Entity usage Dutch Albums # 3
 * Entity usage Flesh # 2
 * Entity usage Johnson # 1
 * Entity usage Nikki # 1
-* Entity usage McDonald # 1
+* Entity usage AV media notestitle # 6
 * Entity usage Carson Daly # 1
 * Entity usage Bertelsmann Music Group # 2
 * Entity usage Jex # 1
 * Entity usage Foster # 1
-* Entity usage UKBabyTableEntry # 1
+* Entity usage Readies A Funky New Album # 1
 * Entity usage Universal Music Publishing Group # 2
 * Entity usage Tim # 1
 * Entity usage Sony Music # 1
@@ -4462,10 +4472,10 @@
 * Entity usage Thriller # 1
 * Entity usage Jaaroverzichten # 2
 * Entity usage D.13 # 1
-* Entity usage Ricki Lake Show # 1
-* Entity usage Aall # 1
+* Entity usage N Sync At No # 1
 * Entity usage Hollywood # 1
-* Entity usage U. # 2
+* Entity usage Natalie Imbruglia # 1
+* Entity usage U. # 1
 * Entity usage Spring # 1
 * Entity usage Austrian Albums Chart # 1
 * Entity usage Inc. # 1
@@ -4473,21 +4483,24 @@
 * Entity usage World # 3
 * Entity usage Diamond # 1
 * Entity usage Dance # 1
+* Entity usage Barbara # 1
 * Entity usage Choice Music # 1
 * Entity usage Spanish # 1
+* Entity usage Korea Database # 1
 * Entity usage Category # 1
 * Entity usage Argentina # 1
 * Entity usage Zobbel # 1
 * Entity usage MTV # 8
 * Entity usage Pop music # 1
 * Entity usage US # 9
-* Entity usage McCrorey # 1
+* Entity usage America # 1
+* Entity usage Tiffany # 1
 * Entity usage WarnerMedia # 1
 * Entity usage Walters # 1
 * Entity usage Mundy # 1
 * Entity usage Selling # 1
-* Entity usage Digital # 2
-* Entity usage Video # 2
+* Entity usage Seymour # 1
+* Entity usage Video # 1
 * Entity usage Producer # 1
 * Entity usage Hearst Communications # 1
 * Entity usage Solomon # 1
@@ -4496,20 +4509,21 @@
 * Entity usage Austrian Albums # 2
 * Entity usage Start Me Up # 1
 * Entity usage first1 # 1
-* Entity usage Hits # 1
-* Entity usage Ryan # 2
-* Entity usage CDs # 3
+* Entity usage single4 # 1
+* Entity usage McCrorey # 1
+* Entity usage BRITannica # 1
 * Entity usage last3 # 1
-* Entity usage Polaroid # 1
+* Entity usage Polaroid # 2
 * Entity usage Malibu # 1
+* Entity usage Vapid Songs # 1
 * Entity usage Spring break # 1
 * Entity usage Nigel Dick # 3
 * Entity usage Teenage Solo Artist # 1
-* Entity usage Contemporary Books # 1
 * Entity usage ARIA # 6
+* Entity usage Chart History # 1
 * Entity usage Injury # 1
 * Entity usage Region # 1
-* Entity usage Seymour # 1
+* Entity usage Digital # 1
 * Entity usage Ultratop # 7
 * Entity usage Lindberg # 1
 * Entity usage San Antonio Express # 1
@@ -4517,15 +4531,15 @@
 * Entity usage Don # 2
 * Entity usage Sometimes # 2
 * Entity usage Popology # 1
-* Entity usage Sheet # 1
+* Entity usage Whitney Houston # 2
 * Entity usage The Corrs # 1
 * Entity usage Total Request Live # 2
 * Entity usage The Observer # 3
 * Entity usage Battery Studios # 1
 * Entity usage The Walt Disney Company # 1
-* Entity usage Top # 18
+* Entity usage Top # 15
 * Entity usage Recording # 1
-* Entity usage Drag # 1
+* Entity usage Contemporary Books # 1
 * Entity usage Belgian Walloon Albums Chart # 1
 * Entity usage Shania Twain # 2
 * Entity usage International Federation of the Phonographic Industry # 2
@@ -4538,7 +4552,7 @@
 * Entity usage Thompson # 1
 * Entity usage Jazzy # 1
 * Entity usage Choreographer # 1
-* Entity usage Swedish Albums # 1
+* Entity usage Pioneer Newspapers # 1
 * Entity usage Album Review # 2
 * Entity usage Simmons # 1
 * Entity usage Musica # 1
@@ -4550,8 +4564,8 @@
 * Entity usage Robert # 1
 * Entity usage Music Week # 1
 * Entity usage Updated Edition # 1
-* Entity usage Pop rock song # 1
-* Entity usage Denniz Pop # 4
+* Entity usage Hit # 1
+* Entity usage Hilfiger # 1
 * Entity usage Announces # 1
 * Entity usage Official New Zealand Music Chart # 1
 * Entity usage Schoolgirl Days # 1
@@ -4562,47 +4576,46 @@
 * Entity usage Germany # 5
 * Entity usage Aleese # 1
 * Entity usage Mid Tempo Mix # 1
-* Entity usage Oxoby # 1
+* Entity usage Hungarian Albums Chart # 1
 * Entity usage Melody # 1
 * Entity usage JIVE Label Group # 1
 * Entity usage Alec Hanley # 1
 * Entity usage Shoot # 1
-* Entity usage Oft # 1
 * Entity usage Louisiana # 1
+* Entity usage Backstage At The # 1
 * Entity usage Bertelsmann Music Groups # 1
-* Entity usage N # 1
 * Entity usage Russetid # 1
 * Entity usage Federazione Industria Musicale Italiana # 1
 * Entity usage Recording Industry Association of America # 6
-* Entity usage New # 1
 * Entity usage We Will Rock You # 1
 * Entity usage Notes # 2
 * Entity usage Stevenson # 2
-* Entity usage Music # 9
+* Entity usage Music # 8
 * Entity usage single4date # 1
 * Entity usage Kristen # 1
 * Entity usage Shcherbakova # 1
 * Entity usage Swiss # 2
-* Entity usage single4 # 1
+* Entity usage Hits # 1
 * Entity usage Guinness # 1
 * Entity usage FIMI # 4
 * Entity usage Special # 2
 * Entity usage ARIA Albums Chart # 1
 * Entity usage Amazon # 2
 * Entity usage TV # 1
+* Entity usage Max # 1
 * Entity usage BRITNEY # 1
 * Entity usage Verna # 1
 * Entity usage Chartverfolgung # 1
-* Entity usage Autumn Goodbye # 2
+* Entity usage Syndicat # 3
 * Entity usage Amanda Murray # 2
 * Entity usage Remixer # 1
 * Entity usage Barry # 2
 * Entity usage Zomba # 1
 * Entity usage Melissa Ruggieri # 1
 * Entity usage Scotland # 1
-* Entity usage Vapid # 1
 * Entity usage Jackie # 1
 * Entity usage Urban Outfitters # 2
+* Entity usage Hitlisten # 3
 * Entity usage Hurt # 1
 * Entity usage Chart # 7
 * Entity usage Greek Albums Chart # 1
@@ -4610,14 +4623,13 @@
 * Entity usage Billboard Books # 1
 * Entity usage Tom # 1
 * Entity usage ultratop # 1
-* Entity usage Shoots # 1
-* Entity usage BRITannica # 1
+* Entity usage CDs # 3
 * Entity usage August # 15
 * Entity usage Paradise Cove # 1
 * Entity usage Sabrina the Teenage Witch # 1
-* Entity usage TRL # 2
+* Entity usage TRL # 1
 * Entity usage Reporter # 3
-* Entity usage Natalie Imbruglia # 1
+* Entity usage Finnish Albums # 1
 * Entity usage Netherlands # 2
 * Entity usage The Official Finnish Charts # 2
 * Entity usage Wetten # 1
@@ -4628,7 +4640,7 @@
 * Entity usage Yahoo # 15
 * Entity usage Comment # 1
 * Entity usage Eminem # 1
-* Entity usage Richmond Times # 3
+* Entity usage Richmond Times # 2
 * Entity usage Spotlight # 1
 * Entity usage Davidson Ospina Radio Mix # 2
 * Entity usage Debbie Gibson # 2
@@ -4637,17 +4649,17 @@
 * Entity usage RIAK # 1
 * Entity usage Disney # 1
 * Entity usage James Robert # 1
-* Entity usage Announce # 1
 * Entity usage FranceCertification # 1
 * Entity usage last2 # 1
 * Entity usage Music News # 13
+* Entity usage Reid # 2
 * Entity usage Korea # 2
 * Link 'Drive Me Crazy'
 * Link 'Orlando Sentinel'
 * Link 'Melissa Joan Hart'
 * Link 'Polish Society of the Phonographic Industry'
 * Link 'The Walt Disney Company'
-* Link 'The Rosie O'Donnell Show'
+* Link 'The Rosie ODonnell Show'
 * Link 'The Corrs'
 * Link 'The Observer'
 * Link 'The Tuscaloosa News'
@@ -4682,7 +4694,7 @@
 * Link 'Rolling Stone'
 * Link 'These Words'
 * Link 'Alfred Music'
-* Link 'Nickelodeon Kids' Choice Awards'
+* Link 'Nickelodeon Kids Choice Awards'
 * Link 'Advertising Age'
 * Link '1001 Albums You Must Hear Before You Die'
 * Link 'Grammy Award for Best Female Pop Vocal Performance'
@@ -4702,13 +4714,13 @@
 * Link 'Official Charts Company'
 * Link 'Official New Zealand Music Chart'
 * Link 'Hey Hey Hey Music Champ'
-* Link 'Syndicat National de l'Édition Phonographique'
-* Link 'European Top 100 Albums'
+* Link 'Syndicat National de lÉdition Phonographique'
 * Link 'National Lottery'
 * Link 'Total Request Live'
 * Link 'Spy film'
 * Link 'Kentwood, Louisiana'
-* Link 'Urban Outfitters'
+* Link 'Oops. I Did It Again'
+* Link 'Oops. I Did It Again Tour'
 * Link 'New York City'
 * Link 'New York'
 * Link 'Richmond Times-Dispatch'
@@ -4724,7 +4736,7 @@
 * Link 'Music Canada'
 * Link 'Music recording certification'
 * Link 'Music download'
-* Link 'Time Inc'
+* Link 'Time Inc.'
 * Link 'Shania Twain'
 * Link 'Clive Calder'
 * Link 'Live with Kelly and Ryan'
@@ -4746,8 +4758,7 @@
 * Link 'Jann Wenner'
 * Link 'Andreas Carlsson'
 * Link 'Toni Braxton'
-* Link 'Oops I Did It Again'
-* Link 'Oops I Did It Again Tour'
+* Link 'European Top 100 Albums'
 * Link 'BBC News'
 * Link 'Spring break'
 * Link 'Phonograph record'
@@ -4779,6 +4790,7 @@
 * Link 'Recorded Music NZ'
 * Link 'Lou Pearlman'
 * Link 'Trip hop'
+* Link 'Urban Outfitters'
 * Link 'Prometheus Global Media'
 * Link 'Sun Media'
 * Link 'Penguin Group'
@@ -4793,12 +4805,11 @@
 * Link 'Pop icon'
 * Link 'Pop music'
 * Link 'Pop rock'
-* Link 'Dawson's Creek'
 * Link 'Ricki Lake'
 * Link 'Femme Fatale Tour'
 * Link 'Malibu, California'
 * Link 'Rami Yacoub'
-* Link 'Wetten, dass'
+* Link 'Wetten, dass.'
 * Link 'Kristian Lundin'
 * Link 'Samantha Fox'
 * Link 'PR Newswire'
@@ -4806,7 +4817,7 @@
 * Link 'Sheryl Crow'
 * Link 'Recording Industry Association of America'
 * Link 'Recording Industry Association of America certification'
-* Link 'Backstreet Boys'
+* Link 'Dawsons Creek'
 * Link 'Cover Version'
 * Link '42nd Annual Grammy Awards'
 * Link 'IFPI Greece'
@@ -4819,6 +4830,7 @@
 * Link 'Catholic Church'
 * Link 'Artists and repertoire'
 * Link 'Bubblegum pop'
+* Link 'Backstreet Boys'
 * Link 'Larry Rudolph'
 * Link 'Born to Make You Happy'
 * Link 'Tommy Hilfiger'
@@ -4832,6 +4844,2162 @@
 * Link 'Tribune Media'
 * Link 'Natalie Imbruglia'
 * Link 'Got Milk'
+* Token count april # 0.211
+* Token count someone # 0.000
+* Token count 2000 # 0.309
+* Token count never # 0.083
+* Token count concerned # 0.000
+* Token count tempo # 0.030
+* Token count kingdom # 0.083
+* Token count forty # 0.000
+* Token count piece # 0.000
+* Token count madrid # 0.000
+* Token count deep # 0.000
+* Token count ] # 0.190
+* Token count 10 # 0.216
+* Token count vena # 0.000
+* Token count 40-ready # 0.000
+* Token count no # 0.331
+* Token count rev4 # 0.000
+* Token count broke # 0.030
+* Token count editions # 0.030
+* Token count rev8 # 0.000
+* Token count encore # 0.000
+* Token count 2.5 # 0.000
+* Token count hop # 0.030
+* Token count 20575 # 0.000
+* Token count comeback # 0.000
+* Token count played # 0.051
+* Token count download # 0.030
+* Token count fanatic # 0.000
+* Token count camera # 0.000
+* Token count millennial # 0.000
+* Token count jaaroverzichten # 0.051
+* Token count euro # 0.000
+* Token count january # 0.272
+* Token count 17 # 0.127
+* Token count developing # 0.000
+* Token count asked # 0.030
+* Token count dimery # 0.000
+* Token count grow # 0.000
+* Token count spacedust # 0.000
+* Token count level # 0.030
+* Token count pioneer # 0.000
+* Token count greenwood # 0.000
+* Token count networks # 0.144
+* Token count week # 0.127
+* Token count ... # 0.401
+* Token count 68 # 0.000
+* Token count european # 0.069
+* Token count 2009 # 0.323
+* Token count alive # 0.000
+* Token count singer # 0.107
+* Token count marks # 0.000
+* Token count single2 # 0.000
+* Token count choreographer # 0.000
+* Token count mitchell # 0.069
+* Token count tlc # 0.030
+* Token count ray # 0.000
+* Token count korean # 0.030
+* Token count management # 0.030
+* Token count probably # 0.000
+* Token count soul # 0.000
+* Token count during # 0.107
+* Token count film # 0.051
+* Token count tribune # 0.000
+* Token count when # 0.118
+* Token count nt # 0.144
+* Token count stanza # 0.000
+* Token count day # 0.083
+* Token count rise # 0.000
+* Token count confessions # 0.000
+* Token count & # 0.127
+* Token count isp # 0.030
+* Token count charted # 0.030
+* Token count repair # 0.000
+* Token count directed # 0.096
+* Token count shipping # 0.030
+* Token count charles # 0.000
+* Token count manager # 0.030
+* Token count machine # 0.000
+* Token count tine # 0.000
+* Token count europecertification # 0.000
+* Token count title1 # 0.051
+* Token count soars # 0.000
+* Token count hitlisten # 0.051
+* Token count page # 0.136
+* Token count people # 0.030
+* Token count without # 0.000
+* Token count tape # 0.051
+* Token count 16th # 0.000
+* Token count 0523032 # 0.000
+* Token count rzbd004 # 0.000
+* Token count eric # 0.051
+* Token count certification # 0.246
+* Token count of # 0.491
+* Token count dutchcharts.nl # 0.000
+* Token count title9 # 0.030
+* Token count champ # 0.000
+* Token count salaverri # 0.000
+* Token count juno # 0.030
+* Token count sort # 0.000
+* Token count debut # 0.136
+* Token count deal # 0.000
+* Token count appointed # 0.030
+* Token count country # 0.083
+* Token count 2000s # 0.000
+* Token count heart # 0.190
+* Token count though # 0.000
+* Token count start # 0.051
+* Token count scenes # 0.000
+* Token count favorite # 0.000
+* Token count ratingsrev1 # 0.000
+* Token count hit # 0.127
+* Token count assistant # 0.000
+* Token count rosen # 0.144
+* Token count boy # 0.000
+* Token count other # 0.069
+* Token count wunder # 0.000
+* Token count yacoub # 0.069
+* Token count dark # 0.030
+* Token count british # 0.000
+* Token count b # 0.096
+* Token count lindberg # 0.000
+* Token count self # 0.000
+* Token count my # 0.220
+* Token count previous # 0.000
+* Token count 2002 # 0.051
+* Token count angela # 0.000
+* Token count while # 0.096
+* Token count denmark # 0.000
+* Token count inc. # 0.000
+* Token count title15 # 0.000
+* Token count magic # 0.000
+* Token count folkard # 0.030
+* Token count dancehall # 0.000
+* Token count would # 0.069
+* Token count live # 0.136
+* Token count chuck # 0.051
+* Token count quote # 0.069
+* Token count yet # 0.000
+* Token count draws # 0.000
+* Token count lip # 0.030
+* Token count variety # 0.051
+* Token count understanding # 0.000
+* Token count rev8score # 0.000
+* Token count expect # 0.000
+* Token count rap # 0.000
+* Token count reached # 0.096
+* Token count review # 0.069
+* Token count considered # 0.030
+* Token count early # 0.051
+* Token count practice # 0.000
+* Token count say # 0.000
+* Token count top # 0.265
+* Token count from # 0.268
+* Token count rami # 0.069
+* Token count 104 # 0.000
+* Token count spears # 0.568
+* Token count group # 0.166
+* Token count known # 0.030
+* Token count lead # 0.030
+* Token count 34 # 0.000
+* Token count 1991 # 0.000
+* Token count alpha # 0.000
+* Token count language # 0.159
+* Token count officielle # 0.000
+* Token count charts # 0.229
+* Token count bantam # 0.030
+* Token count exclusive # 0.000
+* Token count lasted # 0.000
+* Token count domestic # 0.000
+* Token count platinum+gold # 0.000
+* Token count zomba # 0.000
+* Token count journalyear # 0.030
+* Token count synching # 0.000
+* Token count ca # 0.030
+* Token count develop # 0.000
+* Token count vocal # 0.051
+* Token count howie # 0.000
+* Token count writer6 # 0.000
+* Token count ukbabytableentry # 0.000
+* Token count personality # 0.000
+* Token count r. # 0.000
+* Token count cameo # 0.000
+* Token count extra1 # 0.030
+* Token count lopez # 0.000
+* Token count refers # 0.000
+* Token count so # 0.136
+* Token count tips # 0.000
+* Token count took # 0.000
+* Token count june # 0.166
+* Token count at # 0.268
+* Token count future # 0.030
+* Token count wah # 0.030
+* Token count buckler # 0.000
+* Token count notes # 0.196
+* Token count mtv # 0.136
+* Token count 7893 # 0.000
+* Token count debuted # 0.083
+* Token count musicomh # 0.000
+* Token count career # 0.069
+* Token count standing # 0.000
+* Token count braxton # 0.030
+* Token count sheet # 0.083
+* Token count journalurl # 0.000
+* Token count book # 0.051
+* Token count reminiscent # 0.000
+* Token count press # 0.030
+* Token count rosie # 0.030
+* Token count where # 0.096
+* Token count extra16 # 0.000
+* Token count whitney # 0.030
+* Token count 14th # 0.000
+* Token count halfway # 0.000
+* Token count reference # 0.000
+* Token count pretty # 0.000
+* Token count stage # 0.030
+* Token count picture # 0.000
+* Token count natalie # 0.000
+* Token count omits # 0.000
+* Token count words # 0.000
+* Token count note8 # 0.000
+* Token count four # 0.118
+* Token count polish # 0.000
+* Token count previously # 0.000
+* Token count its # 0.144
+* Token count smash # 0.030
+* Token count another # 0.069
+* Token count dvd # 0.030
+* Token count stay # 0.030
+* Token count promotes # 0.000
+* Token count 15 # 0.246
+* Token count russetid # 0.000
+* Token count crash # 0.000
+* Token count co # 0.051
+* Token count diary # 0.000
+* Token count equivalent # 0.000
+* Token count italia # 0.000
+* Token count lane # 0.000
+* Token count material # 0.051
+* Token count weekly # 0.083
+* Token count norway # 0.000
+* Token count knew # 0.051
+* Token count love # 0.096
+* Token count audience # 0.000
+* Token count blows # 0.000
+* Token count close # 0.000
+* Token count vinyl # 0.051
+* Token count biography # 0.030
+* Token count over # 0.172
+* Token count 804,200 # 0.000
+* Token count source # 0.030
+* Token count mikey # 0.051
+* Token count signed # 0.000
+* Token count riff # 0.000
+* Token count davidson # 0.051
+* Token count mail # 0.096
+* Token count federazione # 0.000
+* Token count influential # 0.000
+* Token count kristen # 0.000
+* Token count gave # 0.030
+* Token count less # 0.000
+* Token count exception # 0.000
+* Token count hip # 0.000
+* Token count 50 # 0.030
+* Token count scene # 0.000
+* Token count pubescent # 0.000
+* Token count soundscan # 0.051
+* Token count blood # 0.030
+* Token count bum # 0.000
+* Token count soundtracks # 0.000
+* Token count fatale # 0.000
+* Token count boxalign # 0.030
+* Token count sensitive # 0.000
+* Token count jason # 0.000
+* Token count director # 0.030
+* Token count courts # 0.000
+* Token count radio # 0.069
+* Token count cover # 0.127
+* Token count writer10 # 0.000
+* Token count alanis # 0.000
+* Token count shoot # 0.000
+* Token count 1967 # 0.030
+* Token count story # 0.030
+* Token count 22 # 0.083
+* Token count data # 0.000
+* Token count title12 # 0.000
+* Token count peaking # 0.069
+* Token count peardon # 0.000
+* Token count may # 0.238
+* Token count main # 0.051
+* Token count happier # 0.000
+* Token count mastering # 0.000
+* Token count contemporary # 0.030
+* Token count sets # 0.000
+* Token count first # 0.309
+* Token count kyle # 0.051
+* Token count most # 0.107
+* Token count like # 0.030
+* Token count don # 0.030
+* Token count webtitle # 0.166
+* Token count francisco # 0.000
+* Token count archetype # 0.000
+* Token count nailed # 0.000
+* Token count in # 0.422
+* Token count teenage # 0.107
+* Token count answering # 0.000
+* Token count become # 0.030
+* Token count culturales # 0.000
+* Token count imbruglia # 0.000
+* Token count after # 0.159
+* Token count lunt # 0.000
+* Token count stevenson # 0.030
+* Token count drag # 0.000
+* Token count 112 # 0.000
+* Token count that # 0.288
+* Token count post # 0.000
+* Token count stronger # 0.000
+* Token count sony # 0.000
+* Token count sacks # 0.000
+* Token count 547 # 0.000
+* Token count have # 0.118
+* Token count san # 0.030
+* Token count año # 0.030
+* Token count verna # 0.030
+* Token count cria # 0.000
+* Token count achieved # 0.069
+* Token count cutting # 0.000
+* Token count growing # 0.000
+* Token count poll # 0.030
+* Token count 9 # 0.096
+* Token count singing # 0.069
+* Token count least # 0.000
+* Token count occ # 0.030
+* Token count deadurl # 0.389
+* Token count nikki # 0.000
+* Token count rehearsals # 0.000
+* Token count last2 # 0.000
+* Token count trying # 0.000
+* Token count —spears # 0.030
+* Token count altered # 0.000
+* Token count referred # 0.000
+* Token count included # 0.051
+* Token count busacca # 0.000
+* Token count motion # 0.000
+* Token count lucrative # 0.000
+* Token count appearance # 0.000
+* Token count reported # 0.069
+* Token count songs # 0.172
+* Token count your # 0.069
+* Token count millennium # 0.000
+* Token count 2074 # 0.000
+* Token count non # 0.030
+* Token count 2010 # 0.242
+* Token count inc # 0.083
+* Token count basham # 0.000
+* Token count britannica # 0.000
+* Token count reaching # 0.069
+* Token count robert # 0.083
+* Token count news # 0.196
+* Token count bookauthor1 # 0.000
+* Token count showed # 0.030
+* Token count appeared # 0.051
+* Token count rev3 # 0.000
+* Token count got # 0.069
+* Token count musik # 0.000
+* Token count kreuger # 0.000
+* Token count snep # 0.069
+* Token count onstage # 0.000
+* Token count toni # 0.030
+* Token count disc # 0.030
+* Token count wanting # 0.000
+* Token count held # 0.000
+* Token count reflects # 0.000
+* Token count author2 # 0.000
+* Token count udarbejdet # 0.000
+* Token count vanderbilt # 0.000
+* Token count night # 0.000
+* Token count white # 0.107
+* Token count spotlight # 0.000
+* Token count title7 # 0.000
+* Token count observer # 0.051
+* Token count featured # 0.083
+* Token count bladet # 0.000
+* Token count copies # 0.172
+* Token count best # 0.196
+* Token count pressings # 0.030
+* Token count awards # 0.152
+* Token count genre # 0.000
+* Token count drive # 0.190
+* Token count mandel # 0.000
+* Token count highly # 0.000
+* Token count mid # 0.030
+* Token count ended # 0.000
+* Token count remixer # 0.000
+* Token count gang # 0.000
+* Token count planning # 0.000
+* Token count allmusicid # 0.000
+* Token count december # 0.275
+* Token count several # 0.107
+* Token count noted # 0.051
+* Token count geneva # 0.000
+* Token count abbott # 0.000
+* Token count keziah # 0.000
+* Token count target # 0.000
+* Token count dates # 0.051
+* Token count charts.com # 0.000
+* Token count singles # 0.136
+* Token count the # 0.721
+* Token count uk # 0.096
+* Token count tim # 0.000
+* Token count bennett # 0.030
+* Token count accused # 0.000
+* Token count rev6 # 0.000
+* Token count has # 0.166
+* Token count studying # 0.030
+* Token count posters # 0.000
+* Token count walsh # 0.030
+* Token count recovering # 0.000
+* Token count very # 0.051
+* Token count portrays # 0.000
+* Token count hermanson # 0.030
+* Token count corrupting # 0.000
+* Token count diamond # 0.083
+* Token count liberalism # 0.000
+* Token count avcz-95114 # 0.000
+* Token count international.png # 0.000
+* Token count lédition # 0.069
+* Token count unusual # 0.000
+* Token count réelles # 0.000
+* Token count power # 0.000
+* Token count robson # 0.030
+* Token count carson # 0.000
+* Token count exclusively # 0.000
+* Token count extra5 # 0.000
+* Token count u. # 0.030
+* Token count swedish # 0.030
+* Token count autumn # 0.030
+* Token count sense # 0.000
+* Token count legacy # 0.000
+* Token count hundredth # 0.000
+* Token count presence # 0.000
+* Token count every # 0.051
+* Token count age # 0.083
+* Token count wenner # 0.096
+* Token count eye # 0.000
+* Token count talk # 0.069
+* Token count magazine # 0.069
+* Token count house # 0.000
+* Token count nzbabytableentry # 0.000
+* Token count mundy # 0.000
+* Token count marker # 0.000
+* Token count nme # 0.030
+* Token count 2016 # 0.051
+* Token count annual # 0.083
+* Token count seeing # 0.000
+* Token count outside # 0.000
+* Token count 04 # 0.083
+* Token count rife # 0.000
+* Token count calls # 0.000
+* Token count takes # 0.030
+* Token count wrong # 0.000
+* Token count 1.6 # 0.000
+* Token count journaltitle # 0.069
+* Token count result # 0.000
+* Token count culture # 0.096
+* Token count note2 # 0.030
+* Token count 08 # 0.000
+* Token count promotional # 0.051
+* Token count advertising # 0.030
+* Token count readers # 0.030
+* Token count 19 # 0.118
+* Token count newsurl # 0.144
+* Token count 41 # 0.000
+* Token count arrangement # 0.000
+* Token count writer3 # 0.000
+* Token count ndash # 0.051
+* Token count underwhelmingly # 0.030
+* Token count classement # 0.030
+* Token count 25 # 0.254
+* Token count electronic # 0.000
+* Token count promociones # 0.000
+* Token count seem # 0.000
+* Token count fenster # 0.000
+* Token count case # 0.000
+* Token count united # 0.184
+* Token count called # 0.051
+* Token count because # 0.000
+* Token count jeff # 0.000
+* Token count 0554 # 0.000
+* Token count afar # 0.000
+* Token count units # 0.096
+* Token count 12th # 0.000
+* Token count 93 # 0.000
+* Token count yomiuri # 0.030
+* Token count shania # 0.051
+* Token count leno # 0.000
+* Token count man # 0.000
+* Token count fuckin # 0.000
+* Token count hilton # 0.000
+* Token count alone # 0.000
+* Token count 3 # 0.275
+* Token count announces # 0.000
+* Token count injury # 0.000
+* Token count announced # 0.051
+* Token count vice # 0.000
+* Token count sellers # 0.051
+* Token count executives # 0.051
+* Token count swirled # 0.000
+* Token count — # 0.051
+* Token count synchs # 0.000
+* Token count it # 0.309
+* Token count row # 0.069
+* Token count zobbel # 0.000
+* Token count smith # 0.000
+* Token count award # 0.242
+* Token count lisa # 0.000
+* Token count hart # 0.030
+* Token count request # 0.030
+* Token count decuple # 0.000
+* Token count she # 0.242
+* Token count writer7 # 0.000
+* Token count taped # 0.030
+* Token count debuts # 0.000
+* Token count today # 0.000
+* Token count hey # 0.051
+* Token count music # 0.374
+* Token count pet # 0.000
+* Token count vintage # 0.000
+* Token count liner # 0.144
+* Token count catchy # 0.000
+* Token count watching # 0.000
+* Token count publishers # 0.000
+* Token count extra11 # 0.000
+* Token count history # 0.107
+* Token count hearing # 0.030
+* Token count japanese # 0.096
+* Token count 553 # 0.030
+* Token count will # 0.127
+* Token count books # 0.069
+* Token count certified # 0.118
+* Token count 145 # 0.000
+* Token count tiffany # 0.000
+* Token count x # 0.000
+* Token count cut # 0.000
+* Token count essex # 0.000
+* Token count interviews # 0.000
+* Token count well # 0.000
+* Token count 1.8 # 0.000
+* Token count usher # 0.000
+* Token count zone # 0.030
+* Token count those # 0.000
+* Token count shooting # 0.000
+* Token count 2 # 0.220
+* Token count bad # 0.000
+* Token count lynne # 0.030
+* Token count been # 0.083
+* Token count misc # 0.000
+* Token count production # 0.051
+* Token count remix # 0.096
+* Token count edgy # 0.000
+* Token count highest # 0.030
+* Token count promotion # 0.051
+* Token count high # 0.000
+* Token count move # 0.000
+* Token count 2017 # 0.288
+* Token count toward # 0.000
+* Token count w. # 0.000
+* Token count produced # 0.051
+* Token count offspring # 0.000
+* Token count wendy # 0.030
+* Token count weeks # 0.118
+* Token count jahreshitparade # 0.000
+* Token count challenging # 0.000
+* Token count 36 # 0.000
+* Token count tomas # 0.000
+* Token count observed # 0.030
+* Token count sold # 0.127
+* Token count karaoke # 0.030
+* Token count writer12 # 0.000
+* Token count 1237841 # 0.000
+* Token count italy # 0.030
+* Token count sound # 0.127
+* Token count network # 0.000
+* Token count 69 # 0.000
+* Token count 377 # 0.000
+* Token count moves # 0.000
+* Token count regis # 0.030
+* Token count christmas # 0.000
+* Token count universal # 0.030
+* Token count antonio # 0.000
+* Token count 0029 # 0.000
+* Token count visited # 0.051
+* Token count absolutely # 0.000
+* Token count tom # 0.000
+* Token count sonically # 0.000
+* Token count smooth # 0.000
+* Token count slaps # 0.000
+* Token count hooks # 0.000
+* Token count universe # 0.000
+* Token count mediatitle # 0.000
+* Token count party # 0.000
+* Token count written # 0.030
+* Token count receive # 0.000
+* Token count 29 # 0.144
+* Token count journal # 0.051
+* Token count extra15 # 0.000
+* Token count continent # 0.000
+* Token count boyfriend # 0.000
+* Token count 111 # 0.000
+* Token count finding # 0.030
+* Token count weburl # 0.423
+* Token count 29th # 0.000
+* Token count miss # 0.000
+* Token count back # 0.107
+* Token count then # 0.030
+* Token count nickelodeon # 0.030
+* Token count sponsor # 0.069
+* Token count melissa # 0.069
+* Token count go # 0.030
+* Token count mouseketeer # 0.000
+* Token count eventually # 0.000
+* Token count ex # 0.000
+* Token count groups # 0.000
+* Token count professional # 0.000
+* Token count our # 0.030
+* Token count rules # 0.000
+* Token count moderate # 0.000
+* Token count fox # 0.069
+* Token count enh # 0.030
+* Token count lackluster # 0.000
+* Token count demo # 0.083
+* Token count followed # 0.000
+* Token count bonus # 0.118
+* Token count top20.dk # 0.000
+* Token count delivery # 0.000
+* Token count photos # 0.000
+* Token count 288 # 0.030
+* Token count lines # 0.030
+* Token count entryregion # 0.216
+* Token count malls # 0.000
+* Token count reproduced # 0.000
+* Token count aleese # 0.000
+* Token count others # 0.144
+* Token count used # 0.000
+* Token count solution # 0.000
+* Token count 21 # 0.178
+* Token count position # 0.083
+* Token count voice&nbsp # 0.000
+* Token count formats # 0.030
+* Token count 7 # 0.144
+* Token count ballad # 0.051
+* Token count aired # 0.030
+* Token count special # 0.107
+* Token count lista # 0.118
+* Token count region # 0.030
+* Token count started # 0.030
+* Token count disney # 0.030
+* Token count 2018 # 0.000
+* Token count extra9 # 0.000
+* Token count die # 0.030
+* Token count revised # 0.030
+* Token count listingheadline # 0.000
+* Token count 2014 # 0.107
+* Token count version # 0.030
+* Token count funkdified # 0.000
+* Token count idol # 0.000
+* Token count jagged # 0.000
+* Token count companies # 0.030
+* Token count corrs # 0.000
+* Token count similar # 0.030
+* Token count too # 0.051
+* Token count louisiana # 0.000
+* Token count spectator # 0.000
+* Token count presented # 0.000
+* Token count spain # 0.051
+* Token count peterson # 0.000
+* Token count title # 0.551
+* Token count female # 0.136
+* Token count incarnation # 0.000
+* Token count 2000–09 # 0.000
+* Token count broken # 0.152
+* Token count recorded # 0.127
+* Token count set # 0.069
+* Token count july # 0.334
+* Token count snippets # 0.000
+* Token count lyricist # 0.000
+* Token count vg # 0.118
+* Token count caption # 0.030
+* Token count devil # 0.000
+* Token count quite # 0.000
+* Token count ever # 0.030
+* Token count grown # 0.000
+* Token count austria # 0.096
+* Token count fifth # 0.030
+* Token count vapid # 0.000
+* Token count rev5 # 0.000
+* Token count listed # 0.030
+* Token count crucial # 0.000
+* Token count writer5 # 0.030
+* Token count topp # 0.030
+* Token count tell # 0.000
+* Token count pure # 0.030
+* Token count silly # 0.000
+* Token count around # 0.096
+* Token count released # 0.196
+* Token count wade # 0.030
+* Token count attitude # 0.000
+* Token count orlando # 0.000
+* Token count debuting # 0.000
+* Token count six # 0.030
+* Token count dave # 0.000
+* Token count laden # 0.000
+* Token count unremarkable # 0.000
+* Token count salesamount # 0.069
+* Token count such # 0.083
+* Token count dungaree # 0.000
+* Token count 1212 # 0.030
+* Token count global # 0.144
+* Token count 2006 # 0.000
+* Token count toronto # 0.000
+* Token count 943 # 0.000
+* Token count york # 0.083
+* Token count des # 0.000
+* Token count 12 # 0.242
+* Token count days # 0.030
+* Token count hidden # 0.000
+* Token count mike # 0.000
+* Token count busy # 0.000
+* Token count blandford # 0.051
+* Token count prometheus # 0.136
+* Token count cher # 0.051
+* Token count title5 # 0.030
+* Token count next # 0.069
+* Token count begins # 0.030
+* Token count rated # 0.000
+* Token count wanted # 0.030
+* Token count phenomena # 0.000
+* Token count large # 0.000
+* Token count landed # 0.000
+* Token count baldwin # 0.000
+* Token count amazon.com # 0.051
+* Token count ressufeiring # 0.000
+* Token count dick # 0.051
+* Token count rev1score # 0.000
+* Token count chris # 0.069
+* Token count feature # 0.000
+* Token count kentwood # 0.030
+* Token count 11 # 0.127
+* Token count 229,000 # 0.000
+* Token count plans # 0.000
+* Token count apple- # 0.000
+* Token count claimed # 0.030
+* Token count children # 0.000
+* Token count us # 0.136
+* Token count swedishcharts.com # 0.000
+* Token count reporter # 0.051
+* Token count 6 # 0.144
+* Token count films # 0.030
+* Token count really # 0.030
+* Token count alec # 0.000
+* Token count gum # 0.000
+* Token count eyes # 0.000
+* Token count lizard # 0.000
+* Token count taylor # 0.051
+* Token count 1990s # 0.030
+* Token count videopeople # 0.000
+* Token count brazil # 0.000
+* Token count links # 0.000
+* Token count nana # 0.000
+* Token count later # 0.127
+* Token count 1534 # 0.000
+* Token count notestitle # 0.107
+* Token count became # 0.107
+* Token count interested # 0.000
+* Token count musical # 0.000
+* Token count lydon # 0.000
+* Token count gaines # 0.030
+* Token count sent # 0.000
+* Token count jaws # 0.000
+* Token count sonic # 0.030
+* Token count 200 # 0.184
+* Token count they # 0.051
+* Token count 2007 # 0.083
+* Token count born # 0.136
+* Token count development # 0.030
+* Token count platinum # 0.242
+* Token count selling # 0.184
+* Token count expected # 0.000
+* Token count lower # 0.000
+* Token count rev7score # 0.000
+* Token count single1date # 0.000
+* Token count considering # 0.000
+* Token count influences # 0.000
+* Token count tours # 0.000
+* Token count society # 0.000
+* Token count cotton # 0.000
+* Token count martin # 0.127
+* Token count swisscharts.com # 0.030
+* Token count dispatch # 0.030
+* Token count quebecor # 0.000
+* Token count promo # 0.000
+* Token count rev7 # 0.000
+* Token count terra # 0.000
+* Token count tour # 0.220
+* Token count 300,000 # 0.000
+* Token count north # 0.069
+* Token count collection # 0.000
+* Token count gregory # 0.000
+* Token count database # 0.051
+* Token count opinion # 0.030
+* Token count artwork # 0.030
+* Token count 1959–2002 # 0.030
+* Token count doing # 0.000
+* Token count show # 0.166
+* Token count trip # 0.000
+* Token count loved # 0.000
+* Token count kristian # 0.000
+* Token count workout # 0.000
+* Token count 92 # 0.000
+* Token count leaning # 0.000
+* Token count notestype # 0.030
+* Token count switzerland # 0.051
+* Token count buzzmarketing # 0.000
+* Token count parish # 0.030
+* Token count woman # 0.030
+* Token count sync # 0.030
+* Token count said # 0.051
+* Token count little # 0.069
+* Token count listing # 0.030
+* Token count searchable # 0.030
+* Token count 500,000 # 0.000
+* Token count curious # 0.051
+* Token count single3 # 0.000
+* Token count bubble # 0.000
+* Token count extra # 0.000
+* Token count october # 0.285
+* Token count morissette # 0.000
+* Token count アルバム年間top100 # 0.000
+* Token count walters # 0.051
+* Token count headlining # 0.000
+* Token count jackie # 0.000
+* Token count further # 0.000
+* Token count sponsored # 0.000
+* Token count abc # 0.000
+* Token count poland # 0.030
+* Token count quadruple # 0.030
+* Token count located # 0.000
+* Token count a&r # 0.030
+* Token count germany # 0.083
+* Token count youngest # 0.030
+* Token count tommy # 0.000
+* Token count jex # 0.000
+* Token count now # 0.030
+* Token count success # 0.096
+* Token count sentinel # 0.000
+* Token count triple # 0.069
+* Token count fucking # 0.000
+* Token count song # 0.216
+* Token count harvnbp # 0.127
+* Token count 39 # 0.000
+* Token count showbiz # 0.000
+* Token count steven # 0.030
+* Token count pitch # 0.030
+* Token count some # 0.069
+* Token count pearlman # 0.030
+* Token count hughes # 0.051
+* Token count real # 0.030
+* Token count theme # 0.000
+* Token count newspaper # 0.083
+* Token count albumchartdate # 0.000
+* Token count af # 0.000
+* Token count returning # 0.030
+* Token count world # 0.127
+* Token count extra13 # 0.030
+* Token count jim # 0.030
+* Token count fame # 0.000
+* Token count hitliste # 0.000
+* Token count funky # 0.000
+* Token count november # 0.201
+* Token count andy # 0.030
+* Token count rudolph # 0.096
+* Token count rescheduled # 0.000
+* Token count hung # 0.096
+* Token count phones # 0.000
+* Token count turned # 0.000
+* Token count albeit # 0.000
+* Token count geocities # 0.000
+* Token count extra4 # 0.000
+* Token count lundin # 0.000
+* Token count dancing # 0.000
+* Token count note15 # 0.000
+* Token count flanders # 0.083
+* Token count snooki # 0.000
+* Token count industry # 0.190
+* Token count cd # 0.184
+* Token count princess # 0.000
+* Token count states # 0.152
+* Token count } # 0.000
+* Token count ready # 0.000
+* Token count sun # 0.030
+* Token count 2001 # 0.096
+* Token count local # 0.000
+* Token count greatest # 0.083
+* Token count saw # 0.000
+* Token count australian # 0.152
+* Token count 42 # 0.000
+* Token count 30 # 0.178
+* Token count third # 0.083
+* Token count piano # 0.030
+* Token count mini # 0.000
+* Token count © # 0.000
+* Token count producer # 0.178
+* Token count premature # 0.030
+* Token count and # 0.492
+* Token count time # 0.482
+* Token count pop # 0.254
+* Token count replaced # 0.000
+* Token count star # 0.000
+* Token count trust # 0.000
+* Token count hitparade # 0.083
+* Token count sixth # 0.000
+* Token count deluxe # 0.051
+* Token count new # 0.206
+* Token count title3 # 0.030
+* Token count million # 0.159
+* Token count mixture # 0.000
+* Token count an # 0.166
+* Token count drum # 0.030
+* Token count burlap # 0.000
+* Token count spy # 0.000
+* Token count larger # 0.000
+* Token count outfitters # 0.030
+* Token count britney.com # 0.000
+* Token count ryan # 0.030
+* Token count duet # 0.000
+* Token count for # 0.282
+* Token count blockbuster # 0.030
+* Token count stop # 0.127
+* Token count hits # 0.118
+* Token count 13 # 0.246
+* Token count ending # 0.000
+* Token count his # 0.051
+* Token count ganahl # 0.000
+* Token count decided # 0.030
+* Token count trevett # 0.000
+* Token count bed # 0.000
+* Token count chronicle # 0.000
+* Token count australia # 0.107
+* Token count received # 0.118
+* Token count britneyspears # 0.000
+* Token count odonnell # 0.030
+* Token count archiveurl # 0.397
+* Token count life # 0.030
+* Token count paul # 0.051
+* Token count craig # 0.152
+* Token count first1 # 0.000
+* Token count stars # 0.030
+* Token count attained # 0.000
+* Token count hundred # 0.030
+* Token count 1001 # 0.030
+* Token count desires # 0.000
+* Token count karger # 0.000
+* Token count design # 0.000
+* Token count femme # 0.000
+* Token count anderson # 0.051
+* Token count 01241 # 0.030
+* Token count coverheader # 0.000
+* Token count into # 0.051
+* Token count title8 # 0.000
+* Token count 51 # 0.000
+* Token count nominations # 0.000
+* Token count 110 # 0.000
+* Token count jam # 0.030
+* Token count newswire # 0.030
+* Token count labeling # 0.000
+* Token count date # 0.489
+* Token count authors # 0.000
+* Token count riaa # 0.083
+* Token count campaign # 0.030
+* Token count summer # 0.000
+* Token count are # 0.000
+* Token count amazon.co.uk # 0.030
+* Token count jive # 0.206
+* Token count readies # 0.000
+* Token count mother # 0.000
+* Token count webpublisher # 0.000
+* Token count strong # 0.000
+* Token count city # 0.030
+* Token count bottom # 0.152
+* Token count lyrics # 0.051
+* Token count various # 0.000
+* Token count industria # 0.000
+* Token count re # 0.051
+* Token count covers # 0.030
+* Token count e # 0.118
+* Token count mystery # 0.000
+* Token count mix # 0.107
+* Token count cultivated # 0.000
+* Token count schoolgirl # 0.000
+* Token count japan # 0.083
+* Token count amazon.de # 0.051
+* Token count reasons # 0.000
+* Token count ventes # 0.000
+* Token count funk # 0.000
+* Token count me # 0.238
+* Token count cheiron # 0.000
+* Token count mccrorey # 0.000
+* Token count unmistakably # 0.000
+* Token count listen # 0.000
+* Token count dance # 0.096
+* Token count corporation # 0.083
+* Token count sell # 0.000
+* Token count seven # 0.000
+* Token count 27 # 0.127
+* Token count replacing # 0.000
+* Token count younger # 0.000
+* Token count earned # 0.000
+* Token count message # 0.030
+* Token count swiss # 0.152
+* Token count progression # 0.000
+* Token count table # 0.216
+* Token count arguing # 0.000
+* Token count 100 # 0.190
+* Token count free # 0.000
+* Token count sings # 0.000
+* Token count 1977 # 0.000
+* Token count first2 # 0.030
+* Token count ekstra # 0.000
+* Token count yes # 0.339
+* Token count wetten # 0.000
+* Token count jimmy # 0.000
+* Token count sometimes # 0.144
+* Token count andreas # 0.000
+* Token count rejected # 0.051
+* Token count flemish # 0.000
+* Token count joan # 0.030
+* Token count danish # 0.051
+* Token count carries # 0.000
+* Token count pops # 0.000
+* Token count already # 0.000
+* Token count costumes # 0.000
+* Token count 791x # 0.051
+* Token count jocelyn # 0.000
+* Token count stone # 0.152
+* Token count phonographic # 0.069
+* Token count tivo # 0.051
+* Token count executed # 0.030
+* Token count guitar # 0.096
+* Token count motivation # 0.000
+* Token count broadcast # 0.000
+* Token count webfirst # 0.172
+* Token count huge # 0.000
+* Token count track # 0.178
+* Token count catholic # 0.000
+* Token count excited # 0.030
+* Token count fred # 0.000
+* Token count order # 0.000
+* Token count denniz # 0.069
+* Token count max # 0.118
+* Token count media # 0.285
+* Token count 31 # 0.107
+* Token count bar # 0.000
+* Token count larry # 0.051
+* Token count 147 # 0.000
+* Token count 1 # 0.216
+* Token count 58636 # 0.030
+* Token count murray # 0.051
+* Token count jennifer # 0.000
+* Token count road # 0.000
+* Token count imdb # 0.030
+* Token count important # 0.000
+* Token count interest # 0.030
+* Token count studio # 0.107
+* Token count .. # 0.000
+* Token count secondary # 0.000
+* Token count korea # 0.051
+* Token count alfred # 0.051
+* Token count take # 0.051
+* Token count refname # 0.083
+* Token count references # 0.051
+* Token count lawyer # 0.030
+* Token count blender # 0.069
+* Token count woodruff # 0.000
+* Token count musicale # 0.000
+* Token count magnusson # 0.000
+* Token count filler # 0.000
+* Token count claudia # 0.000
+* Token count hearst # 0.000
+* Token count 45 # 0.000
+* Token count 0006 # 0.051
+* Token count with # 0.315
+* Token count what # 0.000
+* Token count two # 0.127
+* Token count finnish # 0.069
+* Token count credits # 0.030
+* Token count product # 0.000
+* Token count warnermedia # 0.000
+* Token count profile # 0.000
+* Token count focus # 0.000
+* Token count liza # 0.000
+* Token count hanley # 0.000
+* Token count external # 0.000
+* Token count exactly # 0.000
+* Token count instrumentals # 0.000
+* Token count 7712 # 0.000
+* Token count this # 0.051
+* Token count roll # 0.000
+* Token count endearing # 0.000
+* Token count greece # 0.000
+* Token count autocat # 0.220
+* Token count claims # 0.000
+* Token count vår # 0.000
+* Token count wrote # 0.030
+* Token count elerwine # 0.000
+* Token count medien # 0.096
+* Token count mcintyre # 0.051
+* Token count david # 0.051
+* Token count explained # 0.000
+* Token count thirty # 0.030
+* Token count as # 0.257
+* Token count 5 # 0.225
+* Token count issn # 0.118
+* Token count trl # 0.030
+* Token count listening # 0.030
+* Token count 94 # 0.000
+* Token count petty # 0.030
+* Token count premiere # 0.000
+* Token count melody # 0.030
+* Token count parrot # 0.000
+* Token count annuels # 0.000
+* Token count dutch # 0.107
+* Token count sputnikmusic # 0.069
+* Token count philippines # 0.030
+* Token count cities # 0.000
+* Token count 10,600,000 # 0.000
+* Token count hear # 0.069
+* Token count 1997 # 0.107
+* Token count shcherbakova # 0.000
+* Token count adult # 0.000
+* Token count ekg # 0.000
+* Token count praising # 0.000
+* Token count 2013 # 0.242
+* Token count entertainment # 0.144
+* Token count higher # 0.000
+* Token count title11 # 0.030
+* Token count before # 0.083
+* Token count return # 0.000
+* Token count women # 0.030
+* Token count ricki # 0.000
+* Token count single # 0.225
+* Token count bille # 0.000
+* Token count aall # 0.000
+* Token count aim # 0.030
+* Token count 09 # 0.000
+* Token count reportedly # 0.000
+* Token count britstory # 0.000
+* Token count aged # 0.000
+* Token count extra14 # 0.000
+* Token count movies # 0.000
+* Token count full # 0.030
+* Token count la # 0.000
+* Token count guinness # 0.069
+* Token count delays # 0.000
+* Token count we # 0.118
+* Token count august # 0.172
+* Token count dropping # 0.000
+* Token count 28 # 0.238
+* Token count walls # 0.000
+* Token count productions # 0.000
+* Token count 90s # 0.051
+* Token count yells # 0.000
+* Token count fenômeno # 0.000
+* Token count 42nd # 0.030
+* Token count mall # 0.000
+* Token count s. # 0.030
+* Token count communications # 0.030
+* Token count creek # 0.000
+* Token count odd # 0.000
+* Token count fabulous # 0.000
+* Token count pictures # 0.030
+* Token count chart#1161 # 0.000
+* Token count continued # 0.030
+* Token count relyear # 0.201
+* Token count completed # 0.000
+* Token count since # 0.083
+* Token count done # 0.030
+* Token count staff # 0.051
+* Token count girl # 0.107
+* Token count 14× # 0.000
+* Token count 2003 # 0.144
+* Token count own # 0.069
+* Token count zealand # 0.136
+* Token count rev10score # 0.000
+* Token count working # 0.030
+* Token count urban # 0.030
+* Token count emotional # 0.000
+* Token count fimi # 0.069
+* Token count seventeen # 0.000
+* Token count b00064am62 # 0.000
+* Token count boys # 0.051
+* Token count hamilton # 0.000
+* Token count allstars # 0.000
+* Token count crafted # 0.000
+* Token count required # 0.000
+* Token count help # 0.000
+* Token count oxoby # 0.000
+* Token count nervous # 0.000
+* Token count retailers # 0.000
+* Token count 47275 # 0.000
+* Token count ellen # 0.030
+* Token count school # 0.030
+* Token count slow # 0.030
+* Token count kathie # 0.030
+* Token count richmond # 0.030
+* Token count 14 # 0.184
+* Token count eleven # 0.000
+* Token count witch # 0.000
+* Token count presenter # 0.000
+* Token count hedin # 0.000
+* Token count injured # 0.000
+* Token count releasetitle # 0.000
+* Token count istoé # 0.000
+* Token count albums # 0.393
+* Token count rev6score # 0.000
+* Token count videos # 0.051
+* Token count appreciation # 0.000
+* Token count executive # 0.000
+* Token count allmusic # 0.136
+* Token count action # 0.000
+* Token count morning # 0.000
+* Token count aiming # 0.000
+* Token count reception # 0.000
+* Token count interlude # 0.000
+* Token count a # 0.427
+* Token count url # 0.268
+* Token count violence # 0.000
+* Token count ukchartstats # 0.000
+* Token count schuster # 0.000
+* Token count samantha # 0.000
+* Token count spring # 0.030
+* Token count bronson # 0.000
+* Token count paradise # 0.000
+* Token count fernando # 0.000
+* Token count s # 0.294
+* Token count dmx # 0.000
+* Token count spanish # 0.030
+* Token count edition # 0.144
+* Token count icon # 0.030
+* Token count about # 0.096
+* Token count upcoming # 0.000
+* Token count italiana # 0.000
+* Token count commenting # 0.030
+* Token count p320976 # 0.000
+* Token count twain # 0.030
+* Token count hailed # 0.000
+* Token count performances # 0.051
+* Token count raspy # 0.000
+* Token count work # 0.339
+* Token count eminem # 0.000
+* Token count bmg # 0.051
+* Token count offizielle # 0.051
+* Token count eil.com # 0.000
+* Token count booklast1 # 0.030
+* Token count rather # 0.000
+* Token count caulfield # 0.030
+* Token count dead # 0.030
+* Token count official # 0.118
+* Token count stephanie # 0.000
+* Token count performing # 0.030
+* Token count label # 0.069
+* Token count actress # 0.000
+* Token count dan # 0.000
+* Token count which # 0.096
+* Token count lake # 0.000
+* Token count 2011 # 0.346
+* Token count peter # 0.000
+* Token count rev2 # 0.000
+* Token count scars # 0.000
+* Token count gardiner # 0.000
+* Token count shaped # 0.000
+* Token count single2date # 0.000
+* Token count festival # 0.000
+* Token count get # 0.030
+* Token count announcement # 0.000
+* Token count transition # 0.000
+* Token count synthesized # 0.000
+* Token count canada # 0.083
+* Token count means # 0.000
+* Token count realize # 0.000
+* Token count heard # 0.051
+* Token count inserted # 0.000
+* Token count writer9 # 0.030
+* Token count nirvana # 0.000
+* Token count extension # 0.000
+* Token count translocal # 0.000
+* Token count feeling # 0.000
+* Token count winners # 0.030
+* Token count tonight # 0.051
+* Token count lovin # 0.000
+* Token count 0035 # 0.051
+* Token count appearances # 0.051
+* Token count available # 0.000
+* Token count boom # 0.000
+* Token count schedule # 0.000
+* Token count pie # 0.000
+* Token count access # 0.184
+* Token count lou # 0.030
+* Token count was # 0.363
+* Token count publishing # 0.069
+* Token count éxitos # 0.000
+* Token count richard # 0.000
+* Token count shot # 0.051
+* Token count carlsson # 0.000
+* Token count mccartney # 0.000
+* Token count shown # 0.000
+* Token count 06 # 0.083
+* Token count than # 0.107
+* Token count appeal # 0.000
+* Token count due # 0.030
+* Token count bubblegum # 0.000
+* Token count cite # 0.556
+* Token count following # 0.030
+* Token count range # 0.000
+* Token count solo # 0.069
+* Token count starts # 0.030
+* Token count leg # 0.051
+* Token count seymour # 0.000
+* Token count lfo # 0.000
+* Token count dawson # 0.000
+* Token count c # 0.190
+* Token count performed # 0.096
+* Token count asin # 0.000
+* Token count nz # 0.051
+* Token count missed # 0.000
+* Token count deliver # 0.000
+* Token count megacharts # 0.083
+* Token count flew # 0.000
+* Token count demonstrates # 0.000
+* Token count certifications # 0.051
+* Token count can # 0.030
+* Token count wars # 0.000
+* Token count programming # 0.069
+* Token count california # 0.000
+* Token count choice # 0.069
+* Token count type # 0.278
+* Token count shameless # 0.000
+* Token count note4 # 0.051
+* Token count talks # 0.000
+* Token count stephen # 0.069
+* Token count number # 0.282
+* Token count competent # 0.030
+* Token count issue # 0.051
+* Token count adrian # 0.000
+* Token count numerous # 0.000
+* Token count box # 0.000
+* Token count peakposition # 0.000
+* Token count angel # 0.000
+* Token count release # 0.107
+* Token count luv # 0.000
+* Token count same # 0.107
+* Token count 1981 # 0.000
+* Token count rev3score # 0.000
+* Token count rev9score # 0.000
+* Token count prerogative # 0.030
+* Token count albert # 0.000
+* Token count each # 0.000
+* Token count first3 # 0.000
+* Token count schlock # 0.000
+* Token count male # 0.030
+* Token count did # 0.136
+* Token count steadfast # 0.000
+* Token count virtual # 0.000
+* Token count sabrina # 0.000
+* Token count x3 # 0.000
+* Token count consisted # 0.000
+* Token count amazon.it # 0.030
+* Token count years # 0.030
+* Token count 01 # 0.000
+* Token count destruction # 0.000
+* Token count anything # 0.000
+* Token count guest # 0.030
+* Token count fourteen # 0.000
+* Token count recording # 0.172
+* Token count total # 0.096
+* Token count isbn # 0.069
+* Token count up # 0.127
+* Token count norwegian # 0.096
+* Token count great # 0.000
+* Token count small # 0.000
+* Token count choreographed # 0.000
+* Token count infobox # 0.000
+* Token count records # 0.196
+* Token count one # 0.498
+* Token count commercial # 0.083
+* Token count trans # 0.000
+* Token count extremely # 0.000
+* Token count spam # 0.000
+* Token count clive # 0.000
+* Token count ti # 0.000
+* Token count club # 0.030
+* Token count shimbun # 0.030
+* Token count hm1 # 0.000
+* Token count enhanced # 0.000
+* Token count thing # 0.030
+* Token count composed # 0.000
+* Token count by # 0.294
+* Token count breaking # 0.000
+* Token count again # 0.107
+* Token count 61 # 0.000
+* Token count 0 # 0.083
+* Token count n # 0.030
+* Token count barbara # 0.030
+* Token count debbie # 0.030
+* Token count cds # 0.069
+* Token count on # 0.408
+* Token count business # 0.069
+* Token count offiziellecharts.de # 0.030
+* Token count ifpi # 0.083
+* Token count retrieved # 0.000
+* Token count video # 0.184
+* Token count newspapers # 0.000
+* Token count 61,580 # 0.000
+* Token count website # 0.030
+* Token count 1,600,000 # 0.000
+* Token count baby # 0.458
+* Token count hopefully # 0.000
+* Token count 17-year # 0.030
+* Token count join # 0.030
+* Token count digital # 0.107
+* Token count wretched # 0.000
+* Token count albumname # 0.000
+* Token count 81 # 0.000
+* Token count tiger— # 0.000
+* Token count 21st # 0.000
+* Token count writer1 # 0.051
+* Token count walloon # 0.000
+* Token count allude # 0.000
+* Token count 4 # 0.201
+* Token count title13 # 0.030
+* Token count selznick # 0.000
+* Token count barry # 0.051
+* Token count zpav # 0.000
+* Token count composition # 0.000
+* Token count gfk # 0.030
+* Token count many # 0.083
+* Token count de # 0.069
+* Token count leading # 0.000
+* Token count last # 0.285
+* Token count lounge # 0.000
+* Token count prior # 0.000
+* Token count comment # 0.000
+* Token count final # 0.030
+* Token count national # 0.096
+* Token count location # 0.030
+* Token count dean # 0.000
+* Token count completely # 0.000
+* Token count promote # 0.000
+* Token count featuring # 0.000
+* Token count title16 # 0.000
+* Token count friend # 0.051
+* Token count thomas # 0.069
+* Token count 1,000,000 # 0.000
+* Token count bass # 0.083
+* Token count labels # 0.083
+* Token count octave # 0.000
+* Token count scotland # 0.000
+* Token count geoff # 0.000
+* Token count atop # 0.000
+* Token count hook # 0.030
+* Token count title2 # 0.051
+* Token count double # 0.000
+* Token count doll # 0.000
+* Token count compared # 0.030
+* Token count pre # 0.000
+* Token count opening # 0.000
+* Token count torn # 0.000
+* Token count left # 0.051
+* Token count artist # 0.288
+* Token count commented # 0.000
+* Token count shipments # 0.000
+* Token count bemis # 0.000
+* Token count signifies # 0.051
+* Token count worldwide # 0.096
+* Token count association # 0.152
+* Token count there # 0.107
+* Token count flesh # 0.030
+* Token count las # 0.000
+* Token count 9788480486392 # 0.000
+* Token count 7243 # 0.000
+* Token count belgian # 0.118
+* Token count nielsen # 0.118
+* Token count comes # 0.000
+* Token count cove # 0.000
+* Token count porn # 0.030
+* Token count voice # 0.083
+* Token count end # 0.118
+* Token count include # 0.000
+* Token count vibe # 0.000
+* Token count longing # 0.000
+* Token count 64 # 0.000
+* Token count relmonth # 0.030
+* Token count knee # 0.069
+* Token count bassie # 0.051
+* Token count singlesname # 0.000
+* Token count classic # 0.030
+* Token count residency # 0.000
+* Token count dj # 0.000
+* Token count point # 0.000
+* Token count chart # 0.278
+* Token count oft # 0.000
+* Token count foster # 0.051
+* Token count criticized # 0.000
+* Token count thinkin # 0.051
+* Token count 626,000 # 0.000
+* Token count thanks # 0.000
+* Token count pages # 0.030
+* Token count extra7 # 0.000
+* Token count 4f # 0.000
+* Token count studios # 0.030
+* Token count revival # 0.000
+* Token count returned # 0.000
+* Token count makes # 0.000
+* Token count longplay # 0.000
+* Token count ospina # 0.051
+* Token count clearly # 0.000
+* Token count ll # 0.096
+* Token count out # 0.107
+* Token count wallonia # 0.069
+* Token count you # 0.303
+* Token count happy # 0.127
+* Token count 8 # 0.206
+* Token count being # 0.069
+* Token count rev9 # 0.000
+* Token count america # 0.127
+* Token count jann # 0.069
+* Token count oops # 0.069
+* Token count relaxed # 0.030
+* Token count young # 0.000
+* Token count 2k # 0.051
+* Token count pill # 0.000
+* Token count snappy # 0.000
+* Token count année # 0.030
+* Token count jazzy # 0.000
+* Token count extra12 # 0.000
+* Token count ref # 0.030
+* Token count mcdonald # 0.000
+* Token count negotiated # 0.000
+* Token count blues # 0.030
+* Token count teen # 0.144
+* Token count announce # 0.051
+* Token count limited # 0.083
+* Token count were # 0.136
+* Token count he # 0.083
+* Token count segments # 0.000
+* Token count slightly # 0.000
+* Token count terrific # 0.000
+* Token count having # 0.000
+* Token count av # 0.136
+* Token count chorus # 0.000
+* Token count category # 0.000
+* Token count mtv.viacom # 0.144
+* Token count food # 0.000
+* Token count magazinetitle # 0.000
+* Token count hurting # 0.000
+* Token count copenhagen # 0.000
+* Token count promoted # 0.000
+* Token count five # 0.083
+* Token count smug # 0.000
+* Token count loréal # 0.030
+* Token count saying # 0.000
+* Token count launching # 0.000
+* Token count september # 0.272
+* Token count beefy # 0.000
+* Token count rom # 0.000
+* Token count whereas # 0.030
+* Token count 43 # 0.000
+* Token count line # 0.000
+* Token count rev10 # 0.000
+* Token count denied # 0.000
+* Token count alternative # 0.000
+* Token count associates # 0.000
+* Token count single5date # 0.000
+* Token count 243 # 0.000
+* Token count bank # 0.000
+* Token count minutes # 0.000
+* Token count reviewer # 0.000
+* Token count 37,865 # 0.000
+* Token count favor # 0.000
+* Token count olds # 0.000
+* Token count role # 0.000
+* Token count met # 0.000
+* Token count requested # 0.000
+* Token count sexy # 0.000
+* Token count art # 0.000
+* Token count terms # 0.000
+* Token count amanda # 0.051
+* Token count american # 0.127
+* Token count daniel # 0.000
+* Token count sverigetopplistan # 0.030
+* Token count balladry # 0.000
+* Token count title14 # 0.030
+* Token count sonny # 0.030
+* Token count celebrity # 0.000
+* Token count fact # 0.030
+* Token count if # 0.030
+* Token count fun # 0.030
+* Token count medley # 0.000
+* Token count sweden # 0.096
+* Token count janet # 0.030
+* Token count lot # 0.000
+* Token count year # 0.238
+* Token count needed # 0.000
+* Token count distinctively # 0.000
+* Token count superstardom # 0.000
+* Token count o # 0.000
+* Token count crain # 0.000
+* Token count jackson # 0.000
+* Token count innosense # 0.030
+* Token count hitparade.ch # 0.000
+* Token count christgau # 0.051
+* Token count i # 0.300
+* Token count times # 0.083
+* Token count musica # 0.000
+* Token count recuperating # 0.000
+* Token count newslast1 # 0.000
+* Token count voted # 0.000
+* Token count just # 0.051
+* Token count influenced # 0.000
+* Token count doug # 0.000
+* Token count 1998 # 0.159
+* Token count jams # 0.000
+* Token count only # 0.030
+* Token count acoustic # 0.000
+* Token count queen # 0.030
+* Token count italian # 0.030
+* Token count ways # 0.000
+* Token count must # 0.030
+* Token count les # 0.000
+* Token count french # 0.107
+* Token count concert # 0.083
+* Token count 1968 # 0.000
+* Token count listingcollapsed # 0.083
+* Token count drugs # 0.000
+* Token count jane # 0.051
+* Token count bpi # 0.000
+* Token count 35 # 0.000
+* Token count responsible # 0.000
+* Token count canadian # 0.107
+* Token count penguin # 0.000
+* Token count allowed # 0.000
+* Token count marked # 0.000
+* Token count 8230 # 0.000
+* Token count archive # 0.069
+* Token count updated # 0.000
+* Token count mariah # 0.000
+* Token count girls # 0.051
+* Token count michael # 0.000
+* Token count appetite # 0.000
+* Token count to # 0.423
+* Token count placing # 0.030
+* Token count bbc # 0.030
+* Token count erlewine # 0.051
+* Token count 1999 # 0.526
+* Token count credited # 0.000
+* Token count producers # 0.069
+* Token count infodisc # 0.000
+* Token count off # 0.000
+* Token count kind # 0.030
+* Token count 26 # 0.096
+* Token count rolling # 0.152
+* Token count asian # 0.030
+* Token count separated # 0.000
+* Token count rianz # 0.083
+* Token count unused # 0.030
+* Token count standard # 0.051
+* Token count d.13 # 0.000
+* Token count these # 0.051
+* Token count old # 0.051
+* Token count consummate # 0.000
+* Token count hilfiger # 0.030
+* Token count album.png # 0.000
+* Token count 19-year # 0.000
+* Token count tries # 0.000
+* Token count much # 0.030
+* Token count either # 0.000
+* Token count musicline.de # 0.000
+* Token count second # 0.083
+* Token count even # 0.051
+* Token count hard # 0.000
+* Token count uge # 0.000
+* Token count volatile # 0.000
+* Token count finland # 0.000
+* Token count p. # 0.000
+* Token count direction # 0.000
+* Token count according # 0.069
+* Token count lp # 0.000
+* Token count m # 0.030
+* Token count pace # 0.030
+* Token count do # 0.096
+* Token count foreign # 0.000
+* Token count greek # 0.030
+* Token count polaroid # 0.051
+* Token count . # 0.610
+* Token count ferociously # 0.000
+* Token count shoots # 0.000
+* Token count critical # 0.051
+* Token count pink # 0.030
+* Token count imports # 0.000
+* Token count solomon # 0.000
+* Token count gibson # 0.030
+* Token count 978 # 0.069
+* Token count 121,000 # 0.000
+* Token count yahoo # 0.172
+* Token count began # 0.030
+* Token count keith # 0.030
+* Token count hot # 0.083
+* Token count 0550672 # 0.000
+* Token count successful # 0.051
+* Token count divided # 0.000
+* Token count sitcom # 0.000
+* Token count jacqueline # 0.000
+* Token count author # 0.083
+* Token count 18 # 0.107
+* Token count german # 0.096
+* Token count clean # 0.000
+* Token count coming # 0.000
+* Token count salesref # 0.051
+* Token count jay # 0.000
+* Token count billboard # 0.323
+* Token count also # 0.172
+* Token count idols # 0.000
+* Token count former # 0.000
+* Token count published # 0.000
+* Token count title10 # 0.030
+* Token count fans # 0.000
+* Token count offers # 0.000
+* Token count village # 0.000
+* Token count coyne # 0.000
+* Token count 24 # 0.159
+* Token count how # 0.051
+* Token count 1995 # 0.000
+* Token count poster # 0.000
+* Token count gesture # 0.000
+* Token count filled # 0.000
+* Token count discogs # 0.051
+* Token count inside # 0.030
+* Token count personnel # 0.000
+* Token count rousing # 0.000
+* Token count herald # 0.000
+* Token count original # 0.000
+* Token count a. # 0.000
+* Token count originally # 0.030
+* Token count had # 0.144
+* Token count along # 0.030
+* Token count upon # 0.000
+* Token count britney # 0.488
+* Token count guide # 0.030
+* Token count seventy # 0.000
+* Token count milk # 0.051
+* Token count latham # 0.000
+* Token count blend # 0.000
+* Token count 05 # 0.083
+* Token count addition # 0.000
+* Token count wore # 0.000
+* Token count rpm # 0.083
+* Token count popology # 0.000
+* Token count through # 0.118
+* Token count hawaiian # 0.000
+* Token count extra3 # 0.051
+* Token count backstage # 0.000
+* Token count backstreet # 0.069
+* Token count wanna # 0.000
+* Token count know # 0.030
+* Token count looking # 0.000
+* Token count beat # 0.096
+* Token count serve # 0.000
+* Token count university # 0.000
+* Token count single5 # 0.000
+* Token count photography # 0.069
+* Token count 108 # 0.000
+* Token count background # 0.118
+* Token count murphy # 0.000
+* Token count philip # 0.030
+* Token count engineer # 0.107
+* Token count moderately # 0.000
+* Token count cheerleader # 0.000
+* Token count additional # 0.069
+* Token count image # 0.000
+* Token count per # 0.000
+* Token count three # 0.107
+* Token count amazon.ca # 0.030
+* Token count seventh # 0.030
+* Token count gifted # 0.000
+* Token count spectacular # 0.000
+* Token count clubs # 0.000
+* Token count madonna # 0.030
+* Token count -machine # 0.000
+* Token count 2008 # 0.107
+* Token count middle # 0.000
+* Token count slowies # 0.000
+* Token count europe # 0.069
+* Token count competently # 0.000
+* Token count months # 0.051
+* Token count abuzz # 0.000
+* Token count 32 # 0.000
+* Token count france # 0.051
+* Token count refregion # 0.083
+* Token count february # 0.272
+* Token count count # 0.000
+* Token count month # 0.030
+* Token count adapted # 0.000
+* Token count changes # 0.000
+* Token count fimi.it # 0.000
+* Token count vegas # 0.000
+* Token count soundtrack # 0.030
+* Token count publisher # 0.508
+* Token count mexico # 0.000
+* Token count mostly # 0.030
+* Token count bralower # 0.000
+* Token count traveled # 0.030
+* Token count revealed # 0.030
+* Token count innocence # 0.000
+* Token count felt # 0.083
+* Token count single1 # 0.000
+* Token count candy # 0.000
+* Token count found # 0.000
+* Token count petch # 0.000
+* Token count carey # 0.000
+* Token count loving # 0.051
+* Token count stats # 0.000
+* Token count their # 0.030
+* Token count writer11 # 0.000
+* Token count cherion # 0.000
+* Token count sanchez # 0.000
+* Token count social # 0.000
+* Token count spent # 0.069
+* Token count album # 0.438
+* Token count within # 0.000
+* Token count kids # 0.000
+* Token count thompson # 0.000
+* Token count simultaneous # 0.000
+* Token count popular # 0.030
+* Token count century # 0.000
+* Token count - # 0.609
+* Token count certref # 0.030
+* Token count sestanovich # 0.000
+* Token count runs # 0.000
+* Token count booklast # 0.136
+* Token count games # 0.000
+* Token count condone # 0.000
+* Token count 02 # 0.118
+* Token count danmarks # 0.000
+* Token count andrew # 0.030
+* Token count performance # 0.030
+* Token count aloha # 0.000
+* Token count 1999-now # 0.000
+* Token count sales # 0.127
+* Token count vocals # 0.152
+* Token count gary # 0.000
+* Token count tracks # 0.051
+* Token count musique # 0.000
+* Token count audio # 0.083
+* Token count positive # 0.000
+* Token count sentimental # 0.000
+* Token count give # 0.000
+* Token count stuff # 0.000
+* Token count 41651 # 0.030
+* Token count mayfield # 0.000
+* Token count ultratop # 0.178
+* Token count note1 # 0.030
+* Token count certyear # 0.144
+* Token count 0523002 # 0.000
+* Token count crazy # 0.206
+* Token count calder # 0.000
+* Token count themes # 0.000
+* Token count 1990–99 # 0.000
+* Token count surprised # 0.000
+* Token count kiddie # 0.000
+* Token count gregoroff # 0.000
+* Token count amazon.fr # 0.030
+* Token count computer # 0.000
+* Token count infectious # 0.000
+* Token count 250,000 # 0.000
+* Token count danmark # 0.000
+* Token count billboardurlbynameartist # 0.000
+* Token count going # 0.069
+* Token count claire # 0.030
+* Token count headline # 0.083
+* Token count shapiro # 0.000
+* Token count title4 # 0.051
+* Token count dass # 0.000
+* Token count [ # 0.190
+* Token count march # 0.288
+* Token count television # 0.030
+* Token count iberautor # 0.000
+* Token count experience # 0.000
+* Token count bookfirst # 0.000
+* Token count bertelsmann # 0.051
+* Token count spoken # 0.000
+* Token count programmes # 0.000
+* Token count albumchartartist # 0.051
+* Token count break # 0.030
+* Token count corners # 0.000
+* Token count 16 # 0.107
+* Token count immediately # 0.000
+* Token count but # 0.107
+* Token count controversial # 0.000
+* Token count weblast # 0.030
+* Token count tuscaloosa # 0.030
+* Token count thriller # 0.000
+* Token count submitted # 0.030
+* Token count joey # 0.030
+* Token count favorable # 0.030
+* Token count push # 0.000
+* Token count motif # 0.000
+* Token count international # 0.107
+* Token count rev4score # 0.000
+* Token count d # 0.152
+* Token count oricon # 0.069
+* Token count totaling # 0.000
+* Token count volume # 0.069
+* Token count why # 0.030
+* Token count 2510 # 0.051
+* Token count different # 0.000
+* Token count company # 0.127
+* Token count behind # 0.051
+* Token count ten # 0.030
+* Token count talking # 0.000
+* Token count determination # 0.000
+* Token count come # 0.051
+* Token count timothy # 0.000
+* Token count including # 0.051
+* Token count critics # 0.069
+* Token count australiacertification # 0.000
+* Token count pulls # 0.000
+* Token count eleventh # 0.000
+* Token count reissue # 0.030
+* Token count nova # 0.000
+* Token count be # 0.159
+* Token count record # 0.127
+* Token count 20 # 0.118
+* Token count heavily # 0.000
+* Token count malibu # 0.000
+* Token count reader # 0.000
+* Token count features # 0.051
+* Token count salesref= # 0.000
+* Token count reid # 0.030
+* Token count student # 0.000
+* Token count tops # 0.000
+* Token count episode # 0.051
+* Token count prelude # 0.000
+* Token count keyboards # 0.069
+* Token count child # 0.000
+* Token count newstitle # 0.051
+* Token count crisis # 0.000
+* Token count austrian # 0.069
+* Token count almost # 0.000
+* Token count writer2 # 0.051
+* Token count all # 0.201
+* Token count herself # 0.000
+* Token count ask # 0.030
+* Token count spot # 0.000
+* Token count hollywood # 0.000
+* Token count amazon # 0.069
+* Token count single4 # 0.000
+* Token count houston # 0.030
+* Token count argentina # 0.000
+* Token count extra2 # 0.030
+* Token count promusicae # 0.000
+* Token count parade # 0.000
+* Token count spice # 0.000
+* Token count honolulu # 0.000
+* Token count last3 # 0.000
+* Token count 7677 # 0.000
+* Token count belgium # 0.030
+* Token count fr # 0.000
+* Token count event # 0.000
+* Token count surgery # 0.000
+* Token count hungarian # 0.069
+* Token count however # 0.051
+* Token count countries # 0.051
+* Token count netherlands # 0.030
+* Token count twenty # 0.051
+* Token count her # 0.268
+* Token count despite # 0.000
+* Token count rapports # 0.000
+* Token count francecertification # 0.000
+* Token count envisioned # 0.000
+* Token count gold # 0.083
+* Token count consecutive # 0.030
+* Token count mixed # 0.096
+* Token count ruggieri # 0.030
+* Token count issued # 0.000
+* Token count embarked # 0.051
+* Token count fourth # 0.069
+* Token count physical # 0.000
+* Token count simmons # 0.000
+* Token count making # 0.069
+* Token count 2005 # 0.051
+* Token count chartverfolgung # 0.000
+* Token count syndicat # 0.069
+* Token count stockholm # 0.030
+* Token count simon # 0.000
+* Token count nine # 0.051
+* Token count archivedate # 0.397
+* Token count wall # 0.000
+* Token count nasal # 0.030
+* Token count 99 # 0.000
+* Token count bossa # 0.000
+* Token count dancers # 0.030
+* Token count ordered # 0.000
+* Token count lottery # 0.000
+* Token count phonographique # 0.069
+* Token count oceania # 0.000
+* Token count regnery # 0.000
+* Token count rhythm # 0.069
+* Token count rovi # 0.000
+* Token count entitled # 0.000
+* Token count grenier # 0.000
+* Token count rca # 0.030
+* Token count 9–10 # 0.000
+* Token count writer4 # 0.000
+* Token count make # 0.136
+* Token count – # 0.399
+* Token count titled # 0.051
+* Token count any # 0.030
+* Token count rehearsed # 0.000
+* Token count goes # 0.096
+* Token count accessdate # 0.498
+* Token count battery # 0.000
+* Token count nigel # 0.051
+* Token count still # 0.051
+* Token count significantly # 0.000
+* Token count lee # 0.030
+* Token count 03 # 0.069
+* Token count multi # 0.000
+* Token count relationship # 0.000
+* Token count bands # 0.000
+* Token count made # 0.069
+* Token count span # 0.000
+* Token count proving # 0.030
+* Token count singaporean # 0.030
+* Token count famously # 0.000
+* Token count find # 0.000
+* Token count more # 0.483
+* Token count solace # 0.000
+* Token count nvpi # 0.000
+* Token count teenagers # 0.000
+* Token count depuis # 0.000
+* Token count edit # 0.000
+* Token count is # 0.250
+* Token count aria # 0.136
+* Token count electric # 0.051
+* Token count 280,000 # 0.000
+* Token count sheryl # 0.000
+* Token count generation # 0.000
+* Token count vocalists # 0.000
+* Token count does # 0.000
+* Token count johnson # 0.000
+* Token count writer # 0.030
+* Token count rewind # 0.000
+* Token count single4date # 0.000
+* Token count 23 # 0.211
+* Token count 85 # 0.000
+* Token count generally # 0.000
+* Token count walt # 0.000
+* Token count scope= # 0.069
+* Token count list # 0.051
+* Token count note # 0.000
+* Token count went # 0.096
+* Token count 2004 # 0.083
+* Token count or # 0.083
+* Token count single3date # 0.000
+* Token count ö3 # 0.051
+* Token count away # 0.051
+* Token count note3 # 0.030
+* Token count oldest # 0.000
+* Token count superstar # 0.000
+* Token count senior # 0.000
+* Token count divas # 0.000
+* Token count beth # 0.000
+* Token count hess # 0.000
+* Token count totally # 0.000
+* Token count 20000130 # 0.000
+* Token count 40 # 0.051
+* Token count title6 # 0.030
+* Token count performer # 0.000
+* Token count sólo # 0.000
+* Token count pr # 0.030
+* Token count daly # 0.030
+* Token count content # 0.000
+* Token count sidelined # 0.000
+* Token count writer13 # 0.030
+* Token count federation # 0.030
+* Token count rock # 0.051
+* Token count accolades # 0.000
+* Token count although # 0.000
+* Token count 500 # 0.000
+* Token count hurt # 0.000
+* Token count note14 # 0.000
+* Token count poppy # 0.000
+* Token count english # 0.000
+* Token count half # 0.000
+* Token count family # 0.030
+* Token count mixing # 0.069
+* Token count reviews # 0.096
+* Token count goodbye # 0.030
+* Token count who # 0.107
+* Token count hawaii # 0.000
+* Token count installment # 0.000
+* Token count putting # 0.000
+* Token count 2,500 # 0.000
+* Token count artists # 0.000
+* Token count jahrescharts # 0.030
+* Token count good # 0.000
+* Token count 2015 # 0.118
+* Token count knopper # 0.030
+* Token count period # 0.000
+* Token count audiences # 0.000
+* Token count opens # 0.000
+* Token count pressure # 0.000
+* Token count 1999年 # 0.000
+* Token count riak # 0.000
+* Token count president # 0.030
+* Token count , # 1.000
+* Token count grammy # 0.051
+* Token count bibliography # 0.000
+* Token count actors # 0.000
+* Token count sights # 0.000
+* Token count quick # 0.000
+* Token count right # 0.030
+* Token count 2012 # 0.242
+* Token count newslast # 0.051
+* Token count daydream # 0.000
+* Token count decade # 0.030
+* Token count note16 # 0.000
+* Token count shows # 0.030
+* Token count crow # 0.000
+* Token count not # 0.051
+* Token count honer # 0.000
+* Token count want # 0.000
+* Token count ta # 0.000
+* Token count accompanying # 0.000
+* Token count competitive # 0.000
+* Token count spearheaded # 0.000
+* Token count inflected # 0.000
+* Token count bag # 0.000
+* Token count tv # 0.083
+* Token count flashback # 0.000
+* Token count express # 0.000
+* Token count james # 0.030
+* Token count stated # 0.000
+* Token count soda # 0.051
+* Token count kissing # 0.000
+* Token count among # 0.051
+* Token count rare # 0.000
+* Token count showing # 0.000
 #FILE#/%2e%2e%2eBaby_One_More_Time_%28album%29.xml
  (ROOT)		NFP	...	
 S (none)	E	NNP	Baby	Baby One More Time
@@ -4924,14 +7092,14 @@ S (nsubj)	E	NNP	Rudolph	Larry Rudolph
  (det)		DT	a	
  (dobj)	N	NN	tape	
  (prep)		IN	of	
-S (none)	E	NNP	Britney	Britney Spears
+S (none)	E	NNP	Britney	
 _ (nsubj)	_	_	Spears	
  (pcomp)	V	VBG	singing	
  (prep)		IN	over	
  (det)		DT	a	
  (none)	E	NNP	Whitney	
  (none)	_	_	Houston	
- (compound)	N	NN	Karaoke	
+ (compound)	E	NNP	Karaoke	
  (pobj)	N	NN	song	
  (punct)	P!	,	,	
  (prep)		IN	along	
@@ -4947,7 +7115,7 @@ _ (nsubj)	_	_	Spears
  (none)	E	NNP	Toni	
  (none)	_	_	Braxton	
  (punct)	T!	.	.	
-S (none)	E	NNP	Jive	Jive Records
+S (none)	E	NNP	Jive	
 _ (nsubj)	_	_	Records	
  (ROOT)	V	VBD	was	
  (acomp)	A	JJ	interested	
@@ -4979,7 +7147,7 @@ S (nsubj)	E	NNP	Jive	Jive Records
  (compound)	N	NN	album	
  (pobj)	_	_	deal	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	traveled	
  (prep)		IN	to	
  (pobj)	E	NNP	Sweden	
@@ -5028,7 +7196,7 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (compound)	_	_	group	
  (pobj)	E	NNP	TLC	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (advmod)	A	RB	later	
  (ROOT)	V	VBD	claimed	
  (mark)		IN	that	
@@ -5056,7 +7224,7 @@ _ (nsubjpass)	_	_	album
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	completed	
  (prep)		IN	in	
- (pobj)	E	NNP	June	June
+ (pobj)	E	NNP	June	
  (nummod)	C	CD	1998	
  (punct)	P!	,	,	
  (cc)		CC	and	
@@ -5290,7 +7458,7 @@ S (nsubj)	E	PRP	She
  (none)	_	_	One	
  (none)	_	_	More	
  (none)	_	_	Time	
- (pobj)	_	_	Tour	
+ (none)	_	_	Tour	
  (prep)		IN	in	
  (pobj)	C	CD	1999	
  (punct)	P!	,	,	
@@ -5303,9 +7471,9 @@ S (nsubj)	E	PRP	She
  (compound)	N	NN	leg	
  (pobj)	_	_	title	
  (det)		DT	the	
- (none)	E	NNP	Crazy	
- (none)	_	_	2k	
- (none)	_	_	Tour	
+ (compound)	E	NNP	Crazy	
+ (compound)	_	_	2k	
+ (appos)	_	_	Tour	
  (punct)	T!	.	.	
  (punct)		NFP	...	
 S (none)	E	NNP	Baby	Baby One More Time
@@ -5324,7 +7492,7 @@ _ (nsubj)	_	_	Time
  (cc)		CC	and	
  (amod)	A	JJS	Best	
  (compound)	A	JJ	Female	
- (compound)	E	NN	Pop	Denniz Pop
+ (compound)	N	NN	Pop	
  (compound)	E	NNP	Vocal	
  (conj)	N	NN	Performance	
  (prep)		IN	for	
@@ -5498,7 +7666,7 @@ _ (nsubj)	_	_	Time
  (none)	_	_	Make	
  (nsubj)	_	_	You	
  (none)	_	_	Happy	
- (punct)	P!	:	;	
+ (punct)		:	;	
  (conj)		NNP	single4date	
  (punct)		:	;	
  (conj)		NNP	December	
@@ -5597,7 +7765,7 @@ _ (nsubj)	_	_	Time
  (conj)		NN	development	
  (punct)		:	;	
  (prep)		IN	In	
- (pobj)	E	NNP	June	June
+ (pobj)	E	NNP	June	
  (nummod)	C	CD	1997	
  (punct)	P!	,	,	
 S (nsubj)	E	NNPS	Spears	Britney Spears
@@ -5606,23 +7774,23 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (pobj)	N	NNS	talks	
  (prep)		IN	with	
  (compound)	N	NN	manager	
- (none)	E	NNP	Lou	Lou Pearlman
+ (none)	E	NNP	Lou	
  (none)	_	_	Pearlman	
  (aux)		TO	to	
  (xcomp)	V	VB	join	
  (amod)	A	JJ	female	
  (compound)	N	NN	pop	
  (compound)	_	_	group	
- (dobj)	E	NNP	Innosense	Innosense
+ (dobj)	E	NNP	Innosense	
  (punct)	T!	.	.	
-S (nsubj)	E	NNP	Lynne	Lynne Spears
+S (nsubj)	E	NNP	Lynne	
  (ROOT)	V	VBD	asked	
  (compound)	N	NN	family	
  (dobj)	_	_	friend	
  (cc)		CC	and	
  (compound)	N	NN	entertainment	
  (conj)	_	_	lawyer	
- (none)	E	NNP	Larry	Larry Rudolph
+ (none)	E	NNP	Larry	
  (none)	_	_	Rudolph	
  (prep)		IN	for	
  (poss)	E	PRP$	his	
@@ -5636,7 +7804,7 @@ S (nsubj)	E	NNP	Lynne	Lynne Spears
  (pobj)	V	VBG	singing	
  (prep)		IN	over	
  (det)		DT	a	
- (none)	E	NNP	Whitney	Whitney Houston Karaoke
+ (none)	E	NNP	Whitney	
  (none)	_	_	Houston	
  (compound)	N	NN	karaoke	
  (pobj)	_	_	song	
@@ -5667,7 +7835,7 @@ S (nsubj)	E	PRP	He
  (amod)	A	JJ	unused	
  (dobj)	N	NN	song	
  (prep)		IN	from	
- (none)	E	NNP	Toni	Toni Braxton
+ (none)	E	NNP	Toni	
  (none)	_	_	Braxton	
  (punct)	P!	:	;	
 S (nsubj)	E	PRP	she	Britney Spears
@@ -5685,7 +7853,7 @@ S (nsubj)	E	PRP	she	Britney Spears
  (amod)	A	JJ	sound	
  (pobj)	N	NN	engineer	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	traveled	
  (prep)		IN	to	
  (none)	E	NNP	New	
@@ -5749,7 +7917,7 @@ S (nsubj)	N	NNS	audiences
  (punct)	P!	,	,	
 S (nsubj)	N	NNS	executives	
  (prep)		IN	from	
- (none)	E	NNP	Jive	Jive Records
+ (none)	E	NNP	Jive	
  (none)	_	_	Records	
  (ROOT)	V	VBD	returned	
  (dobj)	N	NNS	calls	
@@ -5815,7 +7983,7 @@ S (nsubj)	E	PRP	They
  (xcomp)	V	VB	work	
  (prep)		IN	with	
  (compound)	N	NN	producer	
- (none)	E	NNP	Eric	Eric Foster White
+ (none)	E	NNP	Eric	
  (none)	_	_	Foster	
  (none)	_	_	White	
  (prep)		IN	for	
@@ -5839,7 +8007,7 @@ S (nsubj)	E	PRP	They
  (advmod)	A	RB	unmistakably	
  (pobj)	E	NNP	Britney	Britney Spears
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	recorded	
  (nummod)	C	CD	ten	
  (dobj)	N	NNS	songs	
@@ -5950,7 +8118,7 @@ _ (nsubj)	_	_	Calder
  (amod)	A	JJ	full	
  (dobj)	N	NN	album	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	flew	
  (prep)		IN	to	
  (none)	E	NNP	Cheiron	
@@ -5958,7 +8126,7 @@ S (nsubj)	E	NNS	Spears	Britney Spears
  (prep)		IN	in	
  (pobj)	E	NNP	Stockholm	
  (punct)	P!	,	,	
- (appos)	E	NNP	Sweden	Sweden
+ (appos)	E	NNP	Sweden	
  (punct)	P!	,	,	
  (advmod)	W	WRB	where	
 S (nsubjpass)	N	NN	half	
@@ -5975,13 +8143,13 @@ S (nsubjpass)	N	NN	half
  (punct)	P!	,	,	
  (prep)		IN	with	
  (compound)	N	NNS	producers	
- (none)	E	NNP	Max	Max Martin
+ (none)	E	NNP	Max	
  (none)	_	_	Martin	
  (punct)	P!	,	,	
- (none)	E	NNP	Denniz	Denniz Pop
+ (none)	E	NNP	Denniz	
  (none)	_	_	Pop	
  (cc)		CC	and	
- (none)	E	NNP	Rami	Rami Yacoub
+ (none)	E	NNP	Rami	
  (none)	_	_	Yacoub	
  (punct)	P!	,	,	
  (prep)		IN	among	
@@ -6012,8 +8180,8 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (none)	E	NNP	Rhythm	
  (none)	_	_	and	
  (none)	_	_	blues	
- (compound)	_	_	group	
- (conj)	E	NNP	TLC	TLC
+ (compound)	N	NN	group	
+ (conj)	E	NNP	TLC	
  (punct)	P!	:	;	
  (advmod)	A	RB	however	
  (punct)	P!	,	,	
@@ -6021,7 +8189,7 @@ S (nsubj)	E	PRP	they	, half
  (ROOT)	V	VBD	rejected	
  (dobj)	E	PRP	it	motivation
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (advmod)	A	RB	later	
  (ROOT)	V	VBD	claimed	
  (mark)		IN	that	
@@ -6044,7 +8212,7 @@ S (nsubj)	E	PRP	it	motivation
  (punct)	T!	.	.	
  (nsubj)		PRP	We	
  (prep)		IN	at	
- (pobj)	E	NNP	Jive	Jive Records
+ (pobj)	E	NNP	Jive	
  (ROOT)	V	VBD	said	
  (punct)	P!	,	,	
  (punct)		``	'	
@@ -6159,7 +8327,7 @@ S (nsubj)	E	PRP	she
  (punct)		''	'	
  (punct)	T!	.	.	
  (prep)		IN	By	
- (pobj)	E	NNP	June	June
+ (pobj)	E	NNP	June	
  (nummod)	C	CD	1998	
  (punct)	P!	,	,	
  (det)		DT	the	
@@ -6182,7 +8350,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
 S (none)	E	NNP	Baby	Baby One More Time
 _ (none)	_	_	One	
 _ (none)	_	_	More	
-_ (nsubj)	_	_	Time	
+_ (nsubjpass)	_	_	Time	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	as	
@@ -6191,7 +8359,7 @@ _ (nsubj)	_	_	Time
  (compound)	N	NN	debut	
  (pobj)	_	_	album	
  (prep)		IN	on	
- (pobj)	E	NNP	January	January
+ (pobj)	E	NNP	January	
  (nummod)	C	CD	12	
  (punct)	P!	,	,	
  (nummod)	C	CD	1999	
@@ -6225,7 +8393,7 @@ _ (nsubj)	_	_	Time
  (case)		POS	's	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (compound)	_	_	Sets	
+ (compound)	E	NNP	Sets	
  (conj)	_	_	Top	
  (nummod)	C	CD	40	
  (appos)	E	NNP	Abuzz	
@@ -6313,10 +8481,10 @@ _ (nsubj)	_	_	Time
  (advcl)	V	VBD	started	
  (xcomp)	V	VBG	working	
  (prep)		IN	with	
- (none)	E	NNP	Max	Max Martin
+ (none)	E	NNP	Max	
  (none)	_	_	Martin	
  (prep)		IN	in	
- (pobj)	E	NNP	Sweden	Sweden
+ (pobj)	E	NNP	Sweden	
  (punct)	P!	,	,	
 S (nsubj)	E	PRP	he	
  (ROOT)	V	VBD	played	
@@ -6389,7 +8557,7 @@ S (nsubj)	E	PRP	It
  (neg)	A	RB	never	
  (advmod)	A	RB	even	
  (ROOT)	V	VBD	saw	
- (dobj)	E	NNP	Sweden	Sweden
+ (dobj)	E	NNP	Sweden	
  (punct)	T!	.	.	
  (nsubj)		PRP	We	
  (ROOT)	V	VBD	were	
@@ -6405,7 +8573,7 @@ S (nsubj)	E	PRP	It
  (compound)	E	NNP	Chuck	
  (pobj)	_	_	Taylor	
  (prep)		IN	of	
- (pobj)	E	NNP	Billboard	Billboard 200
+ (pobj)	E	NNP	Billboard	
  (punct)	T!	.	.	
  (punct)		:	;	
  (ROOT)		NN	harvnbp	
@@ -6776,13 +8944,13 @@ S (nsubj)	N	NN	presence
  (prep)	V	VBG	According	
  (prep)		IN	to	
  (compound)	N	NN	magazine	
- (pobj)	E	NNP	Blender	Blender
+ (pobj)	E	NNP	Blender	
  (punct)	P!	,	,	
  (punct)	_	:	...	
 S (none)	E	NNP	Baby	Baby One More Time
 _ (none)	_	_	One	
 _ (none)	_	_	More	
-_ (nsubj)	_	_	Time	
+_ (nsubjpass)	_	_	Time	
  (auxpass)	V	VBZ	is	
  (ROOT)	V	VBN	composed	
  (agent)		IN	by	
@@ -6857,7 +9025,7 @@ S (nsubj)	N	NN	guide
  (appos)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
-S (nsubj)	E	NNP	Crazy	Crazy
+S (nsubj)	E	NNP	Crazy	
  (ROOT)	V	VBZ	runs	
  (prep)		IN	through	
  (det)		DT	a	
@@ -6974,7 +9142,7 @@ S (nsubj)	N	NN	song
  (amod)	A	JJ	fourth	
 S (nsubj)	N	NN	track	
  (punct)	P!	,	,	
- (none)	E	NNP	Soda	Soda Pop
+ (none)	E	NNP	Soda	
  (none)	_	_	Pop	
  (punct)	P!	,	,	
  (det)		DT	a	
@@ -6999,7 +9167,7 @@ S (nsubj)	N	NN	track
  (compound)	E	NNP	Mikey	
  (pobj)	_	_	Bassie	
  (punct)	T!	.	.	
- (poss)	E	NNS	Spears	Britney Spears
+ (poss)	E	NNP	Spears	Britney Spears
  (case)		POS	'	
 S (nsubj)	N	NNS	vocals	
  (prep)		IN	on	
@@ -7074,7 +9242,7 @@ S (nsubj)	N	NN	track
  (amod)	A	JJ	final	
  (conj)	A	JJ	single	
  (punct)	P!	,	,	
- (none)	E	NNP	From	From the Bottom of My Broken Heart
+ (none)	E	NNP	From	
  (none)	_	_	the	
  (none)	_	_	Bottom	
  (none)	_	_	of	
@@ -7090,7 +9258,7 @@ S (nsubj)	N	NN	track
  (compound)	N	NN	tempo	
  (none)	E	NNP	Teen	
  (none)	_	_	pop	
- (acomp)	_	_	ballad	
+ (acomp)	N	NN	ballad	
  (punct)	T!	.	.	
  (punct)		:	;	
  (nsubj)		PRP	I	
@@ -7101,7 +9269,7 @@ S (nsubj)	N	NN	track
  (det)		DT	a	
  (none)	E	NNP	Pop	
  (none)	_	_	rock	
- (attr)	_	_	song	
+ (attr)	N	NN	song	
  (nsubj)	W	WDT	that	
  (relcl)	V	VBZ	features	
  (det)		DT	a	
@@ -7149,9 +9317,9 @@ S (nsubj)	N	NN	track
  (amod)	A	JJ	eleventh	
  (ROOT)	N	NN	track	
  (punct)	P!	,	,	
- (compound)	E	NN	E	E
+ (compound)	N	NN	E	
  (punct)	P!	:	-	
- (appos)	E	NNP	Mail	Mail
+ (appos)	E	NNP	Mail	
  (poss)		PRP$	My	
 S (nsubj)	N	NN	Heart	
  (punct)	P!	,	,	
@@ -7164,7 +9332,7 @@ S (nsubj)	N	NN	Heart
  (compound)	E	NNP	Spears	Britney Spears
  (relcl)	N	NNS	sings	
  (punct)	P!	,	,	
- (compound)	E	NN	E	E
+ (compound)	N	NN	E	
  (punct)		HYPH	-	
  (compound)	N	NN	mail	
  (punct)		PRP	me	
@@ -7180,7 +9348,7 @@ S (nsubj)	N	NN	love
  (det)		DT	The	
  (ROOT)	N	NN	cover	
  (prep)		IN	of	
- (none)	E	NNP	Sonny	Sonny & Cher
+ (none)	E	NNP	Sonny	
  (none)	_	_	&	
  (none)	_	_	Cher	
  (case)		POS	's	
@@ -7217,7 +9385,7 @@ S (nsubj)	N	NN	love
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (nsubj)	_	_	Baby	
+ (nsubj)	E	NNP	Baby	
  (none)	_	_	One	
  (none)	_	_	More	
  (none)	_	_	Time	
@@ -7327,14 +9495,14 @@ S (nsubj)	N	NN	love
  (punct)	P!	:	;	
  (conj)		NN	title	
  (punct)		:	;	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)	P!	-LRB-	(	
  (compound)		PRP	You	
  (parataxis)	V	VBP	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (compound)	E	NNP	Crazy	Crazy
+ (compound)	E	NNP	Crazy	
  (punct)		HYPH	–	
  (compound)	E	NNP	Sheet	
  (ROOT)	_	_	Music	
@@ -7558,10 +9726,10 @@ S (nsubj)	N	NN	love
  (nsubj)	_	_	You	
  (none)	_	_	Happy	
  (punct)		HYPH	–	
- (compound)	E	NNP	Digital	
- (compound)	_	_	Sheet	
- (dobj)	_	_	Music	
- (punct)	P!	:	;	
+ (none)	E	NNP	Digital	
+ (none)	_	_	Sheet	
+ (none)	_	_	Music	
+ (punct)		:	;	
  (conj)		NN	work	
  (punct)		:	;	
  (none)	E	NNP	Music	
@@ -7600,7 +9768,7 @@ S (nsubj)	N	NN	love
  (punct)	P!	:	;	
  (dep)		NN	title	
  (punct)		:	;	
-S (none)	E	NNP	Britney	Britney Spears
+S (none)	E	NNP	Britney	
 _ (nsubj)	_	_	Spears	
  (conj)	V	VBZ	Goes	
  (advmod)	A	RB	Back	
@@ -7710,7 +9878,7 @@ _ (nsubj)	_	_	Spears
  (punct)		:	:	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (none)	_	_	Flashback	
+ (none)	E	NNP	Flashback	
  (punct)		:	;	
  (appos)		NN	author	
  (punct)		:	;	
@@ -7759,17 +9927,17 @@ _ (nsubj)	_	_	Spears
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (prep)		IN	From	
- (det)		DT	The	
- (pobj)		NN	Bottom	
- (prep)		IN	Of	
- (poss)		PRP$	My	
- (compound)		NNP	Broken	
- (nmod)		NNP	Heart	
+ (none)	E	NNP	From	
+ (none)	_	_	The	
+ (none)	_	_	Bottom	
+ (none)	_	_	Of	
+ (none)	_	_	My	
+ (none)	_	_	Broken	
+ (none)	_	_	Heart	
  (punct)		HYPH	–	
- (compound)		NNP	Digital	
- (compound)		NNP	Sheet	
- (pobj)		NNP	Music	
+ (none)	E	NNP	Digital	
+ (none)	_	_	Sheet	
+ (none)	_	_	Music	
  (punct)		:	;	
  (conj)		NN	work	
  (punct)		:	;	
@@ -7866,14 +10034,14 @@ _ (nsubj)	_	_	Spears
  (cc)		CC	and	
  (conj)		NN	promotion	
  (punct)		:	;	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBG	performing	
  (punct)	P!	-LRB-	(	
  (nsubj)		PRP	You	
  (parataxis)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (prep)		IN	at	
  (poss)	E	PRP$	her	
  (compound)	E	NNP	Las	
@@ -7896,16 +10064,16 @@ S (nsubj)	E	NNS	Spears	Britney Spears
 S (none)	E	NNP	Baby	Baby One More Time
 _ (none)	_	_	One	
 _ (none)	_	_	More	
-_ (nsubj)	_	_	Time	
+_ (nsubjpass)	_	_	Time	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	in	
- (none)	E	NNP	North	
- (none)	_	_	America	
+ (compound)	E	NNP	North	
+ (pobj)	_	_	America	
  (cc)		CC	and	
  (conj)	E	NNP	Philippines	
  (prep)		IN	on	
- (pobj)	E	NNP	January	January
+ (pobj)	E	NNP	January	
  (nummod)	C	CD	12	
  (punct)	P!	,	,	
  (appos)	C	CD	1999	
@@ -7921,7 +10089,7 @@ _ (nsubj)	_	_	Time
  (cc)		CC	and	
  (conj)	E	NNP	Oceania	
  (prep)		IN	on	
- (pobj)	E	NNP	March	March
+ (pobj)	E	NNP	March	
  (nummod)	C	CD	8	
  (punct)	T!	.	.	
  (det)		DT	The	
@@ -7931,9 +10099,9 @@ S (nsubj)	N	NN	album
  (punct)		HYPH	-	
  (punct)	V	VBN	released	
  (ROOT)		IN	in	
- (pobj)	E	NNP	Europe	Europe
+ (pobj)	E	NNP	Europe	
  (prep)		IN	on	
- (pobj)	E	NNP	June	June
+ (pobj)	E	NNP	June	
  (nummod)	C	CD	30	
  (punct)	P!	,	,	
  (appos)	C	CD	2003	
@@ -7979,7 +10147,7 @@ S (nsubjpass)	E	PRP	it	Baby One More Time
 S (none)	E	NNP	Baby	Baby One More Time
 _ (none)	_	_	One	
 _ (none)	_	_	More	
-_ (nsubj)	_	_	Time	
+_ (nsubjpass)	_	_	Time	
  (aux)	m	MD	would	
  (auxpass)	V	VB	be	
  (ccomp)	V	VBN	released	
@@ -8013,7 +10181,7 @@ S (nsubj)	N	NN	Promotion
  (pobj)	C	CD	1998	
  (punct)	P!	,	,	
  (advmod)	W	WRB	when	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (relcl)	V	VBD	did	
  (det)		DT	a	
  (amod)	A	JJ	small	
@@ -8032,7 +10200,7 @@ S (nsubj)	E	NNS	Spears	Britney Spears
  (pobj)	N	NNS	cities	
  (prep)		IN	around	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (cc)		CC	and	
  (conj)	E	NNP	Canada	
@@ -8064,9 +10232,9 @@ _ (nsubjpass)	_	_	tour
  (ROOT)	V	VBN	known	
  (prep)		IN	as	
  (det)		DT	the	
- (none)	E	NNP	L'Oréal	
- (none)	_	_	Mall	
- (none)	_	_	Tour	
+ (compound)	E	NNP	L'Oréal	
+ (compound)	_	_	Mall	
+ (pobj)	_	_	Tour	
  (punct)	P!	,	,	
  (prep)		IN	after	
  (poss)	E	PRP$	its	vinyl
@@ -8089,7 +10257,7 @@ S (nsubj)	N	NN	singer
  (pobj)	N	NN	world	
  (punct)	T!	.	.	
  (prep)		IN	In	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	1998	
  (punct)	P!	,	,	
 S (nsubj)	E	NNPS	Spears	Britney Spears
@@ -8098,7 +10266,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	showed	
  (prt)	_	RP	up	
  (prep)		IN	on	
- (pobj)	E	NNP	MTV	MTV
+ (pobj)	E	NNP	MTV	
  (case)		POS	's	
  (cc)		CC	and	
  (det)		DT	the	
@@ -8117,12 +10285,12 @@ S (nsubj)	E	PRP	She	Britney Spears
  (det)		DT	the	
  (none)	E	NNP	Ricki	
  (none)	_	_	Lake	
- (pobj)	_	_	Show	
+ (pobj)	E	NNP	Show	
  (punct)	P!	,	,	
  (det)		DT	the	
  (none)	E	NNP	Howie	
  (none)	_	_	Mandel	
- (appos)	_	_	Show	
+ (appos)	E	NNP	Show	
  (punct)	P!	,	,	
  (cc)		CC	and	
  (conj)	V	VBD	was	
@@ -8148,7 +10316,7 @@ S (nsubj)	N	NN	singer
  (advmod)	A	RB	also	
  (ROOT)	V	VBD	appeared	
  (prep)		IN	on	
- (poss)	E	NNP	MTV	MTV
+ (poss)	E	NNP	MTV	
  (case)		POS	's	
  (none)	E	NNP	Spring	
  (none)	_	_	break	
@@ -8218,7 +10386,7 @@ S (nsubj)	N	NN	singer
  (pobj)	E	NNP	May	
  (nummod)	C	CD	1	
  (punct)	P!	,	,	
- (poss)	E	NNP	MTV	MTV
+ (poss)	E	NNP	MTV	
  (case)		POS	's	
  (pobj)	N	NN	FANatic	
  (prep)		IN	on	
@@ -8227,19 +10395,19 @@ S (nsubj)	N	NN	singer
  (punct)	P!	,	,	
  (advcl)	V	VB	Live	
  (prep)		IN	with	
- (pobj)	E	NNP	Regis	Regis
+ (pobj)	E	NNP	Regis	
  (cc)		CC	and	
- (conj)	E	NNP	Kathie	Kathie Lee
+ (conj)	E	NNP	Kathie	
  (conj)	_	_	Lee	
  (prep)		IN	on	
  (pobj)	E	NNP	May	
  (nummod)	C	CD	3	
  (punct)	P!	,	,	
  (cc)		CC	and	
- (none)	E	NNP	The	
- (none)	_	_	Rosie	
- (none)	_	_	O'Donnell	
- (none)	_	_	Show	
+ (det)		DT	The	
+ (compound)	E	NNP	Rosie	
+ (compound)	_	_	O'Donnell	
+ (conj)	_	_	Show	
  (prep)		IN	on	
  (pobj)	E	NNP	May	
  (nummod)	C	CD	25	
@@ -8247,7 +10415,7 @@ S (nsubj)	N	NN	singer
  (punct)		:	;	
  (prep)		IN	Outside	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (punct)	P!	,	,	
 S (nsubj)	E	NNPS	Spears	Britney Spears
@@ -8266,7 +10434,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (none)	_	_	the	
  (none)	_	_	Pops	
  (prep)		IN	on	
- (pobj)	E	NNP	June	June
+ (pobj)	E	NNP	June	
  (nummod)	C	CD	25	
  (punct)	P!	,	,	
  (appos)	C	CD	1999	
@@ -8308,10 +10476,10 @@ S (nsubj)	E	PRP	She	Britney Spears
  (punct)	T!	.	!	
  (ROOT)		UH	Hey	
  (punct)	T!	.	!	
- (compound)	E	NN	Music	Sheet Music
+ (compound)	N	NN	Music	
  (ROOT)	E	NNP	Champ	
  (prep)		IN	in	
- (pobj)	E	NNP	Japan	Japan
+ (pobj)	E	NNP	Japan	
  (punct)	P!	,	,	
  (cc)		CC	and	
  (conj)	V	VBD	performed	
@@ -8322,7 +10490,7 @@ S (nsubj)	E	PRP	She	Britney Spears
  (prep)		IN	in	
  (pobj)	E	NNP	Italy	
  (punct)	T!	.	.	
-S (nsubjpass)	E	NNS	Spears	Britney Spears
+S (nsubjpass)	E	NNP	Spears	Britney Spears
  (auxpass)	V	VBD	was	
  (advmod)	A	RB	also	
  (ROOT)	V	VBN	featured	
@@ -8344,7 +10512,7 @@ S (nsubj)	E	PRP	she	Britney Spears
  (relcl)	V	VBD	played	
  (dobj)		PRP	herself	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (aux)	V	VBD	was	
  (ROOT)	V	VBG	returning	
  (det)		DT	a	
@@ -8370,7 +10538,7 @@ S (nsubj)	E	NNS	Spears	Britney Spears
  (parataxis)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (punct)	P!	,	,	
  (intj)	V	VBG	according	
  (prep)		IN	to	
@@ -8392,12 +10560,12 @@ S (nsubj)	E	NNS	Spears	Britney Spears
 S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBN	performed	
  (prep)		IN	on	
- (none)	E	NNP	The	The Rosie O'Donnell Show
- (none)	_	_	Rosie	
- (none)	_	_	O'Donnell	
- (none)	_	_	Show	
+ (det)		DT	The	
+ (compound)	E	NNP	Rosie	
+ (compound)	_	_	O'Donnell	
+ (pobj)	_	_	Show	
  (prep)		IN	on	
- (pobj)	E	NNP	September	September
+ (pobj)	E	NNP	September	
  (nummod)	C	CD	27	
  (punct)	P!	,	,	
  (cc)		CC	and	
@@ -8405,7 +10573,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (none)	E	NNP	Carson	
  (none)	_	_	Daly	
  (prep)		IN	on	
- (poss)	E	NNP	MTV	MTV
+ (poss)	E	NNP	MTV	
  (case)		POS	's	
  (none)	E	NNP	Total	
  (none)	_	_	Request	
@@ -8425,7 +10593,7 @@ S (nsubj)	E	PRP	She	Britney Spears
  (none)	_	_	Company	
  (dobj)	N	NN	concert	
  (acl)	V	VBD	titled	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (cc)		CC	&	
  (none)	E	NNP	Joey	
@@ -8435,7 +10603,7 @@ S (nsubj)	E	PRP	She	Britney Spears
  (punct)	T!	.	.	
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (cc)		CC	and	
- (none)	E	NNP	Joey	Joey McIntyre
+ (none)	E	NNP	Joey	
  (none)	_	_	McIntyre	
  (ROOT)	V	VBD	performed	
  (advmod)	A	RB	live	
@@ -8446,7 +10614,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (pobj)	_	_	event	
  (punct)	T!	.	.	
  (prep)		IN	In	
- (pobj)	E	NNP	November	November
+ (pobj)	E	NNP	November	
  (punct)	P!	,	,	
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	performed	
@@ -8478,14 +10646,14 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (prep)		IN	at	
  (det)		DT	the	
  (nummod)	C	CD	2000	
- (compound)	E	NNP	American	American Music Awards
+ (compound)	E	NNP	American	
  (compound)	_	_	Music	
  (pobj)	_	_	Awards	
  (punct)	P!	,	,	
  (cc)		CC	and	
  (advmod)	A	RB	also	
  (conj)	V	VBD	performed	
- (none)	E	NNP	From	From the Bottom of My Broken Heart
+ (none)	E	NNP	From	
  (none)	_	_	the	
  (none)	_	_	Bottom	
  (none)	_	_	of	
@@ -8503,7 +10671,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (none)	_	_	Time	
  (prep)		IN	at	
  (det)		DT	the	
- (none)	E	NNP	42nd	42nd Annual Grammy Awards
+ (none)	E	NNP	42nd	
  (none)	_	_	Annual	
  (none)	_	_	Grammy	
  (none)	_	_	Awards	
@@ -8575,7 +10743,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (punct)		:	;	
  (appos)		NN	title	
  (punct)		:	;	
-S (none)	E	NNP	Britney	Britney Spears
+S (none)	E	NNP	Britney	
 _ (nsubj)	_	_	Spears	
  (ROOT)	V	VBN	Sidelined	
  (prep)		IN	With	
@@ -8629,7 +10797,7 @@ _ (nsubj)	_	_	Spears
  (punct)		:	;	
  (appos)		NN	title	
  (punct)		:	;	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (appos)	A	JJ	Ready	
  (aux)		TO	To	
@@ -8687,11 +10855,11 @@ _ (nsubj)	_	_	Spears
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)		:	:	
- (ROOT)		IN	In	
- (pobj)		NNP	Drag	
- (cc)		CC	And	
- (prep)		IN	On	
- (pobj)		NN	TV	
+ (none)	E	NNP	In	
+ (none)	_	_	Drag	
+ (none)	_	_	And	
+ (none)	_	_	On	
+ (none)	_	_	TV	
  (punct)		:	;	
  (ROOT)		NN	date	
  (punct)		:	;	
@@ -8740,7 +10908,7 @@ _ (nsubj)	_	_	Spears
  (punct)		:	;	
  (appos)		NN	title	
  (punct)		:	;	
-S (none)	E	NNP	Britney	Britney Spears
+S (none)	E	NNP	Britney	
 _ (nsubj)	_	_	Spears	
  (ROOT)	V	VBZ	Is	
  (advmod)		DT	All	
@@ -8850,7 +11018,7 @@ _ (nsubj)	_	_	Spears
 S (none)	E	NNP	Baby	Baby One More Time
 _ (none)	_	_	One	
 _ (none)	_	_	More	
-_ (nsubj)	_	_	Time	
+_ (nsubjpass)	_	_	Time	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	as	
@@ -8859,13 +11027,13 @@ _ (nsubj)	_	_	Time
  (amod)	N	NN	debut	
  (pobj)	A	JJ	single	
  (prep)		IN	on	
- (pobj)	E	NNP	October	October
+ (pobj)	E	NNP	October	
  (nummod)	C	CD	23	
  (punct)	P!	,	,	
  (nummod)	C	CD	1998	
  (punct)	T!	.	.	
  (det)		DT	The	
-S (nsubj)	E	NN	song	Pop rock song
+S (nsubj)	N	NN	song	
  (ROOT)	V	VBD	received	
  (advmod)	A	RB	generally	
  (amod)	A	JJ	favorable	
@@ -8894,7 +11062,7 @@ _ (nsubj)	_	_	Time
  (amod)	A	JJ	European	
  (pobj)	N	NN	country	
  (advmod)	W	WRB	where	
-S (nsubj)	E	PRP	it	Pop rock song
+S (nsubj)	E	PRP	it	song
  (relcl)	V	VBD	charted	
  (punct)	T!	.	.	
 S (nsubj)	E	PRP	It	Baby One More Time
@@ -8978,7 +11146,7 @@ S (nsubj)	E	PRP	she
 S (none)	E	NNP	Baby	Baby One More Time
 _ (none)	_	_	One	
 _ (none)	_	_	More	
-_ (nsubj)	_	_	Time	
+_ (nsubjpass)	_	_	Time	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	voted	
  (det)		DT	the	
@@ -9003,7 +11171,7 @@ _ (nsubj)	_	_	Time
  (amod)	A	JJ	second	
  (pobj)	N	NN	single	
  (prep)		IN	on	
- (pobj)	E	NNP	April	April
+ (pobj)	E	NNP	April	
  (nummod)	C	CD	30	
  (punct)	P!	,	,	
  (nummod)	C	CD	1999	
@@ -9020,7 +11188,7 @@ _ (nsubj)	_	_	Time
  (prep)		IN	on	
  (none)	E	NNP	Ultratop	
  (none)	_	_	Flanders	
- (pobj)	_	_	Singles	
+ (pobj)	E	NNP	Singles	
  (prep)		IN	in	
  (pobj)	E	NNP	Belgium	
  (punct)	P!	,	,	
@@ -9048,7 +11216,7 @@ _ (nsubj)	_	_	Time
  (punct)	T!	.	.	
  (prep)		IN	In	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (punct)	P!	,	,	
  (advmod)	A	RB	Sometimes	
@@ -9075,18 +11243,18 @@ S (compound)	N	NN	music
 _ (nsubjpass)	_	_	video	
  (prep)		IN	for	
  (det)		DT	the	
- (pobj)	E	NN	song	Pop rock song
+ (pobj)	N	NN	song	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	directed	
  (agent)		IN	by	
- (none)	E	NNP	Nigel	Nigel Dick
+ (none)	E	NNP	Nigel	
  (none)	_	_	Dick	
  (punct)	T!	.	.	
  (prep)		IN	During	
  (pobj)	N	NNS	rehearsals	
  (punct)	P!	,	,	
  (prep)		IN	on	
- (pobj)	E	NNP	February	February
+ (pobj)	E	NNP	February	
  (nummod)	C	CD	11	
  (punct)	P!	,	,	
  (appos)	C	CD	1999	
@@ -9103,7 +11271,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (prep)		IN	After	
  (pcomp)	V	VBG	recuperating	
  (prep)		IN	in	
- (pobj)	E	NNP	Kentwood	Kentwood
+ (pobj)	E	NNP	Kentwood	
  (punct)	P!	,	,	
  (conj)	E	NNP	Louisiana	
  (punct)	P!	,	,	
@@ -9130,23 +11298,23 @@ S (nsubjpass)	E	PRP	It	music video
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	on	
- (pobj)	E	NNP	May	May
+ (pobj)	E	NNP	May	
  (nummod)	C	CD	6	
  (punct)	P!	,	,	
  (nummod)	C	CD	1999	
  (punct)	P!	,	,	
  (prep)		IN	on	
- (poss)	E	NNP	MTV	MTV
+ (poss)	E	NNP	MTV	
  (case)		POS	's	
- (none)	E	NNP	Total	Total Request Live
+ (none)	E	NNP	Total	
  (none)	_	_	Request	
  (none)	_	_	Live	
  (punct)	T!	.	.	
  (prep)		IN	In	
- (pobj)	E	NNP	May	May
+ (pobj)	E	NNP	May	
  (nummod)	C	CD	1999	
  (punct)	P!	,	,	
-S (none)	E	NNP	Max	Max Martin
+S (none)	E	NNP	Max	
 _ (nsubj)	_	_	Martin	
  (cc)		CC	and	
 S (conj)	E	NNPS	Spears	Britney Spears
@@ -9172,7 +11340,7 @@ S (conj)	E	NNPS	Spears	Britney Spears
  (parataxis)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (punct)	P!	,	,	
  (prep)		IN	for	
  (det)		DT	a	
@@ -9206,12 +11374,12 @@ S (conj)	E	NNPS	Spears	Britney Spears
  (punct)	P!	-RRB-	)	
  (punct)	T!	.	.	
  (det)		DT	The	
- (ROOT)	E	NNP	Stop	Stop
+ (ROOT)	E	NNP	Stop	
  (punct)	T!	.	!	
  (nsubjpass)		IN	Remix	
  (prep)		IN	of	
  (det)		DT	the	
- (pobj)	E	NN	song	Pop rock song
+ (pobj)	N	NN	song	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	as	
@@ -9221,7 +11389,7 @@ S (conj)	E	NNPS	Spears	Britney Spears
  (amod)	A	JJ	third	
  (pobj)	A	JJ	single	
  (prep)		IN	on	
- (pobj)	E	NNP	August	August
+ (pobj)	E	NNP	August	
  (nummod)	C	CD	23	
  (punct)	P!	,	,	
  (npadvmod)	C	CD	1999	
@@ -9237,7 +11405,7 @@ S (nsubj)	N	NN	remix
  (advmod)	W	WRB	where	
 S (nsubj)	E	NNP	Spears	Britney Spears
  (relcl)	V	VBZ	yells	
- (dobj)	E	NNP	Stop	Stop
+ (dobj)	E	NNP	Stop	
  (punct)	T!	.	!	
  (punct)	P!	,	,	
  (advmod)	A	RB	then	
@@ -9277,13 +11445,13 @@ _ (nsubjpass)	_	_	video
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	directed	
  (agent)		IN	by	
- (none)	E	NNP	Nigel	Nigel Dick
+ (none)	E	NNP	Nigel	
  (none)	_	_	Dick	
  (punct)	P!	,	,	
  (cc)		CC	and	
  (conj)	A	JJ	featured	
  (dobj)	N	NNS	actors	
- (none)	E	NNP	Melissa	Melissa Joan Hart
+ (none)	E	NNP	Melissa	
  (none)	_	_	Joan	
  (none)	_	_	Hart	
  (cc)		CC	and	
@@ -9291,7 +11459,7 @@ _ (nsubjpass)	_	_	video
  (none)	_	_	Grenier	
  (punct)	T!	.	.	
  (punct)		:	;	
-S (none)	E	NNP	Born	Born to Make You Happy
+S (none)	E	NNP	Born	
 _ (none)	_	_	to	
 _ (none)	_	_	Make	
 _ (nsubj)	_	_	You	
@@ -9299,7 +11467,7 @@ _ (none)	_	_	Happy
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	on	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	6	
  (punct)	P!	,	,	
  (npadvmod)	C	CD	1999	
@@ -9318,7 +11486,7 @@ _ (none)	_	_	Happy
  (pobj)	_	_	critics	
  (punct)	T!	.	.	
  (det)		DT	The	
-S (nsubj)	E	NN	song	Pop rock song
+S (nsubj)	N	NN	song	
  (ROOT)	V	VBD	achieved	
  (amod)	A	JJ	commercial	
  (dobj)	N	NN	success	
@@ -9355,7 +11523,7 @@ _ (nsubjpass)	_	_	video
  (none)	_	_	Robson	
  (punct)	T!	.	.	
  (punct)		:	;	
- (none)	E	NNP	From	From the Bottom of My Broken Heart
+ (none)	E	NNP	From	
  (none)	_	_	the	
  (none)	_	_	Bottom	
  (none)	_	_	of	
@@ -9365,7 +11533,7 @@ _ (nsubjpass)	_	_	video
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	on	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	15	
  (punct)	P!	,	,	
  (nummod)	C	CD	1999	
@@ -9376,7 +11544,7 @@ _ (nsubjpass)	_	_	video
  (pobj)	N	NN	single	
  (punct)	T!	.	.	
  (det)		DT	The	
-S (nsubj)	E	NN	song	Pop rock song
+S (nsubj)	N	NN	song	
  (advmod)	A	RB	also	
  (ROOT)	V	VBD	received	
  (amod)	A	JJ	mixed	
@@ -9384,7 +11552,7 @@ S (nsubj)	E	NN	song	Pop rock song
  (punct)	P!	,	,	
  (advcl)	V	VBG	finding	
  (det)		DT	the	
-S (nsubj)	E	NN	song	Pop rock song
+S (nsubj)	N	NN	song	
  (det)		DT	a	
  (amod)	A	JJ	classic	
  (ccomp)	N	NN	hit	
@@ -9398,14 +11566,14 @@ S (nsubj)	E	NN	song	Pop rock song
  (prep)		IN	as	
  (det)		DT	an	
  (amod)	A	JJ	unremarkable	
- (pobj)	E	NN	song	Pop rock song
+ (pobj)	N	NN	song	
  (nsubj)	W	WDT	that	
  (relcl)	V	VBZ	refers	
  (advmod)	A	RB	only	
  (aux)		IN	to	
  (xcomp)	V	VBG	kissing	
  (punct)	T!	.	.	
-S (none)	E	NNP	From	From the Bottom of My Broken Heart
+S (none)	E	NNP	From	
 _ (none)	_	_	the	
 _ (none)	_	_	Bottom	
 _ (none)	_	_	of	
@@ -9430,14 +11598,14 @@ _ (none)	_	_	Heart
  (punct)		HYPH	-	
  (conj)	C	CD	three	
  (prep)		IN	in	
- (none)	E	NNP	New	New Zealand
+ (none)	E	NNP	New	
  (none)	_	_	Zealand	
  (punct)	T!	.	.	
  (prep)		IN	Through	
  (pobj)	N	NNS	imports	
  (punct)	P!	,	,	
  (det)		DT	the	
-S (nsubj)	E	NN	song	Pop rock song
+S (nsubj)	N	NN	song	
  (ROOT)	V	VBD	reached	
  (nummod)	C	CD	one	
  (nummod)	C	CD	hundred	
@@ -9446,15 +11614,15 @@ S (nsubj)	E	NN	song	Pop rock song
  (dobj)	C	CD	four	
  (prep)		IN	in	
  (det)		DT	the	
- (none)	E	NNP	United	United Kingdom
+ (none)	E	NNP	United	
  (none)	_	_	Kingdom	
  (punct)	T!	.	.	
  (prep)		IN	In	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (punct)	P!	,	,	
- (none)	E	NNP	From	From the Bottom of My Broken Heart
+ (none)	E	NNP	From	
  (none)	_	_	the	
  (none)	_	_	Bottom	
  (none)	_	_	of	
@@ -9465,7 +11633,7 @@ S (nsubj)	E	NN	song	Pop rock song
  (dobj)	N	NN	number	
  (nummod)	C	CD	fourteen	
  (prep)		IN	on	
- (none)	E	NNP	Billboard	Billboard Hot 100
+ (none)	E	NNP	Billboard	
  (none)	_	_	Hot	
  (none)	_	_	100	
  (punct)	P!	,	,	
@@ -9482,16 +11650,16 @@ S (nsubj)	E	NN	song	Pop rock song
  (dobj)	E	NNP	Platinum	
  (agent)		IN	by	
  (det)		DT	the	
- (none)	E	NNP	Recording	Recording Industry Association of America
+ (none)	E	NNP	Recording	
  (none)	_	_	Industry	
  (none)	_	_	Association	
  (none)	_	_	of	
  (none)	_	_	America	
  (punct)	P!	-LRB-	(	
- (appos)	E	NNP	RIAA	RIAA
+ (appos)	E	NNP	RIAA	
  (punct)	P!	-RRB-	)	
  (prep)		IN	on	
- (pobj)	E	NNP	March	March
+ (pobj)	E	NNP	March	
  (nummod)	C	CD	28	
  (punct)	P!	,	,	
  (nummod)	C	CD	2000	
@@ -9518,7 +11686,7 @@ _ (nsubjpass)	_	_	video
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	on	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	17	
  (punct)	P!	,	,	
  (npadvmod)	C	CD	1999	
@@ -9665,12 +11833,12 @@ _ (nsubj)	_	_	gang
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (conj)		NNPS	Shoots	
- (prep)		IN	For	
- (pobj)		NNP	Fun	
- (prep)		IN	With	
- (compound)		NNP	Video	
- (pobj)		NNP	Debut	
+ (none)	E	NNP	Shoots	
+ (none)	_	_	For	
+ (none)	_	_	Fun	
+ (none)	_	_	With	
+ (none)	_	_	Video	
+ (none)	_	_	Debut	
  (punct)		:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -9834,7 +12002,7 @@ S (nsubj)	E	NNP	Thriller
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (none)	_	_	Billboard	
+ (none)	E	NNP	Billboard	
  (none)	_	_	Charts	
  (punct)		:	;	
  (conj)		NN	accessdate	
@@ -9873,7 +12041,7 @@ S (nsubj)	E	NNP	Thriller
  (compound)	E	NNP	Will	
  (appos)	_	_	Smith	
  (punct)	P!	,	,	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)	P!	,	,	
  (compound)	E	NNP	Jennifer	
@@ -9979,14 +12147,14 @@ S (nsubj)	E	NNP	Thriller
  (punct)	P!	:	;	
  (dep)		NN	title	
  (punct)		:	;	
-S (nsubj)	E	NN	Britney	Britney Spears
+S (nsubj)	E	NNP	Britney	Britney Spears
  (appos)	V	VBG	shooting	
  (punct)		``	'	
  (advmod)	A	RB	Sometimes	
  (punct)		''	'	
  (dobj)	N	NN	video	
  (prep)		IN	in	
- (pobj)	E	NNP	April	April
+ (pobj)	E	NNP	April	
  (nummod)	C	CD	1999	
  (punct)	P!	:	;	
  (conj)		NN	publisher	
@@ -10038,12 +12206,12 @@ S (nsubj)	E	NN	Britney	Britney Spears
  (appos)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (punct)	P!	-LRB-	[	
  (det)		DT	The	
- (ROOT)	E	NNP	Stop	Stop
+ (ROOT)	E	NNP	Stop	
  (punct)	T!	.	!	
- (dep)	E	NN	Remix	Remix
+ (dep)	N	NN	Remix	
  (punct)	P!	:	;	
  (appos)	N	NN	year	
  (punct)	P!	:	;	
@@ -10051,7 +12219,7 @@ S (nsubj)	E	NN	Britney	Britney Spears
  (punct)	P!	:	;	
  (conj)	N	NNS	others	
  (punct)	P!	:	;	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)	P!	:	;	
  (conj)	N	NN	publisher	
@@ -10076,11 +12244,11 @@ S (nsubj)	E	NN	Britney	Britney Spears
  (none)	E	NNP	Drive	
  (none)	_	_	Me	
  (none)	_	_	Crazy	
- (punct)	P!	-LRB-	(	
- (nummod)	C	CD	1999	
- (appos)	E	NNP	Film	
- (punct)	P!	-RRB-	)	
- (punct)	_	:	:	
+ (punct)		-LRB-	(	
+ (nummod)		CD	1999	
+ (appos)		NNP	Film	
+ (punct)		-RRB-	)	
+ (punct)		:	:	
  (none)	E	NNP	Various	
  (nsubj)	_	_	Artists	
  (punct)		HYPH	–	
@@ -10114,7 +12282,7 @@ S (nsubj)	E	NN	Britney	Britney Spears
  (punct)	P!	:	;	
  (dep)		NN	title	
  (punct)		:	;	
-S (none)	E	NNP	Britney	Britney Spears
+S (none)	E	NNP	Britney	
 _ (nsubj)	_	_	Spears	
  (appos)	V	VBD	Wanted	
  (punct)		''	'	
@@ -10123,7 +12291,7 @@ _ (nsubj)	_	_	Spears
  (parataxis)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (poss)	E	NNP	Crazy	Crazy
+ (poss)	E	NNP	Crazy	
  (case)		POS	'	
  (ROOT)	N	NN	Video	
  (aux)		TO	To	
@@ -10182,7 +12350,7 @@ _ (nsubj)	_	_	Spears
  (punct)	P!	:	;	
  (appos)		NN	title	
  (punct)		:	;	
- (appos)	E	NNP	Swedishcharts.com	
+ (none)	E	NNP	Swedishcharts.com	
  (punct)		HYPH	–	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
@@ -10192,7 +12360,7 @@ _ (nsubj)	_	_	Spears
  (none)	_	_	Make	
  (nsubj)	_	_	You	
  (none)	_	_	Happy	
- (punct)	P!	:	;	
+ (punct)		:	;	
  (appos)		NN	publisher	
  (punct)		:	;	
  (conj)		NNP	Ultratop	
@@ -10389,11 +12557,11 @@ _ (nsubj)	_	_	Spears
  (punct)	P!	:	;	
  (conj)		NN	title	
  (punct)		:	;	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (ROOT)		TO	To	
  (compound)	V	VB	Announce	
- (pobj)	E	NNP	Tour	L'Oréal Mall Tour
+ (pobj)	E	NNP	Tour	
  (prep)		IN	With	
  (pobj)	E	NNP	LFO	
  (punct)	P!	:	;	
@@ -10718,7 +12886,7 @@ _ (nsubj)	_	_	Spears
  (none)	_	_	Weekly	
  (punct)		.	.	
  (none)	E	NNP	Time	
- (nsubj)	_	_	Inc	
+ (nsubjpass)	_	_	Inc	
  (punct)		:	;	
  (appos)		NN	accessdate	
  (punct)		:	;	
@@ -10743,7 +12911,7 @@ _ (nsubj)	_	_	Spears
  (none)	E	NNP	Tours	
  (punct)		:	;	
  (prep)		IN	On	
- (pobj)	E	NNP	March	March
+ (pobj)	E	NNP	March	
  (nummod)	C	CD	5	
  (punct)	P!	,	,	
  (appos)	C	CD	1999	
@@ -10771,11 +12939,11 @@ S (nsubj)	N	NN	tour
  (pobj)	E	NNP	July	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (pobj)	E	NNP	May	May
+ (pobj)	E	NNP	May	
  (nummod)	C	CD	12	
  (punct)	P!	,	,	
 S (none)	E	NNP	Tommy	
-_ (nsubj)	_	_	Hilfiger	
+_ (nsubjpass)	_	_	Hilfiger	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	announced	
  (prep)		IN	as	
@@ -10803,7 +12971,7 @@ S (nsubjpass)	E	NNP	Spears	Britney Spears
  (pobj)	N	NN	campaign	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	17	
  (punct)	P!	,	,	
  (prep)		IN	during	
@@ -10814,7 +12982,7 @@ S (nsubjpass)	E	NNP	Spears	Britney Spears
  (compound)	N	NN	music	
  (pobj)	_	_	video	
  (prep)		IN	of	
- (none)	E	NNP	From	From the Bottom of My Broken Heart
+ (none)	E	NNP	From	
  (none)	_	_	the	
  (none)	_	_	Bottom	
  (none)	_	_	of	
@@ -10830,9 +12998,9 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (dobj)	N	NN	show	
  (aux)		TO	to	
  (xcomp)	V	VB	announce	
- (nmod)	E	NNP	March	March
+ (nmod)	E	NNP	March	
  (nummod)	C	CD	2000	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (compound)	N	NN	tour	
  (dobj)	_	_	dates	
@@ -10841,9 +13009,9 @@ S (nsubj)	E	NNP	Spears	Britney Spears
 S (nsubjpass)	N	NN	extension	
  (punct)	P!	,	,	
  (acl)	V	VBD	entitled	
- (none)	E	NNP	Crazy	Crazy 2k Tour
- (none)	_	_	2k	
- (none)	_	_	Tour	
+ (compound)	E	NNP	Crazy	
+ (compound)	_	_	2k	
+ (oprd)	_	_	Tour	
  (punct)	P!	,	,	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	considered	
@@ -10862,7 +13030,7 @@ S (nsubjpass)	N	NN	extension
  (ROOT)	V	VBD	Did	
  (dobj)	E	PRP	It	tour
  (advmod)	A	RB	Again	
- (ROOT)	E	NNP	Tour	L'Oréal Mall Tour
+ (ROOT)	E	NNP	Tour	
  (punct)	T!	.	.	
  (det)		DT	The	
  (poss)	N	NN	leg	
@@ -10899,7 +13067,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (prep)		IN	for	
  (pobj)	N	NN	milk	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	shot	
  (det)		DT	an	
  (compound)	N	NN	advertising	
@@ -10933,12 +13101,12 @@ S (nsubj)	E	NNP	Polaroid
  (amod)	A	JJ	official	
  (pobj)	N	NN	camera	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	used	
  (det)		DT	the	
- (compound)	E	NNP	I	All Seeing I
+ (compound)	E	NNP	I	
  (punct)		HYPH	-	
- (compound)	E	NNP	Zone	Zone
+ (compound)	E	NNP	Zone	
  (dobj)	N	NN	onstage	
  (aux)		TO	to	
  (xcomp)	V	VB	take	
@@ -11036,7 +13204,7 @@ S (nsubj)	E	PRP	she	Britney Spears
  (dobj)	N	NNS	claims	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (pobj)	E	NNP	April	April
+ (pobj)	E	NNP	April	
  (nummod)	C	CD	20	
  (punct)	P!	,	,	
  (nummod)	C	CD	2000	
@@ -11061,7 +13229,7 @@ S (nsubjpass)	E	PRP	It	concert
  (ROOT)	V	VBN	altered	
  (prep)		IN	from	
  (poss)	E	PRP$	its	concert
- (compound)	E	NNP	Crazy	Crazy
+ (compound)	E	NNP	Crazy	
  (compound)	C	CD	2k	
  (pobj)	N	NN	incarnation	
  (cc)		CC	and	
@@ -11070,7 +13238,7 @@ S (nsubjpass)	E	PRP	It	concert
  (dobj)	N	NNS	costumes	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (pobj)	E	NNP	June	June
+ (pobj)	E	NNP	June	
  (nummod)	C	CD	5	
  (punct)	P!	,	,	
  (nummod)	C	CD	2000	
@@ -11092,16 +13260,16 @@ S (nsubjpass)	N	NN	special
  (pobj)	N	NN	year	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (pobj)	E	NNP	November	November
+ (pobj)	E	NNP	November	
  (nummod)	C	CD	21	
  (punct)	P!	,	,	
  (nummod)	C	CD	2000	
  (punct)	P!	,	,	
-S (compound)	E	NNP	JIVE	JIVE Records
+S (compound)	E	NNP	JIVE	
 _ (nsubj)	_	_	Records	
  (ROOT)	V	VBD	released	
  (det)		DT	the	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)	P!	:	:	
  (advcl)	V	VB	Live	
@@ -11113,17 +13281,17 @@ _ (nsubj)	_	_	Records
  (nsubj)	W	WDT	which	
  (relcl)	V	VBD	included	
  (det)		DT	the	
- (compound)	E	NNP	Fox	Fox
+ (compound)	E	NNP	Fox	
  (dobj)	N	NN	special	
  (punct)	T!	.	.	
 S (nsubjpass)	E	PRP	It	special
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	certified	
  (amod)	A	JJ	triple	
- (oprd)	E	NNP	Platinum	Platinum
+ (oprd)	E	NNP	Platinum	
  (agent)		IN	by	
  (det)		DT	the	
- (pobj)	E	NNP	RIAA	RIAA
+ (pobj)	E	NNP	RIAA	
  (prep)		IN	for	
  (pcomp)	V	VBG	shipping	
  (nummod)	C	CD	300,000	
@@ -11142,7 +13310,7 @@ S (nsubjpass)	E	PRP	It	special
  (parataxis)	V	VB	Drive	
  (appos)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (compound)	E	NNP	Crazy	Crazy 2k Tour
+ (compound)	E	NNP	Crazy	
  (dep)	_	_	Tour	
  (punct)	P!	:	;	
  (ccomp)	V	VB	cite	
@@ -11223,13 +13391,13 @@ _ (nsubj)	_	_	Gum
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (advmod)		RB	Back	
- (prep)		IN	In	
- (pobj)		NNP	Action	
+ (none)	E	NNP	Back	
+ (none)	_	_	In	
+ (none)	_	_	Action	
  (punct)		,	,	
- (compound)		NNPS	Plans	
- (compound)		NNP	Summer	
- (conj)		NNP	Tour	
+ (none)	E	NNP	Plans	
+ (none)	_	_	Summer	
+ (none)	_	_	Tour	
  (punct)		:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -11264,7 +13432,7 @@ _ (nsubj)	_	_	Gum
  (compound)	N	NN	press	
  (dobj)	_	_	releasetitle	
  (punct)	P!	:	;	
-S (nsubj)	E	NNP	Hilfiger	Tommy Hilfiger
+S (nsubj)	E	NNP	Hilfiger	
  (aux)		TO	to	
  (conj)	V	VB	back	
  (compound)	E	NNP	Spears	
@@ -11297,14 +13465,14 @@ S (nsubj)	E	NNP	Hilfiger	Tommy Hilfiger
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (compound)		NNPS	Phones	
- (appos)		NNP	TRL	
- (prep)		IN	To	
- (compound)		NNP	Announce	
- (compound)		NNP	U.	
- (compound)		NNP	S.	
- (compound)		NNP	Tour	
- (pobj)		NNPS	Dates	
+ (none)	E	NNP	Phones	
+ (none)	_	_	TRL	
+ (none)	_	_	To	
+ (none)	_	_	Announce	
+ (none)	_	_	U.	
+ (none)	_	_	S.	
+ (none)	_	_	Tour	
+ (none)	_	_	Dates	
  (punct)		:	;	
  (appos)		NN	date	
  (punct)		:	;	
@@ -11438,14 +13606,14 @@ S (nsubj)	E	NNP	Girl
  (punct)	P!	:	;	
  (ROOT)		NN	title	
  (punct)		:	;	
-S (nsubj)	E	NNP	Polaroid	Polaroid i
+S (nsubj)	E	NNP	Polaroid	
  (cc)		CC	and	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (aux)	m	MD	Will	
  (conj)	V	VB	Drive	
  (compound)		PRP	You	
- (dobj)	E	NNP	Crazy	Crazy
+ (dobj)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (appos)		NN	date	
  (punct)		:	;	
@@ -11552,7 +13720,7 @@ S (nsubj)	E	NNP	Polaroid	Polaroid i
  (punct)	P!	:	;	
  (conj)		NN	title	
  (punct)		:	;	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (conj)	V	VBZ	takes	
  (dobj)	N	NN	aim	
  (prep)		IN	at	
@@ -11608,7 +13776,7 @@ S (nsubj)	E	NNS	Spears	Britney Spears
  (punct)	P!	:	;	
  (conj)		NN	title	
  (punct)		:	;	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (conj)	A	JJ	special	
  (aux)		TO	to	
  (advcl)	V	VB	include	
@@ -11809,7 +13977,7 @@ _ (nsubj)	_	_	Time
  (prep)		IN	from	
  (pobj)	N	NNS	critics	
  (punct)	T!	.	.	
-S (none)	E	NNP	Stephen	Stephen Thomas Erlewine
+S (none)	E	NNP	Stephen	
 _ (none)	_	_	Thomas	
 _ (nsubj)	_	_	Erlewine	
  (prep)		IN	of	
@@ -11823,7 +13991,7 @@ _ (nsubj)	_	_	Erlewine
  (nummod)	C	CD	five	
  (pobj)	N	NNS	stars	
  (punct)	P!	,	,	
- (poss)	E	NNP	Billboard	Billboard 200
+ (poss)	E	NNP	Billboard	
  (case)		POS	s	
 S (compound)	E	NNP	Paul	
 _ (nsubj)	_	_	Verna	
@@ -11850,10 +14018,10 @@ S (nsubj)	N	NN	title
 _ (advcl)	_	_	cut	
  (punct)	T!	.	.	
  (punct)		:	;	
-S (compound)	E	NNP	Kyle	Kyle Anderson
+S (compound)	E	NNP	Kyle	
 _ (nsubj)	_	_	Anderson	
  (prep)		IN	of	
- (pobj)	E	NNP	MTV	MTV
+ (pobj)	E	NNP	MTV	
  (ROOT)	V	VBD	said	
 S (nsubj)	E	PRP	he	
  (ccomp)	V	VBD	was	
@@ -11970,7 +14138,7 @@ _ (nsubj)	_	_	Walters
  (amod)	A	JJ	early	
  (pobj)	N	NNS	hits	
  (prep)		IN	of	
- (none)	E	NNP	Debbie	Debbie Gibson
+ (none)	E	NNP	Debbie	
  (none)	_	_	Gibson	
  (punct)	P!	,	,	
  (compound)	E	NNP	Mariah	
@@ -12004,9 +14172,9 @@ _ (nsubj)	_	_	jams
  (punct)	P!	,	,	
  (prep)		IN	like	
  (punct)		''	'	
- (compound)	E	NNP	E	E
+ (compound)	E	NNP	E	
  (punct)	P!	:	-	
- (pobj)	E	NNP	Mail	Mail
+ (pobj)	E	NNP	Mail	
  (poss)		PRP$	My	
 S (nsubj)	N	NN	Heart	
  (punct)		''	'	
@@ -12184,7 +14352,7 @@ S (nsubj)	N	NN	album
  (det)		DT	all	
  (pobj)	N	NN	time	
  (prep)		IN	on	
- (none)	E	NNP	Billboard	Billboard 200
+ (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (punct)	T!	.	.	
  (punct)		:	;	
@@ -12266,7 +14434,7 @@ S (nsubj)	N	NN	album
  (none)	_	_	One	
  (none)	_	_	More	
  (none)	_	_	Time	
- (none)	_	_	Music	
+ (none)	E	NNP	Music	
  (none)	_	_	Review	
  (punct)		:	;	
  (conj)		NN	work	
@@ -12322,13 +14490,13 @@ S (nsubj)	N	NN	album
  (punct)		:	;	
  (conj)		NN	title	
  (punct)		:	;	
- (compound)		NNP	Britney	
- (conj)		NNPS	Soars	
- (prep)		IN	Over	
- (compound)		NNP	Oft	
+ (none)	E	NNP	Britney	
+ (none)	_	_	Soars	
+ (none)	_	_	Over	
+ (none)	_	_	Oft	
  (punct)		HYPH	-	
- (compound)		NNP	Vapid	
- (pobj)		NNP	Songs	
+ (none)	E	NNP	Vapid	
+ (none)	_	_	Songs	
  (punct)		:	;	
  (conj)		NN	url	
  (punct)		:	;	
@@ -12637,7 +14805,7 @@ S (nsubj)	N	NN	album
  (punct)		:	;	
  (compound)	A	JJS	Best	
  (compound)	V	VBG	Selling	
- (conj)	E	NNP	Album	Album
+ (conj)	E	NNP	Album	
  (prep)		IN	by	
  (det)		DT	a	
  (compound)	E	NNP	Teenage	
@@ -12748,7 +14916,7 @@ S (nsubj)	N	NN	album
  (amod)		JJ	Commercial	
  (conj)		NN	performance	
  (punct)		:	;	
- (conj)	E	NNS	Spears	Britney Spears
+ (conj)	E	NNP	Spears	Britney Spears
  (cc)		CC	and	
  (conj)		DT	some	
  (prep)		IN	of	
@@ -12781,7 +14949,7 @@ S (nsubj)	N	NN	album
  (nummod)	C	CD	one	
  (prep)		IN	on	
  (det)		DT	the	
- (none)	E	NNP	Billboard	Billboard 200
+ (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (intj)	V	VBG	selling	
  (nummod)	C	CD	121,000	
@@ -12803,7 +14971,7 @@ S (nsubj)	N	NN	album
  (appos)	C	CD	1998	
  (punct)	P!	-RRB-	)	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	broke	
  (amod)	A	JJ	several	
  (dobj)	N	NNS	records	
@@ -12827,7 +14995,7 @@ S (nsubj)	N	NN	singer
  (dobj)	A	JJ	single	
  (prep)		IN	on	
  (det)		DT	the	
- (none)	E	NNP	Billboard	Billboard Hot 100
+ (none)	E	NNP	Billboard	
  (none)	_	_	Hot	
  (none)	_	_	100	
  (cc)		CC	and	
@@ -12836,7 +15004,7 @@ S (nsubj)	N	NN	singer
  (pobj)	N	NN	album	
  (prep)		IN	on	
  (det)		DT	the	
- (none)	E	NNP	Billboard	Billboard 200
+ (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (prep)		IN	at	
  (det)		DT	the	
@@ -12894,7 +15062,7 @@ S (nsubj)	N	NN	album
  (amod)	A	JJ	same	
  (npadvmod)	N	NN	week	
  (punct)	T!	.	.	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBZ	is	
  (advmod)	A	RB	also	
  (det)		DT	the	
@@ -13027,7 +15195,7 @@ _ (nsubj)	_	_	Time
  (pobj)	N	NN	week	
  (prep)		IN	on	
  (det)		DT	the	
- (none)	E	NNP	Billboard	Billboard 200
+ (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (punct)	P!	,	,	
  (det)		DT	the	
@@ -13049,7 +15217,7 @@ S (nsubj)	N	NN	album
  (pobj)	N	NNS	copies	
  (prep)		IN	in	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (advmod)	A	RB	alone	
  (punct)	T!	.	.	
@@ -13061,13 +15229,13 @@ S (nsubj)	N	NN	album
  (attr)	N	NN	diamond	
  (prep)		IN	by	
  (det)		DT	the	
- (none)	E	NNP	Recording	Recording Industry Association of America
+ (none)	E	NNP	Recording	
  (none)	_	_	Industry	
  (none)	_	_	Association	
  (none)	_	_	of	
  (none)	_	_	America	
  (punct)	P!	-LRB-	(	
- (appos)	E	NNP	RIAA	RIAA
+ (appos)	E	NNP	RIAA	
  (punct)	P!	-RRB-	)	
  (punct)	_	,	,	
  (advcl)	V	VBG	making	
@@ -13117,7 +15285,7 @@ S (nsubj)	N	NN	album
  (dobj)	N	NNS	copies	
  (prep)		IN	in	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (punct)	P!	,	,	
  (cc)		CC	and	
@@ -13149,7 +15317,7 @@ _ (nsubj)	_	_	Time
  (pobj)	C	CD	10	
  (prep)		IN	of	
  (det)		DT	the	
- (none)	E	NNP	Billboard	Billboard 200
+ (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (punct)	T!	.	.	
  (det)		DT	The	
@@ -13216,7 +15384,7 @@ _ (nsubj)	_	_	Twain
  (nummod)	C	CD	one	
  (prep)		IN	on	
  (det)		DT	the	
- (none)	E	NNP	Canadian	Canadian Albums Chart
+ (none)	E	NNP	Canadian	
  (none)	_	_	Albums	
  (none)	_	_	Chart	
  (punct)	P!	,	,	
@@ -13231,7 +15399,7 @@ _ (nsubj)	_	_	Twain
  (pobj)	N	NN	top	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	12	
  (punct)	P!	,	,	
  (npadvmod)	C	CD	1999	
@@ -13332,11 +15500,11 @@ S (nsubj)	N	NN	album
  (conj)	N	NN	platinum	
  (prep)		IN	by	
  (det)		DT	the	
- (none)	E	NNP	Syndicat	
- (none)	_	_	National	
- (none)	_	_	de	
- (none)	_	_	l'Édition	
- (none)	_	_	Phonographique	
+ (nmod)	E	NNP	Syndicat	
+ (nmod)	_	_	National	
+ (nmod)	_	_	de	
+ (compound)	_	_	l'Édition	
+ (pobj)	_	_	Phonographique	
  (punct)	P!	-LRB-	(	
  (appos)	E	NNP	SNEP	
  (punct)	P!	-RRB-	)	
@@ -13347,14 +15515,14 @@ S (nsubj)	N	NN	album
  (pobj)	E	NNP	Germany	
  (prep)		IN	by	
  (det)		DT	the	
- (none)	E	NNP	International	International Federation of the Phonographic Industry
+ (none)	E	NNP	International	
  (none)	_	_	Federation	
  (none)	_	_	of	
  (none)	_	_	the	
  (none)	_	_	Phonographic	
  (none)	_	_	Industry	
  (punct)	P!	-LRB-	(	
- (appos)	E	NNP	IFPI	IFPI
+ (appos)	E	NNP	IFPI	
  (punct)	P!	-RRB-	)	
  (punct)	_	,	,	
  (cc)		CC	and	
@@ -13385,7 +15553,7 @@ _ (nsubj)	_	_	Time
  (pobj)	N	NN	number	
  (nummod)	C	CD	nine	
  (prep)		IN	in	
- (pobj)	E	NNP	May	May
+ (pobj)	E	NNP	May	
  (nummod)	C	CD	1999	
  (prep)		IN	on	
  (det)		DT	the	
@@ -13393,7 +15561,7 @@ _ (nsubj)	_	_	Time
  (pobj)	_	_	Albums	
  (appos)	_	_	Chart	
  (prep)		IN	in	
- (pobj)	E	NNP	Australia	Australia
+ (pobj)	E	NNP	Australia	
  (punct)	P!	,	,	
  (advcl)	V	VBG	reaching	
  (dobj)	N	NN	number	
@@ -13460,12 +15628,12 @@ S (nsubj)	N	NN	album
  (pobj)	_	_	Albums	
  (appos)	_	_	Chart	
  (prep)		IN	in	
- (none)	E	NNP	New	New Zealand
+ (none)	E	NNP	New	
  (none)	_	_	Zealand	
  (punct)	P!	,	,	
  (advcl)	V	VBG	placing	
  (advmod)		IN	behind	
-S (none)	E	NNP	Shania	Shania Twain
+S (none)	E	NNP	Shania	
 _ (nsubj)	_	_	Twain	
  (case)	V	VBZ	's	
  (ROOT)	V	VBN	Come	
@@ -13501,7 +15669,7 @@ S (nsubjpass)	N	NN	album
  (none)	_	_	Music	
  (none)	_	_	NZ	
  (punct)	P!	-LRB-	(	
- (appos)	E	NNP	RIANZ	RIANZ
+ (appos)	E	NNP	RIANZ	
  (punct)	P!	-RRB-	)	
  (punct)	T!	.	.	
  (punct)		:	;	
@@ -13521,15 +15689,15 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (appos)		NNS	Debuts	
- (prep)		IN	On	
- (pobj)		NNP	Top	
+ (none)	E	NNP	Debuts	
+ (none)	_	_	On	
+ (none)	_	_	Top	
  (punct)		:	;	
  (punct)		''	'	
- (compound)		NNP	N	
- (appos)		NN	Sync	
- (ROOT)		IN	At	
- (pobj)		NN	No	
+ (none)	E	NNP	N	
+ (none)	_	_	Sync	
+ (none)	_	_	At	
+ (none)	_	_	No	
  (punct)		.	.	
  (nummod)		CD	2	
  (punct)		:	;	
@@ -13645,9 +15813,9 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (conj)		RB	Back	
- (prep)		IN	On	
- (pobj)		NNP	Top	
+ (none)	E	NNP	Back	
+ (none)	_	_	On	
+ (none)	_	_	Top	
  (punct)		:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -13702,15 +15870,15 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (appos)		NN	title	
  (punct)		:	;	
- (conj)		NNP	Britney	
- (advmod)		RB	Still	
- (prep)		IN	On	
- (pobj)		NNP	Top	
+ (none)	E	NNP	Britney	
+ (none)	_	_	Still	
+ (none)	_	_	On	
+ (none)	_	_	Top	
  (punct)		,	,	
- (ROOT)		NN	Offspring	
- (prt)		RP	Up	
- (prep)		IN	To	
- (pobj)		NN	No	
+ (none)	E	NNP	Offspring	
+ (none)	_	_	Up	
+ (none)	_	_	To	
+ (none)	_	_	No	
  (punct)		.	.	
  (nummod)		CD	2	
  (punct)		,	,	
@@ -13824,12 +15992,12 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (appos)		NNP	Backstage	
- (prep)		IN	At	
- (det)		DT	The	
+ (none)	E	NNP	Backstage	
+ (none)	_	_	At	
+ (none)	_	_	The	
  (punct)		``	'	
- (compound)		NNP	Billboard	
- (pobj)		NNPS	Awards	
+ (none)	E	NNP	Billboard	
+ (none)	_	_	Awards	
  (punct)		POS	'	
  (punct)		:	;	
  (appos)		NN	date	
@@ -13989,11 +16157,11 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (compound)		NNPS	Readies	
- (compound)		DT	A	
- (compound)		NNP	Funky	
- (compound)		NNP	New	
- (conj)		NNP	Album	
+ (none)	E	NNP	Readies	
+ (none)	_	_	A	
+ (none)	_	_	Funky	
+ (none)	_	_	New	
+ (none)	_	_	Album	
  (punct)		:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -14050,7 +16218,7 @@ S (nsubjpass)	N	NN	album
  (none)	_	_	One	
  (none)	_	_	More	
  (none)	_	_	Time	
- (none)	_	_	Chart	
+ (none)	E	NNP	Chart	
  (none)	_	_	History	
  (punct)		:	;	
  (conj)		NN	work	
@@ -14336,11 +16504,11 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (conj)		NN	publisher	
  (punct)		:	;	
- (none)	E	NNP	Syndicat	
- (none)	_	_	National	
- (none)	_	_	de	
- (none)	_	_	l'Édition	
- (none)	_	_	Phonographique	
+ (compound)		NNP	Syndicat	
+ (compound)		NNP	National	
+ (compound)		NNP	de	
+ (compound)		NNP	l'Édition	
+ (conj)		NNP	Phonographique	
  (punct)		:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -14603,7 +16771,7 @@ S (nsubjpass)	N	NN	album
  (punct)		:	;	
  (none)	E	NNP	Legacy	
  (punct)		:	;	
-S (nsubjpass)	E	NNP	Spears	Britney Spears
+S (nsubjpass)	E	NNP	Spears	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	credited	
  (prep)		IN	with	
@@ -14611,7 +16779,7 @@ S (nsubjpass)	E	NNP	Spears	Britney Spears
  (det)		DT	the	
  (dobj)	N	NN	revival	
  (prep)		IN	of	
- (none)	E	NNP	Teen	Teen pop ballad
+ (none)	E	NNP	Teen	
  (none)	_	_	pop	
  (punct)	T!	.	.	
 S (none)	E	NNP	Yomiuri	
@@ -14621,7 +16789,7 @@ _ (nsubj)	_	_	Shimbun
 S (nsubj)	N	NNS	critics	
  (aux)	V	VBP	have	
  (ccomp)	V	VBN	hailed	
- (dobj)	E	PRP	her	Britney Spears
+ (dobj)	E	PRP	her	
  (prep)		IN	as	
  (det)		DT	the	
  (advmod)	A	RBS	most	
@@ -14634,16 +16802,16 @@ S (nsubj)	N	NNS	critics
  (pobj)	N	NNS	years	
  (punct)	P!	,	,	
  (cc)		CC	but	
-S (nsubj)	E	NNPS	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	
  (aux)	V	VBZ	has	
  (conj)	V	VBN	set	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	E	PRP$	her	
  (dobj)	N	NNS	sights	
  (det)		DT	a	
  (npadvmod)	A	JJ	little	
  (advmod)	A	JJR	higher	
  (punct)	P!	:	-	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	E	PRP	she	
  (aux)	V	VBZ	is	
  (ccomp)	V	VBG	aiming	
  (prep)		IN	for	
@@ -14656,16 +16824,16 @@ S (nsubj)	E	PRP	she	Britney Spears
  (auxpass)	V	VBN	been	
  (relcl)	_	_	achieved	
  (agent)		IN	by	
- (pobj)	E	NNP	Madonna	Madonna
+ (pobj)	E	NNP	Madonna	
  (cc)		CC	and	
  (compound)	E	NNP	Janet	
  (conj)	_	_	Jackson	
  (punct)	T!	.	.	
-S (none)	E	NNP	Rolling	Rolling Stone
+S (none)	E	NNP	Rolling	
 _ (nsubj)	_	_	Stone	
  (ROOT)	V	VBD	wrote	
  (punct)	P!	:	:	
-S (none)	E	NNP	Britney	Britney Spears
+S (none)	E	NNP	Britney	
 _ (nsubj)	_	_	Spears	
  (ccomp)	V	VBZ	carries	
  (prep)		IN	on	
@@ -14695,29 +16863,29 @@ _ (nsubj)	_	_	Spears
  (det)		DT	a	
  (dobj)	N	NN	scene	
  (punct)	T!	.	.	
-S (none)	E	NNP	Rami	Rami Yacoub
+S (none)	E	NNP	Rami	
 _ (nsubj)	_	_	Yacoub	
  (nsubj)	W	WP	who	
  (nmod)	N	NN	co	
  (punct)	P!	,	-	
  (amod)	V	VBN	produced	
- (poss)	E	NNPS	Spears	Britney Spears
+ (poss)	E	NNPS	Spears	
  (case)		POS	's	
  (compound)	N	NN	debut	
  (appos)	_	_	album	
  (prep)		IN	with	
  (compound)	N	NN	lyricist	
- (none)	E	NNP	Max	Max Martin
+ (none)	E	NNP	Max	
  (none)	_	_	Martin	
  (ROOT)	V	VBD	commented	
  (punct)	P!	,	,	
  (nsubj)		PRP	I	
  (parataxis)	V	VBP	know	
  (prep)		IN	from	
- (none)	E	NNP	Denniz	Denniz Pop
+ (none)	E	NNP	Denniz	
  (none)	_	_	Pop	
  (cc)		CC	and	
- (poss)	E	NNP	Max	Max Martin
+ (poss)	E	NNP	Max	
  (case)		POS	's	
  (amod)	A	JJ	previous	
  (conj)	N	NNS	productions	
@@ -14741,7 +16909,7 @@ _ (nsubj)	_	_	Yacoub
  (pobj)	E	NNP	Sync	
  (cc)		CC	and	
  (det)		DT	the	
- (none)	E	NNP	Backstreet	Backstreet Boys
+ (none)	E	NNP	Backstreet	
  (none)	_	_	Boys	
  (punct)	P!	,	,	
  (nsubj)		PRP	we	
@@ -14770,10 +16938,10 @@ S (nsubj)	E	PRP	she	Britney Spears
  (amod)	A	JJ	sexy	
  (appos)	N	NN	voice	
  (punct)	T!	.	.	
-S (compound)	E	NNP	Chuck	Chuck Taylor
+S (compound)	E	NNP	Chuck	
 _ (nsubj)	_	_	Taylor	
  (prep)		IN	of	
- (pobj)	E	NNP	Billboard	Billboard 200
+ (pobj)	E	NNP	Billboard	
  (advcl)	V	VBD	observed	
  (punct)	P!	,	,	
 S (nsubj)	E	NNPS	Spears	Britney Spears
@@ -14805,7 +16973,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (intj)	E	NNP	Crazy	Crazy
+ (intj)	E	NNP	Crazy	
  (punct)	P!	,	,	
  (poss)	E	PRP$	her	Britney Spears
  (amod)	A	JJ	third	
@@ -14837,15 +17005,15 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (amod)	A	JJ	steadfast	
  (pobj)	N	NN	practice	
  (punct)	T!	.	.	
-S (none)	E	NNP	Stephen	Stephen Thomas Erlewine
+S (none)	E	NNP	Stephen	
 _ (none)	_	_	Thomas	
 _ (nsubj)	_	_	Erlewine	
  (prep)		IN	of	
- (pobj)	E	NNP	Allmusic	Allmusic
+ (pobj)	E	NNP	Allmusic	
  (ROOT)	V	VBD	referred	
  (prep)		IN	to	
  (poss)	E	PRP$	her	Britney Spears
- (pobj)	E	NN	music	Pop music
+ (pobj)	N	NN	music	
  (prep)		IN	as	
  (det)		DT	a	
  (pobj)	N	NN	blend	
@@ -14857,14 +17025,14 @@ _ (nsubj)	_	_	Erlewine
  (amod)	V	VBN	inflected	
  (nmod)	N	NN	dance	
  (punct)		HYPH	-	
- (nmod)	E	NN	pop	Bubblegum pop
+ (nmod)	N	NN	pop	
  (cc)		CC	and	
  (conj)	A	JJ	smooth	
  (pobj)	A	JJ	balladry	
  (punct)	T!	.	.	
  (compound)	A	JJ	Sputnikmusic	
  (compound)	N	NN	writer	
-S (compound)	E	NNP	Amanda	Amanda Murray
+S (compound)	E	NNP	Amanda	
 _ (nsubj)	_	_	Murray	
  (ROOT)	V	VBD	noted	
  (det)		DT	the	
@@ -14909,7 +17077,7 @@ _ (nsubj)	_	_	You
 _ (none)	_	_	Die	
  (punct)	T!	.	.	
  (punct)		:	;	
-S (nsubj)	E	NNS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBD	became	
  (det)		DT	an	
  (amod)	A	JJ	international	
@@ -14923,7 +17091,7 @@ S (nsubj)	E	NNS	Spears	Britney Spears
  (amod)	N	NN	recording	
  (dobj)	_	_	career	
  (punct)	T!	.	.	
- (none)	E	NNP	Rolling	Rolling Stone
+ (none)	E	NNP	Rolling	
  (none)	_	_	Stone	
 S (nsubj)	N	NN	magazine	
  (ROOT)	V	VBD	wrote	
@@ -14993,8 +17161,8 @@ S (compound)	E	NNP	Melissa
 _ (nsubj)	_	_	Ruggieri	
  (prep)		IN	of	
  (det)		DT	the	
- (none)	E	NNP	Richmond	
- (none)	_	_	Times	
+ (compound)	E	NNP	Richmond	
+ (compound)	_	_	Times	
  (punct)		HYPH	-	
  (pobj)	E	NNP	Dispatch	
  (ROOT)	V	VBD	reported	
@@ -15280,7 +17448,7 @@ S (nsubj)	N	NNS	—Spears
  (none)	_	_	More	
  (none)	_	_	Time	
  (prep)		IN	in	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	1999	
  (punct)	T!	.	.	
  (punct)		:	;	
@@ -15402,7 +17570,7 @@ S (nsubj)	N	NNS	—Spears
  (parataxis)	V	VB	Drive	
  (appos)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NN	newspaper	
  (punct)		:	;	
@@ -15448,7 +17616,7 @@ S (nsubj)	N	NNS	—Spears
  (none)	_	_	Before	
  (nsubj)	_	_	You	
  (none)	_	_	Die	
- (punct)	P!	:	:	
+ (punct)		:	:	
  (advcl)	V	VBN	Revised	
  (cc)		CC	and	
  (compound)	E	NNP	Updated	
@@ -15620,7 +17788,7 @@ S (nsubj)	N	NNS	—Spears
  (aux)		TO	to	
  (xcomp)	V	VB	do	
  (punct)	P!	:	:	
- (poss)	E	NNP	America	North America
+ (poss)	E	NNP	America	
  (case)		POS	's	
  (amod)	A	JJ	apple-	
 S (compound)	N	NN	pie	
@@ -15673,7 +17841,7 @@ S (nsubj)	E	PRP	she
  (punct)	P!	:	:	
  (none)	E	NNP	The	
  (none)	_	_	Observer	
- (dep)		NNP	Profile	
+ (none)	E	NNP	Profile	
  (punct)		:	:	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
@@ -15757,8 +17925,8 @@ S (nsubj)	E	PRP	she
  (none)	E	NNP	Notes	
  (punct)		:	;	
  (prep)		IN	In	
- (none)	E	NNP	North	North America
- (none)	_	_	America	
+ (compound)	E	NNP	North	
+ (pobj)	_	_	America	
  (punct)	P!	,	,	
  (det)		DT	the	
 S (nsubjpass)	N	NN	album	
@@ -15767,7 +17935,7 @@ S (nsubjpass)	N	NN	album
  (prep)		IN	as	
  (det)		DT	an	
  (amod)	A	JJ	enhanced	
- (pobj)	E	NN	CD	CD
+ (pobj)	N	NN	CD	
  (punct)	P!	,	,	
  (nsubj)	W	WDT	which	
  (relcl)	V	VBD	allowed	
@@ -15818,7 +17986,7 @@ S (nsubj)	N	NN	Beat
  (advmod)	A	RB	then	
  (punct)		HYPH	-	
  (amod)	A	JJ	upcoming	
- (none)	E	NNP	Backstreet	Backstreet Boys
+ (none)	E	NNP	Backstreet	
  (none)	_	_	Boys	
  (dobj)	N	NN	album	
  (punct)	P!	,	,	
@@ -15850,9 +18018,9 @@ S (nsubj)	N	NN	Beat
  (dobj)	E	NNP	Remixer	
  (punct)	P!	:	;	
  (conj)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (dobj)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -15938,7 +18106,7 @@ S (nsubj)	N	NN	Beat
  (parataxis)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (intj)	V	VBZ	writer2	
  (punct)	P!	:	;	
@@ -15958,7 +18126,7 @@ S (nsubj)	N	NN	Beat
  (conj)		NN	note4	
  (punct)		,	;	
  (acl)	V	VBG	featuring	
- (compound)	E	NNP	Mikey	Mikey Bassie
+ (compound)	E	NNP	Mikey	
  (dobj)	_	_	Bassie	
  (punct)	P!	:	;	
  (conj)		NNP	writer4	
@@ -15970,7 +18138,7 @@ S (nsubj)	N	NN	Beat
  (none)	_	_	Make	
  (nsubj)	_	_	You	
  (none)	_	_	Happy	
- (punct)	P!	:	;	
+ (punct)		:	;	
  (conj)		NNS	writer5	
  (punct)		:	;	
  (conj)		NN	title6	
@@ -16038,9 +18206,9 @@ S (nsubj)	N	NN	Beat
  (nmod)		NN	extra11	
  (punct)		:	;	
  (amod)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (appos)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -16132,7 +18300,7 @@ S (nsubj)	E	NNP	Track
  (ROOT)		NN	title12	
  (punct)		:	;	
  (det)		DT	The	
-S (nsubj)	N	NN	Beat	
+S (nsubj)	E	NNP	Beat	
  (compound)	V	VBZ	Goes	
  (prep)	A	RB	On	
  (punct)	P!	:	;	
@@ -16141,9 +18309,9 @@ S (nsubj)	N	NN	Beat
  (ROOT)		NN	extra12	
  (punct)		:	;	
  (intj)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (dobj)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -16193,7 +18361,7 @@ S (nsubj)	N	NN	Beat
  (conj)		NN	c	
  (punct)		-RRB-	]	
  (punct)		:	;	
-S (nsubj)	E	NNP	Track	Track
+S (nsubj)	E	NNP	Track	
  (parataxis)	V	VBD	listingcollapsed	
  (punct)	P!	:	;	
  (intj)		UH	yes	
@@ -16237,9 +18405,9 @@ S (nsubj)	E	NNP	Track	Track
  (appos)		NNP	extra14	
  (punct)		:	;	
  (ROOT)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (dobj)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -16274,9 +18442,9 @@ S (nsubj)	E	NNP	Track	Track
  (appos)		CD	0523032	
  (punct)		:	;	
  (ROOT)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (dobj)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -16333,7 +18501,7 @@ S (nsubj)	E	NNP	Track	Track
  (intj)		NN	c	
  (punct)		-RRB-	]	
  (punct)		:	;	
-S (nsubj)	E	NNP	Track	Track
+S (nsubj)	E	NNP	Track	
  (parataxis)	V	VBD	listingcollapsed	
  (punct)	P!	:	;	
  (intj)		UH	yes	
@@ -16399,9 +18567,9 @@ S (nsubj)	E	NNP	Track	Track
  (parataxis)		NN	extra16	
  (punct)		:	;	
  (ROOT)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (dobj)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -16470,7 +18638,7 @@ S (nsubj)	E	NNP	Track	Track
  (intj)		NN	c	
  (punct)		-RRB-	]	
  (punct)		:	;	
-S (nsubj)	E	NNP	Track	Track
+S (nsubj)	E	NNP	Track	
  (parataxis)	V	VBD	listingcollapsed	
  (punct)	P!	:	;	
  (intj)		UH	yes	
@@ -16490,14 +18658,14 @@ S (nsubj)	E	NNP	Track	Track
  (appos)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (appos)	E	NNP	Crazy	Crazy
+ (appos)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NNS	note1	
  (punct)		:	;	
- (det)		DT	The	
- (conj)		NNP	Stop	
+ (none)	E	NNP	The	
+ (none)	_	_	Stop	
  (punct)		.	!	
- (ROOT)		NNP	Remix	
+ (none)	E	NNP	Remix	
  (punct)		:	;	
  (conj)		NN	writer1	
  (punct)		:	;	
@@ -16510,7 +18678,7 @@ S (nsubj)	E	NNP	Track	Track
  (conj)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	Crazy
+ (ROOT)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NNP	note2	
  (punct)		:	;	
@@ -16573,9 +18741,9 @@ S (nsubj)	E	NNP	Track	Track
  (conj)		NNP	writer6	
  (punct)		:	;	
  (conj)	V	VB	cite	
- (compound)	N	NN	AV	
- (compound)	_	_	media	
- (dobj)	_	_	notestitle	
+ (none)	E	NNP	AV	
+ (none)	_	_	media	
+ (none)	_	_	notestitle	
  (punct)	P!	:	;	
  (punct)		:	...	
  (none)	E	NNP	Baby	
@@ -16632,7 +18800,7 @@ S (nsubj)	E	NNP	Track	Track
  (intj)		NN	c	
  (punct)		-RRB-	]	
  (punct)		:	;	
-S (nsubj)	E	NNP	Track	Track
+S (nsubj)	E	NNP	Track	
  (punct)	V	VBD	listingcollapsed	
  (punct)	P!	:	;	
  (intj)		UH	yes	
@@ -16652,7 +18820,7 @@ S (nsubj)	E	NNP	Track	Track
  (none)	_	_	Make	
  (nsubj)	_	_	You	
  (none)	_	_	Happy	
- (punct)	P!	:	;	
+ (punct)		:	;	
  (conj)		NNS	note1	
  (punct)		:	;	
  (none)	E	NNP	Radio	
@@ -16667,7 +18835,7 @@ S (nsubj)	E	NNP	Track	Track
  (none)	_	_	Make	
  (nsubj)	_	_	You	
  (none)	_	_	Happy	
- (punct)	P!	:	;	
+ (punct)		:	;	
  (conj)		NN	note2	
  (punct)		:	;	
  (none)	E	NNP	Bonus	
@@ -16682,7 +18850,7 @@ S (nsubj)	E	NNP	Track	Track
  (parataxis)	V	VB	Drive	
  (dobj)		PRP	Me	
  (punct)	P!	-RRB-	)	
- (conj)	E	NNP	Crazy	Crazy
+ (conj)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (appos)		NN	note3	
  (punct)		:	;	
@@ -16730,10 +18898,10 @@ S (nsubj)	N	NNS	Credits
  (ROOT)	V	VBD	adapted	
  (prep)		IN	from	
  (punct)	T!	.	...	
- (compound)	E	NNP	Baby	Baby
+ (compound)	E	NNP	Baby	
  (nummod)	C	CD	One	
  (compound)	A	JJR	More	
- (compound)	E	NNP	Times	Richmond Times
+ (compound)	E	NNP	Times	
  (compound)	N	NN	liner	
  (ROOT)	_	_	notes	
  (punct)	T!	.	.	
@@ -17065,8 +19233,8 @@ S (nsubj)	N	NNS	Credits
  (none)	E	NNP	MegaCharts	
  (punct)		-RRB-	)	
  (punct)		:	;	
- (compound)		NNP	Finnish	
- (conj)		NNP	Albums	
+ (none)	E	NNP	Finnish	
+ (none)	_	_	Albums	
  (punct)		-LRB-	(	
  (none)	E	NNP	The	
  (none)	_	_	Official	
@@ -17091,8 +19259,8 @@ S (nsubj)	N	NNS	Credits
  (none)	E	NNP	IFPI	
  (punct)		-RRB-	)	
  (punct)		:	;	
- (compound)		NNP	Hungarian	
- (conj)		NNP	Albums	
+ (none)	E	NNP	Hungarian	
+ (none)	_	_	Albums	
  (punct)		-LRB-	(	
  (none)	E	NNP	Association	
  (none)	_	_	of	
@@ -18029,7 +20197,7 @@ S (nsubj)	E	NNP	Uge
  (none)	_	_	100	
  (none)	_	_	Albums	
  (punct)		-LRB-	(	
- (npadvmod)		NNP	Billboard	
+ (none)	E	NNP	Billboard	
  (punct)		-RRB-	)	
  (punct)		:	;	
  (none)	E	NNP	French	
@@ -18227,10 +20395,10 @@ S (nsubj)	E	NNP	Uge
  (none)	E	NNP	ARIA	
  (none)	_	_	Charts	
  (punct)		HYPH	–	
- (conj)		NN	End	
- (ROOT)		IN	Of	
- (pobj)		NNP	Year	
- (ROOT)		NNPS	Charts	
+ (none)	E	NNP	End	
+ (none)	_	_	Of	
+ (none)	_	_	Year	
+ (none)	_	_	Charts	
  (punct)		HYPH	–	
  (amod)		NNP	Top	
  (nummod)		CD	100	
@@ -18459,11 +20627,11 @@ S (nsubj)	E	NNP	Uge
  (punct)		:	;	
  (conj)		NN	publisher	
  (punct)		:	;	
- (none)	E	NNP	Syndicat	
- (none)	_	_	National	
- (none)	_	_	de	
- (none)	_	_	l'Édition	
- (none)	_	_	Phonographique	
+ (compound)		NNP	Syndicat	
+ (compound)		NNP	National	
+ (nmod)		NNP	de	
+ (compound)		NNP	l'Édition	
+ (conj)		NNP	Phonographique	
  (punct)		-LRB-	(	
  (appos)		NNP	SNEP	
  (punct)		-RRB-	)	
@@ -18886,11 +21054,11 @@ S (nsubj)	E	NNP	Uge
  (punct)		:	;	
  (conj)		NN	publisher	
  (punct)		:	;	
- (none)	E	NNP	Syndicat	
- (none)	_	_	National	
- (none)	_	_	de	
- (none)	_	_	l'Édition	
- (none)	_	_	Phonographique	
+ (compound)		NNP	Syndicat	
+ (compound)		NNP	National	
+ (compound)		NNP	de	
+ (compound)		NNP	l'Édition	
+ (conj)		NNP	Phonographique	
  (punct)		,	;	
  (conj)		NN	language	
  (punct)		:	;	
@@ -19198,7 +21366,7 @@ S (nsubj)	E	NNP	Uge
  (prep)		IN	of	
  (det)	E	NNP	All	
  (compound)	_	_	Time	
- (none)	E	NNP	Billboard	Billboard 200
+ (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (appos)	E	NNPS	Albums	
  (acl)	V	VBN	Published	
@@ -19209,7 +21377,7 @@ S (nsubj)	E	NNP	Uge
  (pobj)	V	VBD	Retrieved	
  (prep)		IN	on	
  (nummod)	C	CD	5	
- (pobj)	E	NNP	December	December
+ (pobj)	E	NNP	December	
  (nummod)	C	CD	2015	
  (punct)	T!	.	.	
  (punct)		:	;	
@@ -19225,7 +21393,7 @@ S (nsubj)	E	NNP	Uge
  (none)	E	NNP	Billboard	
  (none)	_	_	200	
  (punct)		-LRB-	(	
- (appos)		NNS	Women	
+ (none)	E	NNP	Women	
  (punct)		-RRB-	)	
  (punct)		:	;	
  (appos)		CD	41	
@@ -20431,7 +22599,7 @@ S (nsubj)	E	NNP	Uge
  (dep)		NN	title	
  (punct)		:	;	
  (conj)	V	VB	Ask	
- (dobj)	E	NNP	Billboard	Billboard 200
+ (dobj)	E	NNP	Billboard	
  (punct)	P!	:	:	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
@@ -20483,7 +22651,7 @@ S (nsubj)	E	NNP	Uge
  (appos)		NN	title	
  (punct)		:	;	
  (compound)	V	VB	Ask	
- (conj)	E	NNP	Billboard	Billboard 200
+ (conj)	E	NNP	Billboard	
  (punct)	P!	:	;	
  (conj)		NN	work	
  (punct)		:	;	
@@ -20510,7 +22678,7 @@ S (nsubj)	E	NNP	Uge
  (punct)		:	;	
  (prep)		IN	As	
  (prep)		IN	of	
- (pobj)	E	NNP	March	March
+ (pobj)	E	NNP	March	
  (nummod)	C	CD	2015	
  (punct)	P!	,	,	
  (punct)	_	:	...	
@@ -20524,11 +22692,11 @@ _ (nsubj)	_	_	Time
  (dobj)	N	NNS	copies	
  (prep)		IN	in	
  (det)		DT	the	
- (none)	E	NNP	United	United States
+ (none)	E	NNP	United	
  (none)	_	_	States	
  (prep)	V	VBG	according	
  (prep)		IN	to	
- (none)	E	NNP	Nielsen	Nielsen SoundScan
+ (none)	E	NNP	Nielsen	
  (none)	_	_	SoundScan	
  (punct)	P!	,	,	
  (prep)		IN	with	
@@ -20540,7 +22708,7 @@ _ (nsubj)	_	_	Time
  (compound)	_	_	Music	
  (pobj)	_	_	Groups	
  (punct)	T!	.	.	
-S (none)	E	NNP	Nielsen	Nielsen SoundScan
+S (none)	E	NNP	Nielsen	
 _ (nsubj)	_	_	SoundScan	
  (aux)	V	VBZ	does	
  (neg)	A	RB	not	
@@ -20551,7 +22719,7 @@ _ (nsubj)	_	_	SoundScan
  (pobj)	N	NNS	clubs	
  (prep)		IN	like	
  (det)		DT	the	
- (none)	E	NNP	Bertelsmann	Bertelsmann Music Group
+ (none)	E	NNP	Bertelsmann	
  (none)	_	_	Music	
  (none)	_	_	Group	
  (punct)	P!	,	,	
@@ -20843,7 +23011,7 @@ _ (nsubj)	_	_	SoundScan
  (punct)	P!	:	;	
  (conj)		NN	title	
  (punct)		:	;	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (cc)		CC	&	
  (conj)	V	VB	ndash	
@@ -21059,13 +23227,13 @@ _ (nsubj)	_	_	SoundScan
  (none)	_	_	More	
  (none)	_	_	Time	
  (punct)		:	:	
- (ROOT)		IN	Amazon.co.uk	
+ (none)	E	NNP	Amazon.co.uk	
  (punct)		:	:	
  (none)	E	NNP	Music	
  (punct)		:	;	
  (conj)		NN	work	
  (punct)		:	;	
- (conj)		IN	Amazon.co.uk	
+ (none)	E	NNP	Amazon.co.uk	
  (punct)		:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -21186,7 +23354,7 @@ _ (nsubj)	_	_	SoundScan
  (punct)		:	;	
  (conj)		NN	title	
  (punct)		:	;	
- (none)	E	NNP	Britney	Britney Spears
+ (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)		''	'	
  (punct)		''	'	
