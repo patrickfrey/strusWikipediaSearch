@@ -1245,11 +1245,14 @@ def processStdin( verbose, complete, duration):
     entityReadState = False
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
-            if content:
-                title = getTitleFromFileName( filename)
-                result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
-                printOutput( filename, result)
-                content = ""
+            if filename:
+                if content:
+                    title = getTitleFromFileName( filename)
+                    result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
+                    printOutput( filename, result)
+                    content = ""
+                else:
+                    printOutput( filename, "")
             filename = line[6:].rstrip( "\r\n")
             entityReadState = True
             entityMap = {}
@@ -1259,11 +1262,14 @@ def processStdin( verbose, complete, duration):
             else:
                 entityReadState = False
                 content += line
-    if content:
-        title = getTitleFromFileName( filename)
-        result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
-        printOutput( filename, result)
-        content = ""
+    if filename:
+        if content:
+            title = getTitleFromFileName( filename)
+            result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
+            printOutput( filename, result)
+            content = ""
+        else:
+            printOutput( filename, "")
     if duration and "timepost" in accuvar:
         sys.stderr.write( "duration post processing: %.3f seconds\n" % accuvar[ "timepost"])
 
