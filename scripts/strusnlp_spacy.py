@@ -14,9 +14,10 @@ from recordtype import recordtype
 from copy import deepcopy
 import spacy
 import en_core_web_sm
+import time
 
 spacy_nlp = en_core_web_sm.load()
-NlpToken = recordtype('NlpToken', ['strustag','strusrole','nlptag','nlprole', 'value', 'ref'])
+NlpToken = recordtype('NlpToken', ['strustag','strusrole','nlptag','nlprole', 'value', 'alphavalue', 'ref'])
 Subject = recordtype('Subject', ['sex','strustag','value','sentidx'])
 
 def mapTagValue( tagname):
@@ -143,26 +144,24 @@ def getPrpSex( prp):
         return "P"
     return None
 
-def trimString( nam, ts):
+def trimApos( nam):
+    quotlist = ["'","’","`","\"","!","—"]
     nidx = 0
-    while len(nam) > len(ts)+nidx and nam[nidx:nidx+len(ts)] == ts:
-        nidx += len(ts)
     eidx = len(nam)
-    while eidx > nidx and nam[ eidx-len(ts):eidx] == ts:
-        eidx -= len(ts)
+    changed = True
+    while changed:
+        changed = False
+        for quot in quotlist:
+            while eidx > len(quot)+nidx and nam[nidx:nidx+len(quot)] == quot:
+                nidx += len(quot)
+                changed = True
+            while eidx > nidx and nam[ eidx-len(quot):eidx] == quot:
+                eidx -= len(quot)
+                changed = True
     if eidx > nidx:
         return nam[nidx:eidx]
     else:
         return ""
-
-def trimApos( nam):
-    ln = len(nam)
-    while ln and nam[ln-1] in ["'","’","`","\""]:
-        ln -= 1
-    st = 0
-    while st < ln and nam[ st] in ["'","’","`","\""]:
-        st += 1
-    return trimString( nam[ st:ln], "—")
 
 def matchName( obj, candidate, relaxed):
     cd = deepcopy(candidate)
@@ -216,10 +215,10 @@ def isEqualName( obj, candidate):
     return True
 
 def getMultipartName( tokens, tidx):
-    rt = [tokens[tidx].value]
+    rt = [tokens[ tidx].alphavalue]
     ti = tidx + 1
     while ti < len(tokens) and tokens[ ti].nlptag == '_':
-        trnam = trimApos( tokens[ ti].value)
+        trnam = tokens[ ti].alphavalue
         if trnam:
             rt.append( trnam)
         ti += 1
@@ -229,7 +228,7 @@ def getMultipartNameStr( tokens, tidx):
     rt = tokens[tidx].value
     ti = tidx + 1
     while ti < len(tokens) and tokens[ ti].nlptag == '_':
-        trnam = trimApos( tokens[ ti].value)
+        trnam = tokens[ ti].alphavalue
         if trnam:
             rt += " " + trnam
         ti += 1
@@ -256,10 +255,17 @@ def getTitleSubject( title):
         rt += splitAbbrev( tp)
     return rt
 
-def getFirstKeyMap( map):
+def getEntityElements( name):
+    rt = []
+    for nm in name:
+        if nm:
+            rt.append( nm)
+    return rt
+
+def getFirstKeyMap( map, getKeyElementsFunc):
     rt = {}
     for key in map:
-        keyelements = getTitleSubject( key)
+        keyelements = getKeyElementsFunc( key)
         if len(keyelements) >= 2:
             fkey = keyelements[0]
             if fkey in rt:
@@ -379,10 +385,15 @@ def sentenceIsTitle( tokens):
         return False
     return True
 
-def getMapBestWeight( name2weightMap, name):
+def getMapBestWeight( firstNameMap, name2weightMap, name):
     bestCd = None
     bestWeight = 0
-    for cd,weight in name2weightMap.items():
+    cdList = []
+    for nm in name:
+        if nm in firstNameMap:
+            cdList.extend( firstNameMap[ nm])
+    for cd in cdList:
+        weight = name2weightMap[ cd]
         thisCd = cd.split(' ')
         if len(name) == 1:
             if len(thisCd) >= 3:
@@ -397,6 +408,17 @@ def getMapBestWeight( name2weightMap, name):
                 bestCd = thisCd
                 bestWeight = weight
     return bestCd,bestWeight
+
+def removeFirstNameMap( map, namekey):
+    for nm in namekey.split(' '):
+        map[ nm].remove( namekey)
+
+def defineFirstNameMap( map, namekey):
+    for nm in namekey.split(' '):
+        if nm in map:
+            map[ nm].append( namekey)
+        else:
+            map[ nm] = [namekey]
 
 def skipToOwnPrp( tokens, tidx):
     nidx = tidx
@@ -547,22 +569,50 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
         else:
             tidx += 1
 
-def tagSentenceNameReferences( tokens, names):
+def matchTokenNameReference( tokens, tidx, nam):
+    sidx = 0
+    while sidx < len(nam) and tidx+sidx < len(tokens):
+        if tokens[tidx+sidx].alphavalue != nam[sidx] or tokens[tidx+sidx].nlprole == 'none':
+            break
+        sidx += 1
+    if sidx == len(nam):
+        return True
+    else:
+        return False
+
+def tagTokenNameReference( tokens, tidx, size):
+    sidx = 0
+    while sidx < size:
+        tagEntitySequenceTokenShift( tokens, tidx+sidx, sidx)
+        sidx += 1
+
+def tagSentenceNameReferences( tokens, nam):
+    if nam:
+        tidx = 0
+        while tidx < len(tokens):
+            if matchTokenNameReference( tokens, tidx, nam):
+                tagTokenNameReference( tokens, tidx, len(nam))
+                tidx += len(nam)
+            else:
+                tidx += 1
+
+def tagSentenceNameMapReferences( tokens, namemap):
     tidx = 0
     while tidx < len(tokens):
-        for nam in names:
-            sidx = 0
-            while sidx < len(nam) and tidx+sidx < len(tokens):
-                if tokens[tidx+sidx].value != nam[sidx] or tokens[tidx+sidx].nlprole == 'none':
-                    break
-                sidx += 1
-            if sidx == len(nam):
-                sidx = 0
-                while sidx < len(nam):
-                    tagEntitySequenceTokenShift( tokens, tidx+sidx, sidx)
-                    sidx += 1
-                tidx += sidx
-                break
+        tokval = tokens[tidx].alphavalue
+        if tokval in namemap:
+            bestIdx = -1
+            bestLen = 0
+            cdlist = namemap[ tokval]
+            for cdIdx,cd in enumerate(cdlist):
+                if len(cd) > bestLen and matchTokenNameReference( tokens, tidx, cd):
+                    bestLen = len(cd)
+                    bestIdx = cdIdx
+            if bestIdx >= 0:
+                tagTokenNameReference( tokens, tidx, bestLen)
+                tidx += bestLen
+            else:
+                tidx += 1
         else:
             tidx += 1
 
@@ -639,7 +689,7 @@ def weightIncrOnNounMatch( weight):
                 rt += math.sqrt( weight)
     return rt
 
-def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidates, tokCntWeightMap, sentenceIdx):
+def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, nounCandidateKeyMap, nounCandidates, tokCntWeightMap, sentenceIdx):
     usedEntities = []
     eidx = 0
     ref = None
@@ -666,7 +716,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                         ref = titlesubject
                         isEntity = True
             if isEntity and not ref:
-                item,weight = getMapBestWeight( nounCandidates, name)
+                item,weight = getMapBestWeight( nounCandidateKeyMap, nounCandidates, name)
                 if item:
                     if len(name) == 1:
                         normname = normalizedCountTokenValue( name[0])
@@ -683,11 +733,11 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                     if tokens[ eidx].strustag == "N":
                         tokens[ eidx].strustag = "E"
             if isEntity:
-                key = trimApos( ' '.join( ref or name))
+                key = ' '.join( ref or name)
                 usedEntities.append( key)
             elif ref:
                 tokens[ eidx].strustag = 'E'
-                key = trimApos( ' '.join( ref or name))
+                key = ' '.join( ref or name)
                 usedEntities.append( key)
         eidx += 1
     for key in usedEntities:
@@ -695,6 +745,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
             weight = weightIncrOnNounMatch( nounCandidates[ key] + 1)
         else:
             weight = (1/0.8)
+            defineFirstNameMap( nounCandidateKeyMap, key)
         nounCandidates[ key] = weight
     expiredKeys = []
     for key,weight in nounCandidates.items():
@@ -704,6 +755,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
             expiredKeys.append( key)
     for key in expiredKeys:
         del nounCandidates[ key]
+        removeFirstNameMap( nounCandidateKeyMap, key)
 
 # param sexSubjectMap: map sex:string -> Subject
 def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap):
@@ -810,9 +862,11 @@ def getDocumentSentences( text, verbose):
         if value:
             if node.tag_[:3] == "NNP" and value.count('.') > 1:
                 for abr in splitAbbrev( value):
-                    tokens.append( NlpToken( None, None, node.tag_, node.dep_, abr, None))
+                    tokens.append( NlpToken( None, None, node.tag_, node.dep_, abr, trimApos(abr), None))
+            elif node.tag_ and node.tag_[0] in ["N","J","V","R"]:
+                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, trimApos(value), None))
             else:
-                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, None))
+                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, value, None))
         if node.dep_ == "punct":
             if not eb:
                 if value in [':',';','.']:
@@ -838,7 +892,7 @@ def getDocumentNlpTokCountMap( sentences, elements):
         for tidx,tok in enumerate(sent):
             if tok.nlptag in elements:
                 name = tok.ref or getMultipartName( sent, tidx)
-                key = trimApos( ' '.join( name))
+                key = ' '.join( name)
                 if key in rt:
                     rt[ key] += 1
                 else:
@@ -1030,10 +1084,10 @@ def getDocumentNnpSexMap( map):
             rt[ nnp] = maxsex
     return rt
 
-def tagDocument( title, text, entityMap, verbose, complete):
+def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     rt = ""
     titlesubject = getTitleSubject( title)
-    entityFirstKeyMap = getFirstKeyMap( entityMap)
+    entityFirstKeyMap = getFirstKeyMap( entityMap, getTitleSubject)
     tokCntMap = {}
     tokCntWeightMap = {}
     tokCntTotal = 0
@@ -1041,6 +1095,8 @@ def tagDocument( title, text, entityMap, verbose, complete):
     if verbose:
         print( "* Document title %s" % ' '.join(titlesubject))
     sentences = getDocumentSentences( text, verbose)
+    start_time = time.time()
+    
     for sent in sentences:
         countTokens( tokCntMap, sent)
         tokCntTotal += len(sent)
@@ -1050,7 +1106,7 @@ def tagDocument( title, text, entityMap, verbose, complete):
         if sentenceIsTitle( sent):
             tagEntitySequenceStrusTags( sent, 0, len(sent))
         tagEntitySequenceStrusTagsInBrackets( sent)
-        tagSentenceNameReferences( sent, [titlesubject])
+        tagSentenceNameReferences( sent, titlesubject)
 
     tokCntWeightMap = tokenCountToWeightMap( tokCntMap, tokCntTotal)
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
@@ -1059,18 +1115,20 @@ def tagDocument( title, text, entityMap, verbose, complete):
         for bm in bestTitleMatches:
             print( "* Best title match %s" % ' '.join(bm))
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
+    nounCandidateKeyMap = {}
     nounCandidates = {}
     titlekey = ' '.join( titlesubject)
     for sidx,sent in enumerate(sentences):
         if sentenceHasVerb( sent):
             tagSentenceSubjects( sent)
-            tagSentenceCompleteNounReferences( sent, titlesubject, bestTitleMatches, nounCandidates, tokCntWeightMap, sidx)
+            tagSentenceCompleteNounReferences( sent, titlesubject, bestTitleMatches, nounCandidateKeyMap, nounCandidates, tokCntWeightMap, sidx)
 
     countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
     splitNlpTokCountMap( countNnp)
     mostUsedNnp = getMostUsedMultipartList( countNnp)
+    mostUsedNnpMap = getFirstKeyMap( mostUsedNnp, getEntityElements)
     for sidx,sent in enumerate(sentences):
-        tagSentenceNameReferences( sent, mostUsedNnp)
+        tagSentenceNameMapReferences( sent, mostUsedNnpMap)
 
     nnpSexCountMap = getDocumentNnpSexCountMap( titlesubject, sentences)
     nnpSexMap = getDocumentNnpSexMap( nnpSexCountMap)
@@ -1098,6 +1156,14 @@ def tagDocument( title, text, entityMap, verbose, complete):
                 print( "* Link '%s'" % ' '.join(link))
         for key,weight in tokCntWeightMap.items():
             print( "* Token count %s # %.3f" % (key, weight))
+        for nnp,nnplist in mostUsedNnpMap.items():
+            for ne in nnplist:
+                print( "* Most used NNP '%s'" % (' '.join(ne)))
+    diff_time = time.time() - start_time
+    if "timepost" in accuvar:
+        accuvar["timepost"] += diff_time
+    else:
+        accuvar["timepost"] = diff_time
     return rt
 
 def substFilename( filename):
@@ -1145,7 +1211,7 @@ def printUsage():
 def parseProgramArguments( argv):
     rt = {}
     try:
-        opts, args = getopt.getopt( argv,"hTVKSC:",["chunksize=","status","verbose","complete","test"])
+        opts, args = getopt.getopt( argv,"hTVKDSC:",["chunksize=","status","verbose","complete","duration","test"])
         for opt, arg in opts:
             if opt in ("-h", "--help"):
                 printUsage()
@@ -1159,6 +1225,8 @@ def parseProgramArguments( argv):
                 rt['V'] = True
             elif opt in ("-K", "--complete"):
                 rt['K'] = True
+            elif opt in ("-D", "--duration"):
+                rt['D'] = True
             elif opt in ("-T", "--test"):
                 rt['T'] = True
             elif opt in ("-S", "--status"):
@@ -1169,16 +1237,17 @@ def parseProgramArguments( argv):
         printUsage()
         sys.exit(2)
 
-def processStdin( verbose, complete):
+def processStdin( verbose, complete, duration):
     content = ""
     filename = ""
     entityMap = {}
+    accuvar = {}
     entityReadState = False
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if content:
                 title = getTitleFromFileName( filename)
-                result = tagDocument( title, content, entityMap, verbose, complete)
+                result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
                 printOutput( filename, result)
                 content = ""
             filename = line[6:].rstrip( "\r\n")
@@ -1192,9 +1261,11 @@ def processStdin( verbose, complete):
                 content += line
     if content:
         title = getTitleFromFileName( filename)
-        result = tagDocument( title, content, entityMap, verbose, complete)
+        result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
         printOutput( filename, result)
         content = ""
+    if duration and "timepost" in accuvar:
+        sys.stderr.write( "duration post processing: %.3f seconds\n" % accuvar[ "timepost"])
 
 linebuf = None
 def readChunkStdin( nofFiles):
@@ -1231,21 +1302,31 @@ def printTestResult( text, result):
         resultstr = "FAILED"
     sys.stderr.write( "Run test %s %s\n" % (text,resultstr))
 
+def diffTransformationResult( output, expected):
+    return output == expected
+
 def runTest():
     printTestResult( "MATCH 1", matchName( ["Giuliani"], ["Rudy","Giuliani"], False))
     printTestResult( "MATCH 2", matchName( ["Rudy","Giuliani"], ["Rudolph", "William", "Louis", "Giuliani"], True))
     printTestResult( "NOT MATCH 1", not matchName( ["Hugo","Chavez"], ["Hurto", "Castro"], False))
+    printTestResult( "TRIM APOS 1", diffTransformationResult( trimApos( "calvin'"), "calvin"))
+    printTestResult( "TRIM APOS 2", diffTransformationResult( trimApos( "calvin—"), "calvin"))
+    printTestResult( "TRIM APOS 3", diffTransformationResult( trimApos( "—calvin"), "calvin"))
+    printTestResult( "TRIM APOS 4", diffTransformationResult( trimApos( "—calvin—'"), "calvin"))
 
 if __name__ == "__main__":
     argmap = parseProgramArguments( sys.argv[ 1:])
     chunkSize = 0
     verbose = False
     complete = False
+    duration = False
 
     if 'V' in argmap:
         verbose = True
     if 'K' in argmap:
         complete = True
+    if 'D' in argmap:
+        duration = True
     if 'T' in argmap:
         runTest()
         exit( 0)
@@ -1266,7 +1347,7 @@ if __name__ == "__main__":
             if verbose:
                 printContent( content)
     else:
-        processStdin( verbose, complete)
+        processStdin( verbose, complete, duration)
 
 
 

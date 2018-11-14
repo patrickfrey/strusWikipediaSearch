@@ -3863,7 +3863,7 @@
 * Entity usage Format(s # 1
 * Entity usage A&R Jeff Fenster # 1
 * Entity usage CD # 7
-* Entity usage Finnish Albums Chart # 1
+* Entity usage Ruggieri # 1
 * Entity usage Billboard Greatest # 1
 * Entity usage Rosie O'Donnell Show # 2
 * Entity usage Luv # 1
@@ -3999,6 +3999,7 @@
 * Entity usage Fox # 2
 * Entity usage Soundtracks # 1
 * Entity usage Universe # 1
+* Entity usage Finnish Albums Chart # 1
 * Entity usage Barry Walters # 2
 * Entity usage Quote # 2
 * Entity usage Walsh # 2
@@ -4255,7 +4256,7 @@
 * Entity usage Personnel # 1
 * Entity usage Hop # 1
 * Entity usage Daydream # 1
-* Entity usage Ruggieri # 1
+* Entity usage tiger # 1
 * Entity usage In Drag And On TV # 1
 * Entity usage Backstreet Boys # 3
 * Entity usage Billboard Hot 100 # 3
@@ -4265,7 +4266,6 @@
 * Entity usage Devil # 1
 * Entity usage FOX # 1
 * Entity usage Richard A. # 1
-* Entity usage tiger' # 1
 * Entity usage Terra # 1
 * Entity usage ARIA Charts # 3
 * Entity usage Amazon.com Music # 1
@@ -7000,6 +7000,56 @@
 * Token count among # 0.051
 * Token count rare # 0.000
 * Token count showing # 0.000
+* Most used NNP 'Stephen Thomas Erlewine'
+* Most used NNP 'AV media notestitle'
+* Most used NNP 'Australian Recording Industry Association'
+* Most used NNP 'The Observer'
+* Most used NNP 'New Zealand'
+* Most used NNP 'Billboard Hot 100'
+* Most used NNP 'Billboard 200'
+* Most used NNP 'Eric Foster White'
+* Most used NNP 'Hung Medien'
+* Most used NNP 'Teen pop'
+* Most used NNP 'TiVo Corporation'
+* Most used NNP 'Rami Yacoub'
+* Most used NNP 'Music News'
+* Most used NNP 'Music Notes'
+* Most used NNP 'Certification Cite Refregion'
+* Most used NNP 'Certification Table Entryregion'
+* Most used NNP 'Jann Wenner'
+* Most used NNP 'Britney Spears'
+* Most used NNP 'Born to Make You Happy'
+* Most used NNP 'Dutch Albums'
+* Most used NNP 'Ö3 Austria'
+* Most used NNP 'Swiss Albums'
+* Most used NNP 'Swiss Hitparade'
+* Most used NNP 'Nielsen Business Media'
+* Most used NNP 'Nielsen SoundScan'
+* Most used NNP 'Max Martin'
+* Most used NNP 'Rolling Stone'
+* Most used NNP 'Official Charts Company'
+* Most used NNP 'Alfred Music'
+* Most used NNP 'Guinness World Records'
+* Most used NNP 'Recorded Music NZ'
+* Most used NNP 'Recording Industry Association of America'
+* Most used NNP 'Canadian Albums Chart'
+* Most used NNP 'From the Bottom of My Broken Heart'
+* Most used NNP 'Prometheus Global Media'
+* Most used NNP 'Backstreet Boys'
+* Most used NNP 'Baby One More Time'
+* Most used NNP 'Larry Rudolph'
+* Most used NNP 'MTV.Viacom Media Networks'
+* Most used NNP 'Nigel Dick'
+* Most used NNP 'ARIA Charts'
+* Most used NNP 'Entertainment Weekly'
+* Most used NNP 'Soda Pop'
+* Most used NNP 'Belgian Albums'
+* Most used NNP 'United States'
+* Most used NNP 'United Kingdom'
+* Most used NNP 'Ultratop Flanders'
+* Most used NNP 'Ultratop Wallonia'
+* Most used NNP 'Denniz Pop'
+* Most used NNP 'Jive Records'
 #FILE#/%2e%2e%2eBaby_One_More_Time_%28album%29.xml
  (ROOT)		NFP	...	
 S (none)	E	NNP	Baby	Baby One More Time
