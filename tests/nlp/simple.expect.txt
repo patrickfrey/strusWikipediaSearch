@@ -12,14 +12,15 @@
 * Subject Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
 * Entity usage Rudy Giuliani # 2
 * Entity usage Mayor # 1
-* Entity usage Bernd # 1
-* Entity usage New York City # 2
+* Entity usage N. Y. # 1
+* Entity usage New York City # 1
 * Entity usage Bloomberg # 1
 * Entity usage Erni # 1
 * Entity usage America # 1
 * Entity usage Ayer # 1
 * Entity usage United States # 1
 * Entity usage David Bowie # 1
+* Entity usage Bernd # 1
 * Token count n. # 0.000
 * Token count let # 0.000
 * Token count america # 0.000
@@ -163,7 +164,7 @@ S (nsubj)	E	PRP	he
  (nsubj)		PRP	's	
  (ccomp)	V	VB	go	
  (prep)		IN	to	
- (pobj)	E	NNP	N.	New York City
+ (pobj)	E	NNP	N.	
  (pobj)	_	_	Y.	
  (punct)	T!	.	.	
  (prep)		IN	Because	

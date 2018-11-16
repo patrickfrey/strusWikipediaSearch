@@ -63,7 +63,7 @@ V	Let
 	's	
 V	go	
 	to	
-E	N.	New York City
+E	N.	
 _	Y.	
 T!	.	
 	Because	
