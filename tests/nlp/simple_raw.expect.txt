@@ -44,19 +44,19 @@ A	big
 N	budget	
 _	problem	
 T!	.	
-E	It	
+R	It	
 V	s	
 A	unclear	
 W	how	
-E	he	
+R	he	
 m	ll	
 V	be	
 A	able	
 	to	
 V	handle	
-E	it	
+R	it	
 	during	
-E	his	
+R	his	
 N	term	
 T!	.	
 V	Let	

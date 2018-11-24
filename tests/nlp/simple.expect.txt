@@ -145,19 +145,19 @@ S (nsubj)	E	NNP	Giuliani	Rudy Giuliani
  (compound)	N	NN	budget	
  (pobj)	_	_	problem	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	It	
+S (nsubj)	R	PRP	It	
  (ROOT)	V	VBZ	s	
  (acomp)	A	JJ	unclear	
  (advmod)	W	WRB	how	
-S (nsubj)	E	PRP	he	
+S (nsubj)	R	PRP	he	
  (aux)	m	MD	ll	
  (ccomp)	V	VB	be	
  (acomp)	A	JJ	able	
  (aux)		TO	to	
  (xcomp)	V	VB	handle	
- (dobj)	E	PRP	it	
+ (dobj)	R	PRP	it	
  (prep)		IN	during	
- (poss)	E	PRP$	his	
+ (poss)	R	PRP$	his	
  (pobj)	N	NN	term	
  (punct)	T!	.	.	
  (ROOT)	V	VB	Let	

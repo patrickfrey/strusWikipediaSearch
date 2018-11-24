@@ -214,6 +214,12 @@ def isEqualName( obj, candidate):
             return False
     return True
 
+def isUpperCaseName( sq):
+    for elem in sq:
+        if not elem or not elem[ 0].isupper():
+            return False
+    return True
+
 def getMultipartName( tokens, tidx):
     rt = [tokens[ tidx].alphavalue]
     ti = tidx + 1
@@ -628,11 +634,12 @@ def tagSentenceNameMapReferences( tokens, namemap):
         else:
             tidx += 1
 
+# UNUSED
 def tagSentenceSingleLastNameReferences( tokens, entityLastKeyMap):
     tidx = 0
     while tidx < len(tokens):
-        if tokens[tidx].nlptag[:2] == 'NN':
-            if not tokens[ tidx].ref and tokens[ tidx].value[0].isupper():
+        if tokens[tidx].nlptag[:1] == 'N':
+            if not tokens[ tidx].ref and tokens[ tidx].value and tokens[ tidx].value[0].isupper():
                 if tidx+1 == len(tokens) or not tokens[tidx+1].nlptag[:1] in ['N','_']:
                     tokval = tokens[tidx].alphavalue
                     if tokval in entityLastKeyMap:
@@ -645,14 +652,9 @@ def tagSentenceSingleLastNameReferences( tokens, entityLastKeyMap):
                                 bestIdx = cdIdx
                         if bestIdx >= 0 and bestLen > 1 and bestLen <= 3:
                             ref = cdlist[ bestIdx]
-                            isAllUpper = True
-                            for rr in ref:
-                                if not rr[ 0].isupper():
-                                    isAllUpper = False
-                                    break
-                            if isAllUpper:
+                            if isUpperCaseName( ref):
                                 tokens[ tidx].ref = ref
-            while tidx < len(tokens) and not tokens[tidx].nlptag[:1] in ['N','_']:
+            while tidx < len(tokens) and tokens[tidx].nlptag[:1] in ['N','_']:
                 tidx += 1
         else:
             tidx += 1
@@ -1171,7 +1173,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     mostUsedNnpMap = getFirstKeyMap( mostUsedNnp, getEntityElements)
     for sidx,sent in enumerate(sentences):
         tagSentenceNameMapReferences( sent, mostUsedNnpMap)
-        tagSentenceSingleLastNameReferences( sent, entityLastKeyMap)
+        # UNUSED tagSentenceSingleLastNameReferences( sent, entityLastKeyMap)
 
     nnpSexCountMap = getDocumentNnpSexCountMap( titlesubject, sentences)
     nnpSexMap = getDocumentNnpSexMap( nnpSexCountMap)

@@ -7067,7 +7067,7 @@ _ (nsubj)	_	_	Time
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)	T!	.	.	
-S (nsubjpass)	E	PRP	It	Baby One More Time
+S (nsubjpass)	R	PRP	It	Baby One More Time
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	on	
@@ -7087,7 +7087,7 @@ S (nsubjpass)	E	PRP	It	Baby One More Time
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (advcl)	V	VBD	negotiated	
  (prep)		IN	with	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (pobj)	N	NN	manager	
  (prep)		IN	at	
  (det)		DT	the	
@@ -7103,7 +7103,7 @@ _ (nsubj)	_	_	Pearlman
  (dobj)	_	_	group	
 S (nsubj)	E	NNP	Innosense	
  (punct)	P!	,	,	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (conj)	N	NN	mother	
  (punct)	P!	,	,	
  (none)	E	NNP	Lynne	
@@ -7122,7 +7122,7 @@ S (nsubj)	E	NNP	Innosense
  (none)	_	_	Rudolph	
  (punct)	P!	,	,	
  (prep)		IN	for	
- (poss)	E	PRP$	his	
+ (poss)	R	PRP$	his	
  (pobj)	N	NN	opinion	
  (punct)	T!	.	.	
 S (nsubj)	E	NNP	Rudolph	Larry Rudolph
@@ -7132,7 +7132,7 @@ S (nsubj)	E	NNP	Rudolph	Larry Rudolph
  (conj)	V	VBD	decided	
  (aux)		TO	to	
  (xcomp)	V	VB	pitch	
- (dobj)	E	PRP	her	
+ (dobj)	R	PRP	her	
  (prep)		TO	to	
  (compound)	V	VB	record	
  (pobj)	N	NNS	labels	
@@ -7234,7 +7234,7 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (dative)		IN	to	
  (pobj)	E	NNPS	Spears	Britney Spears
  (cc)		CC	and	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (conj)	N	NN	management	
  (punct)	P!	,	,	
  (nsubjpass)	W	WDT	which	
@@ -7250,16 +7250,16 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (advmod)	A	RB	later	
  (ROOT)	V	VBD	claimed	
  (mark)		IN	that	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (ccomp)	V	VBD	felt	
  (acomp)	A	JJ	excited	
  (advmod)	W	WRB	when	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBD	heard	
- (dobj)	E	PRP	it	
+ (dobj)	R	PRP	it	
  (cc)		CC	and	
  (conj)	V	VBD	knew	
-S (nsubj)	E	PRP	it	
+S (nsubj)	R	PRP	it	
  (aux)	V	VBD	was	
  (ccomp)	V	VBG	going	
  (aux)		TO	to	
@@ -7268,7 +7268,7 @@ S (nsubj)	E	PRP	it
  (amod)	N	NN	hit	
  (attr)	_	_	record	
  (punct)	T!	.	.	
- (poss)	E	PRP$	Her	Britney Spears
+ (poss)	R	PRP$	Her	Britney Spears
 S (compound)	N	NN	debut	
 _ (nsubjpass)	_	_	album	
  (auxpass)	V	VBD	was	
@@ -7309,7 +7309,7 @@ S (nsubjpass)	N	NN	song
  (prep)		IN	in	
  (det)		DT	every	
  (pobj)	N	NN	country	
-S (nsubj)	E	PRP	it	
+S (nsubj)	R	PRP	it	
  (relcl)	V	VBD	charted	
  (advmod)	_	RP	in	
  (punct)	P!	,	,	
@@ -7362,7 +7362,7 @@ S (nsubj)	N	NN	album
  (prep)		IN	with	
  (amod)	A	JJ	many	
  (pcomp)	N	NN	labeling	
-S (nsubj)	E	PRP	it	
+S (nsubj)	R	PRP	it	
  (ccomp)	A	JJ	silly	
  (cc)		CC	and	
  (conj)	A	JJ	premature	
@@ -7398,7 +7398,7 @@ _ (nsubj)	_	_	Time
  (amod)	A	JJ	several	
  (pobj)	N	NNS	countries	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	It	Baby One More Time
+S (nsubj)	R	PRP	It	Baby One More Time
  (advmod)	A	RB	also	
  (ROOT)	V	VBD	received	
  (amod)	A	JJ	worldwide	
@@ -7454,7 +7454,7 @@ _ (nsubj)	_	_	Time
  (advmod)	A	RB	worldwide	
  (punct)	P!	,	,	
  (advcl)	V	VBG	making	
-S (nsubj)	E	PRP	it	Baby One More Time
+S (nsubj)	R	PRP	it	Baby One More Time
  (ccomp)	C	CD	one	
  (prep)		IN	of	
  (det)		DT	the	
@@ -7490,7 +7490,7 @@ S (nsubjpass)	N	NNS	singles
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	heavily	
  (conj)	V	VBD	promoted	
- (dobj)	E	PRP	it	Baby One More Time
+ (dobj)	R	PRP	it	Baby One More Time
  (prep)		IN	through	
  (pobj)	N	NNS	interviews	
  (cc)		CC	and	
@@ -7499,7 +7499,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (amod)	A	JJ	national	
  (pobj)	N	NN	television	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	She	
+S (nsubj)	R	PRP	She	
  (ROOT)	V	VBD	embarked	
  (prep)		IN	on	
  (det)		DT	the	
@@ -7805,7 +7805,7 @@ _ (nsubj)	_	_	Time
  (punct)		NFP	...	
  (nsubj)		PRP	I	
  (ccomp)	V	VBD	Did	
- (dobj)	E	PRP	It	
+ (dobj)	R	PRP	It	
  (advmod)	A	RB	Again	
  (punct)	P!	:	;	
  (advcl)		NN	misc	
@@ -7843,7 +7843,7 @@ S (nsubj)	E	NNP	Lynne
  (none)	E	NNP	Larry	
  (none)	_	_	Rudolph	
  (prep)		IN	for	
- (poss)	E	PRP$	his	
+ (poss)	R	PRP$	his	
  (pobj)	N	NN	opinion	
  (cc)		CC	and	
  (conj)	V	VBD	submitted	
@@ -7867,7 +7867,7 @@ S (nsubj)	E	NNP	Rudolph	Larry Rudolph
  (ROOT)	V	VBD	decided	
  (aux)		TO	to	
  (xcomp)	V	VB	pitch	
- (dobj)	E	PRP	her	Britney Spears
+ (dobj)	R	PRP	her	Britney Spears
  (aux)		TO	to	
  (xcomp)	V	VB	record	
  (dobj)	N	NNS	labels	
@@ -7878,7 +7878,7 @@ S (nsubj)	E	NNP	Rudolph	Larry Rudolph
  (amod)	A	JJ	professional	
  (dobj)	N	NN	demo	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	He	
+S (nsubj)	R	PRP	He	
  (ccomp)	V	VBD	sent	
  (dative)	E	NNPS	Spears	Britney Spears
  (det)		DT	an	
@@ -7888,7 +7888,7 @@ S (nsubj)	E	PRP	He
  (none)	E	NNP	Toni	
  (none)	_	_	Braxton	
  (punct)	P!	:	;	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (ROOT)	V	VBD	rehearsed	
  (prep)		IN	for	
  (det)		DT	a	
@@ -7927,7 +7927,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (punct)	T!	.	.	
  (nsubj)	C	CD	Three	
  (ROOT)	V	VBD	rejected	
- (dobj)	E	PRP	her	Britney Spears
+ (dobj)	R	PRP	her	Britney Spears
  (punct)	P!	,	,	
  (advcl)	V	VBG	arguing	
 S (nsubj)	N	NNS	audiences	
@@ -7983,7 +7983,7 @@ _ (nsubj)	_	_	president
  (pobj)	_	_	Fenster	
  (ROOT)	V	VBD	stated	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	It	
+S (nsubj)	R	PRP	It	
  (ccomp)	V	VBZ	's	
  (advmod)	A	RB	very	
  (acomp)	A	JJ	rare	
@@ -8026,9 +8026,9 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (ROOT)	V	VBD	had	
  (dobj)		DT	that	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	They	
+S (nsubj)	R	PRP	They	
  (ROOT)	V	VBD	appointed	
- (dobj)	E	PRP	her	Britney Spears
+ (dobj)	R	PRP	her	Britney Spears
  (aux)		TO	to	
  (xcomp)	V	VB	work	
  (prep)		IN	with	
@@ -8043,7 +8043,7 @@ S (nsubj)	E	PRP	They
  (nsubj)	W	WP	who	
  (advmod)	A	RB	reportedly	
  (relcl)	V	VBD	shaped	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (dobj)	N	NN	voice	
  (prep)		IN	from	
  (amod)	A	JJR	lower	
@@ -8109,7 +8109,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (cc)		CC	and	
  (nsubj)		PRP	You	
  (conj)	V	VBP	Got	
- (dobj)	E	PRP	It	motivation
+ (dobj)	R	PRP	It	motivation
  (appos)		DT	All	
  (punct)	T!	.	.	
  (det)		DT	The	
@@ -8209,7 +8209,7 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (ROOT)	V	VBD	showed	
  (dobj)	E	NNPS	Spears	Britney Spears
  (cc)		CC	and	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (conj)	N	NN	management	
  (det)		DT	a	
  (dobj)	N	NN	track	
@@ -8235,24 +8235,24 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (punct)	P!	:	;	
  (advmod)	A	RB	however	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	they	, half
+S (nsubj)	R	PRP	they	, half
  (ROOT)	V	VBD	rejected	
- (dobj)	E	PRP	it	motivation
+ (dobj)	R	PRP	it	motivation
  (punct)	T!	.	.	
 S (nsubj)	E	NNP	Spears	Britney Spears
  (advmod)	A	RB	later	
  (ROOT)	V	VBD	claimed	
  (mark)		IN	that	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (ccomp)	V	VBD	felt	
  (acomp)	A	JJ	excited	
  (advmod)	W	WRB	when	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBD	heard	
- (dobj)	E	PRP	it	motivation
+ (dobj)	R	PRP	it	motivation
  (cc)		CC	and	
  (conj)	V	VBD	knew	
-S (nsubj)	E	PRP	it	motivation
+S (nsubj)	R	PRP	it	motivation
  (aux)	V	VBD	was	
  (ccomp)	V	VBG	going	
  (aux)		TO	to	
@@ -8303,7 +8303,7 @@ S (nsubj)	N	NN	line
  (cc)		CC	and	
  (advmod)	A	RB	later	
  (conj)	V	VBD	revised	
- (dobj)	E	PRP	it	motivation
+ (dobj)	R	PRP	it	motivation
  (prep)		IN	to	
  (punct)	T!	.	...	
  (none)	E	NNP	Baby	Baby One More Time
@@ -8315,7 +8315,7 @@ S (nsubj)	N	NN	line
 S (nsubj)	N	NN	singer	
  (ccomp)	V	VBD	revealed	
  (mark)		IN	that	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (aux)	V	VBD	did	
  (neg)	A	RB	n't	
  (ccomp)	V	VB	do	
@@ -8360,7 +8360,7 @@ S (nsubj)	E	PRP	she
  (acomp)	A	JJ	relaxed	
  (cc)		CC	and	
  (conj)	V	VBD	nailed	
- (dobj)	E	PRP	it	singer
+ (dobj)	R	PRP	it	singer
  (punct)	T!	.	.	
  (nsubj)		PRP	You	
  (ROOT)	V	VBD	got	
@@ -8536,7 +8536,7 @@ _ (nsubjpass)	_	_	Time
  (prep)		IN	in	
  (pobj)	E	NNP	Sweden	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	he	
+S (nsubj)	R	PRP	he	
  (ROOT)	V	VBD	played	
  (det)		DT	the	
  (dobj)	A	JJS	demo	
@@ -8556,7 +8556,7 @@ S (nsubj)	E	PRP	he
  (prep)		IN	from	
  (det)		DT	the	
  (pobj)	N	NN	start	
- (dobj)	E	PRP	it	
+ (dobj)	R	PRP	it	
  (prep)		IN	of	
  (det)		DT	those	
  (pobj)	N	NNS	songs	
@@ -8568,7 +8568,7 @@ S (nsubj)	E	PRP	he
  (cc)		CC	and	
  (conj)	A	RB	again	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	It	
+S (nsubj)	R	PRP	It	
  (advmod)	A	RB	just	
  (ROOT)	V	VBD	felt	
  (advmod)	A	RB	really	
@@ -8585,12 +8585,12 @@ S (nsubj)	E	PRP	It
  (amod)	A	JJ	own	
  (dobj)	N	NN	thing	
  (prep)		IN	with	
- (pobj)	E	PRP	it	
+ (pobj)	R	PRP	it	
  (punct)	P!	,	,	
  (advcl)	V	VBG	trying	
  (aux)		TO	to	
  (xcomp)	V	VB	give	
- (dative)	E	PRP	it	
+ (dative)	R	PRP	it	
  (det)		DT	a	
  (advmod)	A	RB	little	
  (amod)	A	JJR	more	
@@ -8874,13 +8874,13 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	all	
  (acomp)	A	JJ	right	
  (prep)		IN	with	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (poss)	N	NN	label	
  (case)		POS	's	
  (pobj)	N	NNS	producers	
  (punct)	P!	,	,	
  (mark)		IN	since	
-S (nsubj)	E	PRP	It	
+S (nsubj)	R	PRP	It	
  (advcl)	V	VBD	made	
  (amod)	A	JJR	more	
  (dobj)	N	NN	sense	
@@ -8893,9 +8893,9 @@ S (nsubj)	E	PRP	It
  (aux)	m	MD	can	
  (advcl)	V	VB	dance	
  (prep)		IN	to	
- (pobj)	E	PRP	it	
+ (pobj)	R	PRP	it	
  (ROOT)	P!	:	—	
-S (nsubj)	E	PRP	it	
+S (nsubj)	R	PRP	it	
  (ROOT)	V	VBZ	's	
  (advmod)	A	JJR	more	
  (attr)		PRP	me	
@@ -8983,7 +8983,7 @@ _ (nsubj)	_	_	Words
  (det)		DT	the	
 S (nsubj)	N	NN	track	
  (ROOT)	V	VBZ	makes	
- (poss)	E	PRP$	its	album
+ (poss)	R	PRP$	its	album
 S (nsubj)	N	NN	presence	
  (ccomp)	V	VBN	known	
  (prep)		IN	in	
@@ -9134,7 +9134,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (prep)		IN	from	
  (pobj)		PRP	me	
  (punct)	T!	.	/	
-S (nsubj)	E	PRP	It	guide
+S (nsubj)	R	PRP	It	guide
  (ROOT)	V	VBZ	's	
  (neg)	A	RB	not	
  (mark)		IN	that	
@@ -9240,7 +9240,7 @@ _ (none)	_	_	Happy
  (det)		DT	an	
  (pobj)	N	NN	Octave	
  (punct)	T!	.	.	
- (poss)	E	PRP$	Its	track
+ (poss)	R	PRP$	Its	track
 S (nsubj)	N	NNS	lyrics	
  (ROOT)	A	RB	allude	
  (prep)		IN	to	
@@ -9261,7 +9261,7 @@ S (nsubj)	N	NN	woman
  (acomp)	A	JJ	wrong	
  (punct)	P!	,	,	
  (mark)		IN	as	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (advcl)	V	VBZ	comes	
  (aux)		TO	to	
  (xcomp)	V	VB	realize	
@@ -9823,7 +9823,7 @@ _ (nsubj)	_	_	Spears
  (conj)	V	VBZ	Goes	
  (advmod)	A	RB	Back	
  (prep)		IN	To	
- (poss)	E	PRP$	Her	
+ (poss)	R	PRP$	Her	
  (compound)	E	NNP	Schoolgirl	
  (pobj)	_	_	Days	
  (prep)		IN	For	
@@ -10093,7 +10093,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (punct)	P!	-RRB-	)	
  (ROOT)	E	NNP	Crazy	
  (prep)		IN	at	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (compound)	E	NNP	Las	
  (compound)	_	_	Vegas	
  (compound)	N	NN	residency	
@@ -10182,7 +10182,7 @@ S (nsubjpass)	N	NN	edition
  (punct)	P!	,	,	
  (nummod)	C	CD	2017	
  (punct)	P!	,	,	
-S (nsubjpass)	E	PRP	it	Baby One More Time
+S (nsubjpass)	R	PRP	it	Baby One More Time
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	announced	
  (prep)		IN	that	
@@ -10269,7 +10269,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (amod)	A	JJ	male	
  (dobj)	N	NNS	dancers	
  (prep)		IN	with	
- (pobj)	E	PRP	her	
+ (pobj)	R	PRP	her	
  (prep)		IN	on	
  (det)		DT	the	
  (pobj)	N	NN	stage	
@@ -10287,7 +10287,7 @@ _ (nsubjpass)	_	_	tour
  (pobj)	_	_	Tour	
  (punct)	P!	,	,	
  (prep)		IN	after	
- (poss)	E	PRP$	its	vinyl
+ (poss)	R	PRP$	its	vinyl
  (pobj)	N	NN	sponsor	
  (punct)	T!	.	.	
  (det)		DT	The	
@@ -10328,7 +10328,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (compound)	N	NN	video	
  (pobj)	_	_	charts	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	She	Britney Spears
+S (nsubj)	R	PRP	She	Britney Spears
  (advmod)	A	RB	also	
  (ROOT)	V	VBD	appeared	
  (prep)		IN	on	
@@ -10385,10 +10385,10 @@ S (nsubj)	N	NN	singer
  (punct)	P!	,	,	
  (prep)		IN	after	
  (pcomp)	V	VBG	hurting	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (dobj)	N	NN	knee	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (aux)	V	VBD	had	
  (ROOT)	V	VBN	rescheduled	
  (dobj)	N	NNS	appearances	
@@ -10489,7 +10489,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (punct)	P!	,	,	
  (appos)	C	CD	1999	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	She	Britney Spears
+S (nsubj)	R	PRP	She	Britney Spears
  (advmod)	A	RB	also	
  (ROOT)	V	VBD	went	
  (prep)		IN	to	
@@ -10513,7 +10513,7 @@ S (nsubj)	E	PRP	She	Britney Spears
  (none)	E	NNP	National	
  (none)	_	_	Lottery	
  (punct)		.	.	
-S (nsubj)	E	PRP	She	Britney Spears
+S (nsubj)	R	PRP	She	Britney Spears
  (ROOT)	V	VBD	visited	
  (det)		DT	a	
  (compound)	N	NN	music	
@@ -10558,7 +10558,7 @@ S (nsubjpass)	E	NNP	Spears	Britney Spears
  (none)	_	_	Witch	
  (punct)	P!	,	,	
  (advmod)	W	WRB	where	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (relcl)	V	VBD	played	
  (dobj)		PRP	herself	
  (punct)	T!	.	.	
@@ -10632,7 +10632,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (amod)	A	JJ	following	
  (npadvmod)	N	NN	day	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	She	Britney Spears
+S (nsubj)	R	PRP	She	Britney Spears
  (ROOT)	V	VBD	had	
  (det)		DT	a	
  (nmod)	N	NN	mini	
@@ -11092,7 +11092,7 @@ S (nsubj)	N	NN	song
  (punct)	P!	,	,	
  (advmod)	A	RB	mostly	
  (advcl)	V	VBG	praising	
- (poss)	E	PRP$	its	Baby One More Time
+ (poss)	R	PRP$	its	Baby One More Time
  (dobj)	N	NN	composition	
  (punct)	T!	.	.	
  (punct)		NFP	...	
@@ -11112,10 +11112,10 @@ _ (nsubj)	_	_	Time
  (amod)	A	JJ	European	
  (pobj)	N	NN	country	
  (advmod)	W	WRB	where	
-S (nsubj)	E	PRP	it	song
+S (nsubj)	R	PRP	it	song
  (relcl)	V	VBD	charted	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	It	Baby One More Time
+S (nsubj)	R	PRP	It	Baby One More Time
  (ROOT)	V	VBD	received	
  (amod)	A	JJ	numerous	
  (dobj)	N	NNS	certifications	
@@ -11168,7 +11168,7 @@ _ (nsubj)	_	_	video
  (prep)		IN	to	
  (pobj)	E	NNP	Daydream	
  (mark)		IN	that	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (aux)	V	VBZ	is	
  (ccomp)	V	VBG	singing	
  (cc)		CC	and	
@@ -11179,7 +11179,7 @@ S (nsubj)	E	PRP	she
  (punct)	P!	,	,	
  (mark)		IN	while	
  (advcl)	V	VBG	watching	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (compound)	N	NN	love	
  (dobj)	_	_	interest	
  (prep)		IN	from	
@@ -11311,7 +11311,7 @@ _ (nsubjpass)	_	_	video
  (punct)	P!	,	,	
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	injured	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (amod)	A	JJ	left	
  (dobj)	N	NN	knee	
  (cc)		CC	and	
@@ -11344,7 +11344,7 @@ _ (nsubjpass)	_	_	video
  (appos)	E	NNP	California	
  (punct)	T!	.	.	
  (punct)		:	;	
-S (nsubjpass)	E	PRP	It	music video
+S (nsubjpass)	R	PRP	It	music video
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	released	
  (prep)		IN	on	
@@ -11469,7 +11469,7 @@ S (nsubj)	N	NN	sound
  (det)		DT	a	
  (pobj)	N	NN	transition	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	It	music video
+S (nsubj)	R	PRP	It	music video
  (advmod)	A	RB	also	
  (ROOT)	V	VBZ	omits	
  (det)		DT	the	
@@ -11555,7 +11555,7 @@ S (nsubj)	N	NN	song
 S (compound)	N	NN	music	
 _ (nsubjpass)	_	_	video	
  (prep)		IN	for	
- (pobj)	E	PRP	it	
+ (pobj)	R	PRP	it	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	directed	
  (agent)		IN	by	
@@ -11612,7 +11612,7 @@ S (nsubj)	N	NN	song
  (punct)	P!	,	,	
  (prep)		IN	despite	
  (pcomp)	V	VBG	considering	
- (dobj)	E	PRP	it	music video
+ (dobj)	R	PRP	it	music video
  (prep)		IN	as	
  (det)		DT	an	
  (amod)	A	JJ	unremarkable	
@@ -11741,7 +11741,7 @@ _ (nsubjpass)	_	_	video
  (punct)	P!	,	,	
  (npadvmod)	C	CD	1999	
  (punct)	T!	.	.	
-S (nsubjpass)	E	PRP	It	music video
+S (nsubjpass)	R	PRP	It	music video
  (auxpass)	V	VBD	was	
  (advmod)	A	RB	highly	
  (ROOT)	V	VBN	criticized	
@@ -12346,7 +12346,7 @@ _ (nsubj)	_	_	Spears
  (ROOT)	N	NN	Video	
  (aux)		TO	To	
  (advcl)	V	VB	Take	
- (dobj)	E	PRP	Her	
+ (dobj)	R	PRP	Her	
  (punct)		''	'	
  (prep)		IN	To	
  (det)		DT	The	
@@ -12966,19 +12966,19 @@ _ (nsubj)	_	_	Spears
  (punct)	P!	,	,	
  (appos)	C	CD	1999	
  (punct)	P!	,	,	
-S (nsubjpass)	E	PRP	it	
+S (nsubjpass)	R	PRP	it	
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	reported	
  (mark)		IN	that	
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (aux)	V	VBD	was	
  (ccomp)	V	VBG	planning	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (amod)	A	JJ	first	
  (compound)	A	JJ	headlining	
  (dobj)	N	NN	tour	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	She	Britney Spears
+S (nsubj)	R	PRP	She	Britney Spears
  (ROOT)	V	VBD	announced	
  (mark)		IN	that	
  (det)		DT	the	
@@ -13068,7 +13068,7 @@ S (nsubjpass)	N	NN	extension
  (det)		DT	a	
  (oprd)	N	NN	prelude	
  (prep)		IN	to	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	A	JJ	future	
  (compound)	N	NN	world	
  (pobj)	_	_	tour	
@@ -13078,7 +13078,7 @@ S (nsubjpass)	N	NN	extension
  (punct)		NFP	...	
  (nsubj)		PRP	I	
  (ROOT)	V	VBD	Did	
- (dobj)	E	PRP	It	tour
+ (dobj)	R	PRP	It	tour
  (advmod)	A	RB	Again	
  (ROOT)	E	NNP	Tour	
  (punct)	T!	.	.	
@@ -13126,7 +13126,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (auxpass)	V	VB	be	
  (relcl)	V	VBN	shown	
  (mark)		IN	before	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
 S (nsubj)	N	NNS	performances	
  (advcl)	V	VBD	began	
  (punct)	T!	.	.	
@@ -13193,7 +13193,7 @@ _ (nsubj)	_	_	list
  (prep)		IN	of	
  (pobj)	N	NNS	songs	
  (prep)		IN	from	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (compound)	N	NN	debut	
  (pobj)	_	_	album	
  (cc)		CC	and	
@@ -13216,7 +13216,7 @@ S (nsubjpass)	N	NNS	changes
  (agent)		IN	by	
  (pobj)	N	NNS	songs	
  (prep)		IN	from	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	A	JJ	second	
  (compound)	N	NN	studio	
  (pobj)	_	_	album	
@@ -13226,7 +13226,7 @@ S (nsubjpass)	N	NNS	changes
  (punct)		NFP	...	
  (nsubj)		PRP	I	
  (ROOT)	V	VBD	Did	
- (dobj)	E	PRP	It	set list
+ (dobj)	R	PRP	It	set list
  (advmod)	A	RB	Again	
  (punct)	T!	.	.	
  (det)		DT	The	
@@ -13248,7 +13248,7 @@ S (nsubjpass)	E	NNP	Spears	Britney Spears
  (pobj)	N	NN	synching	
  (punct)	P!	,	,	
  (mark)		IN	although	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBD	denied	
  (det)		DT	these	
  (dobj)	N	NNS	claims	
@@ -13273,12 +13273,12 @@ S (nsubjpass)	N	NN	concert
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	taped	
  (punct)	T!	.	.	
-S (nsubjpass)	E	PRP	It	concert
+S (nsubjpass)	R	PRP	It	concert
  (auxpass)	V	VBD	was	
  (advmod)	A	RB	slightly	
  (ROOT)	V	VBN	altered	
  (prep)		IN	from	
- (poss)	E	PRP$	its	concert
+ (poss)	R	PRP$	its	concert
  (compound)	E	NNP	Crazy	
  (compound)	C	CD	2k	
  (pobj)	N	NN	incarnation	
@@ -13293,7 +13293,7 @@ S (nsubjpass)	E	PRP	It	concert
  (punct)	P!	,	,	
  (nummod)	C	CD	2000	
  (punct)	P!	,	,	
-S (nsubjpass)	E	PRP	it	concert
+S (nsubjpass)	R	PRP	it	concert
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	broadcast	
  (prep)		IN	on	
@@ -13334,7 +13334,7 @@ _ (nsubj)	_	_	Records
  (compound)	E	NNP	Fox	
  (dobj)	N	NN	special	
  (punct)	T!	.	.	
-S (nsubjpass)	E	PRP	It	special
+S (nsubjpass)	R	PRP	It	special
  (auxpass)	V	VBD	was	
  (ROOT)	V	VBN	certified	
  (amod)	A	JJ	triple	
@@ -13574,7 +13574,7 @@ S (nsubj)	E	NNP	Girl
  (aux)	m	MD	Ca	
  (neg)	A	RB	n't	
  (ccomp)	V	VB	Help	
- (dobj)	E	PRP	It	
+ (dobj)	R	PRP	It	
  (punct)	P!	:	;	
  (appos)		NN	date	
  (punct)		:	;	
@@ -14073,7 +14073,7 @@ _ (nsubj)	_	_	Anderson
  (prep)		IN	of	
  (pobj)	E	NNP	MTV	
  (ROOT)	V	VBD	said	
-S (nsubj)	E	PRP	he	
+S (nsubj)	R	PRP	he	
  (ccomp)	V	VBD	was	
  (acomp)	A	JJ	surprised	
  (prep)		IN	in	
@@ -14082,7 +14082,7 @@ S (nsubj)	E	PRP	he
  (prep)		IN	than	
  (pobj)	C	CD	one	
  (prep)		IN	with	
- (poss)	E	PRP$	his	
+ (poss)	R	PRP$	his	
  (amod)	A	JJ	first	
  (pobj)	N	NN	listening	
  (prep)		IN	of	
@@ -14093,7 +14093,7 @@ S (nsubj)	E	PRP	he
  (none)	_	_	Time	
  (punct)	P!	,	,	
  (intj)	V	VBG	commenting	
-S (nsubj)	E	PRP	he	
+S (nsubj)	R	PRP	he	
  (ccomp)	V	VBD	expected	
  (expl)	A	RB	there	
  (aux)		TO	to	
@@ -14114,7 +14114,7 @@ S (nsubj)	E	PRP	he
  (aux)	V	VBD	did	
  (neg)	A	RB	n't	
  (ROOT)	V	VB	expect	
-S (nsubj)	E	PRP	it	Baby One More Time
+S (nsubj)	R	PRP	it	Baby One More Time
  (aux)		TO	to	
  (ccomp)	V	VB	be	
  (advmod)	A	RB	as	
@@ -14125,7 +14125,7 @@ S (nsubj)	E	PRP	it	Baby One More Time
  (advmod)	A	RB	sonically	
  (punct)	P!	-RRB-	)	
  (mark)		IN	as	
-S (nsubj)	E	PRP	it	Baby One More Time
+S (nsubj)	R	PRP	it	Baby One More Time
  (advcl)	V	VBD	ended	
  (prt)	_	RP	up	
  (xcomp)	V	VBG	being	
@@ -14161,7 +14161,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (prep)		IN	in	
  (pobj)		DT	all	
  (prep)		IN	of	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (pobj)	N	NNS	videos	
  (punct)	T!	.	.	
 S (compound)	E	NNP	Barry	
@@ -14278,12 +14278,12 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	already	
  (advmod)	A	RB	halfway	
  (prep)		IN	through	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (amod)	A	JJ	lucrative	
  (compound)	N	NN	showbiz	
  (pobj)	_	_	career	
  (punct)	T!	.	.	
-S (nsubj)	E	PRP	He	
+S (nsubj)	R	PRP	He	
  (advmod)	A	RB	also	
  (ROOT)	V	VBD	found	
  (det)		DT	the	
@@ -14295,7 +14295,7 @@ S (nsubj)	N	NN	album
  (advmod)	A	RB	hopefully	
  (punct)	P!	,	,	
  (mark)		IN	if	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (advcl)	V	VBZ	starts	
  (aux)		TO	to	
  (xcomp)	V	VB	live	
@@ -14308,14 +14308,14 @@ S (nsubj)	E	PRP	she
  (advmod)	A	RB	eventually	
  (relcl)	V	VBP	do	
  (punct)	P!	,	,	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
 S (nsubj)	N	NN	voice	
  (aux)	m	MD	will	
  (ccomp)	V	VB	show	
  (det)		DT	the	
  (dobj)	N	NNS	scars	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (aux)	m	MD	'll	
  (ccomp)	V	VB	stop	
  (xcomp)	V	VBG	looking	
@@ -14323,7 +14323,7 @@ S (nsubj)	E	PRP	she
  (amod)	A	JJ	fucking	
  (advmod)	A	JJ	smug	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (aux)	m	MD	'll	
  (ccomp)	V	VB	find	
  (dobj)	N	NN	solace	
@@ -14338,7 +14338,7 @@ S (nsubj)	E	PRP	she
  (advmod)	A	RBR	more	
  (acomp)	A	JJR	happier	
  (prep)		IN	for	
- (pobj)	E	PRP	it	Baby One More Time
+ (pobj)	R	PRP	it	Baby One More Time
  (punct)	T!	.	.	
  (advmod)	A	RB	Now	
  (ROOT)	V	VB	grow	
@@ -14970,7 +14970,7 @@ S (nsubj)	N	NN	album
  (cc)		CC	and	
  (conj)		DT	some	
  (prep)		IN	of	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (pobj)	N	NNS	dancers	
  (conj)	V	VBG	performing	
  (amod)	N	NN	lead	
@@ -14981,7 +14981,7 @@ S (nsubj)	N	NN	album
  (none)	_	_	More	
  (none)	_	_	Time	
  (prep)		IN	during	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (nummod)	C	CD	2011	
  (none)	E	NNP	Femme	
  (none)	_	_	Fatale	
@@ -15140,7 +15140,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (nummod)	C	CD	four	
  (pobj)	N	NNS	weeks	
  (prep)		IN	since	
- (poss)	E	PRP$	its	album
+ (poss)	R	PRP$	its	album
  (pobj)	N	NN	release	
  (punct)	P!	,	,	
  (det)		DT	the	
@@ -15174,7 +15174,7 @@ S (nsubj)	N	NN	album
  (pobj)	N	NN	number	
  (nummod)	C	CD	one	
  (prep)		IN	in	
- (poss)	E	PRP$	its	album
+ (poss)	R	PRP$	its	album
  (amod)	A	JJ	fourth	
  (pobj)	N	NN	week	
  (punct)	P!	,	,	
@@ -15187,12 +15187,12 @@ S (nsubj)	N	NN	album
  (acl)	V	VBN	sold	
  (punct)	T!	.	.	
  (prep)		IN	On	
- (poss)	E	PRP$	its	album
+ (poss)	R	PRP$	its	album
  (amod)	A	JJ	fifth	
  (pobj)	N	NN	week	
-S (nsubj)	E	PRP	it	album
+S (nsubj)	R	PRP	it	album
  (ROOT)	V	VBD	reached	
- (poss)	E	PRP$	its	album
+ (poss)	R	PRP$	its	album
  (amod)	A	JJS	highest	
  (compound)	N	NNS	sales	
  (dobj)	_	_	week	
@@ -15227,7 +15227,7 @@ _ (nsubj)	_	_	Time
  (nummod)	C	CD	million	
  (dobj)	N	NNS	copies	
  (prep)		IN	in	
- (poss)	E	PRP$	its	album
+ (poss)	R	PRP$	its	album
  (amod)	A	JJ	first	
  (nummod)	C	CD	two	
  (pobj)	N	NNS	months	
@@ -15238,7 +15238,7 @@ _ (nsubj)	_	_	Time
  (pobj)	N	NN	country	
  (punct)	T!	.	.	
  (prep)		IN	In	
- (poss)	E	PRP$	its	Baby One More Time
+ (poss)	R	PRP$	its	Baby One More Time
  (nummod)	C	CD	forty	
  (punct)		HYPH	-	
  (amod)	A	JJ	seventh	
@@ -15310,7 +15310,7 @@ S (nsubj)	N	NN	artist
  (npadvmod)	N	NNS	years	
  (acomp)	A	JJ	old	
  (advmod)	W	WRB	when	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBD	released	
  (none)	E	NNP	Jagged	
  (none)	_	_	Little	
@@ -15461,7 +15461,7 @@ _ (nsubj)	_	_	Canada
  (appos)	E	NNP	CRIA	
  (punct)	P!	-RRB-	)	
  (ROOT)	V	VBD	certified	
-S (nsubj)	E	PRP	it	album
+S (nsubj)	R	PRP	it	album
  (ccomp)	N	NN	diamond	
  (punct)	P!	,	,	
  (prep)		IN	for	
@@ -16839,7 +16839,7 @@ _ (nsubj)	_	_	Shimbun
 S (nsubj)	N	NNS	critics	
  (aux)	V	VBP	have	
  (ccomp)	V	VBN	hailed	
- (dobj)	E	PRP	her	
+ (dobj)	R	PRP	her	
  (prep)		IN	as	
  (det)		DT	the	
  (advmod)	A	RBS	most	
@@ -16855,13 +16855,13 @@ S (nsubj)	N	NNS	critics
 S (nsubj)	E	NNPS	Spears	
  (aux)	V	VBZ	has	
  (conj)	V	VBN	set	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (dobj)	N	NNS	sights	
  (det)		DT	a	
  (npadvmod)	A	JJ	little	
  (advmod)	A	JJR	higher	
  (punct)	P!	:	-	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (aux)	V	VBZ	is	
  (ccomp)	V	VBG	aiming	
  (prep)		IN	for	
@@ -16978,7 +16978,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (advcl)	V	VBD	did	
  (dobj)		DT	that	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (ROOT)	V	VBD	got	
  (det)		DT	this	
  (dobj)	N	NN	kind	
@@ -17025,7 +17025,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (punct)	P!	-RRB-	)	
  (intj)	E	NNP	Crazy	
  (punct)	P!	,	,	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	A	JJ	third	
  (intj)	A	JJ	single	
  (punct)	P!	:	...	
@@ -17043,7 +17043,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (nsubj)	A	JJ	old	
  (aux)	V	VBZ	is	
  (ccomp)	V	VBG	finding	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	A	JJ	own	
  (amod)	A	JJ	vocal	
  (dobj)	N	NN	personality	
@@ -17062,7 +17062,7 @@ _ (nsubj)	_	_	Erlewine
  (pobj)	E	NNP	Allmusic	
  (ROOT)	V	VBD	referred	
  (prep)		IN	to	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (pobj)	N	NN	music	
  (prep)		IN	as	
  (det)		DT	a	
@@ -17137,7 +17137,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (advmod)	A	RB	immediately	
  (prep)		IN	after	
  (pcomp)	V	VBG	launching	
- (poss)	E	PRP$	her	Britney Spears
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	N	NN	recording	
  (dobj)	_	_	career	
  (punct)	T!	.	.	
@@ -17160,7 +17160,7 @@ S (nsubj)	N	NN	magazine
  (amod)	A	JJ	21st	
  (pobj)	N	NN	century	
  (punct)	P!	,	,	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (ccomp)	V	VBD	spearheaded	
  (det)		DT	the	
  (dobj)	N	NN	rise	
@@ -17186,7 +17186,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (det)		DT	the	
  (dobj)	N	NN	bank	
  (punct)	T!	.	.	
-S (nsubjpass)	E	PRP	She	Britney Spears
+S (nsubjpass)	R	PRP	She	Britney Spears
  (auxpass)	V	VBZ	is	
  (ROOT)	V	VBN	listed	
  (agent)		IN	by	
@@ -17217,7 +17217,7 @@ _ (nsubj)	_	_	Ruggieri
  (pobj)	E	NNP	Dispatch	
  (ROOT)	V	VBD	reported	
  (punct)	P!	,	,	
-S (nsubjpass)	E	PRP	She	Britney Spears
+S (nsubjpass)	R	PRP	She	Britney Spears
  (auxpass)	V	VBZ	's	
  (advmod)	A	RB	also	
  (ccomp)	V	VBN	marked	
@@ -17231,7 +17231,7 @@ S (nsubjpass)	E	PRP	She	Britney Spears
  (attr)	N	NN	artist	
  (punct)	T!	.	.	
  (mark)		IN	Before	
-S (nsubj)	E	PRP	she	Britney Spears
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBD	turned	
  (dobj)	C	CD	20	
  (prep)		IN	in	
@@ -17326,7 +17326,7 @@ S (nsubj)	N	NNS	girls
  (advcl)	V	VBG	putting	
  (dobj)	N	NNS	posters	
  (prep)		IN	on	
- (poss)	E	PRP$	their	, Britney Spears
+ (poss)	R	PRP$	their	, Britney Spears
  (pobj)	N	NNS	walls	
  (punct)	P!	,	,	
 S (nsubj)	E	NNP	Britney	Britney Spears
@@ -17345,7 +17345,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
 S (nsubj)	N	NNS	children	
  (advcl)	V	VBP	develop	
  (prep)		IN	at	
- (poss)	E	PRP$	their	, Britney Spears
+ (poss)	R	PRP$	their	, Britney Spears
  (amod)	A	JJ	own	
  (pobj)	N	NN	pace	
  (punct)	P!	,	,	
@@ -17480,7 +17480,7 @@ S (nsubj)	N	NNS	songs
  (acomp)	A	JJ	great	
  (punct)	P!	,	,	
  (cc)		CC	but	
-S (nsubj)	E	PRP	they	
+S (nsubj)	R	PRP	they	
  (conj)	V	VBD	were	
  (neg)	A	RB	n't	
  (advmod)	A	RB	very	
@@ -17534,7 +17534,7 @@ S (nsubj)	N	NNS	—Spears
  (punct)	P!	:	...	
  (nsubj)		PRP	I	
  (ROOT)	V	VBD	Did	
- (dobj)	E	PRP	It	
+ (dobj)	R	PRP	It	
  (advmod)	A	RB	Again	
  (punct)	P!	:	;	
  (npadvmod)		NN	year	
@@ -17848,20 +17848,20 @@ _ (nsubj)	_	_	cheerleader
  (det)		DT	the	
  (dobj)	N	NN	pressure	
  (mark)		IN	as	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (advcl)	V	VBZ	tries	
  (aux)		TO	to	
  (xcomp)	V	VB	break	
  (advmod)	A	JJ	free	
  (prep)		IN	from	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (amod)	A	JJ	clean	
  (compound)	N	NN	teen	
  (pobj)	_	_	image	
  (punct)	T!	.	.	
  (advmod)	A	RB	So	
  (aux)	V	VBZ	is	
-S (nsubj)	E	PRP	it	pie cheerleader
+S (nsubj)	R	PRP	it	pie cheerleader
  (appos)		DT	all	
  (ROOT)	V	VBG	proving	
  (advmod)	A	RB	too	
@@ -17871,7 +17871,7 @@ S (nsubj)	E	PRP	it	pie cheerleader
  (pobj)	_	_	Inc	
  (punct)	P!	,	,	
  (mark)		IN	as	
-S (nsubj)	E	PRP	she	
+S (nsubj)	R	PRP	she	
  (advcl)	V	VBZ	pulls	
  (prep)		IN	out	
  (prep)		IN	of	
@@ -17886,7 +17886,7 @@ S (nsubj)	E	PRP	she
  (cc)		CC	and	
  (conj)	V	VBZ	takes	
  (prep)		IN	to	
- (poss)	E	PRP$	her	
+ (poss)	R	PRP$	her	
  (pobj)	N	NN	bed	
  (punct)	P!	:	:	
  (none)	E	NNP	The	
@@ -18025,7 +18025,7 @@ S (nsubj)	N	NN	Beat
  (prt)	_	RP	On	
  (punct)	T!	.	.	
  (prep)		IN	In	
- (pobj)	E	PRP	it	album
+ (pobj)	R	PRP	it	album
  (punct)	P!	,	,	
  (compound)	E	NNPS	Spears	Britney Spears
  (compound)	N	NNS	thanks	
