@@ -56,9 +56,9 @@ def mapTagValue( tagname):
     if tagname == "POS":
         return "" # [possesive] possessive ending
     if tagname == "PRP":
-        return "E" # [entity] personal pronoun
+        return "R" # [entity] personal pronoun
     if tagname == "PRP$":
-        return "E" # [entity] possesive pronoun
+        return "R" # [entity] possesive pronoun
     if tagname == "RB" or tagname == "RBR" or tagname == "RBS":
         return "A" # [adjective/adverb] adverb or comparative or superlative
     if tagname == "RP":
@@ -268,6 +268,18 @@ def getFirstKeyMap( map, getKeyElementsFunc):
         keyelements = getKeyElementsFunc( key)
         if len(keyelements) >= 2:
             fkey = keyelements[0]
+            if fkey in rt:
+                rt[ fkey].append( keyelements)
+            else:
+                rt[ fkey] = [keyelements]
+    return rt
+
+def getLastKeyMap( map, getKeyElementsFunc):
+    rt = {}
+    for key in map:
+        keyelements = getKeyElementsFunc( key)
+        if len(keyelements) >= 1:
+            fkey = keyelements[-1]
             if fkey in rt:
                 rt[ fkey].append( keyelements)
             else:
@@ -612,6 +624,35 @@ def tagSentenceNameMapReferences( tokens, namemap):
                 tagTokenNameReference( tokens, tidx, bestLen)
                 tidx += bestLen
             else:
+                tidx += 1
+        else:
+            tidx += 1
+
+def tagSentenceSingleLastNameReferences( tokens, entityLastKeyMap):
+    tidx = 0
+    while tidx < len(tokens):
+        if tokens[tidx].nlptag[:2] == 'NN':
+            if not tokens[ tidx].ref and tokens[ tidx].value[0].isupper():
+                if tidx+1 == len(tokens) or not tokens[tidx+1].nlptag[:1] in ['N','_']:
+                    tokval = tokens[tidx].alphavalue
+                    if tokval in entityLastKeyMap:
+                        bestIdx = -1
+                        bestLen = -1
+                        cdlist = entityLastKeyMap[ tokval]
+                        for cdIdx,cd in enumerate(cdlist):
+                            if bestLen == 0 or len(cd) > bestLen:
+                                bestLen = len(cd)
+                                bestIdx = cdIdx
+                        if bestIdx >= 0 and bestLen > 1 and bestLen <= 3:
+                            ref = cdlist[ bestIdx]
+                            isAllUpper = True
+                            for rr in ref:
+                                if not rr[ 0].isupper():
+                                    isAllUpper = False
+                                    break
+                            if isAllUpper:
+                                tokens[ tidx].ref = ref
+            while tidx < len(tokens) and not tokens[tidx].nlptag[:1] in ['N','_']:
                 tidx += 1
         else:
             tidx += 1
@@ -1088,6 +1129,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     rt = ""
     titlesubject = getTitleSubject( title)
     entityFirstKeyMap = getFirstKeyMap( entityMap, getTitleSubject)
+    entityLastKeyMap = getLastKeyMap( entityMap, getTitleSubject)
     tokCntMap = {}
     tokCntWeightMap = {}
     tokCntTotal = 0
@@ -1129,6 +1171,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     mostUsedNnpMap = getFirstKeyMap( mostUsedNnp, getEntityElements)
     for sidx,sent in enumerate(sentences):
         tagSentenceNameMapReferences( sent, mostUsedNnpMap)
+        tagSentenceSingleLastNameReferences( sent, entityLastKeyMap)
 
     nnpSexCountMap = getDocumentNnpSexCountMap( titlesubject, sentences)
     nnpSexMap = getDocumentNnpSexMap( nnpSexCountMap)

@@ -1561,12 +1561,12 @@ static std::string normalizeAttributeName( const std::string& name)
 	return rt;
 }
 
-static void printTagOpen( XmlPrinter& output, std::string& rt, const char* tagnam, const std::string& id, const std::string& text)
+static void printTagOpenA( XmlPrinter& output, std::string& rt, const char* tagnam, const char* attrnam, const std::string& id, const std::string& text)
 {
 	output.printOpenTag( tagnam, rt);
 	if (!id.empty())
 	{
-		output.printAttribute( "id", rt);
+		output.printAttribute( attrnam, rt);
 		output.printValue( id, rt);
 	}
 	if (!text.empty())
@@ -1574,6 +1574,11 @@ static void printTagOpen( XmlPrinter& output, std::string& rt, const char* tagna
 		output.switchToContent( rt);
 		output.printValue( text, rt);
 	}
+}
+
+static void printTagOpen( XmlPrinter& output, std::string& rt, const char* tagnam, const std::string& id, const std::string& text)
+{
+	printTagOpenA( output, rt, tagnam, "id", id, text);
 }
 
 static void printTagContent( XmlPrinter& output, std::string& rt, const char* tagnam, const std::string& id, const std::string& text)
@@ -1724,7 +1729,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::QuotationStart:
 				stk.push_back( Paragraph::StructQuotation);
-				printTagOpen( output, rt, "quot", pi->id(), pi->text());
+				printTagOpenA( output, rt, "quot", "lv", pi->id(), pi->text());
 				break;
 			case Paragraph::QuotationEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1732,7 +1737,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::MultiQuoteStart:
 				stk.push_back( Paragraph::StructMultiQuote);
-				printTagOpen( output, rt, "entity", pi->id(), pi->text());
+				printTagOpenA( output, rt, "entity", "lv", pi->id(), pi->text());
 				break;
 			case Paragraph::MultiQuoteEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1771,7 +1776,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::HeadingStart:
 				stk.push_back( Paragraph::StructHeading);
-				printTagOpen( output, rt, "heading", pi->id(), pi->text());
+				printTagOpenA( output, rt, "heading", "lv", pi->id(), pi->text());
 				break;
 			case Paragraph::HeadingEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1779,7 +1784,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::ListItemStart:
 				stk.push_back( Paragraph::StructList);
-				printTagOpen( output, rt, "list", pi->id(), pi->text());
+				printTagOpenA( output, rt, "list", "lv", pi->id(), pi->text());
 				break;
 			case Paragraph::ListItemEnd:
 				stack_pop_back( stk, pi->typeName());

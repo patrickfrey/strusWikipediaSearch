@@ -34,22 +34,22 @@ strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-p
 for ext in err mis wtf org; do find xml -name "*.$ext" | xargs rm; done
 
 export PYTHONHASHSEED=123
-POSTAGGER_TAG_OPT="-D '; ' ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br'"
+POSTAGGER_TAG_OPT="-D '; ' ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//text' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br'"
 
-for aa in 0 1 2 3 4 5 6 7 8 9; do
+for aa in 0 1 2 3 4 5 6 ; do
 for bb in 0 1 2 3 4 5 6 7 8 9; do
 for cc in 0 1 2 3 4 5 6 7 8 9; do
 for dd in 0 1 2 3 4 5 6 7 8 9; do
 	DID=$aa$bb$cc$dd
 	echo "processing $DID ..."
-	strusPosTagger -I -x xml -C XML -D '; ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
+	strusPosTagger -I -x xml -C XML -D '; ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//text' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
 done
 done
 done
 done
 
 
-cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp_spacy.py -S -C 10 > /srv/wikipedia/tag/0000.txt
+cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp_spacy.py -S -C 100 > /srv/wikipedia/tag/0000.txt
 DID=0000
 strusPosTagger -x ".xml" -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -o /srv/wikipedia/nlpxml/$DID /srv/wikipedia/xml/$DID /srv/wikipedia/tag/$DID.txt
 
