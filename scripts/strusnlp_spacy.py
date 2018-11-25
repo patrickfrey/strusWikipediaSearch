@@ -395,7 +395,7 @@ def sentenceIsTitle( tokens):
                 continue
             if elem.strustag == '_':
                 continue
-            elif elem.nlptag[0] in ['J','N','P','R','W','M','C','F','T','D','I']:
+            elif elem.nlptag[0] in ['V','J','N','P','R','W','M','C','F','T','D','I']:
                 if elem.value and elem.value[0].isupper():
                     continue
         if elem.nlprole == "punct":
@@ -455,6 +455,7 @@ def skipToOwnPrp( tokens, tidx):
 def tagSentenceStrusTags( tokens):
     prev = ""
     mapprev = ""
+    termidx = -1
     for eidx,elem in enumerate(tokens):
         if elem.nlprole == "none" or elem.strustag == '_':
             prev = ""
@@ -463,6 +464,14 @@ def tagSentenceStrusTags( tokens):
         type = elem.nlptag
         utype = unifyType( type)
         maptype = mapTag( type)
+        if maptype == "T!":
+            if type != ".":
+                termidx = eidx
+                maptype = "P!"
+        elif maptype == "P!":
+            pass
+        else:
+            termidx = -1
         if type == 'PRP' or type == 'PRP$':
             if not getPrpSex( elem.value):
                 maptype = ""
@@ -476,6 +485,8 @@ def tagSentenceStrusTags( tokens):
             mapprev = maptype
         elem.strustag = maptype
         elem.nlptag = type
+    if termidx >= 0:
+        tokens[ termidx].strustag = "T!"
 
 def tagEntitySequenceToken( elem, eidx):
     if elem.nlprole[:5] == "nsubj":

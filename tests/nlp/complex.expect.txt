@@ -3770,7 +3770,7 @@
 * Entity sex stats Britney Spears , Lou Pearlman , Innosense -> {'W': 1.0}
 * Entity sex stats Baby One More Time , Baby One More Time -> {'N': 1.0}
 * Entity sex stats Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
-* Entity sex stats Chuck Taylor , Britney Spears -> {'W': 0.1111111111111111}
+* Entity sex stats Chuck Taylor , Britney Spears -> {'W': 1.0}
 * Entity sex stats Crazy , Melody -> {'N': 0.2}
 * Entity sex Britney Spears -> W
 * Entity sex Baby One More Time -> N
@@ -3790,15 +3790,16 @@
 * Subject Britney Spears , Lou Pearlman , Innosense -> {'W': 1.0}
 * Subject Baby One More Time , Baby One More Time -> {'N': 1.0}
 * Subject Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
-* Subject Chuck Taylor , Britney Spears -> {'W': 0.1111111111111111}
+* Subject Chuck Taylor , Britney Spears -> {'W': 1.0}
 * Subject Crazy , Melody -> {'N': 0.2}
 * Entity usage Tommy Hilfiger # 1
 * Entity usage Swedish Albums # 1
-* Entity usage Amazon.fr # 2
+* Entity usage You Drive Me # 8
 * Entity usage DVD # 1
 * Entity usage Swedishcharts.com # 1
 * Entity usage Creek # 1
 * Entity usage Janet # 1
+* Entity usage Amazon.fr # 2
 * Entity usage Italian Albums # 2
 * Entity usage Beth Sestanovich # 1
 * Entity usage Britney # 5
@@ -3806,14 +3807,12 @@
 * Entity usage Aall # 1
 * Entity usage Track # 6
 * Entity usage AllMusic # 7
-* Entity usage Road # 1
 * Entity usage Nickelodeon # 1
 * Entity usage rev8 # 1
 * Entity usage Geoff # 1
 * Entity usage Shapiro # 1
 * Entity usage Trip hop # 1
 * Entity usage RZBD004 # 1
-* Entity usage Beat # 1
 * Entity usage Rhythm and blues # 1
 * Entity usage April 9–10 # 1
 * Entity usage Hot # 1
@@ -3823,6 +3822,7 @@
 * Entity usage L'Oréal Mall Tour # 1
 * Entity usage Toronto Sun # 1
 * Entity usage Wallonia # 1
+* Entity usage Of # 1
 * Entity usage Cher # 1
 * Entity usage GeoCities # 1
 * Entity usage Petch # 1
@@ -3851,7 +3851,6 @@
 * Entity usage BillboardURLbyNameartist # 1
 * Entity usage Alpha Media Group # 1
 * Entity usage Dean # 1
-* Entity usage Dancehall # 1
 * Entity usage Sheryl Crow # 1
 * Entity usage Pop # 2
 * Entity usage Danish Albums # 2
@@ -3886,6 +3885,7 @@
 * Entity usage Robert Dimery # 1
 * Entity usage Knopper # 2
 * Entity usage James R. # 1
+* Entity usage The Observer # 3
 * Entity usage Femme Fatale Tour # 1
 * Entity usage EuropeCertification # 1
 * Entity usage AVCZ-95114 # 1
@@ -3908,6 +3908,7 @@
 * Entity usage Book # 1
 * Entity usage Backstreet # 1
 * Entity usage des # 1
+* Entity usage May # 28
 * Entity usage Samantha Fox # 1
 * Entity usage Charts # 6
 * Entity usage Autumn Goodbye # 2
@@ -3922,7 +3923,7 @@
 * Entity usage Las Vegas # 1
 * Entity usage Kristian Lundin # 1
 * Entity usage Japanese Main Albums Chart # 1
-* Entity usage March # 42
+* Entity usage Keith # 2
 * Entity usage Soda Pop # 3
 * Entity usage Offspring Up To No # 1
 * Entity usage These Words # 1
@@ -3948,6 +3949,7 @@
 * Entity usage Philip # 2
 * Entity usage first2 # 1
 * Entity usage Blockbuster # 1
+* Entity usage Oricon # 4
 * Entity usage Kyle Anderson # 2
 * Entity usage Peardon # 1
 * Entity usage Abbott # 1
@@ -3958,7 +3960,7 @@
 * Entity usage Only Hits # 1
 * Entity usage The New York Times Company # 1
 * Entity usage The Stop # 1
-* Entity usage Crain Communications # 1
+* Entity usage Dancehall # 1
 * Entity usage Honolulu # 1
 * Entity usage Swiss Albums Chart # 1
 * Entity usage Amazon.it # 2
@@ -3967,11 +3969,12 @@
 * Entity usage Andy # 2
 * Entity usage Millennium # 1
 * Entity usage Karaoke # 1
+* Entity usage To Announce Tour With LFO # 1
 * Entity usage Film # 1
 * Entity usage Will Smith # 1
 * Entity usage Craig # 12
 * Entity usage July # 58
-* Entity usage Oricon # 4
+* Entity usage National # 3
 * Entity usage Christmas # 1
 * Entity usage McDonald # 1
 * Entity usage United States # 12
@@ -3998,6 +4001,7 @@
 * Entity usage SNEP # 4
 * Entity usage Fox # 2
 * Entity usage Soundtracks # 1
+* Entity usage Ventes # 1
 * Entity usage Universe # 1
 * Entity usage Finnish Albums Chart # 1
 * Entity usage Barry Walters # 2
@@ -4020,7 +4024,6 @@
 * Entity usage Juno Award # 1
 * Entity usage Soul Solution # 1
 * Entity usage Nirvana # 1
-* Entity usage Searchable Database # 1
 * Entity usage Swedish Albums Chart # 1
 * Entity usage Princess # 1
 * Entity usage First Installment # 1
@@ -4065,13 +4068,14 @@
 * Entity usage Decade # 1
 * Entity usage Allmusicid # 1
 * Entity usage Hilton Hawaiian Village # 1
-* Entity usage Platinum+Gold # 1
+* Entity usage Making BRITstory # 1
 * Entity usage Career # 1
 * Entity usage Jive Records # 13
 * Entity usage Denniz Pop # 4
 * Entity usage Rolling Stone # 12
 * Entity usage Jimmy # 1
 * Entity usage Davidson Ospina Club Mix # 1
+* Entity usage Denmark # 1
 * Entity usage JIVE # 1
 * Entity usage Sverigetopplistan # 2
 * Entity usage Latham # 1
@@ -4085,11 +4089,11 @@
 * Entity usage International).png # 1
 * Entity usage Amazon Music # 2
 * Entity usage Alanis Morissette # 1
-* Entity usage National # 3
 * Entity usage Digital Sheet Music # 2
 * Entity usage Angela # 1
 * Entity usage Basham # 1
 * Entity usage BritneySpears # 1
+* Entity usage I Will Be There # 1
 * Entity usage January # 37
 * Entity usage Ultratop Wallonia # 3
 * Entity usage Vår # 1
@@ -4175,7 +4179,7 @@
 * Entity usage Quebecor # 1
 * Entity usage Show # 3
 * Entity usage Belgium # 2
-* Entity usage Tour # 3
+* Entity usage Tour # 2
 * Entity usage Records # 1
 * Entity usage PROMUSICAE # 1
 * Entity usage Discogs # 3
@@ -4183,7 +4187,6 @@
 * Entity usage Single # 1
 * Entity usage Daly # 1
 * Entity usage Got Milk # 1
-* Entity usage Ryan # 2
 * Entity usage Hughes # 3
 * Entity usage Jason # 1
 * Entity usage Spice Girls # 1
@@ -4194,7 +4197,6 @@
 * Entity usage Ref # 2
 * Entity usage Australian Recording Industry Association # 4
 * Entity usage Joey McIntyre # 2
-* Entity usage Videos # 1
 * Entity usage Tips # 1
 * Entity usage Rhythm # 1
 * Entity usage ISP # 2
@@ -4244,13 +4246,14 @@
 * Entity usage Rules # 1
 * Entity usage Gregoroff # 1
 * Entity usage Norwegian Albums Chart # 1
+* Entity usage Tiffany # 1
 * Entity usage Marks # 1
 * Entity usage Europe # 3
 * Entity usage Austria # 3
 * Entity usage writer4 # 1
 * Entity usage Synchs # 1
 * Entity usage Ultratop Flanders # 3
-* Entity usage Billboard # 30
+* Entity usage Billboard # 28
 * Entity usage September # 37
 * Entity usage Phonographique # 3
 * Entity usage Personnel # 1
@@ -4269,7 +4272,7 @@
 * Entity usage Terra # 1
 * Entity usage ARIA Charts # 3
 * Entity usage Amazon.com Music # 1
-* Entity usage May # 28
+* Entity usage Searchable Database # 1
 * Entity usage Delays # 1
 * Entity usage Bassie # 1
 * Entity usage Mouseketeer # 1
@@ -4288,6 +4291,7 @@
 * Entity usage Lou Pearlman # 2
 * Entity usage Music Industry News Network # 1
 * Entity usage Foreign Album # 1
+* Entity usage The Beat Goes On # 2
 * Entity usage Timothy # 1
 * Entity usage Stephen Thomas # 1
 * Entity usage Annual Nickelodeon # 1
@@ -4296,7 +4300,6 @@
 * Entity usage Madrid # 1
 * Entity usage Bronson # 1
 * Entity usage OCC # 2
-* Entity usage Debut # 1
 * Entity usage Busacca # 1
 * Entity usage Parade # 1
 * Entity usage Platinum # 22
@@ -4307,6 +4310,7 @@
 * Entity usage All # 1
 * Entity usage Stockholm # 2
 * Entity usage InfoDisc # 1
+* Entity usage I Will Still Love You # 1
 * Entity usage Stephen Thomas Erlewine # 3
 * Entity usage Amanda # 1
 * Entity usage Sonny & Cher # 2
@@ -4324,6 +4328,7 @@
 * Entity usage Finland # 1
 * Entity usage Italia # 1
 * Entity usage Danish # 1
+* Entity usage Platinum+Gold # 1
 * Entity usage Buckler # 1
 * Entity usage Coyne # 1
 * Entity usage Sólo # 1
@@ -4338,7 +4343,7 @@
 * Entity usage Favorite CD # 1
 * Entity usage Lisa # 1
 * Entity usage Canadian Top Albums # 2
-* Entity usage Denmark # 1
+* Entity usage Crain Communications # 1
 * Entity usage Canadian Albums Chart # 5
 * Entity usage RIANZ # 4
 * Entity usage Tours # 1
@@ -4365,6 +4370,7 @@
 * Entity usage Back On Top # 1
 * Entity usage Longplay # 1
 * Entity usage B00064AM62 # 1
+* Entity usage Ask Billboard # 2
 * Entity usage LP # 1
 * Entity usage New York City # 2
 * Entity usage NZBabyTableEntry # 1
@@ -4395,7 +4401,7 @@
 * Entity usage Max Martin # 9
 * Entity usage Usher # 1
 * Entity usage RCA # 2
-* Entity usage Keith # 2
+* Entity usage March # 42
 * Entity usage Salaverri # 1
 * Entity usage Petty # 2
 * Entity usage l'Édition # 3
@@ -4409,7 +4415,7 @@
 * Entity usage ABC # 1
 * Entity usage Bum Knee # 1
 * Entity usage NME # 2
-* Entity usage Ventes # 1
+* Entity usage Ready To Hit The Road # 1
 * Entity usage TLC # 2
 * Entity usage Buzzmarketing # 1
 * Entity usage S. # 1
@@ -4423,7 +4429,6 @@
 * Entity usage Domestic violence # 1
 * Entity usage Belgian Albums # 6
 * Entity usage Trust # 1
-* Entity usage LFO # 1
 * Entity usage Mitchell # 3
 * Entity usage McCartney # 1
 * Entity usage Answering Machine Message # 1
@@ -4494,7 +4499,7 @@
 * Entity usage Pop music # 1
 * Entity usage US # 9
 * Entity usage America # 1
-* Entity usage Tiffany # 1
+* Entity usage McCrorey # 1
 * Entity usage WarnerMedia # 1
 * Entity usage Walters # 1
 * Entity usage Mundy # 1
@@ -4510,7 +4515,7 @@
 * Entity usage Start Me Up # 1
 * Entity usage first1 # 1
 * Entity usage single4 # 1
-* Entity usage McCrorey # 1
+* Entity usage Ryan # 2
 * Entity usage BRITannica # 1
 * Entity usage last3 # 1
 * Entity usage Polaroid # 2
@@ -4534,7 +4539,7 @@
 * Entity usage Whitney Houston # 2
 * Entity usage The Corrs # 1
 * Entity usage Total Request Live # 2
-* Entity usage The Observer # 3
+* Entity usage Among Videos Set To Debut # 1
 * Entity usage Battery Studios # 1
 * Entity usage The Walt Disney Company # 1
 * Entity usage Top # 15
@@ -4634,6 +4639,7 @@
 * Entity usage The Official Finnish Charts # 2
 * Entity usage Wetten # 1
 * Entity usage Año # 1
+* Entity usage Is All Over TV # 1
 * Entity usage California # 1
 * Entity usage Infobox # 1
 * Entity usage Reference # 1
@@ -7000,56 +7006,57 @@
 * Token count among # 0.051
 * Token count rare # 0.000
 * Token count showing # 0.000
-* Most used NNP 'Stephen Thomas Erlewine'
+* Most used NNP 'You Drive Me'
 * Most used NNP 'AV media notestitle'
-* Most used NNP 'Australian Recording Industry Association'
 * Most used NNP 'The Observer'
-* Most used NNP 'New Zealand'
+* Most used NNP 'MTV.Viacom Media Networks'
 * Most used NNP 'Billboard Hot 100'
 * Most used NNP 'Billboard 200'
-* Most used NNP 'Eric Foster White'
-* Most used NNP 'Hung Medien'
-* Most used NNP 'Teen pop'
+* Most used NNP 'Stephen Thomas Erlewine'
 * Most used NNP 'TiVo Corporation'
 * Most used NNP 'Rami Yacoub'
-* Most used NNP 'Music News'
-* Most used NNP 'Music Notes'
 * Most used NNP 'Certification Cite Refregion'
 * Most used NNP 'Certification Table Entryregion'
-* Most used NNP 'Jann Wenner'
 * Most used NNP 'Britney Spears'
-* Most used NNP 'Born to Make You Happy'
 * Most used NNP 'Dutch Albums'
-* Most used NNP 'Ö3 Austria'
-* Most used NNP 'Swiss Albums'
-* Most used NNP 'Swiss Hitparade'
+* Most used NNP 'Teen pop'
 * Most used NNP 'Nielsen Business Media'
 * Most used NNP 'Nielsen SoundScan'
 * Most used NNP 'Max Martin'
 * Most used NNP 'Rolling Stone'
-* Most used NNP 'Official Charts Company'
+* Most used NNP 'Ö3 Austria'
 * Most used NNP 'Alfred Music'
-* Most used NNP 'Guinness World Records'
 * Most used NNP 'Recorded Music NZ'
-* Most used NNP 'Recording Industry Association of America'
-* Most used NNP 'Canadian Albums Chart'
-* Most used NNP 'From the Bottom of My Broken Heart'
+* Most used NNP 'Jive Records'
 * Most used NNP 'Prometheus Global Media'
-* Most used NNP 'Backstreet Boys'
 * Most used NNP 'Baby One More Time'
-* Most used NNP 'Larry Rudolph'
-* Most used NNP 'MTV.Viacom Media Networks'
 * Most used NNP 'Nigel Dick'
 * Most used NNP 'ARIA Charts'
 * Most used NNP 'Entertainment Weekly'
 * Most used NNP 'Soda Pop'
 * Most used NNP 'Belgian Albums'
+* Most used NNP 'Backstreet Boys'
+* Most used NNP 'Official Charts Company'
+* Most used NNP 'Australian Recording Industry Association'
+* Most used NNP 'New Zealand'
+* Most used NNP 'Hung Medien'
 * Most used NNP 'United States'
 * Most used NNP 'United Kingdom'
+* Most used NNP 'Eric Foster White'
+* Most used NNP 'Swiss Albums'
+* Most used NNP 'Swiss Hitparade'
 * Most used NNP 'Ultratop Flanders'
 * Most used NNP 'Ultratop Wallonia'
+* Most used NNP 'Guinness World Records'
+* Most used NNP 'From the Bottom of My Broken Heart'
+* Most used NNP 'Canadian Albums Chart'
+* Most used NNP 'Music News'
+* Most used NNP 'Music Notes'
+* Most used NNP 'Larry Rudolph'
+* Most used NNP 'Jann Wenner'
+* Most used NNP 'Born to Make You Happy'
+* Most used NNP 'Recording Industry Association of America'
 * Most used NNP 'Denniz Pop'
-* Most used NNP 'Jive Records'
 #FILE#/%2e%2e%2eBaby_One_More_Time_%28album%29.xml
  (ROOT)		NFP	...	
 S (none)	E	NNP	Baby	Baby One More Time
@@ -7696,11 +7703,11 @@ _ (nsubj)	_	_	Time
  (conj)		NN	single3	
  (punct)		:	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (appos)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NN	single3date	
  (punct)		:	;	
@@ -9071,9 +9078,9 @@ S (nsubj)	N	NN	guide
  (conj)	A	JJ	single	
  (punct)	P!	,	,	
  (punct)	_	-LRB-	(	
- (nsubj)		PRP	You	
- (appos)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
 S (nsubj)	E	NNP	Crazy	
  (ROOT)	V	VBZ	runs	
@@ -9548,11 +9555,11 @@ S (nsubj)	N	NN	love
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
  (punct)	P!	-LRB-	(	
- (compound)		PRP	You	
- (parataxis)	V	VBP	Drive	
- (dobj)		PRP	Me	
+ (none)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (compound)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)		HYPH	–	
  (compound)	E	NNP	Sheet	
  (ROOT)	_	_	Music	
@@ -9830,9 +9837,9 @@ _ (nsubj)	_	_	Spears
  (det)		DT	The	
  (compound)	E	NNP	First	
  (pobj)	_	_	Installment	
- (prep)		IN	Of	
+ (none)	E	NNP	Of	
  (punct)		``	'	
- (pobj)	E	NNP	Popology	
+ (none)	E	NNP	Popology	
  (punct)		''	'	
  (punct)	P!	:	;	
  (conj)		NN	date	
@@ -10087,9 +10094,9 @@ _ (nsubj)	_	_	Spears
 S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBG	performing	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (ROOT)	E	NNP	Crazy	
  (prep)		IN	at	
@@ -10584,9 +10591,9 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (pobj)	N	NN	video	
  (prep)		IN	for	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (ROOT)	E	NNP	Crazy	
  (punct)	P!	,	,	
@@ -10849,11 +10856,11 @@ _ (nsubj)	_	_	Spears
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (appos)	A	JJ	Ready	
- (aux)		TO	To	
- (ROOT)	V	VB	Hit	
- (det)		DT	The	
- (dobj)	E	NNP	Road	
+ (none)	E	NNP	Ready	
+ (none)	_	_	To	
+ (none)	_	_	Hit	
+ (none)	_	_	The	
+ (none)	_	_	Road	
  (punct)	P!	,	;	
  (npadvmod)		NN	date	
  (punct)		:	;	
@@ -10958,12 +10965,12 @@ _ (nsubj)	_	_	Spears
  (punct)		:	;	
  (appos)		NN	title	
  (punct)		:	;	
-S (none)	E	NNP	Britney	
-_ (nsubj)	_	_	Spears	
- (ROOT)	V	VBZ	Is	
- (advmod)		DT	All	
- (prep)		IN	Over	
- (pobj)	N	NN	TV	
+ (none)	E	NNP	Britney	
+ (nsubj)	_	_	Spears	
+ (none)	E	NNP	Is	
+ (none)	_	_	All	
+ (none)	_	_	Over	
+ (none)	_	_	TV	
  (punct)	P!	:	;	
  (npadvmod)		NN	date	
  (punct)		:	;	
@@ -11386,9 +11393,9 @@ S (conj)	E	NNPS	Spears	Britney Spears
  (appos)	N	NNS	vocals	
  (prep)		IN	of	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (ROOT)	E	NNP	Crazy	
  (punct)	P!	,	,	
@@ -11974,8 +11981,8 @@ S (nsubj)	E	NNP	Thriller
  (punct)	P!	:	;	
  (conj)		NN	title	
  (punct)		:	;	
- (conj)	V	VBG	Making	
- (dobj)	N	NN	BRITstory	
+ (none)	E	NNP	Making	
+ (none)	_	_	BRITstory	
  (punct)	P!	:	;	
  (conj)		NN	author	
  (punct)		:	;	
@@ -12099,11 +12106,11 @@ S (nsubj)	E	NNP	Thriller
  (punct)	P!	,	,	
  (compound)	E	NNP	Star	
  (conj)	_	_	Wars	
- (ROOT)		IN	Among	
- (pobj)	E	NNP	Videos	
- (pobj)	V	VBN	Set	
- (prep)		IN	To	
- (pobj)	E	NNP	Debut	
+ (none)	E	NNP	Among	
+ (none)	_	_	Videos	
+ (none)	_	_	Set	
+ (none)	_	_	To	
+ (none)	_	_	Debut	
  (punct)	P!	:	;	
  (conj)		NN	date	
  (punct)		:	;	
@@ -12252,9 +12259,9 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (appos)		NN	title	
  (punct)		:	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (appos)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (ROOT)	E	NNP	Crazy	
  (punct)	P!	-LRB-	[	
@@ -12337,9 +12344,9 @@ _ (nsubj)	_	_	Spears
  (appos)	V	VBD	Wanted	
  (punct)		''	'	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (poss)	E	NNP	Crazy	
  (case)		POS	'	
@@ -12609,11 +12616,11 @@ _ (nsubj)	_	_	Spears
  (punct)		:	;	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
- (ROOT)		TO	To	
- (compound)	V	VB	Announce	
- (pobj)	E	NNP	Tour	
- (prep)		IN	With	
- (pobj)	E	NNP	LFO	
+ (none)	E	NNP	To	
+ (none)	_	_	Announce	
+ (none)	_	_	Tour	
+ (none)	_	_	With	
+ (none)	_	_	LFO	
  (punct)	P!	:	;	
  (dep)		NN	author	
  (punct)		:	;	
@@ -13356,9 +13363,9 @@ S (nsubjpass)	R	PRP	It	special
  (none)	_	_	Tour	
  (punct)		:	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (appos)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (compound)	E	NNP	Crazy	
  (dep)	_	_	Tour	
@@ -17019,9 +17026,9 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (punct)	P!	:	;	
  (punct)		NFP	...	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (ROOT)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
  (intj)	E	NNP	Crazy	
  (punct)	P!	,	,	
@@ -17616,11 +17623,11 @@ S (nsubj)	N	NNS	—Spears
  (none)	_	_	Spears	
  (punct)		:	:	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (appos)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NN	newspaper	
  (punct)		:	;	
@@ -18152,11 +18159,11 @@ S (nsubj)	N	NN	Beat
  (conj)		DT	title2	
  (punct)		,	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (intj)	V	VBZ	writer2	
  (punct)	P!	:	;	
@@ -18203,10 +18210,10 @@ S (nsubj)	N	NN	Beat
  (punct)		:	;	
  (dep)		NN	title7	
  (punct)		:	;	
- (nsubj)		PRP	I	
- (aux)	m	MD	Will	
- (ROOT)	V	VB	Be	
- (advmod)	A	RB	There	
+ (nsubj)	E	NNP	I	
+ (none)	_	_	Will	
+ (none)	_	_	Be	
+ (none)	_	_	There	
  (punct)	P!	:	;	
  (conj)		NN	writer7	
  (punct)		:	;	
@@ -18214,11 +18221,11 @@ S (nsubj)	N	NN	Beat
  (punct)		:	;	
  (conj)		NN	title8	
  (punct)		:	;	
- (nsubj)		PRP	I	
- (aux)	m	MD	Will	
- (advmod)	A	RB	Still	
- (ccomp)	V	VB	Love	
- (dobj)		PRP	You	
+ (nsubj)	E	NNP	I	
+ (none)	_	_	Will	
+ (none)	_	_	Still	
+ (none)	_	_	Love	
+ (none)	_	_	You	
  (punct)	P!	:	;	
  (advmod)		RB	note8	
  (punct)		:	;	
@@ -18246,10 +18253,10 @@ S (nsubj)	N	NN	Beat
  (punct)		:	;	
  (ROOT)		NN	title11	
  (punct)		:	;	
- (det)		DT	The	
- (compound)	N	NN	Beat	
- (compound)	V	VBZ	Goes	
- (ROOT)	A	RB	On	
+ (none)	E	NNP	The	
+ (none)	_	_	Beat	
+ (none)	_	_	Goes	
+ (none)	_	_	On	
  (punct)	P!	:	;	
  (advcl)		NN	writer11	
  (punct)		:	;	
@@ -18349,10 +18356,10 @@ S (nsubj)	E	NNP	Track
  (punct)		,	;	
  (ROOT)		NN	title12	
  (punct)		:	;	
- (det)		DT	The	
-S (nsubj)	E	NNP	Beat	
- (compound)	V	VBZ	Goes	
- (prep)	A	RB	On	
+ (none)	E	NNP	The	
+ (nsubj)	_	_	Beat	
+ (none)	_	_	Goes	
+ (none)	_	_	On	
  (punct)	P!	:	;	
  (dep)		NN	writer12	
  (punct)		:	;	
@@ -18704,11 +18711,11 @@ S (nsubj)	E	NNP	Track
  (ROOT)		NN	title1	
  (punct)		:	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (appos)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (appos)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NNS	note1	
  (punct)		:	;	
@@ -18724,11 +18731,11 @@ S (nsubj)	E	NNP	Track
  (conj)		DT	title2	
  (punct)		,	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (conj)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (ROOT)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (conj)		NNP	note2	
  (punct)		:	;	
@@ -18896,11 +18903,11 @@ S (nsubj)	E	NNP	Track
  (conj)		NN	title3	
  (punct)		:	;	
  (punct)	P!	-LRB-	(	
- (nsubj)		PRP	You	
- (parataxis)	V	VB	Drive	
- (dobj)		PRP	Me	
+ (nsubj)	E	NNP	You	
+ (none)	_	_	Drive	
+ (none)	_	_	Me	
  (punct)	P!	-RRB-	)	
- (conj)	E	NNP	Crazy	
+ (none)	E	NNP	Crazy	
  (punct)	P!	:	;	
  (appos)		NN	note3	
  (punct)		:	;	
@@ -22648,8 +22655,8 @@ S (nsubj)	E	NNP	Uge
  (punct)	P!	:	;	
  (dep)		NN	title	
  (punct)		:	;	
- (conj)	V	VB	Ask	
- (dobj)	E	NNP	Billboard	
+ (none)	E	NNP	Ask	
+ (none)	_	_	Billboard	
  (punct)	P!	:	:	
  (none)	E	NNP	Britney	
  (none)	_	_	Spears	
@@ -22700,8 +22707,8 @@ S (nsubj)	E	NNP	Uge
  (punct)		:	;	
  (appos)		NN	title	
  (punct)		:	;	
- (compound)	V	VB	Ask	
- (conj)	E	NNP	Billboard	
+ (none)	E	NNP	Ask	
+ (none)	_	_	Billboard	
  (punct)	P!	:	;	
  (conj)		NN	work	
  (punct)		:	;	

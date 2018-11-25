@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 2.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<link rel="icon" type="image/ico" href="images/strus.ico" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Wikipedia to XML conversion for Strus." />
+	<meta name="keywords" content="conversion Wikipedia data dump to XML" />
+	<meta name="author" content="Patrick Frey &lt;patrickpfrey (a) yahoo (dt) com&gt;" />
+	<link rel="stylesheet" type="text/css" href="text-profile.css" title="Text Profile" media="all" />
+	<title>Wikipedia part of speech tagging</title>
+</head>
+
+<body>
+<div id="wrap">
+	<div id="content">
+		<h1>Part of speech tagging of the Wikipedia collection for information retrieval</h1>
+
+<h2>Intention</h2>
+<p class="description">
+The part of speech tagging of the Wikipedia collection for the <i>Strus</i> search engine intends to address the needs of a search engine only.
+It is not a general purpose approach and not a start to such an approach. An attempt to take this POS tagging as base for other purposes will most likely fail.
+The POS tagging implemented here aims to distinguish between verbs, adverbs and adjectives, nouns and entities and it tries to resolve personal pronoun references.
+Not more.
+</p>
+
+<h2>Tags</h2>
+<p class="description">
+The following list describes the tags assigned to words or sequences of words in a document. The base document structure is the one described <a href="wikipediaToXML.html">here</a>.
+The POS tags are assigned to content to '&lt;text&gt;' tags. The assignements of the tags is flat, there are no structures described with the tags. 
+Every element or sequence of elements is uniquely tagged by POS tags. A POS tag is one of the following:
+<ul>
+<li><b>V</b>:&nbsp;&nbsp;&nbsp;</li>
+<li><b>A</b>:&nbsp;&nbsp;&nbsp;</li>
+<li><b>E</b>:&nbsp;&nbsp;&nbsp;</li>
+<li><b>N</b>:&nbsp;&nbsp;&nbsp;</li>
+<li><b>R</b>:&nbsp;&nbsp;&nbsp;</li>
+<li><b>P</b>:&nbsp;&nbsp;&nbsp;</li>
+<li><b>T</b>:&nbsp;&nbsp;&nbsp; Sentence termination</li>
+</ul>
+</p>
+
+
+</div>
+</div>
+</body>
+</html>
