@@ -30,16 +30,17 @@ The following list describes the tags assigned to words or sequences of words in
 The POS tags are assigned to content to '&lt;text&gt;' tags. The assignements of the tags is flat, there are no structures described with the tags. 
 Every element or sequence of elements is uniquely tagged by POS tags. A POS tag is one of the following:
 <ul>
-<li><b>V</b>:&nbsp;&nbsp;&nbsp;</li>
-<li><b>A</b>:&nbsp;&nbsp;&nbsp;</li>
-<li><b>E</b>:&nbsp;&nbsp;&nbsp;</li>
-<li><b>N</b>:&nbsp;&nbsp;&nbsp;</li>
-<li><b>R</b>:&nbsp;&nbsp;&nbsp;</li>
-<li><b>P</b>:&nbsp;&nbsp;&nbsp;</li>
-<li><b>T</b>:&nbsp;&nbsp;&nbsp; Sentence termination</li>
+<li><b>V</b>:&nbsp;&nbsp;&nbsp; Verb</li>
+<li><b>A</b>:&nbsp;&nbsp;&nbsp; Adverb or adjectiv</li>
+<li><b>E</b>:&nbsp;&nbsp;&nbsp; Sequence of names forming a named entity identified by some heuristics. An entity 'E' tag may have an id attribute with the complete name referred to, if the name in the tag is not complete.</li>
+<li><b>N</b>:&nbsp;&nbsp;&nbsp; Sequence of nouns forming a noun entity identified by some heuristics.</li>
+<li><b>R</b>:&nbsp;&nbsp;&nbsp; Personal pronoun reference with an id attribute with the text of the entity referred to, e.g. "because &lt;R id=&apos;Mick Jagger&apos;&gt;he&lt;/R&gt; was"</li>
+<li><b>P</b>:&nbsp;&nbsp;&nbsp; Punctuation marker splitting different parts of a sentence (tag without content, e.g. '&lt;P/&gt;'</li>
+<li><b>T</b>:&nbsp;&nbsp;&nbsp; Sentence termination marker (tag without content, e.g. '&lt;T/&gt;'</li>
 </ul>
+The tag names do not correspond to <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">the Penn Treebank tag names</a> 
+because this would be misleading. The reduction to a small set of tags is intentional here.
 </p>
-
 
 </div>
 </div>
