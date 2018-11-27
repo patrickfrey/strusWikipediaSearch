@@ -1,26 +1,26 @@
 * Document title Rudy Giuliani
-* Sentence Rudolph William Louis Giuliani is an American politician , attorney , businessman and public speaker who served as the 107th Mayor of New York City from 1994 to 2001 .
-* Sentence Giuliani left Bloomberg to be mayor of a city with a big budget problem .
-* Sentence It s unclear how he ll be able to handle it during his term .
-* Sentence Let 's go to N. Y. .
-* Sentence Because of the bad weather , Erni and Bernd go to town .
-* Sentence The United States of America are a country .
-* Sentence The ninth album of David Bowie is a masterpiece .
-* Sentence This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
+* Sentence [sent] Rudolph William Louis Giuliani is an American politician , attorney , businessman and public speaker who served as the 107th Mayor of New York City from 1994 to 2001 .
+* Sentence [sent] Giuliani left Bloomberg to be mayor of a city with a big budget problem .
+* Sentence [sent] It s unclear how he ll be able to handle it during his term .
+* Sentence [sent] Let 's go to N. Y. .
+* Sentence [sent] Because of the bad weather , Erni and Bernd go to town .
+* Sentence [sent] The United States of America are a country .
+* Sentence [sent] The ninth album of David Bowie is a masterpiece .
+* Sentence [sent] This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
 * Best title match Giuliani
 * Entity sex stats Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
 * Subject Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
-* Entity usage Rudy Giuliani # 2
-* Entity usage Mayor # 1
-* Entity usage N. Y. # 1
-* Entity usage New York City # 1
-* Entity usage Bloomberg # 1
-* Entity usage Erni # 1
-* Entity usage America # 1
-* Entity usage Ayer # 1
-* Entity usage United States # 1
-* Entity usage David Bowie # 1
-* Entity usage Bernd # 1
+* Entity usage Rudy Giuliani # 2.000
+* Entity usage Mayor # 1.000
+* Entity usage N. Y. # 1.000
+* Entity usage New York City # 1.000
+* Entity usage Bloomberg # 1.000
+* Entity usage Erni # 1.000
+* Entity usage America # 1.000
+* Entity usage Ayer # 1.000
+* Entity usage United States # 1.000
+* Entity usage David Bowie # 1.000
+* Entity usage Bernd # 1.000
 * Token count n. # 0.000
 * Token count let # 0.000
 * Token count america # 0.000
@@ -216,31 +216,29 @@ S (nsubj)	N	NN	album
  (punct)	T!	.	.	
 
 * Document title A. S. Roma
-* Sentence Associazione Sportiva Roma ( , ; Rome Sport Association ) , commonly referred to as simply Roma , is a professional Italian football club based in Rome .
-* Sentence Roma4 ;
-* Sentence 1927 ;
-* Sentence 6 ;
-* Sentence 7 ;
-* Sentence cite weburl ;
-* Sentence title ;
-* Sentence Stadi Serie A 2015–2016 ;
-* Sentence deadurl ;
-* Sentence yes ;
-* Sentence archiveurl ;
-* Sentence Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
+* Sentence [sent] Associazione Sportiva Roma ( , ; Rome Sport Association ) , commonly referred to as simply Roma , is a professional Italian football club based in Rome .
+* Sentence [title] Roma4 ;
+* Sentence [numseq] 1927 ;
+* Sentence [numseq] 6 ;
+* Sentence [numseq] 7 ;
+* Sentence [sent] cite weburl ;
+* Sentence [] title ;
+* Sentence [title] Stadi Serie A 2015–2016 ;
+* Sentence [] deadurl ;
+* Sentence [] yes ;
+* Sentence [] archiveurl ;
+* Sentence [sent] Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
 * Best title match Roma
-* Entity usage Stadi # 1
-* Entity usage A. S. Roma # 2
-* Entity usage A # 1
-* Entity usage Real Madrid Club de Fútbol # 1
-* Entity usage Roma4 # 1
-* Entity usage Rome Sport Association # 1
-* Entity usage Madrid # 1
-* Entity usage Real Madrid # 1
-* Entity usage Spain # 1
-* Entity usage Serie # 1
-* Entity usage Rome # 1
-* Entity usage Royal Madrid Football Club # 1
+* Entity usage Roma4 # 2.700
+* Entity usage Stadi Serie A 2015–2016 # 2.700
+* Entity usage Rome Sport Association # 1.000
+* Entity usage Madrid # 1.000
+* Entity usage Real Madrid # 1.000
+* Entity usage A. S. Roma # 2.000
+* Entity usage Spain # 1.000
+* Entity usage Rome # 1.000
+* Entity usage Real Madrid Club de Fútbol # 1.000
+* Entity usage Royal Madrid Football Club # 1.000
 * Token count ðe # 0.000
 * Token count ˈfuðβol # 0.000
 * Token count based # 0.256
@@ -333,10 +331,10 @@ _ (nsubj)	_	_	Roma
  (punct)	P!	:	;	
  (ROOT)		NN	title	
  (punct)		:	;	
- (compound)		NNP	Stadi	
- (conj)		NNP	Serie	
- (det)		NNP	A	
- (dep)		CD	2015–2016	
+ (none)	E	NNP	Stadi	
+ (none)	_	_	Serie	
+ (none)	_	_	A	
+ (none)	_	_	2015–2016	
  (punct)		:	;	
  (nsubj)		NN	deadurl	
  (punct)		:	;	

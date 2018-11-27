@@ -19,6 +19,7 @@ import time
 spacy_nlp = en_core_web_sm.load()
 NlpToken = recordtype('NlpToken', ['strustag','strusrole','nlptag','nlprole', 'value', 'alphavalue', 'ref'])
 Subject = recordtype('Subject', ['sex','strustag','value','sentidx'])
+Sentence = recordtype('Sentence', ['type','tokens'])
 
 def mapTagValue( tagname):
     if tagname == "." or tagname == ";":
@@ -71,7 +72,7 @@ def mapTagValue( tagname):
         return "" # [] declarative clause, question, etc.
     if tagname == "SYM":
         return "N" # symbol
-    if tagname == "VBD" or tagname == "VBG" or tagname == "VBN" or tagname == "VBP" or tagname == "VBZ" or tagname == "VB":
+    if tagname == "VBD" or tagname == "VBG" or tagname == "VVG" or tagname == "VHG" or tagname == "VBN" or tagname == "VBP" or tagname == "VBZ" or tagname == "VB":
         return "V" # Verb, past tense or gerund or present participle or past participle or singular present
     if tagname == "WDT" or tagname == "WP" or tagname == "WP$" or tagname == "WRB":
         return "W" # determiner
@@ -95,7 +96,7 @@ def mapTagValue( tagname):
 tgmaplist = [
  "CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", "TO",
  "NNS", "NN", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$", "RB", "RBR", "RBS", "RP", "HYPH", "NFP", "AFX",
- "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VBN", "VBP", "VBZ", "VB", "ADD",
+ "S", "SBAR", "SBARQ", "SINV", "SQ", "SYM", "VBD", "VBG", "VVG", "VHG", "VBN", "VBP", "VBZ", "VB", "ADD",
  "WDT", "WP", "WP$", "WRB", ".", ";", ":", ",", "-LRB-", "-RRB-", "$", "#" , "UH", "", "''", "``", "XX", "_SP", "NFP"
 ]
 
@@ -220,6 +221,16 @@ def isUpperCaseName( sq):
             return False
     return True
 
+def getAlphaTokens( tokens, tidx, tend):
+    rt = []
+    while tidx < tend:
+        if tokens[tidx].alphavalue:
+            rt.append( tokens[tidx].alphavalue)
+        tidx += 1
+    while rt and rt[-1] in [";",",","."]:
+        rt = rt[ :-1]
+    return rt
+
 def getMultipartName( tokens, tidx):
     rt = [tokens[ tidx].alphavalue]
     ti = tidx + 1
@@ -323,7 +334,7 @@ def tokenCountToWeightMap( tokCntMap, tokCntTotal):
 
 def assignRef( tokens, tidx, ref):
     ridx = 0
-    while ridx < len(ref) and tokens[ tidx+ridx].value == ref[ ridx]:
+    while ridx < len(ref) and tidx+ridx < len(tokens) and tokens[ tidx+ridx].value == ref[ ridx]:
         ridx += 1
     if ridx != len(ref):
         tokens[ tidx].ref = ref
@@ -381,27 +392,77 @@ def tagLongestTitleMatch( tokens, tidx, titlesubject, relaxed):
     else:
         return -1
 
-def sentenceHasVerb( tokens):
+def listIsSentence( tokens):
     hasVerb = False
+    hasObj = False
     for elem in tokens:
-        if elem.nlptag and elem.nlptag[0] == 'V':
-            hasVerb = True
-    return hasVerb
+        if elem.nlptag:
+            if elem.nlptag in ['VBG','VVG','VHG']:
+                hasObj = True
+            elif elem.nlptag[0] == 'V':
+                hasVerb = True
+            elif elem.nlptag[0] in ['P','N','W']:
+                hasObj = True
+    return hasVerb and hasObj
 
-def sentenceIsTitle( tokens):
+def listIsNumberSequence( tokens):
     for elem in tokens:
+        if elem.nlptag == "CD":
+            continue
+        elif elem.nlprole == "punct":
+            continue
+        else:
+            return False
+    return True
+
+def listIsDate( tokens):
+    pt = ""
+    for elem in tokens:
+        if elem.nlptag == "CD":
+            pt += "N"
+            continue
+        elif elem.value == "," or elem.value == ";":
+            pt += ","
+            continue
+        elif elem.value in ["January","February","March","April","May","June","July","August","September","October","November","December","Feb.","Mar.","Apr.","Aug.","Sept.","Oct.","Nov.","Dec."]:
+            pt += "M"
+            continue
+        else:
+            return False
+    while pt and pt[-1:] == ',':
+        pt = pt[:-1]
+    return pt in ["N,MN","NMN","N,M,N","MN,N","MNN","MN","M,N","NM","N,M"]
+
+def listIsTitle( tokens):
+    quotlist = ["'","’","`",'"',"—"]
+    if listIsNumberSequence( tokens) or listIsDate( tokens):
+        return False
+    for eidx,elem in enumerate(tokens):
         if elem.nlptag:
             if elem.nlptag == "HYPH":
                 continue
             if elem.strustag == '_':
                 continue
-            elif elem.nlptag[0] in ['V','J','N','P','R','W','M','C','F','T','D','I']:
-                if elem.value and elem.value[0].isupper():
+            if elem.nlptag == 'CC' and elem.value and elem.value[0].islower():
+                continue
+            if elem.nlptag[0] in ['V','J','N','P','R','W','M','C','F','T','D','I']:
+                if elem.value and (elem.value[0].isupper() or elem.value[0].isdigit() or elem.value[0] in quotlist):
                     continue
         if elem.nlprole == "punct":
             continue
         return False
     return True
+
+def getSentence( tokens):
+    if listIsNumberSequence( tokens):
+        return Sentence( "numseq", tokens)
+    if listIsDate( tokens):
+        return Sentence( "date", tokens)
+    if listIsTitle( tokens):
+        return Sentence( "title", tokens)
+    if listIsSentence( tokens):
+        return Sentence( "sent", tokens)
+    return Sentence( "", tokens)
 
 def getMapBestWeight( firstNameMap, name2weightMap, name):
     bestCd = None
@@ -521,28 +582,32 @@ def tagEntitySequenceTokenShift( toklist, tokidx, eidx):
 
 def tagEntitySequenceStrusTags( tokens, startidx, endidx):
     eidx = startidx
-    ofs = 0
     while eidx < endidx:
         if tokens[eidx].nlprole == "none" or  tokens[eidx].strustag == '_':
-            ofs = 0
             eidx += 1
-        elif tokens[eidx].nlprole == "punct" or tokens[eidx].nlptag == "HYPH":
-            ofs = 0
+        elif tokens[eidx].nlprole == "punct" and tokens[eidx].nlptag not in ["''","``"]:
+            eidx += 1
+        elif tokens[eidx].nlptag == 'CC' and tokens[eidx].value and tokens[eidx].value[0].islower():
+            eidx += 1
+        elif tokens[eidx].nlptag == "HYPH":
             eidx += 1
         else:
             nidx = eidx
             doSkip = False
-            while nidx < endidx and tokens[nidx].nlprole != "punct" and tokens[nidx].nlptag != "HYPH":
+            while nidx < endidx and not (tokens[nidx].nlprole == "punct" and tokens[nidx].nlptag not in ["''","``"]) and tokens[nidx].nlptag != "HYPH":
                 if tokens[nidx].nlprole == "none" or  tokens[nidx].strustag == '_':
                     doSkip = True
                     break
                 nidx += 1
-            if not doSkip:
+            if not doSkip and not listIsNumberSequence( tokens[eidx:nidx]) and not listIsDate( tokens[eidx:nidx]):
+                ofs = 0
+                if eidx+2 < nidx and tokens[eidx].nlptag in ["''","``"] and tokens[nidx-1].nlptag in ["''","``"]:
+                    eidx += 1
+                    nidx -= 1
                 while eidx < nidx:
                     tagEntitySequenceTokenShift( tokens, eidx, ofs)
                     ofs += 1
                     eidx += 1
-                ofs = 0
             else:
                 eidx = nidx
 
@@ -556,6 +621,8 @@ def tagEntitySequenceStrusTagsInBrackets( tokens):
             eb = "–"
         elif tokens[eidx].value == ";":
             eb = ';'
+        elif tokens[eidx].value == ",":
+            eb = ','
         if eb:
             eidx += 1
             startidx = eidx
@@ -563,7 +630,9 @@ def tagEntitySequenceStrusTagsInBrackets( tokens):
                 eidx += 1
             if eidx < len(tokens):
                 endidx = eidx
-                if sentenceIsTitle( tokens[ startidx:endidx]):
+                if listIsTitle( tokens[ startidx:endidx]):
+                    if eb == ',' and tokens[ startidx].nlptag == "CC" and tokens[ startidx].value and tokens[ startidx].value[0].islower():
+                        startidx += 1
                     tagEntitySequenceStrusTags( tokens, startidx, endidx)
             else:
                 eidx = startidx
@@ -641,31 +710,6 @@ def tagSentenceNameMapReferences( tokens, namemap):
                 tagTokenNameReference( tokens, tidx, bestLen)
                 tidx += bestLen
             else:
-                tidx += 1
-        else:
-            tidx += 1
-
-# UNUSED
-def tagSentenceSingleLastNameReferences( tokens, entityLastKeyMap):
-    tidx = 0
-    while tidx < len(tokens):
-        if tokens[tidx].nlptag[:1] == 'N':
-            if not tokens[ tidx].ref and tokens[ tidx].value and tokens[ tidx].value[0].isupper():
-                if tidx+1 == len(tokens) or not tokens[tidx+1].nlptag[:1] in ['N','_']:
-                    tokval = tokens[tidx].alphavalue
-                    if tokval in entityLastKeyMap:
-                        bestIdx = -1
-                        bestLen = -1
-                        cdlist = entityLastKeyMap[ tokval]
-                        for cdIdx,cd in enumerate(cdlist):
-                            if bestLen == 0 or len(cd) > bestLen:
-                                bestLen = len(cd)
-                                bestIdx = cdIdx
-                        if bestIdx >= 0 and bestLen > 1 and bestLen <= 3:
-                            ref = cdlist[ bestIdx]
-                            if isUpperCaseName( ref):
-                                tokens[ tidx].ref = ref
-            while tidx < len(tokens) and tokens[tidx].nlptag[:1] in ['N','_']:
                 tidx += 1
         else:
             tidx += 1
@@ -845,7 +889,7 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap):
            if sex:
                if sex in sexSubjectMap:
                    subj = sexSubjectMap[ sex]
-                   if sentidx - subj.sentidx < 7:
+                   if sentidx - subj.sentidx <= 8:
                        subj.sentidx = sentidx
                        tokens[ eidx].ref = subj.value
         eidx += 1
@@ -924,33 +968,55 @@ def getDocumentSentences( text, verbose):
         if node.dep_ == "punct":
             if not eb:
                 if value in [':',';','.']:
-                    if verbose:
-                        print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
-                    sentences.append( tokens)
+                    sentences.append( getSentence( tokens))
                     tokens = []
             else:
                 if value == '.':
-                    if verbose:
-                        print( "* Sentence %s" % ' '.join( [tk.value for tk in tokens]))
-                    sentences.append( tokens)
+                    sentences.append( getSentence( tokens))
                     tokens = []
                     ebstk = []
                     eb = None
     if tokens:
-        sentences.append( tokens)
+        sentences.append( getSentence( tokens))
     return sentences
 
-def getDocumentNlpTokCountMap( sentences, elements):
+def getDocumentNlpTokCountMap( sentences):
     rt = {}
     for sent in sentences:
-        for tidx,tok in enumerate(sent):
-            if tok.nlptag in elements:
-                name = tok.ref or getMultipartName( sent, tidx)
-                key = ' '.join( name)
-                if key in rt:
-                    rt[ key] += 1
-                else:
-                    rt[ key] = 1
+        if sent.type == "title":
+            tidx = 0
+            tstart = -1
+            while tidx < len(sent.tokens):
+                if sent.tokens[ tidx].nlprole == "punct":
+                    if tstart >= 0:
+                        if listIsTitle( sent.tokens[ tstart:tidx]):
+                            name = getAlphaTokens( sent.tokens, tstart, tidx)
+                            key = ' '.join( name)
+                            if key in rt:
+                                rt[ key] += 1.5
+                            else:
+                                rt[ key] = 1.5
+                    tstart = -1
+                elif tstart < 0:
+                    tstart = tidx
+                tidx += 1
+            if tstart >= 0:
+                if listIsTitle( sent.tokens[ tstart:tidx]):
+                    name = getAlphaTokens( sent.tokens, tstart, tidx)
+                    key = ' '.join( name)
+                    if key in rt:
+                        rt[ key] += 1.5
+                    else:
+                        rt[ key] = 1.5
+        if sent.type == "sent":
+            for tidx,tok in enumerate(sent.tokens):
+                if tok.nlptag in ["NNP","NNPS"]:
+                    name = tok.ref or getMultipartName( sent.tokens, tidx)
+                    key = ' '.join( name)
+                    if key in rt:
+                        rt[ key] += 1
+                    else:
+                        rt[ key] = 1
     return rt
 
 def splitNlpTokCountMap( usageMap):
@@ -1078,18 +1144,21 @@ def getDocumentNnpSexCountMap( titlesubject, sentences):
         sentSubjects = []
         sentPrpRefsMap = {}
         tidx = 0
-        while tidx < len(sent):
-            tok = sent[tidx]
+        if sent.type != "sent":
+            lastSentSubjects = []
+            continue
+        while tidx < len(sent.tokens):
+            tok = sent.tokens[tidx]
             if tok.nlptag[0:3] == "NNP":
-                name = tok.ref or getMultipartName( sent, tidx)
-                nidx = skipToOwnPrp( sent, skipMultipartName( sent, tidx))
+                name = tok.ref or getMultipartName( sent.tokens, tidx)
+                nidx = skipToOwnPrp( sent.tokens, skipMultipartName( sent.tokens, tidx))
                 if nidx >= 0:
                     if getPrpSex( tok.value) in ['W','M']:
                         weightfactor = 3.0
                     else:
                         weightfactor = 2.5
                     if name:
-                        addToNnpSexCountMap( rt, name, sent[nidx].value, weightfactor)
+                        addToNnpSexCountMap( rt, name, sent.tokens[nidx].value, weightfactor)
                     tidx = nidx + 1
                 if tok.strusrole == 'S':
                     if sentSubjects:
@@ -1150,41 +1219,42 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     if verbose:
         print( "* Document title %s" % ' '.join(titlesubject))
     sentences = getDocumentSentences( text, verbose)
+    if verbose:
+        for sent in sentences:
+            print( "* Sentence [%s] %s" % (sent.type, ' '.join( [tk.value for tk in sent.tokens])))
     start_time = time.time()
     
     for sent in sentences:
-        countTokens( tokCntMap, sent)
-        tokCntTotal += len(sent)
-        tagSentenceLinkReferences( sent, entityFirstKeyMap)
-        if sentenceHasVerb( sent):
-            tagSentenceStrusTags( sent)
-        if sentenceIsTitle( sent):
-            tagEntitySequenceStrusTags( sent, 0, len(sent))
-        tagEntitySequenceStrusTagsInBrackets( sent)
-        tagSentenceNameReferences( sent, titlesubject)
+        countTokens( tokCntMap, sent.tokens)
+        tokCntTotal += len(sent.tokens)
+        tagSentenceLinkReferences( sent.tokens, entityFirstKeyMap)
+        if sent.type == "title":
+            tagEntitySequenceStrusTags( sent.tokens, 0, len(sent.tokens))
+            tagSentenceStrusTags( sent.tokens)
+        elif sent.type == "sent":
+            tagSentenceStrusTags( sent.tokens)
+        tagEntitySequenceStrusTagsInBrackets( sent.tokens)
+        tagSentenceNameReferences( sent.tokens, titlesubject)
 
     tokCntWeightMap = tokenCountToWeightMap( tokCntMap, tokCntTotal)
-    countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
+    countNnp = getDocumentNlpTokCountMap( sentences)
     bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
-    if verbose:
-        for bm in bestTitleMatches:
-            print( "* Best title match %s" % ' '.join(bm))
-    countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
+    countNnp = getDocumentNlpTokCountMap( sentences)
     nounCandidateKeyMap = {}
     nounCandidates = {}
     titlekey = ' '.join( titlesubject)
     for sidx,sent in enumerate(sentences):
-        if sentenceHasVerb( sent):
-            tagSentenceSubjects( sent)
-            tagSentenceCompleteNounReferences( sent, titlesubject, bestTitleMatches, nounCandidateKeyMap, nounCandidates, tokCntWeightMap, sidx)
+        if sent.type == "sent":
+            tagSentenceSubjects( sent.tokens)
+            tagSentenceCompleteNounReferences( sent.tokens, titlesubject, bestTitleMatches, nounCandidateKeyMap, nounCandidates, tokCntWeightMap, sidx)
 
-    countNnp = getDocumentNlpTokCountMap( sentences, ["NNP","NNPS"])
+    countNnp = getDocumentNlpTokCountMap( sentences)
     splitNlpTokCountMap( countNnp)
     mostUsedNnp = getMostUsedMultipartList( countNnp)
     mostUsedNnpMap = getFirstKeyMap( mostUsedNnp, getEntityElements)
     for sidx,sent in enumerate(sentences):
-        tagSentenceNameMapReferences( sent, mostUsedNnpMap)
-        # UNUSED tagSentenceSingleLastNameReferences( sent, entityLastKeyMap)
+        if sent.type == "sent" or sent.type == "title":
+            tagSentenceNameMapReferences( sent.tokens, mostUsedNnpMap)
 
     nnpSexCountMap = getDocumentNnpSexCountMap( titlesubject, sentences)
     nnpSexMap = getDocumentNnpSexMap( nnpSexCountMap)
@@ -1194,11 +1264,13 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         titlesex = nnpSexMap[ titlekey]
         sexSubjectMap[ titlesex] = Subject( titlesex, "E", titlesubject, 0)
     for sidx,sent in enumerate(sentences):
-        if sentenceHasVerb( sent):
-            tagSentencePrpReferences( sent, sidx, sexSubjectMap, nnpSexMap)
+        if sent.type == "sent":
+            tagSentencePrpReferences( sent.tokens, sidx, sexSubjectMap, nnpSexMap)
     for sent in sentences:
-        rt += printSentence( sent, complete)
+        rt += printSentence( sent.tokens, complete)
     if verbose:
+        for bm in bestTitleMatches:
+            print( "* Best title match %s" % ' '.join(bm))
         for subj,sexmap in nnpSexCountMap.items():
             print( "* Entity sex stats %s -> %s" % (subj, sexmap))
         for subj,sex in nnpSexMap.items():
@@ -1206,7 +1278,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         for subj,sc in nnpSexCountMap.items():
             print( "* Subject %s -> %s" % (subj, sc))
         for key in countNnp:
-            print( "* Entity usage %s # %d" % (key, countNnp[ key]))
+            print( "* Entity usage %s # %.3f" % (key, countNnp[ key]))
         for key,linklist in entityFirstKeyMap.items():
             for link in linklist:
                 print( "* Link '%s'" % ' '.join(link))
