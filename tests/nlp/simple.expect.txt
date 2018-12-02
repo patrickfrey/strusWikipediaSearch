@@ -10,6 +10,7 @@
 * Best title match Giuliani
 * Entity sex stats Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
 * Subject Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
+* Synonym politician -> Rudy Giuliani 2.000
 * Entity usage Rudy Giuliani # 2.000
 * Entity usage Mayor # 1.000
 * Entity usage N. Y. # 1.000
@@ -21,199 +22,199 @@
 * Entity usage United States # 1.000
 * Entity usage David Bowie # 1.000
 * Entity usage Bernd # 1.000
-* Token count n. # 0.000
-* Token count let # 0.000
-* Token count america # 0.000
-* Token count who # 0.000
-* Token count city # 0.200
-* Token count big # 0.000
-* Token count and # 0.200
-* Token count an # 0.000
-* Token count mayor # 0.200
-* Token count weather # 0.000
-* Token count left # 0.000
-* Token count at # 0.000
-* Token count york # 0.000
-* Token count rudolph # 0.000
-* Token count term # 0.000
-* Token count bloomberg # 0.000
-* Token count 107th # 0.000
-* Token count handle # 0.000
-* Token count the # 0.641
-* Token count terrible # 0.000
-* Token count ninth # 0.000
-* Token count his # 0.000
-* Token count problem # 0.000
-* Token count town # 0.000
-* Token count unclear # 0.000
-* Token count made # 0.000
-* Token count how # 0.000
-* Token count album # 0.000
-* Token count businessman # 0.000
-* Token count public # 0.000
-* Token count bowie # 0.000
-* Token count louis # 0.000
-* Token count of # 0.766
-* Token count budget # 0.000
-* Token count to # 0.641
-* Token count is # 0.200
-* Token count bernd # 0.000
-* Token count giuliani # 0.200
-* Token count with # 0.000
-* Token count y. # 0.000
-* Token count , # 0.364
-* Token count because # 0.000
-* Token count speaker # 0.000
-* Token count . # 1.000
-* Token count philosophy # 0.000
-* Token count bad # 0.000
-* Token count ll # 0.000
-* Token count states # 0.000
-* Token count country # 0.000
-* Token count during # 0.000
-* Token count be # 0.200
-* Token count go # 0.200
-* Token count served # 0.000
-* Token count a # 0.509
-* Token count from # 0.000
-* Token count masterpiece # 0.000
-* Token count this # 0.000
-* Token count united # 0.000
-* Token count he # 0.000
-* Token count politician # 0.000
-* Token count enfant # 0.000
-* Token count 1994 # 0.000
-* Token count s # 0.200
-* Token count age # 0.000
-* Token count attorney # 0.000
-* Token count david # 0.000
-* Token count it # 0.200
-* Token count as # 0.000
-* Token count william # 0.000
-* Token count ayer # 0.000
-* Token count are # 0.000
-* Token count 26 # 0.000
-* Token count british # 0.000
-* Token count 2001 # 0.000
-* Token count erni # 0.000
-* Token count american # 0.000
-* Token count able # 0.000
-* Token count new # 0.000
+* Token count n. # 0.00000
+* Token count let # 0.00000
+* Token count america # 0.00000
+* Token count who # 0.00000
+* Token count city # 0.20004
+* Token count big # 0.00000
+* Token count and # 0.20004
+* Token count an # 0.00000
+* Token count mayor # 0.20004
+* Token count weather # 0.00000
+* Token count left # 0.00000
+* Token count at # 0.00000
+* Token count york # 0.00000
+* Token count rudolph # 0.00000
+* Token count term # 0.00000
+* Token count bloomberg # 0.00000
+* Token count 107th # 0.00000
+* Token count handle # 0.00000
+* Token count the # 0.64132
+* Token count terrible # 0.00000
+* Token count ninth # 0.00000
+* Token count his # 0.00000
+* Token count problem # 0.00000
+* Token count town # 0.00000
+* Token count unclear # 0.00000
+* Token count made # 0.00000
+* Token count how # 0.00000
+* Token count album # 0.00000
+* Token count businessman # 0.00000
+* Token count public # 0.00000
+* Token count bowie # 0.00000
+* Token count louis # 0.00000
+* Token count of # 0.76605
+* Token count budget # 0.00000
+* Token count to # 0.64132
+* Token count is # 0.20004
+* Token count bernd # 0.00000
+* Token count giuliani # 0.20004
+* Token count with # 0.00000
+* Token count y. # 0.00000
+* Token count , # 0.36389
+* Token count because # 0.00000
+* Token count speaker # 0.00000
+* Token count . # 1.00000
+* Token count philosophy # 0.00000
+* Token count bad # 0.00000
+* Token count ll # 0.00000
+* Token count states # 0.00000
+* Token count country # 0.00000
+* Token count during # 0.00000
+* Token count be # 0.20004
+* Token count go # 0.20004
+* Token count served # 0.00000
+* Token count a # 0.50856
+* Token count from # 0.00000
+* Token count masterpiece # 0.00000
+* Token count this # 0.00000
+* Token count united # 0.00000
+* Token count he # 0.00000
+* Token count politician # 0.00000
+* Token count enfant # 0.00000
+* Token count 1994 # 0.00000
+* Token count s # 0.20004
+* Token count age # 0.00000
+* Token count attorney # 0.00000
+* Token count david # 0.00000
+* Token count it # 0.20004
+* Token count as # 0.00000
+* Token count william # 0.00000
+* Token count ayer # 0.00000
+* Token count are # 0.00000
+* Token count 26 # 0.00000
+* Token count british # 0.00000
+* Token count 2001 # 0.00000
+* Token count erni # 0.00000
+* Token count american # 0.00000
+* Token count able # 0.00000
+* Token count new # 0.00000
 #FILE#Rudy_Giuliani.txt
 S (compound)	E	NNP	Rudolph	Rudy Giuliani
-_ (compound)	_	_	William	
-_ (compound)	_	_	Louis	
-_ (nsubj)	_	_	Giuliani	
- (ROOT)	V	VBZ	is	
- (det)		DT	an	
- (amod)	A	JJ	American	
- (attr)	N	NN	politician	
- (punct)	P!	,	,	
- (conj)	N	NN	attorney	
- (punct)	P!	,	,	
- (conj)	N	NN	businessman	
- (cc)		CC	and	
- (amod)	A	JJ	public	
- (conj)	N	NN	speaker	
- (nsubj)	W	WP	who	
- (relcl)	V	VBD	served	
- (prep)		IN	as	
- (det)		DT	the	
- (amod)	A	JJ	107th	
- (pobj)	E	NNP	Mayor	
- (prep)		IN	of	
- (compound)	E	NNP	New	
- (compound)	_	_	York	
- (pobj)	_	_	City	
- (prep)		IN	from	
- (pobj)	C	CD	1994	
- (prep)		IN	to	
- (pobj)	C	CD	2001	
- (punct)	T!	.	.	
+_ (compound)	_	_	William
+_ (compound)	_	_	Louis
+_ (nsubj)	_	_	Giuliani
+ (ROOT)	V	VBZ	is
+ (det)		DT	an
+ (amod)	A	JJ	American
+ (attr)	N	NN	politician
+ (punct)	P!	,	,
+ (conj)	N	NN	attorney
+ (punct)	P!	,	,
+ (conj)	N	NN	businessman
+ (cc)		CC	and
+ (amod)	A	JJ	public
+ (conj)	N	NN	speaker
+ (nsubj)	W	WP	who
+ (relcl)	V	VBD	served
+ (prep)		IN	as
+ (det)		DT	the
+ (amod)	A	JJ	107th
+ (pobj)	E	NNP	Mayor
+ (prep)		IN	of
+ (compound)	E	NNP	New
+ (compound)	_	_	York
+ (pobj)	_	_	City
+ (prep)		IN	from
+ (pobj)	C	CD	1994
+ (prep)		IN	to
+ (pobj)	C	CD	2001
+ (punct)	T!	.	.
 S (nsubj)	E	NNP	Giuliani	Rudy Giuliani
- (ROOT)	V	VBD	left	
- (dobj)	E	NNP	Bloomberg	
- (aux)		TO	to	
- (xcomp)	V	VB	be	
- (attr)	N	NN	mayor	
- (prep)		IN	of	
- (det)		DT	a	
- (pobj)	N	NN	city	
- (prep)		IN	with	
- (det)		DT	a	
- (amod)	A	JJ	big	
- (compound)	N	NN	budget	
- (pobj)	_	_	problem	
- (punct)	T!	.	.	
-S (nsubj)	R	PRP	It	
- (ROOT)	V	VBZ	s	
- (acomp)	A	JJ	unclear	
- (advmod)	W	WRB	how	
-S (nsubj)	R	PRP	he	
- (aux)	m	MD	ll	
- (ccomp)	V	VB	be	
- (acomp)	A	JJ	able	
- (aux)		TO	to	
- (xcomp)	V	VB	handle	
- (dobj)	R	PRP	it	
- (prep)		IN	during	
- (poss)	R	PRP$	his	
- (pobj)	N	NN	term	
- (punct)	T!	.	.	
- (ROOT)	V	VB	Let	
- (nsubj)		PRP	's	
- (ccomp)	V	VB	go	
- (prep)		IN	to	
- (pobj)	E	NNP	N.	
- (pobj)	_	_	Y.	
- (punct)	T!	.	.	
- (prep)		IN	Because	
- (pcomp)		IN	of	
- (det)		DT	the	
- (amod)	A	JJ	bad	
- (pobj)	N	NN	weather	
- (punct)	P!	,	,	
-S (nsubj)	E	NNP	Erni	
- (cc)		CC	and	
-S (conj)	E	NNP	Bernd	
- (ROOT)	V	VB	go	
- (prep)		IN	to	
- (pobj)	N	NN	town	
- (punct)	T!	.	.	
- (det)		DT	The	
-S (compound)	E	NNP	United	
-_ (nsubj)	_	_	States	
- (prep)		IN	of	
- (pobj)	E	NNP	America	
- (ROOT)	V	VBP	are	
- (det)		DT	a	
- (attr)	N	NN	country	
- (punct)	T!	.	.	
- (det)		DT	The	
- (amod)	A	JJ	ninth	
-S (nsubj)	N	NN	album	
- (prep)		IN	of	
- (compound)	E	NNP	David	
- (pobj)	_	_	Bowie	
- (ROOT)	V	VBZ	is	
- (det)		DT	a	
- (attr)	N	NN	masterpiece	
- (punct)	T!	.	.	
- (nsubj)		DT	This	
- (ROOT)	V	VBD	made	
- (dobj)	E	NNP	Ayer	
- (prep)		IN	at	
- (pobj)	N	NN	age	
- (nummod)	C	CD	26	
- (det)		DT	the	
- (punct)		``	'	
- (amod)	A	JJ	enfant	
- (dobj)	A	JJ	terrible	
- (punct)		''	'	
- (prep)		IN	of	
- (amod)	A	JJ	British	
- (pobj)	N	NN	philosophy	
- (punct)	T!	.	.	
+ (ROOT)	V	VBD	left
+ (dobj)	E	NNP	Bloomberg
+ (aux)		TO	to
+ (xcomp)	V	VB	be
+ (attr)	N	NN	mayor
+ (prep)		IN	of
+ (det)		DT	a
+ (pobj)	N	NN	city
+ (prep)		IN	with
+ (det)		DT	a
+ (amod)	A	JJ	big
+ (compound)	N	NN	budget
+ (pobj)	_	_	problem
+ (punct)	T!	.	.
+S (nsubj)	R	PRP	It
+ (ROOT)	V	VBZ	s
+ (acomp)	A	JJ	unclear
+ (advmod)	W	WRB	how
+S (nsubj)	R	PRP	he
+ (aux)	m	MD	ll
+ (ccomp)	V	VB	be
+ (acomp)	A	JJ	able
+ (aux)		TO	to
+ (xcomp)	V	VB	handle
+ (dobj)	R	PRP	it
+ (prep)		IN	during
+ (poss)	R	PRP$	his
+ (pobj)	N	NN	term
+ (punct)	T!	.	.
+ (ROOT)	V	VB	Let
+ (nsubj)		PRP	's
+ (ccomp)	V	VB	go
+ (prep)		IN	to
+ (pobj)	E	NNP	N.
+ (pobj)	_	_	Y.
+ (punct)	T!	.	.
+ (prep)		IN	Because
+ (pcomp)		IN	of
+ (det)		DT	the
+ (amod)	A	JJ	bad
+ (pobj)	N	NN	weather
+ (punct)	P!	,	,
+S (nsubj)	E	NNP	Erni
+ (cc)		CC	and
+S (conj)	E	NNP	Bernd
+ (ROOT)	V	VB	go
+ (prep)		IN	to
+ (pobj)	N	NN	town
+ (punct)	T!	.	.
+ (det)		DT	The
+S (compound)	E	NNP	United
+_ (nsubj)	_	_	States
+ (prep)		IN	of
+ (pobj)	E	NNP	America
+ (ROOT)	V	VBP	are
+ (det)		DT	a
+ (attr)	N	NN	country
+ (punct)	T!	.	.
+ (det)		DT	The
+ (amod)	A	JJ	ninth
+S (nsubj)	N	NN	album
+ (prep)		IN	of
+ (compound)	E	NNP	David
+ (pobj)	_	_	Bowie
+ (ROOT)	V	VBZ	is
+ (det)		DT	a
+ (attr)	N	NN	masterpiece
+ (punct)	T!	.	.
+ (nsubj)		DT	This
+ (ROOT)	V	VBD	made
+ (dobj)	E	NNP	Ayer
+ (prep)		IN	at
+ (pobj)	N	NN	age
+ (nummod)	C	CD	26
+ (det)		DT	the
+ (punct)		``	'
+ (amod)	A	JJ	enfant
+ (dobj)	A	JJ	terrible
+ (punct)		''	'
+ (prep)		IN	of
+ (amod)	A	JJ	British
+ (pobj)	N	NN	philosophy
+ (punct)	T!	.	.
 
 * Document title A. S. Roma
 * Sentence [sent] Associazione Sportiva Roma ( , ; Rome Sport Association ) , commonly referred to as simply Roma , is a professional Italian football club based in Rome .
@@ -229,8 +230,8 @@ S (nsubj)	N	NN	album
 * Sentence [] archiveurl ;
 * Sentence [sent] Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
 * Best title match Roma
-* Entity usage Roma4 # 2.700
-* Entity usage Stadi Serie A 2015–2016 # 2.700
+* Entity usage Roma4 # 1.500
+* Entity usage Stadi Serie A 2015–2016 # 1.500
 * Entity usage Rome Sport Association # 1.000
 * Entity usage Madrid # 1.000
 * Entity usage Real Madrid # 1.000
@@ -239,149 +240,149 @@ S (nsubj)	N	NN	album
 * Entity usage Rome # 1.000
 * Entity usage Real Madrid Club de Fútbol # 1.000
 * Entity usage Royal Madrid Football Club # 1.000
-* Token count ðe # 0.000
-* Token count ˈfuðβol # 0.000
-* Token count based # 0.256
-* Token count sport # 0.000
-* Token count ˈkluβ # 0.000
-* Token count ] # 0.000
-* Token count [ # 0.000
-* Token count maˈðɾið # 0.000
-* Token count simply # 0.000
-* Token count 7 # 0.000
-* Token count madrid # 0.658
-* Token count club # 0.658
-* Token count real # 0.256
-* Token count association # 0.000
-* Token count associazione # 0.000
-* Token count commonly # 0.256
-* Token count stadi # 0.000
-* Token count spain # 0.000
-* Token count archiveurl # 0.000
-* Token count italian # 0.000
-* Token count roma # 0.256
-* Token count serie # 0.000
-* Token count weburl # 0.000
-* Token count 2015–2016 # 0.000
-* Token count title # 0.000
-* Token count rome # 0.256
-* Token count referred # 0.000
-* Token count , # 1.000
-* Token count . # 0.256
-* Token count roma4 # 0.000
-* Token count yes # 0.000
-* Token count 1927 # 0.000
-* Token count known # 0.000
-* Token count in # 0.256
-* Token count de # 0.000
-* Token count a # 0.469
-* Token count sportiva # 0.000
-* Token count deadurl # 0.000
-* Token count pronunciation # 0.000
-* Token count football # 0.469
-* Token count spanish # 0.000
-* Token count professional # 0.256
-* Token count to # 0.000
-* Token count 6 # 0.000
-* Token count fútbol # 0.000
-* Token count is # 0.256
-* Token count reˈal # 0.000
-* Token count cite # 0.000
-* Token count royal # 0.000
-* Token count as # 0.256
+* Token count ðe # 0.00000
+* Token count ˈfuðβol # 0.00000
+* Token count based # 0.25646
+* Token count sport # 0.00000
+* Token count ˈkluβ # 0.00000
+* Token count ] # 0.00000
+* Token count [ # 0.00000
+* Token count maˈðɾið # 0.00000
+* Token count simply # 0.00000
+* Token count 7 # 0.00000
+* Token count madrid # 0.65841
+* Token count club # 0.65841
+* Token count real # 0.25646
+* Token count association # 0.00000
+* Token count associazione # 0.00000
+* Token count commonly # 0.25646
+* Token count stadi # 0.00000
+* Token count spain # 0.00000
+* Token count archiveurl # 0.00000
+* Token count italian # 0.00000
+* Token count roma # 0.25646
+* Token count serie # 0.00000
+* Token count weburl # 0.00000
+* Token count 2015–2016 # 0.00000
+* Token count title # 0.00000
+* Token count rome # 0.25646
+* Token count referred # 0.00000
+* Token count , # 1.00000
+* Token count . # 0.25646
+* Token count roma4 # 0.00000
+* Token count yes # 0.00000
+* Token count 1927 # 0.00000
+* Token count known # 0.00000
+* Token count in # 0.25646
+* Token count de # 0.00000
+* Token count a # 0.46895
+* Token count sportiva # 0.00000
+* Token count deadurl # 0.00000
+* Token count pronunciation # 0.00000
+* Token count football # 0.46895
+* Token count spanish # 0.00000
+* Token count professional # 0.25646
+* Token count to # 0.00000
+* Token count 6 # 0.00000
+* Token count fútbol # 0.00000
+* Token count is # 0.25646
+* Token count reˈal # 0.00000
+* Token count cite # 0.00000
+* Token count royal # 0.00000
+* Token count as # 0.25646
 #FILE#/A%2eS%2e_Roma.xml
 S (compound)	E	NNP	Associazione	A. S. Roma
-_ (compound)	_	_	Sportiva	
-_ (nsubj)	_	_	Roma	
- (punct)	P!	-LRB-	(	
- (punct)	_	,	,	
- (punct)	_	:	;	
- (compound)	E	NNP	Rome	
- (compound)	_	_	Sport	
- (nsubj)	_	_	Association	
- (punct)	P!	-RRB-	)	
- (punct)	_	,	,	
- (advmod)	A	RB	commonly	
- (acl)	V	VBN	referred	
- (prep)		IN	to	
- (prep)		IN	as	
- (advmod)	A	RB	simply	
+_ (compound)	_	_	Sportiva
+_ (nsubj)	_	_	Roma
+ (punct)	P!	-LRB-	(
+ (punct)	_	,	,
+ (punct)	_	:	;
+ (compound)	E	NNP	Rome
+ (compound)	_	_	Sport
+ (nsubj)	_	_	Association
+ (punct)	P!	-RRB-	)
+ (punct)	_	,	,
+ (advmod)	A	RB	commonly
+ (acl)	V	VBN	referred
+ (prep)		IN	to
+ (prep)		IN	as
+ (advmod)	A	RB	simply
  (pobj)	E	NNP	Roma	A. S. Roma
- (punct)	P!	,	,	
- (ROOT)	V	VBZ	is	
- (det)		DT	a	
- (amod)	A	JJ	professional	
- (amod)	A	JJ	Italian	
- (compound)	N	NN	football	
- (attr)	_	_	club	
- (acl)	V	VBN	based	
- (prep)		IN	in	
- (pobj)	E	NNP	Rome	
- (punct)	T!	.	.	
- (none)	E	NNP	Roma4	
- (punct)		:	;	
- (npadvmod)		CD	1927	
- (punct)		:	;	
- (appos)		CD	6	
- (punct)		SYM	;	
- (appos)		CD	7	
- (punct)		:	;	
- (conj)	V	VB	cite	
- (dobj)	N	NN	weburl	
- (punct)	P!	:	;	
- (ROOT)		NN	title	
- (punct)		:	;	
- (none)	E	NNP	Stadi	
- (none)	_	_	Serie	
- (none)	_	_	A	
- (none)	_	_	2015–2016	
- (punct)		:	;	
- (nsubj)		NN	deadurl	
- (punct)		:	;	
- (intj)		UH	yes	
- (punct)		:	;	
- (conj)		NN	archiveurl	
- (punct)		:	;	
-S (amod)	E	NNP	Real	
-_ (compound)	_	_	Madrid	
-_ (nmod)	_	_	Club	
-_ (nmod)	_	_	de	
-_ (appos)	_	_	Fútbol	
- (punct)	P!	-LRB-	(	
- (amod)	A	JJ	Spanish	
- (appos)	N	NN	pronunciation	
- (punct)	P!	:	:	
- (punct)	_	-LRB-	[	
- (npadvmod)	N	NN	reˈal	
- (amod)	_	_	maˈðɾið	
- (compound)	_	_	ˈkluβ	
- (compound)		IN	ðe	
- (appos)	N	NN	ˈfuðβol	
- (punct)	P!	-RRB-	]	
- (punct)	_	:	;	
- (punct)		``	"	
- (compound)	E	NNP	Royal	
- (compound)	_	_	Madrid	
- (compound)	_	_	Football	
- (conj)	_	_	Club	
- (punct)		''	"	
- (punct)	P!	-RRB-	)	
- (punct)	_	,	,	
- (advmod)	A	RB	commonly	
- (acl)	V	VBN	known	
- (prep)		IN	as	
- (compound)	E	NNP	Real	
- (pobj)	_	_	Madrid	
- (punct)	P!	,	,	
- (ROOT)	V	VBZ	is	
- (det)		DT	a	
- (amod)	A	JJ	professional	
- (compound)	N	NN	football	
- (attr)	_	_	club	
- (acl)	V	VBN	based	
- (prep)		IN	in	
- (pobj)	E	NNP	Madrid	
- (punct)	P!	,	,	
- (appos)	E	NNP	Spain	
- (punct)	T!	.	.	
+ (punct)	P!	,	,
+ (ROOT)	V	VBZ	is
+ (det)		DT	a
+ (amod)	A	JJ	professional
+ (amod)	A	JJ	Italian
+ (compound)	N	NN	football
+ (attr)	_	_	club
+ (acl)	V	VBN	based
+ (prep)		IN	in
+ (pobj)	E	NNP	Rome
+ (punct)	T!	.	.
+ (none)	E	NNP	Roma4
+ (punct)	P!	:	;
+ (npadvmod)		CD	1927
+ (punct)		:	;
+ (appos)		CD	6
+ (punct)		SYM	;
+ (appos)		CD	7
+ (punct)		:	;
+ (conj)	V	VB	cite
+ (dobj)	N	NN	weburl
+ (punct)	P!	:	;
+ (ROOT)		NN	title
+ (punct)		:	;
+ (none)	E	NNP	Stadi
+ (none)	_	_	Serie
+ (none)	_	_	A
+ (none)	_	_	2015–2016
+ (punct)	P!	:	;
+ (nsubj)		NN	deadurl
+ (punct)		:	;
+ (intj)		UH	yes
+ (punct)		:	;
+ (conj)		NN	archiveurl
+ (punct)		:	;
+S (amod)	E	NNP	Real
+_ (compound)	_	_	Madrid
+_ (nmod)	_	_	Club
+_ (nmod)	_	_	de
+_ (appos)	_	_	Fútbol
+ (punct)	P!	-LRB-	(
+ (amod)	A	JJ	Spanish
+ (appos)	N	NN	pronunciation
+ (punct)	P!	:	:
+ (punct)	_	-LRB-	[
+ (npadvmod)	N	NN	reˈal
+ (amod)	_	_	maˈðɾið
+ (compound)	_	_	ˈkluβ
+ (compound)		IN	ðe
+ (appos)	N	NN	ˈfuðβol
+ (punct)	P!	-RRB-	]
+ (punct)	_	:	;
+ (punct)		``	"
+ (compound)	E	NNP	Royal
+ (compound)	_	_	Madrid
+ (compound)	_	_	Football
+ (conj)	_	_	Club
+ (punct)		''	"
+ (punct)	P!	-RRB-	)
+ (punct)	_	,	,
+ (advmod)	A	RB	commonly
+ (acl)	V	VBN	known
+ (prep)		IN	as
+ (compound)	E	NNP	Real
+ (pobj)	_	_	Madrid
+ (punct)	P!	,	,
+ (ROOT)	V	VBZ	is
+ (det)		DT	a
+ (amod)	A	JJ	professional
+ (compound)	N	NN	football
+ (attr)	_	_	club
+ (acl)	V	VBN	based
+ (prep)		IN	in
+ (pobj)	E	NNP	Madrid
+ (punct)	P!	,	,
+ (appos)	E	NNP	Spain
+ (punct)	T!	.	.
 
