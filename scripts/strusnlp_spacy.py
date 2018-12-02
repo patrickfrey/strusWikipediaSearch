@@ -1246,7 +1246,7 @@ def getDocumentSynonymCountMap( sentences):
     pastSentSomeNouns = {}
     for sent in sentences:
         # if sent.type == "sent":
-            # print( "** SENT %s" % ' '.join( [tk.value for tk in sent.tokens]))
+        #     print( "** SENT %s" % ' '.join( [tk.value for tk in sent.tokens]))
         sentSubjects = []
         sentNNPs = []
         sentSomeNouns = []
@@ -1348,11 +1348,12 @@ def getDocumentSynonymCountMap( sentences):
                 pastSentSomeNouns[ noun] *= 0.6
         for noun in delPastSentSomeNouns:
             del pastSentSomeNouns[ noun]
+
         # pastSentSomeNounsStr = ""
         # for noun,weight in pastSentSomeNouns.items():
-            # if pastSentSomeNounsStr:
-            #    pastSentSomeNounsStr += ", "
-            # pastSentSomeNounsStr += "SOME %s %.3f" % (noun,weight)
+        #     if pastSentSomeNounsStr:
+        #         pastSentSomeNounsStr += ", "
+        #     pastSentSomeNounsStr += "SOME %s %.3f" % (noun,weight)
         # for synonym in sentDetNouns:
         #     if pastSentSomeNounsStr:
         #        pastSentSomeNounsStr += ", "
@@ -1363,9 +1364,9 @@ def getDocumentSynonymCountMap( sentences):
         #     if nnp in sentSubjects:
         #        pastSentSomeNounsStr += "SUBJ-"
         #     pastSentSomeNounsStr += "NNP %s" % (nnp)
-
         # if pastSentSomeNounsStr:
         #     print( "** OBJ %s" % (pastSentSomeNounsStr))
+
         if sentSubjects:
             for nnp,weight in pastSubjects.items():
                 if nnp not in sentSubjects and weight > 0.0:
@@ -1402,7 +1403,7 @@ def getDocumentSynonymCountMap( sentences):
     rt = {}
     for nnp,map in synomap.items():
         for noun,weight in map.items():
-            if weight > 0.5:
+            if weight > 1.0:
                 if noun in rt:
                     rt[ noun][ nnp] = weight
                 else:

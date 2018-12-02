@@ -3790,11 +3790,8 @@
 * Subject Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
 * Subject Chuck Taylor , Britney Spears -> {'W': 1.0}
 * Subject Crazy , Melody -> {'N': 0.2}
-* Synonym extension -> Britney Spears 0.864
-* Synonym set list -> Britney Spears 0.501
-* Synonym wall -> Britney Spears 0.504
 * Synonym collection -> Baby One More Time 2.000
-* Synonym debut -> Baby One More Time 0.600
+* Synonym music group -> All Seeing I 2.700
 * Synonym producer -> Eric Foster White 5.400
 * Synonym pop icon -> Britney Spears 2.700
 * Synonym album -> Baby One More Time 5.558
@@ -3803,10 +3800,7 @@
 * Synonym actress -> Melissa Joan Hart 2.700
 * Synonym girl group -> TLC 2.700
 * Synonym manager -> Lou Pearlman 4.500
-* Synonym pop group -> Innosense 0.600
-* Synonym music group -> All Seeing I 2.700
 * Synonym theme song -> Jaws 1.800
-* Synonym age -> Britney Spears 0.787
 * Synonym singer -> Britney Spears 2.683
 * Entity usage Tommy Hilfiger # 1.000
 * Entity usage You Drive Me # 13.500
