@@ -324,20 +324,21 @@ def countTokens( toknctmap, toklist):
                 toknctmap[ tv] = 1
 
 def calcTokenWeight( N, tf):
-    return 1.0 / math.log( (N - 0.5) / (tf + 0.5))
+    return 1.0 / (math.log( (N - 0.5) / (tf + 0.5)) + 1.0)
 
 def tokenCountToWeightMap( tokCntMap, tokCntTotal):
     rt = {}
-    maxcnt = 1
-    maxkey = ""
-    for key,cnt in tokCntMap.items():
-        if int(cnt) > maxcnt:
-            maxcnt = int(cnt)
-            maxkey = key
-    wBase = calcTokenWeight( tokCntTotal, maxcnt)
-    mBase = calcTokenWeight( tokCntTotal, 1)
-    for key,cnt in tokCntMap.items():
-        rt[ key] = (calcTokenWeight( tokCntTotal, cnt) - mBase) / (wBase - mBase)
+    if tokCntTotal:
+        maxcnt = 1
+        maxkey = ""
+        for key,cnt in tokCntMap.items():
+            if int(cnt) > maxcnt:
+                maxcnt = int(cnt)
+                maxkey = key
+        wBase = calcTokenWeight( tokCntTotal, maxcnt)
+        mBase = calcTokenWeight( tokCntTotal, 1)
+        for key,cnt in tokCntMap.items():
+            rt[ key] = (calcTokenWeight( tokCntTotal, cnt) - mBase) / (wBase - mBase)
     return rt
 
 def assignRef( tokens, tidx, ref):
@@ -874,7 +875,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
         removeFirstNameMap( nounCandidateKeyMap, key)
 
 # param sexSubjectMap: map sex:string -> Subject
-def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap):
+def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonymCountMap):
     subjects = []
     eidx = 0
     while eidx < len( tokens):
@@ -1495,7 +1496,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         sexSubjectMap[ titlesex] = Subject( titlesex, "E", titlesubject, 0)
     for sidx,sent in enumerate(sentences):
         if sent.type == "sent":
-            tagSentencePrpReferences( sent.tokens, sidx, sexSubjectMap, nnpSexMap)
+            tagSentencePrpReferences( sent.tokens, sidx, sexSubjectMap, nnpSexMap, synonymCountMap)
     for sent in sentences:
         rt += printSentence( sent.tokens, complete)
     if verbose:
