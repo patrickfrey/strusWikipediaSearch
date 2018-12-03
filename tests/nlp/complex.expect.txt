@@ -8136,7 +8136,7 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (punct)	P!	:	;
  (advmod)	A	RB	however
  (punct)	P!	,	,
-S (nsubj)	R	PRP	they	, half
+S (nsubj)	R	PRP	they
  (ROOT)	V	VBD	rejected
  (dobj)	R	PRP	it
  (punct)	T!	.	.
@@ -9162,7 +9162,7 @@ S (nsubj)	N	NN	woman
  (acomp)	A	JJ	wrong
  (punct)	P!	,	,
  (mark)		IN	as
-S (nsubj)	R	PRP	she
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBZ	comes
  (aux)		TO	to
  (xcomp)	V	VB	realize
@@ -11456,7 +11456,7 @@ S (nsubj)	N	NN	song
 S (compound)	N	NN	music
 _ (nsubjpass)	_	_	video
  (prep)		IN	for
- (pobj)	R	PRP	it
+ (pobj)	R	PRP	it	Baby One More Time
  (auxpass)	V	VBD	was
  (ROOT)	V	VBN	directed
  (agent)		IN	by
@@ -14179,7 +14179,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	already
  (advmod)	A	RB	halfway
  (prep)		IN	through
- (poss)	R	PRP$	her
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	A	JJ	lucrative
  (compound)	N	NN	showbiz
  (pobj)	_	_	career
@@ -14196,7 +14196,7 @@ S (nsubj)	N	NN	album	Baby One More Time
  (advmod)	A	RB	hopefully
  (punct)	P!	,	,
  (mark)		IN	if
-S (nsubj)	R	PRP	she
+S (nsubj)	R	PRP	she	Britney Spears
  (advcl)	V	VBZ	starts
  (aux)		TO	to
  (xcomp)	V	VB	live
@@ -14209,14 +14209,14 @@ S (nsubj)	R	PRP	she
  (advmod)	A	RB	eventually
  (relcl)	V	VBP	do
  (punct)	P!	,	,
- (poss)	R	PRP$	her
+ (poss)	R	PRP$	her	Britney Spears
 S (nsubj)	N	NN	voice
  (aux)	m	MD	will
  (ccomp)	V	VB	show
  (det)		DT	the
  (dobj)	N	NNS	scars
  (punct)	P!	,	,
-S (nsubj)	R	PRP	she
+S (nsubj)	R	PRP	she	Britney Spears
  (aux)	m	MD	'll
  (ccomp)	V	VB	stop
  (xcomp)	V	VBG	looking
@@ -14224,7 +14224,7 @@ S (nsubj)	R	PRP	she
  (amod)	A	JJ	fucking
  (advmod)	A	JJ	smug
  (punct)	P!	,	,
-S (nsubj)	R	PRP	she
+S (nsubj)	R	PRP	she	Britney Spears
  (aux)	m	MD	'll
  (ccomp)	V	VB	find
  (dobj)	N	NN	solace
@@ -17227,7 +17227,7 @@ S (nsubj)	N	NNS	girls
  (advcl)	V	VBG	putting
  (dobj)	N	NNS	posters
  (prep)		IN	on
- (poss)	R	PRP$	their	, Britney Spears
+ (poss)	R	PRP$	their
  (pobj)	N	NNS	walls
  (punct)	P!	,	,
 S (nsubj)	E	NNP	Britney	Britney Spears
@@ -17246,7 +17246,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
 S (nsubj)	N	NNS	children
  (advcl)	V	VBP	develop
  (prep)		IN	at
- (poss)	R	PRP$	their	, Britney Spears
+ (poss)	R	PRP$	their
  (amod)	A	JJ	own
  (pobj)	N	NN	pace
  (punct)	P!	,	,

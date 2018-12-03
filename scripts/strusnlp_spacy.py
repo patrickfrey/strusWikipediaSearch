@@ -229,6 +229,45 @@ def isUpperCaseName( sq):
             return False
     return True
 
+def cmpStringListPart( dest, dstart, dend, add, astart, aend):
+    ee = aend - astart
+    ei = 0
+    if ee != dend - dstart:
+        return False
+    while ei < ee and dest[ dstart + ei] == add[ astart + ei]:
+        ei += 1
+    return ei == ee
+
+def isInStringListPart( dest, add, astart, aend):
+    di = 0
+    de = len(dest)
+    while di < de:
+        dn = di
+        while dn < de and dest[ dn] != ',':
+            dn += 1
+        if cmpStringListPart( dest, di, dn, add, astart, aend):
+            return True
+        di = dn + 1
+    return False
+
+def joinStringList( dest, add):
+    if not dest:
+        return add
+    ai = 0
+    ae = len(add)
+    rt = []
+    for dd in dest:
+        rt.append( dd)
+    while ai < ae:
+        an = ai
+        while an < ae and add[ an] != ',':
+            an += 1
+        if ai < an and not isInStringListPart( rt, add, ai, an):
+            rt.append( ',')
+            rt.extend( add[ ai:an])
+        ai = an + 1
+    return rt
+
 def getAlphaTokens( tokens, tidx, tend):
     rt = []
     while tidx < tend:
@@ -898,7 +937,7 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
         if tokens[ eidx].nlptag == "DT" and tokens[ eidx].value.lower() in ["the","that","this","these"]:
             nidx = eidx + 1
             if nidx < len(tokens):
-                if tokens[nidx].nlptag == "NN" and not tokens[nidx].ref:
+                if tokens[nidx].nlptag in ["NN","NNS"] and not tokens[nidx].ref:
                     noun = getMultipartNameStr( tokens, nidx)
                     nidx = skipMultipartName( tokens, nidx)
                     if nidx < len(tokens) and not tokens[nidx].nlptag in ['IN'] and noun in synonymCountMap:
@@ -913,8 +952,11 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
                                     best_weight = ww
                         if best_nnp and best_weight > 0.2:
                             tokens[ eidx+1].ref = best_nnp.split(' ')
-            elif tokens[ eidx].nlptag[:2] == 'NN':
-                name = tokens[ eidx].ref or getMultipartName( tokens, eidx)
+        elif tokens[ eidx].nlptag[:2] == 'NN':
+            name = tokens[ eidx].ref
+            if not name and tokens[ eidx].nlptag in ["NNP","NNPS"]:
+                name = getMultipartName( tokens, eidx)
+            if name:
                 namekey = ' '.join(name)
                 updateNnpWeightMap( synonymNnpWeightMap, namekey)
                 if tokens[ eidx].strusrole == "S":
@@ -929,36 +971,46 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
                                 matchprev = True
                     if not matchprev:
                         subjects.append( Subject( sex, tokens[ eidx].strustag, name, sentidx))
-                    nidx = skipToOwnPrp( tokens, skipMultipartName( tokens, eidx))
-                    if nidx >= 0:
-                        eidx = nidx
-            elif tokens[ eidx].nlptag[:3] == 'PRP' and not tokens[ eidx].ref:
-               sex = getPrpSex( tokens[ eidx].value)
-               if sex:
-                   if sex in sexSubjectMap:
-                       subj = sexSubjectMap[ sex]
-                       if sentidx - subj.sentidx <= 10:
-                           subj.sentidx = sentidx
-                           tokens[ eidx].ref = subj.value
-                           nnpkey = ' '.join( subj.value)
-                           updateNnpWeightMap( synonymNnpWeightMap, nnpkey)
+                        nidx = skipToOwnPrp( tokens, skipMultipartName( tokens, eidx))
+                        if nidx >= 0:
+                            eidx = nidx
+        elif tokens[ eidx].nlptag[:3] == 'PRP' and not tokens[ eidx].ref:
+           sex = getPrpSex( tokens[ eidx].value)
+           if sex and sex in sexSubjectMap:
+               subj = sexSubjectMap[ sex]
+               if ',' in subj.value:
+                   maxdiff = 2
+               else:
+                   maxdiff = 10
+               if sentidx - subj.sentidx <= maxdiff:
+                   subj.sentidx = sentidx
+                   tokens[ eidx].ref = subj.value
+                   nnpkey = ' '.join( subj.value)
+                   updateNnpWeightMap( synonymNnpWeightMap, nnpkey)
         eidx += 1
     if subjects:
         if len(subjects) > 1:
-           combined = []
-           combinedtag = subjects[0].strustag
-           si = 1
-           while si < len(subjects):
-               combined.append( ',')
-               combined += subjects[ si].value
-               if combinedtag != subjects[0].strustag:
-                   combinedtag = None
-                   break
-               si += 1
-           sexSubjectMap[ 'P'] = Subject( 'P', combinedtag, combined, sentidx)
+            combined = subjects[0].value
+            combinedtag = subjects[0].strustag
+            si = 1
+            while si < len(subjects):
+                combined = joinStringList( combined, subjects[ si].value)
+                if combinedtag != subjects[0].strustag:
+                    combinedtag = None
+                    break
+                si += 1
+            if ',' in combined:
+                sx = 'P'
+            else:
+                sx = subjects[0].sex
+                if "Shania" in combined:
+                    for sb in subjects:
+                        sys.stderr.write( "PART SEX %s KEY '%s'\n" % (sb.sex,' '.join(sb.value)))
+                    sys.stderr.write( "HALLY GALLY SEX %s KEY '%s'\n" % (sx,' '.join(combined)))
+            sexSubjectMap[ sx] = Subject( sx, combinedtag, combined, sentidx)
         else:
-           sb = subjects[ 0]
-           sexSubjectMap[ sb.sex] = sb
+            sb = subjects[ 0]
+            sexSubjectMap[ sb.sex] = sb
 
 def printSentence( sent, complete):
     rt = ""
@@ -1182,45 +1234,6 @@ def addToNnpSexCountMap( map, nnp, prptok, weight):
                 map[ key][ prpsex] = weight
         else:
             map[ key] = { prpsex : weight }
-
-def cmpStringListPart( dest, dstart, dend, add, astart, aend):
-    ee = aend - astart
-    ei = 0
-    if ee != dend - dstart:
-        return False
-    while ei < ee and dest[ dstart + ei] == add[ astart + ei]:
-        ei += 1
-    return ei == ee
-
-def isInStringListPart( dest, add, astart, aend):
-    di = 0
-    de = len(dest)
-    while di < de:
-        dn = di
-        while dn < de and dest[ dn] != ',':
-            dn += 1
-        if cmpStringListPart( dest, di, dn, add, astart, aend):
-            return True
-        di = dn + 1
-    return False
-
-def joinStringList( dest, add):
-    if not dest:
-        return add
-    ai = 0
-    ae = len(add)
-    rt = []
-    for dd in dest:
-        rt.append( dd)
-    while ai < ae:
-        an = ai
-        while an < ae and add[ an] != ',':
-            an += 1
-        if not isInStringListPart( rt, add, ai, an):
-            rt.append( ',')
-            rt.extend( add[ ai:an])
-        ai = an + 1
-    return rt
 
 # param titlesubject string[]
 # param sentences Sentence[]
