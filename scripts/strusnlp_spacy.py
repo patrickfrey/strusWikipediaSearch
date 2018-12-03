@@ -897,51 +897,51 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
     while eidx < len( tokens):
         if tokens[ eidx].nlptag == "DT" and tokens[ eidx].value.lower() in ["the","that","this","these"]:
             nidx = eidx + 1
-            if nidx < len(tokens) and tokens[nidx].nlptag == "NN" and not tokens[nidx].ref:
-                noun = getMultipartNameStr( tokens, nidx)
-                nidx = skipMultipartName( tokens, nidx)
-                if not tokens[nidx].nlptag in ['IN'] and noun in synonymCountMap:
-                    nnpWeightMap = synonymCountMap[ noun]
-                    best_weight = 0.0
-                    best_nnp = None
-                    for nnp,nnpweight in nnpWeightMap.items():
-                        if nnp in synonymNnpWeightMap:
-                            ww = nnpweight * synonymNnpWeightMap[ nnp]
-                            if ww > best_weight:
-                                best_nnp = nnp
-                                best_weight = ww
-                    if best_nnp and best_weight > 0.2:
-                        tokens[ eidx+1].ref = best_nnp.split(' ')
-        elif tokens[ eidx].nlptag[:2] == 'NN':
-            name = tokens[ eidx].ref or getMultipartName( tokens, eidx)
-            namekey = ' '.join(name)
-            updateNnpWeightMap( synonymNnpWeightMap, namekey)
-            if tokens[ eidx].strusrole == "S":
-                if namekey in nnpSexMap:
-                    sex = nnpSexMap[ namekey]
-                else:
-                    sex = None
-                matchprev = False
-                if subjects:
-                    for sb in subjects:
-                        if sb.sex == sex and sb.strustag == tokens[ eidx].strustag and (matchName( name, sb.value, False) or matchName( sb.value, name, False)):
-                            matchprev = True
-                if not matchprev:
-                    subjects.append( Subject( sex, tokens[ eidx].strustag, name, sentidx))
-                nidx = skipToOwnPrp( tokens, skipMultipartName( tokens, eidx))
-                if nidx >= 0:
-                    eidx = nidx
-
-        elif tokens[ eidx].nlptag[:3] == 'PRP' and not tokens[ eidx].ref:
-           sex = getPrpSex( tokens[ eidx].value)
-           if sex:
-               if sex in sexSubjectMap:
-                   subj = sexSubjectMap[ sex]
-                   if sentidx - subj.sentidx <= 10:
-                       subj.sentidx = sentidx
-                       tokens[ eidx].ref = subj.value
-                       nnpkey = ' '.join( subj.value)
-                       updateNnpWeightMap( synonymNnpWeightMap, nnpkey)
+            if nidx < len(tokens):
+                if tokens[nidx].nlptag == "NN" and not tokens[nidx].ref:
+                    noun = getMultipartNameStr( tokens, nidx)
+                    nidx = skipMultipartName( tokens, nidx)
+                    if nidx < len(tokens) and not tokens[nidx].nlptag in ['IN'] and noun in synonymCountMap:
+                        nnpWeightMap = synonymCountMap[ noun]
+                        best_weight = 0.0
+                        best_nnp = None
+                        for nnp,nnpweight in nnpWeightMap.items():
+                            if nnp in synonymNnpWeightMap:
+                                ww = nnpweight * synonymNnpWeightMap[ nnp]
+                                if ww > best_weight:
+                                    best_nnp = nnp
+                                    best_weight = ww
+                        if best_nnp and best_weight > 0.2:
+                            tokens[ eidx+1].ref = best_nnp.split(' ')
+            elif tokens[ eidx].nlptag[:2] == 'NN':
+                name = tokens[ eidx].ref or getMultipartName( tokens, eidx)
+                namekey = ' '.join(name)
+                updateNnpWeightMap( synonymNnpWeightMap, namekey)
+                if tokens[ eidx].strusrole == "S":
+                    if namekey in nnpSexMap:
+                        sex = nnpSexMap[ namekey]
+                    else:
+                        sex = None
+                    matchprev = False
+                    if subjects:
+                        for sb in subjects:
+                            if sb.sex == sex and sb.strustag == tokens[ eidx].strustag and (matchName( name, sb.value, False) or matchName( sb.value, name, False)):
+                                matchprev = True
+                    if not matchprev:
+                        subjects.append( Subject( sex, tokens[ eidx].strustag, name, sentidx))
+                    nidx = skipToOwnPrp( tokens, skipMultipartName( tokens, eidx))
+                    if nidx >= 0:
+                        eidx = nidx
+            elif tokens[ eidx].nlptag[:3] == 'PRP' and not tokens[ eidx].ref:
+               sex = getPrpSex( tokens[ eidx].value)
+               if sex:
+                   if sex in sexSubjectMap:
+                       subj = sexSubjectMap[ sex]
+                       if sentidx - subj.sentidx <= 10:
+                           subj.sentidx = sentidx
+                           tokens[ eidx].ref = subj.value
+                           nnpkey = ' '.join( subj.value)
+                           updateNnpWeightMap( synonymNnpWeightMap, nnpkey)
         eidx += 1
     if subjects:
         if len(subjects) > 1:
@@ -957,7 +957,7 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
                si += 1
            sexSubjectMap[ 'P'] = Subject( 'P', combinedtag, combined, sentidx)
         else:
-           sb = subjects[0]
+           sb = subjects[ 0]
            sexSubjectMap[ sb.sex] = sb
 
 def printSentence( sent, complete):
