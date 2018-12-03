@@ -3794,7 +3794,7 @@
 * Synonym music group -> All Seeing I 2.700
 * Synonym producer -> Eric Foster White 5.400
 * Synonym pop icon -> Britney Spears 2.700
-* Synonym album -> Baby One More Time 5.558
+* Synonym album -> Baby One More Time 11.117
 * Synonym lyricist -> Max Martin 2.700
 * Synonym magazine -> Blender 2.700
 * Synonym actress -> Melissa Joan Hart 2.700
@@ -7073,7 +7073,7 @@ _ (nsubj)	_	_	Records
  (cc)		CC	and
  (conj)	V	VBD	appointed
  (det)		DT	the
- (dobj)	N	NN	singer
+ (dobj)	N	NN	singer	Britney Spears
  (aux)		TO	to
  (xcomp)	V	VB	work
  (prep)		IN	with
@@ -7252,7 +7252,7 @@ S (nsubj)	R	PRP	it	Baby One More Time
  (pobj)	N	NN	release
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	received
  (amod)	A	JJ	mixed
  (dobj)	N	NNS	reviews
@@ -7386,7 +7386,7 @@ S (nsubjpass)	N	NNS	singles
  (ROOT)	V	VBN	released
  (prep)		IN	from
  (det)		DT	the
- (pobj)	N	NN	album
+ (pobj)	N	NN	album	Baby One More Time
  (cc)		CC	and
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	heavily
@@ -8014,7 +8014,7 @@ _ (none)	_	_	You
  (appos)		DT	All
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	singer
+S (nsubj)	N	NN	singer	Britney Spears
  (advmod)	A	RB	also
  (ROOT)	V	VBD	recorded
  (det)		DT	a
@@ -8083,7 +8083,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
 S (nsubjpass)	N	NN	half
  (prep)		IN	of
  (det)		DT	the
- (pobj)	N	NN	album
+ (pobj)	N	NN	album	Baby One More Time
  (auxpass)	V	VBD	was
  (relcl)	V	VBN	recorded
  (prep)		IN	from
@@ -8213,7 +8213,7 @@ S (nsubj)	N	NN	line
  (none)	_	_	Time
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	singer
+S (nsubj)	N	NN	singer	Britney Spears
  (ccomp)	V	VBD	revealed
  (mark)		IN	that
 S (nsubj)	R	PRP	she
@@ -8282,7 +8282,7 @@ S (nsubj)	R	PRP	she
  (nummod)	C	CD	1998
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubjpass)	N	NN	album
+S (nsubjpass)	N	NN	album	Baby One More Time
  (auxpass)	V	VBD	was
  (ROOT)	V	VBN	done
  (punct)	P!	,	,
@@ -8802,7 +8802,7 @@ S (nsubj)	R	PRP	it
  (attr)		PRP	me
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBZ	opens
  (prep)		IN	with
  (det)		DT	the
@@ -8884,7 +8884,7 @@ _ (nsubj)	_	_	Words
  (det)		DT	the
 S (nsubj)	N	NN	track
  (ROOT)	V	VBZ	makes
- (poss)	R	PRP$	its
+ (poss)	R	PRP$	its	Baby One More Time
 S (nsubj)	N	NN	presence
  (ccomp)	V	VBN	known
  (prep)		IN	in
@@ -10044,7 +10044,7 @@ _ (nsubjpass)	_	_	Time
  (nummod)	C	CD	8
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (auxpass)	V	VBD	was
  (nmod)	N	NN	re
  (punct)		HYPH	-
@@ -10192,7 +10192,7 @@ _ (nsubjpass)	_	_	tour
  (pobj)	N	NN	sponsor
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	singer
+S (nsubj)	N	NN	singer	Britney Spears
  (ROOT)	V	VBD	made
  (amod)	A	JJ	several
  (amod)	A	JJ	promotional
@@ -10260,10 +10260,10 @@ S (nsubj)	R	PRP	She	Britney Spears
  (pobj)	N	NN	release
  (prep)		IN	of
  (det)		DT	the
- (pobj)	N	NN	album
+ (pobj)	N	NN	album	Baby One More Time
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	singer
+S (nsubj)	N	NN	singer	Britney Spears
  (advmod)	A	RB	also
  (ROOT)	V	VBD	appeared
  (prep)		IN	on
@@ -10322,7 +10322,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (pobj)	N	NN	schedule
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	singer
+S (nsubj)	N	NN	singer	Britney Spears
  (ROOT)	V	VBD	appeared
  (prep)		IN	on
  (amod)	A	JJ	12th
@@ -10570,7 +10570,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	performed
  (det)		DT	the
- (poss)	N	NN	album
+ (poss)	N	NN	album	Baby One More Time
  (case)		POS	’s
  (amod)	A	JJ	first
  (nummod)	C	CD	two
@@ -10585,7 +10585,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
 S (nsubj)	N	NN	Promotion
  (prep)		IN	for
  (det)		DT	the
- (pobj)	N	NN	album
+ (pobj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	continued
  (prep)		IN	in
  (amod)	A	JJ	early
@@ -11335,7 +11335,7 @@ S (conj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBN	released
  (prep)		IN	as
  (det)		DT	the
- (poss)	N	NN	album
+ (poss)	N	NN	album	Baby One More Time
  (case)		POS	's
  (amod)	A	JJ	third
  (pobj)	A	JJ	single
@@ -13935,7 +13935,7 @@ _ (nsubj)	_	_	Erlewine
  (pobj)	E	NNP	Allmusic
  (ROOT)	V	VBD	gave
  (det)		DT	the
- (dative)	N	NN	album
+ (dative)	N	NN	album	Baby One More Time
  (dobj)	C	CD	four
  (prep)		IN	out
  (prep)		IN	of
@@ -13948,7 +13948,7 @@ S (compound)	E	NNP	Paul
 _ (nsubj)	_	_	Verna
  (conj)	V	VBD	considered
  (det)		DT	the
- (dobj)	N	NN	album
+ (dobj)	N	NN	album	Baby One More Time
  (det)		DT	a
  (amod)	A	JJ	top
  (amod)	C	CD	40-ready
@@ -14072,7 +14072,7 @@ _ (nsubj)	_	_	Walters
  (none)	_	_	Stone
  (ROOT)	V	VBD	gave
  (det)		DT	the
- (dative)	N	NN	album
+ (dative)	N	NN	album	Baby One More Time
  (nummod)	C	CD	two
  (dobj)	N	NNS	stars
  (prep)		IN	out
@@ -14082,7 +14082,7 @@ _ (nsubj)	_	_	Walters
  (cc)		CC	and
  (conj)	V	VBD	compared
  (det)		DT	the
- (poss)	N	NN	album
+ (poss)	N	NN	album	Baby One More Time
  (case)		POS	's
  (pobj)	N	NN	sound
  (prep)		IN	to
@@ -14188,7 +14188,7 @@ S (nsubj)	R	PRP	He
  (advmod)	A	RB	also
  (ROOT)	V	VBD	found
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ccomp)	A	JJ	premature
  (punct)	P!	,	,
  (advcl)	V	VBG	commenting
@@ -14290,7 +14290,7 @@ _ (nsubj)	_	_	songs
  (punct)	T!	.	.
  (punct)		:	;
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (aux)	V	VBZ	has
  (ROOT)	V	VBN	listed
  (prep)		IN	as
@@ -14931,7 +14931,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (advmod)	A	RB	so
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	singer
+S (nsubj)	N	NN	singer	Britney Spears
  (ROOT)	V	VBD	became
  (det)		DT	the
  (amod)	A	JJ	first
@@ -14986,7 +14986,7 @@ S (nsubj)	N	NN	singer
  (npadvmod)	N	NN	week
  (dobj)		IN	that
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (relcl)	V	VBD	debuted
  (prep)		IN	at
  (pobj)	N	NN	number
@@ -15041,11 +15041,11 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (nummod)	C	CD	four
  (pobj)	N	NNS	weeks
  (prep)		IN	since
- (poss)	R	PRP$	its
+ (poss)	R	PRP$	its	Baby One More Time
  (pobj)	N	NN	release
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (aux)	V	VBD	had
  (ROOT)	V	VBN	sold
  (amod)	A	JJR	more
@@ -15068,14 +15068,14 @@ S (nsubj)	N	NN	album
  (pobj)	C	CD	five
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	went
  (advmod)	A	RB	back
  (prep)		IN	to
  (pobj)	N	NN	number
  (nummod)	C	CD	one
  (prep)		IN	in
- (poss)	R	PRP$	its
+ (poss)	R	PRP$	its	Baby One More Time
  (amod)	A	JJ	fourth
  (pobj)	N	NN	week
  (punct)	P!	,	,
@@ -15088,12 +15088,12 @@ S (nsubj)	N	NN	album
  (acl)	V	VBN	sold
  (punct)	T!	.	.
  (prep)		IN	On
- (poss)	R	PRP$	its
+ (poss)	R	PRP$	its	Baby One More Time
  (amod)	A	JJ	fifth
  (pobj)	N	NN	week
-S (nsubj)	R	PRP	it
+S (nsubj)	R	PRP	it	Baby One More Time
  (ROOT)	V	VBD	reached
- (poss)	R	PRP$	its
+ (poss)	R	PRP$	its	Baby One More Time
  (amod)	A	JJS	highest
  (compound)	N	NNS	sales
  (dobj)	_	_	week
@@ -15128,7 +15128,7 @@ _ (nsubj)	_	_	Time
  (nummod)	C	CD	million
  (dobj)	N	NNS	copies
  (prep)		IN	in
- (poss)	R	PRP$	its
+ (poss)	R	PRP$	its	Baby One More Time
  (amod)	A	JJ	first
  (nummod)	C	CD	two
  (pobj)	N	NNS	months
@@ -15150,7 +15150,7 @@ _ (nsubj)	_	_	Time
  (none)	_	_	200
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	held
  (advmod)	A	JJ	strong
  (prep)		IN	at
@@ -15173,7 +15173,7 @@ S (nsubj)	N	NN	album
  (advmod)	A	RB	alone
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	was
  (advmod)	A	RB	later
  (amod)	V	VBN	certified
@@ -15221,7 +15221,7 @@ S (nsubj)	R	PRP	she	Britney Spears
  (punct)	P!	-RRB-	)
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	was
  (det)		DT	the
  (amod)	A	JJ	14th
@@ -15272,7 +15272,7 @@ _ (nsubj)	_	_	Time
  (none)	_	_	200
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	spent
  (det)		DT	a
  (dobj)	N	NN	total
@@ -15328,7 +15328,7 @@ _ (nsubj)	_	_	Twain
  (punct)	T!	.	.
  (punct)		:	;
  (det)		DT	The
- (ROOT)	N	NN	album
+ (ROOT)	N	NN	album	Baby One More Time
  (acl)	V	VBD	debuted
  (prep)		IN	at
  (pobj)	N	NN	number
@@ -15417,7 +15417,7 @@ _ (nsubj)	_	_	Time
  (punct)	P!	-RRB-	)
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	reached
  (dobj)	N	NN	number
  (nummod)	C	CD	two
@@ -15530,7 +15530,7 @@ _ (nsubj)	_	_	Time
  (pobj)	N	NN	soundtrack
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	became
  (det)		DT	the
  (amod)	A	JJ	seventh
@@ -15568,7 +15568,7 @@ S (nsubj)	N	NN	album
  (pobj)	N	NNS	retailers
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBD	debuted
  (prep)		IN	at
  (pobj)	N	NN	number
@@ -15605,7 +15605,7 @@ _ (nsubj)	_	_	Twain
  (punct)	P!	-RRB-	)
  (punct)	T!	.	.
  (det)		DT	The
-S (nsubjpass)	N	NN	album
+S (nsubjpass)	N	NN	album	Baby One More Time
  (auxpass)	V	VBD	was
  (advmod)	A	RB	later
  (ROOT)	V	VBN	certified
@@ -16987,7 +16987,7 @@ S (compound)	E	NNP	Amanda
 _ (nsubj)	_	_	Murray
  (ROOT)	V	VBD	noted
  (det)		DT	the
-S (nsubj)	N	NN	album
+S (nsubj)	N	NN	album	Baby One More Time
  (ccomp)	V	VBZ	offers
  (det)		DT	a
  (dobj)	N	NN	marker
@@ -17012,7 +17012,7 @@ S (nsubj)	N	NN	album
  (pobj)	C	CD	2010
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubjpass)	N	NN	album
+S (nsubjpass)	N	NN	album	Baby One More Time
  (auxpass)	V	VBD	was
  (ROOT)	V	VBN	included
  (prep)		IN	in
@@ -17880,7 +17880,7 @@ S (nsubj)	R	PRP	she
  (pobj)	_	_	America
  (punct)	P!	,	,
  (det)		DT	the
-S (nsubjpass)	N	NN	album
+S (nsubjpass)	N	NN	album	Baby One More Time
  (auxpass)	V	VBD	was
  (ROOT)	V	VBN	issued
  (prep)		IN	as
@@ -17911,7 +17911,7 @@ S (nsubjpass)	N	NN	album
 S (nsubj)	N	NNS	pressings
  (prep)		IN	of
  (det)		DT	the
- (pobj)	N	NN	album
+ (pobj)	N	NN	album	Baby One More Time
  (ROOT)	V	VBP	feature
  (det)		DT	a
  (amod)	A	JJ	hidden
@@ -17926,7 +17926,7 @@ S (nsubj)	_	_	Beat
  (none)	_	_	On
  (punct)	T!	.	.
  (prep)		IN	In
- (pobj)	R	PRP	it
+ (pobj)	R	PRP	it	Baby One More Time
  (punct)	P!	,	,
  (compound)	E	NNPS	Spears	Britney Spears
  (compound)	N	NNS	thanks
@@ -17950,7 +17950,7 @@ S (nsubj)	_	_	Beat
  (acl)	V	VBN	featured
  (prep)		IN	on
  (det)		DT	the
- (pobj)	N	NN	album
+ (pobj)	N	NN	album	Baby One More Time
  (punct)	T!	.	.
  (punct)		:	;
  (conj)	V	VBZ	signifies

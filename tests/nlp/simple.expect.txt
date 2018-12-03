@@ -10,7 +10,7 @@
 * Best title match Giuliani
 * Entity sex stats Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
 * Subject Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
-* Synonym politician -> Rudy Giuliani 2.000
+* Synonym politician -> Rudy Giuliani 4.000
 * Entity usage Rudy Giuliani # 2.000
 * Entity usage Mayor # 1.000
 * Entity usage N. Y. # 1.000
