@@ -1311,7 +1311,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                                     nidx += 1
                                 elif sent.tokens[nidx].nlptag == "NNPS":
                                     nidx += 1
-                                    if sent.tokens[nidx].nlptag == "POS":
+                                    if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag == "POS":
                                         nidx += 1
                             while nidx < len(sent.tokens) and sent.tokens[nidx].nlptag in ["RBS","RBR","JJ","VBG"]:
                                 nidx += 1
@@ -1355,25 +1355,26 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                     if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag == "NN":
                         noun = getMultipartNameStr( sent.tokens, nidx)
                         nidx = skipMultipartName( sent.tokens, nidx)
-                        if sent.tokens[nidx].strusrole == 'S':
-                            sentSbjNouns.append( noun)
-                        if detClass and not hasAdjectiv and not sent.tokens[nidx].nlptag in ['IN']:
-                            sentDetNouns.append( noun)
-                        else:
-                            sentSomeNouns.append( noun)
-                            if noun in pastSentSomeNouns:
-                                pastSentSomeNouns[ noun] += 1.1
+                        if nidx < len(sent.tokens):
+                            if sent.tokens[nidx].strusrole == 'S':
+                                sentSbjNouns.append( noun)
+                            if detClass and not hasAdjectiv and not sent.tokens[nidx].nlptag in ['IN']:
+                                sentDetNouns.append( noun)
                             else:
-                                pastSentSomeNouns[ noun] = 1.1
+                                sentSomeNouns.append( noun)
+                                if noun in pastSentSomeNouns:
+                                    pastSentSomeNouns[ noun] += 1.1
+                                else:
+                                    pastSentSomeNouns[ noun] = 1.1
                         tidx = nidx-1
                 elif tok.nlptag == "IN":
                     nidx = tidx + 1
                     while nidx < len(sent.tokens) and sent.tokens[nidx].nlptag in ["RBS","RBR","JJ","VBG"]:
                         nidx += 1
-                    if sent.tokens[nidx].nlptag == "NN":
+                    if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag == "NN":
                         noun = getMultipartNameStr( sent.tokens, nidx)
                         nidx = skipMultipartName( sent.tokens, nidx)
-                        if sent.tokens[nidx].nlptag[:3] == "NNP":
+                        if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag[:3] == "NNP":
                             namestr = getMultipartNameStr( sent.tokens, nidx)
                             addWeightSynonymMap( synomap, namestr, noun, 2.7)
                             tidx = nidx-1
