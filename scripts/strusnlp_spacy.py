@@ -71,7 +71,7 @@ def mapTagValue( tagname):
     if tagname == "$" or tagname == "S" or tagname == "SBAR" or tagname == "SBARQ" or tagname == "SINV" or tagname == "SQ":
         return "" # [] declarative clause, question, etc.
     if tagname == "SYM":
-        return "N" # symbol
+        return "" # symbol
     if tagname == "VBD" or tagname == "VBG" or tagname == "VVG" or tagname == "VHG" or tagname == "VBN" or tagname == "VBP" or tagname == "VBZ" or tagname == "VB":
         return "V" # Verb, past tense or gerund or present participle or past participle or singular present
     if tagname == "WDT" or tagname == "WP" or tagname == "WP$" or tagname == "WRB":
@@ -336,7 +336,7 @@ def tokenCountToWeightMap( tokCntMap, tokCntTotal):
                 maxcnt = int(cnt)
                 maxkey = key
         wBase = calcTokenWeight( tokCntTotal, maxcnt)
-        mBase = calcTokenWeight( tokCntTotal, 1)
+        mBase = calcTokenWeight( tokCntTotal, 0)
         for key,cnt in tokCntMap.items():
             rt[ key] = (calcTokenWeight( tokCntTotal, cnt) - mBase) / (wBase - mBase)
     return rt
@@ -1568,7 +1568,7 @@ def printOutput( filename, result):
     print( "%s" % result)
 
 def printUsage():
-    print( "%s [-h|--help] [-V|--verbose] [-S|--status] [-C <chunksize> ]" % __file__)
+    print( "%s [-h|--help] [-V|--verbose] [-K|--complete] [-D|--duration] [-S|--status] [-C <chunksize> ]" % __file__)
 
 def parseProgramArguments( argv):
     rt = {}
