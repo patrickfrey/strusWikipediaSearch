@@ -1,12 +1,20 @@
 * Document title Rudy Giuliani
 * Sentence [sent] Rudolph William Louis Giuliani is an American politician , attorney , businessman and public speaker who served as the 107th Mayor of New York City from 1994 to 2001 .
+* Tagging  'Rudolph' :NNP 'William' :NNP 'Louis' :NNP 'Giuliani' :NNP 'is' :VBZ 'an' :DT 'American' :JJ 'politician' :NN ',' :, 'attorney' :NN ',' :, 'businessman' :NN 'and' :CC 'public' :JJ 'speaker' :NN 'who' :WP 'served' :VBD 'as' :IN 'the' :DT '107th' :JJ 'Mayor' :NNP 'of' :IN 'New' :NNP 'York' :NNP 'City' :NNP 'from' :IN '1994' :CD 'to' :IN '2001' :CD '.' :.
 * Sentence [sent] Giuliani left Bloomberg to be mayor of a city with a big budget problem .
+* Tagging  'Giuliani' :NNP 'left' :VBD 'Bloomberg' :NNP 'to' :TO 'be' :VB 'mayor' :NN 'of' :IN 'a' :DT 'city' :NN 'with' :IN 'a' :DT 'big' :JJ 'budget' :NN 'problem' :NN '.' :.
 * Sentence [sent] It s unclear how he ll be able to handle it during his term .
+* Tagging  'It' :PRP 's' :VBZ 'unclear' :JJ 'how' :WRB 'he' :PRP 'll' :MD 'be' :VB 'able' :JJ 'to' :TO 'handle' :VB 'it' :PRP 'during' :IN 'his' :PRP$ 'term' :NN '.' :.
 * Sentence [sent] Let 's go to N. Y. .
+* Tagging  'Let' :VB ''s' :PRP 'go' :VB 'to' :IN 'N.' :NNP 'Y.' :NNP '.' :.
 * Sentence [sent] Because of the bad weather , Erni and Bernd go to town .
+* Tagging  'Because' :IN 'of' :IN 'the' :DT 'bad' :JJ 'weather' :NN ',' :, 'Erni' :NNP 'and' :CC 'Bernd' :NNP 'go' :VB 'to' :IN 'town' :NN '.' :.
 * Sentence [sent] The United States of America are a country .
+* Tagging  'The' :DT 'United' :NNP 'States' :NNP 'of' :IN 'America' :NNP 'are' :VBP 'a' :DT 'country' :NN '.' :.
 * Sentence [sent] The ninth album of David Bowie is a masterpiece .
+* Tagging  'The' :DT 'ninth' :JJ 'album' :NN 'of' :IN 'David' :NNP 'Bowie' :NNP 'is' :VBZ 'a' :DT 'masterpiece' :NN '.' :.
 * Sentence [sent] This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
+* Tagging  'This' :DT 'made' :VBD 'Ayer' :NNP 'at' :IN 'age' :NN '26' :CD 'the' :DT ''' :`` 'enfant' :JJ 'terrible' :JJ ''' :'' 'of' :IN 'British' :JJ 'philosophy' :NN '.' :.
 * Best title match Giuliani
 * Entity sex stats Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
 * Subject Rudy Giuliani -> {'M': 0.375, 'N': 0.375}
@@ -151,7 +159,7 @@ S (nsubj)	R	PRP	It
  (acomp)	A	JJ	unclear
  (advmod)	W	WRB	how
 S (nsubj)	R	PRP	he
- (aux)	m	MD	ll
+ (aux)	M	MD	ll
  (ccomp)	V	VB	be
  (acomp)	A	JJ	able
  (aux)		TO	to
@@ -218,17 +226,29 @@ S (nsubj)	N	NN	album
 
 * Document title A. S. Roma
 * Sentence [sent] Associazione Sportiva Roma ( , ; Rome Sport Association ) , commonly referred to as simply Roma , is a professional Italian football club based in Rome .
+* Tagging  'Associazione' :NNP 'Sportiva' :NNP 'Roma' :NNP '(' :-LRB- ',' :, ';' :: 'Rome' :NNP 'Sport' :NNP 'Association' :NNP ')' :-RRB- ',' :, 'commonly' :RB 'referred' :VBN 'to' :IN 'as' :IN 'simply' :RB 'Roma' :NNP ',' :, 'is' :VBZ 'a' :DT 'professional' :JJ 'Italian' :JJ 'football' :NN 'club' :NN 'based' :VBN 'in' :IN 'Rome' :NNP '.' :.
 * Sentence [title] Roma4 ;
+* Tagging  'Roma4' :NNP ';' ::
 * Sentence [numseq] 1927 ;
+* Tagging  '1927' :CD ';' ::
 * Sentence [numseq] 6 ;
+* Tagging  '6' :CD ';' :SYM
 * Sentence [numseq] 7 ;
+* Tagging  '7' :CD ';' ::
 * Sentence [sent] cite weburl ;
+* Tagging  'cite' :VB 'weburl' :NN ';' ::
 * Sentence [] title ;
+* Tagging  'title' :NN ';' ::
 * Sentence [title] Stadi Serie A 2015–2016 ;
+* Tagging  'Stadi' :NNP 'Serie' :NNP 'A' :NNP '2015–2016' :CD ';' ::
 * Sentence [] deadurl ;
+* Tagging  'deadurl' :NN ';' ::
 * Sentence [] yes ;
+* Tagging  'yes' :UH ';' ::
 * Sentence [] archiveurl ;
+* Tagging  'archiveurl' :NN ';' ::
 * Sentence [sent] Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
+* Tagging  'Real' :NNP 'Madrid' :NNP 'Club' :NNP 'de' :NNP 'Fútbol' :NNP '(' :-LRB- 'Spanish' :JJ 'pronunciation' :NN ':' :: '[' :-LRB- 'reˈal' :NN 'maˈðɾið' :NN 'ˈkluβ' :NN 'ðe' :IN 'ˈfuðβol' :NN ']' :-RRB- ';' :: '"' :`` 'Royal' :NNP 'Madrid' :NNP 'Football' :NNP 'Club' :NNP '"' :'' ')' :-RRB- ',' :, 'commonly' :RB 'known' :VBN 'as' :IN 'Real' :NNP 'Madrid' :NNP ',' :, 'is' :VBZ 'a' :DT 'professional' :JJ 'football' :NN 'club' :NN 'based' :VBN 'in' :IN 'Madrid' :NNP ',' :, 'Spain' :NNP '.' :.
 * Best title match Roma
 * Entity usage Roma4 # 1.500
 * Entity usage Stadi Serie A 2015–2016 # 1.500

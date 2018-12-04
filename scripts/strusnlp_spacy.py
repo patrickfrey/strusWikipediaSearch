@@ -43,7 +43,7 @@ def mapTagValue( tagname):
     if tagname == "LS":
         return "T" # [delimiter] list item marker
     if tagname == "MD":
-        return "m" # modal
+        return "M" # modal
     if tagname == "TO":
         return "" # to
     if tagname == "NN" or tagname == "NNS":
@@ -53,7 +53,7 @@ def mapTagValue( tagname):
     if tagname == "ADD":
         return "U" # [URI]
     if tagname == "PDT":
-        return "m" # [modal] pre determiner
+        return "M" # [modal] pre determiner
     if tagname == "POS":
         return "" # [possesive] possessive ending
     if tagname == "PRP":
@@ -574,6 +574,7 @@ def skipToOwnPrp( tokens, tidx):
 def tagSentenceStrusTags( tokens):
     prev = ""
     mapprev = ""
+    prevIsPlural = False
     termidx = -1
     for eidx,elem in enumerate(tokens):
         if elem.nlprole == "none" or elem.strustag == '_':
@@ -581,6 +582,7 @@ def tagSentenceStrusTags( tokens):
             mapprev = ""
             continue
         type = elem.nlptag
+        isPlural = type in ["NNPS","NNS"]
         utype = unifyType( type)
         maptype = mapTag( type)
         if maptype == "T!":
@@ -594,7 +596,7 @@ def tagSentenceStrusTags( tokens):
         if type == 'PRP' or type == 'PRP$':
             if not getPrpSex( elem.value):
                 maptype = ""
-        if prev and utype == prev and prev[0] in ['N','E','V']:
+        if prev and utype == prev and prev[0] in ['N','E','V'] and not (prevIsPlural and not isPlural):
             type = "_"
             maptype = "_";
         elif maptype and maptype == mapprev and maptype[-1:] == '!':
@@ -602,6 +604,7 @@ def tagSentenceStrusTags( tokens):
         else:
             prev = utype
             mapprev = maptype
+        prevIsPlural = isPlural
         elem.strustag = maptype
         elem.nlptag = type
     if termidx >= 0:
@@ -1350,12 +1353,14 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                                     if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag == ",":
                                         nidx += 1
                                     if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag == "NNP":
-                                        namestr = getMultipartNameStr( sent.tokens, nidx)
+                                        name = sent.tokens[nidx].ref or getMultipartName( sent.tokens, nidx)
+                                        namestr = ' '.join( name)
                                         addWeightSynonymMap( synomap, namestr, noun, 2.5)
                                         sentNNPs.append( namestr)
                                         tidx = nidx
                         elif sent.tokens[nidx].nlptag[:3] == "NNP":
-                            namestr = getMultipartNameStr( sent.tokens, nidx)
+                            name = sent.tokens[nidx].ref or getMultipartName( sent.tokens, nidx)
+                            namestr = ' '.join( name)
                             addWeightSynonymMap( synomap, namestr, noun, 1.0)
                             tidx = nidx-1
                 elif pastSubjects and tok.nlptag == "DT":
@@ -1388,7 +1393,8 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                         noun = getMultipartNameStr( sent.tokens, nidx)
                         nidx = skipMultipartName( sent.tokens, nidx)
                         if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag[:3] == "NNP":
-                            namestr = getMultipartNameStr( sent.tokens, nidx)
+                            name = sent.tokens[nidx].ref or getMultipartName( sent.tokens, nidx)
+                            namestr = ' '.join( name)
                             addWeightSynonymMap( synomap, namestr, noun, 2.7)
                             tidx = nidx-1
                 tidx += 1
@@ -1497,6 +1503,20 @@ def getDocumentNnpSexMap( map):
             rt[ nnp] = maxsex
     return rt
 
+def printSentenceTagging( title, tokens):
+    origtgstr = ""
+    for tk in tokens:
+        if origtgstr:
+            origtgstr += " "
+        if tk.strustag:
+            if tk.ref:
+                origtgstr += "'%s' :%s/%s -> '%s'" % (tk.value, tk.nlptag, tk.strustag, ' '.join(tk.ref))
+            else:
+                origtgstr += "'%s' :%s/%s" % (tk.value, tk.nlptag, tk.strustag)
+        else:
+            origtgstr += "'%s' :%s" % (tk.value, tk.nlptag)
+    print( "* Tagging %s %s" % (title,origtgstr))
+
 def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     rt = ""
     titlesubject = getTitleSubject( title)
@@ -1512,6 +1532,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     if verbose:
         for sent in sentences:
             print( "* Sentence [%s] %s" % (sent.type, ' '.join( [tk.value for tk in sent.tokens])))
+            printSentenceTagging( "", sent.tokens)
     start_time = time.time()
     
     for sent in sentences:
