@@ -503,10 +503,10 @@ def listIsTitle( tokens):
 
 def outvoteTagging( tokens):
     tidx = 0
-    while tidx < len(tokens):
-        if tokens[tidx].nlptag == "DT":
+    while tidx+2 < len(tokens):
+        if tokens[ tidx].nlptag == "DT":
             nidx = tidx+1
-            if tokens[nidx].nlptag in ["JJ","VBG"] and nidx+1 < len(tokens) and tokens[nidx+1].nlptag in ["VBD","VBZ"]:
+            if tokens[nidx].nlptag in ["JJ","VBG"] and tokens[nidx+1].nlptag in ["VBD","VBZ"]:
                 tokens[nidx].nlptag = "NN"
         tidx += 1
 
