@@ -7618,12 +7618,12 @@
 * Entity usage April 9–10 # 1.000
 * Entity usage IFPI Greece # 1.500
 * Entity usage Chuck # 1.500
-* Entity usage L'Oréal Mall Tour # 1.000
 * Entity usage United States # 13.500
 * Entity usage Plans Summer Tour # 1.500
 * Entity usage Bubblegum pop # 1.000
-* Entity usage E # 1.000
+* Entity usage E # 2.500
 * Entity usage Paul McCartney # 1.500
+* Entity usage E Entertainment Special # 1.500
 * Entity usage Rosen # 16.500
 * Entity usage Hit Parade Italia # 1.500
 * Entity usage April # 3.000
@@ -7636,28 +7636,27 @@
 * Entity usage Festival Bar # 1.000
 * Entity usage The Tuscaloosa News # 3.000
 * Entity usage BillboardURLbyNameartist # 1.500
-* Entity usage ' N Sync At No # 1.500
 * Entity usage Alpha Media Group # 1.500
 * Entity usage Dancehall # 1.000
 * Entity usage Leaning # 1.500
 * Entity usage Sheryl Crow # 1.000
 * Entity usage Danish Albums # 3.000
 * Entity usage MTV News # 1.500
-* Entity usage Britney Spears ' Knee Injury Delays Video Shoot # 1.500
-* Entity usage Torn # 1.000
+* Entity usage Award # 1.500
+* Entity usage Madonna # 2.000
 * Entity usage Claire # 3.000
 * Entity usage Hop Mix # 1.500
 * Entity usage A&R Jeff Fenster # 1.000
 * Entity usage CD # 2.500
-* Entity usage Ruggieri # 1.500
-* Entity usage Rosie O'Donnell Show # 2.000
-* Entity usage JAAROVERZICHTEN # 1.500
+* Entity usage Finnish Albums Chart # 1.500
+* Entity usage I ll Never Stop Loving You # 4.500
 * Entity usage Mariah Carey # 1.000
 * Entity usage Drive Me Crazy # 2.500
 * Entity usage UK Chart History # 1.500
 * Entity usage Crazy # 19.000
 * Entity usage Singles # 1.500
 * Entity usage Sheet Music # 3.000
+* Entity usage Jam # 3.000
 * Entity usage Spears # 8.500
 * Entity usage Volume 68 # 1.500
 * Entity usage Billboard 200 # 9.500
@@ -7669,6 +7668,7 @@
 * Entity usage Ultratop Wallonia # 4.500
 * Entity usage Knopper # 3.000
 * Entity usage The Observer # 2.500
+* Entity usage Britney Spears Goes Back To Her Schoolgirl Days For The First Installment Of Popology # 1.500
 * Entity usage EuropeCertification # 1.500
 * Entity usage AVCZ-95114 # 1.500
 * Entity usage Bibliography # 1.500
@@ -7689,15 +7689,17 @@
 * Entity usage New Zealand Albums # 3.000
 * Entity usage EKG # 1.000
 * Entity usage Wade Robson # 2.500
+* Entity usage Pioneer Newspapers # 1.500
 * Entity usage Britney Still On Top # 1.500
 * Entity usage Mitchell Lane Publishers # 1.500
 * Entity usage Las Vegas # 1.000
 * Entity usage Japanese Main Albums Chart # 1.500
+* Entity usage Yahoo Music News # 19.500
 * Entity usage March # 6.000
 * Entity usage Soda Pop # 3.500
 * Entity usage Offspring Up To No # 1.500
 * Entity usage These Words # 1.000
-* Entity usage Jazzy Jim 's Hip # 1.500
+* Entity usage Regnery Publishing # 1.500
 * Entity usage From the Bottom of My Broken Heart # 7.000
 * Entity usage Music Notes # 9.000
 * Entity usage Rami Yacoub # 3.000
@@ -7710,8 +7712,8 @@
 * Entity usage Japanese # 1.500
 * Entity usage Singlesname # 1.500
 * Entity usage Girl # 1.000
-* Entity usage Pioneer Newspapers # 1.500
-* Entity usage Essex # 1.500
+* Entity usage JIVE s Britney Spears Sets Top 40 Abuzz With Rhythm # 1.500
+* Entity usage Craig # 18.000
 * Entity usage Greenwood Publishing Group # 1.500
 * Entity usage Top of the Pops # 1.000
 * Entity usage Kyle Anderson # 2.000
@@ -7721,10 +7723,9 @@
 * Entity usage Britney Spears Back On Top # 1.500
 * Entity usage Only Hits # 1.500
 * Entity usage The New York Times Company # 1.500
-* Entity usage Barbara # 1.500
+* Entity usage Hitlisten # 4.500
 * Entity usage Crain Communications # 1.500
 * Entity usage Honolulu # 1.000
-* Entity usage Regnery Publishing # 1.500
 * Entity usage Swiss Albums Chart # 1.500
 * Entity usage Amazon.it # 3.000
 * Entity usage Toronto Sun # 1.500
@@ -7733,16 +7734,19 @@
 * Entity usage Karaoke # 1.000
 * Entity usage News # 1.500
 * Entity usage Will Smith # 1.500
-* Entity usage Craig # 18.000
+* Entity usage The Official Charts Company # 1.500
 * Entity usage July # 1.000
 * Entity usage Oricon # 6.000
-* Entity usage Steven # 1.500
-* Entity usage E ! Entertainment Special # 1.500
+* Entity usage Christmas # 1.000
+* Entity usage Barbara # 1.500
 * Entity usage Petch # 1.500
 * Entity usage Chuck Taylor # 1.000
+* Entity usage LOréal # 1.000
+* Entity usage And Britney Spears In Today s TV Tips # 1.500
 * Entity usage Edition(s # 1.500
+* Entity usage The Rosie ODonnell Show # 2.000
 * Entity usage Searchable Database # 1.500
-* Entity usage Poland # 3.000
+* Entity usage Zone # 2.000
 * Entity usage Baby One More Time # 134.000
 * Entity usage E - Mail My Heart # 5.000
 * Entity usage TI Media # 1.500
@@ -7763,7 +7767,6 @@
 * Entity usage Nielsen Business Media # 6.000
 * Entity usage Top 100 Album # 3.000
 * Entity usage Universe # 1.500
-* Entity usage Finnish Albums Chart # 1.500
 * Entity usage Barry Walters # 2.000
 * Entity usage Allmusicid # 1.500
 * Entity usage Walsh # 1.500
@@ -7773,7 +7776,7 @@
 * Entity usage Label(s # 1.500
 * Entity usage Jim # 1.500
 * Entity usage RCA # 3.000
-* Entity usage I 'll Never Stop Loving You # 4.500
+* Entity usage Remix # 1.000
 * Entity usage Pop Songs # 1.000
 * Entity usage Spain # 3.000
 * Entity usage Folkard # 3.000
@@ -7785,20 +7788,19 @@
 * Entity usage Britney Spears From The Bottom Of My Broken Heart # 1.500
 * Entity usage Nirvana # 1.500
 * Entity usage 4F # 1.500
-* Entity usage Star Wars Among Videos Set To Debut # 1.500
+* Entity usage Boy Wunder Radio Mix # 1.500
+* Entity usage Crazy Video To Take Her To The Next Level # 1.500
 * Entity usage Britney Spears Back In Action # 1.500
-* Entity usage The Stop ! Remix # 1.500
 * Entity usage Swedish Albums Chart # 1.500
 * Entity usage OCC # 3.000
 * Entity usage Vocal # 1.000
-* Entity usage Mouseketeer # 1.000
-* Entity usage Britney Spears ' Stronger ' # 1.500
+* Entity usage Kentwood # 2.000
 * Entity usage Born to Make You Happy # 8.000
 * Entity usage February # 2.000
 * Entity usage Position # 7.500
 * Entity usage Australia # 8.000
 * Entity usage Certifications # 1.500
-* Entity usage Sweden # 7.000
+* Entity usage Hey Hey Hey Music Champ # 1.000
 * Entity usage Polaroid i # 1.000
 * Entity usage Canada # 6.500
 * Entity usage Paul Verna # 1.000
@@ -7812,7 +7814,7 @@
 * Entity usage LA Weekly # 1.500
 * Entity usage UK Albums # 3.000
 * Entity usage IMDb # 3.000
-* Entity usage L'Oréal # 1.000
+* Entity usage Australian Albums # 3.000
 * Entity usage My Prerogative # 3.000
 * Entity usage Argentina # 1.500
 * Entity usage Udarbejdet # 1.000
@@ -7843,10 +7845,13 @@
 * Entity usage I Will Be There # 1.500
 * Entity usage January # 3.000
 * Entity usage Reid # 1.500
+* Entity usage Yahoo Music # 1.500
 * Entity usage All Seeing I # 1.000
 * Entity usage Sun Media # 1.500
 * Entity usage Jaws # 1.000
 * Entity usage United Kingdom # 6.500
+* Entity usage tiger— # 1.000
+* Entity usage Jagged Little Pill # 1.000
 * Entity usage References # 1.500
 * Entity usage Prometheus Global Media # 14.500
 * Entity usage France # 4.500
@@ -7859,7 +7864,7 @@
 * Entity usage Year # 3.000
 * Entity usage 1001 Albums You Must Hear Before You Die # 2.500
 * Entity usage Philippines # 2.500
-* Entity usage October # 2.000
+* Entity usage New Zealand Albums Chart # 1.500
 * Entity usage MTV.Viacom Media Networks # 16.500
 * Entity usage Chart Stats # 1.500
 * Entity usage June # 7.000
@@ -7875,13 +7880,12 @@
 * Entity usage Offizielle Top 100 # 4.500
 * Entity usage Mike Power # 1.500
 * Entity usage Jane # 4.500
-* Entity usage Boy Wunder Radio Mix # 1.500
-* Entity usage Britney Spears 's Career Sales # 1.500
+* Entity usage Star Wars Among Videos Set To Debut # 1.500
 * Entity usage Ekstra Bladet # 1.500
 * Entity usage Kyle # 1.500
 * Entity usage Fred # 1.500
 * Entity usage Bemis # 1.500
-* Entity usage Award # 1.500
+* Entity usage BBC News # 1.500
 * Entity usage BMG # 4.500
 * Entity usage Norwegian # 3.000
 * Entity usage 42nd Annual Grammy Awards # 2.000
@@ -7893,16 +7897,15 @@
 * Entity usage Liza # 1.500
 * Entity usage Amazon.de # 4.500
 * Entity usage Digital Deluxe Version # 1.500
-* Entity usage Yahoo ! Music News # 19.500
+* Entity usage Michael Lydon # 1.500
 * Entity usage Jocelyn # 1.500
 * Entity usage Geneva Films # 1.000
 * Entity usage Hawaii # 1.000
 * Entity usage Time Sellers # 1.500
-* Entity usage Oops ! ... I Did It Again # 1.500
+* Entity usage British Phonographic Industry # 1.000
 * Entity usage Cher In Top 10 # 1.500
 * Entity usage Guinness World Records # 1.000
 * Entity usage Daly # 1.500
-* Entity usage British Phonographic Industry # 1.000
 * Entity usage Blender # 5.500
 * Entity usage American Music Awards # 2.000
 * Entity usage New Teen Queen # 1.500
@@ -7918,7 +7921,8 @@
 * Entity usage PROMUSICAE # 1.500
 * Entity usage Discogs # 1.500
 * Entity usage Got Milk # 1.000
-* Entity usage Hughes # 4.500
+* Entity usage Britney Spears s Career Sales # 1.500
+* Entity usage LOréal Mall Tour # 1.000
 * Entity usage Spice Girls # 1.000
 * Entity usage Australian Albums Chart # 1.500
 * Entity usage Kathie Lee # 2.000
@@ -7929,6 +7933,7 @@
 * Entity usage Denmark # 1.500
 * Entity usage ISP # 3.000
 * Entity usage Alfred Music # 4.500
+* Entity usage JAAROVERZICHTEN # 1.500
 * Entity usage Switzerland # 4.500
 * Entity usage Greatest Hits # 3.000
 * Entity usage James R. # 1.500
@@ -7946,28 +7951,27 @@
 * Entity usage Copenhagen # 1.500
 * Entity usage Gregory Dark # 2.000
 * Entity usage Baby # 3.500
-* Entity usage Jagged Little Pill # 1.000
+* Entity usage 99 REWIND # 1.500
+* Entity usage Live and More # 1.500
 * Entity usage Amazon.ca # 3.000
 * Entity usage Inc. # 1.500
 * Entity usage Adrian Grenier # 1.000
-* Entity usage Remix # 1.000
+* Entity usage BPI # 1.000
 * Entity usage Digital Download # 1.500
+* Entity usage Notes # 3.000
 * Entity usage Italy # 2.500
 * Entity usage Girl Culture # 1.500
 * Entity usage RPM 1999 Top 100 CDs # 1.500
 * Entity usage IFPI Danmark # 1.000
 * Entity usage Dutch Albums # 4.500
 * Entity usage GfK Entertainment Charts # 3.000
-* Entity usage BBC News # 1.500
 * Entity usage Crazy 2k Tour # 2.000
 * Entity usage Melissa Joan Hart # 2.000
 * Entity usage The Hamilton Spectator # 1.500
 * Entity usage No # 1.500
 * Entity usage AustraliaCertification # 1.500
-* Entity usage Crazy ' Video To Take Her ' To The Next Level ' # 1.500
 * Entity usage Vanderbilt University Press # 1.500
 * Entity usage US CD Single # 1.500
-* Entity usage Syndicat National de l'Édition Phonographique # 1.000
 * Entity usage Norwegian Albums Chart # 1.500
 * Entity usage Austria # 4.500
 * Entity usage Ultratop Flanders # 4.500
@@ -7975,14 +7979,13 @@
 * Entity usage September # 2.000
 * Entity usage Kristen # 1.500
 * Entity usage Personnel # 1.500
-* Entity usage Michael Lydon # 1.500
 * Entity usage Daydream # 1.000
-* Entity usage tiger # 1.000
+* Entity usage Ruggieri # 1.500
 * Entity usage Music # 5.500
 * Entity usage In Drag And On TV # 1.500
+* Entity usage Bubble Gum Blows Up # 1.500
 * Entity usage Backstreet Boys # 3.000
 * Entity usage Billboard Hot 100 # 3.000
-* Entity usage Thinkin ' About You # 4.000
 * Entity usage VIBE # 1.500
 * Entity usage ZPAV # 1.000
 * Entity usage FOX # 1.000
@@ -7993,7 +7996,7 @@
 * Entity usage Britney Spears Billboard Charts # 1.500
 * Entity usage End Of Year Charts # 1.500
 * Entity usage Elerwine # 1.500
-* Entity usage Zone # 2.000
+* Entity usage Mouseketeer # 1.000
 * Entity usage Britney.com # 1.500
 * Entity usage Kids # 1.000
 * Entity usage Staff # 3.000
@@ -8005,22 +8008,23 @@
 * Entity usage Belgian Flemish Albums Chart # 1.500
 * Entity usage Lou Pearlman # 2.000
 * Entity usage Music Industry News Network # 1.500
+* Entity usage Hughes # 4.500
 * Entity usage The Beat Goes On # 6.000
 * Entity usage Stephen Thomas # 1.500
 * Entity usage Album 1999 # 1.500
-* Entity usage E ! # 1.500
 * Entity usage Annual Nickelodeon # 1.000
 * Entity usage Baby One More Time Chart History # 1.500
 * Entity usage BBC # 1.500
 * Entity usage New York # 2.500
 * Entity usage Bronson # 1.500
+* Entity usage Oops ... I Did It Again # 1.500
 * Entity usage NVPI # 1.500
 * Entity usage The 1990s # 1.500
 * Entity usage Platinum # 30.500
 * Entity usage Concert # 1.000
 * Entity usage Hot 100 Spotlight # 1.500
 * Entity usage 1999 Film # 1.500
-* Entity usage Australian Annual Chart # 1.500
+* Entity usage Poland # 3.000
 * Entity usage GAMES # 1.000
 * Entity usage TiVo Corporation # 4.500
 * Entity usage JIVE Records # 2.000
@@ -8034,10 +8038,8 @@
 * Entity usage Tine # 1.500
 * Entity usage Bossa nova # 1.000
 * Entity usage Madrid # 1.500
-* Entity usage Kentwood # 2.000
 * Entity usage Musik # 1.500
 * Entity usage Wenner Media # 3.000
-* Entity usage Autumn Goodbye # 2.500
 * Entity usage Finland # 1.500
 * Entity usage Danish # 1.500
 * Entity usage Britney Spears Ready To Hit The Road # 1.500
@@ -8057,6 +8059,7 @@
 * Entity usage Robert Christgau # 3.000
 * Entity usage Toni Braxton # 2.000
 * Entity usage Britney Spears Phones TRL To Announce U. S. Tour Dates # 1.500
+* Entity usage Britney Spears Readies A Funky New Album # 1.500
 * Entity usage Pop rock # 1.000
 * Entity usage Japanese Albums # 3.000
 * Entity usage Gaines # 3.000
@@ -8064,6 +8067,7 @@
 * Entity usage UK Albums Chart # 1.000
 * Entity usage I m So Curious # 2.500
 * Entity usage Mail # 1.000
+* Entity usage Britney Spears Backstage At The Billboard Awards # 1.500
 * Entity usage Stop # 4.000
 * Entity usage Hermanson # 3.000
 * Entity usage Jahrescharts # 3.000
@@ -8088,7 +8092,7 @@
 * Entity usage Accolades # 1.500
 * Entity usage Larry Rudolph # 6.000
 * Entity usage Radio Edit # 1.500
-* Entity usage Madonna # 2.000
+* Entity usage Torn # 1.000
 * Entity usage New Artist # 1.000
 * Entity usage Jaaroverzichten 2000 # 1.500
 * Entity usage Album Chart#1161 # 1.500
@@ -8101,18 +8105,21 @@
 * Entity usage Mayfield # 1.500
 * Entity usage Sometimes Chart History # 1.500
 * Entity usage Date # 1.500
-* Entity usage Champ # 1.000
+* Entity usage McDonald # 1.500
 * Entity usage Britney Spears Sidelined With Bum Knee # 1.500
 * Entity usage ABC # 1.000
 * Entity usage NME # 2.500
 * Entity usage TLC # 2.000
 * Entity usage Buzzmarketing # 1.500
+* Entity usage Syndicat National de lÉdition Phonographique # 1.000
 * Entity usage Women # 1.500
 * Entity usage Albums # 4.000
-* Entity usage Britney Spears Goes Back To Her Schoolgirl Days For The First Installment Of ' Popology ' # 1.500
+* Entity usage Britney Spears Wanted # 1.500
+* Entity usage Britney Spears Stronger # 1.500
 * Entity usage Mikey Bassie # 1.000
 * Entity usage German # 3.000
 * Entity usage Melissa # 1.500
+* Entity usage The Stop Remix # 1.500
 * Entity usage Domestic violence # 1.000
 * Entity usage Belgian Albums # 9.000
 * Entity usage Trust # 1.500
@@ -8121,7 +8128,7 @@
 * Entity usage German Albums # 4.500
 * Entity usage Answering Machine Message # 1.500
 * Entity usage Teen pop # 3.000
-* Entity usage New Zealand Albums Chart # 1.500
+* Entity usage October # 2.000
 * Entity usage Clive Calder # 1.000
 * Entity usage Mexico # 1.500
 * Entity usage Advertising Age # 1.500
@@ -8140,36 +8147,33 @@
 * Entity usage Flesh # 2.000
 * Entity usage Johnson # 1.500
 * Entity usage Europe # 3.500
-* Entity usage McDonald # 1.500
-* Entity usage And Britney Spears In Today 's TV Tips # 1.500
+* Entity usage Carson Daly # 1.000
 * Entity usage Bertelsmann Music Group # 2.000
 * Entity usage Jex # 1.500
 * Entity usage UKBabyTableEntry # 1.500
-* Entity usage Paradise Cove # 1.000
 * Entity usage Universal Music Publishing Group # 3.000
 * Entity usage Sony Music # 1.500
 * Entity usage DMX # 1.000
-* Entity usage Britney Spears Wanted ' # 1.500
 * Entity usage Cheiron Studios # 1.000
 * Entity usage Bonus Remix # 1.500
 * Entity usage Gold # 4.500
 * Entity usage Biography # 1.500
 * Entity usage Oceania # 1.000
 * Entity usage Ö3 Austria # 4.500
-* Entity usage Jam ! # 3.000
 * Entity usage Swiss Hitparade # 7.500
 * Entity usage Rovi Corporation # 1.500
 * Entity usage Fernando # 1.500
 * Entity usage Thriller # 1.000
 * Entity usage Jaaroverzichten # 1.500
 * Entity usage D.13 # 1.500
+* Entity usage N Sync At No # 1.500
 * Entity usage Natalie Imbruglia # 1.000
 * Entity usage ARIA Top 50 Singles # 3.000
 * Entity usage Austrian Albums Chart # 1.500
+* Entity usage Baby One More Time Is Coming Out On Pink Vinyl # 1.500
 * Entity usage Official Charts Company # 3.000
 * Entity usage Diamond # 1.500
 * Entity usage Dance # 1.000
-* Entity usage Yahoo ! Music # 1.500
 * Entity usage Choice Music # 1.500
 * Entity usage Spanish # 1.500
 * Entity usage Category # 1.500
@@ -8184,28 +8188,29 @@
 * Entity usage WarnerMedia # 1.500
 * Entity usage Walters # 1.500
 * Entity usage Mundy # 1.500
+* Entity usage Australian Annual Chart # 1.500
 * Entity usage Seymour # 1.500
 * Entity usage Dawson # 1.000
 * Entity usage Japan # 5.000
 * Entity usage Revised and Updated Edition # 1.500
-* Entity usage BPI # 1.000
+* Entity usage Hearst Communications # 1.500
 * Entity usage Solomon # 1.500
 * Entity usage Music Sales Group # 1.500
 * Entity usage Austrian Albums # 3.000
 * Entity usage Start Me Up # 1.000
 * Entity usage Ryan # 3.000
-* Entity usage BRITannica # 1.500
+* Entity usage CDs # 4.500
 * Entity usage Britney Spears To Announce Tour With LFO # 1.500
 * Entity usage Polaroid # 1.000
-* Entity usage Malibu # 1.000
+* Entity usage Yahoo GeoCities # 1.500
 * Entity usage Vapid Songs # 1.500
 * Entity usage Spring break # 1.000
 * Entity usage Nigel Dick # 3.000
 * Entity usage ARIA # 5.500
-* Entity usage JIVE 's Britney Spears Sets Top 40 Abuzz With Rhythm # 1.500
 * Entity usage Region # 1.500
 * Entity usage Ultratop # 9.000
 * Entity usage Sputnikmusic # 4.000
+* Entity usage Thinkin About You # 4.000
 * Entity usage Making BRITstory # 1.500
 * Entity usage Sometimes # 3.000
 * Entity usage Whitney Houston # 2.000
@@ -8218,14 +8223,13 @@
 * Entity usage Contemporary Books # 1.500
 * Entity usage Belgian Walloon Albums Chart # 1.500
 * Entity usage Shania Twain # 2.000
-* Entity usage Britney Spears Backstage At The ' Billboard Awards # 1.500
 * Entity usage Britney Spears Debuts On Top # 1.500
 * Entity usage International Federation of the Phonographic Industry # 2.000
 * Entity usage Choice Awards # 1.000
 * Entity usage Ellen # 1.500
-* Entity usage Andy # 1.500
+* Entity usage We Will Rock You # 1.000
 * Entity usage Single Top 100 # 1.000
-* Entity usage Christmas # 1.000
+* Entity usage Steven # 1.500
 * Entity usage Gary # 1.500
 * Entity usage Thompson # 1.500
 * Entity usage Fox # 2.000
@@ -8241,57 +8245,52 @@
 * Entity usage Richmond Times # 2.500
 * Entity usage Hilfiger # 1.000
 * Entity usage Official New Zealand Music Chart # 1.500
-* Entity usage Australian Albums # 3.000
 * Entity usage French # 4.500
 * Entity usage IT # 2.000
 * Entity usage Germany # 7.000
 * Entity usage Mid Tempo Mix # 1.500
 * Entity usage Oxoby # 1.500
-* Entity usage Baby One More Time ' Is Coming Out On Pink Vinyl # 1.500
-* Entity usage Britney Spears Readies A Funky New Album # 1.500
+* Entity usage Angela # 1.500
+* Entity usage Sweden # 7.000
 * Entity usage Melody # 1.000
 * Entity usage JIVE Label Group # 1.500
 * Entity usage Alec Hanley # 1.500
 * Entity usage Billboard Greatest # 1.000
 * Entity usage Louisiana # 1.000
 * Entity usage Bertelsmann Music Groups # 1.000
-* Entity usage Live and More ! # 1.500
 * Entity usage Federazione Industria Musicale Italiana # 1.500
 * Entity usage Recording Industry Association of America # 3.000
-* Entity usage We Will Rock You # 1.000
-* Entity usage Notes # 3.000
+* Entity usage Andy # 1.500
+* Entity usage Jazzy Jim s Hip # 1.500
 * Entity usage Stevenson # 3.000
 * Entity usage Jennifer Lopez # 1.500
 * Entity usage Polaroid and Britney Spears Will Drive You Crazy # 1.500
 * Entity usage Shcherbakova # 1.500
 * Entity usage Guinness World Records 2003 # 3.000
-* Entity usage The Official Charts Company # 1.500
 * Entity usage FIMI # 6.000
 * Entity usage Special # 3.000
 * Entity usage ARIA Albums Chart # 1.000
 * Entity usage Max # 1.000
 * Entity usage BRITNEY # 1.000
 * Entity usage Verna # 1.500
-* Entity usage Britney Spears ' One More Time ' Again # 1.500
+* Entity usage Autumn Goodbye # 2.500
 * Entity usage Amanda Murray # 2.000
 * Entity usage Remixer # 1.000
 * Entity usage Barry # 3.000
 * Entity usage Melissa Ruggieri # 1.000
 * Entity usage Scotland # 1.500
-* Entity usage Carson Daly # 1.000
 * Entity usage European Top 100 Albums # 2.500
 * Entity usage Urban Outfitters # 1.000
-* Entity usage Hitlisten # 4.500
+* Entity usage Essex # 1.500
 * Entity usage Chart # 9.000
 * Entity usage Greek Albums Chart # 1.500
+* Entity usage Britney Spears One More Time Again # 1.500
 * Entity usage Deluxe # 1.500
 * Entity usage Billboard Books # 1.500
-* Entity usage Yahoo ! GeoCities # 1.500
 * Entity usage The Year Of Britney Spears # 1.500
-* Entity usage Hearst Communications # 1.500
-* Entity usage CDs # 4.500
+* Entity usage BRITannica # 1.500
 * Entity usage August # 2.000
-* Entity usage ' 99 REWIND # 1.500
+* Entity usage Paradise Cove # 1.000
 * Entity usage Sabrina the Teenage Witch # 1.000
 * Entity usage The Curious Case Of Britney Spears # 1.500
 * Entity usage Reporter # 4.500
@@ -8309,9 +8308,9 @@
 * Entity usage Davidson Ospina Radio Mix # 3.000
 * Entity usage Debbie Gibson # 2.000
 * Entity usage The Tonight Show with Jay Leno # 1.000
-* Entity usage Bubble Gum Blows Up ! # 1.500
-* Entity usage Angela # 1.500
+* Entity usage Malibu # 1.000
 * Entity usage Disney # 1.000
+* Entity usage Britney Spears Knee Injury Delays Video Shoot # 1.500
 * Link 'Drive Me Crazy'
 * Link 'Orlando Sentinel'
 * Link 'Melissa Joan Hart'
@@ -10658,91 +10657,90 @@
 * Token count among # 0.11809
 * Token count rare # 0.06119
 * Token count showing # 0.06119
+* Most used NNP 'Thinkin About You'
+* Most used NNP 'Offizielle Top 100'
 * Most used NNP 'You Drive Me'
 * Most used NNP 'Certification Cite Refregion'
 * Most used NNP 'Certification Table Entryregion'
-* Most used NNP 'Belgian Albums'
-* Most used NNP 'The Beat Goes On'
 * Most used NNP 'The Official Finnish Charts'
+* Most used NNP 'The Beat Goes On'
 * Most used NNP 'The Tuscaloosa News'
 * Most used NNP 'MTV.Viacom Media Networks'
-* Most used NNP 'Billboard Hot 100'
-* Most used NNP 'Billboard 200'
+* Most used NNP 'Belgian Albums'
 * Most used NNP 'Stephen Thomas Erlewine'
 * Most used NNP 'TiVo Corporation'
 * Most used NNP 'Robert Christgau'
-* Most used NNP 'Offizielle Top 100'
+* Most used NNP 'Amazon Music'
 * Most used NNP 'Rami Yacoub'
 * Most used NNP 'AV media'
-* Most used NNP 'Hung Medien'
 * Most used NNP 'Britney Spears'
-* Most used NNP 'Baby One More Time'
-* Most used NNP 'Music Notes'
-* Most used NNP 'Teen Choice Awards'
+* Most used NNP 'Swiss Albums'
+* Most used NNP 'Swiss Hitparade'
+* Most used NNP 'UK Albums'
+* Most used NNP 'Dutch Albums'
 * Most used NNP 'Teen pop'
-* Most used NNP 'Nielsen SoundScan'
+* Most used NNP 'Teen Choice Awards'
 * Most used NNP 'Nielsen Business Media'
-* Most used NNP 'Wenner Media'
-* Most used NNP 'Larry Rudolph'
-* Most used NNP 'Rolling Stone'
+* Most used NNP 'Nielsen SoundScan'
+* Most used NNP 'Max Martin'
+* Most used NNP 'French Albums'
 * Most used NNP 'Ö3 Austria'
 * Most used NNP 'Alfred Music'
+* Most used NNP 'Ask Billboard'
 * Most used NNP 'Recorded Music NZ'
-* Most used NNP 'Dutch Albums'
-* Most used NNP 'Jam !'
+* Most used NNP 'Jive Records'
 * Most used NNP 'Prometheus Global Media'
 * Most used NNP 'Italian Albums'
-* Most used NNP 'UK Albums'
+* Most used NNP 'Baby One More Time'
 * Most used NNP 'Album Review'
 * Most used NNP 'Nigel Dick'
 * Most used NNP 'ARIA Top 50 Singles'
 * Most used NNP 'ARIA Charts'
+* Most used NNP 'Billboard Hot 100'
+* Most used NNP 'Billboard 200'
 * Most used NNP 'Entertainment Weekly'
 * Most used NNP 'Soda Pop'
-* Most used NNP 'Jive Records'
+* Most used NNP 'Wenner Media'
 * Most used NNP 'Eric Foster White'
 * Most used NNP 'German Albums'
 * Most used NNP 'Official Charts Company'
 * Most used NNP 'US Billboard 200'
 * Most used NNP 'GfK Entertainment Charts'
-* Most used NNP 'United States'
-* Most used NNP 'United Kingdom'
-* Most used NNP 'Austrian Albums'
+* Most used NNP 'Hung Medien'
 * Most used NNP 'Sheet Music'
-* Most used NNP 'Australian Recording Industry Association'
 * Most used NNP 'Australian Albums'
+* Most used NNP 'Australian Recording Industry Association'
 * Most used NNP 'New Zealand'
 * Most used NNP 'New Zealand Albums'
 * Most used NNP 'Danish Albums'
-* Most used NNP 'Yahoo ! Music News'
-* Most used NNP 'Ask Billboard'
-* Most used NNP 'I 'll Never Stop Loving You'
-* Most used NNP 'French Albums'
+* Most used NNP 'Yahoo Music News'
+* Most used NNP 'Austrian Albums'
+* Most used NNP 'E - Mail My Heart'
+* Most used NNP 'Rolling Stone'
 * Most used NNP 'PR Newswire'
 * Most used NNP 'Top 100 Album'
 * Most used NNP 'Greatest Hits'
-* Most used NNP 'Thinkin ' About You'
+* Most used NNP 'Recording Industry Association of America'
 * Most used NNP 'Backstreet Boys'
 * Most used NNP 'Cover Story'
 * Most used NNP 'Bantam Books'
 * Most used NNP 'My Prerogative'
-* Most used NNP 'Swiss Hitparade'
-* Most used NNP 'Swiss Albums'
+* Most used NNP 'I ll Never Stop Loving You'
 * Most used NNP 'Ultratop Flanders'
 * Most used NNP 'Ultratop Wallonia'
-* Most used NNP 'Universal Music Publishing Group'
 * Most used NNP 'Guinness World Records 2003'
+* Most used NNP 'Universal Music Publishing Group'
 * Most used NNP 'From the Bottom of My Broken Heart'
 * Most used NNP 'Davidson Ospina Radio Mix'
 * Most used NNP 'Canadian Top Albums'
 * Most used NNP 'Canadian Albums Chart'
-* Most used NNP 'Amazon Music'
+* Most used NNP 'Music Notes'
 * Most used NNP 'Japanese Albums'
-* Most used NNP 'Max Martin'
+* Most used NNP 'Larry Rudolph'
 * Most used NNP 'Jann Wenner'
 * Most used NNP 'Born to Make You Happy'
-* Most used NNP 'Recording Industry Association of America'
-* Most used NNP 'E - Mail My Heart'
+* Most used NNP 'United Kingdom'
+* Most used NNP 'United States'
 * Most used NNP 'Denniz Pop'
 #FILE#/%2e%2e%2eBaby_One_More_Time_%28album%29.xml
  (ROOT)		NFP	...
@@ -14148,10 +14146,10 @@ S (nsubj)	N	NN	singer	Britney Spears
  (nummod)	C	CD	3
  (punct)	P!	,	,
  (cc)		CC	and
- (det)		DT	The
- (compound)	E	NNP	Rosie
- (compound)	_	_	O'Donnell
- (conj)	_	_	Show
+ (none)	E	NNP	The
+ (none)	_	_	Rosie
+ (none)	_	_	O'Donnell
+ (none)	_	_	Show
  (prep)		IN	on
  (pobj)	E	NNP	May
  (nummod)	C	CD	25
@@ -14214,14 +14212,14 @@ S (nsubj)	R	PRP	She	Britney Spears
  (compound)	_	_	variety
  (dobj)	_	_	show
  (acl)	V	VBN	called
- (oprd)		UH	Hey
- (punct)	T!	.	!
- (ROOT)		UH	Hey
- (punct)	T!	.	!
- (ROOT)		UH	Hey
- (punct)	T!	.	!
- (compound)	N	NN	Music
- (ROOT)	E	NNP	Champ
+ (none)	E	NNP	Hey
+ (none)	_	_	!
+ (none)	_	_	Hey
+ (none)	_	_	!
+ (none)	_	_	Hey
+ (none)	_	_	!
+ (none)	_	_	Music
+ (none)	_	_	Champ
  (prep)		IN	in
  (pobj)	E	NNP	Japan
  (punct)	P!	,	,
@@ -14304,10 +14302,10 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
 S (nsubj)	E	NNP	Spears	Britney Spears
  (ROOT)	V	VBN	performed
  (prep)		IN	on
- (det)		DT	The
- (compound)	E	NNP	Rosie
- (compound)	_	_	O'Donnell
- (pobj)	_	_	Show
+ (none)	E	NNP	The	The Rosie ODonnell Show
+ (none)	_	_	Rosie
+ (none)	_	_	O'Donnell
+ (none)	_	_	Show
  (prep)		IN	on
  (pobj)	E	NNP	September
  (nummod)	C	CD	27
@@ -19244,11 +19242,11 @@ S (nsubj)	N	NN	album	Baby One More Time
  (conj)	N	NN	platinum
  (prep)		IN	by
  (det)		DT	the
- (nmod)	E	NNP	Syndicat
- (nmod)	_	_	National
- (nmod)	_	_	de
- (compound)	_	_	l'Édition
- (pobj)	_	_	Phonographique
+ (none)	E	NNP	Syndicat
+ (none)	_	_	National
+ (none)	_	_	de
+ (none)	_	_	l'Édition
+ (none)	_	_	Phonographique
  (punct)	P!	-LRB-	(
  (appos)	E	NNP	SNEP
  (punct)	P!	-RRB-	)
@@ -20248,11 +20246,11 @@ S (nsubjpass)	N	NN	album	Baby One More Time
  (punct)	P!	:	;
  (conj)		NN	publisher
  (punct)		:	;
- (compound)		NNP	Syndicat
- (compound)		NNP	National
- (compound)		NNP	de
- (compound)		NNP	l'Édition
- (conj)		NNP	Phonographique
+ (none)	E	NNP	Syndicat
+ (none)	_	_	National
+ (none)	_	_	de
+ (none)	_	_	l'Édition
+ (none)	_	_	Phonographique
  (punct)		:	;
  (conj)		NN	date
  (punct)		:	;
@@ -24371,11 +24369,11 @@ S (nsubj)	E	NNP	Uge
  (punct)		:	;
  (conj)		NN	publisher
  (punct)		:	;
- (compound)		NNP	Syndicat
- (compound)		NNP	National
- (nmod)		NNP	de
- (compound)		NNP	l'Édition
- (conj)		NNP	Phonographique
+ (none)	E	NNP	Syndicat
+ (none)	_	_	National
+ (none)	_	_	de
+ (none)	_	_	l'Édition
+ (none)	_	_	Phonographique
  (punct)		-LRB-	(
  (appos)		NNP	SNEP
  (punct)		-RRB-	)
@@ -24798,11 +24796,11 @@ S (nsubj)	E	NNP	Uge
  (punct)		:	;
  (conj)		NN	publisher
  (punct)		:	;
- (compound)		NNP	Syndicat
- (compound)		NNP	National
- (compound)		NNP	de
- (compound)		NNP	l'Édition
- (conj)		NNP	Phonographique
+ (none)	E	NNP	Syndicat
+ (none)	_	_	National
+ (none)	_	_	de
+ (none)	_	_	l'Édition
+ (none)	_	_	Phonographique
  (punct)		,	;
  (conj)		NN	language
  (punct)		:	;
