@@ -1776,7 +1776,10 @@ def substFilename( filename):
             rt += ' '
             fidx += 1
         elif filename[ fidx] == '%':
-            rt += chr( int( filename[fidx+1:fidx+3], 16))
+            try:
+                rt += chr( int( filename[fidx+1:fidx+3], 16))
+            except ValueError:
+                raise RuntimeError( "illegal characters in encoded file name reference: %s" % filename)
             fidx += 3
         else:
             rt += filename[ fidx]
