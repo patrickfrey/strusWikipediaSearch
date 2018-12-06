@@ -1076,10 +1076,6 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
                 sx = 'P'
             else:
                 sx = subjects[0].sex
-                if "Shania" in combined:
-                    for sb in subjects:
-                        sys.stderr.write( "PART SEX %s KEY '%s'\n" % (sb.sex,' '.join(sb.value)))
-                    sys.stderr.write( "HALLY GALLY SEX %s KEY '%s'\n" % (sx,' '.join(combined)))
             sexSubjectMap[ sx] = Subject( sx, combinedtag, combined, sentidx)
         else:
             sb = subjects[ 0]
