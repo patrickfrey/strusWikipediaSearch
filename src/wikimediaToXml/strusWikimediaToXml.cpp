@@ -464,7 +464,10 @@ static std::string getFilenameFromDocid( int fileCounter, const std::string& doc
 	}
 	else
 	{
-		return std::string( docid.c_str(), 110) + "__" + strus::string_format( "%d", fileCounter);
+		int sz = 110;
+		char const* si = docid.c_str() + sz;
+		while (*si && (*(si-1) == '%' || *(si-2) == '%')) {++si,++sz;}
+		return std::string( docid.c_str(), sz) + "__" + strus::string_format( "%d", fileCounter);
 	}
 }
 
