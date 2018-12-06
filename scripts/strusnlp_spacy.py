@@ -333,7 +333,7 @@ def getFirstKeyMap( map, getKeyElementsFunc):
     rt = {}
     for key in map:
         keyelements = getKeyElementsFunc( key)
-        if len(keyelements) >= 2:
+        if len(keyelements) >= 1:
             fkey = keyelements[0]
             if fkey in rt:
                 rt[ fkey].append( keyelements)
@@ -1249,19 +1249,21 @@ def splitNlpTokCountMap( usageMap):
 def getMostUsedMultipartList( usageMap):
     selMap = {}
     usageCntMap = {}
+    totalUsageCnt = 0
     for key,usage in usageMap.items():
-        if usage >= 3 and key.find(' ') >= 0:
+        if usage >= 3:
              selMap[ key] = usage
+             totalUsageCnt += usage
              if usage in usageCntMap:
                  usageCntMap[ usage] += 1
              else:
                  usageCntMap[ usage] = 1
     minusage = 3
-    maxlen = len(usageMap) / 5
-    pp = 0
+    maxUsageCnt = totalUsageCnt * 0.8
+    usageCnt = 0
     for usage in sorted( usageCntMap.keys(), reverse=True):
-        pp += usageCntMap[ usage]
-        if pp > maxlen:
+        usageCnt += usageCntMap[ usage] * usage
+        if usageCnt > maxUsageCnt:
             minusage = usage
             break
     if minusage > 3:
