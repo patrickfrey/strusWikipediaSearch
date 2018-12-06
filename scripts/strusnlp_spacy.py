@@ -746,8 +746,6 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
                 nidx = tidx+sidx
                 doDebug = (tokens[nidx].alphavalue == "Africa")
                 while sidx < len(cd) and nidx < len(tokens):
-                    if doDebug:
-                        sys.stderr.write( "VISIT %s %s\n" % (tokens[nidx].alphavalue,cd[sidx]))
                     if not tokens[nidx].alphavalue:
                         nidx += 1
                         continue
@@ -760,8 +758,6 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
                         bestLen = len(cd)
                         bestIdx = cidx
                         bestTokLen = nidx - tidx
-                        if doDebug:
-                            sys.stderr.write( "MATCH %s %s\n" % (' '.join(cd),' '.join([tk.value for tk in tokens[tidx:nidx]])))
             if bestIdx >= 0:
                 sidx = 0
                 while sidx < bestTokLen:
