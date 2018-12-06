@@ -487,15 +487,22 @@ def listIsTitle( tokens):
         return False
     for eidx,elem in enumerate(tokens):
         if elem.nlptag:
-            if elem.nlptag == "HYPH":
+            if eidx > 0 and elem.nlptag == "HYPH":
                 continue
             if elem.strustag == '_':
                 continue
-            if elem.nlptag == 'CC' and elem.value and elem.value[0].islower():
+            if eidx > 0 and elem.nlptag == 'CC' and elem.value and elem.value[0].islower():
                 continue
             if elem.nlptag[0] in ['U','V','J','N','P','R','W','M','C','F','T','D','I']:
-                if elem.value and (elem.value[0].isupper() or elem.value[0].isdigit() or elem.value[0] in quotlist):
-                    continue
+                if elem.value:
+                    if (elem.value[0].isupper() or elem.value[0].isdigit() or elem.value[0] in quotlist):
+                        continue
+#                    if eidx > 0 and elem.nlprole == "prep" and len(elem.value) <= 4:
+#                        continue
+#                    if eidx > 0 and elem.nlptag == "DT":
+#                        continue
+#                    if eidx > 0 and elem.nlptag == "TO" and elem.value == "to":
+#                        continue
         if elem.nlprole == "punct":
             continue
         return False
@@ -506,8 +513,15 @@ def outvoteTagging( tokens):
     while tidx+2 < len(tokens):
         if tokens[ tidx].nlptag == "DT":
             nidx = tidx+1
-            if tokens[nidx].nlptag in ["JJ","VBG"] and tokens[nidx+1].nlptag in ["VBD","VBZ"]:
+            if tokens[nidx].nlptag in ["JJ","VBG"] and tokens[nidx+1].nlptag in ["VBD","VBZ","VBP"]:
                 tokens[nidx].nlptag = "NN"
+        elif tokens[ tidx].nlptag in ["NNS","NNPS"]:
+            nidx = tidx+1
+            if tokens[nidx].nlptag in ["VBZ"]:
+                if tokens[ tidx].nlptag == "NNS":
+                    tokens[tidx].nlptag = "NN"
+                else:
+                    tokens[tidx].nlptag = "NNP"
         tidx += 1
 
 def getSentence( tokens):
@@ -561,14 +575,30 @@ def skipToOwnPrp( tokens, tidx):
     nidx = tidx
     while nidx<len(tokens) and tokens[nidx].nlptag[:2] == "RB":
         nidx += 1
-    if nidx<len(tokens) and tokens[nidx].nlptag in ["VBZ","VBD"]:
-        nidx += 1
-    if nidx<len(tokens) and tokens[nidx].nlptag == "VBN":
+    while nidx<len(tokens) and tokens[nidx].nlptag in ["MD","VBZ","VBD","VBG","VBP","VBN"]:
         nidx += 1
     if nidx<len(tokens) and tokens[nidx].nlptag in ["IN","CC"]:
         nidx += 1
         if nidx<len(tokens) and tokens[nidx].nlptag[:3] == "PRP":
-            return nidx
+            if tokens[nidx].value not in ["it","him"]:
+                if tokens[nidx].value == "her":
+                    if nidx+1<len(tokens) and tokens[nidx+1].nlptag not in ["VBG","JJ","JJR","JJS","RB","RBR","RBS","NN","NNS","NNP","NNPS"]:
+                        return nidx
+                else:
+                    return nidx
+    return -1
+
+def skipNeutralPrp( tokens, tidx):
+    if tokens[tidx].value.lower() == "it":
+        tidx += 1
+        if tokens[tidx].nlptag in ["VBZ","VBD"] and tokens[tidx].value in ["'s","s","is","was"]:
+            tidx += 1
+            if tokens[tidx].nlptag in ["RBR","RBS","RB","JJ","JJR","JJS"]:
+                tidx += 1
+            if tokens[tidx].nlptag in ["IN"] and tokens[tidx].value in ["that","to"]:
+                return tidx + 1
+            if tokens[tidx].nlptag in ["WP","WP$","WRB","WDT"]:
+                return tidx + 1
     return -1
 
 def tagSentenceStrusTags( tokens):
@@ -710,7 +740,7 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
             for cidx,cd in enumerate( candidateList):
                 sidx = 0
                 while sidx < len(cd) and tidx+sidx < len(tokens):
-                    if tokens[tidx+sidx].value != cd[sidx] or tokens[tidx+sidx].nlprole == 'none' or tokens[tidx+sidx].nlptag in ["VBZ","VBD"]:
+                    if tokens[tidx+sidx].value != cd[sidx] or tokens[tidx+sidx].nlprole == 'none' or (tokens[tidx+sidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[tidx+sidx].value[0].islower()):
                         break
                     sidx += 1
                 if sidx == len(cd):
@@ -777,7 +807,9 @@ def tagSentenceNameMapReferences( tokens, namemap):
 
 def tagSentenceSubjects( tokens):
     bracketCnt = 0
-    for eidx,elem in enumerate( tokens):
+    eidx = 0
+    while eidx < len(tokens):
+        elem = tokens[ eidx]
         name = None
         if elem.nlptag == "-LRB-" and elem.value == '(':
             bracketCnt += 1
@@ -785,6 +817,19 @@ def tagSentenceSubjects( tokens):
             bracketCnt -= 1
         elif bracketCnt > 0:
             pass
+        elif elem.nlptag in ["WP","WP$","WRB","WDT","IN"] and elem.value[0] == 'w':
+            # skip subordinate clause
+            nidx = eidx + 1
+            if nidx < len(tokens) and tokens[nidx].nlptag == "DT" and not tokens[nidx].value[0].isupper():
+                nidx += 1
+            if nidx < len(tokens) and tokens[nidx].nlptag in ["RBR","RBS","RB"] and not tokens[nidx].value[0].isupper():
+                nidx += 1
+            while nidx < len(tokens) and tokens[nidx].nlptag in ["RBS","JJ","JJS","JJR","VBG","HYPH"] and not tokens[nidx].value[0].isupper():
+                nidx += 1
+            while nidx < len(tokens) and tokens[nidx].nlptag in ["NN","NNS","NNP","NNPS"]:
+                nidx = skipMultipartName( tokens, nidx)
+            if nidx < len(tokens) and tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and not tokens[nidx].value[0].isupper():
+                eidx = nidx
         elif elem.nlptag == 'PRP' and elem.nlprole[:5] == "nsubj" and getPrpSex(elem.value):
             elem.strusrole = "S"
         elif elem.nlptag[:2] == 'NN':
@@ -827,7 +872,7 @@ def tagSentenceSubjects( tokens):
                                ei += 1
                            else:
                                break
-                       elif tokens[ei].nlprole == "ROOT" and (tokens[ei].nlptag == "VBZ" or tokens[ei].nlptag == "VBD"):
+                       elif tokens[ei].nlprole == "ROOT" and tokens[ei].nlptag in ["MD","VBZ","VBD","VBP"]:
                            elem.strusrole = "S"
                            break
                        else:
@@ -837,6 +882,7 @@ def tagSentenceSubjects( tokens):
             while ei < len(tokens) and tokens[ei].nlptag == '_':
                 tokens[ei].strusrole = "_"
                 ei += 1
+        eidx += 1
 
 def weightIncrOnNounMatch( weight):
     rt = weight + weight / 3
@@ -865,6 +911,12 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                 if nidx >= 0:
                     sentenceIdx = -1
                     tokens[ eidx].ref = titlesubject
+                    if tokens[ eidx].nlptag == "NN":
+                        tokens[ eidx].nlptag == "NNP"
+                    if tokens[ eidx].nlptag == "NNS":
+                        tokens[ eidx].nlptag == "NNPS"
+                    if tokens[ eidx].strustag == "N":
+                        tokens[ eidx].strustag == "E"
                     ref = titlesubject
                     isEntity = True
             if isEntity and not ref:
@@ -888,7 +940,10 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                         assignRef( tokens, eidx, item)
                         ref = item
                 if ref and tokens[ eidx].nlptag in ["NN","NNS"]:
-                    tokens[ eidx].nlptag = "NNP"
+                    if tokens[ eidx].nlptag == "NN":
+                        tokens[ eidx].nlptag = "NNP"
+                    else:
+                        tokens[ eidx].nlptag = "NNPS"
                     if tokens[ eidx].strustag == "N":
                         tokens[ eidx].strustag = "E"
             if isEntity:
@@ -937,7 +992,7 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
     eidx = 0
     lowerNnpWeightMap( synonymNnpWeightMap)
     while eidx < len( tokens):
-        if tokens[ eidx].nlptag == "DT" and tokens[ eidx].value.lower() in ["the","that","this","these"]:
+        if tokens[ eidx].nlptag == "DT" and tokens[ eidx].value.lower() == "the":
             nidx = eidx + 1
             if nidx < len(tokens):
                 if tokens[nidx].nlptag in ["NN","NNS"] and not tokens[nidx].ref:
@@ -974,22 +1029,26 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
                                 matchprev = True
                     if not matchprev:
                         subjects.append( Subject( sex, tokens[ eidx].strustag, name, sentidx))
-                        nidx = skipToOwnPrp( tokens, skipMultipartName( tokens, eidx))
-                        if nidx >= 0:
-                            eidx = nidx
+            nidx = skipToOwnPrp( tokens, skipMultipartName( tokens, eidx))
+            if nidx >= 0:
+                eidx = nidx
         elif tokens[ eidx].nlptag[:3] == 'PRP' and not tokens[ eidx].ref:
-           sex = getPrpSex( tokens[ eidx].value)
-           if sex and sex in sexSubjectMap:
-               subj = sexSubjectMap[ sex]
-               if ',' in subj.value:
-                   maxdiff = 2
-               else:
-                   maxdiff = 10
-               if sentidx - subj.sentidx <= maxdiff:
-                   subj.sentidx = sentidx
-                   tokens[ eidx].ref = subj.value
-                   nnpkey = ' '.join( subj.value)
-                   updateNnpWeightMap( synonymNnpWeightMap, nnpkey)
+           nidx = skipNeutralPrp( tokens, eidx)
+           if nidx >= 0:
+               eidx = nidx-1
+           else:
+               sex = getPrpSex( tokens[ eidx].value)
+               if sex and sex in sexSubjectMap:
+                   subj = sexSubjectMap[ sex]
+                   if ',' in subj.value:
+                       maxdiff = 2
+                   else:
+                       maxdiff = 10
+                   if sentidx - subj.sentidx <= maxdiff:
+                       subj.sentidx = sentidx
+                       tokens[ eidx].ref = subj.value
+                       nnpkey = ' '.join( subj.value)
+                       updateNnpWeightMap( synonymNnpWeightMap, nnpkey)
         eidx += 1
     if subjects:
         if len(subjects) > 1:
@@ -1226,59 +1285,135 @@ def getBestTitleMatches( titlesubject, tokCountMap):
                 rt.append( name)
     return rt
 
-def addToNnpSexCountMap( map, nnp, prptok, weight):
-    prpsex = getPrpSex( prptok)
-    if prpsex:
-        key = ' '.join( nnp)
-        if prpsex and key in map:
-            if prpsex in map[ key]:
-                map[ key][ prpsex] += weight
-            else:
-                map[ key][ prpsex] = weight
+def addToNnpSexCountMap( map, key, sex, weight):
+    # print( "** ADD SEX %s -> %s %.5f" % (key, sex, weight))
+    if sex and key in map:
+        if sex in map[ key]:
+            map[ key][ sex] += weight
         else:
-            map[ key] = { prpsex : weight }
+            map[ key][ sex] = weight
+    else:
+        map[ key] = { sex : weight }
+
+def reduSubjectMap( map):
+    delPastSubjects = []
+    for subj,sexmap in map.items():
+        delSexmap = []
+        for sex,weight in sexmap.items():
+            if weight < 0.3:
+                delSexmap.append( sex)
+            map[ subj][ sex] *= 0.80
+        for sex in delSexmap:
+            del map[ subj][ sex]
+        if not map[ subj]:
+            delPastSubjects.append( subj)
+    for subj in delPastSubjects:
+        del map[ subj]
+
+def initSubjectMap( updatelist, map, subj):
+    if subj in map:
+        if "" not in map[ subj]:
+            updatelist.append( [subj, "", 1.0] )
+        for key,weight in map[ subj].items():
+            updatelist.append( [subj, key, weight * 0.3 + 0.2] )
+    else:
+        updatelist.append( [subj, "", 1.0] )
+
+def fireSubjectMap( updateList, map, sex, addweight):
+    totweight = 0.0
+    for subj,sexmap in map.items():
+        for xx,ww in sexmap.items():
+            totweight += ww
+    # print( "** FIRE SEX %s TOT %.5f" % (sex, totweight))
+    for subj,sexmap in map.items():
+        if sex in sexmap:
+            weight = map[ subj][ sex]
+            updateList.append( [ subj, sex, addweight * weight / totweight] )
+        if sex and "" in sexmap:
+            weight = map[ subj][ ""]
+            updateList.append( [ subj, sex, addweight * weight / totweight] )
+
+def filterUpdateList( updateList):
+    rt = []
+    for sex in ["W","M","N","P"]:
+        maxweight = 0.0
+        for subj,updatesex,weight in updateList:
+            if updatesex == sex and weight > maxweight:
+                maxweight = weight
+        for subj,updatesex,weight in updateList:
+            if updatesex == sex and weight > maxweight/2:
+                rt.append( [subj,updatesex,weight] )
+    for subj,updatesex,weight in updateList:
+        if not updatesex:
+            rt.append( [subj,updatesex,weight] )
+    return rt
+
+def addUpdatesSubjectMap( map, updatelist):
+    for subj,sex,weight in updatelist:
+        if subj not in map:
+            map[ subj] = {}
+        if sex in map[ subj]:
+            map[ subj][ sex] += weight
+        else:
+            map[ subj][ sex] = weight
 
 # param titlesubject string[]
 # param sentences Sentence[]
 # return map NNP -> sex count  {'M':0, 'W':0, 'N':0, 'P':0} list 
 def getDocumentNnpSexCountMap( titlesubject, sentences):
     rt = {}
-    sidx = 0
-    lastSentSubjects = titlesubject
+    pastSubjects = {}
     for sent in sentences:
-        sentSubjects = []
-        sentPrpRefsMap = {}
-        tidx = 0
+        updateList = []
+        # print( "** SENT %s" % ' '.join( [tok.value for tok in sent.tokens]))
+
+        reduSubjectMap( pastSubjects)
+
         if sent.type != "sent":
-            lastSentSubjects = []
             continue
+        tidx = 0
         while tidx < len(sent.tokens):
             tok = sent.tokens[tidx]
             if tok.nlptag[0:3] == "NNP":
                 name = tok.ref or getMultipartName( sent.tokens, tidx)
+                namestr = ' '.join( name)
                 nidx = skipToOwnPrp( sent.tokens, skipMultipartName( sent.tokens, tidx))
+                sex = ""
                 if nidx >= 0:
-                    if getPrpSex( tok.value) in ['W','M']:
-                        weightfactor = 3.0
+                    sex = getPrpSex( sent.tokens[nidx].value)
+                    if sex in ['W','M']:
+                        weightfactor = 1.0
                     else:
-                        weightfactor = 2.5
-                    if name:
-                        addToNnpSexCountMap( rt, name, sent.tokens[nidx].value, weightfactor)
+                        weightfactor = 0.7
+                    if tok.strusrole == 'S':
+                        weightfactor *= 1.7
+                    if namestr:
+                        updateList.append( [namestr, sex, weightfactor] )
                     tidx = nidx + 1
-                if tok.strusrole == 'S':
-                    sentSubjects = joinStringList( sentSubjects, name)
-            elif tok.nlptag[0:3] == "PRP" and lastSentSubjects:
-                if tok.strusrole == 'S':
-                    sentPrpRefsMap[ tok.value] = 5.0
-                    sentSubjects = joinStringList( sentSubjects, lastSentSubjects)
-                elif tok.value not in sentPrpRefsMap:
-                    sentPrpRefsMap[ tok.value] = 1.0
+                elif tok.strusrole == 'S':
+                    initSubjectMap( updateList, pastSubjects, namestr)
+            elif tok.nlptag[0:3] == "PRP":
+                nidx = skipNeutralPrp( sent.tokens, tidx)
+                if nidx >= 0:
+                    # print( "** SKIP NEUTRAL PRP %s" % ' '.join( [tk.value for tk in sent.tokens[tidx:nidx]] ))
+                    tidx = nidx-1
+                else:
+                    sex = getPrpSex( tok.value)
+                    # print( "** PRP %s SEX %s" % (tok.value,sex))
+                    weight = 0.7
+                    if tok.strusrole == 'S':
+                        weight = 1.2
+                    fireSubjectMap( updateList, pastSubjects, sex, weight)
             tidx += 1
-        normfactor = float(len(sentPrpRefsMap) ** 2)
-        for prp,weight in sentPrpRefsMap.items():
-            addToNnpSexCountMap( rt, lastSentSubjects, prp, float(weight) / normfactor)
-        sentPrpRefsMap = {}
-        lastSentSubjects = sentSubjects or []
+        # for sbj,sexmap in pastSubjects.items():
+        #     print( "** SEXMAP %s { %s}" % (sbj,' '.join(["%s:%.3f " % (key,val) for key,val in sexmap.items()])))
+        # for sbj,sex,weight in updateList:
+        #     print( "** UPDATE %s %s %.4f" % (sbj,sex,weight))
+        normfactor = math.sqrt( len( updateList))
+        for nnp,sex,weight in updateList:
+            if sex:
+                addToNnpSexCountMap( rt, nnp, sex, float(weight) / normfactor)
+        addUpdatesSubjectMap( pastSubjects, filterUpdateList( updateList))
     return rt
 
 def addWeightSynonymMap( synomap, nnp, synonym, weight):
@@ -1320,7 +1455,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                     if tok.strusrole == 'S':
                         sentSubjects.append( namestr)
                         nidx = skipMultipartName( sent.tokens, tidx)
-                        if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag == "VBZ" and sent.tokens[nidx].value in ["is","are"]:
+                        if nidx < len(sent.tokens) and sent.tokens[nidx].nlptag in ["VBZ","VBP"] and sent.tokens[nidx].value in ["is","are"]:
                             nidx += 1
                             if nidx < len(sent.tokens):
                                 if sent.tokens[nidx].nlptag == "DT":
@@ -1364,7 +1499,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                             addWeightSynonymMap( synomap, namestr, noun, 1.0)
                             tidx = nidx-1
                 elif pastSubjects and tok.nlptag == "DT":
-                    detClass = (tok.value.lower() in ["the","that","this","these"])
+                    detClass = tok.value.lower() == "the"
                     nidx = tidx + 1
                     hasAdjectiv = False
                     while nidx < len(sent.tokens) and sent.tokens[nidx].nlptag in ["RBS","RBR","JJ","VBG"]:
@@ -1407,7 +1542,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
         for noun in delPastSentSomeNouns:
             del pastSentSomeNouns[ noun]
 
-        # pastSentSomeNounsStr = ""
+        pastSentSomeNounsStr = ""
         # for noun,weight in pastSentSomeNouns.items():
         #     if pastSentSomeNounsStr:
         #         pastSentSomeNounsStr += ", "
@@ -1455,7 +1590,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
             if sbj in pastSubjects:
                 pastSubjects[ sbj] += 1.0 / nofSentSubjects ** 2
             else:
-                pastSubjects[ sbj] = 1.0 / nofSentSubjects ** 2
+                pastSubjects[ sbj] = 2.0 / nofSentSubjects ** 2
             if pastSubjects[ sbj] > 2.5:
                 pastSubjects[ sbj] = 2.5
     rt = {}
@@ -1469,8 +1604,11 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                     bestcd = noun
             if bestcd:
                 map[ bestcd] *= 2
-        for noun,weight in map.items():
-            if weight > 1.0:
+        minweight = None
+        for noun,weight in sorted( map.items(), key=lambda item: item[1], reverse=True):
+            if not minweight:
+                minweight = max( weight / 2, 1.0)
+            if weight > minweight:
                 if noun in rt:
                     rt[ noun][ nnp] = weight
                 else:
@@ -1487,9 +1625,9 @@ def getMaxSexCount( sexCountMap):
             max = cnt
             rt = sex
     values.sort( reverse=True)
-    if len(values) >= 2 and values[0] <= values[1] * 2 + 1.0:
+    if len(values) >= 2 and values[0] <= values[1] * 2:
         return None
-    if len(values) == 1 and values[0] <= 5.0:
+    if len(values) >= 1 and values[0] <= 2.0:
         return None
     return rt
 
@@ -1508,13 +1646,16 @@ def printSentenceTagging( title, tokens):
     for tk in tokens:
         if origtgstr:
             origtgstr += " "
+        attr = ""
+        if tk.strusrole:
+            attr += "%s:" % tk.strusrole
+        if tk.nlptag:
+            attr += tk.nlptag
         if tk.strustag:
-            if tk.ref:
-                origtgstr += "'%s' :%s/%s -> '%s'" % (tk.value, tk.nlptag, tk.strustag, ' '.join(tk.ref))
-            else:
-                origtgstr += "'%s' :%s/%s" % (tk.value, tk.nlptag, tk.strustag)
-        else:
-            origtgstr += "'%s' :%s" % (tk.value, tk.nlptag)
+            attr += "/%s" % tk.strustag
+        if tk.ref:
+            attr += "-> %s" % ' '.join( tk.ref)
+        origtgstr += "'%s' :%s" % (tk.value,attr)
     print( "* Tagging %s %s" % (title,origtgstr))
 
 def tagDocument( title, text, entityMap, accuvar, verbose, complete):
@@ -1576,9 +1717,15 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     if titlekey in nnpSexMap:
         titlesex = nnpSexMap[ titlekey]
         sexSubjectMap[ titlesex] = Subject( titlesex, "E", titlesubject, 0)
+    sentidx = 0
+    lsidx = -1
     for sidx,sent in enumerate(sentences):
         if sent.type == "sent":
-            tagSentencePrpReferences( sent.tokens, sidx, sexSubjectMap, nnpSexMap, synonymNnpWeightMap, synonymCountMap)
+            sentidx += 1
+            lsidx = sidx
+            tagSentencePrpReferences( sent.tokens, sentidx, sexSubjectMap, nnpSexMap, synonymNnpWeightMap, synonymCountMap)
+        elif lsidx == sidx+1:
+            sentidx += 1
     for sent in sentences:
         rt += printSentence( sent.tokens, complete)
     if verbose:

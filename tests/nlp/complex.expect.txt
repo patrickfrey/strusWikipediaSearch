@@ -488,7 +488,7 @@
 * Sentence [sent] The next song and third single , ( You Drive Me ) Crazy runs through a moderately slow dance beat , and has a rhythm and blues Melody mixed with edgy synthesized instrumentals .
 * Tagging  'The' :DT 'next' :JJ 'song' :NN 'and' :CC 'third' :JJ 'single' :JJ ',' :, '(' :-LRB- 'You' :PRP 'Drive' :VB 'Me' :PRP ')' :-RRB- 'Crazy' :NNP 'runs' :VBZ 'through' :IN 'a' :DT 'moderately' :RB 'slow' :JJ 'dance' :NN 'beat' :VBD ',' :, 'and' :CC 'has' :VBZ 'a' :DT 'rhythm' :NN 'and' :CC 'blues' :NNS 'Melody' :NNP 'mixed' :VBN 'with' :IN 'edgy' :JJ 'synthesized' :VBN 'instrumentals' :NNS '.' :.
 * Sentence [sent] The third track and second single Sometimes is a ballad , that Spears begins with You tell me you 're in love with me / That you ca n't take your pretty eyes away from me / It 's not that I do n't wanna stay / But every time you come too close I move away .
-* Tagging  'The' :DT 'third' :JJ 'track' :NN 'and' :CC 'second' :JJ 'single' :JJ 'Sometimes' :RB 'is' :VBZ 'a' :DT 'ballad' :NN ',' :, 'that' :IN 'Spears' :NNPS 'begins' :VBZ 'with' :IN 'You' :PRP 'tell' :VBP 'me' :PRP 'you' :PRP ''re' :VBP 'in' :IN 'love' :NN 'with' :IN 'me' :PRP '/' :NFP 'That' :IN 'you' :PRP 'ca' :MD 'n't' :RB 'take' :VB 'your' :PRP$ 'pretty' :JJ 'eyes' :NNS 'away' :RB 'from' :IN 'me' :PRP '/' :. 'It' :PRP ''s' :VBZ 'not' :RB 'that' :IN 'I' :PRP 'do' :VBP 'n't' :RB 'wanna' :VB 'stay' :VB '/' :SYM 'But' :CC 'every' :DT 'time' :NN 'you' :PRP 'come' :VBP 'too' :RB 'close' :RB 'I' :PRP 'move' :VBP 'away' :RB '.' :.
+* Tagging  'The' :DT 'third' :JJ 'track' :NN 'and' :CC 'second' :JJ 'single' :JJ 'Sometimes' :RB 'is' :VBZ 'a' :DT 'ballad' :NN ',' :, 'that' :IN 'Spears' :NNP 'begins' :VBZ 'with' :IN 'You' :PRP 'tell' :VBP 'me' :PRP 'you' :PRP ''re' :VBP 'in' :IN 'love' :NN 'with' :IN 'me' :PRP '/' :NFP 'That' :IN 'you' :PRP 'ca' :MD 'n't' :RB 'take' :VB 'your' :PRP$ 'pretty' :JJ 'eyes' :NNS 'away' :RB 'from' :IN 'me' :PRP '/' :. 'It' :PRP ''s' :VBZ 'not' :RB 'that' :IN 'I' :PRP 'do' :VBP 'n't' :RB 'wanna' :VB 'stay' :VB '/' :SYM 'But' :CC 'every' :DT 'time' :NN 'you' :PRP 'come' :VBP 'too' :RB 'close' :RB 'I' :PRP 'move' :VBP 'away' :RB '.' :.
 * Sentence [sent] Stephen Thomas Erlewine of AllMusic noted the song has a catchy hook and endearing melody , with a reminiscent euro - dance rhythm .
 * Tagging  'Stephen' :NNP 'Thomas' :NNP 'Erlewine' :NNP 'of' :IN 'AllMusic' :NNP 'noted' :VBD 'the' :DT 'song' :NN 'has' :VBZ 'a' :DT 'catchy' :JJ 'hook' :NN 'and' :CC 'endearing' :JJ 'melody' :NN ',' :, 'with' :IN 'a' :DT 'reminiscent' :JJ 'euro' :NN '-' :HYPH 'dance' :NN 'rhythm' :NN '.' :.
 * Sentence [numseq] ;
@@ -2308,7 +2308,7 @@
 * Sentence [] title ;
 * Tagging  'title' :NN ';' ::
 * Sentence [sent] Spears takes aim at fame ;
-* Tagging  'Spears' :NNS 'takes' :VBZ 'aim' :NN 'at' :IN 'fame' :NN ';' ::
+* Tagging  'Spears' :NN 'takes' :VBZ 'aim' :NN 'at' :IN 'fame' :NN ';' ::
 * Sentence [] date ;
 * Tagging  'date' :NN ';' ::
 * Sentence [date] July 10 , 1999 ;
@@ -2480,7 +2480,7 @@
 * Sentence [sent] A NME reviewer rated ... Baby One More Time 1 out of 10 , saying that we seem to have reached crisis point :
 * Tagging  'A' :DT 'NME' :NNP 'reviewer' :NN 'rated' :VBN '...' :: 'Baby' :NNP 'One' :CD 'More' :JJR 'Time' :NN '1' :CD 'out' :IN 'of' :IN '10' :CD ',' :, 'saying' :VBG 'that' :IN 'we' :PRP 'seem' :VBP 'to' :TO 'have' :VB 'reached' :VBN 'crisis' :NN 'point' :NN ':' ::
 * Sentence [sent] pubescent pop is now so rife that 17-year - old Britney ' lizard - lounge ' Spears is already halfway through her lucrative showbiz career .
-* Tagging  'pubescent' :NN 'pop' :NN 'is' :VBZ 'now' :RB 'so' :RB 'rife' :JJ 'that' :IN '17-year' :CD '-' :HYPH 'old' :JJ 'Britney' :NNP ''' :'' 'lizard' :JJ '-' :HYPH 'lounge' :NN ''' :`` 'Spears' :NNPS 'is' :VBZ 'already' :RB 'halfway' :RB 'through' :IN 'her' :PRP$ 'lucrative' :JJ 'showbiz' :NN 'career' :NN '.' :.
+* Tagging  'pubescent' :NN 'pop' :NN 'is' :VBZ 'now' :RB 'so' :RB 'rife' :JJ 'that' :IN '17-year' :CD '-' :HYPH 'old' :JJ 'Britney' :NNP ''' :'' 'lizard' :JJ '-' :HYPH 'lounge' :NN ''' :`` 'Spears' :NNP 'is' :VBZ 'already' :RB 'halfway' :RB 'through' :IN 'her' :PRP$ 'lucrative' :JJ 'showbiz' :NN 'career' :NN '.' :.
 * Sentence [sent] He also found the album premature , commenting , hopefully , if she starts to live the wretched life that we all eventually do , her voice will show the scars , she 'll stop looking so fucking smug , she 'll find solace in drugs and we 'll be all the more happier for it .
 * Tagging  'He' :PRP 'also' :RB 'found' :VBD 'the' :DT 'album' :NN 'premature' :JJ ',' :, 'commenting' :VBG ',' :, 'hopefully' :RB ',' :, 'if' :IN 'she' :PRP 'starts' :VBZ 'to' :TO 'live' :VB 'the' :DT 'wretched' :JJ 'life' :NN 'that' :WDT 'we' :PRP 'all' :DT 'eventually' :RB 'do' :VBP ',' :, 'her' :PRP$ 'voice' :NN 'will' :MD 'show' :VB 'the' :DT 'scars' :NNS ',' :, 'she' :PRP ''ll' :MD 'stop' :VB 'looking' :VBG 'so' :RB 'fucking' :JJ 'smug' :JJ ',' :, 'she' :PRP ''ll' :MD 'find' :VB 'solace' :NN 'in' :IN 'drugs' :NNS 'and' :CC 'we' :PRP ''ll' :MD 'be' :VB 'all' :PDT 'the' :DT 'more' :RBR 'happier' :JJR 'for' :IN 'it' :PRP '.' :.
 * Sentence [sent] Now grow up , girl .
@@ -2892,7 +2892,7 @@
 * Sentence [sent] and the first new female artist to have the first single and first album at number one the same week .
 * Tagging  'and' :CC 'the' :DT 'first' :JJ 'new' :JJ 'female' :JJ 'artist' :NN 'to' :TO 'have' :VB 'the' :DT 'first' :JJ 'single' :JJ 'and' :CC 'first' :JJ 'album' :NN 'at' :IN 'number' :NN 'one' :CD 'the' :DT 'same' :JJ 'week' :NN '.' :.
 * Sentence [sent] Spears is also the youngest female in Billboard history to have a simultaneous single and album at number one in the same week .
-* Tagging  'Spears' :NNS 'is' :VBZ 'also' :RB 'the' :DT 'youngest' :JJS 'female' :NN 'in' :IN 'Billboard' :NNP 'history' :NN 'to' :TO 'have' :VB 'a' :DT 'simultaneous' :JJ 'single' :JJ 'and' :CC 'album' :NN 'at' :IN 'number' :NN 'one' :CD 'in' :IN 'the' :DT 'same' :JJ 'week' :NN '.' :.
+* Tagging  'Spears' :NN 'is' :VBZ 'also' :RB 'the' :DT 'youngest' :JJS 'female' :NN 'in' :IN 'Billboard' :NNP 'history' :NN 'to' :TO 'have' :VB 'a' :DT 'simultaneous' :JJ 'single' :JJ 'and' :CC 'album' :NN 'at' :IN 'number' :NN 'one' :CD 'in' :IN 'the' :DT 'same' :JJ 'week' :NN '.' :.
 * Sentence [sent] After four weeks since its release , the album had sold more than 500,000 copies , according to Nielsen SoundScan sales data .
 * Tagging  'After' :IN 'four' :CD 'weeks' :NNS 'since' :IN 'its' :PRP$ 'release' :NN ',' :, 'the' :DT 'album' :NN 'had' :VBD 'sold' :VBN 'more' :JJR 'than' :IN '500,000' :CD 'copies' :NNS ',' :, 'according' :VBG 'to' :IN 'Nielsen' :NNP 'SoundScan' :NNP 'sales' :NNS 'data' :NNS '.' :.
 * Sentence [sent] After dropping to the top five , the album went back to number one in its fourth week , with a total of 804,200 units sold .
@@ -3648,11 +3648,11 @@
 * Sentence [sent] Spears was credited with leading the revival of Teen pop .
 * Tagging  'Spears' :NNP 'was' :VBD 'credited' :VBN 'with' :IN 'leading' :VBG 'the' :DT 'revival' :NN 'of' :IN 'Teen' :NNP 'pop' :NN '.' :.
 * Sentence [sent] Yomiuri Shimbun reported that critics have hailed her as the most gifted teenage pop idol for many years , but Spears has set her sights a little higher - she is aiming for the level of superstardom that has been achieved by Madonna and Janet Jackson .
-* Tagging  'Yomiuri' :NNP 'Shimbun' :NNP 'reported' :VBD 'that' :IN 'critics' :NNS 'have' :VBP 'hailed' :VBN 'her' :PRP 'as' :IN 'the' :DT 'most' :RBS 'gifted' :JJ 'teenage' :JJ 'pop' :NN 'idol' :NN 'for' :IN 'many' :JJ 'years' :NNS ',' :, 'but' :CC 'Spears' :NNPS 'has' :VBZ 'set' :VBN 'her' :PRP$ 'sights' :NNS 'a' :DT 'little' :JJ 'higher' :JJR '-' :: 'she' :PRP 'is' :VBZ 'aiming' :VBG 'for' :IN 'the' :DT 'level' :NN 'of' :IN 'superstardom' :NN 'that' :WDT 'has' :VBZ 'been' :VBN 'achieved' :VBN 'by' :IN 'Madonna' :NNP 'and' :CC 'Janet' :NNP 'Jackson' :NNP '.' :.
+* Tagging  'Yomiuri' :NNP 'Shimbun' :NNP 'reported' :VBD 'that' :IN 'critics' :NNS 'have' :VBP 'hailed' :VBN 'her' :PRP 'as' :IN 'the' :DT 'most' :RBS 'gifted' :JJ 'teenage' :JJ 'pop' :NN 'idol' :NN 'for' :IN 'many' :JJ 'years' :NNS ',' :, 'but' :CC 'Spears' :NNP 'has' :VBZ 'set' :VBN 'her' :PRP$ 'sights' :NNS 'a' :DT 'little' :JJ 'higher' :JJR '-' :: 'she' :PRP 'is' :VBZ 'aiming' :VBG 'for' :IN 'the' :DT 'level' :NN 'of' :IN 'superstardom' :NN 'that' :WDT 'has' :VBZ 'been' :VBN 'achieved' :VBN 'by' :IN 'Madonna' :NNP 'and' :CC 'Janet' :NNP 'Jackson' :NNP '.' :.
 * Sentence [sent] Rolling Stone wrote :
 * Tagging  'Rolling' :NNP 'Stone' :NNP 'wrote' :VBD ':' ::
 * Sentence [sent] Britney Spears carries on the classic archetype of the rock & roll teen queen , the dungaree doll , the angel baby who just has to make a scene .
-* Tagging  'Britney' :NNP 'Spears' :NNPS 'carries' :VBZ 'on' :IN 'the' :DT 'classic' :JJ 'archetype' :NN 'of' :IN 'the' :DT 'rock' :NN '&' :CC 'roll' :NN 'teen' :NN 'queen' :NN ',' :, 'the' :DT 'dungaree' :JJ 'doll' :NN ',' :, 'the' :DT 'angel' :NN 'baby' :NN 'who' :WP 'just' :RB 'has' :VBZ 'to' :TO 'make' :VB 'a' :DT 'scene' :NN '.' :.
+* Tagging  'Britney' :NNP 'Spears' :NNP 'carries' :VBZ 'on' :IN 'the' :DT 'classic' :JJ 'archetype' :NN 'of' :IN 'the' :DT 'rock' :NN '&' :CC 'roll' :NN 'teen' :NN 'queen' :NN ',' :, 'the' :DT 'dungaree' :JJ 'doll' :NN ',' :, 'the' :DT 'angel' :NN 'baby' :NN 'who' :WP 'just' :RB 'has' :VBZ 'to' :TO 'make' :VB 'a' :DT 'scene' :NN '.' :.
 * Sentence [sent] Rami Yacoub who co - produced Spears 's debut album with lyricist Max Martin commented , I know from Denniz Pop and Max 's previous productions , when we do songs , there 's kind of a nasal thing .
 * Tagging  'Rami' :NNP 'Yacoub' :NNP 'who' :WP 'co' :NN '-' :, 'produced' :VBN 'Spears' :NNPS ''s' :POS 'debut' :NN 'album' :NN 'with' :IN 'lyricist' :NN 'Max' :NNP 'Martin' :NNP 'commented' :VBD ',' :, 'I' :PRP 'know' :VBP 'from' :IN 'Denniz' :NNP 'Pop' :NNP 'and' :CC 'Max' :NNP ''s' :POS 'previous' :JJ 'productions' :NNS ',' :, 'when' :WRB 'we' :PRP 'do' :VBP 'songs' :NNS ',' :, 'there' :EX ''s' :VBZ 'kind' :NN 'of' :IN 'a' :DT 'nasal' :JJ 'thing' :NN '.' :.
 * Sentence [sent] With N ' Sync and the Backstreet Boys , we had to push for that mid - nasal voice .
@@ -3660,7 +3660,7 @@
 * Sentence [sent] When Britney did that , she got this kind of raspy , sexy voice .
 * Tagging  'When' :WRB 'Britney' :NNP 'did' :VBD 'that' :DT ',' :, 'she' :PRP 'got' :VBD 'this' :DT 'kind' :NN 'of' :IN 'raspy' :JJ ',' :, 'sexy' :JJ 'voice' :NN '.' :.
 * Sentence [sent] Chuck Taylor of Billboard observed , Spears has become a consummate performer , with snappy dance moves , a clearly real - albeit young - and funkdified voice&nbsp ;
-* Tagging  'Chuck' :NNP 'Taylor' :NNP 'of' :IN 'Billboard' :NNP 'observed' :VBD ',' :, 'Spears' :NNPS 'has' :VBZ 'become' :VBN 'a' :DT 'consummate' :JJ 'performer' :NN ',' :, 'with' :IN 'snappy' :JJ 'dance' :NN 'moves' :NNS ',' :, 'a' :DT 'clearly' :RB 'real' :JJ '-' :HYPH 'albeit' :IN 'young' :JJ '-' :: 'and' :CC 'funkdified' :VBD 'voice&nbsp' :NN ';' ::
+* Tagging  'Chuck' :NNP 'Taylor' :NNP 'of' :IN 'Billboard' :NNP 'observed' :VBD ',' :, 'Spears' :NNP 'has' :VBZ 'become' :VBN 'a' :DT 'consummate' :JJ 'performer' :NN ',' :, 'with' :IN 'snappy' :JJ 'dance' :NN 'moves' :NNS ',' :, 'a' :DT 'clearly' :RB 'real' :JJ '-' :HYPH 'albeit' :IN 'young' :JJ '-' :: 'and' :CC 'funkdified' :VBD 'voice&nbsp' :NN ';' ::
 * Sentence [sent] ... ( You Drive Me ) Crazy , her third single ... demonstrates Spears ' own development , proving that the 17-year - old is finding her own vocal personality after so many months of steadfast practice .
 * Tagging  '...' :NFP '(' :-LRB- 'You' :PRP 'Drive' :VB 'Me' :PRP ')' :-RRB- 'Crazy' :NNP ',' :, 'her' :PRP$ 'third' :JJ 'single' :JJ '...' :: 'demonstrates' :VBZ 'Spears' :NNPS ''' :POS 'own' :JJ 'development' :NN ',' :, 'proving' :VBG 'that' :IN 'the' :DT '17-year' :CD '-' :HYPH 'old' :JJ 'is' :VBZ 'finding' :VBG 'her' :PRP$ 'own' :JJ 'vocal' :JJ 'personality' :NN 'after' :IN 'so' :RB 'many' :JJ 'months' :NNS 'of' :IN 'steadfast' :JJ 'practice' :NN '.' :.
 * Sentence [sent] Stephen Thomas Erlewine of Allmusic referred to her music as a blend of infectious , rap - inflected dance - pop and smooth balladry .
@@ -3686,7 +3686,7 @@
 * Sentence [sent] Barbara Ellen of The Observer has reported :
 * Tagging  'Barbara' :NNP 'Ellen' :NNP 'of' :IN 'The' :DT 'Observer' :NNP 'has' :VBZ 'reported' :VBN ':' ::
 * Sentence [sent] Spears is famously one of the ' oldest ' teenagers pop has ever produced , almost middle aged in terms of focus and determination .
-* Tagging  'Spears' :NNPS 'is' :VBZ 'famously' :RB 'one' :CD 'of' :IN 'the' :DT ''' :`` 'oldest' :JJS ''' :'' 'teenagers' :NNS 'pop' :NN 'has' :VBZ 'ever' :RB 'produced' :VBN ',' :, 'almost' :RB 'middle' :JJ 'aged' :VBN 'in' :IN 'terms' :NNS 'of' :IN 'focus' :NN 'and' :CC 'determination' :NN '.' :.
+* Tagging  'Spears' :NNP 'is' :VBZ 'famously' :RB 'one' :CD 'of' :IN 'the' :DT ''' :`` 'oldest' :JJS ''' :'' 'teenagers' :NNS 'pop' :NN 'has' :VBZ 'ever' :RB 'produced' :VBN ',' :, 'almost' :RB 'middle' :JJ 'aged' :VBN 'in' :IN 'terms' :NNS 'of' :IN 'focus' :NN 'and' :CC 'determination' :NN '.' :.
 * Sentence [sent] Many 19-year - olds have n't even started working by that age , whereas Britney , a former Mouseketeer , was that most unusual and volatile of American phenomena — a child with a full - time career .
 * Tagging  'Many' :JJ '19-year' :CD '-' :HYPH 'olds' :NNS 'have' :VBP 'n't' :RB 'even' :RB 'started' :VBN 'working' :VBG 'by' :IN 'that' :DT 'age' :NN ',' :, 'whereas' :IN 'Britney' :NNP ',' :, 'a' :DT 'former' :JJ 'Mouseketeer' :NNP ',' :, 'was' :VBD 'that' :IN 'most' :RBS 'unusual' :JJ 'and' :CC 'volatile' :JJ 'of' :IN 'American' :JJ 'phenomena' :NNS '—' : 'a' :DT 'child' :NN 'with' :IN 'a' :DT 'full' :JJ '-' :HYPH 'time' :NN 'career' :NN '.' :.
 * Sentence [sent] While other little girls were putting posters on their walls , Britney was wanting to be the poster on the wall .
@@ -3738,7 +3738,7 @@
 * Sentence [] source ;
 * Tagging  'source' :NN ';' ::
 * Sentence [sent] —Spears reflects on ... Baby One More Time in December 1999 .
-* Tagging  '—Spears' :NNS 'reflects' :VBZ 'on' :IN '...' :: 'Baby' :NNP 'One' :CD 'More' :JJR 'Time' :NN 'in' :IN 'December' :NNP '1999' :CD '.' :.
+* Tagging  '—Spears' :NN 'reflects' :VBZ 'on' :IN '...' :: 'Baby' :NNP 'One' :CD 'More' :JJR 'Time' :NN 'in' :IN 'December' :NNP '1999' :CD '.' :.
 * Sentence [numseq] ;
 * Tagging  ';' ::
 * Sentence [] cite newstitle ;
@@ -7508,54 +7508,93 @@
 * Sentence [] Official website ;
 * Tagging  'Official' :JJ 'website' :NN ';' ::
 * Best title match Baby One More Time
-* Entity sex stats Crazy -> {'W': 2.5}
-* Entity sex stats Born to Make You Happy -> {'N': 0.04, 'W': 0.2}
-* Entity sex stats Britney Spears -> {'M': 0.2, 'P': 3.25, 'N': 2.956666666666667, 'W': 50.101111111111116}
-* Entity sex stats Baby One More Time -> {'M': 0.25, 'N': 23.0, 'W': 1.25}
-* Entity sex stats Larry Rudolph -> {'M': 7.5, 'W': 5.0}
-* Entity sex stats Melissa Ruggieri , Britney Spears -> {'W': 5.0}
-* Entity sex stats Britney Spears , Max Martin -> {'W': 1.0}
-* Entity sex stats Peter Gardiner , Britney Spears -> {'W': 1.0}
-* Entity sex stats Spears -> {'W': 1.5}
-* Entity sex stats Kyle Anderson -> {'W': 1.0}
-* Entity sex stats Lynne -> {'W': 1.0}
-* Entity sex stats Allmusic -> {'W': 2.5}
-* Entity sex stats Daydream -> {'W': 2.5}
-* Entity sex stats Britney Spears , Lou Pearlman , Innosense -> {'W': 1.0}
-* Entity sex stats Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
-* Entity sex stats Chuck Taylor , Britney Spears -> {'W': 1.0}
-* Entity sex stats Crazy , Melody -> {'N': 0.2}
+* Entity sex stats Tommy Hilfiger -> {'N': 0.06287397406105051, 'W': 0.08695832955447368}
+* Entity sex stats Rolling Stone -> {'W': 0.09050552849585244}
+* Entity sex stats Melissa Ruggieri -> {'P': 0.05594954118707775, 'W': 0.1528489354105835}
+* Entity sex stats Rami Yacoub -> {'W': 0.16952452880893784}
+* Entity sex stats Paul Verna -> {'M': 0.31452656919120675, 'N': 0.2142857142857143, 'W': 0.02475923020068971}
+* Entity sex stats Eric Foster White -> {'P': 0.02952847682752378, 'N': 0.0638354911326821, 'W': 0.05994834619144697}
+* Entity sex stats JIVE Records -> {'N': 0.3733729265864163}
+* Entity sex stats Lou Pearlman -> {'W': 0.102297693692144}
+* Entity sex stats Clive Calder -> {'P': 0.036910596034404726, 'N': 0.11013411573957996, 'W': 0.07493543273930872}
+* Entity sex stats Peter Gardiner -> {'N': 0.026999630716656942, 'W': 0.14256221966143612}
+* Entity sex stats Daydream -> {'W': 0.7071067811865475}
+* Entity sex stats Amanda Murray -> {'W': 0.2445890960654237}
+* Entity sex stats Barbara Ellen -> {'P': 0.08742115810480897}
+* Entity sex stats Innosense -> {'W': 0.102297693692144}
+* Entity sex stats Barry Walters -> {'M': 0.08255812010576469, 'N': 0.04815890339502941, 'W': 0.39439282768844597}
+* Entity sex stats Kyle Anderson -> {'M': 0.034088514108186724, 'N': 0.01988496656310892, 'W': 0.20153236797606508}
+* Entity sex stats From the Bottom of My Broken Heart -> {'N': 0.8485281374238569}
+* Entity sex stats I m So Curious -> {'P': 0.018898225169615222, 'N': 0.011023964682275544, 'W': 0.019526468104015964}
+* Entity sex stats Crazy -> {'N': 0.024941821132272834, 'W': 0.04275740765532486}
+* Entity sex stats Born to Make You Happy -> {'N': 0.6414823651100932, 'W': 0.1304852528543849}
+* Entity sex stats Shania Twain -> {'N': 0.12700249451880888}
+* Entity sex stats 1001 Albums You Must Hear Before You Die -> {'W': 0.38924039148592904}
+* Entity sex stats Britney Spears -> {'M': 0.18054763936199503, 'N': 8.463705429012283, 'P': 1.1079097892358456, 'W': 20.19540052406036}
+* Entity sex stats Baby One More Time -> {'M': 0.3466483781685597, 'N': 6.481938160827705, 'W': 1.0313183481469081}
+* Entity sex stats Larry Rudolph -> {'M': 1.2923241724908954, 'N': 0.3267136072343208, 'W': 0.36298601597736413}
+* Entity sex stats Yomiuri Shimbun -> {'W': 0.04721789239232978}
+* Entity sex stats I Will Still Love You -> {'P': 0.018898225169615222, 'N': 0.011023964682275544, 'W': 0.019526468104015964}
+* Entity sex stats Stephen Thomas Erlewine -> {'M': 0.31452656919120675, 'N': 0.2532573098048906, 'W': 0.2089952765399718}
+* Entity sex stats Spears -> {'W': 2.2464737624908215}
+* Entity sex stats The Beat Goes On -> {'P': 0.02362278146201903, 'N': 0.7510683929061455, 'W': 0.04795867695315758}
+* Entity sex stats Melody -> {'N': 0.024941821132272834, 'W': 0.04275740765532486}
+* Entity sex stats Lynne -> {'M': 0.13043478260869568, 'W': 0.30814146471667725}
+* Entity sex stats Jive Records -> {'N': 0.2814068318042637, 'W': 0.20946747668987112}
+* Entity sex stats Chuck Taylor -> {'W': 0.20111735287904212}
+* Entity sex stats Polaroid -> {'N': 0.04218692299477647, 'W': 0.190549233576119}
+* Entity sex stats Max Martin -> {'P': 0.05767280630375737, 'N': 1.504692543849672, 'W': 0.34860132660780363}
 * Entity sex Britney Spears -> W
 * Entity sex Baby One More Time -> N
-* Subject Crazy -> {'W': 2.5}
-* Subject Born to Make You Happy -> {'N': 0.04, 'W': 0.2}
-* Subject Britney Spears -> {'M': 0.2, 'P': 3.25, 'N': 2.956666666666667, 'W': 50.101111111111116}
-* Subject Baby One More Time -> {'M': 0.25, 'N': 23.0, 'W': 1.25}
-* Subject Larry Rudolph -> {'M': 7.5, 'W': 5.0}
-* Subject Melissa Ruggieri , Britney Spears -> {'W': 5.0}
-* Subject Britney Spears , Max Martin -> {'W': 1.0}
-* Subject Peter Gardiner , Britney Spears -> {'W': 1.0}
-* Subject Spears -> {'W': 1.5}
-* Subject Kyle Anderson -> {'W': 1.0}
-* Subject Lynne -> {'W': 1.0}
-* Subject Allmusic -> {'W': 2.5}
-* Subject Daydream -> {'W': 2.5}
-* Subject Britney Spears , Lou Pearlman , Innosense -> {'W': 1.0}
-* Subject Max Martin -> {'P': 1.25, 'N': 2.75, 'W': 2.5}
-* Subject Chuck Taylor , Britney Spears -> {'W': 1.0}
-* Subject Crazy , Melody -> {'N': 0.2}
-* Synonym collection -> Baby One More Time 2.000
+* Entity sex Spears -> W
+* Subject Tommy Hilfiger -> {'N': 0.06287397406105051, 'W': 0.08695832955447368}
+* Subject Rolling Stone -> {'W': 0.09050552849585244}
+* Subject Melissa Ruggieri -> {'P': 0.05594954118707775, 'W': 0.1528489354105835}
+* Subject Rami Yacoub -> {'W': 0.16952452880893784}
+* Subject Paul Verna -> {'M': 0.31452656919120675, 'N': 0.2142857142857143, 'W': 0.02475923020068971}
+* Subject Eric Foster White -> {'P': 0.02952847682752378, 'N': 0.0638354911326821, 'W': 0.05994834619144697}
+* Subject JIVE Records -> {'N': 0.3733729265864163}
+* Subject Lou Pearlman -> {'W': 0.102297693692144}
+* Subject Clive Calder -> {'P': 0.036910596034404726, 'N': 0.11013411573957996, 'W': 0.07493543273930872}
+* Subject Peter Gardiner -> {'N': 0.026999630716656942, 'W': 0.14256221966143612}
+* Subject Daydream -> {'W': 0.7071067811865475}
+* Subject Amanda Murray -> {'W': 0.2445890960654237}
+* Subject Barbara Ellen -> {'P': 0.08742115810480897}
+* Subject Innosense -> {'W': 0.102297693692144}
+* Subject Barry Walters -> {'M': 0.08255812010576469, 'N': 0.04815890339502941, 'W': 0.39439282768844597}
+* Subject Kyle Anderson -> {'M': 0.034088514108186724, 'N': 0.01988496656310892, 'W': 0.20153236797606508}
+* Subject From the Bottom of My Broken Heart -> {'N': 0.8485281374238569}
+* Subject I m So Curious -> {'P': 0.018898225169615222, 'N': 0.011023964682275544, 'W': 0.019526468104015964}
+* Subject Crazy -> {'N': 0.024941821132272834, 'W': 0.04275740765532486}
+* Subject Born to Make You Happy -> {'N': 0.6414823651100932, 'W': 0.1304852528543849}
+* Subject Shania Twain -> {'N': 0.12700249451880888}
+* Subject 1001 Albums You Must Hear Before You Die -> {'W': 0.38924039148592904}
+* Subject Britney Spears -> {'M': 0.18054763936199503, 'N': 8.463705429012283, 'P': 1.1079097892358456, 'W': 20.19540052406036}
+* Subject Baby One More Time -> {'M': 0.3466483781685597, 'N': 6.481938160827705, 'W': 1.0313183481469081}
+* Subject Larry Rudolph -> {'M': 1.2923241724908954, 'N': 0.3267136072343208, 'W': 0.36298601597736413}
+* Subject Yomiuri Shimbun -> {'W': 0.04721789239232978}
+* Subject I Will Still Love You -> {'P': 0.018898225169615222, 'N': 0.011023964682275544, 'W': 0.019526468104015964}
+* Subject Stephen Thomas Erlewine -> {'M': 0.31452656919120675, 'N': 0.2532573098048906, 'W': 0.2089952765399718}
+* Subject Spears -> {'W': 2.2464737624908215}
+* Subject The Beat Goes On -> {'P': 0.02362278146201903, 'N': 0.7510683929061455, 'W': 0.04795867695315758}
+* Subject Melody -> {'N': 0.024941821132272834, 'W': 0.04275740765532486}
+* Subject Lynne -> {'M': 0.13043478260869568, 'W': 0.30814146471667725}
+* Subject Jive Records -> {'N': 0.2814068318042637, 'W': 0.20946747668987112}
+* Subject Chuck Taylor -> {'W': 0.20111735287904212}
+* Subject Polaroid -> {'N': 0.04218692299477647, 'W': 0.190549233576119}
+* Subject Max Martin -> {'P': 0.05767280630375737, 'N': 1.504692543849672, 'W': 0.34860132660780363}
+* Synonym actress -> Melissa Joan Hart 2.700
+* Synonym magazine -> Blender 2.700
+* Synonym pop icon -> Britney Spears 2.700
+* Synonym girl group -> TLC 2.700
 * Synonym music group -> All Seeing I 2.700
 * Synonym producer -> Eric Foster White 5.400
-* Synonym pop icon -> Britney Spears 2.700
-* Synonym album -> Baby One More Time 11.117
-* Synonym lyricist -> Max Martin 2.700
-* Synonym magazine -> Blender 2.700
-* Synonym actress -> Melissa Joan Hart 2.700
-* Synonym girl group -> TLC 2.700
-* Synonym manager -> Lou Pearlman 4.500
+* Synonym singer -> Britney Spears 3.608
 * Synonym theme song -> Jaws 1.800
-* Synonym singer -> Britney Spears 2.683
+* Synonym album -> Shania Twain 1.152
+* Synonym album -> Baby One More Time 16.531
+* Synonym manager -> Lou Pearlman 4.500
+* Synonym lyricist -> Max Martin 2.700
 * Entity usage Tommy Hilfiger # 1.000
 * Entity usage You Drive Me # 13.500
 * Entity usage Top Albums # 1.500
@@ -7605,7 +7644,7 @@
 * Entity usage Danish Albums # 3.000
 * Entity usage MTV News # 1.500
 * Entity usage Britney Spears ' Knee Injury Delays Video Shoot # 1.500
-* Entity usage Madonna # 2.000
+* Entity usage Torn # 1.000
 * Entity usage Claire # 3.000
 * Entity usage Hop Mix # 1.500
 * Entity usage A&R Jeff Fenster # 1.000
@@ -7650,7 +7689,6 @@
 * Entity usage New Zealand Albums # 3.000
 * Entity usage EKG # 1.000
 * Entity usage Wade Robson # 2.500
-* Entity usage Pioneer Newspapers # 1.500
 * Entity usage Britney Still On Top # 1.500
 * Entity usage Mitchell Lane Publishers # 1.500
 * Entity usage Las Vegas # 1.000
@@ -7672,7 +7710,7 @@
 * Entity usage Japanese # 1.500
 * Entity usage Singlesname # 1.500
 * Entity usage Girl # 1.000
-* Entity usage TI Media # 1.500
+* Entity usage Pioneer Newspapers # 1.500
 * Entity usage Essex # 1.500
 * Entity usage Greenwood Publishing Group # 1.500
 * Entity usage Top of the Pops # 1.000
@@ -7703,10 +7741,11 @@
 * Entity usage Petch # 1.500
 * Entity usage Chuck Taylor # 1.000
 * Entity usage Edition(s # 1.500
-* Entity usage Nielsen Business Media # 6.000
+* Entity usage Searchable Database # 1.500
 * Entity usage Poland # 3.000
 * Entity usage Baby One More Time # 134.000
 * Entity usage E - Mail My Heart # 5.000
+* Entity usage TI Media # 1.500
 * Entity usage Album # 5.500
 * Entity usage Vena # 1.500
 * Entity usage Polish Society of the Phonographic Industry # 1.000
@@ -7721,6 +7760,7 @@
 * Entity usage SNEP # 4.000
 * Entity usage Brazil # 1.500
 * Entity usage Soundtracks # 1.500
+* Entity usage Nielsen Business Media # 6.000
 * Entity usage Top 100 Album # 3.000
 * Entity usage Universe # 1.500
 * Entity usage Finnish Albums Chart # 1.500
@@ -7746,7 +7786,6 @@
 * Entity usage Nirvana # 1.500
 * Entity usage 4F # 1.500
 * Entity usage Star Wars Among Videos Set To Debut # 1.500
-* Entity usage Searchable Database # 1.500
 * Entity usage Britney Spears Back In Action # 1.500
 * Entity usage The Stop ! Remix # 1.500
 * Entity usage Swedish Albums Chart # 1.500
@@ -7966,7 +8005,7 @@
 * Entity usage Belgian Flemish Albums Chart # 1.500
 * Entity usage Lou Pearlman # 2.000
 * Entity usage Music Industry News Network # 1.500
-* Entity usage The Beat Goes On # 3.000
+* Entity usage The Beat Goes On # 6.000
 * Entity usage Stephen Thomas # 1.500
 * Entity usage Album 1999 # 1.500
 * Entity usage E ! # 1.500
@@ -8049,7 +8088,7 @@
 * Entity usage Accolades # 1.500
 * Entity usage Larry Rudolph # 6.000
 * Entity usage Radio Edit # 1.500
-* Entity usage Torn # 1.000
+* Entity usage Madonna # 2.000
 * Entity usage New Artist # 1.000
 * Entity usage Jaaroverzichten 2000 # 1.500
 * Entity usage Album Chart#1161 # 1.500
@@ -10739,7 +10778,7 @@ S (nsubjpass)	R	PRP	It	Baby One More Time
  (nummod)	C	CD	1997
  (punct)	P!	,	,
  (mark)		IN	while
-S (nsubj)	E	NNPS	Spears	Britney Spears
+ (nsubj)	E	NNPS	Spears	Britney Spears
  (advcl)	V	VBD	negotiated
  (prep)		IN	with
  (poss)	R	PRP$	her
@@ -10852,7 +10891,7 @@ S (nsubj)	E	NNP	Jive	Jive Records
  (compound)	N	NN	album
  (pobj)	_	_	deal
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	traveled
  (prep)		IN	to
  (pobj)	E	NNP	Sweden
@@ -10901,7 +10940,7 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (compound)	_	_	group
  (pobj)	E	NNP	TLC
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	later
  (ROOT)	V	VBD	claimed
  (mark)		IN	that
@@ -11558,7 +11597,7 @@ S (nsubj)	R	PRP	she	Britney Spears
  (amod)	A	JJ	sound
  (pobj)	N	NN	engineer
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	traveled
  (prep)		IN	to
  (none)	E	NNP	New
@@ -11712,7 +11751,7 @@ S (nsubj)	R	PRP	They
  (advmod)	A	RB	unmistakably
  (pobj)	E	NNP	Britney	Britney Spears
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	recorded
  (nummod)	C	CD	ten
  (dobj)	N	NNS	songs
@@ -11780,10 +11819,10 @@ S (nsubj)	N	NN	singer	Britney Spears
  (case)		POS	's
  (nummod)	C	CD	1967
  (appos)	A	JJ	single
- (none)	E	NNP	The
-S (nsubj)	_	_	Beat
- (none)	_	_	Goes
- (none)	_	_	On
+S (none)	E	NNP	The
+_ (nsubj)	_	_	Beat
+_ (none)	_	_	Goes
+_ (none)	_	_	On
  (punct)	T!	.	.
 S (nsubj)	E	NNP	White	Eric Foster White
  (ROOT)	V	VBD	was
@@ -11798,7 +11837,7 @@ S (nsubj)	E	NNP	White	Eric Foster White
  (punct)	P!	,	,
  (mark)		IN	while
  (amod)	A	JJ	additional
-S (nsubjpass)	N	NN	production
+ (nsubjpass)	N	NN	production
  (auxpass)	V	VBD	was
  (advcl)	V	VBN	done
  (agent)		IN	by
@@ -11823,7 +11862,7 @@ _ (nsubj)	_	_	Calder
  (amod)	A	JJ	full
  (dobj)	N	NN	album
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	flew
  (prep)		IN	to
  (none)	E	NNP	Cheiron
@@ -11894,7 +11933,7 @@ S (nsubj)	R	PRP	they
  (ROOT)	V	VBD	rejected
  (dobj)	R	PRP	it
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (advmod)	A	RB	later
  (ROOT)	V	VBD	claimed
  (mark)		IN	that
@@ -12211,7 +12250,7 @@ S (nsubj)	R	PRP	he
  (prep)		IN	from
  (det)		DT	the
  (pobj)	N	NN	start
- (dobj)	R	PRP	it
+ (dobj)	R	PRP	it	Baby One More Time
  (prep)		IN	of
  (det)		DT	those
  (pobj)	N	NNS	songs
@@ -12223,7 +12262,7 @@ S (nsubj)	R	PRP	he
  (cc)		CC	and
  (conj)	A	RB	again
  (punct)	T!	.	.
-S (nsubj)	R	PRP	It
+S (nsubj)	R	PRP	It	Baby One More Time
  (advmod)	A	RB	just
  (ROOT)	V	VBD	felt
  (advmod)	A	RB	really
@@ -12240,12 +12279,12 @@ S (nsubj)	R	PRP	It
  (amod)	A	JJ	own
  (dobj)	N	NN	thing
  (prep)		IN	with
- (pobj)	R	PRP	it
+ (pobj)	R	PRP	it	Baby One More Time
  (punct)	P!	,	,
  (advcl)	V	VBG	trying
  (aux)		TO	to
  (xcomp)	V	VB	give
- (dative)	R	PRP	it
+ (dative)	R	PRP	it	Baby One More Time
  (det)		DT	a
  (advmod)	A	RB	little
  (amod)	A	JJR	more
@@ -12535,7 +12574,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (pobj)	N	NNS	producers
  (punct)	P!	,	,
  (mark)		IN	since
-S (nsubj)	R	PRP	It
+S (nsubj)	R	PRP	It	Baby One More Time
  (advcl)	V	VBD	made
  (amod)	A	JJR	more
  (dobj)	N	NN	sense
@@ -12548,9 +12587,9 @@ S (nsubj)	R	PRP	It
  (aux)	M	MD	can
  (advcl)	V	VB	dance
  (prep)		IN	to
- (pobj)	R	PRP	it
+ (pobj)	R	PRP	it	Baby One More Time
  (ROOT)	P!	:	—
-S (nsubj)	R	PRP	it
+S (nsubj)	R	PRP	it	Baby One More Time
  (ROOT)	V	VBZ	's
  (advmod)	A	JJR	more
  (attr)		PRP	me
@@ -12764,7 +12803,7 @@ S (nsubj)	N	NN	track
  (attr)	N	NN	ballad
  (punct)	P!	,	,
  (mark)		IN	that
-S (nsubj)	E	NNPS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ccomp)	V	VBZ	begins
  (prep)		IN	with
  (pobj)		PRP	You
@@ -12789,7 +12828,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (prep)		IN	from
  (pobj)		PRP	me
  (punct)	T!	.	/
-S (nsubj)	R	PRP	It	Baby One More Time
+S (nsubj)	R	PRP	It
  (ROOT)	V	VBZ	's
  (neg)	A	RB	not
  (mark)		IN	that
@@ -12872,7 +12911,7 @@ S (nsubj)	N	NN	track
  (compound)	E	NNP	Mikey
  (pobj)	_	_	Bassie
  (punct)	T!	.	.
- (poss)	E	NNP	Spears	Britney Spears
+ (poss)	E	NNPS	Spears	Britney Spears
  (case)		POS	'
 S (nsubj)	N	NNS	vocals
  (prep)		IN	on
@@ -13059,10 +13098,10 @@ S (nsubj)	N	NN	love
  (case)		POS	's
  (nummod)	C	CD	1967
  (appos)	A	JJ	single
- (none)	E	NNP	The
- (none)	_	_	Beat
- (none)	_	_	Goes
- (nsubjpass)	_	_	On
+S (none)	E	NNP	The
+_ (none)	_	_	Beat
+_ (none)	_	_	Goes
+_ (nsubjpass)	_	_	On
  (auxpass)	V	VBZ	is
  (ROOT)	V	VBN	influenced
  (agent)		IN	by
@@ -13739,7 +13778,7 @@ _ (none)	_	_	Happy
  (cc)		CC	and
  (conj)		NN	promotion
  (punct)		:	;
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBG	performing
  (punct)	P!	-LRB-	(
  (nsubj)	E	NNP	You
@@ -13886,7 +13925,7 @@ S (nsubj)	N	NN	Promotion
  (pobj)	C	CD	1998
  (punct)	P!	,	,
  (advmod)	W	WRB	when
-S (nsubj)	E	NNP	Spears	Britney Spears
+ (nsubj)	E	NNPS	Spears	Britney Spears
  (relcl)	V	VBD	did
  (det)		DT	a
  (amod)	A	JJ	small
@@ -13924,7 +13963,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (amod)	A	JJ	male
  (dobj)	N	NNS	dancers
  (prep)		IN	with
- (pobj)	R	PRP	her	Britney Spears
+ (pobj)	R	PRP	her
  (prep)		IN	on
  (det)		DT	the
  (pobj)	N	NN	stage
@@ -14195,7 +14234,7 @@ S (nsubj)	R	PRP	She	Britney Spears
  (prep)		IN	in
  (pobj)	E	NNP	Italy
  (punct)	T!	.	.
-S (nsubjpass)	E	NNP	Spears	Britney Spears
+S (nsubjpass)	E	NNPS	Spears	Britney Spears
  (auxpass)	V	VBD	was
  (advmod)	A	RB	also
  (ROOT)	V	VBN	featured
@@ -14217,7 +14256,7 @@ S (nsubj)	R	PRP	she	Britney Spears
  (relcl)	V	VBD	played
  (dobj)		PRP	herself
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (aux)	V	VBD	was
  (ROOT)	V	VBG	returning
  (det)		DT	a
@@ -14346,7 +14385,7 @@ S (nsubj)	N	NN	Promotion
  (pobj)	C	CD	2000
  (punct)	P!	,	,
  (advmod)	W	WRB	where
-S (nsubj)	E	NNPS	Spears	Britney Spears
+ (nsubj)	E	NNPS	Spears	Britney Spears
  (relcl)	V	VBD	performed
  (prep)		IN	at
  (det)		DT	the
@@ -14834,7 +14873,7 @@ S (nsubj)	R	PRP	she
  (punct)	P!	,	,
  (mark)		IN	while
  (advcl)	V	VBG	watching
- (poss)	R	PRP$	her
+ (poss)	R	PRP$	her	Britney Spears
  (compound)	N	NN	love
  (dobj)	_	_	interest
  (prep)		IN	from
@@ -14966,7 +15005,7 @@ _ (nsubjpass)	_	_	video
  (punct)	P!	,	,
 S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	injured
- (poss)	R	PRP$	her
+ (poss)	R	PRP$	her	Britney Spears
  (amod)	A	JJ	left
  (dobj)	N	NN	knee
  (cc)		CC	and
@@ -15108,7 +15147,7 @@ S (nsubj)	N	NN	remix
  (det)		DT	a
  (pobj)	N	NN	stanza
  (advmod)	W	WRB	where
-S (nsubj)	E	NNP	Spears	Britney Spears
+ (nsubj)	E	NNP	Spears	Britney Spears
  (relcl)	V	VBZ	yells
  (dobj)	E	NNP	Stop
  (punct)	T!	.	!
@@ -16772,7 +16811,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (prep)		IN	for
  (pobj)	N	NN	milk
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	shot
  (det)		DT	an
  (compound)	N	NN	advertising
@@ -16806,7 +16845,7 @@ S (nsubj)	E	NNP	Polaroid
  (amod)	A	JJ	official
  (pobj)	N	NN	camera
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	used
  (det)		DT	the
  (compound)	E	NNP	I
@@ -17481,7 +17520,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (punct)	P!	:	;
  (conj)		NN	title
  (punct)		:	;
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (conj)	A	JJ	special
  (aux)		TO	to
  (advcl)	V	VB	include
@@ -17793,7 +17832,7 @@ S (nsubj)	R	PRP	it	Baby One More Time
  (attr)	N	NN	mystery
  (prep)		IN	to
  (advmod)	W	WRB	why
-S (nsubj)	E	NNPS	Spears	Britney Spears
+ (nsubj)	E	NNPS	Spears	Britney Spears
  (pcomp)	V	VBD	became
  (predet)	M	PDT	such
  (det)		DT	a
@@ -17816,7 +17855,7 @@ S (nsubj)	E	NNP	Britney	Britney Spears
  (prep)		IN	in
  (pobj)		DT	all
  (prep)		IN	of
- (poss)	R	PRP$	her
+ (poss)	R	PRP$	her	Britney Spears
  (pobj)	N	NNS	videos
  (punct)	T!	.	.
 S (compound)	E	NNP	Barry
@@ -17928,7 +17967,7 @@ _ (nsubj)	_	_	pop
  (punct)		HYPH	-
  (poss)	N	NN	lounge
  (case)		``	'
-S (nsubj)	E	NNPS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ccomp)	V	VBZ	is
  (advmod)	A	RB	already
  (advmod)	A	RB	halfway
@@ -18676,7 +18715,7 @@ S (nsubj)	N	NN	album	Baby One More Time
  (appos)	C	CD	1998
  (punct)	P!	-RRB-	)
  (punct)	T!	.	.
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	broke
  (amod)	A	JJ	several
  (dobj)	N	NNS	records
@@ -18795,7 +18834,7 @@ S (nsubj)	E	NNP	Spears	Britney Spears
  (nummod)	C	CD	four
  (pobj)	N	NNS	weeks
  (prep)		IN	since
- (poss)	R	PRP$	its	Baby One More Time
+ (poss)	R	PRP$	its
  (pobj)	N	NN	release
  (punct)	P!	,	,
  (det)		DT	the
@@ -18882,7 +18921,7 @@ _ (nsubj)	_	_	Time
  (nummod)	C	CD	million
  (dobj)	N	NNS	copies
  (prep)		IN	in
- (poss)	R	PRP$	its	Baby One More Time
+ (poss)	R	PRP$	its
  (amod)	A	JJ	first
  (nummod)	C	CD	two
  (pobj)	N	NNS	months
@@ -20494,7 +20533,7 @@ _ (nsubj)	_	_	Shimbun
 S (nsubj)	N	NNS	critics
  (aux)	V	VBP	have
  (ccomp)	V	VBN	hailed
- (dobj)	R	PRP	her
+ (dobj)	R	PRP	her	Spears
  (prep)		IN	as
  (det)		DT	the
  (advmod)	A	RBS	most
@@ -20507,16 +20546,16 @@ S (nsubj)	N	NNS	critics
  (pobj)	N	NNS	years
  (punct)	P!	,	,
  (cc)		CC	but
-S (nsubj)	E	NNPS	Spears
+S (nsubj)	E	NNP	Spears
  (aux)	V	VBZ	has
  (conj)	V	VBN	set
- (poss)	R	PRP$	her
+ (poss)	R	PRP$	her	Spears
  (dobj)	N	NNS	sights
  (det)		DT	a
  (npadvmod)	A	JJ	little
  (advmod)	A	JJR	higher
  (punct)	P!	:	-
-S (nsubj)	R	PRP	she
+S (nsubj)	R	PRP	she	Spears
  (aux)	V	VBZ	is
  (ccomp)	V	VBG	aiming
  (prep)		IN	for
@@ -20649,7 +20688,7 @@ _ (nsubj)	_	_	Taylor
  (pobj)	E	NNP	Billboard
  (advcl)	V	VBD	observed
  (punct)	P!	,	,
-S (nsubj)	E	NNPS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (aux)	V	VBZ	has
  (ROOT)	V	VBN	become
  (det)		DT	a
@@ -20782,7 +20821,7 @@ _ (nsubj)	_	_	You
 _ (none)	_	_	Die
  (punct)	T!	.	.
  (punct)		:	;
-S (nsubj)	E	NNP	Spears	Britney Spears
+S (nsubj)	E	NNPS	Spears	Britney Spears
  (ROOT)	V	VBD	became
  (det)		DT	an
  (amod)	A	JJ	international
@@ -20909,7 +20948,7 @@ _ (nsubj)	_	_	Ellen
  (aux)	V	VBZ	has
  (ROOT)	V	VBN	reported
  (punct)	P!	:	:
-S (nsubj)	E	NNPS	Spears	Britney Spears
+S (nsubj)	E	NNP	Spears	Britney Spears
  (ccomp)	V	VBZ	is
  (advmod)	A	RB	famously
  (attr)	C	CD	one
@@ -21144,7 +21183,7 @@ S (nsubj)	R	PRP	they
  (punct)		:	;
  (nsubj)		NN	source
  (punct)		:	;
-S (nsubj)	N	NNS	—Spears
+S (nsubj)	N	NN	—Spears
  (ROOT)	V	VBZ	reflects
  (prep)		IN	on
  (punct)	P!	:	...
@@ -21189,7 +21228,7 @@ S (nsubj)	N	NNS	—Spears
  (punct)	P!	:	...
  (nsubj)		PRP	I
  (ROOT)	V	VBD	Did
- (dobj)	R	PRP	It
+ (dobj)	R	PRP	It	Baby One More Time
  (advmod)	A	RB	Again
  (punct)	P!	:	;
  (npadvmod)		NN	year
@@ -21516,7 +21555,7 @@ S (nsubj)	R	PRP	she
  (punct)	T!	.	.
  (advmod)	A	RB	So
  (aux)	V	VBZ	is
-S (nsubj)	R	PRP	it
+S (nsubj)	R	PRP	it	Baby One More Time
  (appos)		DT	all
  (ROOT)	V	VBG	proving
  (advmod)	A	RB	too
@@ -21674,10 +21713,10 @@ S (nsubj)	N	NNS	pressings
  (prep)		IN	by
  (pobj)	E	NNPS	Spears	Britney Spears
  (mark)		IN	after
- (none)	E	NNP	The
-S (nsubj)	_	_	Beat
- (none)	_	_	Goes
- (none)	_	_	On
+S (none)	E	NNP	The
+_ (nsubj)	_	_	Beat
+_ (none)	_	_	Goes
+_ (none)	_	_	On
  (punct)	T!	.	.
  (prep)		IN	In
  (pobj)	R	PRP	it	Baby One More Time
