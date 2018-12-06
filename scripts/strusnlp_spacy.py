@@ -172,6 +172,9 @@ def trimApos( nam):
     else:
         return ""
 
+def getAlphaTokenValue( value):
+    return value.translate( str.maketrans( "", "", "’'\"?!/;:"))
+
 def matchName( obj, candidate, relaxed):
     cd = deepcopy(candidate)
     if not obj:
@@ -733,23 +736,35 @@ def tagEntitySequenceStrusTagsInBrackets( tokens):
 def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
     tidx = 0
     while tidx < len(tokens):
-        if tokens[tidx].value in firstKeyLinkListMap:
-            candidateList = firstKeyLinkListMap[ tokens[tidx].value]
+        if tokens[tidx].alphavalue in firstKeyLinkListMap:
+            candidateList = firstKeyLinkListMap[ tokens[tidx].alphavalue]
             bestIdx = -1
             bestLen = 0
+            bestTokLen = 0
             for cidx,cd in enumerate( candidateList):
                 sidx = 0
-                while sidx < len(cd) and tidx+sidx < len(tokens):
-                    if tokens[tidx+sidx].value != cd[sidx] or tokens[tidx+sidx].nlprole == 'none' or (tokens[tidx+sidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[tidx+sidx].value[0].islower()):
+                nidx = tidx+sidx
+                doDebug = (tokens[nidx].alphavalue == "Africa")
+                while sidx < len(cd) and nidx < len(tokens):
+                    if doDebug:
+                        sys.stderr.write( "VISIT %s %s\n" % (tokens[nidx].alphavalue,cd[sidx]))
+                    if not tokens[nidx].alphavalue:
+                        nidx += 1
+                        continue
+                    if tokens[nidx].alphavalue != cd[sidx] or tokens[nidx].nlprole == 'none' or (tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[nidx].value[0].islower()):
                         break
+                    nidx += 1
                     sidx += 1
                 if sidx == len(cd):
                     if len(cd) > bestLen:
                         bestLen = len(cd)
                         bestIdx = cidx
+                        bestTokLen = nidx - tidx
+                        if doDebug:
+                            sys.stderr.write( "MATCH %s %s\n" % (' '.join(cd),' '.join([tk.value for tk in tokens[tidx:nidx]])))
             if bestIdx >= 0:
                 sidx = 0
-                while sidx < bestLen:
+                while sidx < bestTokLen:
                     tagEntitySequenceTokenShift( tokens, tidx+sidx, sidx)
                     sidx += 1
                 tidx += sidx
@@ -1124,11 +1139,11 @@ def getDocumentSentences( text, verbose):
         if value:
             if node.tag_[:3] == "NNP" and value.count('.') > 1:
                 for abr in splitAbbrev( value):
-                    tokens.append( NlpToken( None, None, node.tag_, node.dep_, abr, trimApos(abr), None))
+                    tokens.append( NlpToken( None, None, node.tag_, node.dep_, abr, getAlphaTokenValue(abr), None))
             elif node.tag_ and node.tag_[0] in ["N","J","V","R"]:
-                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, trimApos(value), None))
+                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, getAlphaTokenValue(value), None))
             else:
-                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, value, None))
+                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, getAlphaTokenValue(value), None))
         if node.dep_ == "punct":
             if not eb:
                 if value in [':',';','.']:
