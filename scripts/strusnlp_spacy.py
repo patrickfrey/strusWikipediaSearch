@@ -41,7 +41,7 @@ def mapTagValue( tagname):
     if tagname == "JJ" or tagname == "JJR" or tagname == "JJS":
         return "A" # [adjective/adverb] adjective
     if tagname == "LS":
-        return "T" # [delimiter] list item marker
+        return "T!" # [delimiter] list item marker
     if tagname == "MD":
         return "M" # modal
     if tagname == "TO":
