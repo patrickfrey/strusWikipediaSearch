@@ -115,7 +115,7 @@ N	philosophy
 T!	.
 
 #FILE#/A%2eS%2e_Roma.xml
-E	Associazione	A. S. Roma
+E	Associazione	A S Roma
 _	Sportiva
 _	Roma
 P!	(
@@ -131,7 +131,7 @@ V	referred
 	to
 	as
 A	simply
-E	Roma	A. S. Roma
+E	Roma	A S Roma
 P!	,
 V	is
 	a

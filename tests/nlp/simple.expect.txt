@@ -1,35 +1,35 @@
 * Document title Rudy Giuliani
 * Sentence [sent] Rudolph William Louis Giuliani is an American politician , attorney , businessman and public speaker who served as the 107th Mayor of New York City from 1994 to 2001 .
-* Tagging  'Rudolph' :NNP 'William' :NNP 'Louis' :NNP 'Giuliani' :NNP 'is' :VBZ 'an' :DT 'American' :JJ 'politician' :NN ',' :, 'attorney' :NN ',' :, 'businessman' :NN 'and' :CC 'public' :JJ 'speaker' :NN 'who' :WP 'served' :VBD 'as' :IN 'the' :DT '107th' :JJ 'Mayor' :NNP 'of' :IN 'New' :NNP 'York' :NNP 'City' :NNP 'from' :IN '1994' :CD 'to' :IN '2001' :CD '.' :.
+* Tagging  'Rudolph' :NNP(compound) 'William' :NNP(compound) 'Louis' :NNP(compound) 'Giuliani' :NNP(nsubj) 'is' :VBZ(ROOT) 'an' :DT(det) 'American' :JJ(amod) 'politician' :NN(attr) ',' :,(punct) 'attorney' :NN(conj) ',' :,(punct) 'businessman' :NN(conj) 'and' :CC(cc) 'public' :JJ(amod) 'speaker' :NN(conj) 'who' :WP(nsubj) 'served' :VBD(relcl) 'as' :IN(prep) 'the' :DT(det) '107th' :JJ(amod) 'Mayor' :NNP(pobj) 'of' :IN(prep) 'New' :NNP(compound) 'York' :NNP(compound) 'City' :NNP(pobj) 'from' :IN(prep) '1994' :CD(pobj) 'to' :IN(prep) '2001' :CD(pobj) '.' :.(punct)
 * Sentence [sent] Giuliani left Bloomberg to be mayor of a city with a big budget problem .
-* Tagging  'Giuliani' :NNP 'left' :VBD 'Bloomberg' :NNP 'to' :TO 'be' :VB 'mayor' :NN 'of' :IN 'a' :DT 'city' :NN 'with' :IN 'a' :DT 'big' :JJ 'budget' :NN 'problem' :NN '.' :.
+* Tagging  'Giuliani' :NNP(nsubj) 'left' :VBD(ROOT) 'Bloomberg' :NNP(dobj) 'to' :TO(aux) 'be' :VB(xcomp) 'mayor' :NN(attr) 'of' :IN(prep) 'a' :DT(det) 'city' :NN(pobj) 'with' :IN(prep) 'a' :DT(det) 'big' :JJ(amod) 'budget' :NN(compound) 'problem' :NN(pobj) '.' :.(punct)
 * Sentence [sent] It s unclear how he ll be able to handle it during his term .
-* Tagging  'It' :PRP 's' :VBZ 'unclear' :JJ 'how' :WRB 'he' :PRP 'll' :MD 'be' :VB 'able' :JJ 'to' :TO 'handle' :VB 'it' :PRP 'during' :IN 'his' :PRP$ 'term' :NN '.' :.
+* Tagging  'It' :PRP(nsubj) 's' :VBZ(ROOT) 'unclear' :JJ(acomp) 'how' :WRB(advmod) 'he' :PRP(nsubj) 'll' :MD(aux) 'be' :VB(ccomp) 'able' :JJ(acomp) 'to' :TO(aux) 'handle' :VB(xcomp) 'it' :PRP(dobj) 'during' :IN(prep) 'his' :PRP$(poss) 'term' :NN(pobj) '.' :.(punct)
 * Sentence [sent] Let 's go to N. Y. .
-* Tagging  'Let' :VB ''s' :PRP 'go' :VB 'to' :IN 'N.' :NNP 'Y.' :NNP '.' :.
+* Tagging  'Let' :VB(ROOT) ''s' :PRP(nsubj) 'go' :VB(ccomp) 'to' :IN(prep) 'N.' :NNP(pobj) 'Y.' :_(pobj) '.' :.(punct)
 * Sentence [sent] Because of the bad weather , Erni and Bernd go to town .
-* Tagging  'Because' :IN 'of' :IN 'the' :DT 'bad' :JJ 'weather' :NN ',' :, 'Erni' :NNP 'and' :CC 'Bernd' :NNP 'go' :VB 'to' :IN 'town' :NN '.' :.
+* Tagging  'Because' :IN(prep) 'of' :IN(pcomp) 'the' :DT(det) 'bad' :JJ(amod) 'weather' :NN(pobj) ',' :,(punct) 'Erni' :NNP(nsubj) 'and' :CC(cc) 'Bernd' :NNP(conj) 'go' :VB(ROOT) 'to' :IN(prep) 'town' :NN(pobj) '.' :.(punct)
 * Sentence [sent] The United States of America are a country .
-* Tagging  'The' :DT 'United' :NNP 'States' :NNP 'of' :IN 'America' :NNP 'are' :VBP 'a' :DT 'country' :NN '.' :.
+* Tagging  'The' :DT(det) 'United' :NNP(compound) 'States' :NNP(nsubj) 'of' :IN(prep) 'America' :NNP(pobj) 'are' :VBP(ROOT) 'a' :DT(det) 'country' :NN(attr) '.' :.(punct)
 * Sentence [sent] The ninth album of David Bowie is a masterpiece .
-* Tagging  'The' :DT 'ninth' :JJ 'album' :NN 'of' :IN 'David' :NNP 'Bowie' :NNP 'is' :VBZ 'a' :DT 'masterpiece' :NN '.' :.
+* Tagging  'The' :DT(det) 'ninth' :JJ(amod) 'album' :NN(nsubj) 'of' :IN(prep) 'David' :NNP(compound) 'Bowie' :NNP(pobj) 'is' :VBZ(ROOT) 'a' :DT(det) 'masterpiece' :NN(attr) '.' :.(punct)
 * Sentence [sent] This made Ayer at age 26 the ' enfant terrible ' of British philosophy .
-* Tagging  'This' :DT 'made' :VBD 'Ayer' :NNP 'at' :IN 'age' :NN '26' :CD 'the' :DT ''' :`` 'enfant' :JJ 'terrible' :JJ ''' :'' 'of' :IN 'British' :JJ 'philosophy' :NN '.' :.
-* Best title match Giuliani
+* Tagging  'This' :DT(nsubj) 'made' :VBD(ROOT) 'Ayer' :NNP(dobj) 'at' :IN(prep) 'age' :NN(pobj) '26' :CD(nummod) 'the' :DT(det) ''' :``(punct) 'enfant' :JJ(amod) 'terrible' :JJ(dobj) ''' :''(punct) 'of' :IN(prep) 'British' :JJ(amod) 'philosophy' :NN(pobj) '.' :.(punct)
+* Best title match 'Giuliani'
 * Entity sex stats Rudy Giuliani -> {'M': 1.096965511460289, 'N': 0.40414518843273806}
 * Subject Rudy Giuliani -> {'M': 1.096965511460289, 'N': 0.40414518843273806}
 * Synonym politician -> Rudy Giuliani 4.000
 * Entity usage Rudy Giuliani # 2.000
 * Entity usage Mayor # 1.000
-* Entity usage N. Y. # 1.000
+* Entity usage Bernd # 1.000
 * Entity usage New York City # 1.000
 * Entity usage Bloomberg # 1.000
 * Entity usage Erni # 1.000
 * Entity usage America # 1.000
 * Entity usage Ayer # 1.000
-* Entity usage United States # 1.000
+* Entity usage N Y # 1.000
 * Entity usage David Bowie # 1.000
-* Entity usage Bernd # 1.000
+* Entity usage United States # 1.000
 * Token count n. # 0.26148
 * Token count let # 0.26148
 * Token count america # 0.26148
@@ -109,9 +109,9 @@
 * Token count able # 0.26148
 * Token count new # 0.26148
 #FILE#Rudy_Giuliani.txt
-S (compound)	E	NNP	Rudolph	Rudy Giuliani
-_ (compound)	_	_	William
-_ (compound)	_	_	Louis
+S (none)	E	NNP	Rudolph	Rudy Giuliani
+_ (none)	_	_	William
+_ (none)	_	_	Louis
 _ (nsubj)	_	_	Giuliani
  (ROOT)	V	VBZ	is
  (det)		DT	an
@@ -224,42 +224,42 @@ S (nsubj)	N	NN	album
  (pobj)	N	NN	philosophy
  (punct)	T!	.	.
 
-* Document title A. S. Roma
+* Document title A S Roma
 * Sentence [sent] Associazione Sportiva Roma ( , ; Rome Sport Association ) , commonly referred to as simply Roma , is a professional Italian football club based in Rome .
-* Tagging  'Associazione' :NNP 'Sportiva' :NNP 'Roma' :NNP '(' :-LRB- ',' :, ';' :: 'Rome' :NNP 'Sport' :NNP 'Association' :NNP ')' :-RRB- ',' :, 'commonly' :RB 'referred' :VBN 'to' :IN 'as' :IN 'simply' :RB 'Roma' :NNP ',' :, 'is' :VBZ 'a' :DT 'professional' :JJ 'Italian' :JJ 'football' :NN 'club' :NN 'based' :VBN 'in' :IN 'Rome' :NNP '.' :.
+* Tagging  'Associazione' :NNP(compound) 'Sportiva' :NNP(compound) 'Roma' :NNP(nsubj) '(' :-LRB-(punct) ',' :,(punct) ';' ::(punct) 'Rome' :NNP(compound) 'Sport' :NNP(compound) 'Association' :NNP(nsubj) ')' :-RRB-(punct) ',' :,(punct) 'commonly' :RB(advmod) 'referred' :VBN(acl) 'to' :IN(prep) 'as' :IN(prep) 'simply' :RB(advmod) 'Roma' :NNP(pobj) ',' :,(punct) 'is' :VBZ(ROOT) 'a' :DT(det) 'professional' :JJ(amod) 'Italian' :JJ(amod) 'football' :NN(compound) 'club' :NN(attr) 'based' :VBN(acl) 'in' :IN(prep) 'Rome' :NNP(pobj) '.' :.(punct)
 * Sentence [title] Roma4 ;
-* Tagging  'Roma4' :NNP ';' ::
+* Tagging  'Roma4' :NNP(nmod) ';' ::(punct)
 * Sentence [numseq] 1927 ;
-* Tagging  '1927' :CD ';' ::
+* Tagging  '1927' :CD(npadvmod) ';' ::(punct)
 * Sentence [numseq] 6 ;
-* Tagging  '6' :CD ';' :SYM
+* Tagging  '6' :CD(appos) ';' :SYM(punct)
 * Sentence [numseq] 7 ;
-* Tagging  '7' :CD ';' ::
+* Tagging  '7' :CD(appos) ';' ::(punct)
 * Sentence [sent] cite weburl ;
-* Tagging  'cite' :VB 'weburl' :NN ';' ::
+* Tagging  'cite' :VB(conj) 'weburl' :NN(dobj) ';' ::(punct)
 * Sentence [] title ;
-* Tagging  'title' :NN ';' ::
+* Tagging  'title' :NN(ROOT) ';' ::(punct)
 * Sentence [title] Stadi Serie A 2015–2016 ;
-* Tagging  'Stadi' :NNP 'Serie' :NNP 'A' :NNP '2015–2016' :CD ';' ::
+* Tagging  'Stadi' :NNP(compound) 'Serie' :NNP(conj) 'A' :NNP(det) '2015–2016' :CD(dep) ';' ::(punct)
 * Sentence [] deadurl ;
-* Tagging  'deadurl' :NN ';' ::
+* Tagging  'deadurl' :NN(nsubj) ';' ::(punct)
 * Sentence [] yes ;
-* Tagging  'yes' :UH ';' ::
+* Tagging  'yes' :UH(intj) ';' ::(punct)
 * Sentence [] archiveurl ;
-* Tagging  'archiveurl' :NN ';' ::
+* Tagging  'archiveurl' :NN(conj) ';' ::(punct)
 * Sentence [sent] Real Madrid Club de Fútbol ( Spanish pronunciation : [ reˈal maˈðɾið ˈkluβ ðe ˈfuðβol ] ; " Royal Madrid Football Club " ) , commonly known as Real Madrid , is a professional football club based in Madrid , Spain .
-* Tagging  'Real' :NNP 'Madrid' :NNP 'Club' :NNP 'de' :NNP 'Fútbol' :NNP '(' :-LRB- 'Spanish' :JJ 'pronunciation' :NN ':' :: '[' :-LRB- 'reˈal' :NN 'maˈðɾið' :NN 'ˈkluβ' :NN 'ðe' :IN 'ˈfuðβol' :NN ']' :-RRB- ';' :: '"' :`` 'Royal' :NNP 'Madrid' :NNP 'Football' :NNP 'Club' :NNP '"' :'' ')' :-RRB- ',' :, 'commonly' :RB 'known' :VBN 'as' :IN 'Real' :NNP 'Madrid' :NNP ',' :, 'is' :VBZ 'a' :DT 'professional' :JJ 'football' :NN 'club' :NN 'based' :VBN 'in' :IN 'Madrid' :NNP ',' :, 'Spain' :NNP '.' :.
-* Best title match Roma
+* Tagging  'Real' :NNP(amod) 'Madrid' :NNP(compound) 'Club' :NNP(nmod) 'de' :NNP(nmod) 'Fútbol' :NNP(appos) '(' :-LRB-(punct) 'Spanish' :JJ(amod) 'pronunciation' :NN(appos) ':' ::(punct) '[' :-LRB-(punct) 'reˈal' :NN(npadvmod) 'maˈðɾið' :NN(amod) 'ˈkluβ' :NN(compound) 'ðe' :IN(compound) 'ˈfuðβol' :NN(appos) ']' :-RRB-(punct) ';' ::(punct) '"' :``(punct) 'Royal' :NNP(compound) 'Madrid' :NNP(compound) 'Football' :NNP(compound) 'Club' :NNP(conj) '"' :''(punct) ')' :-RRB-(punct) ',' :,(punct) 'commonly' :RB(advmod) 'known' :VBN(acl) 'as' :IN(prep) 'Real' :NNP(compound) 'Madrid' :NNP(pobj) ',' :,(punct) 'is' :VBZ(ROOT) 'a' :DT(det) 'professional' :JJ(amod) 'football' :NN(compound) 'club' :NN(attr) 'based' :VBN(acl) 'in' :IN(prep) 'Madrid' :NNP(pobj) ',' :,(punct) 'Spain' :NNP(appos) '.' :.(punct)
+* Best title match 'Roma'
 * Entity usage Roma4 # 1.500
+* Entity usage Royal Madrid Football Club # 1.000
 * Entity usage Stadi Serie A 2015–2016 # 1.500
-* Entity usage Rome Sport Association # 1.000
+* Entity usage A S Roma # 2.000
 * Entity usage Madrid # 1.000
 * Entity usage Real Madrid # 1.000
-* Entity usage A. S. Roma # 2.000
 * Entity usage Spain # 1.000
 * Entity usage Rome # 1.000
 * Entity usage Real Madrid Club de Fútbol # 1.000
-* Entity usage Royal Madrid Football Club # 1.000
+* Entity usage Rome Sport Association # 1.000
 * Token count ðe # 0.30595
 * Token count ˈfuðβol # 0.30595
 * Token count based # 0.49775
@@ -311,8 +311,8 @@ S (nsubj)	N	NN	album
 * Token count royal # 0.30595
 * Token count as # 0.49775
 #FILE#/A%2eS%2e_Roma.xml
-S (compound)	E	NNP	Associazione	A. S. Roma
-_ (compound)	_	_	Sportiva
+S (none)	E	NNP	Associazione	A S Roma
+_ (none)	_	_	Sportiva
 _ (nsubj)	_	_	Roma
  (punct)	P!	-LRB-	(
  (punct)	_	,	,
@@ -327,7 +327,7 @@ _ (nsubj)	_	_	Roma
  (prep)		IN	to
  (prep)		IN	as
  (advmod)	A	RB	simply
- (pobj)	E	NNP	Roma	A. S. Roma
+ (pobj)	E	NNP	Roma	A S Roma
  (punct)	P!	,	,
  (ROOT)	V	VBZ	is
  (det)		DT	a

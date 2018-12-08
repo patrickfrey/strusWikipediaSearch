@@ -119,13 +119,14 @@ def unifyType( type):
 
 def splitAbbrev( name):
     rt = []
-    while name.find('.') >= 0:
-        pi = name.index('.');
-        if pi > 0:
-            rt.append( name[ :pi+1])
-        name = name[ pi+1:]
-    if name:
-        rt.append( name)
+    sidx = 0
+    nidx = name.find('.', sidx)
+    while nidx >= 0:
+        rt.append( name[ sidx:nidx+1].strip())
+        sidx = nidx+1
+        nidx = name.find('.', sidx)
+    if sidx < len(name):
+        rt.append( name[sidx:].strip())
     return rt
 
 def getPrpSex( prp):
@@ -154,7 +155,7 @@ def getNounSex( noun):
         return None
 
 def trimApos( nam):
-    quotlist = ["'","’","`","\"","!","—"]
+    quotlist = ["'","’","`","\"",";",".",":"]
     nidx = 0
     eidx = len(nam)
     changed = True
@@ -172,59 +173,109 @@ def trimApos( nam):
     else:
         return ""
 
+alphaTokenDelimiters = ['"',"’","'",'"',"?","!","/",";",":",".",",","-","—"," "]
+def getAlphaTokenList( value):
+    value = trimApos(value)
+    sidx = 0
+    nidx = 0
+    rt = []
+    while nidx < len(value):
+        if value[nidx] in alphaTokenDelimiters:
+            if sidx < nidx:
+                rt.append( value[ sidx:nidx])
+                if value[nidx] != ' ':
+                    rt.append("-")
+            sidx = nidx+1
+        nidx += 1
+    if sidx < nidx:
+        rt.append( value[ sidx:nidx])
+    return rt
+
 def getAlphaTokenValue( value):
-    return value.translate( str.maketrans( "", "", "’'\"?!/;:"))
+    return ' '.join( getAlphaTokenList( value))
 
-def matchName( obj, candidate, relaxed):
-    cd = deepcopy(candidate)
-    if not obj:
-        return False
-    for nam in obj:
-        nam = trimApos( nam)
-        if relaxed or (nam and nam[ -1:] in ['.']):
-            if not nam or nam in [".", "..", "..."]:
-                continue
-            prefix = nam
-            if nam[ -1:] == '.':
-                prefix = nam[ :-1]
-            elif relaxed:
-                prefix = nam[0:2]
-            else:
-                prefix = nam[ :-1]
-            found = False
-            for eidx,elem in enumerate(cd):
-                elemnam = trimApos( elem)
-                if len(elemnam) > len(prefix) and elemnam[ :len(prefix)] == prefix:
-                    del cd[ eidx]
-                    found = True
-                    break
-            if not found:
-                return False
-        else:
-            found = False
-            for eidx,elem in enumerate(cd): 
-                if trimApos( nam) == trimApos( elem):
-                    del cd[ eidx]
-                    found = True
-                    break
-            if not found:
-                return False
-    return True
+def getTokenListString( tokens):
+    rt = ""
+    for tk in tokens:
+        if tk.value:
+            if rt:
+                rt += " "
+            rt += tk.value
+    return rt
 
-def isEqualName( obj, candidate):
-    if not obj or len(obj) != len(candidate):
-        return False
+def matchNameSubset( name, candidate):
     cd = deepcopy(candidate)
-    for nam in obj:
+    if not name:
+        return False
+    for nam in name:
+        if nam == '-':
+            if nam not in cd:
+                return False
+            continue
         found = False
         for eidx,elem in enumerate(cd):
-            if trimApos( nam) == trimApos( elem):
+            if nam == elem:
                 del cd[ eidx]
                 found = True
                 break
         if not found:
             return False
     return True
+
+def isEqualName( name, candidate):
+    hasDelim = False
+    cd = []
+    for c in candidate:
+        if c == '-':
+            hasDelim = True
+        else:
+            cd.append( c)
+    for nam in name:
+        if nam == '-':
+            if not hasDelim:
+                return False
+            continue
+        found = False
+        for eidx,elem in enumerate(cd): 
+            if nam == elem:
+                del cd[ eidx]
+                found = True
+                break
+        if not found:
+            return False
+    return len(cd) == 0
+
+def getLongestMatchIndex( tokens, tidx, candidate, maxErrors):
+    cd = deepcopy(candidate)
+    failCount = 0
+    lastMatch = -1
+    while tidx < len(tokens) and cd:
+        nam = tokens[tidx].alphavalue
+        found = False
+        for eidx,elem in enumerate(cd):
+            if nam == elem:
+                found = True
+                del cd[ eidx]
+                break
+        if not found:
+            for eidx,elem in enumerate(cd):
+                if (len(elem) == 1 and nam[:1] == elem) or (nam[:2] == elem[:2]):
+                    del cd[ eidx]
+                    found = True
+                    break
+        if found:
+            lastMatch = tidx
+        elif lastMatch == -1:
+            return -1
+        else:
+            failCount += 1
+            if failCount > maxErrors:
+                return -1
+        tidx += 1
+    if lastMatch >= 0:
+        return lastMatch+1
+    else:
+        return -1
 
 def isUpperCaseName( sq):
     for elem in sq:
@@ -308,18 +359,14 @@ def skipMultipartName( tokens, tidx):
     return ti
 
 def getTitleSubject( title):
-    if len(title) > 0 and title[0] == '(':
-        title = title.translate( str.maketrans( "", "", "’'\"()?!/;:"))
-    else:
-        title = title.translate( str.maketrans( "", "", "’'\"?!/;:"))
+    if len(title) > 0 and title[0] == '(' and title[-1] == ')':
+        title = title[1:-1]
     endtitle = title.find('(')
     if endtitle >= 0:
-        titleparts = title[ :endtitle ].split(' ')
-    else:
-        titleparts = title.split(' ')
+        title = title[ :endtitle ]
     rt = []
-    for tp in titleparts:
-        rt += splitAbbrev( tp)
+    for abr in splitAbbrev( title):
+        rt += getAlphaTokenList( abr)
     return rt
 
 def getEntityElements( name):
@@ -390,59 +437,6 @@ def assignRef( tokens, tidx, ref):
     if ridx != len(ref):
         tokens[ tidx].ref = ref
 
-def tagLongestTitleMatch( tokens, tidx, titlesubject, relaxed):
-    name = getMultipartName( tokens, tidx)
-    isSubject = (tokens[ tidx].nlprole[:5] == "nsubj")
-    matches = False
-    if relaxed:
-        mt = matchName( titlesubject, name, True)
-    if not mt:
-        mt = matchName( name, titlesubject, False)
-    if mt:
-        btidx = tidx - 1
-        while btidx > 0:
-            name.insert( 0, tokens[ btidx].value)
-            if relaxed:
-                if not (matchName( titlesubject, name, True) or matchName( name, titlesubject, False)):
-                    break
-            else:
-                if not matchName( name, titlesubject, False):
-                    break
-            if tokens[ btidx].nlprole[:5] == "nsubj":
-                isSubject = True
-            btidx -= 1
-        btidx += 1
-        tidx += 1
-        while tidx < len(tokens):
-            name.append( tokens[ tidx].value)
-            if not matchName( [tokens[ tidx].value], titlesubject, False):
-                break
-            if relaxed:
-                if not (matchName( titlesubject, name, True) or matchName( name, titlesubject, False)):
-                    break
-            else:
-                if not matchName( name, titlesubject, False):
-                    break
-            if tokens[ tidx].nlprole[:5] == "nsubj":
-                isSubject = True
-            tidx += 1
-        if isSubject:
-            tokens[ btidx].strusrole = 'S'
-        tokens[ btidx].strustag = 'E'
-        tokens[ btidx].nlptag = 'NNP'
-        tokens[ btidx].ref = titlesubject
-        btidx += 1
-        while btidx < tidx:
-            if isSubject:
-                tokens[ btidx].strusrole = '_'
-            tokens[ btidx].strustag = '_'
-            tokens[ btidx].nlptag = '_'
-            tokens[ btidx].ref = None
-            btidx += 1
-        return btidx
-    else:
-        return -1
-
 def listIsSentence( tokens):
     hasVerb = False
     hasObj = False
@@ -485,14 +479,14 @@ def listIsDate( tokens):
     return pt in ["N,MN","NMN","N,M,N","MN,N","MNN","MN","M,N","NM","N,M"]
 
 def listIsTitle( tokens):
-    quotlist = ["'","’","`",'"',"—",".","-",":"]
+    quotlist = ["'","’","`",'"',"—",".","-",":","!"]
     if listIsNumberSequence( tokens) or listIsDate( tokens):
         return False
     for eidx,elem in enumerate(tokens):
         if elem.nlptag:
-            if eidx > 0 and elem.nlptag == "HYPH":
+            if elem.strustag == '_' or elem.nlptag == '_':
                 continue
-            if elem.strustag == '_':
+            if eidx > 0 and elem.nlptag == "HYPH":
                 continue
             if eidx > 0 and elem.nlptag == 'CC' and elem.value and elem.value[0].islower():
                 continue
@@ -557,7 +551,7 @@ def getMapBestWeight( firstNameMap, name2weightMap, name):
             if len(thisCd) >= 4:
                 if len(thisCd) > 4 or thisCd[-1] not in name:
                     continue
-        if matchName( name, thisCd, False):
+        if matchNameSubset( name, thisCd):
             if weight > bestWeight or (weight == bestWeight and (not bestCd or len(bestCd) < len(thisCd))):
                 bestCd = thisCd
                 bestWeight = weight
@@ -594,13 +588,13 @@ def skipToOwnPrp( tokens, tidx):
 def skipNeutralPrp( tokens, tidx):
     if tokens[tidx].value.lower() == "it":
         tidx += 1
-        if tokens[tidx].nlptag in ["VBZ","VBD"] and tokens[tidx].value in ["'s","s","is","was"]:
+        if tidx < len(tokens) and tokens[tidx].nlptag in ["VBZ","VBD"] and tokens[tidx].value in ["'s","s","is","was"]:
             tidx += 1
-            if tokens[tidx].nlptag in ["RBR","RBS","RB","JJ","JJR","JJS"]:
+            if tidx < len(tokens) and tokens[tidx].nlptag in ["RBR","RBS","RB","JJ","JJR","JJS"]:
                 tidx += 1
-            if tokens[tidx].nlptag in ["IN"] and tokens[tidx].value in ["that","to"]:
+            if tidx < len(tokens) and tokens[tidx].nlptag in ["IN"] and tokens[tidx].value in ["that","to"]:
                 return tidx + 1
-            if tokens[tidx].nlptag in ["WP","WP$","WRB","WDT"]:
+            if tidx < len(tokens) and tokens[tidx].nlptag in ["WP","WP$","WRB","WDT"]:
                 return tidx + 1
     return -1
 
@@ -609,37 +603,44 @@ def tagSentenceStrusTags( tokens):
     mapprev = ""
     prevIsPlural = False
     termidx = -1
-    for eidx,elem in enumerate(tokens):
-        if elem.nlprole == "none" or elem.strustag == '_':
+    eidx = 0
+    while eidx < len(tokens):
+        elem = tokens[eidx]
+        if elem.nlprole == "none":
             prev = ""
             mapprev = ""
-            continue
-        type = elem.nlptag
-        isPlural = type in ["NNPS","NNS"]
-        utype = unifyType( type)
-        maptype = mapTag( type)
-        if maptype == "T!":
-            if type != ".":
-                termidx = eidx
-                maptype = "P!"
-        elif maptype == "P!":
-            pass
+        elif elem.nlptag == '_':
+            elem.strustag = '_'
+            prev = ""
+            mapprev = ""
         else:
-            termidx = -1
-        if type == 'PRP' or type == 'PRP$':
-            if not getPrpSex( elem.value):
-                maptype = ""
-        if prev and utype == prev and prev[0] in ['N','E','V'] and not (prevIsPlural and not isPlural):
-            type = "_"
-            maptype = "_";
-        elif maptype and maptype == mapprev and maptype[-1:] == '!':
-            maptype = '_'
-        else:
-            prev = utype
-            mapprev = maptype
-        prevIsPlural = isPlural
-        elem.strustag = maptype
-        elem.nlptag = type
+            type = elem.nlptag
+            isPlural = type in ["NNPS","NNS"]
+            utype = unifyType( type)
+            maptype = mapTag( type)
+            if maptype == "T!":
+                if type != ".":
+                    termidx = eidx
+                    maptype = "P!"
+            elif maptype == "P!":
+                pass
+            else:
+                termidx = -1
+            if type == 'PRP' or type == 'PRP$':
+                if not getPrpSex( elem.value):
+                    maptype = ""
+            if prev and utype == prev and prev[0] in ['N','E','V'] and not (prevIsPlural and not isPlural):
+                type = "_"
+                maptype = "_";
+            elif maptype and maptype == mapprev and maptype[-1:] == '!':
+                maptype = '_'
+            else:
+                prev = utype
+                mapprev = maptype
+            prevIsPlural = isPlural
+            elem.strustag = maptype
+            elem.nlptag = type
+        eidx = skipMultipartName( tokens, eidx)
     if termidx >= 0:
         tokens[ termidx].strustag = "T!"
 
@@ -741,15 +742,22 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
             bestIdx = -1
             bestLen = 0
             bestTokLen = 0
+            bestCd = None
+            bestDoAddRef = False
             for cidx,cd in enumerate( candidateList):
+                doAddRef = False
                 sidx = 0
-                nidx = tidx+sidx
-                doDebug = (tokens[nidx].alphavalue == "Africa")
+                nidx = tidx
                 while sidx < len(cd) and nidx < len(tokens):
-                    if not tokens[nidx].alphavalue:
-                        nidx += 1
-                        continue
                     if tokens[nidx].alphavalue != cd[sidx] or tokens[nidx].nlprole == 'none' or (tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[nidx].value[0].islower()):
+                        if not tokens[nidx].alphavalue:
+                            nidx += 1
+                            doAddRef = True
+                            continue
+                        if len(cd) > 3 and tokens[nidx].alphavalue == '-':
+                            nidx += 1
+                            doAddRef = True
+                            continue
                         break
                     nidx += 1
                     sidx += 1
@@ -758,27 +766,36 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
                         bestLen = len(cd)
                         bestIdx = cidx
                         bestTokLen = nidx - tidx
-            if bestIdx >= 0:
+                        bestCd = cd
+                        bestDoAddRef = doAddRef
+            if bestIdx >= 0 and bestLen > 1:
                 sidx = 0
+                if bestDoAddRef and not tokens[ tidx].ref:
+                    tokens[ tidx].ref = bestCd
                 while sidx < bestTokLen:
                     tagEntitySequenceTokenShift( tokens, tidx+sidx, sidx)
                     sidx += 1
                 tidx += sidx
             else:
-                tidx += 1
+                tidx = skipMultipartName( tokens, tidx)
         else:
-            tidx += 1
+            tidx = skipMultipartName( tokens, tidx)
 
 def matchTokenNameReference( tokens, tidx, nam):
     sidx = 0
-    while sidx < len(nam) and tidx+sidx < len(tokens):
-        if tokens[tidx+sidx].alphavalue != nam[sidx] or tokens[tidx+sidx].nlprole == 'none':
+    nidx = tidx
+    while sidx < len(nam) and nidx < len(tokens):
+        if not tokens[nidx].alphavalue:
+            nidx += 1
+            continue
+        if tokens[nidx].alphavalue != nam[sidx] or tokens[nidx].nlprole == 'none':
             break
         sidx += 1
+        nidx += 1
     if sidx == len(nam):
-        return True
+        return nidx-tidx
     else:
-        return False
+        return -1
 
 def tagTokenNameReference( tokens, tidx, size):
     sidx = 0
@@ -790,25 +807,34 @@ def tagSentenceNameReferences( tokens, nam):
     if nam:
         tidx = 0
         while tidx < len(tokens):
-            if matchTokenNameReference( tokens, tidx, nam):
+            if tokens[tidx].nlprole == "none":
+                tidx = skipMultipartName( tokens, tidx)
+                continue
+            mlen = matchTokenNameReference( tokens, tidx, nam)
+            if mlen >= 1:
                 tagTokenNameReference( tokens, tidx, len(nam))
-                tidx += len(nam)
+                tidx += mlen
             else:
                 tidx += 1
 
 def tagSentenceNameMapReferences( tokens, namemap):
     tidx = 0
     while tidx < len(tokens):
+        if tokens[tidx].nlprole == "none":
+            tidx = skipMultipartName( tokens, tidx)
+            continue
         tokval = tokens[tidx].alphavalue
         if tokval in namemap:
             bestIdx = -1
             bestLen = 0
             cdlist = namemap[ tokval]
             for cdIdx,cd in enumerate(cdlist):
-                if len(cd) > bestLen and matchTokenNameReference( tokens, tidx, cd):
-                    bestLen = len(cd)
-                    bestIdx = cdIdx
-            if bestIdx >= 0:
+                if len(cd) > bestLen:
+                    mlen = matchTokenNameReference( tokens, tidx, cd)
+                    if mlen >= 1:
+                        bestLen = mlen
+                        bestIdx = cdIdx
+            if bestIdx >= 0 and bestLen > 1:
                 tagTokenNameReference( tokens, tidx, bestLen)
                 tidx += bestLen
             else:
@@ -918,18 +944,17 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
             elif tokens[ eidx].nlptag[:2] == 'NN' and tokens[ eidx].value[0].isupper():
                 isEntity = True
             if sentenceIdx == 0:
-                nidx = tagLongestTitleMatch( tokens, eidx, titlesubject, True)
+                nidx = getLongestMatchIndex( tokens, eidx, titlesubject, 2)
                 if nidx >= 0:
-                    sentenceIdx = -1
-                    tokens[ eidx].ref = titlesubject
-                    if tokens[ eidx].nlptag == "NN":
-                        tokens[ eidx].nlptag == "NNP"
-                    if tokens[ eidx].nlptag == "NNS":
-                        tokens[ eidx].nlptag == "NNPS"
-                    if tokens[ eidx].strustag == "N":
-                        tokens[ eidx].strustag == "E"
                     ref = titlesubject
-                    isEntity = True
+                    tokens[ eidx].ref = ref
+                    ofs = 0
+                    while eidx < nidx:
+                        tagEntitySequenceTokenShift( tokens, eidx, ofs)
+                        ofs += 1
+                        eidx += 1
+                        isEntity = True
+                        sentenceIdx = -1
             if isEntity and not ref:
                 name = getMultipartName( tokens, eidx)
                 for bt in bestTitleMatches:
@@ -937,6 +962,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                         tokens[ eidx].ref = titlesubject
                         ref = titlesubject
                         isEntity = True
+                        break
             if isEntity and not ref:
                 item,weight = getMapBestWeight( nounCandidateKeyMap, nounCandidates, name)
                 if item:
@@ -1036,7 +1062,7 @@ def tagSentencePrpReferences( tokens, sentidx, sexSubjectMap, nnpSexMap, synonym
                     matchprev = False
                     if subjects:
                         for sb in subjects:
-                            if sb.sex == sex and sb.strustag == tokens[ eidx].strustag and (matchName( name, sb.value, False) or matchName( sb.value, name, False)):
+                            if sb.sex == sex and sb.strustag == tokens[ eidx].strustag and (matchNameSubset( name, sb.value) or matchNameSubset( sb.value, name)):
                                 matchprev = True
                     if not matchprev:
                         subjects.append( Subject( sex, tokens[ eidx].strustag, name, sentidx))
@@ -1129,13 +1155,28 @@ def getDocumentSentences( text, verbose):
             else:
                 eb = None
         if value:
+            nlptag = node.tag_
             if node.tag_[:3] == "NNP" and value.count('.') > 1:
                 for abr in splitAbbrev( value):
-                    tokens.append( NlpToken( None, None, node.tag_, node.dep_, abr, getAlphaTokenValue(abr), None))
-            elif node.tag_ and node.tag_[0] in ["N","J","V","R"]:
-                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, getAlphaTokenValue(value), None))
+                    elemList = getAlphaTokenList(abr)
+                    if not elemList:
+                        tokens.append( NlpToken( None, None, nlptag, node.dep_, abr, "", None))
+                    else:
+                        for elem in elemList:
+                            tokens.append( NlpToken( None, None, nlptag, node.dep_, abr, elem, None))
+                            abr = ""
+                            nlptag = "_"
+            elif value in alphaTokenDelimiters:
+                tokens.append( NlpToken( None, None, nlptag, node.dep_, value, "-", None))
             else:
-                tokens.append( NlpToken( None, None, node.tag_, node.dep_, value, getAlphaTokenValue(value), None))
+                elemList = getAlphaTokenList(value)
+                if not elemList:
+                    tokens.append( NlpToken( None, None, nlptag, node.dep_, value, "", None))
+                else:
+                    for elem in elemList:
+                        tokens.append( NlpToken( None, None, nlptag, node.dep_, value, elem, None))
+                        value = ""
+                        nlptag = "_"
         if node.dep_ == "punct":
             if not eb:
                 if value in [':',';','.']:
@@ -1180,14 +1221,20 @@ def getDocumentNlpTokCountMap( sentences):
                     else:
                         rt[ key] = 1.5
         if sent.type == "sent":
-            for tidx,tok in enumerate(sent.tokens):
+            tidx = 0
+            while tidx < len(sent.tokens):
+                tok = sent.tokens[ tidx]
                 if tok.nlptag in ["NNP","NNPS"]:
-                    name = tok.ref or getMultipartName( sent.tokens, tidx)
+                    nidx = skipMultipartName( sent.tokens, tidx)
+                    name = tok.ref or getAlphaTokens( sent.tokens, tidx, nidx)
                     key = ' '.join( name)
                     if key in rt:
                         rt[ key] += 1
                     else:
                         rt[ key] = 1
+                    tidx = nidx
+                else:
+                    tidx += 1
     return rt
 
 def splitNlpTokCountMap( usageMap):
@@ -1255,7 +1302,7 @@ def getMostUsedMultipartList( usageMap):
              else:
                  usageCntMap[ usage] = 1
     minusage = 3
-    maxUsageCnt = totalUsageCnt * 0.8
+    maxUsageCnt = totalUsageCnt * 0.6
     usageCnt = 0
     for usage in sorted( usageCntMap.keys(), reverse=True):
         usageCnt += usageCntMap[ usage] * usage
@@ -1265,7 +1312,7 @@ def getMostUsedMultipartList( usageMap):
     if minusage > 3:
         reduMap = {}
         for key,usage in selMap.items():
-            if usage >= minusage:
+            if usage >= minusage or key.count(' ') > 3:
                 reduMap[ key] = usage
         return [elem.split(' ') for elem in reduMap.keys()]
     else:
@@ -1278,7 +1325,7 @@ def getBestTitleMatches( titlesubject, tokCountMap):
         name = key.split(' ')
         if len(name) == 1 and len(titlesubject) > 3:
             continue
-        if matchName( name, titlesubject, False):
+        if matchNameSubset( name, titlesubject):
             if tf > 20 and maxTf > 20 and len(name) < len(bestName) and tf * 2 > maxTf:
                 maxTf = tf
                 bestName = name
@@ -1290,7 +1337,7 @@ def getBestTitleMatches( titlesubject, tokCountMap):
         rt.append( bestName)
         for key,tf in tokCountMap.items():
             name = key.split(' ')
-            if matchName( name, titlesubject, False) and len(name) > len(bestName):
+            if matchNameSubset( name, titlesubject) and len(name) > len(bestName):
                 rt.append( name)
     return rt
 
@@ -1374,7 +1421,7 @@ def getDocumentNnpSexCountMap( titlesubject, sentences):
     pastSubjects = {}
     for sent in sentences:
         updateList = []
-        # print( "** SENT %s" % ' '.join( [tok.value for tok in sent.tokens]))
+        # print( "** SENT %s" % getTokenListString( sent.tokens))
 
         reduSubjectMap( pastSubjects)
 
@@ -1404,7 +1451,7 @@ def getDocumentNnpSexCountMap( titlesubject, sentences):
             elif tok.nlptag[0:3] == "PRP":
                 nidx = skipNeutralPrp( sent.tokens, tidx)
                 if nidx >= 0:
-                    # print( "** SKIP NEUTRAL PRP %s" % ' '.join( [tk.value for tk in sent.tokens[tidx:nidx]] ))
+                    # print( "** SKIP NEUTRAL PRP %s" % getTokenListString( sent.tokens[tidx:nidx]))
                     tidx = nidx-1
                 else:
                     sex = getPrpSex( tok.value)
@@ -1444,7 +1491,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
     pastSentSomeNouns = {}
     for sent in sentences:
         # if sent.type == "sent":
-        #     print( "** SENT %s" % ' '.join( [tk.value for tk in sent.tokens]))
+        #     print( "** SENT %s" % getTokenListString( sent.tokens))
         sentSubjects = []
         sentNNPs = []
         sentSomeNouns = []
@@ -1604,7 +1651,7 @@ def getDocumentSynonymCountMap( titlesubject, sentences):
                 pastSubjects[ sbj] = 2.5
     rt = {}
     for nnp,map in synomap.items():
-        if matchName( nnp.split(' '), titlesubject, False):
+        if matchNameSubset( nnp.split(' '), titlesubject):
             bestweight = 1.0
             bestcd = None
             for noun,weight in map.items():
@@ -1660,6 +1707,8 @@ def printSentenceTagging( title, tokens):
             attr += "%s:" % tk.strusrole
         if tk.nlptag:
             attr += tk.nlptag
+        if tk.nlprole:
+            attr += "(" + tk.nlprole + ")"
         if tk.strustag:
             attr += "/%s" % tk.strustag
         if tk.ref:
@@ -1681,7 +1730,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     sentences = getDocumentSentences( text, verbose)
     if verbose:
         for sent in sentences:
-            print( "* Sentence [%s] %s" % (sent.type, ' '.join( [tk.value for tk in sent.tokens])))
+            print( "* Sentence [%s] %s" % (sent.type, getTokenListString( sent.tokens)))
             printSentenceTagging( "", sent.tokens)
     start_time = time.time()
     
@@ -1689,13 +1738,16 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         countTokens( tokCntMap, sent.tokens)
         tokCntTotal += len(sent.tokens)
         tagSentenceLinkReferences( sent.tokens, entityFirstKeyMap)
+        printSentenceTagging( "STEP0", sent.tokens)
         if sent.type == "title":
             tagEntitySequenceStrusTags( sent.tokens, 0, len(sent.tokens))
             tagSentenceStrusTags( sent.tokens)
         elif sent.type == "sent":
             tagSentenceStrusTags( sent.tokens)
         tagEntitySequenceStrusTagsInBrackets( sent.tokens)
+        printSentenceTagging( "STEP1", sent.tokens)
         tagSentenceNameReferences( sent.tokens, titlesubject)
+        # printSentenceTagging( "STEP2", sent.tokens)
 
     tokCntWeightMap = tokenCountToWeightMap( tokCntMap, tokCntTotal)
     countNnp = getDocumentNlpTokCountMap( sentences)
@@ -1708,7 +1760,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         if sent.type == "sent":
             tagSentenceSubjects( sent.tokens)
             tagSentenceCompleteNounReferences( sent.tokens, titlesubject, bestTitleMatches, nounCandidateKeyMap, nounCandidates, tokCntWeightMap, sidx)
-
+            # printSentenceTagging( "STEP3", sent.tokens)
     countNnp = getDocumentNlpTokCountMap( sentences)
     splitNlpTokCountMap( countNnp)
     mostUsedNnp = getMostUsedMultipartList( countNnp)
@@ -1716,7 +1768,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     for sidx,sent in enumerate(sentences):
         if sent.type == "sent" or sent.type == "title":
             tagSentenceNameMapReferences( sent.tokens, mostUsedNnpMap)
-
+            # printSentenceTagging( "STEP4", sent.tokens)
     nnpSexCountMap = getDocumentNnpSexCountMap( titlesubject, sentences)
     synonymCountMap = getDocumentSynonymCountMap( titlesubject, sentences)
     nnpSexMap = getDocumentNnpSexMap( nnpSexCountMap)
@@ -1739,7 +1791,7 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         rt += printSentence( sent.tokens, complete)
     if verbose:
         for bm in bestTitleMatches:
-            print( "* Best title match %s" % ' '.join(bm))
+            print( "* Best title match '%s'" % ' '.join(bm))
         for subj,sexmap in nnpSexCountMap.items():
             print( "* Entity sex stats %s -> %s" % (subj, sexmap))
         for subj,sex in nnpSexMap.items():
@@ -1915,13 +1967,9 @@ def diffTransformationResult( output, expected):
     return output == expected
 
 def runTest():
-    printTestResult( "MATCH 1", matchName( ["Giuliani"], ["Rudy","Giuliani"], False))
-    printTestResult( "MATCH 2", matchName( ["Rudy","Giuliani"], ["Rudolph", "William", "Louis", "Giuliani"], True))
-    printTestResult( "NOT MATCH 1", not matchName( ["Hugo","Chavez"], ["Hurto", "Castro"], False))
-    printTestResult( "TRIM APOS 1", diffTransformationResult( trimApos( "calvin'"), "calvin"))
-    printTestResult( "TRIM APOS 2", diffTransformationResult( trimApos( "calvin—"), "calvin"))
-    printTestResult( "TRIM APOS 3", diffTransformationResult( trimApos( "—calvin"), "calvin"))
-    printTestResult( "TRIM APOS 4", diffTransformationResult( trimApos( "—calvin—'"), "calvin"))
+    printTestResult( "MATCH 1", matchNameSubset( ["Giuliani"], ["Rudy","Giuliani"]))
+    printTestResult( "MATCH 2", matchNameSubset( ["Rudy","Giuliani"], ["Rudolph", "William", "Louis", "Giuliani"]))
+    printTestResult( "NOT MATCH 1", not matchNameSubset( ["Hugo","Chavez"], ["Hurto", "Castro"]))
 
 if __name__ == "__main__":
     argmap = parseProgramArguments( sys.argv[ 1:])
