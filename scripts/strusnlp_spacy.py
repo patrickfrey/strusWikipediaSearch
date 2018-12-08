@@ -1156,6 +1156,7 @@ def getDocumentSentences( text, verbose):
                 eb = None
         if value:
             nlptag = node.tag_
+            strustag = None
             if node.tag_[:3] == "NNP" and value.count('.') > 1:
                 for abr in splitAbbrev( value):
                     elemList = getAlphaTokenList(abr)
@@ -1163,9 +1164,10 @@ def getDocumentSentences( text, verbose):
                         tokens.append( NlpToken( None, None, nlptag, node.dep_, abr, "", None))
                     else:
                         for elem in elemList:
-                            tokens.append( NlpToken( None, None, nlptag, node.dep_, abr, elem, None))
+                            tokens.append( NlpToken( strustag, None, nlptag, node.dep_, abr, elem, None))
                             abr = ""
                             nlptag = "_"
+                            strustag = "_"
             elif value in alphaTokenDelimiters:
                 tokens.append( NlpToken( None, None, nlptag, node.dep_, value, "-", None))
             else:
@@ -1174,9 +1176,10 @@ def getDocumentSentences( text, verbose):
                     tokens.append( NlpToken( None, None, nlptag, node.dep_, value, "", None))
                 else:
                     for elem in elemList:
-                        tokens.append( NlpToken( None, None, nlptag, node.dep_, value, elem, None))
+                        tokens.append( NlpToken( strustag, None, nlptag, node.dep_, value, elem, None))
                         value = ""
                         nlptag = "_"
+                        strustag = "_"
         if node.dep_ == "punct":
             if not eb:
                 if value in [':',';','.']:

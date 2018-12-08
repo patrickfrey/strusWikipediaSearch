@@ -6,7 +6,7 @@
 * Sentence [sent] It s unclear how he ll be able to handle it during his term .
 * Tagging  'It' :PRP(nsubj) 's' :VBZ(ROOT) 'unclear' :JJ(acomp) 'how' :WRB(advmod) 'he' :PRP(nsubj) 'll' :MD(aux) 'be' :VB(ccomp) 'able' :JJ(acomp) 'to' :TO(aux) 'handle' :VB(xcomp) 'it' :PRP(dobj) 'during' :IN(prep) 'his' :PRP$(poss) 'term' :NN(pobj) '.' :.(punct)
 * Sentence [sent] Let 's go to N. Y. .
-* Tagging  'Let' :VB(ROOT) ''s' :PRP(nsubj) 'go' :VB(ccomp) 'to' :IN(prep) 'N.' :NNP(pobj) 'Y.' :_(pobj) '.' :.(punct)
+* Tagging  'Let' :VB(ROOT) ''s' :PRP(nsubj) 'go' :VB(ccomp) 'to' :IN(prep) 'N.' :NNP(pobj) 'Y.' :_(pobj)/_ '.' :.(punct)
 * Sentence [sent] Because of the bad weather , Erni and Bernd go to town .
 * Tagging  'Because' :IN(prep) 'of' :IN(pcomp) 'the' :DT(det) 'bad' :JJ(amod) 'weather' :NN(pobj) ',' :,(punct) 'Erni' :NNP(nsubj) 'and' :CC(cc) 'Bernd' :NNP(conj) 'go' :VB(ROOT) 'to' :IN(prep) 'town' :NN(pobj) '.' :.(punct)
 * Sentence [sent] The United States of America are a country .
