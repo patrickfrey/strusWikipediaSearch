@@ -1738,14 +1738,14 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
         countTokens( tokCntMap, sent.tokens)
         tokCntTotal += len(sent.tokens)
         tagSentenceLinkReferences( sent.tokens, entityFirstKeyMap)
-        printSentenceTagging( "STEP0", sent.tokens)
+        # printSentenceTagging( "STEP0", sent.tokens)
         if sent.type == "title":
             tagEntitySequenceStrusTags( sent.tokens, 0, len(sent.tokens))
             tagSentenceStrusTags( sent.tokens)
         elif sent.type == "sent":
             tagSentenceStrusTags( sent.tokens)
         tagEntitySequenceStrusTagsInBrackets( sent.tokens)
-        printSentenceTagging( "STEP1", sent.tokens)
+        # printSentenceTagging( "STEP1", sent.tokens)
         tagSentenceNameReferences( sent.tokens, titlesubject)
         # printSentenceTagging( "STEP2", sent.tokens)
 
