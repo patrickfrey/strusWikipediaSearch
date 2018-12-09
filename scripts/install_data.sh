@@ -64,9 +64,11 @@ processPosTaggingDumpSlice() {
     for cc in 0 1 2 3 4 5 6 7 8 9; do
     for dd in 0 1 2 3 4 5 6 7 8 9; do
         DID=$aa$bb$cc$dd
-        if [ $DID >= $START && `expr $DID % $SLICE` == $WHAT ]; then
-            echo "processing $DID ..."
-            processPosTagging $DID
+        if [ $DID -ge $START ]; then
+            if [ `expr $DID % $SLICE` == $WHAT ]; then
+                echo "processing $DID ..."
+                processPosTagging $DID
+            fi
         fi
     done
     done
@@ -74,9 +76,9 @@ processPosTaggingDumpSlice() {
     done
 }
 
-processPosTaggingDumpSlice 0 3 0 &
-processPosTaggingDumpSlice 1 3 0 &
-processPosTaggingDumpSlice 2 3 0
+processPosTaggingDumpSlice 0 3 0021 &
+processPosTaggingDumpSlice 1 3 0021 &
+processPosTaggingDumpSlice 2 3 0021 &
 
 
 # cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp.py -S -C 100 > /srv/wikipedia/tag/0000.txt

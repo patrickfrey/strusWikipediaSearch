@@ -173,7 +173,7 @@ def trimApos( nam):
     else:
         return ""
 
-alphaTokenDelimiters = ['"',"’","'",'"',"?","!","/",";",":",".",",","-","—"," "]
+alphaTokenDelimiters = ['"',"’","'",'"',"?","!","/",";",":",".",",","-","—"," ",")","(","[","]","{","}","<",">"]
 def getAlphaTokenList( value):
     value = trimApos(value)
     sidx = 0
