@@ -492,14 +492,8 @@ def listIsTitle( tokens):
                 continue
             if elem.nlptag[0] in ['U','V','J','N','P','R','W','M','C','F','T','D','I']:
                 if elem.value:
-                    if (elem.value[0].isupper() or elem.value[0].isdigit() or elem.value[0] in quotlist):
+                    if elem.value and (elem.value[0].isupper() or elem.value[0].isdigit() or elem.value[0] in quotlist):
                         continue
-#                    if eidx > 0 and elem.nlprole == "prep" and len(elem.value) <= 4:
-#                        continue
-#                    if eidx > 0 and elem.nlptag == "DT":
-#                        continue
-#                    if eidx > 0 and elem.nlptag == "TO" and elem.value == "to":
-#                        continue
         if elem.nlprole == "punct":
             continue
         return False
@@ -749,7 +743,7 @@ def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
                 sidx = 0
                 nidx = tidx
                 while sidx < len(cd) and nidx < len(tokens):
-                    if tokens[nidx].alphavalue != cd[sidx] or tokens[nidx].nlprole == 'none' or (tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[nidx].value[0].islower()):
+                    if tokens[nidx].alphavalue != cd[sidx] or tokens[nidx].nlprole == 'none' or (tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[nidx].value and tokens[nidx].value[0].islower()):
                         if not tokens[nidx].alphavalue:
                             nidx += 1
                             doAddRef = True
@@ -854,18 +848,18 @@ def tagSentenceSubjects( tokens):
             bracketCnt -= 1
         elif bracketCnt > 0:
             pass
-        elif elem.nlptag in ["WP","WP$","WRB","WDT","IN"] and elem.value[0] == 'w':
+        elif elem.nlptag in ["WP","WP$","WRB","WDT","IN"] and elem.value and elem.value[0] == 'w':
             # skip subordinate clause
             nidx = eidx + 1
-            if nidx < len(tokens) and tokens[nidx].nlptag == "DT" and not tokens[nidx].value[0].isupper():
+            if nidx < len(tokens) and tokens[nidx].nlptag == "DT" and tokens[nidx].value and not tokens[nidx].value[0].isupper():
                 nidx += 1
-            if nidx < len(tokens) and tokens[nidx].nlptag in ["RBR","RBS","RB"] and not tokens[nidx].value[0].isupper():
+            if nidx < len(tokens) and tokens[nidx].nlptag in ["RBR","RBS","RB"] and tokens[nidx].value and not tokens[nidx].value[0].isupper():
                 nidx += 1
             while nidx < len(tokens) and tokens[nidx].nlptag in ["RBS","JJ","JJS","JJR","VBG","HYPH"] and not tokens[nidx].value[0].isupper():
                 nidx += 1
             while nidx < len(tokens) and tokens[nidx].nlptag in ["NN","NNS","NNP","NNPS"]:
                 nidx = skipMultipartName( tokens, nidx)
-            if nidx < len(tokens) and tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and not tokens[nidx].value[0].isupper():
+            if nidx < len(tokens) and tokens[nidx].nlptag in ["MD","VBZ","VBD","VBP"] and tokens[nidx].value and not tokens[nidx].value[0].isupper():
                 eidx = nidx
         elif elem.nlptag == 'PRP' and elem.nlprole[:5] == "nsubj" and getPrpSex(elem.value):
             elem.strusrole = "S"
@@ -941,7 +935,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
             isEntity = False
             if tokens[ eidx].nlptag[:3] == 'NNP':
                 isEntity = True
-            elif tokens[ eidx].nlptag[:2] == 'NN' and tokens[ eidx].value[0].isupper():
+            elif tokens[ eidx].nlptag[:2] == 'NN' and tokens[ eidx].value and tokens[ eidx].value[0].isupper():
                 isEntity = True
             if sentenceIdx == 0:
                 nidx = getLongestMatchIndex( tokens, eidx, titlesubject, 2)
