@@ -36,7 +36,7 @@ for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 
 processPosTagging() {
     DID=$1
-    NLPCONV=/home/patrick/github/strusWikipediaSearch/scripts/strusnlp_spacy.py
+    NLPCONV=/home/patrick/github/strusWikipediaSearch/scripts/strusnlp.py
     PYTHONHASHSEED=123
     strusPosTagger -I -x xml -C XML -D '; ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//mark' -E '//text' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -E '//char' -E '//code' -E '//math' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
     EC="$?"
@@ -78,7 +78,7 @@ processPosTaggingDumpSlice 1 3 &
 processPosTaggingDumpSlice 2 3
 
 
-# cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp_spacy.py -S -C 100 > /srv/wikipedia/tag/0000.txt
+# cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp.py -S -C 100 > /srv/wikipedia/tag/0000.txt
 # strusPosTagger -x ".xml" -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -o /srv/wikipedia/nlpxml/0000 /srv/wikipedia/xml/0000 /srv/wikipedia/tag/0000.txt
 
 
