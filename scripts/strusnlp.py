@@ -590,6 +590,8 @@ def skipNeutralPrp( tokens, tidx):
                 return tidx + 1
             if tidx < len(tokens) and tokens[tidx].nlptag in ["WP","WP$","WRB","WDT"]:
                 return tidx + 1
+    elif tidx+1 < len(tokens) and tokens[tidx].value.lower() in ["his","her","its"] and tokens[tidx+1].value.lower() in ["own"]:
+        return tidx + 2
     return -1
 
 def tagSentenceStrusTags( tokens):
