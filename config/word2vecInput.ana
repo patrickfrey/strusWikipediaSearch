@@ -1,0 +1,35 @@
+[SearchIndex]
+	none = prefix("B#"):entityid content //bibref();
+	none = prefix("U#"):entityid content //char();
+	none = prefix("U#"):entityid content //math();
+	none = prefix("U#"):entityid content //code();
+	none = prefix("T#"):entityid content //attr();
+	none = prefix("T#"):entityid content //attr/code();
+	none = entityid content //citlink@id;
+	none = entityid content //citlink;
+	none = entityid content //weblink@id;
+	none = entityid content //weblink;
+
+	punct = empty content //P;
+	eos = empty content //T;
+
+	word = entityid content //nowiki();
+	word = prefix("E#"):entityid content //entity();
+	word = prefix("E#"):entityid content //pagelink();
+	word = prefix("E#"):entityid content //pagelink@anchor;
+	word = prefix("E#"):entityid content //pagelink@id;
+	word = prefix("E#"):entityid content //pagelink();
+	word = prefix("T#"):entityid word //text();
+	word = prefix("T#"):entityid word //text();
+
+	tagd = prefix("C#"):entityid word //C();
+	tagd = prefix("X#"):entityid word //X();
+	tagd = prefix("A#"):entityid word //A();
+	tagd = prefix("M#"):entityid word //M();
+	tagd = prefix("N#"):entityid word //N();
+	tagd = prefix("E#"):entityid word //E();
+	tagd = prefix("U#"):entityid word //U();
+	tagd = prefix("R#"):entityid word //R();
+	tagd = prefix("V#"):entityid word //V();
+	tagd = prefix("W#"):entityid word //W();
+

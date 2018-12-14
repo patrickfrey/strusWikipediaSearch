@@ -63,7 +63,7 @@ def mapTagValue( tagname):
     if tagname == "RB" or tagname == "RBR" or tagname == "RBS":
         return "A" # [adjective/adverb] adverb or comparative or superlative
     if tagname == "RP":
-        return "_" # [particle] particle
+        return "A" # [particle] particle
     if tagname == "HYPH":
         return "" # empty
     if tagname == "AFX":
