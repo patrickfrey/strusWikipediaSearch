@@ -1,5 +1,12 @@
 {
     "library": {
+        "select": [
+            "//C()","//X()","//A()","//M()","//N()","//E()","//U()","//R@id","//R()","//V()","//W()",
+            "//P()","//T()",
+            "//bibref()","//math()","//code()","//char()","//text()",
+            "//citlink@id","//citlink()","//weblink@id","//weblink()","//pagelink@id","//pagelink@anchor","//pagelink()",
+            "//entity()"
+        ],
         "element": [
             {"type":"title", "regex":".*", "priority":1, "minlen":1, "maxlen":10,
              "tokenizer": {"name":"word"}, "normalizer":[{"name":"orig"}]},
