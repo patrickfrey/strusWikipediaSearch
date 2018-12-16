@@ -1,13 +1,18 @@
+[ForwardIndex]
+	none = orig content //weblink@id;
+	none = orig content //math();
+	none = orig content //char();
+	none = orig content //bibref();
+	none = orig word //E();
+	none = orig word //U();
+
 [SearchIndex]
 	none = prefix("B#"):entityid content //bibref();
-	none = prefix("U#"):entityid content //char();
 	none = prefix("U#"):entityid content //math();
 	none = prefix("U#"):entityid content //code();
 	none = prefix("T#"):entityid content //attr();
-	none = prefix("T#"):entityid content //attr/code();
 	none = entityid content //citlink@id;
 	none = entityid content //citlink;
-	none = entityid content //weblink@id;
 	none = entityid content //weblink;
 
 	punct = empty content //P;
@@ -15,21 +20,23 @@
 
 	word = entityid content //nowiki();
 	word = prefix("E#"):entityid content //entity();
-	word = prefix("E#"):entityid content //pagelink();
-	word = prefix("E#"):entityid content //pagelink@anchor;
-	word = prefix("E#"):entityid content //pagelink@id;
+	word = prefix("E#"):entityid content {position=succ} //pagelink@anchor;
+	word = prefix("E#"):entityid content {position=succ} //pagelink@id;
 	word = prefix("E#"):entityid content //pagelink();
 	word = prefix("T#"):entityid word //text();
 	word = prefix("T#"):entityid word //text();
+	word = prefix("T#"):entityid word //char();
+	word = prefix("T#"):entityid content //pagelink();
 
-	tagd = prefix("C#"):entityid word //C();
-	tagd = prefix("X#"):entityid word //X();
-	tagd = prefix("A#"):entityid word //A();
-	tagd = prefix("M#"):entityid word //M();
-	tagd = prefix("N#"):entityid word //N();
+	tagd = prefix("C#"):lc word //C();
+	tagd = prefix("X#"):lc word //X();
+	tagd = prefix("A#"):lc word //A();
+	tagd = prefix("M#"):lc word //M();
+	tagd = prefix("N#"):lc word //N();
 	tagd = prefix("E#"):entityid word //E();
 	tagd = prefix("U#"):entityid word //U();
-	tagd = prefix("R#"):entityid word //R();
-	tagd = prefix("V#"):entityid word //V();
-	tagd = prefix("W#"):entityid word //W();
+	tagd = prefix("R#"):entityid word {position=succ} //R@id;
+	tagd = prefix("R#"):lc word //R();
+	tagd = prefix("V#"):lc word //V();
+	tagd = prefix("W#"):lc word //W();
 

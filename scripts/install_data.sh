@@ -16,12 +16,11 @@
 #	Python:
 #		numpy
 
-export USER=patrick:patrick
 export PYTHONHASHSEED=123
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
 
-sudo mkdir /srv/wikipedia
-sudo chown $USER /srv/wikipedia
-sudo mkdir /srv/wikipedia/
+mkdir /srv/wikipedia
 
 cd /srv/wikipedia/
 wget http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
@@ -36,23 +35,32 @@ for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 
 processPosTagging() {
     DID=$1
-    NLPCONV=/home/patrick/github/strusWikipediaSearch/scripts/strusnlp.py
+    NLPCONV=$SCRIPTPATH/strusnlp.py
     PYTHONHASHSEED=123
+    # [1] Call a strus program to scan the Strus Wikipedia XML generated in the previous step from the Wikimedia dump.
+    #	the program creates a text dump in /srv/wikipedia/pos/$DID.txt with all the selected contents as input for the
+    #	POS tagging script.
     strusPosTagger -I -x xml -C XML -D '; ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//mark' -E '//text' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -E '//char' -E '//code' -E '//math' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
     EC="$?"
     if [ "$EC" != "0" ]; then
         echo "Error creating POS tagger input: $EC" > /srv/wikipedia/err/$DID.txt
     fi
+    # [2] Call the POS tagging script with the text dumps in /srv/wikipedia/pos/$DID.txt and write the output to /srv/wikipedia/tag/$DID,txt
     cat /srv/wikipedia/pos/$DID.txt | $NLPCONV -S -C 100 > /srv/wikipedia/tag/$DID.txt
     EC="$?"
     if [ "$EC" != "0" ]; then
         echo "Error in POS tagger script: $EC" > /srv/wikipedia/err/$DID.txt
     fi
+    # [3] Merge the output of the POS tagging script with the original XML in /srv/wikipedia/xml/$DID/
+    #	and write a new XML file with the same name into /srv/wikipedia/nlpxml/$DID/
     strusPosTagger -x ".xml" -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -o /srv/wikipedia/nlpxml/$DID /srv/wikipedia/xml/$DID /srv/wikipedia/tag/$DID.txt
     EC="$?"
     if [ "$EC" != "0" ]; then
         echo "Error tagging XML with POS tagger output: $EC" > /srv/wikipedia/err/$DID.txt
     fi
+    # [4] Cleanup temporary files
+    rm /srv/wikipedia/pos/$DID.txt
+    rm /srv/wikipedia/tag/$DID.txt
 }
 
 processPosTaggingDumpSlice() {
@@ -81,8 +89,6 @@ processPosTaggingDumpSlice 1 3 0021 &
 processPosTaggingDumpSlice 2 3 0021 &
 
 
-# cat /srv/wikipedia/pos/0000.txt | scripts/strusnlp.py -S -C 100 > /srv/wikipedia/tag/0000.txt
-# strusPosTagger -x ".xml" -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -o /srv/wikipedia/nlpxml/0000 /srv/wikipedia/xml/0000 /srv/wikipedia/tag/0000.txt
 
 
 
