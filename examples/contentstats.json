@@ -5,9 +5,11 @@
             "//P()", "//T()", 
             "//N@id", "//E@id", "//R@id", 
             "//bibref()", "//math()", "//code()", "//char()", "//text()", 
-            "//reflink@id", "//citlink@id", "//citlink()", "//weblink@id", "//weblink()", "//pagelink@id", "//pagelink@anchor", "//pagelink()", "//category@id", 
-            "//head@id", "//cell@id", "//tabtitle@id", "//table@id", "//tablink@id", 
-            "//entity()", "//entity@lv", "//attr()", "//attr@id", "//list@lv", "//heading@lv",
+            "//reflink@id", "//citlink@id", "//citlink()", "//weblink@id", "//weblink()", "//pagelink@id", "//pagelink@anchor", "//pagelink()",
+            "//category()", "//category@id",
+            "//head@id", "//cell@id", "//tabtitle@id", "//table@id", "//tablink@id",  "//ref@id",
+            "//entity()", "//entity@lv", "//attr()", "//attr@id",
+            "//list@lv", "//heading@lv",
             "//nowiki()", "//mark()", "//filelink()", "//filelink@id", "//imglink()", "//imglink@id"
         ],
         "element": [
