@@ -5,9 +5,9 @@
             "//P()","//T()",
             "//N@id","//E@id","//R@id",
             "//bibref()","//math()","//code()","//char()","//text()",
-            "//reflink@id","//citlink@id","//citlink()","//weblink@id","//weblink()","//pagelink@id","//pagelink@anchor","//pagelink()",
+            "//reflink@id","//citlink@id","//citlink()","//weblink@id","//weblink()","//pagelink@id","//pagelink@anchor","//pagelink()","//category@id",
             "//entity()","//attr()",
-            "//nowiki()","//mark()"
+            "//nowiki()","//mark()","filelink()","filelink@id","imglink()","imglink@id"
         ],
         "element": [
             {"type":"title", "regex":".*", "priority":1, "minlen":1, "maxlen":10,
