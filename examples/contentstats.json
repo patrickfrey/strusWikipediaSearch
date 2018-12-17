@@ -1,13 +1,14 @@
 {
     "library": {
         "select": [
-            "//C()","//X()","//A()","//M()","//N()","//E()","//U()","//R()","//V()","//W()",
-            "//P()","//T()",
-            "//N@id","//E@id","//R@id",
-            "//bibref()","//math()","//code()","//char()","//text()",
-            "//reflink@id","//citlink@id","//citlink()","//weblink@id","//weblink()","//pagelink@id","//pagelink@anchor","//pagelink()","//category@id",
-            "//entity()","//entity@lv","//attr()","//list@lv",
-            "//nowiki()","//mark()","//filelink()","//filelink@id","//imglink()","//imglink@id"
+            "//C()", "//X()", "//A()", "//M()", "//N()", "//E()", "//U()", "//R()", "//V()", "//W()", 
+            "//P()", "//T()", 
+            "//N@id", "//E@id", "//R@id", 
+            "//bibref()", "//math()", "//code()", "//char()", "//text()", 
+            "//reflink@id", "//citlink@id", "//citlink()", "//weblink@id", "//weblink()", "//pagelink@id", "//pagelink@anchor", "//pagelink()", "//category@id", 
+            "//head@id", "//cell@id", "//tabtitle@id", "//table@id", "//tablink@id", 
+            "//entity()", "//entity@lv", "//attr()", "//list@lv", 
+            "//nowiki()", "//mark()", "//filelink()", "//filelink@id", "//imglink()", "//imglink@id"
         ],
         "element": [
             {"type":"title", "regex":".*", "priority":1, "minlen":1, "maxlen":10,
