@@ -625,7 +625,7 @@ def tagSentenceStrusTags( tokens):
             if type == 'PRP' or type == 'PRP$':
                 if not getPrpSex( elem.value):
                     maptype = ""
-            if prev and utype == prev and prev[0] in ['N','E','V'] and not (prevIsPlural and not isPlural):
+            if prev and utype == prev and prev[0] in ['N','E'] and not (prevIsPlural and not isPlural):
                 type = "_"
                 maptype = "_";
             elif maptype and maptype == mapprev and maptype[-1:] == '!':

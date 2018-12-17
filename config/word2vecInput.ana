@@ -28,15 +28,17 @@
 	word = prefix("T#"):entityid word //char();
 	word = prefix("T#"):entityid content //pagelink();
 
-	tagd = prefix("C#"):lc word //C();
-	tagd = prefix("X#"):lc word //X();
-	tagd = prefix("A#"):lc word //A();
-	tagd = prefix("M#"):lc word //M();
-	tagd = prefix("N#"):lc word //N();
-	tagd = prefix("E#"):entityid word //E();
-	tagd = prefix("U#"):entityid word //U();
-	tagd = prefix("R#"):entityid word {position=succ} //R@id;
-	tagd = prefix("R#"):lc word //R();
-	tagd = prefix("V#"):lc word //V();
-	tagd = prefix("W#"):lc word //W();
+	word = prefix("C#"):lc word //C();
+	word = prefix("X#"):lc word //X();
+	word = prefix("A#"):lc word //A();
+	word = prefix("M#"):lc word //M();
+	word = prefix("N#"):entityid:lc content //N();
+	word = prefix("E#"):entityid content //E();
+	word = prefix("R#"):lc word //R();
+	word = prefix("V#"):lc word //V();
+	word = prefix("W#"):lc word //W();
+
+	refid = prefix("N#"):entityid:lc word {position=succ} //N@id;
+	refid = prefix("E#"):entityid word {position=succ} //E@id;
+	refid = prefix("R#"):entityid word {position=succ} //R@id;
 

@@ -1,11 +1,13 @@
 {
     "library": {
         "select": [
-            "//C()","//X()","//A()","//M()","//N()","//E()","//U()","//R@id","//R()","//V()","//W()",
+            "//C()","//X()","//A()","//M()","//N()","//E()","//U()","//R()","//V()","//W()",
             "//P()","//T()",
+            "//N@id","//E@id","//R@id",
             "//bibref()","//math()","//code()","//char()","//text()",
-            "//citlink@id","//citlink()","//weblink@id","//weblink()","//pagelink@id","//pagelink@anchor","//pagelink()",
-            "//entity()"
+            "//reflink@id","//citlink@id","//citlink()","//weblink@id","//weblink()","//pagelink@id","//pagelink@anchor","//pagelink()",
+            "//entity()","//attr()",
+            "//nowiki()","//mark()"
         ],
         "element": [
             {"type":"title", "regex":".*", "priority":1, "minlen":1, "maxlen":10,
