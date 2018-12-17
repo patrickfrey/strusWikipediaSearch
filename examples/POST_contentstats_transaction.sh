@@ -7,7 +7,7 @@ BASEDIR=`dirname "$0"`
 TRANSACTION=`strusWebServiceClient -V -A "text/plain" POST "${SERVER_ADDR}/contentstats/wikipedia/transaction"`
 
 echo "start analyze content statistics ..."
-strusWebServiceClient -A "text/plain" PUT ${TRANSACTION} "@/srv/wikipedia/doc/0000/*.xml"
+strusWebServiceClient -A "text/plain" PUT ${TRANSACTION} "@/srv/wikipedia/nlpxml/0000/*.xml"
 
 echo "LINK $TRANSACTION"
 
