@@ -1455,7 +1455,22 @@ WikimediaLexem WikimediaLexer::next()
 				else
 				{
 					linkid = tryParseLinkId();
-					if (!linkid.empty() && m_si < m_se && (*m_si == ']' || *m_si == '|'))
+					if (linkid.size() > 300)
+					{
+						if (m_si < m_se && (*m_si == ']' || *m_si == '|'))
+						{
+							if (*m_si == '|')
+							{
+								m_si++;
+							}
+							else if (m_si[0] == ']' && m_si[1] == ']')
+							{
+								m_si += 2;
+							}
+						}
+						return WikimediaLexem( WikimediaLexem::Text, 0, linkid);
+					}
+					else if (!linkid.empty() && m_si < m_se && (*m_si == ']' || *m_si == '|'))
 					{
 						if (*m_si == '|') ++m_si;
 						return WikimediaLexem( WikimediaLexem::OpenPageLink, 0, linkid);
@@ -1559,7 +1574,14 @@ WikimediaLexem WikimediaLexer::next()
 				{
 					std::string title( strus::string_conv::trim( std::string( start, m_si - start)));
 					m_si += 2;
-					return WikimediaLexem( WikimediaLexem::Markup, 0, title);
+					if (title.size() > 300)
+					{
+						return WikimediaLexem( WikimediaLexem::Text, 0, title);
+					}
+					else
+					{
+						return WikimediaLexem( WikimediaLexem::Markup, 0, title);
+					}
 				}
 				m_si = start;
 				while (m_si < m_se && *m_si != '}' && *m_si != '|' && (isAlphaNum(*m_si) || *m_si == '_' || *m_si == '-' || isSpace(*m_si)))

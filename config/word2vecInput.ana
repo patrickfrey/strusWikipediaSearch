@@ -18,9 +18,10 @@
 	punct = empty content //P;
 	eos = empty content //T;
 
-	word = entityid content //nowiki();
+	word = prefix("W#"):lc content {position=succ} //pagelink@anchor;
+	word = prefix("W#"):lc content //nowiki();
+
 	word = prefix("E#"):entityid content //entity();
-	word = prefix("E#"):entityid content {position=succ} //pagelink@anchor;
 	word = prefix("E#"):entityid content {position=succ} //pagelink@id;
 	word = prefix("E#"):entityid content //pagelink();
 	word = prefix("T#"):entityid word //text();
