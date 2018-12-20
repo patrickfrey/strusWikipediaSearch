@@ -240,16 +240,17 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 					if (g_linkmap)
 					{
 						const char* val = g_linkmap->get( link);
-						if (!val)
+						if (val)
 						{
-							doc.addUnresolved( lexem.value);
 							doc.openPageLink( val, anchorid);
 						}
 						else
 						{
+							doc.addUnresolved( link);
 							doc.openPageLink( link, anchorid);
 						}
-					} else
+					}
+					else
 					{
 						doc.openPageLink( link, anchorid);
 					}
