@@ -1,16 +1,17 @@
 [ForwardIndex]
 	none = orig content //weblink@id;
-	none = orig content //math();
+	none = orig word //math();
 	none = orig content //char();
 	none = orig content //bibref();
-	none = orig word //E();
-	none = orig word //U();
+	none = orig content //time();
+	none = orig content //weblink();
+	none = orig content //E();
+	none = orig content //U();
 
 [SearchIndex]
 	none = prefix("B#"):entityid content //bibref();
-	none = prefix("U#"):entityid content //math();
-	none = prefix("U#"):entityid content //code();
-	none = prefix("T#"):entityid content //attr();
+	none = prefix("T#"):lc word //code();
+	none = prefix("T#"):lc word //math();
 	none = entityid content //citlink@id;
 	none = entityid content //citlink;
 	none = entityid content //weblink;
@@ -24,10 +25,12 @@
 	word = prefix("E#"):entityid content //entity();
 	word = prefix("E#"):entityid content {position=succ} //pagelink@id;
 	word = prefix("E#"):entityid content //pagelink();
-	word = prefix("T#"):entityid word //text();
-	word = prefix("T#"):entityid word //text();
-	word = prefix("T#"):entityid word //char();
-	word = prefix("T#"):entityid content //pagelink();
+	word = prefix("E#"):entityid content //pagelink();
+	word = prefix("T#"):lc word //text();
+	word = prefix("T#"):lc word //text();
+	word = prefix("T#"):lc word //quot();
+	word = prefix("T#"):lc word //char();
+	word = prefix("T#"):lc content //attr();
 
 	word = prefix("C#"):lc word //C();
 	word = prefix("X#"):lc word //X();

@@ -213,40 +213,46 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			case strus::WikimediaLexem::OpenPageLink:
 			{
 				std::pair<std::string,std::string> lnk = strus::LinkMap::getLinkParts( lexem.value);
-				if (g_linkmap)
+				std::string link = lnk.first;
+				std::string anchorid;
+				if (lnk.second.size() > 80)
 				{
-					std::string prefix = getLinkDomainPrefix( lnk.first, 12);
-					if (strus::caseInsensitiveEquals( prefix, "wikipedia"))
-					{
-						lnk.first = strus::string_conv::trim( lnk.first.c_str() + prefix.size()+1);
-					}
-					if (strus::caseInsensitiveEquals( prefix, "file")
-					||  strus::caseInsensitiveEquals( prefix, "image")
-					||  strus::caseInsensitiveEquals( prefix, "category"))
-					{
-						doc.openPageLink( lnk.first, lnk.second);
-					}
-					else
-					{
-						const char* val = g_linkmap->get( lnk.first);
-						if (val)
-						{
-							doc.openPageLink( val, lnk.second);
-						}
-						else
-						{
-							doc.addUnresolved( lexem.value);
-							doc.openPageLink( lnk.first, lnk.second);
-						}
-					}
+					doc.setLinkDescription( lnk.second);
 				}
 				else
 				{
-					if (strus::caseInsensitiveStartsWith( lnk.first, "wikipedia:"))
+					anchorid = lnk.second;
+				}
+
+				std::string prefix = getLinkDomainPrefix( link, 12);
+				if (strus::caseInsensitiveEquals( prefix, "wikipedia"))
+				{
+					link = strus::string_conv::trim( link.c_str() + prefix.size()+1);
+				}
+				if (strus::caseInsensitiveEquals( prefix, "file")
+				||  strus::caseInsensitiveEquals( prefix, "image")
+				||  strus::caseInsensitiveEquals( prefix, "category"))
+				{
+					doc.openPageLink( link, anchorid);
+				}
+				else
+				{
+					if (g_linkmap)
 					{
-						lnk.first = strus::string_conv::trim( lnk.first.c_str() + 10/*strlen("wikipedia:")*/);
+						const char* val = g_linkmap->get( link);
+						if (!val)
+						{
+							doc.addUnresolved( lexem.value);
+							doc.openPageLink( val, anchorid);
+						}
+						else
+						{
+							doc.openPageLink( link, anchorid);
+						}
+					} else
+					{
+						doc.openPageLink( link, anchorid);
 					}
-					doc.openPageLink( lnk.first, lnk.second);
 				}
 				break;
 			}

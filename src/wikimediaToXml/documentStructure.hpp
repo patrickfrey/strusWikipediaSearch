@@ -359,6 +359,10 @@ public:
 	}
 
 	void setTitle( const std::string& text);
+	void setLinkDescription( const std::string& text)
+	{
+		m_linkDescription = text;
+	}
 
 	void addMarkup( const std::string& text)
 	{
@@ -418,6 +422,7 @@ public:
 		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::RefStart);
+		//closeDanglingStructures( Paragraph::RefStart);
 		openStructure( Paragraph::RefStart, "ref", ++m_refCnt);
 	}
 	void closeRef()
@@ -436,6 +441,11 @@ public:
 	}
 	void closePageLink()
 	{
+		if (!m_linkDescription.empty())
+		{
+			addAttribute( m_linkDescription);
+			m_linkDescription.clear();
+		}
 		closeStructure( Paragraph::PageLinkStart, "");
 	}
 	void closeWebLinkIfOpen();
@@ -614,6 +624,7 @@ public:
 		Paragraph::StructType tp = currentStructType();
 		if (tp == Paragraph::StructCitation
 		||  tp == Paragraph::StructRef
+		||  tp == Paragraph::StructPageLink
 		||  tp == Paragraph::StructAttribute)
 		{
 			openAutoCloseItem( Paragraph::AttributeStart, id.c_str(), 0/*idx*/, 1/*depth*/);
@@ -797,6 +808,7 @@ private:
 	std::vector<TableDef> m_tableDefs;
 	std::vector<std::string> m_errors;
 	std::set<std::string> m_unresolved;
+	std::string m_linkDescription;
 	int m_nofErrors;
 	int m_tableCnt;
 	int m_citationCnt;

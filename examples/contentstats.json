@@ -4,7 +4,7 @@
             "//C()", "//X()", "//A()", "//M()", "//N()", "//E()", "//U()", "//R()", "//V()", "//W()", 
             "//P()", "//T()", 
             "//N@id", "//E@id", "//R@id", 
-            "//bibref()", "//math()", "//code()", "//char()", "//text()", 
+            "//bibref()", "//math()", "//code()", "//char()", "//text()", "//quot()", 
             "//reflink@id", "//citlink@id", "//citlink()", "//weblink@id", "//weblink()", "//pagelink@id", "//pagelink@anchor", "//pagelink()",
             "//category()", "//category@id",
             "//head@id", "//cell@id", "//tabtitle@id", "//table@id", "//tablink@id",  "//ref@id",

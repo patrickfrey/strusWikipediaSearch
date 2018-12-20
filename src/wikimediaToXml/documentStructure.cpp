@@ -1008,6 +1008,10 @@ bool DocumentStructure::processParsedCitation( std::vector<Paragraph>& dest, std
 								if (!text.empty() && !content.empty()) text.push_back( ' ');
 								text.append( content);
 							}
+							else
+							{
+								textlist.push_back( range);
+							}
 							break;
 						}
 						case AlignedTable:
@@ -1693,6 +1697,18 @@ static bool collectMultiAttributeText(
 	return rt;
 }
 
+static bool isAttributeText( const std::string& text, int maxlen)
+{
+	char const* si = text.c_str();
+	if (text.size() > (std::size_t)maxlen) return false;
+	for (; *si; ++si)
+	{
+		if (*si == '\n') return false;
+		if ((unsigned char)si[0] < 32 && (unsigned char)si[1] < 32) return false;
+	}
+	return true;
+}
+
 static void stack_pop_back( std::vector<Paragraph::StructType>& stk, const char* ctx)
 {
 	if (stk.empty())
@@ -1800,7 +1816,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				}
 				std::string attrid = pi->id();
 				std::string attrtext;
-				if (output.isInTagDeclaration() && !attrid.empty())
+				if (output.isInTagDeclaration() && !attrid.empty() && isAttributeText( pi->text(), pi->id() == "id"?200:80))
 				{
 					bool cr = singleIdAttribute
 						?collectMultiAttributeText( attrtext, pidx, pi, pe, true/*inTag*/)
