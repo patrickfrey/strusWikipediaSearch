@@ -118,4 +118,5 @@ static NormalizerFunctionInterface* createEntityIdNormalizerFunction( ErrorBuffe
 static strus::NormalizerConstructor g_normalizers[] = { {"entityid",&createEntityIdNormalizerFunction}, {0,0} };
 
 extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
-strus::AnalyzerModule g_moduleheader( 0, g_normalizers, 0);
+
+strus::AnalyzerModule entryPoint( 0, g_normalizers, 0);
