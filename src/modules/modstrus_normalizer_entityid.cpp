@@ -10,6 +10,7 @@
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInstanceInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/base/utf8.hpp"
 #include "errorUtils.hpp"
 #include <string>
 #include <cstring>
@@ -21,6 +22,23 @@ using namespace strus;
 
 static const char g_delimiters[] = "\"’`'?!/;:.,-— )([]{}<>_";
 static const char g_quotes[] = "\"'’`;.:";
+
+static bool isDelimiter( char const* ci, int clen)
+{
+	const char* di = std::strchr( g_delimiters, *ci);
+	return di && 0!=std::memcmp( di, ci, clen);
+}
+
+static bool isQuote( char const* ci)
+{
+	return 0!=std::strchr( g_quotes, *ci);
+}
+
+static bool isSpace( char const* ci)
+{
+	return (unsigned char)*ci <= 32 || *ci == '_';
+}
+
 
 class EntityIdNormalizerInstance
 	:public NormalizerFunctionInstanceInterface
@@ -38,21 +56,36 @@ public:
 			std::string rt;
 			char const* si = src;
 			char const* se = src + srcsize;
-			for (;si < se && (0!=std::strchr( g_quotes, *si) || (unsigned char)*si <= 32); ++si){}
-			for (;si < se && (0!=std::strchr( g_quotes, *(se-1)) || (unsigned char)*(se-1) <= 32); --se){}
+			for (;si < se && (isQuote( si) || isSpace(si)); si+=strus::utf8charlen(*si)){}
+			char const* pi = strus::utf8prev( se);
+			for (;si < se && (isQuote( pi) || isSpace(pi)); se=pi,pi=strus::utf8prev( se)){}
 			const char* start = si;
-			for (; si < se; ++si)
+
+			int chrlen;
+			while (si < se)
 			{
-				if (0!=std::strchr( g_delimiters, *si))
+				chrlen = strus::utf8charlen(*si);
+				if (isSpace(si) || isDelimiter( si, chrlen))
 				{
 					rt.append( start, si-start);
-					bool hasOnlySpace = (unsigned char)*si <= 32 || *si == '_';
-					for (++si; si < se && (0!=std::strchr( g_delimiters, *si) || (unsigned char)*si <= 32); ++si)
+					bool hasOnlySpace = isSpace(si);
+					for (si+=chrlen; si < se; si += chrlen)
 					{
-						hasOnlySpace &= (unsigned char)*si <= 32 || *si == '_';
+						chrlen = strus::utf8charlen(*si);
+						if (isSpace(si)) continue;
+						if (isDelimiter( si, chrlen))
+						{
+							hasOnlySpace = false;
+							continue;
+						}
+						break;
 					}
 					rt.push_back( hasOnlySpace ? '_':'-');
 					start = si;
+				}
+				else
+				{
+					si += chrlen;
 				}
 			}
 			rt.append( start, se-start);
