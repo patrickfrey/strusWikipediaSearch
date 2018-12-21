@@ -53,10 +53,6 @@ public:
 	{
 		try
 		{
-			if (srcsize > 5 && 0==std::memcmp( src, "Mamma", 5))
-			{
-				std::cerr << "HALLY GALLY" << std::endl;
-			}
 			std::string rt;
 			char const* si = src;
 			char const* se = src + srcsize;
