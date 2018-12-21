@@ -26,7 +26,7 @@ static const char g_quotes[] = "\"'’`;.:";
 static bool isDelimiter( char const* ci, int clen)
 {
 	const char* di = std::strchr( g_delimiters, *ci);
-	return di && 0!=std::memcmp( di, ci, clen);
+	return di && 0==std::memcmp( di, ci, clen);
 }
 
 static bool isQuote( char const* ci)
@@ -53,6 +53,10 @@ public:
 	{
 		try
 		{
+			if (srcsize > 5 && 0==std::memcmp( src, "Mamma", 5))
+			{
+				std::cerr << "HALLY GALLY" << std::endl;
+			}
 			std::string rt;
 			char const* si = src;
 			char const* se = src + srcsize;
