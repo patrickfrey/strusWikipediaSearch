@@ -15,22 +15,16 @@
 	none = entityid content //citlink@id;
 	none = entityid content //citlink;
 	none = entityid content //weblink;
+	none = prefix("T#"):entityid content {position=succ} //pagelink@anchor;
+	none = prefix("T#"):lc content //nowiki();
 
 	punct = empty content //P;
 	eos = empty content //T;
-
-	word = prefix("W#"):lc content {position=succ} //pagelink@anchor;
-	word = prefix("W#"):lc content //nowiki();
 
 	word = prefix("E#"):entityid content //entity();
 	word = prefix("E#"):entityid content {position=succ} //pagelink@id;
 	word = prefix("E#"):entityid content //pagelink();
 	word = prefix("E#"):entityid content //pagelink();
-	word = prefix("T#"):lc word //text();
-	word = prefix("T#"):lc word //text();
-	word = prefix("T#"):lc word //quot();
-	word = prefix("T#"):lc word //char();
-	word = prefix("T#"):lc content //attr();
 
 	word = prefix("C#"):lc word //C();
 	word = prefix("X#"):lc word //X();
@@ -41,6 +35,10 @@
 	word = prefix("R#"):lc word //R();
 	word = prefix("V#"):lc word //V();
 	word = prefix("W#"):lc word //W();
+	word = prefix("T#"):lc word //text();
+	word = prefix("T#"):lc word //attr();
+	word = prefix("T#"):lc word //quot();
+	word = prefix("T#"):lc word //char();
 
 	refid = prefix("N#"):entityid:lc word {position=succ} //N@id;
 	refid = prefix("E#"):entityid word {position=succ} //E@id;

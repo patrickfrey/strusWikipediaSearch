@@ -36,6 +36,7 @@ for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 
 processPosTagging() {
     DID=$1
+    mv /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID.old
     NLPCONV=$SCRIPTPATH/strusnlp.py
     PYTHONHASHSEED=123
     # [1] Call a strus program to scan the Strus Wikipedia XML generated in the previous step from the Wikimedia dump.
@@ -62,6 +63,7 @@ processPosTagging() {
     # [4] Cleanup temporary files
     rm /srv/wikipedia/pos/$DID.txt
     rm /srv/wikipedia/tag/$DID.txt
+    rm -Rf /srv/wikipedia/nlpxml/$DID.old
 }
 
 processPosTaggingDumpSlice() {
