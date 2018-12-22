@@ -443,7 +443,8 @@ public:
 	{
 		if (!m_linkDescription.empty())
 		{
-			addAttribute( m_linkDescription);
+			addAttribute( "description");
+			addText( m_linkDescription);
 			m_linkDescription.clear();
 		}
 		closeStructure( Paragraph::PageLinkStart, "");
