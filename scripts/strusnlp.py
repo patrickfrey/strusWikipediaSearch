@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 #
-import nltk
+# This script converts a text dump with multiple files and writes a line for every part of speech (POS) item to stdout. 
+# The output of this script can be merged with the original XML to get an XML with POS tagging.
+#
 from pprint import pprint
 import sys
 import math
