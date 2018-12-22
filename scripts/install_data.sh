@@ -94,7 +94,7 @@ mkdir -p vec
 dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
-    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ > /srv/wikipedia/vec/$DID.txt
+    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $SCRIPTPATH/filtervectok.py > /srv/wikipedia/vec/$DID.txt
 }
 
 processPosTaggingDumpSlice 0 3 0000 &
