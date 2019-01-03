@@ -1753,7 +1753,6 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
     tokCntWeightMap = tokenCountToWeightMap( tokCntMap, tokCntTotal)
     countNnp = getDocumentNlpTokCountMap( sentences)
     bestTitleMatches = getBestTitleMatches( titlesubject, countNnp)
-    countNnp = getDocumentNlpTokCountMap( sentences)
     nounCandidateKeyMap = {}
     nounCandidates = {}
     titlekey = ' '.join( titlesubject)

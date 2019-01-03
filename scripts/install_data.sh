@@ -94,14 +94,32 @@ mkdir -p vec
 dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
-    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $SCRIPTPATH/filtervectok.py > /srv/wikipedia/vec/$DID.txt
+    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ >> /srv/wikipedia/vec.txt
+}
+
+calcWord2vec() {
+    word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 3 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec.bin
+}
+
+processVectors()
+{
+    rm /srv/wikipedia/vec.txt
+    START=${1:-0000}
+    END=${2:-9999}
+    for aa in 0 1 2 3 4 5 6 ; do
+    for bb in 0 1 2 3 4 5 6 7 8 9; do
+    for cc in 0 1 2 3 4 5 6 7 8 9; do
+    for dd in 0 1 2 3 4 5 6 7 8 9; do
+        DID=$aa$bb$cc$dd
+        dumpVectorInput $DID
+    calcWord2vec()
 }
 
 processPosTaggingDumpSlice 0 3 0000 &
 processPosTaggingDumpSlice 1 3 0000 &
 processPosTaggingDumpSlice 2 3 0000 &
 
-
+processVectors()
 
 
 
