@@ -10965,7 +10965,7 @@ S (nsubj)	E	NNP	Martin	Max Martin
  (nsubjpass)	W	WDT	which
  (aux)	V	VBD	had
  (auxpass)	V	VBN	been
- (relcl)	_	_	rejected
+ (relcl)	V	VBN	rejected
  (agent)		IN	by
  (compound)	N	NN	girl
  (compound)	_	_	group
@@ -11036,7 +11036,7 @@ S (nsubj)	N	NN	single
  (pobj)	N	NN	country
 S (nsubj)	R	PRP	it	Baby One More Time
  (relcl)	V	VBD	charted
- (advmod)	_	RP	in
+ (advmod)	A	RP	in
  (punct)	P!	,	,
  (conj)	V	VBD	became
  (det)		DT	the
@@ -12077,7 +12077,7 @@ S (nsubj)	R	PRP	she
  (advmod)	A	RB	So
  (nsubj)		PRP	I
  (ROOT)	V	VBD	went
- (prt)	_	RP	out
+ (prt)	A	RP	out
  (det)		DT	that
  (npadvmod)	N	NN	night
  (cc)		CC	and
@@ -12884,7 +12884,7 @@ S (nsubj)	R	PRP	It
  (neg)	_	_	
  (neg)	_	_	
  (ccomp)	V	VB	wanna
- (ccomp)	_	_	stay
+ (ccomp)	V	VB	stay
  (punct)		SYM	/
  (cc)		CC	But
  (det)		DT	every
@@ -14069,7 +14069,7 @@ S (nsubj)	E	NNPS	Spears	Britney Spears
  (case)		POS	'
  (advmod)	A	RB	first
  (ROOT)	V	VBD	showed
- (prt)	_	RP	up
+ (prt)	A	RP	up
  (prep)		IN	on
  (pobj)	E	NNP	MTV
  (case)		POS	's
@@ -15221,7 +15221,7 @@ S (nsubj)	N	NN	remix
  (det)		DT	all
 S (nsubj)	N	NN	sound
  (ROOT)	V	VBG	cutting
- (prt)	_	RP	out
+ (prt)	A	RP	out
  (punct)	P!	,	,
  (dep)	V	VBN	followed
  (agent)		IN	by
@@ -15606,7 +15606,7 @@ S (compound)	N	NN	TV
 _ (nsubj)	_	_	gang
  (aux)	V	VBZ	has
  (conj)	V	VBN	grown
- (prt)	_	RP	up
+ (prt)	A	RP	up
  (punct)	P!	:	;
  (conj)		NN	date
  (punct)		:	;
@@ -17924,7 +17924,7 @@ S (nsubj)	R	PRP	it	Baby One More Time
  (mark)		IN	as
 S (nsubj)	R	PRP	it	Baby One More Time
  (advcl)	V	VBD	ended
- (prt)	_	RP	up
+ (prt)	A	RP	up
  (xcomp)	V	VBG	being
  (punct)	T!	.	.
  (expl)	X	EX	There
@@ -18009,7 +18009,7 @@ S (nsubj)	E	NNP	Walters	Barry Walters
 S (compound)	N	NN	funk
 _ (nsubj)	_	_	jams
  (advcl)	V	VBP	serve
- (prt)	_	RP	up
+ (prt)	A	RP	up
  (amod)	A	JJ	beefy
  (dobj)	N	NNS	hooks
  (punct)	P!	,	,
@@ -18141,7 +18141,7 @@ S (nsubj)	R	PRP	she	Britney Spears
  (punct)	T!	.	.
  (advmod)	A	RB	Now
  (ROOT)	V	VB	grow
- (prt)	_	RP	up
+ (prt)	A	RP	up
  (punct)	P!	,	,
  (npadvmod)	N	NN	girl
  (punct)	T!	.	.
@@ -19234,7 +19234,7 @@ S (none)	E	NNP	Shania
 _ (nsubj)	_	_	Twain
  (case)	V	VBZ	's
  (ROOT)	V	VBN	Come
- (prt)	_	RP	on
+ (prt)	A	RP	on
  (prep)		IN	Over
  (punct)	P!	-LRB-	(
  (pobj)	C	CD	1997
@@ -19506,7 +19506,7 @@ S (none)	E	NNP	Shania
 _ (nsubj)	_	_	Twain
  (case)	V	VBZ	's
  (ROOT)	V	VBN	Come
- (prt)	_	RP	on
+ (prt)	A	RP	on
  (prep)		IN	Over
  (punct)	P!	-LRB-	(
  (pobj)	C	CD	1997
@@ -20693,7 +20693,7 @@ S (nsubj)	R	PRP	she	Spears
  (nsubjpass)	W	WDT	that
  (aux)	V	VBZ	has
  (auxpass)	V	VBN	been
- (relcl)	_	_	achieved
+ (relcl)	V	VBN	achieved
  (agent)		IN	by
  (pobj)	E	NNP	Madonna
  (cc)		CC	and
@@ -21301,7 +21301,7 @@ _ (nsubj)	_	_	Time
  (xcomp)	V	VB	show
  (poss)		PRP$	my
  (dobj)	N	NN	voice
- (prt)	_	RP	off
+ (prt)	A	RP	off
  (punct)	T!	.	.
  (det)		DT	The
 S (nsubj)	N	NNS	songs
@@ -21666,7 +21666,7 @@ _ (none)	_	_	Again
  (none)	_	_	Spears
  (punct)	P!	:	:
  (csubj)	V	VBG	Growing
- (prt)	_	RP	up
+ (prt)	A	RP	up
  (ccomp)	V	VBZ	is
  (acomp)	A	JJ	hard
  (aux)		TO	to

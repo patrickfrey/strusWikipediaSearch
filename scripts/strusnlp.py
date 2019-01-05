@@ -599,6 +599,7 @@ def skipNeutralPrp( tokens, tidx):
 def tagSentenceStrusTags( tokens):
     prev = ""
     mapprev = ""
+    prev_nlprole = ""
     prevIsPlural = False
     termidx = -1
     eidx = 0
@@ -627,7 +628,8 @@ def tagSentenceStrusTags( tokens):
             if type == 'PRP' or type == 'PRP$':
                 if not getPrpSex( elem.value):
                     maptype = ""
-            if prev and utype == prev and prev[0] in ['N','E'] and not (prevIsPlural and not isPlural):
+            if prev and utype == prev and prev in ['NN','NNS','NNP','NNPS'] and not (prevIsPlural and not isPlural):
+                # TODO: "'giving the couple advice'"
                 type = "_"
                 maptype = "_";
             elif maptype and maptype == mapprev and maptype[-1:] == '!':
@@ -638,6 +640,7 @@ def tagSentenceStrusTags( tokens):
             prevIsPlural = isPlural
             elem.strustag = maptype
             elem.nlptag = type
+            prev_nlprole = elem.nlprole
         eidx = skipMultipartName( tokens, eidx)
     if termidx >= 0:
         tokens[ termidx].strustag = "T!"
