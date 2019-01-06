@@ -93,7 +93,8 @@ processPosTaggingDumpSlice() {
 dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
-    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ >> /srv/wikipedia/vec.txt
+    FILTER=$SCRIPTPATH/filtervectok.py
+    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
 }
 
 calcWord2vec() {
