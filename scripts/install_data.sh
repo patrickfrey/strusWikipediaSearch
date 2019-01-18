@@ -17,9 +17,9 @@
 #		numpy
 
 export PYTHONHASHSEED=123
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
-PROJECTPATH=$(dirname "$SCRIPTPATH")
+export SCRIPT=$(readlink -f "$0")
+export SCRIPTPATH=$(dirname "$SCRIPT")
+export PROJECTPATH=$(dirname "$SCRIPTPATH")
 
 mkdir /srv/wikipedia
 
@@ -36,7 +36,7 @@ for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 
 processPosTagging() {
     DID=$1
-    mv /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID.old
+    # mv /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID.old
     NLPCONV=$SCRIPTPATH/strusnlp.py
     PYTHONHASHSEED=123
     # [1] Call a strus program to scan the Strus Wikipedia XML generated in the previous step from the Wikimedia dump.
@@ -63,7 +63,7 @@ processPosTagging() {
     # [4] Cleanup temporary files
     rm /srv/wikipedia/pos/$DID.txt
     rm /srv/wikipedia/tag/$DID.txt
-    rm -Rf /srv/wikipedia/nlpxml/$DID.old
+    # rm -Rf /srv/wikipedia/nlpxml/$DID.old
 }
 
 processPosTaggingDumpSlice() {
@@ -81,6 +81,7 @@ processPosTaggingDumpSlice() {
                 if [ `expr $DID % $SLICE` == $WHAT ]; then
                     echo "processing $DID ..."
                     processPosTagging $DID
+                    strusTagMarkup -x xml -e '//heading' -P $DID"_1" /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID
                 fi
             fi
         fi
@@ -89,6 +90,31 @@ processPosTaggingDumpSlice() {
     done
     done
 }
+
+processDocumentCheck() {
+    START=${1:-0000}
+    END=${2:-9999}
+    for aa in 0 1 2 3 4 5 6 ; do
+    for bb in 0 1 2 3 4 5 6 7 8 9; do
+    for cc in 0 1 2 3 4 5 6 7 8 9; do
+    for dd in 0 1 2 3 4 5 6 7 8 9; do
+        DID=$aa$bb$cc$dd
+        if [ $DID -ge $START ]; then
+        if [ $DID -le $END ]; then
+            echo "checking $DID ..."
+            for ff in `ls /srv/wikipedia/nlpxml/$DID/*.xml`; do xmllint --noout $ff; done > /srv/wikipedia/err/xmllint.$DID.xml 2>&1
+            sed -e '/parser error [:] Attribute id redefined/,+2d' /srv/wikipedia/err/xmllint.$DID.xml > /srv/wikipedia/err/xmlerr.$DID.xml
+            rm /srv/wikipedia/err/xmllint.$DID.xml
+            [ -s /srv/wikipedia/err/xmlerr.$DID.xml ] || rm /srv/wikipedia/err/xmlerr.$DID.xml # ... delete empty files
+            [ -e /srv/wikipedia/err/xmlerr.$DID.xml ] && echo "$DID has errors, see /srv/wikipedia/err/xmlerr.$DID.xml"
+        fi
+    fi
+    done
+    done
+    done
+    done
+}
+
 
 dumpVectorInput() {
     DID=$1
