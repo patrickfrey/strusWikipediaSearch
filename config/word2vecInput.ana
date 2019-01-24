@@ -1,8 +1,7 @@
 punct = empty content //P;
 eos = empty content //T;
 
-head = prefix("H#"):entityid content //heading@id;
-
+word = prefix("H#"):entityid content //heading@id;
 word = prefix("E#"):lc:entityid content //entity();
 word = prefix("E#"):lc:entityid content //pagelink();
 word = prefix("E#"):lc:entityid content //pagelink();

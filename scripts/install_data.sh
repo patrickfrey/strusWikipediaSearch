@@ -120,7 +120,7 @@ dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
     FILTER=$SCRIPTPATH/filtervectok.py
-    strusAnalyze --dump "punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
+    strusAnalyze --dump "punct=' , ',eos=' .\n',head,refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
 }
 
 calcWord2vec() {
