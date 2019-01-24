@@ -1,47 +1,28 @@
-[ForwardIndex]
-	none = orig content //weblink@id;
-	none = orig word //math();
-	none = orig content //char();
-	none = orig content //bibref();
-	none = orig content //time();
-	none = orig content //weblink();
-	none = orig content //E();
-	none = orig content //U();
+punct = empty content //P;
+eos = empty content //T;
 
-[SearchIndex]
-	none = prefix("B#"):entityid content //bibref();
-	none = prefix("T#"):lc word //code();
-	none = prefix("T#"):lc word //math();
-	none = entityid content //citlink@id;
-	none = entityid content //citlink;
-	none = entityid content //weblink;
-	none = prefix("T#"):entityid content {position=succ} //pagelink@anchor;
-	none = prefix("E#"):entityid content {position=succ} //pagelink@id;
-	none = prefix("T#"):lc content //nowiki();
+head = prefix("H#"):entityid content //heading@id;
 
-	punct = empty content //P;
-	eos = empty content //T;
+word = prefix("E#"):lc:entityid content //entity();
+word = prefix("E#"):lc:entityid content //pagelink();
+word = prefix("E#"):lc:entityid content //pagelink();
 
-	word = prefix("E#"):entityid content //entity();
-	word = prefix("E#"):entityid content //pagelink();
-	word = prefix("E#"):entityid content //pagelink();
+word = prefix("C#"):lc word //C();
+word = prefix("X#"):lc word //X();
+word = prefix("A#"):lc word //A();
+word = prefix("M#"):lc word //M();
+word = prefix("N#"):lc:entityid content //N();
+word = prefix("E#"):lc:entityid content //E();
+word = prefix("R#"):lc word //R();
+word = prefix("V#"):lc word //V();
+word = prefix("W#"):lc word //W();
+word = prefix("T#"):lc word //text();
+word = prefix("T#"):lc word //attr();
+word = prefix("T#"):lc word //quot();
+word = prefix("T#"):lc word //char();
 
-	word = prefix("C#"):lc word //C();
-	word = prefix("X#"):lc word //X();
-	word = prefix("A#"):lc word //A();
-	word = prefix("M#"):lc word //M();
-	word = prefix("N#"):entityid:lc content //N();
-	word = prefix("E#"):entityid content //E();
-	word = prefix("R#"):lc word //R();
-	word = prefix("V#"):lc word //V();
-	word = prefix("W#"):lc word //W();
-	word = prefix("T#"):lc word //text();
-	word = prefix("T#"):lc word //attr();
-	word = prefix("T#"):lc word //quot();
-	word = prefix("T#"):lc word //char();
-
-	refid = prefix("N#"):entityid:lc content {position=succ} //N@id;
-	refid = prefix("E#"):entityid content {position=succ} //E@id;
-	refid = prefix("R#"):entityid content {position=succ} //R@id;
+refid = prefix("N#"):lc:entityid content {position=succ} //N@id;
+refid = prefix("E#"):lc:entityid content {position=succ} //E@id;
+refid = prefix("R#"):lc:entityid content {position=succ} //R@id;
 
 

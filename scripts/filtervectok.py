@@ -59,13 +59,23 @@ def isSentence( toklist, verbose):
 
 def run( verbose):
     tokbuf = []
+    heading = ""
     for line in sys.stdin:
         tokbuf.extend( line.strip(" \t\n").split(' '))
         while "." in tokbuf:
             idx = tokbuf.index(".")
-            if isSentence( tokbuf[:idx], verbose):
-                print( "%s" % ' '.join( tokbuf[:(idx+1)]))
+            sequence = tokbuf[:idx]
+            leadtok = heading
+            for tok in sequence:
+                if tok[:2] == "H#":
+                    heading = tok
+                    leadtok = ""
             tokbuf = tokbuf[(idx+1):]
+            if isSentence( sequence, verbose):
+                if leadtok:
+                    print( "%s %s ." % (leadtok, ' '.join( sequence)))
+                else:
+                    print( "%s ." % ' '.join( sequence))
 
 verbose = "-V" in sys.argv
 run( verbose)
