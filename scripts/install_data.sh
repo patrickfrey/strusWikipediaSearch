@@ -124,10 +124,10 @@ dumpVectorInput() {
 }
 
 calcWord2vec() {
-    word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 3 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec.bin
+    word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 2 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec.bin
 }
 
-processVectors() {
+dumpVectorInputAll() {
     rm /srv/wikipedia/vec.txt
     START=${1:-0000}
     END=${2:-9999}
@@ -146,14 +146,15 @@ processVectors() {
     done
     done
     done
-    calcWord2vec
 }
 
 processPosTaggingDumpSlice 0 3 0000 &
 processPosTaggingDumpSlice 1 3 0000 &
 processPosTaggingDumpSlice 2 3 0000 &
 
-processVectors 0000 5762
+dumpVectorInputAll 0000 5762
+calcWord2vec
+
 
 
 
