@@ -42,7 +42,7 @@ processPosTagging() {
     # [1] Call a strus program to scan the Strus Wikipedia XML generated in the previous step from the Wikimedia dump.
     #	the program creates a text dump in /srv/wikipedia/pos/$DID.txt with all the selected contents as input for the
     #	POS tagging script.
-    strusPosTagger -I -x xml -C XML -D '; ' -X '//pagelink@id' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//mark' -E '//text' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -E '//char' -E '//code' -E '//math' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
+    strusPosTagger -I -x xml -C XML -D '; ' -X '//pagelink@id://pagelink//*()' -Y '##' -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -E '//mark' -E '//text' -E '//entity' -E '//attr' -E '//attr~' -E '//quot' -E '//quot~' -E '//pagelink' -E '//weblink' -E '//tablink' -E '//citlink' -E '//reflink' -E '//tabtitle' -E '//head' -E '//cell' -E '//bibref' -E '//time' -E '//char' -E '//code' -E '//math' -p '//heading' -p '//table' -p '//citation' -p '//ref' -p '//list' -p '//cell~' -p '//head~' -p '//heading~' -p '//list~' -p '//br' /srv/wikipedia/xml/$DID /srv/wikipedia/pos/$DID.txt
     EC="$?"
     if [ "$EC" != "0" ]; then
         echo "Error creating POS tagger input: $EC" > /srv/wikipedia/err/$DID.txt
@@ -79,10 +79,29 @@ processPosTaggingDumpSlice() {
         if [ $DID -ge $START ]; then
             if [ $DID -le $END ]; then
                 if [ `expr $DID % $SLICE` == $WHAT ]; then
-                    echo "processing $DID ..."
+                    echo "processing POS tagging of $DID ..."
                     processPosTagging $DID
-                    strusTagMarkup -x xml -e '//heading' -P $DID"_1" /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID
                 fi
+            fi
+        fi
+    done
+    done
+    done
+    done
+}
+
+processPosTagMarkup() {
+    START=${1:-0000}
+    END=${2:-9999}
+    for aa in 0 1 2 3 4 5 6 ; do
+    for bb in 0 1 2 3 4 5 6 7 8 9; do
+    for cc in 0 1 2 3 4 5 6 7 8 9; do
+    for dd in 0 1 2 3 4 5 6 7 8 9; do
+        DID=$aa$bb$cc$dd
+        if [ $DID -ge $START ]; then
+            if [ $DID -le $END ]; then
+                echo "processing tag markup of $DID ..."
+                strusTagMarkup -x xml -e '/doc/title' -e '//heading' -P $DID"_1" /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID
             fi
         fi
     done
@@ -120,7 +139,7 @@ dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
     FILTER=$SCRIPTPATH/filtervectok.py
-    strusAnalyze --dump "punct=' , ',eos=' .\n',head,refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
+    strusAnalyze --dump "eod=' . . . . . . . .\n',punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
 }
 
 calcWord2vec() {
@@ -148,10 +167,11 @@ dumpVectorInputAll() {
     done
 }
 
-processPosTaggingDumpSlice 0 3 0000 &
-processPosTaggingDumpSlice 1 3 0000 &
-processPosTaggingDumpSlice 2 3 0000 &
+processPosTaggingDumpSlice 0 3 0000 5762 &
+processPosTaggingDumpSlice 1 3 0000 5762 &
+processPosTaggingDumpSlice 2 3 0000 5762 &
 
+processPosTagMarkup 0000 5762
 dumpVectorInputAll 0000 5762
 calcWord2vec
 

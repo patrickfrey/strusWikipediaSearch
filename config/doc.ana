@@ -1,47 +1,107 @@
+# 
+# Document analyzer program for inserting into storage
+# Token types:
+#	-T sentence delimiter
+#	-P punctuation without sentence delimiter
+#	-C cardinal number
+#	-X existential there
+#	-A adjective/adverb
+#	-V verb, past tense or gerund or present participle or past participle or singular present
+#	-M modal, pre determiner
+#	-N noun singular or plural, foreign word
+#	-E entity (proper noun, singular or plural)
+#	-U URI
+#	-R entity, personal or possesive pronoun
+#	-W determiner
+#
 [ForwardIndex]
-	none = orig content //weblink@id;
-	none = orig word //math();
-	none = orig content //char();
-	none = orig content //bibref();
-	none = orig content //time();
-	none = orig content //weblink();
-	none = orig content //E();
-	none = orig content //U();
+	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id
+	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id
+	page = orig content //pagelink@id
+	bibref = orig content //bibref();
+	time = orig content //time();
+	category = orig content //category@id
+	headid = orig content //heading@id
+
+	ref = orig content //N@id;
+	ref = orig content //E@id;
+	ref = orig content //R@id;
+	orig_t = orig content //T();
+	orig_p = orig content //P();
+	orig_c = orig content //C();
+	orig_x = orig content //X();
+	orig_a = orig content //A();
+	orig_v = orig content //V();
+	orig_m = orig content //M();
+	orig_n = orig content //N();
+	orig_e = orig content //E();
+	orig_u = orig content //U();
+	orig_r = orig content //R();
+	orig_w = orig content //W();
+	orig = orig content //heading();
+	orig = orig content //tabtitle();
+	orig = orig content //head();
+	orig = orig content //cell();
+	orig = orig content //citation();
+	orig = orig content //ref();
+	orig = orig content //list();
+	orig = orig content //text();
+	orig = orig content //attr();
+	orig = orig content //pagelink();
+	orig = orig content //weblink();
+	orig = orig content //entity();
+	orig = orig content //quot();
+	orig = orig word //math();
+	orig = orig content //char();
+	orig = orig content //code();
+	orig = orig content //bibref();
+	orig = orig content //time();
 
 [SearchIndex]
-	none = prefix("B#"):entityid content //bibref();
-	none = prefix("T#"):lc word //code();
-	none = prefix("T#"):lc word //math();
-	none = entityid content //citlink@id;
-	none = entityid content //citlink;
-	none = entityid content //weblink;
-	none = prefix("T#"):entityid content {position=succ} //pagelink@anchor;
-	none = prefix("E#"):entityid content {position=succ} //pagelink@id;
-	none = prefix("T#"):lc content //nowiki();
+	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id
+	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id
+	page = orig content //pagelink@id
+	bibref = orig content //bibref();
+	time = orig content //time();
+	category = orig content //category@id
+	headid = lc content //heading@id
 
-	punct = empty content //P;
-	eos = empty content //T;
+	ref = lc:entityid content {position=succ} //N@id;
+	ref = lc:entityid content {position=succ} //E@id;
+	ref = lc:entityid content {position=succ} //R@id;
 
-	word = prefix("E#"):entityid content //entity();
-	word = prefix("E#"):entityid content //pagelink();
-	word = prefix("E#"):entityid content //pagelink();
+	word_t = empty content //T;
+	word_p = empty content //P;
+	word_c = lc word //C();
+	word_x = lc word //X();
+	word_a = lc word //A();
+	word_v = lc word //V();
+	word_m = lc word //M();
+	word_n = lc:entityid content //N();
+	word_e = lc:entityid content //E();
+	word_u = lc word //U();
+	word_r = lc word //R();
+	word_w = lc word //W();
+	word = lc word //heading();
+	word = lc word //tabtitle();
+	word = lc word //head();
+	word = lc word //cell();
+	word = lc word //citation();
+	word = lc word //ref();
+	word = lc word //list();
+	word = lc word //text();
+	word = lc word //attr();
+	word = lc word //pagelink();
+	word = lc word //weblink();
+	word = lc word //entity();
+	word = lc word //quot();
+	word = lc word //math();
+	word = lc word //char();
+	word = lc word //code();
+	word = lc content //bibref();
 
-	word = prefix("C#"):lc word //C();
-	word = prefix("X#"):lc word //X();
-	word = prefix("A#"):lc word //A();
-	word = prefix("M#"):lc word //M();
-	word = prefix("N#"):entityid:lc content //N();
-	word = prefix("E#"):entityid content //E();
-	word = prefix("R#"):lc word //R();
-	word = prefix("V#"):lc word //V();
-	word = prefix("W#"):lc word //W();
-	word = prefix("T#"):lc word //text();
-	word = prefix("T#"):lc word //attr();
-	word = prefix("T#"):lc word //quot();
-	word = prefix("T#"):lc word //char();
+[Aggregator]
+	doclen = count( word_c, word_x, word_a, word_v, word_m, word_n, word_e, word_u, word_r, word_w, word);
 
-	refid = prefix("N#"):entityid:lc content {position=succ} //N@id;
-	refid = prefix("E#"):entityid content {position=succ} //E@id;
-	refid = prefix("R#"):entityid content {position=succ} //R@id;
-
+[Metadata]
 

@@ -1,7 +1,12 @@
+# 
+# Document analyzer program for dumping content as word2vec input
+#
 punct = empty content //P;
 eos = empty content //T;
+eod = empty content /doc~;
 
 word = prefix("H#"):entityid content //heading@id;
+word = prefix("H#"):entityid content //title@id;
 word = prefix("E#"):lc:entityid content //entity();
 word = prefix("E#"):lc:entityid content //pagelink();
 word = prefix("E#"):lc:entityid content //pagelink();
