@@ -139,11 +139,11 @@ dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
     FILTER=$SCRIPTPATH/filtervectok.py
-    strusAnalyze --dump "eod=' . . . . . . . .\n',punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
+    strusAnalyze --dump "eod='\n. . . . . . . .\n',punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG /srv/wikipedia/nlpxml/$DID/ | $FILTER >> /srv/wikipedia/vec.txt
 }
 
 calcWord2vec() {
-    word2vec -size 300 -window 8 -sample 1e-5 -negative 8 -threads 24 -min-count 2 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec.bin
+    word2vec -size 300 -window 6 -sample 1e-5 -negative 8 -threads 24 -min-count 1 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab1.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec1.bin
 }
 
 dumpVectorInputAll() {

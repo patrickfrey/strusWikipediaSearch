@@ -64,6 +64,10 @@ def run( verbose):
         tokbuf.extend( line.strip(" \t\n").split(' '))
         while "." in tokbuf:
             idx = tokbuf.index(".")
+            if idx == 0:
+                print( ".")
+                tokbuf = tokbuf[ 1:]
+                continue
             sequence = tokbuf[:idx]
             leadtok = heading
             for tok in sequence:
