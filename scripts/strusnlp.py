@@ -360,12 +360,29 @@ def skipMultipartName( tokens, tidx):
         ti += 1
     return ti
 
+def getNonBracketPrefix( name):
+    pidx = name.find('(')
+    if pidx >= 0:
+        return name[ :pidx].strip()
+    else:
+        return name
+
+def getLocationCandidate( name):
+    pidx = name.find(',')
+    oidx = name.find(' of ')
+    if pidx < 0 and oidx < 0:
+        return ""
+    pidx += 1
+    oidx += 4
+    if pidx > oidx:
+        return name[ pidx:].strip()
+    else:
+        return name[ oidx:].strip()
+
 def getTitleSubject( title):
     if len(title) > 0 and title[0] == '(' and title[-1] == ')':
         title = title[1:-1]
-    endtitle = title.find('(')
-    if endtitle >= 0:
-        title = title[ :endtitle ]
+    title = getNonBracketPrefix( title)
     rt = []
     for abr in splitAbbrev( title):
         rt += getAlphaTokenList( abr)
@@ -735,10 +752,31 @@ def tagEntitySequenceStrusTagsInBrackets( tokens):
         else:
             eidx += 1
 
+def tagSentenceEntityInvReferences( tokens, entityInvMap):
+    tidx = 0
+    totObserve = False
+    while tidx < len(tokens):
+        doObserve = (tokens[ tidx].alphavalue == "Canterbury")
+        if doObserve:
+            totObserve = True
+        if not tokens[ tidx].ref and tokens[tidx].nlprole != "none" and tokens[ tidx].nlptag in ["NNP","NNPS"]:
+            name = getMultipartName( tokens, tidx)
+            namestr = ' '.join( name)
+            if namestr in entityInvMap:
+                refstr = entityInvMap[ namestr]
+                if doObserve:
+                    sys.stderr.write( "+++ MAP %s -> %s\n" % (namestr, refstr))
+                if refstr != namestr:
+                    tokens[ tidx].ref = refstr.split(' ')
+                tagTokenNameReference( tokens, tidx, len(name))
+        tidx = skipMultipartName( tokens, tidx)
+    if totObserve:
+        sys.stderr.write( "+++ SENT %s\n" % ' '.join([tk.alphavalue for tk in tokens]))
+
 def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
     tidx = 0
     while tidx < len(tokens):
-        if tokens[tidx].alphavalue in firstKeyLinkListMap:
+        if not tokens[ tidx].ref and tokens[tidx].nlprole != "none" and tokens[tidx].alphavalue in firstKeyLinkListMap:
             candidateList = firstKeyLinkListMap[ tokens[tidx].alphavalue]
             bestIdx = -1
             bestLen = 0
@@ -937,6 +975,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
     eidx = 0
     ref = None
     while eidx < len( tokens):
+        isTagged = tokens[eidx].nlprole == "none"
         if tokens[ eidx].nlptag[:2] == 'NN':
             ref = tokens[ eidx].ref
             isEntity = False
@@ -956,15 +995,16 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                         eidx += 1
                         isEntity = True
                         sentenceIdx = -1
-            if isEntity and not ref:
+            if isEntity:
                 name = getMultipartName( tokens, eidx)
+            if isEntity and not ref and not isTagged:
                 for bt in bestTitleMatches:
                     if isEqualName( name, bt):
                         tokens[ eidx].ref = titlesubject
                         ref = titlesubject
                         isEntity = True
                         break
-            if isEntity and not ref:
+            if isEntity and not ref and not isTagged:
                 item,weight = getMapBestWeight( nounCandidateKeyMap, nounCandidates, name)
                 if item:
                     if len(name) == 1:
@@ -989,7 +1029,7 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                 usedEntities.append( key)
             elif ref:
                 tokens[ eidx].strustag = 'E'
-                key = ' '.join( ref or name)
+                key = ' '.join( ref)
                 usedEntities.append( key)
         eidx += 1
     for key in usedEntities:
@@ -1720,7 +1760,7 @@ def printSentenceTagging( title, tokens):
         origtgstr += "'%s' :%s" % (tk.value,attr)
     print( "* Tagging %s %s" % (title,origtgstr))
 
-def tagDocument( title, text, entityMap, accuvar, verbose, complete):
+def tagDocument( title, text, entityMap, entityInvMap, accuvar, verbose, complete):
     rt = ""
     titlesubject = getTitleSubject( title)
     entityFirstKeyMap = getFirstKeyMap( entityMap, getTitleSubject)
@@ -1748,6 +1788,8 @@ def tagDocument( title, text, entityMap, accuvar, verbose, complete):
             tagSentenceStrusTags( sent.tokens)
         elif sent.type == "sent":
             tagSentenceStrusTags( sent.tokens)
+
+        tagSentenceEntityInvReferences( sent.tokens, entityInvMap)
         tagEntitySequenceStrusTagsInBrackets( sent.tokens)
         # printSentenceTagging( "STEP1", sent.tokens)
         tagSentenceNameReferences( sent.tokens, titlesubject)
@@ -1899,14 +1941,22 @@ def processStdin( verbose, complete, duration):
     content = ""
     filename = ""
     entityMap = {}
+    entityInvMap = {}
+    locationMap = {}
     accuvar = {}
     entityReadState = False
     for line in sys.stdin:
         if len(line) > 6 and line[0:6] == '#FILE#':
             if filename:
                 if content:
+                    for location,count in locationMap.items():
+                        if count >= 3:
+                            if not location in entityMap:
+                                entityMap[ location] = location
+                            if not location in entityInvMap:
+                                entityInvMap[ location] = location
                     title = getTitleFromFileName( filename)
-                    result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
+                    result = tagDocument( title, content, entityMap, entityInvMap, accuvar, verbose, complete)
                     printOutput( filename, result)
                     content = ""
                 else:
@@ -1914,16 +1964,40 @@ def processStdin( verbose, complete, duration):
             filename = line[6:].rstrip( "\r\n")
             entityReadState = True
             entityMap = {}
+            entityInvMap = {}
         else:
             if entityReadState and line[:2] == '##':
-                entityMap[ line[2:].strip("\n\r\t ")] = True
+                entitydef = line[2:].strip("\n\r\t ")
+                spidx = entitydef.find('##')
+                if spidx >= 0:
+                    left = entitydef[ :spidx]
+                    right = entitydef[ (spidx+2):]
+                    eid = getNonBracketPrefix( left)
+                    location = getLocationCandidate( left)
+                    eval = right
+                    entityMap[ eid] = eval
+                    entityInvMap[ eval] = eid
+                else:
+                    location = getLocationCandidate( entitydef)
+                    entityMap[ getNonBracketPrefix( entitydef)] = ""
+                if location:
+                    if location in locationMap:
+                        locationMap[ location] += 1
+                    else:
+                        locationMap[ location] = 1
             else:
                 entityReadState = False
                 content += line
     if filename:
         if content:
+            for location,count in locationMap.items():
+                if count >= 3:
+                    if not location in entityMap:
+                        entityMap[ location] = location
+                    if not location in entityInvMap:
+                        entityInvMap[ location] = location
             title = getTitleFromFileName( filename)
-            result = tagDocument( title, content, entityMap, accuvar, verbose, complete)
+            result = tagDocument( title, content, entityMap, entityInvMap, accuvar, verbose, complete)
             printOutput( filename, result)
             content = ""
         else:

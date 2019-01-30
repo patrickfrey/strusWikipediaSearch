@@ -143,7 +143,7 @@ dumpVectorInput() {
 }
 
 calcWord2vec() {
-    word2vec -size 300 -window 6 -sample 1e-5 -negative 8 -threads 24 -min-count 1 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab1.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec1.bin
+    word2vec -size 300 -window 6 -sample 1e-5 -negative 16 -threads 12 -always 'H#' -min-count 5 -alpha 0.025 -classes 0 -debug 1 -binary 1 -portable 1 -save-vocab /srv/wikipedia/vocab.txt -cbow 0 -train /srv/wikipedia/vec.txt -output /srv/wikipedia/vec.bin
 }
 
 dumpVectorInputAll() {
