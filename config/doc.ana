@@ -15,13 +15,13 @@
 #	-W determiner
 #
 [ForwardIndex]
-	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id
-	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id
-	page = orig content //pagelink@id
+	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
+	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
+	page = orig content //pagelink@id;
 	bibref = orig content //bibref();
 	time = orig content //time();
-	category = orig content //category@id
-	headid = orig content //heading@id
+	category = orig content //category@id;
+	headid = orig content //heading@id;
 
 	ref = orig content //N@id;
 	ref = orig content //E@id;
@@ -58,13 +58,13 @@
 	orig = orig content //time();
 
 [SearchIndex]
-	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id
-	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id
-	page = orig content //pagelink@id
+	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
+	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
+	page = orig content //pagelink@id;
 	bibref = orig content //bibref();
 	time = orig content //time();
-	category = orig content //category@id
-	headid = lc content //heading@id
+	category = orig content //category@id;
+	headid = lc content //heading@id;
 
 	ref = lc:entityid content {position=succ} //N@id;
 	ref = lc:entityid content {position=succ} //E@id;

@@ -29,6 +29,8 @@ bunzip2 enwiki-latest-pages-articles.xml.bz2
 
 mkdir -p xml
 mkdir -p nlpxml
+mkdir -p storage
+
 strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml
 strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
 
@@ -172,6 +174,48 @@ dumpVectorInputAll() {
     done
 }
 
+createStorage() {
+    STORAGEID=$1
+    STORAGEPATH="/srv/wikipedia/storage/$STORAGEID"
+    if [ -d "$STORAGEPATH" ]; then
+        strusDestroy -s "path=$STORAGEPATH"
+    fi
+    strusCreate -s "path=$STORAGEPATH"
+}
+
+insertDocuments() {
+    STORAGEID=$1
+    DID=$2
+    CFG=$PROJECTPATH/config/doc.ana
+    STORAGEPATH="/srv/wikipedia/storage/$STORAGEID"
+    strusInsert -s "path=$STORAGEPATH" -x xml -C XML -m normalizer_entityid -t 3 -c 300 $CFG /srv/wikipedia/nlpxml/$DID 
+}
+
+insertDocumentsAll() {
+    STORAGEID=$1
+    WHAT=$2
+    SLICE=$3
+    START=${4:-0000}
+    END=${5:-9999}
+    for aa in 0 1 2 3 4 5 6 ; do
+    for bb in 0 1 2 3 4 5 6 7 8 9; do
+    for cc in 0 1 2 3 4 5 6 7 8 9; do
+    for dd in 0 1 2 3 4 5 6 7 8 9; do
+        DID=$aa$bb$cc$dd
+        if [ $DID -ge $START ]; then
+            if [ $DID -le $END ]; then
+                if [ `expr $DID % $SLICE` == $WHAT ]; then
+                    echo "inserting documents of $DID ..."
+                    insertDocuments $STORAGEID $DID
+                fi
+            fi
+        fi
+    done
+    done
+    done
+    done
+}
+
 processPosTaggingDumpSlice 0 3 0000 5762 &
 processPosTaggingDumpSlice 1 3 0000 5762 &
 processPosTaggingDumpSlice 2 3 0000 5762 &
@@ -181,6 +225,15 @@ processCategoryTagMarkup
 dumpVectorInputAll 0000 5762
 calcWord2vec
 
+createStorage doc1
+createStorage doc2
+createStorage doc3
+createStorage doc4
+
+insertDocumentsAll doc1 0 4 0000 5762
+insertDocumentsAll doc2 1 4 0000 5762
+insertDocumentsAll doc3 1 4 0000 5762
+insertDocumentsAll doc4 1 4 0000 5762
 
 
 
