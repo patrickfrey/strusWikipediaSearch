@@ -90,7 +90,7 @@ processPosTaggingDumpSlice() {
     done
 }
 
-processPosTagMarkup() {
+processHeadingTagMarkup() {
     START=${1:-0000}
     END=${2:-9999}
     for aa in 0 1 2 3 4 5 6 ; do
@@ -100,7 +100,7 @@ processPosTagMarkup() {
         DID=$aa$bb$cc$dd
         if [ $DID -ge $START ]; then
             if [ $DID -le $END ]; then
-                echo "processing tag markup of $DID ..."
+                echo "processing title/heading tag markup of $DID ..."
                 strusTagMarkup -x xml -e '/doc/title' -e '//heading' -P $DID"_1" /srv/wikipedia/nlpxml/$DID /srv/wikipedia/nlpxml/$DID
             fi
         fi
@@ -108,6 +108,11 @@ processPosTagMarkup() {
     done
     done
     done
+}
+
+processCategoryTagMarkup() {
+    echo "processing category tag markup ..."
+    strusTagMarkup -x xml  --markup map --attribute cid -e '//category' -P "1:lc:convdia" /srv/wikipedia/nlpxml /srv/wikipedia/nlpxml
 }
 
 processDocumentCheck() {
@@ -171,7 +176,8 @@ processPosTaggingDumpSlice 0 3 0000 5762 &
 processPosTaggingDumpSlice 1 3 0000 5762 &
 processPosTaggingDumpSlice 2 3 0000 5762 &
 
-processPosTagMarkup 0000 5762
+processHeadingTagMarkup 0000 5762
+processCategoryTagMarkup 
 dumpVectorInputAll 0000 5762
 calcWord2vec
 
