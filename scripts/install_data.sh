@@ -188,7 +188,7 @@ insertDocuments() {
     DID=$2
     CFG=$PROJECTPATH/config/doc.ana
     STORAGEPATH="/srv/wikipedia/storage/$STORAGEID"
-    strusInsert -s "path=$STORAGEPATH" -x xml -C XML -m normalizer_entityid -t 3 -c 300 $CFG /srv/wikipedia/nlpxml/$DID 
+    strusInsert -s "path=$STORAGEPATH" -x xml -C XML -m normalizer_entityid -t 1 -c 1000 $CFG /srv/wikipedia/nlpxml/$DID 
 }
 
 insertDocumentsAll() {
