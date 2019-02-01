@@ -17,27 +17,31 @@
 [ForwardIndex]
 	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
 	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
-	page = orig content //pagelink@id;
+	pageref = orig content //pagelink@id;
 	bibref = orig content //bibref();
 	time = orig content //time();
-	category = orig content //category@id;
-	headid = orig content //heading@id;
+	# category = orig content //category@id;
+	categoryid = orig content //category@cid;
+	headingid = orig content //title@id;
+	headingid = orig content //heading@id;
 
-	ref = orig content //N@id;
-	ref = orig content //E@id;
-	ref = orig content //R@id;
-	orig_t = orig content //T();
-	orig_p = orig content //P();
-	orig_c = orig content //C();
-	orig_x = orig content //X();
-	orig_a = orig content //A();
-	orig_v = orig content //V();
-	orig_m = orig content //M();
-	orig_n = orig content //N();
-	orig_e = orig content //E();
-	orig_u = orig content //U();
-	orig_r = orig content //R();
-	orig_w = orig content //W();
+	entityref = orig content //N@id;
+	entityref = orig content //E@id;
+	entityref = orig content //R@id;
+
+	punct = orig content //T();
+	comma = orig content //P();
+	cardinal = orig content //C();
+	exist = orig content //X();
+	adjv = orig content //A();
+	verb = orig content //V();
+	modal = orig content //M();
+	noun = orig content //N();
+	entity = orig content //E();
+	url = orig content //U();
+	pron = orig content //R();
+	wdet = orig content //W();
+
 	orig = orig content //heading();
 	orig = orig content //tabtitle();
 	orig = orig content //head();
@@ -58,30 +62,32 @@
 	orig = orig content //time();
 
 [SearchIndex]
-	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
-	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
-	page = orig content //pagelink@id;
-	bibref = orig content //bibref();
-	time = orig content //time();
-	category = orig content //category@id;
+	word = lc:entityid regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
+	word = lc:entityid regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
+	word = lc:entityid content //bibref();
+	categoryid = lc content //category@cid;
+	headid = lc content //title@id;
 	headid = lc content //heading@id;
 
-	ref = lc:entityid content {position=succ} //N@id;
-	ref = lc:entityid content {position=succ} //E@id;
-	ref = lc:entityid content {position=succ} //R@id;
+	title = lc word /doc/title();
 
-	word_t = empty content //T;
-	word_p = empty content //P;
-	word_c = lc word //C();
-	word_x = lc word //X();
-	word_a = lc word //A();
-	word_v = lc word //V();
-	word_m = lc word //M();
-	word_n = lc:entityid content //N();
-	word_e = lc:entityid content //E();
-	word_u = lc word //U();
-	word_r = lc word //R();
-	word_w = lc word //W();
+	entity = lc:entityid content {position=succ} //N@id;
+	entity = lc:entityid content {position=succ} //E@id;
+	entity = lc:entityid content {position=succ} //R@id;
+	entity = lc:entityid content //E();
+
+	word = empty content //T;
+	word = empty content //P;
+	word = lc word //C();
+	word = lc word //X();
+	word = lc word //A();
+	word = lc word //V();
+	word = lc word //M();
+	word = lc:entityid content //N();
+	word = lc:entityid content //E();
+	word = lc word //U();
+	word = lc word //R();
+	word = lc word //W();
 	word = lc word //heading();
 	word = lc word //tabtitle();
 	word = lc word //head();
@@ -98,10 +104,10 @@
 	word = lc word //math();
 	word = lc word //char();
 	word = lc word //code();
-	word = lc content //bibref();
 
+[Attribute]
+	title = orig content /doc/title();
 [Aggregator]
-	doclen = count( word_c, word_x, word_a, word_v, word_m, word_n, word_e, word_u, word_r, word_w, word);
-
+	doclen = count( word);
 [Metadata]
 

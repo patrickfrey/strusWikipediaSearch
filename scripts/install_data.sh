@@ -180,7 +180,7 @@ createStorage() {
     if [ -d "$STORAGEPATH" ]; then
         strusDestroy -s "path=$STORAGEPATH"
     fi
-    strusCreate -s "path=$STORAGEPATH"
+    strusCreate -s "path=$STORAGEPATH; metadata=doclen UINT32"
 }
 
 insertDocuments() {
@@ -232,8 +232,8 @@ createStorage doc4
 
 insertDocumentsAll doc1 0 4 0000 5762
 insertDocumentsAll doc2 1 4 0000 5762
-insertDocumentsAll doc3 1 4 0000 5762
-insertDocumentsAll doc4 1 4 0000 5762
+insertDocumentsAll doc3 2 4 0000 5762
+insertDocumentsAll doc4 3 4 0000 5762
 
 
 
