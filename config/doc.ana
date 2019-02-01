@@ -109,6 +109,7 @@
 
 [Attribute]
 	title = orig content /doc/title();
+	docid = orig content /doc/docid();
 [Aggregator]
 	doclen = count( word);
 [Metadata]
