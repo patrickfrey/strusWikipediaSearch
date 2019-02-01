@@ -83,8 +83,10 @@
 	word = lc word //A();
 	word = lc word //V();
 	word = lc word //M();
-	word = lc:entityid content //N();
-	word = lc:entityid content //E();
+	word = lc:entityid content {position=succ} //N();
+	word = lc:entityid content {position=succ} //E();
+	word = lc word //N();
+	word = lc word //E();
 	word = lc word //U();
 	word = lc word //R();
 	word = lc word //W();
