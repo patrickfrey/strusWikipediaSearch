@@ -185,33 +185,32 @@ createStorage() {
 
 insertDocuments() {
     STORAGEID=$1
-    DID=$2
-    CFG=$PROJECTPATH/config/doc.ana
-    STORAGEPATH="/srv/wikipedia/storage/$STORAGEID"
-    strusInsert -s "path=$STORAGEPATH" -x xml -C XML -m normalizer_entityid -t 1 -c 1000 $CFG /srv/wikipedia/nlpxml/$DID 
-}
-
-insertDocumentsAll() {
-    STORAGEID=$1
     WHAT=$2
     SLICE=$3
     START=${4:-0000}
     END=${5:-9999}
+    CFG=$PROJECTPATH/config/doc.ana
+    STORAGEPATH="/srv/wikipedia/storage/$STORAGEID"
+
     for aa in 0 1 2 3 4 5 6 ; do
     for bb in 0 1 2 3 4 5 6 7 8 9; do
+    PATHLIST=""
     for cc in 0 1 2 3 4 5 6 7 8 9; do
     for dd in 0 1 2 3 4 5 6 7 8 9; do
         DID=$aa$bb$cc$dd
         if [ $DID -ge $START ]; then
             if [ $DID -le $END ]; then
                 if [ `expr $DID % $SLICE` == $WHAT ]; then
-                    echo "inserting documents of $DID ..."
-                    insertDocuments $STORAGEID $DID
+                    PATHLIST="$PATHLIST $DID"
                 fi
             fi
         fi
     done
     done
+    cd /srv/wikipedia/nlpxml
+    echo "inserting documents of $PATHLIST ..."
+    strusInsert -s "path=$STORAGEPATH" -x xml -C XML -m normalizer_entityid -t 3 -c 1000 $CFG $PATHLIST 
+    cd -
     done
     done
 }
@@ -230,10 +229,10 @@ createStorage doc2
 createStorage doc3
 createStorage doc4
 
-insertDocumentsAll doc1 0 4 0000 5762
-insertDocumentsAll doc2 1 4 0000 5762
-insertDocumentsAll doc3 2 4 0000 5762
-insertDocumentsAll doc4 3 4 0000 5762
+insertDocuments doc1 0 4 0000 5762
+insertDocuments doc2 1 4 0000 5762
+insertDocuments doc3 2 4 0000 5762
+insertDocuments doc4 3 4 0000 5762
 
 
 

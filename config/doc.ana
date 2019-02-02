@@ -20,7 +20,6 @@
 	pageref = orig content //pagelink@id;
 	bibref = orig content //bibref();
 	time = orig content //time();
-	# category = orig content //category@id;
 	categoryid = orig content //category@cid;
 	headingid = orig content //title@id;
 	headingid = orig content //heading@id;
