@@ -754,24 +754,16 @@ def tagEntitySequenceStrusTagsInBrackets( tokens):
 
 def tagSentenceEntityInvReferences( tokens, entityInvMap):
     tidx = 0
-    totObserve = False
     while tidx < len(tokens):
-        doObserve = (tokens[ tidx].alphavalue == "Canterbury")
-        if doObserve:
-            totObserve = True
         if not tokens[ tidx].ref and tokens[tidx].nlprole != "none" and tokens[ tidx].nlptag in ["NNP","NNPS"]:
             name = getMultipartName( tokens, tidx)
             namestr = ' '.join( name)
             if namestr in entityInvMap:
                 refstr = entityInvMap[ namestr]
-                if doObserve:
-                    sys.stderr.write( "+++ MAP %s -> %s\n" % (namestr, refstr))
                 if refstr != namestr:
                     tokens[ tidx].ref = refstr.split(' ')
                 tagTokenNameReference( tokens, tidx, len(name))
         tidx = skipMultipartName( tokens, tidx)
-    if totObserve:
-        sys.stderr.write( "+++ SENT %s\n" % ' '.join([tk.alphavalue for tk in tokens]))
 
 def tagSentenceLinkReferences( tokens, firstKeyLinkListMap):
     tidx = 0
