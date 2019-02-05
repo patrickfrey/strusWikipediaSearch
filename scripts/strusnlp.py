@@ -345,7 +345,7 @@ def getMultipartName( tokens, tidx):
     return rt
 
 def getMultipartNameStr( tokens, tidx):
-    rt = tokens[tidx].value
+    rt = tokens[tidx].alphavalue
     ti = tidx + 1
     while ti < len(tokens) and tokens[ ti].nlptag == '_':
         trnam = tokens[ ti].alphavalue
@@ -975,6 +975,8 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                 isEntity = True
             elif tokens[ eidx].nlptag[:2] == 'NN' and tokens[ eidx].value and tokens[ eidx].value[0].isupper():
                 isEntity = True
+            if isEntity:
+                name = getMultipartName( tokens, eidx)
             if sentenceIdx == 0:
                 nidx = getLongestMatchIndex( tokens, eidx, titlesubject, 2)
                 if nidx >= 0:
@@ -987,8 +989,6 @@ def tagSentenceCompleteNounReferences( tokens, titlesubject, bestTitleMatches, n
                         eidx += 1
                         isEntity = True
                         sentenceIdx = -1
-            if isEntity:
-                name = getMultipartName( tokens, eidx)
             if isEntity and not ref and not isTagged:
                 for bt in bestTitleMatches:
                     if isEqualName( name, bt):
