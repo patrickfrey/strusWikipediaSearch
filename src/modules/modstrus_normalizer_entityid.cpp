@@ -80,7 +80,17 @@ public:
 						}
 						break;
 					}
-					rt.push_back( hasOnlySpace ? '_':'-');
+					if (hasOnlySpace)
+					{
+						if (si < se)
+						{
+							rt.push_back( '_');
+						}
+					}
+					else
+					{
+						rt.push_back( '-');
+					}
 					start = si;
 				}
 				else
