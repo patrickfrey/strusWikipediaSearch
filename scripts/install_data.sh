@@ -20,9 +20,11 @@ export PYTHONHASHSEED=123
 export SCRIPT=$(readlink -f "$0")
 export SCRIPTPATH=$(dirname "$SCRIPT")
 export PROJECTPATH=$(dirname "$SCRIPTPATH")
-export DATAPATH=/srv/wikipedia
+export DATAPATH=/data/wikipedia
+export STORAGEPATH=/srv/wikipedia/storage
 
-mkdir $DATAPATH
+mkdir -p $DATAPATH
+mkdir -p $STORAGEPATH
 
 cd $DATAPATH
 wget http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
@@ -183,11 +185,10 @@ dumpVectorInputAll() {
 
 createStorage() {
     STORAGEID=$1
-    STORAGEPATH="$DATAPATH/storage/$STORAGEID"
-    if [ -d "$STORAGEPATH" ]; then
-        strusDestroy -s "path=$STORAGEPATH"
+    if [ -d "$STORAGEPATH/$STORAGEID" ]; then
+        strusDestroy -s "path=$STORAGEPATH/$STORAGEID"
     fi
-    strusCreate -s "path=$STORAGEPATH; metadata=doclen UINT32"
+    strusCreate -s "path=$STORAGEPATH/$STORAGEID; metadata=doclen UINT32"
 }
 
 insertDocuments() {
@@ -197,7 +198,6 @@ insertDocuments() {
     START=${4:-0000}
     END=${5:-9999}
     CFG=$PROJECTPATH/config/doc.ana
-    STORAGEPATH="$DATAPATH/storage/$STORAGEID"
     LASTJOB=none
 
     for aa in 0 1 2 3 4 5 6 ; do
@@ -222,7 +222,7 @@ insertDocuments() {
     else
         cd $DATAPATH/nlpxml
         echo "inserting documents of $PATHLIST ..."
-        strusInsert -s "path=$STORAGEPATH" -x xml -C XML -m normalizer_entityid -t 3 -c 1000 $CFG $PATHLIST 
+        strusInsert -s "path=$STORAGEPATH/$STORAGEID" -x xml -C XML -m normalizer_entityid -t 3 -c 5000 $CFG $PATHLIST 
         LASTJOB=$PATHLIST
         cd -
     fi
@@ -243,6 +243,7 @@ createStorage doc1
 createStorage doc2
 createStorage doc3
 createStorage doc4
+
 
 insertDocuments doc1 0 4 0000 5762
 insertDocuments doc2 1 4 0000 5762
