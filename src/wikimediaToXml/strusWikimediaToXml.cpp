@@ -243,6 +243,10 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 						if (val)
 						{
 							doc.openPageLink( val, anchorid);
+							if (!doc.hasLinkText())
+							{
+								doc.setLinkText( link);
+							}
 						}
 						else
 						{

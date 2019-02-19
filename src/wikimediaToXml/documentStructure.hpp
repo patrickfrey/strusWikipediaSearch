@@ -338,11 +338,13 @@ public:
 	explicit DocumentStructure()
 		:m_fileId(),m_parar(),m_citations(),m_tables(),m_refs(),m_citationmap()
 		,m_refmap(),m_structStack(),m_tableDefs(),m_errors(),m_unresolved()
+		,m_linkDescription(),m_linkText()
 		,m_nofErrors(0),m_tableCnt(0),m_citationCnt(0),m_refCnt(0)
 		,m_lastHeadingIdx(0),m_maxStructureDepthReported(false){}
 	DocumentStructure( const DocumentStructure& o)
 		:m_fileId(o.m_fileId),m_parar(o.m_parar),m_citations(o.m_citations),m_tables(o.m_tables),m_refs(o.m_refs),m_citationmap(o.m_citationmap)
 		,m_refmap(o.m_refmap),m_structStack(o.m_structStack),m_tableDefs(o.m_tableDefs),m_errors(o.m_errors),m_unresolved(o.m_unresolved)
+		,m_linkDescription(o.m_linkDescription),m_linkText(o.m_linkText)
 		,m_nofErrors(o.m_nofErrors),m_tableCnt(o.m_tableCnt),m_citationCnt(o.m_citationCnt),m_refCnt(o.m_refCnt)
 		,m_lastHeadingIdx(o.m_lastHeadingIdx),m_maxStructureDepthReported(o.m_maxStructureDepthReported){}
 
@@ -363,7 +365,14 @@ public:
 	{
 		m_linkDescription = text;
 	}
-
+	void setLinkText( const std::string& text)
+	{
+		m_linkText = text;
+	}
+	bool hasLinkText() const
+	{
+		return !m_linkText.empty();
+	}
 	void addMarkup( const std::string& text)
 	{
 		closeWebLinkIfOpen();
@@ -446,6 +455,17 @@ public:
 			addAttribute( "description");
 			addText( m_linkDescription);
 			m_linkDescription.clear();
+		}
+		if (!m_linkText.empty())
+		{
+			if (!m_parar.empty())
+			{
+				if (m_parar.back().type() == Paragraph::AttributeEnd || m_parar.back().type() == Paragraph::PageLinkStart)
+				{
+					addText( m_linkText);
+				}
+			}
+			m_linkText.clear();
 		}
 		closeStructure( Paragraph::PageLinkStart, "");
 	}
@@ -810,6 +830,7 @@ private:
 	std::vector<std::string> m_errors;
 	std::set<std::string> m_unresolved;
 	std::string m_linkDescription;
+	std::string m_linkText;
 	int m_nofErrors;
 	int m_tableCnt;
 	int m_citationCnt;
