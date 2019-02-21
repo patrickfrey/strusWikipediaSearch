@@ -41,7 +41,6 @@ for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 
 processPosTagging() {
     DID=$1
-    mv $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID.old
     NLPCONV=$SCRIPTPATH/strusnlp.py
     PYTHONHASHSEED=123
     # [1] Call a strus program to scan the Strus Wikipedia XML generated in the previous step from the Wikimedia dump.
@@ -65,8 +64,6 @@ processPosTagging() {
     if [ "$EC" != "0" ]; then
         echo "Error tagging XML with POS tagger output: $EC" > $DATAPATH/err/$DID.txt
     fi
-    # [4] Cleanup temporary files
-    rm -Rf $DATAPATH/nlpxml/$DID.old
 }
 
 processPosTaggingDumpSlice() {
@@ -75,6 +72,7 @@ processPosTaggingDumpSlice() {
     START=${3:-0000}
     END=${4:-9999}
     LASTJOB=none
+    STOPPED=false
     for aa in 0 1 2 3 4 5 6 ; do
     for bb in 0 1 2 3 4 5 6 7 8 9; do
     for cc in 0 1 2 3 4 5 6 7 8 9; do
@@ -85,7 +83,10 @@ processPosTaggingDumpSlice() {
                 if [ `expr $DID % $SLICE` == $WHAT ]; then
                     if [ -e $DATAPATH/flags/stop_nlp ]
                     then
-                        echo "stopped POS tagging ($LASTJOB)."
+                        if [ "_$STOPPED" == "_false" ]; then
+                            echo "stopped POS tagging ($LASTJOB)."
+                            STOPPED=true
+                        fi
                         break
                     else
                         echo "processing POS tagging of $DID ..."
@@ -162,6 +163,14 @@ calcWord2vec() {
     word2vec -size 256 -window 8 -sample 1e-5 -negative 16 -threads 12 -type-prefix-delim '#' -type-min-count 'H=1,V=50,E=3,N=10,A=50,C=100,X=50,M=50,U=2,R=50,W=50,T=50' -min-count 5 -alpha 0.025 -classes 0 -debug 2 -binary 1 -portable 1 -save-vocab $DATAPATH/vocab.txt -cbow 0 -train $DATAPATH/vec.txt -output $DATAPATH/vec.bin
 }
 
+insertVectors() {
+    STORAGEID=vec
+    if [ -d "$STORAGEPATH/$STORAGEID" ]; then
+         strusDestroy -s "path=$STORAGEPATH/$STORAGEID"
+    fi
+    strusCreateVectorStorage -s "path=$STORAGEPATH/$STORAGEID;vecdim=256;bits=64;variations=32" -P -f $DATAPATH/vec.bin
+}
+
 dumpVectorInputAll() {
     rm $DATAPATH/vec.txt
     START=${1:-0000}
@@ -199,6 +208,7 @@ insertDocuments() {
     END=${5:-9999}
     CFG=$PROJECTPATH/config/doc.ana
     LASTJOB=none
+    STOPPED=false
 
     for aa in 0 1 2 3 4 5 6 ; do
     for bb in 0 1 2 3 4 5 6 7 8 9; do
@@ -217,12 +227,17 @@ insertDocuments() {
     done
     if [ -e $DATAPATH/flags/stop_insert ]
     then
-        echo "stopped inserting documents ($LASTJOB)."
+        if [ "_$STOPPED" == "_false" ]; then
+            echo "stopped inserting documents ($LASTJOB)."
+            STOPPED=true
+        fi
         break
     else
         cd $DATAPATH/nlpxml
-        echo "inserting documents of $PATHLIST ..."
-        strusInsert -s "path=$STORAGEPATH/$STORAGEID" -x xml -C XML -m normalizer_entityid -t 3 -c 5000 $CFG $PATHLIST 
+        if [ "_$PATHLIST" != "_" ]; then
+            echo "inserting documents of $PATHLIST ..."
+            strusInsert -s "path=$STORAGEPATH/$STORAGEID" -x xml -C XML -m normalizer_entityid -t 3 -c 5000 $CFG $PATHLIST 
+        fi
         LASTJOB=$PATHLIST
         cd -
     fi
@@ -230,24 +245,26 @@ insertDocuments() {
     done
 }
 
-processPosTaggingDumpSlice 0 3 0000 5762 &
-processPosTaggingDumpSlice 1 3 0000 5762 &
-processPosTaggingDumpSlice 2 3 0000 5762 &
+processPosTaggingDumpSlice 0 3 0000 5762
+processPosTaggingDumpSlice 1 3 0000 5762
+processPosTaggingDumpSlice 2 3 0000 5762
 
 processHeadingTagMarkup 0000 5762
 processCategoryTagMarkup 
 dumpVectorInputAll 0000 5762
 calcWord2vec
+insertVectors
 
 createStorage doc1
-createStorage doc2
-createStorage doc3
-createStorage doc4
-
-
 insertDocuments doc1 0 4 0000 5762
+
+createStorage doc2
 insertDocuments doc2 1 4 0000 5762
+
+createStorage doc3
 insertDocuments doc3 2 4 0000 5762
+
+createStorage doc4
 insertDocuments doc4 3 4 0000 5762
 
 
