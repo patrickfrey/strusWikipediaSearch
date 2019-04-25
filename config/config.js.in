@@ -1,7 +1,7 @@
 {
 	"data" :
 	{
-		"workdir"   : "/srv/strus",
+		"workdir"   : "/srv/wikipedia",
 		"configdir" : "/srv/strus/config",
 		"resources" : "/usr/share/strus"
 	},
@@ -13,7 +13,8 @@
 	"extensions" : {
 		"directory" : "@STRUS_MODULE_PATH@",
 		"modules" : [
-			"modstrus_analyzer_pattern.so"
+			"modstrus_analyzer_pattern",
+			"modstrus_storage_vector_std"
 		]
 	},
 
@@ -22,11 +23,10 @@
 	},
 
 	"service" : {
+		"name": "@STRUS_SERVER_ID@",
 		"api" : "http",
 		"ip" : "0.0.0.0",
-		"port" : 8080,
-		"worker_threads" : 4,
-		"applications_pool_size" : 4
+		"port" : @STRUS_SERVER_PORT@,
 	},
 
 	"security" : {
@@ -43,7 +43,7 @@
 	"logging" : {
 		"level" : "debug",
 		"file" : {
-			"name":		"./strusWebService.log",
+			"name":		"./strusWebService.@STRUS_SERVER_ID@.log",
 			"append":	true
 		}
 	},
@@ -51,7 +51,7 @@
 	"debug" : {
 		"log_requests": true,
 		"struct_depth": 4,
-		"request_file": "./requests.log",
+		"request_file": "./requests.@STRUS_SERVER_ID@.log",
 		"protocol" : {
 			"pretty_print":		true,
 			"quit_enabled":		true,
