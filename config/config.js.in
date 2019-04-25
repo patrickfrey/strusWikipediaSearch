@@ -2,7 +2,7 @@
 	"data" :
 	{
 		"workdir"   : "/srv/wikipedia",
-		"configdir" : "/srv/strus/config",
+		"configdir" : "/srv/strus/config_@STRUS_SERVER_ID@",
 		"resources" : "/usr/share/strus"
 	},
 
