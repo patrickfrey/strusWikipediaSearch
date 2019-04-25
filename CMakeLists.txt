@@ -66,6 +66,8 @@ set( STRUS_STORAGE_ID 3 )
 configure_file( "${PROJECT_SOURCE_DIR}/config/istorage.json.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/istorage${STRUS_STORAGE_ID}.json"  @ONLY )
 set( STRUS_STORAGE_ID 4 )
 configure_file( "${PROJECT_SOURCE_DIR}/config/istorage.json.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/istorage${STRUS_STORAGE_ID}.json"  @ONLY )
+set( STRUS_STORAGE_ID "" )
+configure_file( "${PROJECT_SOURCE_DIR}/config/vstorage.json.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/vstorage${STRUS_STORAGE_ID}.json"  @ONLY )
 
 enable_testing()
 
