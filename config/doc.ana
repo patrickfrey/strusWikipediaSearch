@@ -41,6 +41,18 @@
 	pron = orig content //R();
 	wdet = orig content //W();
 
+	orig = orig content //T();
+	orig = orig content //P();
+	orig = orig content //C();
+	orig = orig content //X();
+	orig = orig content //A();
+	orig = orig content //V();
+	orig = orig content //M();
+	orig = orig content //N();
+	orig = orig content //E();
+	orig = orig content //U();
+	orig = orig content //R();
+	orig = orig content //W();
 	orig = orig content //heading();
 	orig = orig content //tabtitle();
 	orig = orig content //head();
