@@ -1661,6 +1661,11 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
+			if (m_si+1 < m_se && m_si[1] == '\n')
+			{
+				m_si += 2;
+				return WikimediaLexem( WikimediaLexem::Break, 0, "\n");
+			}
 			while (m_si < m_se && isSpace(*m_si)) ++m_si;
 			if (m_si == m_se)
 			{

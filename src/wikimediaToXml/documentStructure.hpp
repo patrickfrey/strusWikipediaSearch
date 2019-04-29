@@ -420,6 +420,7 @@ public:
 		else if (isParagraphType( Paragraph::Text))
 		{
 			addText( "\n");
+			addSingleItem( Paragraph::Break, "", "", false/*joinText*/);
 		}
 		else
 		{

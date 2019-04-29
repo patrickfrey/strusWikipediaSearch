@@ -7,6 +7,7 @@ eod = empty content /doc~;
 
 word = prefix("H#"):entityid content //heading@id;
 word = prefix("H#"):entityid content //title@id;
+word = prefix("H#"):entityid content //br@id;
 word = prefix("E#"):lc:entityid content //entity();
 word = prefix("E#"):lc:entityid content //pagelink();
 word = prefix("E#"):lc:entityid content //pagelink();

@@ -113,7 +113,7 @@ processHeadingTagMarkup() {
         if [ $DID -ge $START ]; then
             if [ $DID -le $END ]; then
                 echo "processing title/heading tag markup of $DID ..."
-                strusTagMarkup -x xml -e '/doc/title' -e '//heading' -P $DID"_1" $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID
+                strusTagMarkup -x xml -e '/doc/title' -e '//heading' -e '//br' -P $DID"_1" $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID
             fi
         fi
     done
