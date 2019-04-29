@@ -1,0 +1,74 @@
+{
+    "analyzer": {
+        "query": {
+             "vstorage": {
+                "name": "vstorage@STRUS_STORAGE_ID@",
+                "sentanalyzer": {
+                    "field": "text",
+                    "separator": [ "0x22", "0x3b", "0xa"],
+                    "space": ["_", 32, 44, 08, "0xA0", "0x2008", "0x200B"],
+                    "link": [
+                        {
+                            "chr": ["!","0x22","0x27","0x28","0x29","0x2019","0x60","0x3f","0x2f","0x3a","0x3b", "0x2c","0x2d","0x2e","0x2014", "0x5b","0x5d", "0x7b","0x7d","0x3c","0x3e"],
+                            "subst": "-"
+                        },{
+                            "chr": ["0x20", 8, "_", "0xA0", "0x1680", "0x180E", "0x2000", "0x2001", "0x2002", "0x2003", "0x2004", "0x2005", "0x2006", "0x2007", "0x2009", "0x200A", "0x200B", "0x202F", "0x205F", "0x3000"],
+                            "subst": "_"
+                        }
+                    ],
+                    "sentence": [
+                        {
+                            "name": "std",
+                            "weight": "0.5",
+                            "sentpattern": {
+                                 "op": "repeat",
+                                 "arg": {
+                                     "sentterm": {
+                                         "type": "*"
+                                     }
+                                 }
+                            }
+                        }
+                    ],
+                    "tokenizer": {
+                        "name": "word"
+                    },
+                    "normalizer": {
+                        "name":"text"
+                    }
+                }
+             },
+             "element": [
+                {
+                    "type": "word",
+                    "field": "text",
+                    "tokenizer": {
+                        "name": "word"
+                    },
+                    "normalizer": [{
+                        "name":"text"
+                    },{
+                        "name":"lc"
+                    }]
+                },{
+                    "type": "entity",
+                    "field": "entity",
+                    "tokenizer": {
+                        "name": "word"
+                    },
+                    "normalizer": [{
+                        "name": "entityid"
+                    },{
+                        "name": "lc"
+                    }]
+                }
+            ],
+            "group": {
+                "-by": "all",
+                "field": "text",
+                "op": "sequence"
+            }
+        }
+    }
+}
+

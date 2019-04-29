@@ -1,0 +1,32 @@
+{
+    "query": {
+        "feature": [
+            {
+                "set": "search",
+                "content": {
+                    "term": {
+                        "type": "text",
+                        "value": "Valderrama goes shopping"
+                    }
+                 }
+            },
+            {
+                "set": "search",
+                "content": {
+                    "term": {
+                        "type": "text",
+                        "value": "Golfklub"
+                    }
+                }
+            }
+        ],
+        "sentence": {
+            "field": "text",
+            "content": "david bowie music",
+            "results": 5,
+            "minweight": 0.6
+            
+        }
+    }
+}
+

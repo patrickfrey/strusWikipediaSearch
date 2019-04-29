@@ -25,8 +25,8 @@ word = prefix("T#"):lc word //attr();
 word = prefix("T#"):lc word //quot();
 word = prefix("T#"):lc word //char();
 
-refid = prefix("N#"):lc:entityid content {position=succ} //N@id;
+refid = prefix("E#"):lc:entityid content {position=succ} //N@id;
 refid = prefix("E#"):lc:entityid content {position=succ} //E@id;
-refid = prefix("R#"):lc:entityid content {position=succ} //R@id;
+refid = prefix("E#"):lc:entityid content {position=succ} //R@id;
 
 

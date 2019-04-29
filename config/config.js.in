@@ -13,9 +13,10 @@
 	"extensions" : {
 		"directory" : "@STRUS_MODULE_PATH@",
 		"modules" : [
-			"modstrus_analyzer_pattern",
-			"modstrus_storage_vector_std"
-		]
+			"analyzer_pattern",
+			"storage_vector_std",
+			"normalizer_entityid"
+			]
 	},
 
 	"http" : {
@@ -27,6 +28,7 @@
 		"api" : "http",
 		"ip" : "0.0.0.0",
 		"port" : @STRUS_SERVER_PORT@,
+		"worker_threads": 2
 	},
 
 	"security" : {

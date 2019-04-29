@@ -140,6 +140,8 @@ def getPrpSex( prp):
     prp = prp.lower()
     if prp == "he" or prp == "his":
         return "M"
+    if prp == "he" or prp == "him":
+        return "M"
     if prp == "she" or prp == "her":
         return "W"
     if prp == "it" or prp == "its":
