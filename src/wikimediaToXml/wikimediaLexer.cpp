@@ -1663,7 +1663,7 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			if (m_si+1 < m_se && m_si[1] == '\n')
 			{
-				m_si += 2;
+				m_si += 1;
 				return WikimediaLexem( WikimediaLexem::Break, 0, "\n");
 			}
 			while (m_si < m_se && isSpace(*m_si)) ++m_si;
