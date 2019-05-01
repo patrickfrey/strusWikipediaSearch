@@ -59,7 +59,7 @@ processPosTagging() {
     fi
     # [3] Merge the output of the POS tagging script with the original XML in $DATAPATH/xml/$DID/
     #	and write a new XML file with the same name into $DATAPATH/nlpxml/$DID/
-    strusPosTagger -x ".xml" -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -o $DATAPATH/nlpxml/$DID $DATAPATH/xml/$DID $DATAPATH/tag/$DID.txt
+    strusPosTagger -F $DATAPATH/err/tag_$DID.err -x ".xml" -C XML -e '//pagelink()' -e '//weblink()' -e '//text()' -e '//attr()' -e '//char()' -e '//math()' -e '//code()' -e '//bibref()' -o $DATAPATH/nlpxml/$DID $DATAPATH/xml/$DID $DATAPATH/tag/$DID.txt
     EC="$?"
     if [ "$EC" != "0" ]; then
         echo "Error tagging XML with POS tagger output: $EC" > $DATAPATH/err/$DID.txt
