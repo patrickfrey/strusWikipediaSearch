@@ -23,8 +23,31 @@
                             "sentpattern": {
                                  "op": "repeat",
                                  "arg": {
-                                     "sentterm": {
-                                         "type": "*"
+                                     "sentpattern": {
+                                         "op": "alt",
+                                         "arg": [
+                                             {
+                                                 "sentterm": {
+                                                     "type": "V",
+                                                     "weight": 1
+                                                 }
+                                             },{
+                                                 "sentterm": {
+                                                     "type": "E",
+                                                     "weight": 1
+                                                 }
+                                             },{
+                                                 "sentterm": {
+                                                     "type": "N",
+                                                     "weight": 0.9
+                                                 }
+                                             },{
+                                                 "sentterm": {
+                                                     "type": "*",
+                                                     "weight": 0.8
+                                                 }
+                                             }
+                                         ]
                                      }
                                  }
                             }

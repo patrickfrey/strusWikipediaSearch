@@ -1,8 +1,8 @@
 # 
 # Document analyzer program for inserting into storage
 # Token types:
-#	-T sentence delimiter
-#	-P punctuation without sentence delimiter
+#	-punct sentence delimiter (T# in vector storage and tagging)
+#	-comma punctuation without sentence delimiter (P# in vector storage and tagging)
 #	-C cardinal number
 #	-X existential there
 #	-A adjective/adverb
