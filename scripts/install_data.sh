@@ -168,7 +168,7 @@ insertVectors() {
     if [ -d "$STORAGEPATH/$STORAGEID" ]; then
          strusDestroy -s "path=$STORAGEPATH/$STORAGEID"
     fi
-    strusCreateVectorStorage -s "path=$STORAGEPATH/$STORAGEID;vecdim=256;bits=64;variations=32" -P -f $DATAPATH/vec.bin
+    strusCreateVectorStorage -c 100000 -s "path=$STORAGEPATH/$STORAGEID;vecdim=256;bits=64;variations=32" -P -f $DATAPATH/vec.bin
 }
 
 dumpVectorInputAll() {

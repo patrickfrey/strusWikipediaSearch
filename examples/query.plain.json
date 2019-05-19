@@ -23,8 +23,8 @@
         "sentence": {
             "field": "text",
             "content": "david bowie music",
-            "results": 5,
-            "minweight": 0.6
+            "results": 3,
+            "minweight": 0.9
             
         }
     }

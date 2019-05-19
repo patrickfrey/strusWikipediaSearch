@@ -16,6 +16,7 @@
                             "subst": "_"
                         }
                     ],
+                    "groupsim": 0.6,
                     "sentence": [
                         {
                             "name": "std",
