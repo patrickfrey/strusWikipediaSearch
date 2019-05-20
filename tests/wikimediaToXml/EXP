@@ -106,7 +106,9 @@
 <pagelink id="Siberia">Siberia
   </pagelink>
 <text>. 
-Messerschmidt set out in 1720 on his exploration – the first by a </text>
+</text>
+<br/>
+<text>Messerschmidt set out in 1720 on his exploration – the first by a </text>
 <pagelink id="natural history"><text>naturalist</text>
   </pagelink>
 <text> in this </text>
@@ -155,7 +157,9 @@ Messerschmidt set out in 1720 on his exploration – the first by a </text>
 <pagelink id="Siberia">Siberia
   </pagelink>
 <text>. 
-Strahlenberg accompanied Messerschmidt during several expeditions and later published some of Messerschmidt’s observations.</text>
+</text>
+<br/>
+<text>Strahlenberg accompanied Messerschmidt during several expeditions and later published some of Messerschmidt’s observations.</text>
 <citlink id="cit5"/>
 <text> Messerschmidt explored lands all the way to </text>
 <pagelink id="Argun River (Asia)"><text>Argun</text>
@@ -176,6 +180,7 @@ Strahlenberg accompanied Messerschmidt during several expeditions and later publ
   </pagelink>
 <text> in 1735. 
 </text>
+<br/>
 <filelink id="Messer0002.jpg"><entity lv="2"><text>Cypripedium macranthon</text>
     </entity>
   <text>, described by Messerschmidt</text>
@@ -490,7 +495,9 @@ Strahlenberg accompanied Messerschmidt during several expeditions and later publ
 <pagelink id="Kilgore Trout">Kilgore Trout
   </pagelink>
 <text>.
-In 1980 the story was made into a short film with a running length of 25 minutes.  The film stars </text>
+</text>
+<br/>
+<text>In 1980 the story was made into a short film with a running length of 25 minutes.  The film stars </text>
 <pagelink id="Dennis Dugan">Dennis Dugan
   </pagelink>
 <text> in the lead role with supporting roles played by </text>
@@ -652,7 +659,9 @@ In 1980 the story was made into a short film with a running length of 25 minutes
 <pagelink id="technical sergeant">technical sergeant
   </pagelink>
 <text>.
-His work appeared in </text>
+</text>
+<br/>
+<text>His work appeared in </text>
 <entity lv="2"><text>The Atlantic</text>
   </entity>
 <text>,</text>
@@ -870,11 +879,15 @@ His work appeared in </text>
 <pagelink id="Bedfordshire">Bedfordshire
   </pagelink>
 <text>.
-He also dabbled in the world of screen acting, before focusing on news and factual television, having landed a role as a double for the daytime BBC drama series </text>
+</text>
+<br/>
+<text>He also dabbled in the world of screen acting, before focusing on news and factual television, having landed a role as a double for the daytime BBC drama series </text>
 <quot><text>Doctors</text>
   </quot>
 <text> during his undergraduate years and co-presented a National Film &amp; Television School pilot entertainment show funded by the BBC. 
-Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summary for BBC1 in the </text>
+</text>
+<br/>
+<text>Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summary for BBC1 in the </text>
 <pagelink id="East of England">East of England
   </pagelink>
 <text> including three of the </text>
@@ -1166,26 +1179,21 @@ Waseem can currently be seen on the BBC, presenting the prime-time 8pm News Summ
   </list>
 <heading lv="h1"><text>Gallery</text>
   </heading>
-<text>No Rep Pattern: 0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-Rep Pattern: 
-Rep Pattern: END
-Rep Pattern: END
-Rep Pattern: ?=-==-=
+<text>No Rep Pattern: 00000000000000
 </text>
+<br/>
+<text>Rep Pattern: 
+</text>
+<br/>
+<text>Rep Pattern: END
+</text>
+<br/>
+<text>Rep Pattern: END
+</text>
+<br/>
+<text>Rep Pattern: ?=-==-=
+</text>
+<br/>
 <reflink id="ref2"/>
 <ref id="ref2"><list lv="l1"><pagelink id="Panama Canal Museum">Panama Canal Museum
       </pagelink>
@@ -1648,134 +1656,143 @@ Rep Pattern: ?=-==-=
 346 HeadingStart h1 ""
 347 Text  "Gallery"
 348 HeadingEnd  ""
-349 Text  "No Rep Pattern: 0 0 0 0 0 0 0 0 0 0 0 0 0 0  Rep Pattern:  Rep Pattern: END Rep Pattern: END Rep Pattern: ?=-==-= "
-350 RefLink ref2 ""
-351 RefStart ref2 ""
-352 ListItemStart l1 ""
-353 PageLinkStart Panama Canal Museum "Panama Canal Museum"
-354 PageLinkEnd  ""
-355 Text  "."
-356 ListItemEnd  ""
-357 ListItemStart l1 ""
-358 Text  "Plaza de la Independencia."
-359 ListItemEnd  ""
-360 ListItemStart l1 ""
-361 Text  "San Francisco Church"
-362 ListItemEnd  ""
-363 ListItemStart l1 ""
-364 Text  "National Theater"
+349 Text  "No Rep Pattern: 00000000000000 "
+350 Break  ""
+351 Text  "Rep Pattern:  "
+352 Break  ""
+353 Text  "Rep Pattern: END "
+354 Break  ""
+355 Text  "Rep Pattern: END "
+356 Break  ""
+357 Text  "Rep Pattern: ?=-==-= "
+358 Break  ""
+359 RefLink ref2 ""
+360 RefStart ref2 ""
+361 ListItemStart l1 ""
+362 PageLinkStart Panama Canal Museum "Panama Canal Museum"
+363 PageLinkEnd  ""
+364 Text  "."
 365 ListItemEnd  ""
 366 ListItemStart l1 ""
-367 Text  "Society of Jesus"
+367 Text  "Plaza de la Independencia."
 368 ListItemEnd  ""
 369 ListItemStart l1 ""
-370 Text  "Convent of Santo Domingo"
+370 Text  "San Francisco Church"
 371 ListItemEnd  ""
 372 ListItemStart l1 ""
-373 Text  "Arch Chato"
+373 Text  "National Theater"
 374 ListItemEnd  ""
 375 ListItemStart l1 ""
-376 Text  "San José Church"
+376 Text  "Society of Jesus"
 377 ListItemEnd  ""
 378 ListItemStart l1 ""
-379 Text  "Typical houses"
+379 Text  "Convent of Santo Domingo"
 380 ListItemEnd  ""
 381 ListItemStart l1 ""
-382 Text  "Palacio Nacional"
+382 Text  "Arch Chato"
 383 ListItemEnd  ""
 384 ListItemStart l1 ""
-385 Text  "Palacio de las Garzas"
+385 Text  "San José Church"
 386 ListItemEnd  ""
 387 ListItemStart l1 ""
-388 Text  "House Góngora"
+388 Text  "Typical houses"
 389 ListItemEnd  ""
 390 ListItemStart l1 ""
-391 Text  "Metropolitan Cathedral"
+391 Text  "Palacio Nacional"
 392 ListItemEnd  ""
 393 ListItemStart l1 ""
-394 Text  "Map of Panama and its suburb in 1789."
+394 Text  "Palacio de las Garzas"
 395 ListItemEnd  ""
-396 Break  ""
-397 RefEnd  ""
-398 HeadingStart h1 ""
-399 Text  " References "
-400 HeadingEnd  ""
-401 CitationStart cit7 ""
-402 TableStart table4 ""
-403 TableTitleStart  ""
-404 Text  "cite web"
-405 TableTitleEnd  ""
-406 TableHeadStart  ""
-407 TableCellReference id "C0"
-408 Text  "url"
-409 TableHeadEnd  ""
-410 TableCellStart  ""
-411 TableCellReference id "C0"
-412 WebLinkStart http://whc.unesco.org/en/list/790 ""
-413 WebLinkEnd  ""
-414 TableCellEnd  ""
+396 ListItemStart l1 ""
+397 Text  "House Góngora"
+398 ListItemEnd  ""
+399 ListItemStart l1 ""
+400 Text  "Metropolitan Cathedral"
+401 ListItemEnd  ""
+402 ListItemStart l1 ""
+403 Text  "Map of Panama and its suburb in 1789."
+404 ListItemEnd  ""
+405 Break  ""
+406 RefEnd  ""
+407 HeadingStart h1 ""
+408 Text  " References "
+409 HeadingEnd  ""
+410 CitationStart cit7 ""
+411 TableStart table4 ""
+412 TableTitleStart  ""
+413 Text  "cite web"
+414 TableTitleEnd  ""
 415 TableHeadStart  ""
-416 TableCellReference id "C1"
-417 Text  "title"
+416 TableCellReference id "C0"
+417 Text  "url"
 418 TableHeadEnd  ""
 419 TableCellStart  ""
-420 TableCellReference id "C1"
-421 Text  "Archaeological Site of Panamá Viejo and Historic District of Panamá"
-422 TableCellEnd  ""
-423 TableHeadStart  ""
-424 TableCellReference id "C2"
-425 Text  "publisher"
-426 TableHeadEnd  ""
-427 TableCellStart  ""
-428 TableCellReference id "C2"
-429 PageLinkStart UNESCO "UNESCO"
-430 PageLinkEnd  ""
-431 Text  " World Heritage Centre"
-432 TableCellEnd  ""
-433 TableHeadStart  ""
-434 TableCellReference id "C3"
-435 Text  "accessdate"
-436 TableHeadEnd  ""
-437 TableCellStart  ""
-438 TableCellReference id "C3"
-439 Text  "27 May 2011"
-440 TableCellEnd  ""
-441 TableEnd  ""
-442 CitationEnd  ""
-443 HeadingStart h1 ""
-444 Text  " External links "
-445 HeadingEnd  ""
-446 ListItemStart l1 ""
-447 Text  " "
-448 Markup  "Official website"
-449 Text  " "
-450 Markup  "es icon"
-451 ListItemEnd  ""
-452 Break  ""
-453 Markup  "Spanish Colonial architecture"
-454 Break  ""
-455 Markup  "Panama topics"
-456 Break  ""
-457 PageLinkStart Category:Panama City "Category:Panama City"
-458 PageLinkEnd  ""
-459 Break  ""
-460 PageLinkStart Category:History of Panama City "Category:History of Panama City"
-461 PageLinkEnd  ""
-462 Break  ""
-463 PageLinkStart Category:Historic districts "Category:Historic districts"
-464 PageLinkEnd  ""
+420 TableCellReference id "C0"
+421 WebLinkStart http://whc.unesco.org/en/list/790 ""
+422 WebLinkEnd  ""
+423 TableCellEnd  ""
+424 TableHeadStart  ""
+425 TableCellReference id "C1"
+426 Text  "title"
+427 TableHeadEnd  ""
+428 TableCellStart  ""
+429 TableCellReference id "C1"
+430 Text  "Archaeological Site of Panamá Viejo and Historic District of Panamá"
+431 TableCellEnd  ""
+432 TableHeadStart  ""
+433 TableCellReference id "C2"
+434 Text  "publisher"
+435 TableHeadEnd  ""
+436 TableCellStart  ""
+437 TableCellReference id "C2"
+438 PageLinkStart UNESCO "UNESCO"
+439 PageLinkEnd  ""
+440 Text  " World Heritage Centre"
+441 TableCellEnd  ""
+442 TableHeadStart  ""
+443 TableCellReference id "C3"
+444 Text  "accessdate"
+445 TableHeadEnd  ""
+446 TableCellStart  ""
+447 TableCellReference id "C3"
+448 Text  "27 May 2011"
+449 TableCellEnd  ""
+450 TableEnd  ""
+451 CitationEnd  ""
+452 HeadingStart h1 ""
+453 Text  " External links "
+454 HeadingEnd  ""
+455 ListItemStart l1 ""
+456 Text  " "
+457 Markup  "Official website"
+458 Text  " "
+459 Markup  "es icon"
+460 ListItemEnd  ""
+461 Break  ""
+462 Markup  "Spanish Colonial architecture"
+463 Break  ""
+464 Markup  "Panama topics"
 465 Break  ""
-466 PageLinkStart Category:Populated places in Panamá Province "Category:Populated places in Panamá Province"
+466 PageLinkStart Category:Panama City "Category:Panama City"
 467 PageLinkEnd  ""
 468 Break  ""
-469 PageLinkStart Category:Spanish Colonial architecture "Category:Spanish Colonial architecture"
+469 PageLinkStart Category:History of Panama City "Category:History of Panama City"
 470 PageLinkEnd  ""
 471 Break  ""
-472 PageLinkStart Category:World Heritage Sites in Panama "Category:World Heritage Sites in Panama"
+472 PageLinkStart Category:Historic districts "Category:Historic districts"
 473 PageLinkEnd  ""
 474 Break  ""
-475 PageLinkStart Category:Tourist attractions in Panama City "Category:Tourist attractions in Panama City"
+475 PageLinkStart Category:Populated places in Panamá Province "Category:Populated places in Panamá Province"
 476 PageLinkEnd  ""
+477 Break  ""
+478 PageLinkStart Category:Spanish Colonial architecture "Category:Spanish Colonial architecture"
+479 PageLinkEnd  ""
+480 Break  ""
+481 PageLinkStart Category:World Heritage Sites in Panama "Category:World Heritage Sites in Panama"
+482 PageLinkEnd  ""
+483 Break  ""
+484 PageLinkStart Category:Tourist attractions in Panama City "Category:Tourist attractions in Panama City"
+485 PageLinkEnd  ""
 
 
 ## 0000/Casco_Viejo%2c_Panama.org
@@ -1956,7 +1973,9 @@ File:Plano Panamá 1789.jpg|Map of Panama and its suburb in 1789.
 <text> occurred in the middle of his international career, a period in which all international rugby ceased. He was first capped in 1909, scoring two tries in fourteen matches before the Great War. His next four caps came in 1920, and he scored against </text>
 <citlink id="cit9"/>
 <text> on 28 February 1920 - just over nine years since his previous try. Scotland won that match 19-0.
-He also played for the </text>
+</text>
+<br/>
+<text>He also played for the </text>
 <pagelink id="Scotland national cricket team">Scotland national cricket team
   </pagelink>
 <text>.</text>
@@ -2162,7 +2181,9 @@ He also played for the </text>
 <pagelink id="Columbia Broadcasting System">Columbia Broadcasting System
   </pagelink>
 <text>.
-Throughout his career which combined the techniques of his classical training with </text>
+</text>
+<br/>
+<text>Throughout his career which combined the techniques of his classical training with </text>
 <pagelink id="Afro-Cuban">Afro-Cuban
   </pagelink>
 <text> and </text>
@@ -2284,10 +2305,14 @@ Throughout his career which combined the techniques of his classical training wi
     </pagelink>
   </entity>
 <text>, he once again turned to Rizo, hiring him to be the pianist and orchestrator for the show between 1951 and 1957.  Rizo also made several on-camera appearances on the show throughout its run on television.
-Contrary to popular belief he did not write the I Love Lucy theme by himself which had music by Rizo, Eliot Daniel and Desi Arnaz  with lyrics by Harold Adamson.</text>
+</text>
+<br/>
+<text>Contrary to popular belief he did not write the I Love Lucy theme by himself which had music by Rizo, Eliot Daniel and Desi Arnaz  with lyrics by Harold Adamson.</text>
 <reflink id="ref2"/>
 <text> The lyrics were only heard once on the series in the Season three episode 'Lucy's Last Birthday' made in 1953.
-After the </text>
+</text>
+<br/>
+<text>After the </text>
 <entity lv="2"><pagelink id="I Love Lucy">I Love Lucy
     </pagelink>
   </entity>
@@ -2298,7 +2323,9 @@ After the </text>
 <pagelink id="Bob Hope">Bob Hope
   </pagelink>
 <text> Radio Show.”
-While in Los Angeles, he attended </text>
+</text>
+<br/>
+<text>While in Los Angeles, he attended </text>
 <pagelink id="UCLA">UCLA
   </pagelink>
 <text> and studied under </text>
@@ -2311,7 +2338,9 @@ While in Los Angeles, he attended </text>
 <pagelink id="MGM Studios">MGM Studios
   </pagelink>
 <text>.  He continued his concert career in 1960, playing the music of Lecuona and other Cubans.
-In the early 1970s, Rizo worked as the musical director for the Royal Viking Sea cruise ship.  Throughout his career, he arranged for hundreds of top artists: </text>
+</text>
+<br/>
+<text>In the early 1970s, Rizo worked as the musical director for the Royal Viking Sea cruise ship.  Throughout his career, he arranged for hundreds of top artists: </text>
 <pagelink id="Carmen Miranda">Carmen Miranda
   </pagelink>
 <text>, </text>
@@ -2355,7 +2384,9 @@ In the early 1970s, Rizo worked as the musical director for the Royal Viking Sea
 <reflink id="ref3"/>
 <br/>
 <text>In 1989, Rizo won the Silver Medal of the French Academy of the Arts, Sciences and Letters.
-He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His sister, Vilma Rizo, donated many of his papers, files, and compositions to the Music Division at the </text>
+</text>
+<br/>
+<text>He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His sister, Vilma Rizo, donated many of his papers, files, and compositions to the Music Division at the </text>
 <pagelink id="New York Public Library">New York Public Library
   </pagelink>
 <text> for the Performing Arts located at </text>
@@ -2639,6 +2670,7 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
   </pagelink>
 <text>.
 </text>
+<br/>
 <mark>Municipalities of Bahia</mark>
 <br/>
 <mark>DEFAULTSORT:America Dourada</mark>
@@ -2780,14 +2812,18 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <reflink id="ref3"/>
 <br/>
 <text>Three varieties are recognized:
-#</text>
+</text>
+<br/>
+<text>#</text>
 <entity lv="2"><text>Vriesea friburgensis</text>
   </entity>
 <text> var. </text>
 <entity lv="2"><text>friburgensis</text>
   </entity>
 <text> - eastern + southern Brazil
-#</text>
+</text>
+<br/>
+<text>#</text>
 <entity lv="2"><text>Vriesea friburgensis</text>
   </entity>
 <text> var. </text>
@@ -2798,7 +2834,9 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
   <text>(L.B.Sm.) L.B.Sm.</text>
   
 <text> - southeastern Brazil from São Paulo to Rio Grande do Sul
-#</text>
+</text>
+<br/>
+<text>#</text>
 <entity lv="2"><text>Vriesea friburgensis</text>
   </entity>
 <text> var. </text>
@@ -3423,7 +3461,9 @@ He died of a heart attack in 1998 at St. Luke’s-Roosevelt Hospital Center. His
 <pagelink id="Super 12">Super 12
   </pagelink>
 <text> between 2003 and 2005, reaching the semi-finals in 2004.
-In 2004, Smal was appointed to the South African team management as assistant coach to </text>
+</text>
+<br/>
+<text>In 2004, Smal was appointed to the South African team management as assistant coach to </text>
 <pagelink id="Jake White">Jake White
   </pagelink>
 <text>, during which time the Springboks won the Tri-Nations championship in 2004 before winning the </text>
@@ -3439,7 +3479,9 @@ In 2004, Smal was appointed to the South African team management as assistant co
 <pagelink id="South African Rugby Union">South African Rugby Union
   </pagelink>
 <text> 
-In June 2008, Smal was appointed forward coach to the Irish National team under </text>
+</text>
+<br/>
+<text>In June 2008, Smal was appointed forward coach to the Irish National team under </text>
 <pagelink id="Declan Kidney">Declan Kidney
   </pagelink>
 <text>.</text>
@@ -3476,7 +3518,9 @@ In June 2008, Smal was appointed forward coach to the Irish National team under 
 <citlink id="cit21"/>
 <br/>
 <text>In June 2011, he signed a contract extension with the IRFU.
-Smal was forced to miss the remainder of the </text>
+</text>
+<br/>
+<text>Smal was forced to miss the remainder of the </text>
 <pagelink id="2012 Six Nations Championship">2012 Six Nations Championship
   </pagelink>
 <text> after an eye condition struck him. His temporary replacement was </text>
@@ -3843,7 +3887,9 @@ Smal was forced to miss the remainder of the </text>
 <text>.</text>
 <reflink id="ref7"/>
 <text>  After graduating, the airmen were assigned to overseas combat units.
-However, standard military units, based on relatively inflexible </text>
+</text>
+<br/>
+<text>However, standard military units, based on relatively inflexible </text>
 <pagelink id="table of organization"><text>tables of organization</text>
   </pagelink>
 <text> were proving poorly adapted to the training mission.  Accordingly, the </text>
@@ -3923,7 +3969,9 @@ However, standard military units, based on relatively inflexible </text>
   </list>
 <br/>
 <text>: Activated on 1 August 1943
-: Disbanded on 1 May 1944</text>
+</text>
+<br/>
+<text>: Disbanded on 1 May 1944</text>
 <list lv="l1"><text> Reconstituted on 31 July 1985 and redesignated </text>
   <entity lv="3"><text>411th Tactical Missile Wing</text>
     </entity>
@@ -4609,7 +4657,9 @@ However, standard military units, based on relatively inflexible </text>
 <pagelink id="ring theory">ring theory
   </pagelink>
 <text>.
-He is the Herman P. Taubman Professor of Mathematics at the </text>
+</text>
+<br/>
+<text>He is the Herman P. Taubman Professor of Mathematics at the </text>
 <pagelink id="Weizmann Institute of Science">Weizmann Institute of Science
   </pagelink>
 <text>.  He received his doctorate from the </text>
@@ -4619,7 +4669,9 @@ He is the Herman P. Taubman Professor of Mathematics at the </text>
 <pagelink id="Shimshon Amitsur">Shimshon Amitsur
   </pagelink>
 <text>.
-Regev has made significant contributions to the theory of </text>
+</text>
+<br/>
+<text>Regev has made significant contributions to the theory of </text>
 <pagelink id="polynomial identity ring">polynomial identity rings
   </pagelink>
 <text> (PI rings).  In particular, he proved </text>
@@ -4775,11 +4827,15 @@ Regev has made significant contributions to the theory of </text>
 <pagelink id="Frederick Heath (architect)"><text>Frederick Heath</text>
   </pagelink>
 <text>.
-The house is located at 10815 Greendale Drive, built in 1922. The </text>
+</text>
+<br/>
+<text>The house is located at 10815 Greendale Drive, built in 1922. The </text>
 <pagelink id="Rhodes Brothers">Rhodes Brothers
   </pagelink>
 <text> were involved in the retail trade and had Rhodes department stores in Tacoma and other areas. The business was established in 1892 as a coffee shop in downtown Tacoma by Albert, William, Henry, and Charles Rhodes.
-The </text>
+</text>
+<br/>
+<text>The </text>
 <citlink id="cit7"/>
 <text> 1921 house with its 8+ bedrooms and 7+ bathrooms was on sale in 2009 for $3.4 million.</text>
 <citlink id="cit8"/>
@@ -4990,7 +5046,9 @@ The </text>
     </pagelink>
   </quot>
 <text> ideology.
-Its membership is between 9,000 to over 15,000.</text>
+</text>
+<br/>
+<text>Its membership is between 9,000 to over 15,000.</text>
 <reflink id="ref3"/>
 <text> </text>
 <pagelink id="Vice News">Vice News
@@ -5331,11 +5389,15 @@ Its membership is between 9,000 to over 15,000.</text>
 <text> (the Korean Residents Union in Japan) to extend suffrage to foreigners.</text>
 <reflink id="ref12"/>
 <text> 
-The group involves themselves extensively on </text>
+</text>
+<br/>
+<text>The group involves themselves extensively on </text>
 <pagelink id="social media">social media
   </pagelink>
 <text>.
-Several members of the group made donations to the political funding organization of </text>
+</text>
+<br/>
+<text>Several members of the group made donations to the political funding organization of </text>
 <pagelink id="Tomomi Inada">Tomomi Inada
   </pagelink>
 <text> between 2010 and 2012.</text>
@@ -5422,13 +5484,17 @@ Several members of the group made donations to the political funding organizatio
 <quot><text>cockroaches</text>
   </quot>
 <text>, and called upon them to be killed.
-It frequently organizes small-scale public demonstrations against Zainichi Koreans and other social and political issues, and its members make racist insults against Koreans, Chinese, and other foreign nationals in these demonstrations.</text>
+</text>
+<br/>
+<text>It frequently organizes small-scale public demonstrations against Zainichi Koreans and other social and political issues, and its members make racist insults against Koreans, Chinese, and other foreign nationals in these demonstrations.</text>
 <citlink id="cit10"/>
 <text> A writer for </text>
 <entity lv="2"><text>Vice News</text>
   </entity>
 <text> pointed out they tend to focus on Zainichi Koreans to the exclusion of other groups that might violate immigration statutes.
-They also take to the Internet, and in August 2014, Lee Sin (variously named as Lee Shinhae and Lee Shin-hye), a Zainichi Korean freelance writer, filed two lawsuits, one for damages of ¥5.5 million against the group and Sakurai and ¥22 million against the administrator of Hoshu Shimpo, a conservative news website compiler for </text>
+</text>
+<br/>
+<text>They also take to the Internet, and in August 2014, Lee Sin (variously named as Lee Shinhae and Lee Shin-hye), a Zainichi Korean freelance writer, filed two lawsuits, one for damages of ¥5.5 million against the group and Sakurai and ¥22 million against the administrator of Hoshu Shimpo, a conservative news website compiler for </text>
 <pagelink id="defamation">defamation
   </pagelink>
 <text> by hate speech, the first of its kind. Ms. Lee received sometimes hundreds of negative messages daily on her social networking site and says that she would like to hold responsible website compiler that profits from compiling discriminatory internet commentary.</text>
@@ -5730,6 +5796,7 @@ They also take to the Internet, and in August 2014, Lee Sin (variously named as 
   </pagelink>
 <text>.
 </text>
+<br/>
 <mark>Municipalities of Bahia</mark>
 <br/>
 <mark>DEFAULTSORT:Barra do Mendes</mark>
@@ -5808,7 +5875,9 @@ They also take to the Internet, and in August 2014, Lee Sin (variously named as 
 <pagelink id="Lucius Furius Medullinus (consul 474 BC)"><text>Lucius Furius Medullinus Fusus</text>
   </pagelink>
 <text>.
-The historian </text>
+</text>
+<br/>
+<text>The historian </text>
 <pagelink id="Livy">Livy
   </pagelink>
 <text> calls him </text>
@@ -6163,7 +6232,9 @@ The historian </text>
 <text> in 1952,</text>
 <citlink id="cit5"/>
 <text> forming the Savage Boys, which eventually was known as the Muddy Waters, Jr. Band. They substituted for Waters at local nightclubs while he was touring.
-Buford first played in Waters's backing band in 1959, replacing </text>
+</text>
+<br/>
+<text>Buford first played in Waters's backing band in 1959, replacing </text>
 <pagelink id="Little Walter">Little Walter
   </pagelink>
 <text>, but in 1962 moved to </text>
@@ -6188,14 +6259,18 @@ Buford first played in Waters's backing band in 1959, replacing </text>
 <pagelink id="The Legendary Blues Band"><text>Legendary Blues Band</text>
   </pagelink>
 <text>.
-He also recorded for the Mr. Blues label. These recordings were later reissued by </text>
+</text>
+<br/>
+<text>He also recorded for the Mr. Blues label. These recordings were later reissued by </text>
 <pagelink id="Rooster Blues">Rooster Blues
   </pagelink>
 <text>, Blue Loon Records, and the British </text>
 <pagelink id="JSP Records"><text>JSP</text>
   </pagelink>
 <text> label.
-Buford died on October 11, 2011, at the age of 81, in Minneapolis, after a long hospitalization.</text>
+</text>
+<br/>
+<text>Buford died on October 11, 2011, at the age of 81, in Minneapolis, after a long hospitalization.</text>
 <citlink id="cit7"/>
 <citlink id="cit8"/>
 <citation id="cit5"><table id="table5"><tabtitle><text>cite book</text>
@@ -6687,7 +6762,9 @@ Buford died on October 11, 2011, at the age of 81, in Minneapolis, after a long 
 <citlink id="cit6"/>
 <br/>
 <text>In 2004 Panova suffered a car crash injury and was not able to train and compete for a year. In 2005, she took second place at the WFF-WBBF Russia Amateur Championship. In 2006 Elena earned her professional status at WFF-WBBF Europe Pro Championship, finishing in fourth place. Her greatest success as a professional has been the second place at the WFF-WBBF World Pro Championship 2007 and 2008.
-After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position in World Professional Ranking List (Women).</text>
+</text>
+<br/>
+<text>After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position in World Professional Ranking List (Women).</text>
 <citlink id="cit7"/>
 <citation id="cit6"><table id="table4"><tabtitle><text>cite news</text>
       </tabtitle>
@@ -6875,6 +6952,7 @@ After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position i
         </entity>
       <text>.
 </text>
+      <br/>
       </attr>
     </list>
   </citation>
@@ -7154,399 +7232,402 @@ After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position i
 234 Text  ", finishing in sixth place."
 235 CitationLink cit6 ""
 236 Break  ""
-237 Text  "In 2004 Panova suffered a car crash injury and was not able to train and compete for a year. In 2005, she took second place at the WFF-WBBF Russia Amateur Championship. In 2006 Elena earned her professional status at WFF-WBBF Europe Pro Championship, finishing in fourth place. Her greatest success as a professional has been the second place at the WFF-WBBF World Pro Championship 2007 and 2008. After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position in World Professional Ranking List (Women)."
-238 CitationLink cit7 ""
-239 CitationStart cit6 ""
-240 TableStart table4 ""
-241 TableTitleStart  ""
-242 Text  "cite news"
-243 TableTitleEnd  ""
-244 TableHeadStart  ""
-245 TableCellReference id "C0"
-246 Text  "author"
-247 TableHeadEnd  ""
-248 TableCellStart  ""
-249 TableCellReference id "C0"
-250 Text  "samson-gym.ru"
-251 TableCellEnd  ""
-252 TableHeadStart  ""
-253 TableCellReference id "C1"
-254 Text  "url"
-255 TableHeadEnd  ""
-256 TableCellStart  ""
-257 TableCellReference id "C1"
-258 WebLinkStart http://www.samson-gym.ru/sams22.html ""
-259 WebLinkEnd  ""
-260 TableCellEnd  ""
-261 TableHeadStart  ""
-262 TableCellReference id "C2"
-263 Text  "title"
-264 TableHeadEnd  ""
-265 TableCellStart  ""
-266 TableCellReference id "C2"
-267 Text  "Samson 22 Protocol"
-268 TableCellEnd  ""
-269 TableHeadStart  ""
-270 TableCellReference id "C3"
-271 Text  "language"
-272 TableHeadEnd  ""
-273 TableCellStart  ""
-274 TableCellReference id "C3"
-275 Text  "Russian"
-276 TableCellEnd  ""
-277 TableEnd  ""
-278 CitationEnd  ""
-279 CitationStart cit7 ""
-280 TableStart table5 ""
-281 TableTitleStart  ""
-282 Text  "cite news"
-283 TableTitleEnd  ""
-284 TableHeadStart  ""
-285 TableCellReference id "C0"
-286 Text  "author"
-287 TableHeadEnd  ""
-288 TableCellStart  ""
-289 TableCellReference id "C0"
-290 Text  "wff.lt"
-291 TableCellEnd  ""
-292 TableHeadStart  ""
-293 TableCellReference id "C1"
-294 Text  "url"
-295 TableHeadEnd  ""
-296 TableCellStart  ""
-297 TableCellReference id "C1"
-298 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=rei&amp;id=26 ""
-299 WebLinkEnd  ""
-300 TableCellEnd  ""
-301 TableHeadStart  ""
-302 TableCellReference id "C2"
-303 Text  "title"
-304 TableHeadEnd  ""
-305 TableCellStart  ""
-306 TableCellReference id "C2"
-307 Text  "WFF-WBBF 2009 Professional Ranking List (Women)"
-308 TableCellEnd  ""
-309 TableEnd  ""
-310 CitationEnd  ""
-311 HeadingStart h1 ""
-312 Text  "Contest history"
-313 HeadingEnd  ""
-314 ListItemStart l1 ""
-315 Text  "2003 FBFR Southern Russia Third Championship "
-316 QuotationStart  ""
-317 Text  "Samson 22"
-318 QuotationEnd  ""
-319 Text  " - 6th"
-320 ListItemEnd  ""
-321 ListItemStart l1 ""
-322 Text  "2005 WFF-WBBF Russia Amateur Championship - 2nd."
-323 ListItemEnd  ""
-324 ListItemStart l1 ""
-325 Text  "2006 WFF-WBBF Europe Amateur Championship – 2nd."
-326 CitationLink cit8 ""
-327 ListItemEnd  ""
-328 ListItemStart l1 ""
-329 Text  "2006 WFF-WBBF Europe Pro Championship - 4th"
-330 ListItemEnd  ""
-331 ListItemStart l1 ""
-332 Text  "2007 WFF-WBBF Europe Pro Championship - 2nd."
-333 CitationLink cit9 ""
-334 ListItemEnd  ""
-335 ListItemStart l1 ""
-336 Text  "2007 WFF-WBBF World Amateur Championship - 1st."
-337 CitationLink cit10 ""
-338 ListItemEnd  ""
-339 ListItemStart l1 ""
-340 Text  "2007 WFF-WBBF World Pro Championship - 2nd."
-341 CitationLink cit11 ""
-342 ListItemEnd  ""
-343 ListItemStart l1 ""
-344 Text  "2008 WFF-WBBF World Pro Championship - 2nd."
-345 CitationLink cit12 ""
-346 ListItemEnd  ""
-347 ListItemStart l1 ""
-348 Text  "2011 NPC FL Gold Cup November 12 - Women Overall - 1st, Women Heavyweight - 1st, Women Masters Overall - 1st, Women Masters 30+ - 1st."
-349 CitationLink cit13 ""
-350 ListItemEnd  ""
-351 Break  ""
-352 CitationLink cit14 ""
-353 CitationStart cit8 ""
-354 TableStart table6 ""
-355 TableTitleStart  ""
-356 Text  "cite news"
-357 TableTitleEnd  ""
-358 TableHeadStart  ""
-359 TableCellReference id "C0"
-360 Text  "author"
-361 TableHeadEnd  ""
-362 TableCellStart  ""
-363 TableCellReference id "C0"
-364 Text  "wff.lt"
-365 TableCellEnd  ""
-366 TableHeadStart  ""
-367 TableCellReference id "C1"
-368 Text  "url"
-369 TableHeadEnd  ""
-370 TableCellStart  ""
-371 TableCellReference id "C1"
-372 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=eur&amp;id=24 ""
-373 WebLinkEnd  ""
-374 TableCellEnd  ""
-375 TableHeadStart  ""
-376 TableCellReference id "C2"
-377 Text  "title"
-378 TableHeadEnd  ""
-379 TableCellStart  ""
-380 TableCellReference id "C2"
-381 Text  "2006 WFF-WBBF Europe Amateur Championship Protocol"
-382 TableCellEnd  ""
-383 TableEnd  ""
-384 CitationEnd  ""
-385 CitationStart cit9 ""
-386 TableStart table7 ""
-387 TableTitleStart  ""
-388 Text  "cite news"
-389 TableTitleEnd  ""
-390 TableHeadStart  ""
-391 TableCellReference id "C0"
-392 Text  "author"
-393 TableHeadEnd  ""
-394 TableCellStart  ""
-395 TableCellReference id "C0"
-396 Text  "wff.lt"
-397 TableCellEnd  ""
-398 TableHeadStart  ""
-399 TableCellReference id "C1"
-400 Text  "url"
-401 TableHeadEnd  ""
-402 TableCellStart  ""
-403 TableCellReference id "C1"
-404 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=14 ""
-405 WebLinkEnd  ""
-406 TableCellEnd  ""
-407 TableHeadStart  ""
-408 TableCellReference id "C2"
-409 Text  "title"
-410 TableHeadEnd  ""
-411 TableCellStart  ""
-412 TableCellReference id "C2"
-413 Text  "2007 WFF-WBBF Europe Pro Championship Protocol"
-414 TableCellEnd  ""
-415 TableEnd  ""
-416 CitationEnd  ""
-417 CitationStart cit10 ""
-418 TableStart table8 ""
-419 TableTitleStart  ""
-420 Text  "cite news"
-421 TableTitleEnd  ""
-422 TableHeadStart  ""
-423 TableCellReference id "C0"
-424 Text  "author"
-425 TableHeadEnd  ""
-426 TableCellStart  ""
-427 TableCellReference id "C0"
-428 Text  "wff.lt"
-429 TableCellEnd  ""
-430 TableHeadStart  ""
-431 TableCellReference id "C1"
-432 Text  "url"
-433 TableHeadEnd  ""
-434 TableCellStart  ""
-435 TableCellReference id "C1"
-436 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pas&amp;id=21 ""
-437 WebLinkEnd  ""
-438 TableCellEnd  ""
-439 TableHeadStart  ""
-440 TableCellReference id "C2"
-441 Text  "title"
-442 TableHeadEnd  ""
-443 TableCellStart  ""
-444 TableCellReference id "C2"
-445 Text  "2007 WFF-WBBF World Amateur Championship Protocol"
-446 TableCellEnd  ""
-447 TableEnd  ""
-448 CitationEnd  ""
-449 CitationStart cit11 ""
-450 TableStart table9 ""
-451 TableTitleStart  ""
-452 Text  "cite news"
-453 TableTitleEnd  ""
-454 TableHeadStart  ""
-455 TableCellReference id "C0"
-456 Text  "author"
-457 TableHeadEnd  ""
-458 TableCellStart  ""
-459 TableCellReference id "C0"
-460 Text  "wff.lt"
-461 TableCellEnd  ""
-462 TableHeadStart  ""
-463 TableCellReference id "C1"
-464 Text  "url"
-465 TableHeadEnd  ""
-466 TableCellStart  ""
-467 TableCellReference id "C1"
-468 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=17 ""
-469 WebLinkEnd  ""
-470 TableCellEnd  ""
-471 TableHeadStart  ""
-472 TableCellReference id "C2"
-473 Text  "title"
-474 TableHeadEnd  ""
-475 TableCellStart  ""
-476 TableCellReference id "C2"
-477 Text  "2007 WFF-WBBF World Pro Championship Protocol"
-478 TableCellEnd  ""
-479 TableEnd  ""
-480 CitationEnd  ""
-481 CitationStart cit12 ""
-482 TableStart table10 ""
-483 TableTitleStart  ""
-484 Text  "cite news"
-485 TableTitleEnd  ""
-486 TableHeadStart  ""
-487 TableCellReference id "C0"
-488 Text  "author"
-489 TableHeadEnd  ""
-490 TableCellStart  ""
-491 TableCellReference id "C0"
-492 Text  "wff.lt"
-493 TableCellEnd  ""
-494 TableHeadStart  ""
-495 TableCellReference id "C1"
-496 Text  "url"
-497 TableHeadEnd  ""
-498 TableCellStart  ""
-499 TableCellReference id "C1"
-500 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 ""
-501 WebLinkEnd  ""
-502 TableCellEnd  ""
-503 TableHeadStart  ""
-504 TableCellReference id "C2"
-505 Text  "title"
-506 TableHeadEnd  ""
-507 TableCellStart  ""
-508 TableCellReference id "C2"
-509 Text  "2008 WFF-WBBF World Pro Championship Protocol"
-510 TableCellEnd  ""
-511 TableEnd  ""
-512 CitationEnd  ""
-513 CitationStart cit13 ""
-514 TableStart table11 ""
-515 TableTitleStart  ""
-516 Text  "cite news"
-517 TableTitleEnd  ""
-518 TableHeadStart  ""
-519 TableCellReference id "C0"
-520 Text  "author"
-521 TableHeadEnd  ""
-522 TableCellStart  ""
-523 TableCellReference id "C0"
-524 Text  "rxmuscle.com"
-525 TableCellEnd  ""
-526 TableHeadStart  ""
-527 TableCellReference id "C1"
-528 Text  "url"
-529 TableHeadEnd  ""
-530 TableCellStart  ""
-531 TableCellReference id "C1"
-532 WebLinkStart http://gallery.rxmuscle.com/index.php?contest=261&amp;year=470 ""
-533 WebLinkEnd  ""
-534 TableCellEnd  ""
-535 TableHeadStart  ""
-536 TableCellReference id "C2"
-537 Text  "title"
-538 TableHeadEnd  ""
-539 TableCellStart  ""
-540 TableCellReference id "C2"
-541 Text  "2011 NPC FL Gold Cup November 12 Protocol"
-542 TableCellEnd  ""
-543 TableEnd  ""
-544 CitationEnd  ""
-545 CitationStart cit14 ""
-546 AttributeStart class "hide in print"
-547 AttributeEnd  ""
-548 AttributeStart  "1="
+237 Text  "In 2004 Panova suffered a car crash injury and was not able to train and compete for a year. In 2005, she took second place at the WFF-WBBF Russia Amateur Championship. In 2006 Elena earned her professional status at WFF-WBBF Europe Pro Championship, finishing in fourth place. Her greatest success as a professional has been the second place at the WFF-WBBF World Pro Championship 2007 and 2008. "
+238 Break  ""
+239 Text  "After 2009 WFF-WBBF Pro World Championships Elena Panova holds fourth position in World Professional Ranking List (Women)."
+240 CitationLink cit7 ""
+241 CitationStart cit6 ""
+242 TableStart table4 ""
+243 TableTitleStart  ""
+244 Text  "cite news"
+245 TableTitleEnd  ""
+246 TableHeadStart  ""
+247 TableCellReference id "C0"
+248 Text  "author"
+249 TableHeadEnd  ""
+250 TableCellStart  ""
+251 TableCellReference id "C0"
+252 Text  "samson-gym.ru"
+253 TableCellEnd  ""
+254 TableHeadStart  ""
+255 TableCellReference id "C1"
+256 Text  "url"
+257 TableHeadEnd  ""
+258 TableCellStart  ""
+259 TableCellReference id "C1"
+260 WebLinkStart http://www.samson-gym.ru/sams22.html ""
+261 WebLinkEnd  ""
+262 TableCellEnd  ""
+263 TableHeadStart  ""
+264 TableCellReference id "C2"
+265 Text  "title"
+266 TableHeadEnd  ""
+267 TableCellStart  ""
+268 TableCellReference id "C2"
+269 Text  "Samson 22 Protocol"
+270 TableCellEnd  ""
+271 TableHeadStart  ""
+272 TableCellReference id "C3"
+273 Text  "language"
+274 TableHeadEnd  ""
+275 TableCellStart  ""
+276 TableCellReference id "C3"
+277 Text  "Russian"
+278 TableCellEnd  ""
+279 TableEnd  ""
+280 CitationEnd  ""
+281 CitationStart cit7 ""
+282 TableStart table5 ""
+283 TableTitleStart  ""
+284 Text  "cite news"
+285 TableTitleEnd  ""
+286 TableHeadStart  ""
+287 TableCellReference id "C0"
+288 Text  "author"
+289 TableHeadEnd  ""
+290 TableCellStart  ""
+291 TableCellReference id "C0"
+292 Text  "wff.lt"
+293 TableCellEnd  ""
+294 TableHeadStart  ""
+295 TableCellReference id "C1"
+296 Text  "url"
+297 TableHeadEnd  ""
+298 TableCellStart  ""
+299 TableCellReference id "C1"
+300 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=rei&amp;id=26 ""
+301 WebLinkEnd  ""
+302 TableCellEnd  ""
+303 TableHeadStart  ""
+304 TableCellReference id "C2"
+305 Text  "title"
+306 TableHeadEnd  ""
+307 TableCellStart  ""
+308 TableCellReference id "C2"
+309 Text  "WFF-WBBF 2009 Professional Ranking List (Women)"
+310 TableCellEnd  ""
+311 TableEnd  ""
+312 CitationEnd  ""
+313 HeadingStart h1 ""
+314 Text  "Contest history"
+315 HeadingEnd  ""
+316 ListItemStart l1 ""
+317 Text  "2003 FBFR Southern Russia Third Championship "
+318 QuotationStart  ""
+319 Text  "Samson 22"
+320 QuotationEnd  ""
+321 Text  " - 6th"
+322 ListItemEnd  ""
+323 ListItemStart l1 ""
+324 Text  "2005 WFF-WBBF Russia Amateur Championship - 2nd."
+325 ListItemEnd  ""
+326 ListItemStart l1 ""
+327 Text  "2006 WFF-WBBF Europe Amateur Championship – 2nd."
+328 CitationLink cit8 ""
+329 ListItemEnd  ""
+330 ListItemStart l1 ""
+331 Text  "2006 WFF-WBBF Europe Pro Championship - 4th"
+332 ListItemEnd  ""
+333 ListItemStart l1 ""
+334 Text  "2007 WFF-WBBF Europe Pro Championship - 2nd."
+335 CitationLink cit9 ""
+336 ListItemEnd  ""
+337 ListItemStart l1 ""
+338 Text  "2007 WFF-WBBF World Amateur Championship - 1st."
+339 CitationLink cit10 ""
+340 ListItemEnd  ""
+341 ListItemStart l1 ""
+342 Text  "2007 WFF-WBBF World Pro Championship - 2nd."
+343 CitationLink cit11 ""
+344 ListItemEnd  ""
+345 ListItemStart l1 ""
+346 Text  "2008 WFF-WBBF World Pro Championship - 2nd."
+347 CitationLink cit12 ""
+348 ListItemEnd  ""
+349 ListItemStart l1 ""
+350 Text  "2011 NPC FL Gold Cup November 12 - Women Overall - 1st, Women Heavyweight - 1st, Women Masters Overall - 1st, Women Masters 30+ - 1st."
+351 CitationLink cit13 ""
+352 ListItemEnd  ""
+353 Break  ""
+354 CitationLink cit14 ""
+355 CitationStart cit8 ""
+356 TableStart table6 ""
+357 TableTitleStart  ""
+358 Text  "cite news"
+359 TableTitleEnd  ""
+360 TableHeadStart  ""
+361 TableCellReference id "C0"
+362 Text  "author"
+363 TableHeadEnd  ""
+364 TableCellStart  ""
+365 TableCellReference id "C0"
+366 Text  "wff.lt"
+367 TableCellEnd  ""
+368 TableHeadStart  ""
+369 TableCellReference id "C1"
+370 Text  "url"
+371 TableHeadEnd  ""
+372 TableCellStart  ""
+373 TableCellReference id "C1"
+374 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=eur&amp;id=24 ""
+375 WebLinkEnd  ""
+376 TableCellEnd  ""
+377 TableHeadStart  ""
+378 TableCellReference id "C2"
+379 Text  "title"
+380 TableHeadEnd  ""
+381 TableCellStart  ""
+382 TableCellReference id "C2"
+383 Text  "2006 WFF-WBBF Europe Amateur Championship Protocol"
+384 TableCellEnd  ""
+385 TableEnd  ""
+386 CitationEnd  ""
+387 CitationStart cit9 ""
+388 TableStart table7 ""
+389 TableTitleStart  ""
+390 Text  "cite news"
+391 TableTitleEnd  ""
+392 TableHeadStart  ""
+393 TableCellReference id "C0"
+394 Text  "author"
+395 TableHeadEnd  ""
+396 TableCellStart  ""
+397 TableCellReference id "C0"
+398 Text  "wff.lt"
+399 TableCellEnd  ""
+400 TableHeadStart  ""
+401 TableCellReference id "C1"
+402 Text  "url"
+403 TableHeadEnd  ""
+404 TableCellStart  ""
+405 TableCellReference id "C1"
+406 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=14 ""
+407 WebLinkEnd  ""
+408 TableCellEnd  ""
+409 TableHeadStart  ""
+410 TableCellReference id "C2"
+411 Text  "title"
+412 TableHeadEnd  ""
+413 TableCellStart  ""
+414 TableCellReference id "C2"
+415 Text  "2007 WFF-WBBF Europe Pro Championship Protocol"
+416 TableCellEnd  ""
+417 TableEnd  ""
+418 CitationEnd  ""
+419 CitationStart cit10 ""
+420 TableStart table8 ""
+421 TableTitleStart  ""
+422 Text  "cite news"
+423 TableTitleEnd  ""
+424 TableHeadStart  ""
+425 TableCellReference id "C0"
+426 Text  "author"
+427 TableHeadEnd  ""
+428 TableCellStart  ""
+429 TableCellReference id "C0"
+430 Text  "wff.lt"
+431 TableCellEnd  ""
+432 TableHeadStart  ""
+433 TableCellReference id "C1"
+434 Text  "url"
+435 TableHeadEnd  ""
+436 TableCellStart  ""
+437 TableCellReference id "C1"
+438 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pas&amp;id=21 ""
+439 WebLinkEnd  ""
+440 TableCellEnd  ""
+441 TableHeadStart  ""
+442 TableCellReference id "C2"
+443 Text  "title"
+444 TableHeadEnd  ""
+445 TableCellStart  ""
+446 TableCellReference id "C2"
+447 Text  "2007 WFF-WBBF World Amateur Championship Protocol"
+448 TableCellEnd  ""
+449 TableEnd  ""
+450 CitationEnd  ""
+451 CitationStart cit11 ""
+452 TableStart table9 ""
+453 TableTitleStart  ""
+454 Text  "cite news"
+455 TableTitleEnd  ""
+456 TableHeadStart  ""
+457 TableCellReference id "C0"
+458 Text  "author"
+459 TableHeadEnd  ""
+460 TableCellStart  ""
+461 TableCellReference id "C0"
+462 Text  "wff.lt"
+463 TableCellEnd  ""
+464 TableHeadStart  ""
+465 TableCellReference id "C1"
+466 Text  "url"
+467 TableHeadEnd  ""
+468 TableCellStart  ""
+469 TableCellReference id "C1"
+470 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=17 ""
+471 WebLinkEnd  ""
+472 TableCellEnd  ""
+473 TableHeadStart  ""
+474 TableCellReference id "C2"
+475 Text  "title"
+476 TableHeadEnd  ""
+477 TableCellStart  ""
+478 TableCellReference id "C2"
+479 Text  "2007 WFF-WBBF World Pro Championship Protocol"
+480 TableCellEnd  ""
+481 TableEnd  ""
+482 CitationEnd  ""
+483 CitationStart cit12 ""
+484 TableStart table10 ""
+485 TableTitleStart  ""
+486 Text  "cite news"
+487 TableTitleEnd  ""
+488 TableHeadStart  ""
+489 TableCellReference id "C0"
+490 Text  "author"
+491 TableHeadEnd  ""
+492 TableCellStart  ""
+493 TableCellReference id "C0"
+494 Text  "wff.lt"
+495 TableCellEnd  ""
+496 TableHeadStart  ""
+497 TableCellReference id "C1"
+498 Text  "url"
+499 TableHeadEnd  ""
+500 TableCellStart  ""
+501 TableCellReference id "C1"
+502 WebLinkStart http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 ""
+503 WebLinkEnd  ""
+504 TableCellEnd  ""
+505 TableHeadStart  ""
+506 TableCellReference id "C2"
+507 Text  "title"
+508 TableHeadEnd  ""
+509 TableCellStart  ""
+510 TableCellReference id "C2"
+511 Text  "2008 WFF-WBBF World Pro Championship Protocol"
+512 TableCellEnd  ""
+513 TableEnd  ""
+514 CitationEnd  ""
+515 CitationStart cit13 ""
+516 TableStart table11 ""
+517 TableTitleStart  ""
+518 Text  "cite news"
+519 TableTitleEnd  ""
+520 TableHeadStart  ""
+521 TableCellReference id "C0"
+522 Text  "author"
+523 TableHeadEnd  ""
+524 TableCellStart  ""
+525 TableCellReference id "C0"
+526 Text  "rxmuscle.com"
+527 TableCellEnd  ""
+528 TableHeadStart  ""
+529 TableCellReference id "C1"
+530 Text  "url"
+531 TableHeadEnd  ""
+532 TableCellStart  ""
+533 TableCellReference id "C1"
+534 WebLinkStart http://gallery.rxmuscle.com/index.php?contest=261&amp;year=470 ""
+535 WebLinkEnd  ""
+536 TableCellEnd  ""
+537 TableHeadStart  ""
+538 TableCellReference id "C2"
+539 Text  "title"
+540 TableHeadEnd  ""
+541 TableCellStart  ""
+542 TableCellReference id "C2"
+543 Text  "2011 NPC FL Gold Cup November 12 Protocol"
+544 TableCellEnd  ""
+545 TableEnd  ""
+546 CitationEnd  ""
+547 CitationStart cit14 ""
+548 AttributeStart class "hide in print"
 549 AttributeEnd  ""
-550 CitationEnd  ""
-551 HeadingStart h1 ""
-552 Text  "Image gallery"
-553 HeadingEnd  ""
-554 CitationLink cit15 ""
-555 CitationStart cit15 ""
-556 TableStart table12 ""
-557 TableTitleStart  ""
-558 Text  "Gallery"
-559 TableTitleEnd  ""
-560 TableHeadStart  ""
-561 TableCellReference id "C0"
-562 Text  "lines"
-563 TableHeadEnd  ""
-564 TableCellStart  ""
-565 TableCellReference id "C0"
-566 Text  "2"
-567 TableCellEnd  ""
-568 TableEnd  ""
-569 ListItemStart l1 ""
-570 AttributeStart  "File:IMG 5647-1-print.jpg"
-571 AttributeEnd  ""
-572 ListItemEnd  ""
-573 ListItemStart l1 ""
-574 AttributeStart  "Elena Panova at the WFF Pro Championship (2008), Posing."
-575 AttributeEnd  ""
-576 ListItemEnd  ""
-577 ListItemStart l1 ""
-578 AttributeStart  "File:Elena Panova Photo Session.jpg"
-579 AttributeEnd  ""
-580 ListItemEnd  ""
-581 ListItemStart l1 ""
-582 AttributeStart  "Elena Panova (2008), Photo Session  - "
-583 MultiQuoteStart 2 ""
-584 Text  "Photo: Andrey Krutogolov"
-585 MultiQuoteEnd  ""
-586 Text  ". "
-587 AttributeEnd  ""
-588 ListItemEnd  ""
-589 CitationEnd  ""
-590 HeadingStart h1 ""
-591 Text  "References"
-592 HeadingEnd  ""
+550 AttributeStart  "1="
+551 AttributeEnd  ""
+552 CitationEnd  ""
+553 HeadingStart h1 ""
+554 Text  "Image gallery"
+555 HeadingEnd  ""
+556 CitationLink cit15 ""
+557 CitationStart cit15 ""
+558 TableStart table12 ""
+559 TableTitleStart  ""
+560 Text  "Gallery"
+561 TableTitleEnd  ""
+562 TableHeadStart  ""
+563 TableCellReference id "C0"
+564 Text  "lines"
+565 TableHeadEnd  ""
+566 TableCellStart  ""
+567 TableCellReference id "C0"
+568 Text  "2"
+569 TableCellEnd  ""
+570 TableEnd  ""
+571 ListItemStart l1 ""
+572 AttributeStart  "File:IMG 5647-1-print.jpg"
+573 AttributeEnd  ""
+574 ListItemEnd  ""
+575 ListItemStart l1 ""
+576 AttributeStart  "Elena Panova at the WFF Pro Championship (2008), Posing."
+577 AttributeEnd  ""
+578 ListItemEnd  ""
+579 ListItemStart l1 ""
+580 AttributeStart  "File:Elena Panova Photo Session.jpg"
+581 AttributeEnd  ""
+582 ListItemEnd  ""
+583 ListItemStart l1 ""
+584 AttributeStart  "Elena Panova (2008), Photo Session  - "
+585 MultiQuoteStart 2 ""
+586 Text  "Photo: Andrey Krutogolov"
+587 MultiQuoteEnd  ""
+588 Text  ". "
+589 Break  ""
+590 AttributeEnd  ""
+591 ListItemEnd  ""
+592 CitationEnd  ""
 593 HeadingStart h1 ""
-594 Text  "External links"
+594 Text  "References"
 595 HeadingEnd  ""
-596 ListItemStart l1 ""
-597 WebLinkStart http://gallery.rxmuscle.com/index.php?bodybuilder=24321 ""
-598 Text  " 2011 NPC FL Gold Cup Gallery"
-599 WebLinkEnd  ""
-600 ListItemEnd  ""
-601 ListItemStart l1 ""
-602 WebLinkStart http://el-panova.narod.ru/ ""
-603 Text  " Personal WebPage"
-604 WebLinkEnd  ""
-605 Text  " "
-606 Markup  "ru icon"
-607 ListItemEnd  ""
-608 ListItemStart l1 ""
-609 WebLinkStart http://www.alleyasporta.ru/article/view/303/&amp;page_1 ""
-610 Text  " Alleya Sporta Magazine Exclusive Interview with Elena Panova"
-611 WebLinkEnd  ""
-612 Text  " "
-613 Markup  "ru icon"
-614 ListItemEnd  ""
-615 Break  ""
-616 Markup  "DEFAULTSORT:Panova, Elena"
-617 Break  ""
-618 PageLinkStart Category:1979 births "Category:1979 births"
-619 PageLinkEnd  ""
+596 HeadingStart h1 ""
+597 Text  "External links"
+598 HeadingEnd  ""
+599 ListItemStart l1 ""
+600 WebLinkStart http://gallery.rxmuscle.com/index.php?bodybuilder=24321 ""
+601 Text  " 2011 NPC FL Gold Cup Gallery"
+602 WebLinkEnd  ""
+603 ListItemEnd  ""
+604 ListItemStart l1 ""
+605 WebLinkStart http://el-panova.narod.ru/ ""
+606 Text  " Personal WebPage"
+607 WebLinkEnd  ""
+608 Text  " "
+609 Markup  "ru icon"
+610 ListItemEnd  ""
+611 ListItemStart l1 ""
+612 WebLinkStart http://www.alleyasporta.ru/article/view/303/&amp;page_1 ""
+613 Text  " Alleya Sporta Magazine Exclusive Interview with Elena Panova"
+614 WebLinkEnd  ""
+615 Text  " "
+616 Markup  "ru icon"
+617 ListItemEnd  ""
+618 Break  ""
+619 Markup  "DEFAULTSORT:Panova, Elena"
 620 Break  ""
-621 PageLinkStart Category:Living people "Category:Living people"
+621 PageLinkStart Category:1979 births "Category:1979 births"
 622 PageLinkEnd  ""
 623 Break  ""
-624 PageLinkStart Category:Russian female bodybuilders "Category:Russian female bodybuilders"
+624 PageLinkStart Category:Living people "Category:Living people"
 625 PageLinkEnd  ""
 626 Break  ""
-627 Markup  "Russia-sport-bio-stub"
-628 Break  ""
-629 Markup  "bodybuilding-bio-stub"
+627 PageLinkStart Category:Russian female bodybuilders "Category:Russian female bodybuilders"
+628 PageLinkEnd  ""
+629 Break  ""
+630 Markup  "Russia-sport-bio-stub"
+631 Break  ""
+632 Markup  "bodybuilding-bio-stub"
 
 
 ## 0000/Yelena_Alexandrovna_Panova.org
@@ -8393,6 +8474,7 @@ http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 | title= 2008 WFF-WBBF 
         </pagelink>
       <text> / indoor
 </text>
+      <br/>
       </cell>
     </table>
   </citation>
@@ -8771,7 +8853,9 @@ http://www.wff.lt/page.php?lang=en&amp;idd=pro&amp;id=27 | title= 2008 WFF-WBBF 
 <pagelink id="exploration of Mars">exploration of Mars
   </pagelink>
 <text> over the next several decades.
-The other forums created are the </text>
+</text>
+<br/>
+<text>The other forums created are the </text>
 <pagelink id="Moon"><text>Lunar</text>
   </pagelink>
 <text> Exploration Analysis Group (LEAG), the </text>
@@ -8834,7 +8918,9 @@ The other forums created are the </text>
 <pagelink id="New York (state)"><text>NY</text>
   </pagelink>
 <text>, where Pfitzner was employed at the time.
-The Flyer was the first </text>
+</text>
+<br/>
+<text>The Flyer was the first </text>
 <pagelink id="monoplane">monoplane
   </pagelink>
 <text> designed, built and flown in the </text>
@@ -8847,7 +8933,9 @@ The Flyer was the first </text>
 <pagelink id="pusher configuration">pusher configuration
   </pagelink>
 <text>, the engine also being mounted behind the pilot.
-The aircraft was not a success, and a disappointed Pfitzner is thought to have committed suicide on 12 July 1910.</text>
+</text>
+<br/>
+<text>The aircraft was not a success, and a disappointed Pfitzner is thought to have committed suicide on 12 July 1910.</text>
 <reflink id="ref1"/>
 <reflink id="ref2"/>
 <ref id="ref1"><entity lv="2"><text>Flight</text>
@@ -8944,7 +9032,9 @@ The aircraft was not a success, and a disappointed Pfitzner is thought to have c
 <entity lv="2"><text>Flyer</text>
   </entity>
 <text> as a private project but it was constructed in the Curtiss factory.
-The aircraft consisted of a </text>
+</text>
+<br/>
+<text>The aircraft consisted of a </text>
 <pagelink id="Cuboid" anchor="Rectangular cuboid"><text>rectangular cuboid</text>
   </pagelink>
 <text> </text>
@@ -8952,6 +9042,7 @@ The aircraft consisted of a </text>
   </pagelink>
 <text> central frame, onto which the main monoplane wing, the motor, the forward and rear booms and the ‘undercarriage’ (consisting of one wheel at each of the lower corners) were mounted. Between the upper front and rear posts of the frame were fitted two streamlined fuel tanks (clearly visible in the image above), one on each side of and above the pilot’s seat, with a combined capacity of six gallons (22.7 L.).
 </text>
+<br/>
 <filelink id="PfitznerFlyer Control linkage FlightGlobalVoll II(9) p.182.jpg"><text>Image first published in </text>
   <entity lv="2"><text>Flight</text>
     </entity>
@@ -8965,6 +9056,7 @@ The aircraft consisted of a </text>
   </quot>
 <text>. There was a fixed tail-plane surface with an area of 10.5 sq.ft. (0.98 sq.m.) at the end of the rear boom to provide  longitudinal stability.
 </text>
+<br/>
 <filelink id="PfitznerFlyer Front view of wing trussing Flight Vol.II(11) FlightGlobal archive.jpg"><text>Image first published in </text>
   <entity lv="2"><text>Flight</text>
     </entity>
@@ -8974,7 +9066,9 @@ The aircraft consisted of a </text>
 <text>The span of the main wing, which was set at an angle for incidence of 8°, was 31 ft., with a wingtip extension of </text>
 <citlink id="cit3"/>
 <text> on each wing, providing a constant wingspan of 33 ft. 6 in. (10.21 m). The wing was 6 ft. (1.8 m) wide; the extensible wingtips were 4 ft. 2 in. (1,27 m) wide, each providing a maximum of 10.5 sq. ft. (0.98 sq.m.) wing area. The wing extensions were of the same curvature as the main wing. “The main supporting plane at a 5-deg. dihedral angle consists of two main beams across which are placed spruce ribs. The surface is made of Baldwin vulcanized silk, of jet black color, tacked to the top of the ribs and laced to the frame. The curvature of the surface is slight and is designed for high speed.”   The wing ribs had a camber of 3.75 in. (9.05 cm) over 6 ft (1.8 m).
-Each of the wings consists of three detachable sections, each 5 ft. (1.5 m.) long, which are supported by steel sockets and steel cable, the latter forming a symmetrical double king truss with the beams, fore and aft pairs of </text>
+</text>
+<br/>
+<text>Each of the wings consists of three detachable sections, each 5 ft. (1.5 m.) long, which are supported by steel sockets and steel cable, the latter forming a symmetrical double king truss with the beams, fore and aft pairs of </text>
 <pagelink id="King post">King posts
   </pagelink>
 <text> being situated at the junctions of the sections.</text>
@@ -9182,7 +9276,8 @@ Each of the wings consists of three detachable sections, each 5 ft. (1.5 m.) lon
   <list lv="l1"><attr>thrust/weight=</attr>
     </list>
   </citation>
-<citation id="cit9" class="aircontent"/>
+<citation id="cit9" class="aircontent"><br/>
+  </citation>
 <heading lv="h1"><text>Notes</text>
   </heading>
 <mark>Reflist</mark>
@@ -9388,12 +9483,18 @@ Each of the wings consists of three detachable sections, each 5 ft. (1.5 m.) lon
 <heading lv="h1"><text>ERDEM brand</text>
   </heading>
 <text>Known for his use of experimental textiles, vibrant prints, and detailed craftsmanship, ERDEM mixes the delicate with the bold.
-ERDEM has received numerous accolades over the years, including the 2008 </text>
+</text>
+<br/>
+<text>ERDEM has received numerous accolades over the years, including the 2008 </text>
 <pagelink id="British Fashion Council">British Fashion Council’s
   </pagelink>
 <text> Fashion Forward Award; the 2010 inaugural Vogue / British Fashion Council Designer Fashion Fund Award, the 2012 British Fashion Council’s New Establishment Award, the 2013 British Fashion Council’s Red Carpet Award, the 2014 British Fashion Council’s Womenswear Designer of the Year Award and most recently the 2015 British Fashion Council’s Establishment Designer award.
-ERDEM is sold in over 170 of the most exclusive retailers, including Barneys New York, Bergdorf Goodman, Lane Crawford, Colette, Dover Street Market, Selfridges and Harvey Nichols.
-After launching an e-commerce store in 2014, the label opened its debut </text>
+</text>
+<br/>
+<text>ERDEM is sold in over 170 of the most exclusive retailers, including Barneys New York, Bergdorf Goodman, Lane Crawford, Colette, Dover Street Market, Selfridges and Harvey Nichols.
+</text>
+<br/>
+<text>After launching an e-commerce store in 2014, the label opened its debut </text>
 <weblink id="https://erdem.com/store/"><text> flagship store</text>
   </weblink>
 <text> in London’s Mayfair in August 2015.</text>
@@ -9486,19 +9587,31 @@ After launching an e-commerce store in 2014, the label opened its debut </text>
   </citation>
 <heading lv="h1"><text>Awards</text>
   </heading>
-<text>Moralioglu has received numerous prestigious awards including:
-•         2005: Fashion Fringe Award
-•         2007: The Swarovski/British Fashion Council Fashion Enterprise Award
-•         2008: The BFC's Fashion Forward Award
-•         2009: Fashion Future Award
-•         2010: British Fashion Council/Vogue Designer Fashion Fun Award and Elle Style Awards, ‘Designer of the Year’
-•         2011: WGSN Global Fashion Awards, ‘Most Influential Designer’
-•         2012: British Fashion Council New Establishment Award
-•         2013: British Fashion Council Red Carpet Award and WGSN Womenswear Designer of the Year Award
-•         2014: British Fashion Council ‘Womenswear of the Year’ Award
-•         2015: ‘Designer of the Year’ at Canadian Arts &amp; Fashion and UK Elle Style Awards.
-•         2015: British Fashion Council 'Establishment Designer' award.
-He was also nominated by the British Fashion Council for </text>
+<text>Moralioglu has received numerous prestigious awards including:</text>
+<list lv="l1"><text>         2005: Fashion Fringe Award</text>
+  </list>
+<list lv="l1"><text>         2007: The Swarovski/British Fashion Council Fashion Enterprise Award</text>
+  </list>
+<list lv="l1"><text>         2008: The BFC's Fashion Forward Award</text>
+  </list>
+<list lv="l1"><text>         2009: Fashion Future Award</text>
+  </list>
+<list lv="l1"><text>         2010: British Fashion Council/Vogue Designer Fashion Fun Award and Elle Style Awards, ‘Designer of the Year’</text>
+  </list>
+<list lv="l1"><text>         2011: WGSN Global Fashion Awards, ‘Most Influential Designer’</text>
+  </list>
+<list lv="l1"><text>         2012: British Fashion Council New Establishment Award</text>
+  </list>
+<list lv="l1"><text>         2013: British Fashion Council Red Carpet Award and WGSN Womenswear Designer of the Year Award</text>
+  </list>
+<list lv="l1"><text>         2014: British Fashion Council ‘Womenswear of the Year’ Award</text>
+  </list>
+<list lv="l1"><text>         2015: ‘Designer of the Year’ at Canadian Arts &amp; Fashion and UK Elle Style Awards.</text>
+  </list>
+<list lv="l1"><text>         2015: British Fashion Council 'Establishment Designer' award.</text>
+  </list>
+<br/>
+<text>He was also nominated by the British Fashion Council for </text>
 <quot><text>Designer of the Year 2009</text>
   </quot>
 <text> and was named one of the 1000 most influential people in London by the Evening Standard.</text>
@@ -9671,7 +9784,9 @@ He was also nominated by the British Fashion Council for </text>
 <text> with a surface temperature estimated to be </text>
 <citlink id="cit22"/>
 <text>. Its luminosity is only 0.003% that of the Sun.
-The estimate for the stellar radius is 15% larger than predicted by theoretical models. It also shows a 1% intrinsic variability in the near-infrared probably caused by </text>
+</text>
+<br/>
+<text>The estimate for the stellar radius is 15% larger than predicted by theoretical models. It also shows a 1% intrinsic variability in the near-infrared probably caused by </text>
 <pagelink id="Starspot"><text>stellar spots</text>
   </pagelink>
 <text>. The star is rotating slowly, with a period that is most likely an integer multiple of 53 days. It is probably at least three billion years old and a member of the old disk. Although GJ 1214 has a low to moderate level of </text>
@@ -9708,6 +9823,7 @@ The estimate for the stellar radius is 15% larger than predicted by theoretical 
         </pagelink>
       <text> dwarf star
 </text>
+      <br/>
       </cell>
     </table>
   </citation>
@@ -9807,6 +9923,7 @@ The estimate for the stellar radius is 15% larger than predicted by theoretical 
         </pagelink>
       <text> 
 </text>
+      <br/>
       </cell>
     </table>
   </citation>
@@ -9905,6 +10022,7 @@ The estimate for the stellar radius is 15% larger than predicted by theoretical 
         </pagelink>
       <text> 3275, G 139-21, NLTT 44431, 2MASS J17151894+0457496, LSPM J1715+0457, UBV M 53793, USNO-B1.0 0949-00280047, GEN# +9.80139021.
 </text>
+      <br/>
       </cell>
     </table>
   </citation>
@@ -9960,6 +10078,7 @@ The estimate for the stellar radius is 15% larger than predicted by theoretical 
   </pagelink>
 <text>.
 </text>
+<br/>
 <citlink id="cit25"/>
 <br/>
 <citlink id="cit26"/>
@@ -9990,7 +10109,9 @@ The estimate for the stellar radius is 15% larger than predicted by theoretical 
   <attr id="description">Transit timing variation method (TTV) and transit duration variation method (TDV)</attr>
   </pagelink>
 <text> was negative.
-No transit-time variations have yet been found for this transit. As of 2012, </text>
+</text>
+<br/>
+<text>No transit-time variations have yet been found for this transit. As of 2012, </text>
 <quot><text>the given data does not allow us to conclude that there is a [second] planet in the mass range 0.1–5 Earth-masses and the period range 0.76–1.23 or 1.91–3.18 days.</text>
   </quot>
 <text> The X-ray flux from the host star is estimated to have stripped </text>
@@ -10891,7 +11012,7 @@ No transit-time variations have yet been found for this transit. As of 2012, </t
 
 
 ## 0000/Gliese_1214.wtf
-2049 Text B000UG5T6Y [B000UG5T6Y]
+2057 Text B000UG5T6Y [B000UG5T6Y]
 
 
 ## 0000/Concrete_Jungle_%28Scorcher_album%29.xml
@@ -11253,16 +11374,21 @@ No transit-time variations have yet been found for this transit. As of 2012, </t
 <pagelink id="fuel injection">fuel injection
   </pagelink>
 <text>, tuned exhaust and electric start are optional.
-The engine runs on a 50:1 pre-mix of </text>
+</text>
+<br/>
+<text>The engine runs on a 50:1 pre-mix of </text>
 <pagelink id="Avgas" anchor="Automotive gasoline"><text>unleaded 93 octane auto fuel</text>
   </pagelink>
 <text> and oil. Recommended time between overhauls is 1000 hours.
-The F-23 produces </text>
+</text>
+<br/>
+<text>The F-23 produces </text>
 <citlink id="cit7"/>
 <text> at 6150 rpm and </text>
 <citlink id="cit8"/>
 <text> at 5500 rpm.
 </text>
+<br/>
 <citation id="cit6"><table id="table5"><tabtitle><text>convert</text>
       </tabtitle>
     <head id="C0"><text>abbr</text>
@@ -11496,7 +11622,8 @@ The F-23 produces </text>
     </table>
   <attr>power/weight=</attr>
   </citation>
-<citation id="cit18" class="aircontent"/>
+<citation id="cit18" class="aircontent"><br/>
+  </citation>
 <heading lv="h1"><text>References</text>
   </heading>
 <mark>Reflist</mark>
@@ -11545,7 +11672,9 @@ The F-23 produces </text>
 <pagelink id="Canadian Junior Curling Championships">Canadian Junior Curling Championships
   </pagelink>
 <text>.
-In 2006, Farnell and her team of </text>
+</text>
+<br/>
+<text>In 2006, Farnell and her team of </text>
 <pagelink id="Kim Brown (curler)"><text>Kim Brown</text>
   </pagelink>
 <text>, </text>
@@ -11561,7 +11690,9 @@ In 2006, Farnell and her team of </text>
 <pagelink id="Thunder Bay, Ontario">Thunder Bay, Ontario
   </pagelink>
 <text>. At the Canadian Juniors, the team finished with a 5-6 record, tied for sixth place.
-Farnell would later team up with 2005 provincial champion skip </text>
+</text>
+<br/>
+<text>Farnell would later team up with 2005 provincial champion skip </text>
 <pagelink id="Erin Morrissey">Erin Morrissey
   </pagelink>
 <text> to form a competitive team on the women's </text>
@@ -11571,7 +11702,9 @@ Farnell would later team up with 2005 provincial champion skip </text>
 <pagelink id="2010 Ontario Scotties Tournament of Hearts"><text>provincial women's championship in 2010</text>
   </pagelink>
 <text>, where they finished with a 5-4 record before losing in a tie-breaker match.
-Farnell won her first </text>
+</text>
+<br/>
+<text>Farnell won her first </text>
 <pagelink id="World Curling Tour">World Curling Tour
   </pagelink>
 <text> event at the </text>
@@ -11587,7 +11720,9 @@ Farnell won her first </text>
 <pagelink id="Katie Morrissey">Katie Morrissey
   </pagelink>
 <text> in the final.
-Farnell moved to </text>
+</text>
+<br/>
+<text>Farnell moved to </text>
 <pagelink id="London">London
   </pagelink>
 <text>,</text>
@@ -11619,7 +11754,9 @@ Farnell moved to </text>
     <cell id="C1"><pagelink id="Fenton&apos;s Curling Rink">Fenton's Curling Rink
         </pagelink>
       <text>, 
- </text>
+</text>
+      <br/>
+      <text> </text>
       <pagelink id="Royal Tunbridge Wells">Royal Tunbridge Wells
         </pagelink>
       <text>, </text>
@@ -11720,7 +11857,9 @@ Farnell moved to </text>
 <pagelink id="China">China
   </pagelink>
 <text>.
-Jiujiang had ancient names like Chaisang (</text>
+</text>
+<br/>
+<text>Jiujiang had ancient names like Chaisang (</text>
 <citlink id="cit2"/>
 <text>) and Xunyang (</text>
 <citlink id="cit3"/>
@@ -11729,6 +11868,7 @@ Jiujiang had ancient names like Chaisang (</text>
   </pagelink>
 <text> in Jiujiang.
 </text>
+<br/>
 <citlink id="cit4"/>
 <br/>
 <category id="Rivers of Jiangxi">Rivers of Jiangxi
@@ -12012,7 +12152,9 @@ Jiujiang had ancient names like Chaisang (</text>
   <text>)</text>
   
 <text> 
-#</text>
+</text>
+<br/>
+<text>#</text>
 <quot><text>So Right</text>
   </quot>
 <text> </text>
@@ -12097,7 +12239,9 @@ Jiujiang had ancient names like Chaisang (</text>
 <quot><text>Don't Take It Personal</text>
   </quot>
 <text> (Jazzy Instrumental)
-#</text>
+</text>
+<br/>
+<text>#</text>
 <quot><text>I'd Like to Get to Know You</text>
   </quot>
 <text> (7</text>
@@ -12108,15 +12252,20 @@ Jiujiang had ancient names like Chaisang (</text>
 <quot><text>Two Ships(In the Night)</text>
   </quot>
 <text> (Instrumental Remix Version)
-#</text>
+</text>
+<br/>
+<text>#</text>
 <quot><text>Two Ships (In the Night)</text>
   </quot>
 <text> (Lat Night Turbulence Mix)
-#</text>
+</text>
+<br/>
+<text>#</text>
 <quot><text>Two Ships (In the Night)</text>
   </quot>
 <text> (Extended Version)
 </text>
+<br/>
 <entity lv="3"><text>B-side</text>
   </entity>
 <list lv="l1"><text> </text>
@@ -12259,7 +12408,9 @@ Jiujiang had ancient names like Chaisang (</text>
 <table id="table5"><head id="C0"><text>Chart </text>
     </head>
   <head id="C1"><text>Peak
-position</text>
+</text>
+    <br/>
+    <text>position</text>
     </head>
   <cell id="C0,R1"><text>US </text>
     <pagelink id="Billboard 200"><entity lv="2"><text>Billboard</text>
@@ -12357,7 +12508,9 @@ position</text>
 <pagelink id="Krasnaya Gorka fort"><text>Krasnaya Gorka Fort complex</text>
   </pagelink>
 <text>. The Germans approached Leningrad in early September 1941 and reached the Gulf of Finland on the 7th, isolating an area 65 km long and up to 25 km deep along the Baltic Coast. This area was heavily fortified and defended by the soldiers of the Red Army and Sailors of the Baltic Fleet. An attempt to link up with the main soviet forces around Leningrad, the Strelna Peterhof operation was mounted on 5–10 October but failed.
-On 2 November 1941, the </text>
+</text>
+<br/>
+<text>On 2 November 1941, the </text>
 <pagelink id="19th Rifle Corps">19th Rifle Corps
   </pagelink>
 <text> was reorganised as the 2nd Neva Operations Group, then quickly the Coastal Operations Group, of the </text>
@@ -12367,7 +12520,9 @@ On 2 November 1941, the </text>
 <pagelink id="48th Rifle Division"><text>48th</text>
   </pagelink>
 <text> and the 2nd and 5th Naval Rifle Brigades, under the former commander of the 19th Rifle Corps, General Antonov. 
-Later the garrison included the 48th Rifle Division, the </text>
+</text>
+<br/>
+<text>Later the garrison included the 48th Rifle Division, the </text>
 <pagelink id="98th Rifle Division (Soviet Union)"><text>98th</text>
   </pagelink>
 <text> and </text>
@@ -12781,7 +12936,9 @@ Later the garrison included the 48th Rifle Division, the </text>
 <pagelink id="Priesthood Correlation Program"><text>LDS Church's Correlation Department</text>
   </pagelink>
 <text> prior to joining the BYU faculty, where she studied causes/patterns of Mormons leaving church activity for other ways of living.
-Cornwall was one of the moving figures behind the growth of the </text>
+</text>
+<br/>
+<text>Cornwall was one of the moving figures behind the growth of the </text>
 <pagelink id="Mormon Social Science Association">Mormon Social Science Association
   </pagelink>
 <text>.</text>
@@ -13155,7 +13312,9 @@ Cornwall was one of the moving figures behind the growth of the </text>
 <pagelink id="University of Wroclaw"><text>Wroclaw</text>
   </pagelink>
 <text> performed a clinical trial on one of these agents. It was subsequently marketed as Synthalin by Schering AG for treating mild cases of diabetes.
-Adverse reports on the toxicity of Synthalin prompted the development of Synthalin B (which had a slightly longer polymethylene chain and was claimed to be safer) and the former product was re-branded Synthalin A. However liver toxicity continued to be a problem, leading to discontinuation in the 1930s, though Synthalin B continued to be used in Germany until the mid-1940s.</text>
+</text>
+<br/>
+<text>Adverse reports on the toxicity of Synthalin prompted the development of Synthalin B (which had a slightly longer polymethylene chain and was claimed to be safer) and the former product was re-branded Synthalin A. However liver toxicity continued to be a problem, leading to discontinuation in the 1930s, though Synthalin B continued to be used in Germany until the mid-1940s.</text>
 <heading lv="h2"><text>Anti-trypanosome</text>
   </heading>
 <text>After it was discovered</text>
@@ -13494,6 +13653,7 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
 <mark>s-sports</mark>
 <text> 
 </text>
+<br/>
 <citlink id="cit4"/>
 <br/>
 <citlink id="cit5"/>
@@ -13835,7 +13995,9 @@ Adverse reports on the toxicity of Synthalin prompted the development of Synthal
 <pagelink id="Mut">Mut
   </pagelink>
 <text>.
-Nesitanebetashru of the </text>
+</text>
+<br/>
+<text>Nesitanebetashru of the </text>
 <pagelink id="Twenty-first dynasty of Egypt"><text>21st dynasty</text>
   </pagelink>
 <text> was a daughter of </text>
@@ -13979,6 +14141,7 @@ Nesitanebetashru of the </text>
         </pagelink>
       <text> / outdoor
 </text>
+      <br/>
       </cell>
     </table>
   </citation>
@@ -14352,19 +14515,22 @@ Nesitanebetashru of the </text>
   
     <text>December 16, 2009
 </text>
+    <br/>
     
   <br/>
   <text>----
-
-
-Best Film: 
-
 </text>
+  <br/>
+  <text>Best Film: 
+</text>
+  <br/>
   
     <entity lv="3"><text> Hunger </text>
       </entity>
     <text> 
- </text>
+</text>
+    <br/>
+    <text> </text>
     <entity lv="3"><text> Inglourious Basterds </text>
       </entity>
     
@@ -16657,7 +16823,9 @@ Best Film:
 <quot><text>had a traditional kind of learning among them, and could do wonders by the power of imagination, their fancy binding that of others.</text>
   </quot>
 <text>  When he had learned everything that the gipsies could teach him, he said, he would leave them and give an account of these secrets to the world.
-In 1929 </text>
+</text>
+<br/>
+<text>In 1929 </text>
 <pagelink id="Marjorie Hope Nicolson">Marjorie Hope Nicolson
   </pagelink>
 <text> identified the original of this mysterious figure as the Flemish alchemist </text>
@@ -16686,6 +16854,7 @@ In 1929 </text>
 <text> and claims to have once seen him himself. He entertains a doubt as to the scholar gypsy's still being alive after two centuries, but then shakes off the thought. He cannot have died:
 </text>
 <br/>
+<br/>
   <text>For what wears out the life of mortal men?'Tis that from change to change their being rolls:'Tis that repeated shocks, again, again,Exhaust the energy of strongest souls,And numb the elastic powers.</text>
   <reflink id="ref5"/>
   
@@ -16693,12 +16862,16 @@ In 1929 </text>
 <text>The scholar gipsy, having renounced such a life, is 
 </text>
 <br/>
+<br/>
   <text>Free from the sick fatigue, the languid doubt,Which much to have tried, in much been baffled, brings,</text>
   <reflink id="ref6"/>
   
 <text> 
-and is therefore not subject to ageing and death.  Arnold describes
 </text>
+<br/>
+<text>and is therefore not subject to ageing and death.  Arnold describes
+</text>
+<br/>
 <br/>
   <text>this strange disease of modern life,With its sick hurry, its divided aims,</text>
   <reflink id="ref7"/>
@@ -16751,6 +16924,7 @@ and is therefore not subject to ageing and death.  Arnold describes
   </quot>
 <text>. 
 </text>
+<br/>
 <quot><text>The Scholar Gipsy</text>
   </quot>
 <text>, like </text>
@@ -16878,6 +17052,7 @@ and is therefore not subject to ageing and death.  Arnold describes
 <br/>
   <text>What the poem actually offers is a charm of relaxation, a holiday from serious aims and exacting business.  And what the Scholar-Gipsy really symbolises is Victorian poetry, vehicle (so often) of explicit intellectual and moral intentions, but unable to be in essence anything but relaxed, relaxing and anodyne.                                          
 </text>
+  <br/>
   <pagelink id="F. R. Leavis">F. R. Leavis
     </pagelink>
   <reflink id="ref16"/>
@@ -17789,6 +17964,7 @@ and is therefore not subject to ageing and death.  Arnold describes
   </entity>
 <text>. 
 </text>
+<br/>
 <filelink id="Gedenktafel Opitzstr 8 Margret Boveri.JPG"><text>Memorial at Opitzstraße 8 in </text>
   <pagelink id="Berlin-Steglitz">Berlin-Steglitz
     </pagelink>
@@ -17839,7 +18015,9 @@ and is therefore not subject to ageing and death.  Arnold describes
 <pagelink id="Uwe Johnson">Uwe Johnson
   </pagelink>
 <text>.
-She died in Berlin in 1975.</text>
+</text>
+<br/>
+<text>She died in Berlin in 1975.</text>
 <ref id="ref2"><text>Heike B. Görtemaker: </text>
   <entity lv="2"><text>Ein deutsches Leben. Die Geschichte der Margret Boveri, München</text>
     </entity>
@@ -17925,7 +18103,9 @@ She died in Berlin in 1975.</text>
   <pagelink id="Uwe Johnson">Uwe Johnson
     </pagelink>
   <text>, Munich 1977
-modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
+</text>
+  <br/>
+  <text>modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
   <citlink id="cit5"/>
   </list>
 <citation id="cit2" class="ISBN"><attr>3-937989-06-4</attr>
@@ -18827,6 +19007,7 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
 <citlink id="cit1"/>
 <text> He was invoked when the laying of the foundation of buildings, and shooed-away upon their completion, lest his presence cause further construction to be required and other building work elsewhere to be neglected. In a ritual for the repair of a temple, the invocation is described:
 </text>
+<br/>
 <citlink id="cit2"/>
 <br/>
 <text>In </text>
@@ -18837,6 +19018,7 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
   </pagelink>
 <text>, he recalls:
 </text>
+<br/>
 <citlink id="cit4"/>
 <br/>
 <text>A second ritual was often performed at the end of the work to drive away the god, with him unceremoniously “loaded” onto a boat and banished to the netherworld with incantations. The construction crew, too, were forbidden to approach the building for three days. Alternatively the divinities were thanked for their assistance and bidden to return from whence they came.</text>
@@ -18936,7 +19118,9 @@ modern edition: Frankfurt am Main, Suhrkamp 1996, </text>
 <pagelink id="Pittsburgh Penguins">Pittsburgh Penguins
   </pagelink>
 <text>.
-Born in </text>
+</text>
+<br/>
+<text>Born in </text>
 <pagelink id="Brandon, Manitoba">Brandon, Manitoba
   </pagelink>
 <text>, Mathiasen was an all-American and all-WCHA player at the </text>
@@ -20160,7 +20344,9 @@ Born in </text>
   <text>,</text>
   </entity>
 <text> the first American Trotskyist newspaper.
-Glotzer was a delegate to the founding convention of the </text>
+</text>
+<br/>
+<text>Glotzer was a delegate to the founding convention of the </text>
 <pagelink id="Communist League of America (Opposition)">Communist League of America (Opposition)
   </pagelink>
 <text> (CLA) in May 1929 and was elected as one of five members of the governing National Council of the fledgling organization.</text>
@@ -20169,14 +20355,18 @@ Glotzer was a delegate to the founding convention of the </text>
 <pagelink id="New York City">New York City
   </pagelink>
 <text> to work at the new organization's national office.
-Glotzer was involved in the factional difficulties that best the CLA from the very beginning. He originally gravitated toward </text>
+</text>
+<br/>
+<text>Glotzer was involved in the factional difficulties that best the CLA from the very beginning. He originally gravitated toward </text>
 <pagelink id="James P. Cannon">James P. Cannon
   </pagelink>
 <text> and Arne Swabeck, with whom he had worked in Chicago, but soon became a close ally of </text>
 <pagelink id="Max Shachtman">Max Shachtman
   </pagelink>
 <text>, who felt that Cannon was running the party in a bureaucratic and manner.
-In 1931, Glotzer traveled with his wife to visit Leon Trotsky at </text>
+</text>
+<br/>
+<text>In 1931, Glotzer traveled with his wife to visit Leon Trotsky at </text>
 <pagelink id="Prinkipo">Prinkipo
   </pagelink>
 <text>, Turkey, where he spent some weeks as a secretary and guard to the exiled Soviet leader. According to Glotzer's wife they subsisted on the fish they caught in the </text>
@@ -20188,7 +20378,9 @@ In 1931, Glotzer traveled with his wife to visit Leon Trotsky at </text>
 <pagelink id="fascism">fascism
   </pagelink>
 <text>.
-By June 1932 Glotzer's criticism of Cannon became explicit. Together with </text>
+</text>
+<br/>
+<text>By June 1932 Glotzer's criticism of Cannon became explicit. Together with </text>
 <pagelink id="Martin Abern">Martin Abern
   </pagelink>
 <text> and Max Shachtman, Glotzer made charges that Cannon had showed signs of an </text>
@@ -20203,14 +20395,18 @@ By June 1932 Glotzer's criticism of Cannon became explicit. Together with </text
 <quot><text>new forces</text>
   </quot>
 <text> were needed to revitalize the flagging CLA. Relations between the top leaders were patched up at this juncture and no split of the organization ensued.
-When the unity negotiations with </text>
+</text>
+<br/>
+<text>When the unity negotiations with </text>
 <pagelink id="A. J. Muste"><text>A.J. Muste's</text>
   </pagelink>
 <text> </text>
 <pagelink id="American Workers Party">American Workers Party
   </pagelink>
 <text> began in 1934, Cannon and Shactman became factional allies. Glotzer felt alienated from the policy, however. He returned to Chicago but stayed loyal to the Trotskyist movement.
-In April 1937 the skilled </text>
+</text>
+<br/>
+<text>In April 1937 the skilled </text>
 <pagelink id="stenographer">stenographer
   </pagelink>
 <text> Glotzer was sent to </text>
@@ -20229,7 +20425,9 @@ In April 1937 the skilled </text>
 <pagelink id="Moscow Trials">Moscow Trials
   </pagelink>
 <text>. The transcript produced by Glotzer was later published in book form by the American Trotskyist movement.
-In the United States the Trotskyists emerged from the Socialist party as the </text>
+</text>
+<br/>
+<text>In the United States the Trotskyists emerged from the Socialist party as the </text>
 <pagelink id="Socialist Workers Party (United States)"><text>Socialist Workers Party</text>
   </pagelink>
 <text>. After the </text>
@@ -20314,7 +20512,9 @@ In the United States the Trotskyists emerged from the Socialist party as the </t
 <heading lv="h2"><text> Death and legacy </text>
   </heading>
 <text>Albert Glotzer died February 18, 1999. He was 90 years old at the time of his death.
-Albert Glotzer's papers are housed in 67 archival boxes at the </text>
+</text>
+<br/>
+<text>Albert Glotzer's papers are housed in 67 archival boxes at the </text>
 <pagelink id="Hoover Institution Archives">Hoover Institution Archives
   </pagelink>
 <text> at </text>
@@ -20324,7 +20524,9 @@ Albert Glotzer's papers are housed in 67 archival boxes at the </text>
 <pagelink id="Palo Alto, California">Palo Alto, California
   </pagelink>
 <text>. An on-line finding guide is available.
-Besides remaining a speaker Glotzer was active in the stenographers union, </text>
+</text>
+<br/>
+<text>Besides remaining a speaker Glotzer was active in the stenographers union, </text>
 <pagelink id="Federation of Shorthand Reporters">Federation of Shorthand Reporters
   </pagelink>
 <text>, </text>
@@ -20527,7 +20729,9 @@ Besides remaining a speaker Glotzer was active in the stenographers union, </tex
 <heading lv="h1"><text>Plot</text>
   </heading>
 <text>During the 1960s, David Wakefield is a distance runner for his high school's track and field team who hopes to compete in college.
-His sister Cathy's boyfriend, Dean Berger, is a former track star who tries to advise David, telling him to be more patient during races and hold back, rather than exhausting himself by going too fast too soon. David is influenced by others in school, like friend Paul Morelli, and reassesses his life after Dean goes off to the </text>
+</text>
+<br/>
+<text>His sister Cathy's boyfriend, Dean Berger, is a former track star who tries to advise David, telling him to be more patient during races and hold back, rather than exhausting himself by going too fast too soon. David is influenced by others in school, like friend Paul Morelli, and reassesses his life after Dean goes off to the </text>
 <pagelink id="Vietnam War">Vietnam War
   </pagelink>
 <text> and is killed.</text>
@@ -20856,7 +21060,9 @@ His sister Cathy's boyfriend, Dean Berger, is a former track star who tries to a
 <pagelink id="Canada">Canada
   </pagelink>
 <text> &amp;ndash; 29 September 1999 in  Montreal) was a French-speaking actor and writer.
-Millette's television career spans over thirty years: he was a cast member of many of the best-known series in Quebec, including the children's series </text>
+</text>
+<br/>
+<text>Millette's television career spans over thirty years: he was a cast member of many of the best-known series in Quebec, including the children's series </text>
 <entity lv="2"><pagelink id="La Ribouldingue">La Ribouldingue
     </pagelink>
   </entity>
@@ -20900,7 +21106,9 @@ Millette's television career spans over thirty years: he was a cast member of ma
   <text> (Le Confessionnal)</text>
   </entity>
 <text>.
-However, Millette's most significant work was in theatre: he was a major figure of Quebec theatre and, in 1990, received the </text>
+</text>
+<br/>
+<text>However, Millette's most significant work was in theatre: he was a major figure of Quebec theatre and, in 1990, received the </text>
 <pagelink id="Prix Victor-Morin">Prix Victor-Morin
   </pagelink>
 <text> for outstanding achievement in theatre in Quebec. He was a member of the </text>
@@ -21377,7 +21585,9 @@ However, Millette's most significant work was in theatre: he was a major figure 
 <pagelink id="Mobile game"><text>mobile phones</text>
   </pagelink>
 <text>. It was released in North America on August 22, 2004.
-The game allows the player to choose to play as either </text>
+</text>
+<br/>
+<text>The game allows the player to choose to play as either </text>
 <pagelink id="George W. Bush">George W. Bush
   </pagelink>
 <text> or </text>
@@ -21535,7 +21745,9 @@ The game allows the player to choose to play as either </text>
 <pagelink id="ring girl">ring girl
   </pagelink>
 <text>.
-The game contains a national polling system, which tracks online how many times each candidate is beaten by players. The game keeps track of both local and national results.</text>
+</text>
+<br/>
+<text>The game contains a national polling system, which tracks online how many times each candidate is beaten by players. The game keeps track of both local and national results.</text>
 <citation id="cit4"><table id="table3"><tabtitle><text>cite web</text>
       </tabtitle>
     <head id="C0"><text>title</text>
@@ -22045,8 +22257,12 @@ The game contains a national polling system, which tracks online how many times 
 <citlink id="cit2"/>
 <reflink id="ref2"/>
 <ref id="ref2"><text>Aslan, I., Warchalowski, A. &amp; Özbek, H. 2000. A Preliminary
-Review of the Subfamily Galerucinae (Coleoptera, Chrysomelidae) in Turkey. Journal of the Entomological
-Research Society 2: 27-42</text>
+</text>
+  <br/>
+  <text>Review of the Subfamily Galerucinae (Coleoptera, Chrysomelidae) in Turkey. Journal of the Entomological
+</text>
+  <br/>
+  <text>Research Society 2: 27-42</text>
   </ref>
 <citation id="cit1"><table id="table1"><tabtitle><text>Taxobox</text>
       </tabtitle>
@@ -22554,7 +22770,9 @@ Research Society 2: 27-42</text>
   <mark>'</mark>
   </entity>
 <text>s next captain was briefly Commander H. Higman, and he was soon replaced by Commander John Lake in February 1806. 
-On 11 May 1806. </text>
+</text>
+<br/>
+<text>On 11 May 1806. </text>
 <entity lv="2"><text>Surinam</text>
   </entity>
 <text> captured three vessels: </text>
@@ -22629,6 +22847,7 @@ On 11 May 1806. </text>
   </pagelink>
 <text> fleet off southern Ireland. 
 </text>
+<br/>
 <entity lv="2"><text>Surinam</text>
   </entity>
 <text> left the fleet for Plymouth on 15 November. On 17 November, some 17 </text>
@@ -22658,7 +22877,9 @@ On 11 May 1806. </text>
 <text> was in sight.</text>
 <citlink id="cit17"/>
 <text> 
-On 22 October, </text>
+</text>
+<br/>
+<text>On 22 October, </text>
 <entity lv="2"><text>Surinam</text>
   </entity>
 <text> captured the </text>
@@ -22703,7 +22924,9 @@ On 22 October, </text>
 <text>.</text>
 <citlink id="cit22"/>
 <text> 
-Then on 21 August, </text>
+</text>
+<br/>
+<text>Then on 21 August, </text>
 <entity lv="2"><text>Surinam</text>
   </entity>
 <text> was in company with </text>
@@ -22754,7 +22977,9 @@ Then on 21 August, </text>
 <quot><text>Martinique</text>
   </quot>
 <text> to all naval survivors of that campaign.
-On 17 February 1810 </text>
+</text>
+<br/>
+<text>On 17 February 1810 </text>
 <entity lv="2"><text>Suriname</text>
   </entity>
 <text>, </text>
@@ -22778,7 +23003,9 @@ On 17 February 1810 </text>
 <text>.</text>
 <citlink id="cit29"/>
 <text> 
-By virtue of this action, </text>
+</text>
+<br/>
+<text>By virtue of this action, </text>
 <entity lv="2"><text>Surinam</text>
   </entity>
 <text> effectively also participated in the </text>
@@ -22793,13 +23020,17 @@ By virtue of this action, </text>
 <quot><text>Guadaloupe</text>
   </quot>
 <text> to all surviving participants of the campaign.
-In 1810, Commander A. Hodge (or Hedge) took command, and the next year she visited her namesake country of </text>
+</text>
+<br/>
+<text>In 1810, Commander A. Hodge (or Hedge) took command, and the next year she visited her namesake country of </text>
 <pagelink id="Suriname">Suriname
   </pagelink>
 <text>, in South America. His replacement, in 1811, was A. Kennedy.</text>
 <citlink id="cit32"/>
 <text> In 1812, Commander John Ellis Watt took command on the Leeward Islands station and sailed her for the coast of Guyana. 
-In August 1812 </text>
+</text>
+<br/>
+<text>In August 1812 </text>
 <entity lv="2"><text>Surinam</text>
   </entity>
 <text> was in company with </text>
@@ -23657,25 +23888,33 @@ In August 1812 </text>
 <pagelink id="Maccabi Haifa F.C."><text>Maccabi Haifa</text>
   </pagelink>
 <text> to the league title.
-Giorgi Daraselia passed the courses of Coaching in the </text>
+</text>
+<br/>
+<text>Giorgi Daraselia passed the courses of Coaching in the </text>
 <pagelink id="Israel Football Association">Israel Football Association
   </pagelink>
 <text>, and in Spring 2010, received the PRO Category License, which allowed him to couch professional teams.
-He had a chance of independently working as a chief coach in Georgia. From September 2012 he started leading </text>
+</text>
+<br/>
+<text>He had a chance of independently working as a chief coach in Georgia. From September 2012 he started leading </text>
 <pagelink id="FC Dila Gori"><text>Dila Gori</text>
   </pagelink>
 <text> in Georgian Highest League (</text>
 <pagelink id="Umaglesi Liga">Umaglesi Liga
   </pagelink>
 <text>). The team he trained  got on the second place from the last one in the tournament table. From 18 games his team won 16.
-Country record belongs to Daraselia: none of the couches working in Georgia before him, have managed to defeat each member team of the championship one by one. </text>
+</text>
+<br/>
+<text>Country record belongs to Daraselia: none of the couches working in Georgia before him, have managed to defeat each member team of the championship one by one. </text>
 <pagelink id="FC Dila Gori"><text>Dila Gori</text>
   </pagelink>
 <text> managed this from 15 September 2012 to 18 November 2012, team defeated all 11 members of the </text>
 <pagelink id="Umaglesi Liga">Umaglesi Liga
   </pagelink>
 <text> in this period of time.
-In January 2013, Giorgi Daraselia became a chief coach of </text>
+</text>
+<br/>
+<text>In January 2013, Giorgi Daraselia became a chief coach of </text>
 <pagelink id="Football Championship of the National League">Football Championship of the National League
   </pagelink>
 <text> team of Russia - </text>
@@ -24170,7 +24409,9 @@ In January 2013, Giorgi Daraselia became a chief coach of </text>
 <pagelink id="Gustavus IV">Gustavus IV
   </pagelink>
 <text> in 1806. He then visited several German courts, and in 1807 was created a knight of St Joachim of Würtemberg.
-While in Sweden he had got to know General Sir John Moore, whom he accompanied to Spain. He was with the military expedition throughout, was present at the Battle of Coruña and the death of the general, and made many sketches of the campaign. In the meantime his </text>
+</text>
+<br/>
+<text>While in Sweden he had got to know General Sir John Moore, whom he accompanied to Spain. He was with the military expedition throughout, was present at the Battle of Coruña and the death of the general, and made many sketches of the campaign. In the meantime his </text>
 <entity lv="2"><text>Travelling Sketches in Russia and Sweden during the years 1805–1808</text>
   </entity>
 <text> had appeared in 1809, elaborately illustrated by the author. It was soon followed by </text>
@@ -24184,6 +24425,7 @@ While in Sweden he had got to know General Sir John Moore, whom he accompanied t
   </entity>
 <text>.
 </text>
+<br/>
 <filelink id="Tomb of Cyrus by Ker Porter.jpg"><text>Drawing of the </text>
   <pagelink id="tomb of Cyrus">tomb of Cyrus
     </pagelink>
@@ -24588,7 +24830,9 @@ While in Sweden he had got to know General Sir John Moore, whom he accompanied t
     </pagelink>
   </quot>
 <text>.
-While trying to get his band going, in 1978 Johnson had recorded a demo solo </text>
+</text>
+<br/>
+<text>While trying to get his band going, in 1978 Johnson had recorded a demo solo </text>
 <pagelink id="album">album
   </pagelink>
 <text> (</text>
@@ -24628,7 +24872,9 @@ While trying to get his band going, in 1978 Johnson had recorded a demo solo </t
 <pagelink id="Mark Perry (musician)"><text>Mark Perry</text>
   </pagelink>
 <text>.
-The The made their debut at London's Africa Centre on 11 May 1979,</text>
+</text>
+<br/>
+<text>The The made their debut at London's Africa Centre on 11 May 1979,</text>
 <citlink id="cit7"/>
 <text> third on the bill to </text>
 <pagelink id="Scritti Politti">Scritti Politti
@@ -24640,8 +24886,11 @@ The The made their debut at London's Africa Centre on 11 May 1979,</text>
 <pagelink id="Keith Laws">Keith Laws
   </pagelink>
 <text> on synthesiser and tapes. It was Keith Laws who suggested the name 'the The' to Matt Johnson.
-As the The was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios.
 </text>
+<br/>
+<text>As the The was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios.
+</text>
+<br/>
 <pagelink id="Peter Ashworth">Peter Ashworth
   </pagelink>
 <text>, then known as 'Triash' and later to become a noted photographer, became the The's drummer in 1980, and Tom Johnston (also managing The The at this point and later to become a cartoonist for the </text>
@@ -24701,7 +24950,9 @@ As the The was now getting underway, Johnson was simultaneously working with exp
 <pagelink id="Scritti Politti">Scritti Politti
   </pagelink>
 <text>.
-In early 1981 The The also contributed the composition ‘Untitled’ to the </text>
+</text>
+<br/>
+<text>In early 1981 The The also contributed the composition ‘Untitled’ to the </text>
 <pagelink id="Some Bizzare Album">Some Bizzare Album
   </pagelink>
 <text>. In September of that year Johnson and Laws signed a deal with </text>
@@ -24728,7 +24979,9 @@ In early 1981 The The also contributed the composition ‘Untitled’ to the </t
 <pagelink id="Graham Lewis">Graham Lewis
   </pagelink>
 <text>, Ivo and Johnson himself. Years later, owing to a request from Johnson, so that all of his albums would be in the same rack together, it would be re-issued and credited to The The.
-Towards the end of 1981, Colin Lloyd-Tucker and </text>
+</text>
+<br/>
+<text>Towards the end of 1981, Colin Lloyd-Tucker and </text>
 <pagelink id="Simon Fisher-Turner">Simon Fisher-Turner
   </pagelink>
 <text> joined the band for a series of stripped down The The acoustic concerts in London.</text>
@@ -24792,7 +25045,9 @@ Towards the end of 1981, Colin Lloyd-Tucker and </text>
 <heading lv="h2"><text>The solo years (1982–1987)</text>
   </heading>
 <text>Now freed from the politics of a permanent group line-up, Johnson was able to take The The up to the next level, and spent the next few years collaborating with a diverse range of creative individuals, freely changing personnel from project to project.
-The The's next single was a retooling of </text>
+</text>
+<br/>
+<text>The The's next single was a retooling of </text>
 <quot><text>Cold Spell Ahead</text>
   </quot>
 <text>, now entitled </text>
@@ -24811,7 +25066,9 @@ The The's next single was a retooling of </text>
 <pagelink id="Jools Holland">Jools Holland
   </pagelink>
 <text>.
-In 1982, the intended debut album by the The (</text>
+</text>
+<br/>
+<text>In 1982, the intended debut album by the The (</text>
 <entity lv="2"><text>The Pornography of Despair</text>
   </entity>
 <text>) was recorded, but was never officially mixed nor released.</text>
@@ -24826,8 +25083,12 @@ In 1982, the intended debut album by the The (</text>
 <quot><text>Waitin' For The Upturn</text>
   </quot>
 <text>, two of the songs from the album which saw the light of day as b-sides.
-Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.  
-The The released their official album debut, the synth-noir classic </text>
+</text>
+<br/>
+<text>Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.  
+</text>
+<br/>
+<text>The The released their official album debut, the synth-noir classic </text>
 <entity lv="2"><pagelink id="Soul Mining">Soul Mining
     </pagelink>
   </entity>
@@ -24860,7 +25121,9 @@ The The released their official album debut, the synth-noir classic </text>
 <pagelink id="Foetus (band)"><text>Foetus</text>
   </pagelink>
 <text>).
-During the The's more prolific period of releases, from </text>
+</text>
+<br/>
+<text>During the The's more prolific period of releases, from </text>
 <entity lv="2"><text>Soul Mining</text>
   </entity>
 <text> (1983) to </text>
@@ -24873,7 +25136,9 @@ During the The's more prolific period of releases, from </text>
 <quot><text>Infected</text>
   </quot>
 <text> which featured a masturbating devil and was withdrawn from sale and re-issued with an edited version of the same drawing.
-For the 1986 album </text>
+</text>
+<br/>
+<text>For the 1986 album </text>
 <entity lv="2"><pagelink id="Infected (The The album)"><text>Infected</text>
     </pagelink>
   </entity>
@@ -24902,7 +25167,9 @@ For the 1986 album </text>
 <pagelink id="Throbbing Gristle">Throbbing Gristle
   </pagelink>
 <text>).
-Throughout 1986-1987 Johnson toured the world extensively with </text>
+</text>
+<br/>
+<text>Throughout 1986-1987 Johnson toured the world extensively with </text>
 <entity lv="2"><text>Infected: The Movie</text>
   </entity>
 <text>, showing the film in cinemas in place of performing live concerts. The film was also shown twice in its entirety on </text>
@@ -24918,7 +25185,9 @@ Throughout 1986-1987 Johnson toured the world extensively with </text>
 <pagelink id="United States"><text>US</text>
   </pagelink>
 <text>.
-In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting </text>
+</text>
+<br/>
+<text>In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting </text>
 <entity lv="2"><text>Infected: The Movie</text>
   </entity>
 <text> in Australia he had a chance encounter with </text>
@@ -25015,7 +25284,9 @@ In 1987 Johnson also took some tentative steps back into live performance. Whils
 <pagelink id="Royal Albert Hall">Royal Albert Hall
   </pagelink>
 <text> at the end of the tour. Vocalist Melanie Redmond, who had just completed a world tour with Duran Duran, joined the tour during the European leg as a session musician.
-The studio EP </text>
+</text>
+<br/>
+<text>The studio EP </text>
 <entity lv="2"><text>Shades of Blue</text>
   </entity>
 <text> was released in 1990. This included cover versions of </text>
@@ -25046,7 +25317,9 @@ The studio EP </text>
 <entity lv="2"><text>Solitude</text>
   </entity>
 <text>.
-In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album </text>
+</text>
+<br/>
+<text>In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album </text>
 <entity lv="2"/>
 <entity lv="2"><text>, which debuted at No. 2 in the UK and spun off three Top 40 singles in the UK, led by </text>
   </entity>
@@ -25085,7 +25358,9 @@ In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare
 <pagelink id="Reading Festival">Reading Festival
   </pagelink>
 <text>.
-Another full-length film, directed by longtime collaborator </text>
+</text>
+<br/>
+<text>Another full-length film, directed by longtime collaborator </text>
 <pagelink id="Tim Pope">Tim Pope
   </pagelink>
 <text>, was made for this album. </text>
@@ -25104,7 +25379,9 @@ Another full-length film, directed by longtime collaborator </text>
 <pagelink id="Curtis Sliwa">Curtis Sliwa
   </pagelink>
 <text>, and porn star Rick Savage amongst many other carnival characters.
-Now permanently relocated to New York, The The's next project was 1995's </text>
+</text>
+<br/>
+<text>Now permanently relocated to New York, The The's next project was 1995's </text>
 <entity lv="2"/>
 <entity lv="2"><text>, an album that consisted entirely of </text>
   <pagelink id="Hank Williams">Hank Williams
@@ -25138,7 +25415,9 @@ Now permanently relocated to New York, The The's next project was 1995's </text>
 <quot><text>I Saw The Light</text>
   </quot>
 <text> hit No. 31 UK.Released by Some Bizzare Label / Epic 
-An experimental album called </text>
+</text>
+<br/>
+<text>An experimental album called </text>
 <entity lv="2"><text>Gun Sluts</text>
   </entity>
 <text> was recorded in 1997, but left unreleased by the band after it was rejected for being too uncommercial by their label. The The severed their eighteen-year relationship with Sony and moved to </text>
@@ -25151,7 +25430,9 @@ An experimental album called </text>
 <pagelink id="Nothing Records">Nothing Records
   </pagelink>
 <text> imprint.
-In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released </text>
+</text>
+<br/>
+<text>In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released </text>
 <entity lv="2"><pagelink id="NakedSelf">NakedSelf
     </pagelink>
   </entity>
@@ -25163,7 +25444,9 @@ In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spe
     </pagelink>
   </entity>
 <text> remains The The's final released studio album to date.
-This same line-up also recorded two new tracks, </text>
+</text>
+<br/>
+<text>This same line-up also recorded two new tracks, </text>
 <quot><text>Deep Down Truth</text>
   </quot>
 <text>, featuring </text>
@@ -25198,7 +25481,9 @@ This same line-up also recorded two new tracks, </text>
 <pagelink id="Benn Northover">Benn Northover
   </pagelink>
 <text> on film and video.
-This was the last live performance by The The for sixteen years; Johnson had stated on the official The The web site in the FAQ section that </text>
+</text>
+<br/>
+<text>This was the last live performance by The The for sixteen years; Johnson had stated on the official The The web site in the FAQ section that </text>
 <quot><text>There are no plans for one-off shows or tours in the near future but there will undoubtedly be another The The tour at some point.</text>
   </quot>
 <citlink id="cit10"/>
@@ -25237,7 +25522,9 @@ This was the last live performance by The The for sixteen years; Johnson had sta
 <heading lv="h2"><text>Hiatus (2003–2017)</text>
   </heading>
 <text>Since 2003 the reclusive Johnson has kept well away from the public eye and has concentrated primarily on soundtrack work, scoring numerous documentaries, films and art installations.
-For Swedish filmmaker Johanna St Michaels this has included </text>
+</text>
+<br/>
+<text>For Swedish filmmaker Johanna St Michaels this has included </text>
 <entity lv="2"><text>Best Wishes Bernhard</text>
   </entity>
 <text> (prize winning film of Dokumentär Films Premien Nordic Panorama 2003), </text>
@@ -25268,7 +25555,9 @@ For Swedish filmmaker Johanna St Michaels this has included </text>
 <pagelink id="Hot Docs Canadian International Documentary Festival">Hot Docs Canadian International Documentary Festival
   </pagelink>
 <text> in May 2014.
-In June 2009 it was announced that The The had created an original soundtrack to the </text>
+</text>
+<br/>
+<text>In June 2009 it was announced that The The had created an original soundtrack to the </text>
 <entity lv="2"><pagelink id="Gerard Johnson (director)"><text>Gerard Johnson</text>
     </pagelink>
   </entity>
@@ -25294,7 +25583,9 @@ In June 2009 it was announced that The The had created an original soundtrack to
 <pagelink id="soundtrack">soundtrack
   </pagelink>
 <text> was released on The The's Cineola imprint in March 2010, as volume one of several upcoming soundtrack and instrumental albums.
-In May 2014 The The completed an original soundtrack for </text>
+</text>
+<br/>
+<text>In May 2014 The The completed an original soundtrack for </text>
 <pagelink id="Gerard Johnson (director)"><text>Gerard Johnson</text>
   </pagelink>
 <text>'s latest film, Hyena. Starring </text>
@@ -25310,7 +25601,9 @@ In May 2014 The The completed an original soundtrack for </text>
 <pagelink id="Edinburgh International Film Festival">Edinburgh International Film Festival
   </pagelink>
 <text>. The album was released on 6 March 2015 as the third part in the Cinéola series.
-For English director </text>
+</text>
+<br/>
+<text>For English director </text>
 <pagelink id="Nichola Bruce">Nichola Bruce
   </pagelink>
 <text> it has included the documentary </text>
@@ -25326,6 +25619,7 @@ For English director </text>
 <citlink id="cit11"/>
 <text> which was completed in autumn 2010 and won the Special Jury Remi Award for Theatrical Feature Documentary at the 2011 Houston International Film Festival. The soundtrack was released in 2012 as volume 2 in the series of original soundtrack albums produced through Johnson's Cineola imprint.
 </text>
+<br/>
 <citation id="cit11"><table id="table6"><tabtitle><text>cite web</text>
       </tabtitle>
     <head id="C0"><text>url</text>
@@ -25687,999 +25981,1051 @@ For English director </text>
 314 PageLinkStart Throbbing Gristle "Throbbing Gristle"
 315 PageLinkEnd  ""
 316 QuotationEnd  ""
-317 Text  ". While trying to get his band going, in 1978 Johnson had recorded a demo solo "
-318 PageLinkStart album "album"
-319 PageLinkEnd  ""
-320 Text  " ("
-321 MultiQuoteStart 2 ""
-322 Text  "See Without Being Seen"
-323 MultiQuoteEnd  ""
-324 Text  ") which he continued to sell at various underground gigs on cassettes. In 1979, working with Colin Lloyd-Tucker (a friend and colleague at "
-325 PageLinkStart De Wolfe Music "De Wolfe Music"
-326 PageLinkEnd  ""
-327 Text  ", the Soho music publisher/recording studio) Johnson recorded his first album proper, "
-328 MultiQuoteStart 2 ""
-329 Text  "Spirits"
-330 MultiQuoteEnd  ""
-331 Text  ". This album remains unreleased, although the album track "
-332 QuotationStart  ""
-333 Text  "What Stanley Saw"
-334 QuotationEnd  ""
-335 Text  " was later licensed to "
-336 PageLinkStart Cherry Red Records "Cherry Red Records"
-337 PageLinkEnd  ""
-338 Text  " for their "
-339 MultiQuoteStart 2 ""
-340 Text  "Perspectives &amp; Distortion"
-341 MultiQuoteEnd  ""
-342 Text  " "
-343 PageLinkStart compilation album "compilation album"
-344 PageLinkEnd  ""
-345 Text  ", which also featured "
-346 PageLinkStart Virgin Prunes "Virgin Prunes"
-347 PageLinkEnd  ""
-348 Text  ", "
-349 PageLinkStart Lemon Kittens "Lemon Kittens"
-350 PageLinkEnd  ""
-351 Text  ", "
-352 PageLinkStart Thomas Leer "Thomas Leer"
-353 PageLinkEnd  ""
-354 Text  ", "
-355 PageLinkStart Kevin Coyne "Kevin Coyne"
-356 PageLinkEnd  ""
-357 Text  " and "
-358 PageLinkStart Mark Perry (musician) ""
-359 Text  "Mark Perry"
-360 PageLinkEnd  ""
-361 Text  ". The The made their debut at London's Africa Centre on 11 May 1979,"
-362 CitationLink cit7 ""
-363 Text  " third on the bill to "
-364 PageLinkStart Scritti Politti "Scritti Politti"
-365 PageLinkEnd  ""
-366 Text  " and "
-367 PageLinkStart PragVEC "PragVEC"
-368 PageLinkEnd  ""
-369 Text  ", using backing tape tracks that Johnson created at his day job at De Wolfe studios for the drums and bass. The band at this point consisted of Johnson on vocal, electric piano, guitar and tapes and "
-370 PageLinkStart Keith Laws "Keith Laws"
-371 PageLinkEnd  ""
-372 Text  " on synthesiser and tapes. It was Keith Laws who suggested the name 'the The' to Matt Johnson. As the The was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios. "
-373 PageLinkStart Peter Ashworth "Peter Ashworth"
-374 PageLinkEnd  ""
-375 Text  ", then known as 'Triash' and later to become a noted photographer, became the The's drummer in 1980, and Tom Johnston (also managing The The at this point and later to become a cartoonist for the "
-376 MultiQuoteStart 2 ""
-377 PageLinkStart Evening Standard "Evening Standard"
-378 PageLinkEnd  ""
-379 MultiQuoteEnd  ""
-380 Text  ", "
-381 MultiQuoteStart 2 ""
-382 PageLinkStart Daily Mirror "Daily Mirror"
-383 PageLinkEnd  ""
-384 MultiQuoteEnd  ""
-385 Text  " and "
-386 MultiQuoteStart 2 ""
-387 PageLinkStart The Sun (United Kingdom) ""
-388 Text  "The Sun"
-389 PageLinkEnd  ""
-390 MultiQuoteEnd  ""
-391 Text  " newspapers) was added on bass."
-392 CitationLink cit8 ""
-393 Text  " Although both Ashworth and Johnston were credited with appearing on The The's debut single ("
-394 QuotationStart  ""
-395 Text  "Controversial Subject"
-396 QuotationEnd  ""
-397 Text  "/"
-398 QuotationStart  ""
-399 Text  "Black and White"
-400 QuotationEnd  ""
-401 Text  ") on "
-402 PageLinkStart 4AD ""
-403 Text  "4AD Records"
-404 PageLinkEnd  ""
-405 Text  " neither actually played on the "
-406 PageLinkStart sound recording and reproduction ""
-407 Text  "recordings"
-408 PageLinkEnd  ""
-409 Text  ", which were produced by "
-410 PageLinkStart Wire (band) ""
-411 Text  "Wire"
-412 PageLinkEnd  ""
-413 Text  " members "
-414 PageLinkStart Bruce Gilbert "Bruce Gilbert"
+317 Text  ". "
+318 Break  ""
+319 Text  "While trying to get his band going, in 1978 Johnson had recorded a demo solo "
+320 PageLinkStart album "album"
+321 PageLinkEnd  ""
+322 Text  " ("
+323 MultiQuoteStart 2 ""
+324 Text  "See Without Being Seen"
+325 MultiQuoteEnd  ""
+326 Text  ") which he continued to sell at various underground gigs on cassettes. In 1979, working with Colin Lloyd-Tucker (a friend and colleague at "
+327 PageLinkStart De Wolfe Music "De Wolfe Music"
+328 PageLinkEnd  ""
+329 Text  ", the Soho music publisher/recording studio) Johnson recorded his first album proper, "
+330 MultiQuoteStart 2 ""
+331 Text  "Spirits"
+332 MultiQuoteEnd  ""
+333 Text  ". This album remains unreleased, although the album track "
+334 QuotationStart  ""
+335 Text  "What Stanley Saw"
+336 QuotationEnd  ""
+337 Text  " was later licensed to "
+338 PageLinkStart Cherry Red Records "Cherry Red Records"
+339 PageLinkEnd  ""
+340 Text  " for their "
+341 MultiQuoteStart 2 ""
+342 Text  "Perspectives &amp; Distortion"
+343 MultiQuoteEnd  ""
+344 Text  " "
+345 PageLinkStart compilation album "compilation album"
+346 PageLinkEnd  ""
+347 Text  ", which also featured "
+348 PageLinkStart Virgin Prunes "Virgin Prunes"
+349 PageLinkEnd  ""
+350 Text  ", "
+351 PageLinkStart Lemon Kittens "Lemon Kittens"
+352 PageLinkEnd  ""
+353 Text  ", "
+354 PageLinkStart Thomas Leer "Thomas Leer"
+355 PageLinkEnd  ""
+356 Text  ", "
+357 PageLinkStart Kevin Coyne "Kevin Coyne"
+358 PageLinkEnd  ""
+359 Text  " and "
+360 PageLinkStart Mark Perry (musician) ""
+361 Text  "Mark Perry"
+362 PageLinkEnd  ""
+363 Text  ". "
+364 Break  ""
+365 Text  "The The made their debut at London's Africa Centre on 11 May 1979,"
+366 CitationLink cit7 ""
+367 Text  " third on the bill to "
+368 PageLinkStart Scritti Politti "Scritti Politti"
+369 PageLinkEnd  ""
+370 Text  " and "
+371 PageLinkStart PragVEC "PragVEC"
+372 PageLinkEnd  ""
+373 Text  ", using backing tape tracks that Johnson created at his day job at De Wolfe studios for the drums and bass. The band at this point consisted of Johnson on vocal, electric piano, guitar and tapes and "
+374 PageLinkStart Keith Laws "Keith Laws"
+375 PageLinkEnd  ""
+376 Text  " on synthesiser and tapes. It was Keith Laws who suggested the name 'the The' to Matt Johnson. "
+377 Break  ""
+378 Text  "As the The was now getting underway, Johnson was simultaneously working with experimental synth-pop combo The Gadgets, a studio group he formed with Colin Lloyd Tucker, his colleague at De Wolfe recording studios. "
+379 Break  ""
+380 PageLinkStart Peter Ashworth "Peter Ashworth"
+381 PageLinkEnd  ""
+382 Text  ", then known as 'Triash' and later to become a noted photographer, became the The's drummer in 1980, and Tom Johnston (also managing The The at this point and later to become a cartoonist for the "
+383 MultiQuoteStart 2 ""
+384 PageLinkStart Evening Standard "Evening Standard"
+385 PageLinkEnd  ""
+386 MultiQuoteEnd  ""
+387 Text  ", "
+388 MultiQuoteStart 2 ""
+389 PageLinkStart Daily Mirror "Daily Mirror"
+390 PageLinkEnd  ""
+391 MultiQuoteEnd  ""
+392 Text  " and "
+393 MultiQuoteStart 2 ""
+394 PageLinkStart The Sun (United Kingdom) ""
+395 Text  "The Sun"
+396 PageLinkEnd  ""
+397 MultiQuoteEnd  ""
+398 Text  " newspapers) was added on bass."
+399 CitationLink cit8 ""
+400 Text  " Although both Ashworth and Johnston were credited with appearing on The The's debut single ("
+401 QuotationStart  ""
+402 Text  "Controversial Subject"
+403 QuotationEnd  ""
+404 Text  "/"
+405 QuotationStart  ""
+406 Text  "Black and White"
+407 QuotationEnd  ""
+408 Text  ") on "
+409 PageLinkStart 4AD ""
+410 Text  "4AD Records"
+411 PageLinkEnd  ""
+412 Text  " neither actually played on the "
+413 PageLinkStart sound recording and reproduction ""
+414 Text  "recordings"
 415 PageLinkEnd  ""
-416 Text  " and "
-417 PageLinkStart Graham Lewis "Graham Lewis"
-418 PageLinkEnd  ""
-419 Text  ". All "
-420 PageLinkStart musical instrument ""
-421 Text  "instruments"
+416 Text  ", which were produced by "
+417 PageLinkStart Wire (band) ""
+418 Text  "Wire"
+419 PageLinkEnd  ""
+420 Text  " members "
+421 PageLinkStart Bruce Gilbert "Bruce Gilbert"
 422 PageLinkEnd  ""
-423 Text  " were played by Johnson and Laws. Johnston and Ashworth soon dropped out of the The and returned to their respective day jobs. As a duo (Johnson and Laws), The The began performing concerts with "
-424 PageLinkStart Wire (band) ""
-425 Text  "Wire"
-426 PageLinkEnd  ""
-427 Text  ", "
-428 PageLinkStart Cabaret Voltaire (band) ""
-429 Text  "Cabaret Voltaire"
-430 PageLinkEnd  ""
-431 Text  ", "
-432 PageLinkStart Deutsch Amerikanische Freundschaft ""
-433 Text  "DAF"
-434 PageLinkEnd  ""
-435 Text  ", "
-436 PageLinkStart This Heat "This Heat"
+423 Text  " and "
+424 PageLinkStart Graham Lewis "Graham Lewis"
+425 PageLinkEnd  ""
+426 Text  ". All "
+427 PageLinkStart musical instrument ""
+428 Text  "instruments"
+429 PageLinkEnd  ""
+430 Text  " were played by Johnson and Laws. Johnston and Ashworth soon dropped out of the The and returned to their respective day jobs. As a duo (Johnson and Laws), The The began performing concerts with "
+431 PageLinkStart Wire (band) ""
+432 Text  "Wire"
+433 PageLinkEnd  ""
+434 Text  ", "
+435 PageLinkStart Cabaret Voltaire (band) ""
+436 Text  "Cabaret Voltaire"
 437 PageLinkEnd  ""
 438 Text  ", "
-439 PageLinkStart The Birthday Party (band) ""
-440 Text  "The Birthday Party"
+439 PageLinkStart Deutsch Amerikanische Freundschaft ""
+440 Text  "DAF"
 441 PageLinkEnd  ""
-442 Text  " and "
-443 PageLinkStart Scritti Politti "Scritti Politti"
+442 Text  ", "
+443 PageLinkStart This Heat "This Heat"
 444 PageLinkEnd  ""
-445 Text  ". In early 1981 The The also contributed the composition ‘Untitled’ to the "
-446 PageLinkStart Some Bizzare Album "Some Bizzare Album"
-447 PageLinkEnd  ""
-448 Text  ". In September of that year Johnson and Laws signed a deal with "
-449 PageLinkStart Some Bizzare Records "Some Bizzare Records"
-450 PageLinkEnd  ""
-451 Text  " and released the 7"
-452 QuotationStart  ""
-453 Text  " single Cold"
-454 QuotationEnd  ""
-455 Text  " Spell Ahead"
-456 QuotationStart  ""
-457 Text  ". By this stage Matt Johnson had begun playing all the instruments himself so Laws left to pursue his studies, leaving Johnson as a solo artist using a group moniker."
-458 QuotationEnd  ""
-459 Break  ""
-460 Text  "Johnson was signed up later in 1981 to 4AD Records by "
-461 PageLinkStart Ivo Watts-Russell "Ivo Watts-Russell"
-462 PageLinkEnd  ""
-463 Text  " to record a solo album, "
-464 MultiQuoteStart 2 ""
-465 PageLinkStart Burning Blue Soul "Burning Blue Soul"
-466 PageLinkEnd  ""
-467 MultiQuoteEnd  ""
-468 Text  ". Although all of the instruments and vocals were performed by Johnson, the album featured various producers including Wire's "
-469 PageLinkStart Bruce Gilbert "Bruce Gilbert"
-470 PageLinkEnd  ""
-471 Text  " and "
-472 PageLinkStart Graham Lewis "Graham Lewis"
-473 PageLinkEnd  ""
-474 Text  ", Ivo and Johnson himself. Years later, owing to a request from Johnson, so that all of his albums would be in the same rack together, it would be re-issued and credited to The The. Towards the end of 1981, Colin Lloyd-Tucker and "
-475 PageLinkStart Simon Fisher-Turner "Simon Fisher-Turner"
-476 PageLinkEnd  ""
-477 Text  " joined the band for a series of stripped down The The acoustic concerts in London."
-478 CitationStart cit7 ""
-479 TableStart table3 ""
-480 TableTitleStart  ""
-481 Text  "cite web"
-482 TableTitleEnd  ""
-483 TableHeadStart  ""
-484 TableCellReference id "C0"
-485 Text  "url"
-486 TableHeadEnd  ""
-487 TableCellStart  ""
-488 TableCellReference id "C0"
-489 WebLinkStart http://www.thethe.com/sections/library/gigography/gigography.html ""
-490 WebLinkEnd  ""
-491 TableCellEnd  ""
-492 TableHeadStart  ""
-493 TableCellReference id "C1"
-494 Text  "title"
-495 TableHeadEnd  ""
-496 TableCellStart  ""
-497 TableCellReference id "C1"
-498 Text  "This Is The The Day – Library"
-499 TableCellEnd  ""
-500 TableHeadStart  ""
-501 TableCellReference id "C2"
-502 Text  "publisher"
-503 TableHeadEnd  ""
-504 TableCellStart  ""
-505 TableCellReference id "C2"
-506 Text  "Thethe.com"
-507 TableCellEnd  ""
-508 TableHeadStart  ""
-509 TableCellReference id "C3"
-510 Text  "accessdate"
-511 TableHeadEnd  ""
-512 TableCellStart  ""
-513 TableCellReference id "C3"
-514 Text  "2011-04-02"
-515 TableCellEnd  ""
-516 TableHeadStart  ""
-517 TableCellReference id "C4"
-518 Text  "deadurl"
-519 TableHeadEnd  ""
-520 TableCellStart  ""
-521 TableCellReference id "C4"
-522 Text  "yes"
-523 TableCellEnd  ""
-524 TableHeadStart  ""
-525 TableCellReference id "C5"
-526 Text  "archiveurl"
-527 TableHeadEnd  ""
-528 TableCellStart  ""
-529 TableCellReference id "C5"
-530 WebLinkStart https://web.archive.org/web/20110717040926/http://www.thethe.com/sections/library/gigography/gigography.html ""
-531 WebLinkEnd  ""
-532 TableCellEnd  ""
-533 TableHeadStart  ""
-534 TableCellReference id "C6"
-535 Text  "archivedate"
-536 TableHeadEnd  ""
-537 TableCellStart  ""
-538 TableCellReference id "C6"
-539 Text  "17 July 2011"
-540 TableCellEnd  ""
-541 TableEnd  ""
-542 CitationEnd  ""
-543 CitationStart cit8 ""
-544 TableStart table4 ""
-545 TableTitleStart  ""
-546 Text  "cite book"
-547 TableTitleEnd  ""
-548 TableHeadStart  ""
-549 TableCellReference id "C0"
-550 Text  "last"
-551 TableHeadEnd  ""
-552 TableCellStart  ""
-553 TableCellReference id "C0"
-554 Text  "Larkin"
-555 TableCellEnd  ""
-556 TableHeadStart  ""
-557 TableCellReference id "C1"
-558 Text  "author-link"
-559 TableHeadEnd  ""
-560 TableCellStart  ""
-561 TableCellReference id "C1"
-562 Text  "Colin Larkin (writer)"
-563 TableCellEnd  ""
-564 TableHeadStart  ""
-565 TableCellReference id "C2"
-566 Text  "title"
-567 TableHeadEnd  ""
-568 TableCellStart  ""
-569 TableCellReference id "C2"
-570 Text  "The Guinness encyclopedia of popular music"
-571 TableCellEnd  ""
-572 TableHeadStart  ""
-573 TableCellReference id "C3"
-574 Text  "publisher"
-575 TableHeadEnd  ""
-576 TableCellStart  ""
-577 TableCellReference id "C3"
-578 PageLinkStart Guinness Publishing "Guinness Publishing"
-579 PageLinkEnd  ""
-580 TableCellEnd  ""
-581 TableHeadStart  ""
-582 TableCellReference id "C4"
-583 Text  "edition"
-584 TableHeadEnd  ""
-585 TableCellStart  ""
-586 TableCellReference id "C4"
-587 Text  "2nd revised"
-588 TableCellEnd  ""
-589 TableEnd  ""
-590 CitationEnd  ""
-591 HeadingStart h2 ""
-592 Text  "The solo years (1982–1987)"
-593 HeadingEnd  ""
-594 Text  "Now freed from the politics of a permanent group line-up, Johnson was able to take The The up to the next level, and spent the next few years collaborating with a diverse range of creative individuals, freely changing personnel from project to project. The The's next single was a retooling of "
-595 QuotationStart  ""
-596 Text  "Cold Spell Ahead"
-597 QuotationEnd  ""
-598 Text  ", now entitled "
-599 QuotationStart  ""
-600 Text  "Uncertain Smile"
-601 QuotationEnd  ""
-602 Text  ". Produced in New York by "
-603 PageLinkStart Mike Thorne "Mike Thorne"
-604 PageLinkEnd  ""
-605 Text  "; it reached No. 68 UK. This version is different from the more familiar album version, and featured sax and flute by session player "
-606 PageLinkStart Crispin Cioe "Crispin Cioe"
-607 PageLinkEnd  ""
-608 Text  " rather than (as on the album version) the piano of "
-609 PageLinkStart Squeeze (band) ""
-610 Text  "Squeeze"
-611 PageLinkEnd  ""
-612 Text  "'s "
-613 PageLinkStart Jools Holland "Jools Holland"
-614 PageLinkEnd  ""
-615 Text  ". In 1982, the intended debut album by the The ("
-616 MultiQuoteStart 2 ""
-617 Text  "The Pornography of Despair"
-618 MultiQuoteEnd  ""
-619 Text  ") was recorded, but was never officially mixed nor released."
-620 RefLink ref5 ""
-621 Text  " Johnson apparently ran off some cassette copies for friends, and several tracks were subsequently re-recorded and issued as b-sides, but the original album remains unmixed and unissued. "
-622 PageLinkStart Steve James Sherlock "Steve James Sherlock"
-623 PageLinkEnd  ""
-624 Text  " played flute and saxophone on the re-recordings of "
-625 QuotationStart  ""
-626 Text  "Three Orange Kisses From Kazan"
-627 QuotationEnd  ""
-628 Text  " and "
-629 QuotationStart  ""
-630 Text  "Waitin' For The Upturn"
-631 QuotationEnd  ""
-632 Text  ", two of the songs from the album which saw the light of day as b-sides. Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.   The The released their official album debut, the synth-noir classic "
-633 MultiQuoteStart 2 ""
-634 PageLinkStart Soul Mining "Soul Mining"
-635 PageLinkEnd  ""
-636 MultiQuoteEnd  ""
-637 Text  ", in 1983. It featured the minor UK No. 71 hit "
-638 QuotationStart  ""
-639 PageLinkStart This Is the Day (song) ""
-640 Text  "This Is the Day"
-641 PageLinkEnd  ""
+445 Text  ", "
+446 PageLinkStart The Birthday Party (band) ""
+447 Text  "The Birthday Party"
+448 PageLinkEnd  ""
+449 Text  " and "
+450 PageLinkStart Scritti Politti "Scritti Politti"
+451 PageLinkEnd  ""
+452 Text  ". "
+453 Break  ""
+454 Text  "In early 1981 The The also contributed the composition ‘Untitled’ to the "
+455 PageLinkStart Some Bizzare Album "Some Bizzare Album"
+456 PageLinkEnd  ""
+457 Text  ". In September of that year Johnson and Laws signed a deal with "
+458 PageLinkStart Some Bizzare Records "Some Bizzare Records"
+459 PageLinkEnd  ""
+460 Text  " and released the 7"
+461 QuotationStart  ""
+462 Text  " single Cold"
+463 QuotationEnd  ""
+464 Text  " Spell Ahead"
+465 QuotationStart  ""
+466 Text  ". By this stage Matt Johnson had begun playing all the instruments himself so Laws left to pursue his studies, leaving Johnson as a solo artist using a group moniker."
+467 QuotationEnd  ""
+468 Break  ""
+469 Text  "Johnson was signed up later in 1981 to 4AD Records by "
+470 PageLinkStart Ivo Watts-Russell "Ivo Watts-Russell"
+471 PageLinkEnd  ""
+472 Text  " to record a solo album, "
+473 MultiQuoteStart 2 ""
+474 PageLinkStart Burning Blue Soul "Burning Blue Soul"
+475 PageLinkEnd  ""
+476 MultiQuoteEnd  ""
+477 Text  ". Although all of the instruments and vocals were performed by Johnson, the album featured various producers including Wire's "
+478 PageLinkStart Bruce Gilbert "Bruce Gilbert"
+479 PageLinkEnd  ""
+480 Text  " and "
+481 PageLinkStart Graham Lewis "Graham Lewis"
+482 PageLinkEnd  ""
+483 Text  ", Ivo and Johnson himself. Years later, owing to a request from Johnson, so that all of his albums would be in the same rack together, it would be re-issued and credited to The The. "
+484 Break  ""
+485 Text  "Towards the end of 1981, Colin Lloyd-Tucker and "
+486 PageLinkStart Simon Fisher-Turner "Simon Fisher-Turner"
+487 PageLinkEnd  ""
+488 Text  " joined the band for a series of stripped down The The acoustic concerts in London."
+489 CitationStart cit7 ""
+490 TableStart table3 ""
+491 TableTitleStart  ""
+492 Text  "cite web"
+493 TableTitleEnd  ""
+494 TableHeadStart  ""
+495 TableCellReference id "C0"
+496 Text  "url"
+497 TableHeadEnd  ""
+498 TableCellStart  ""
+499 TableCellReference id "C0"
+500 WebLinkStart http://www.thethe.com/sections/library/gigography/gigography.html ""
+501 WebLinkEnd  ""
+502 TableCellEnd  ""
+503 TableHeadStart  ""
+504 TableCellReference id "C1"
+505 Text  "title"
+506 TableHeadEnd  ""
+507 TableCellStart  ""
+508 TableCellReference id "C1"
+509 Text  "This Is The The Day – Library"
+510 TableCellEnd  ""
+511 TableHeadStart  ""
+512 TableCellReference id "C2"
+513 Text  "publisher"
+514 TableHeadEnd  ""
+515 TableCellStart  ""
+516 TableCellReference id "C2"
+517 Text  "Thethe.com"
+518 TableCellEnd  ""
+519 TableHeadStart  ""
+520 TableCellReference id "C3"
+521 Text  "accessdate"
+522 TableHeadEnd  ""
+523 TableCellStart  ""
+524 TableCellReference id "C3"
+525 Text  "2011-04-02"
+526 TableCellEnd  ""
+527 TableHeadStart  ""
+528 TableCellReference id "C4"
+529 Text  "deadurl"
+530 TableHeadEnd  ""
+531 TableCellStart  ""
+532 TableCellReference id "C4"
+533 Text  "yes"
+534 TableCellEnd  ""
+535 TableHeadStart  ""
+536 TableCellReference id "C5"
+537 Text  "archiveurl"
+538 TableHeadEnd  ""
+539 TableCellStart  ""
+540 TableCellReference id "C5"
+541 WebLinkStart https://web.archive.org/web/20110717040926/http://www.thethe.com/sections/library/gigography/gigography.html ""
+542 WebLinkEnd  ""
+543 TableCellEnd  ""
+544 TableHeadStart  ""
+545 TableCellReference id "C6"
+546 Text  "archivedate"
+547 TableHeadEnd  ""
+548 TableCellStart  ""
+549 TableCellReference id "C6"
+550 Text  "17 July 2011"
+551 TableCellEnd  ""
+552 TableEnd  ""
+553 CitationEnd  ""
+554 CitationStart cit8 ""
+555 TableStart table4 ""
+556 TableTitleStart  ""
+557 Text  "cite book"
+558 TableTitleEnd  ""
+559 TableHeadStart  ""
+560 TableCellReference id "C0"
+561 Text  "last"
+562 TableHeadEnd  ""
+563 TableCellStart  ""
+564 TableCellReference id "C0"
+565 Text  "Larkin"
+566 TableCellEnd  ""
+567 TableHeadStart  ""
+568 TableCellReference id "C1"
+569 Text  "author-link"
+570 TableHeadEnd  ""
+571 TableCellStart  ""
+572 TableCellReference id "C1"
+573 Text  "Colin Larkin (writer)"
+574 TableCellEnd  ""
+575 TableHeadStart  ""
+576 TableCellReference id "C2"
+577 Text  "title"
+578 TableHeadEnd  ""
+579 TableCellStart  ""
+580 TableCellReference id "C2"
+581 Text  "The Guinness encyclopedia of popular music"
+582 TableCellEnd  ""
+583 TableHeadStart  ""
+584 TableCellReference id "C3"
+585 Text  "publisher"
+586 TableHeadEnd  ""
+587 TableCellStart  ""
+588 TableCellReference id "C3"
+589 PageLinkStart Guinness Publishing "Guinness Publishing"
+590 PageLinkEnd  ""
+591 TableCellEnd  ""
+592 TableHeadStart  ""
+593 TableCellReference id "C4"
+594 Text  "edition"
+595 TableHeadEnd  ""
+596 TableCellStart  ""
+597 TableCellReference id "C4"
+598 Text  "2nd revised"
+599 TableCellEnd  ""
+600 TableEnd  ""
+601 CitationEnd  ""
+602 HeadingStart h2 ""
+603 Text  "The solo years (1982–1987)"
+604 HeadingEnd  ""
+605 Text  "Now freed from the politics of a permanent group line-up, Johnson was able to take The The up to the next level, and spent the next few years collaborating with a diverse range of creative individuals, freely changing personnel from project to project. "
+606 Break  ""
+607 Text  "The The's next single was a retooling of "
+608 QuotationStart  ""
+609 Text  "Cold Spell Ahead"
+610 QuotationEnd  ""
+611 Text  ", now entitled "
+612 QuotationStart  ""
+613 Text  "Uncertain Smile"
+614 QuotationEnd  ""
+615 Text  ". Produced in New York by "
+616 PageLinkStart Mike Thorne "Mike Thorne"
+617 PageLinkEnd  ""
+618 Text  "; it reached No. 68 UK. This version is different from the more familiar album version, and featured sax and flute by session player "
+619 PageLinkStart Crispin Cioe "Crispin Cioe"
+620 PageLinkEnd  ""
+621 Text  " rather than (as on the album version) the piano of "
+622 PageLinkStart Squeeze (band) ""
+623 Text  "Squeeze"
+624 PageLinkEnd  ""
+625 Text  "'s "
+626 PageLinkStart Jools Holland "Jools Holland"
+627 PageLinkEnd  ""
+628 Text  ". "
+629 Break  ""
+630 Text  "In 1982, the intended debut album by the The ("
+631 MultiQuoteStart 2 ""
+632 Text  "The Pornography of Despair"
+633 MultiQuoteEnd  ""
+634 Text  ") was recorded, but was never officially mixed nor released."
+635 RefLink ref5 ""
+636 Text  " Johnson apparently ran off some cassette copies for friends, and several tracks were subsequently re-recorded and issued as b-sides, but the original album remains unmixed and unissued. "
+637 PageLinkStart Steve James Sherlock "Steve James Sherlock"
+638 PageLinkEnd  ""
+639 Text  " played flute and saxophone on the re-recordings of "
+640 QuotationStart  ""
+641 Text  "Three Orange Kisses From Kazan"
 642 QuotationEnd  ""
-643 Text  ", as well as a new recording of The the performing "
+643 Text  " and "
 644 QuotationStart  ""
-645 Text  "Uncertain Smile"
+645 Text  "Waitin' For The Upturn"
 646 QuotationEnd  ""
-647 Text  ". Produced by Johnson and "
-648 PageLinkStart Paul Hardiman "Paul Hardiman"
-649 PageLinkEnd  ""
-650 Text  ", it featured guest appearances from "
-651 PageLinkStart Orange Juice (band) ""
-652 Text  "Orange Juice"
-653 PageLinkEnd  ""
-654 Text  "'s drummer "
-655 PageLinkStart Zeke Manyika "Zeke Manyika"
-656 PageLinkEnd  ""
-657 Text  ", "
-658 PageLinkStart Jools Holland "Jools Holland"
-659 PageLinkEnd  ""
-660 Text  ", "
-661 PageLinkStart Thomas Leer "Thomas Leer"
-662 PageLinkEnd  ""
-663 Text  " and "
-664 PageLinkStart J. G. Thirlwell "J. G. Thirlwell"
-665 PageLinkEnd  ""
-666 Text  " (aka "
-667 PageLinkStart Foetus (band) ""
-668 Text  "Foetus"
-669 PageLinkEnd  ""
-670 Text  "). During the The's more prolific period of releases, from "
-671 MultiQuoteStart 2 ""
-672 Text  "Soul Mining"
-673 MultiQuoteEnd  ""
-674 Text  " (1983) to "
-675 MultiQuoteStart 2 ""
-676 Text  "Dusk"
-677 MultiQuoteEnd  ""
-678 Text  " (1992), most artwork used on the albums and single releases was produced by Johnson's brother "
-679 PageLinkStart Andy Dog Johnson ""
-680 Text  "Andrew Johnson"
+647 Text  ", two of the songs from the album which saw the light of day as b-sides. "
+648 Break  ""
+649 Text  "Around 1982 The The played a series  of 4 concerts at the Marque Club in Wardour Street, Soho entitled 'An evening of Rock n Roll with The The'. These concerts were weekly for 4 weeks and featured Marc Almond on guitar and vocals.   "
+650 Break  ""
+651 Text  "The The released their official album debut, the synth-noir classic "
+652 MultiQuoteStart 2 ""
+653 PageLinkStart Soul Mining "Soul Mining"
+654 PageLinkEnd  ""
+655 MultiQuoteEnd  ""
+656 Text  ", in 1983. It featured the minor UK No. 71 hit "
+657 QuotationStart  ""
+658 PageLinkStart This Is the Day (song) ""
+659 Text  "This Is the Day"
+660 PageLinkEnd  ""
+661 QuotationEnd  ""
+662 Text  ", as well as a new recording of The the performing "
+663 QuotationStart  ""
+664 Text  "Uncertain Smile"
+665 QuotationEnd  ""
+666 Text  ". Produced by Johnson and "
+667 PageLinkStart Paul Hardiman "Paul Hardiman"
+668 PageLinkEnd  ""
+669 Text  ", it featured guest appearances from "
+670 PageLinkStart Orange Juice (band) ""
+671 Text  "Orange Juice"
+672 PageLinkEnd  ""
+673 Text  "'s drummer "
+674 PageLinkStart Zeke Manyika "Zeke Manyika"
+675 PageLinkEnd  ""
+676 Text  ", "
+677 PageLinkStart Jools Holland "Jools Holland"
+678 PageLinkEnd  ""
+679 Text  ", "
+680 PageLinkStart Thomas Leer "Thomas Leer"
 681 PageLinkEnd  ""
-682 Text  ", using the pseudonym Andy Dog. The artwork has a distinctive style, and sometimes courted controversy, most notably the initial release of the 1986 single "
-683 QuotationStart  ""
-684 Text  "Infected"
-685 QuotationEnd  ""
-686 Text  " which featured a masturbating devil and was withdrawn from sale and re-issued with an edited version of the same drawing. For the 1986 album "
-687 MultiQuoteStart 2 ""
-688 PageLinkStart Infected (The The album) ""
-689 Text  "Infected"
-690 PageLinkEnd  ""
-691 MultiQuoteEnd  ""
-692 Text  ", the The still consisted only of Johnson, but was augmented by session musicians and featured friends such as Manyika and "
-693 PageLinkStart Rip Rig + Panic "Rip Rig + Panic"
-694 PageLinkEnd  ""
-695 Text  " singer "
-696 PageLinkStart Neneh Cherry "Neneh Cherry"
-697 PageLinkEnd  ""
-698 Text  " and "
-699 PageLinkStart Anna Domino "Anna Domino"
-700 PageLinkEnd  ""
-701 Text  ". This album spawned four charting singles in the UK, notably "
-702 QuotationStart  ""
-703 Text  "Heartland"
-704 QuotationEnd  ""
-705 Text  ", which made the UK Top 30. It was also unusual for having a full-length accompanying film. Costing hundreds of thousands of pounds, "
-706 MultiQuoteStart 2 ""
-707 Text  "Infected: The Movie"
-708 MultiQuoteEnd  ""
-709 Text  " was shot on locations in Bolivia, Peru and New York. Different songs were directed by different directors, mainly "
-710 PageLinkStart Tim Pope "Tim Pope"
-711 PageLinkEnd  ""
-712 Text  " and "
-713 PageLinkStart Peter Christopherson ""
-714 Text  "Peter 'Sleazy' Christopherson"
-715 PageLinkEnd  ""
-716 Text  " (of "
-717 PageLinkStart Throbbing Gristle "Throbbing Gristle"
-718 PageLinkEnd  ""
-719 Text  "). Throughout 1986-1987 Johnson toured the world extensively with "
-720 MultiQuoteStart 2 ""
-721 Text  "Infected: The Movie"
-722 MultiQuoteEnd  ""
-723 Text  ", showing the film in cinemas in place of performing live concerts. The film was also shown twice in its entirety on "
-724 PageLinkStart Channel 4 "Channel 4"
-725 PageLinkEnd  ""
-726 Text  " in the UK and on "
-727 PageLinkStart MTV "MTV"
-728 PageLinkEnd  ""
-729 Text  "'s "
-730 PageLinkStart 120 Minutes "120 Minutes"
-731 PageLinkEnd  ""
-732 Text  " in the "
-733 PageLinkStart United States ""
-734 Text  "US"
-735 PageLinkEnd  ""
-736 Text  ". In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting "
-737 MultiQuoteStart 2 ""
-738 Text  "Infected: The Movie"
-739 MultiQuoteEnd  ""
-740 Text  " in Australia he had a chance encounter with "
-741 PageLinkStart Billy Bragg "Billy Bragg"
-742 PageLinkEnd  ""
-743 Text  " who persuaded him to return to Britain and support "
-744 PageLinkStart Red Wedge "Red Wedge"
-745 PageLinkEnd  ""
-746 Text  ", a coalition of like-minded musicians supporting the British "
-747 PageLinkStart Labour Party (UK) ""
-748 Text  "Labour Party"
-749 PageLinkEnd  ""
-750 Text  " in its election campaign. Johnson agreed and enrolled longtime friend and collaborator Manyika to join him in performing shows in London featuring stripped down versions of political The the songs such as "
-751 QuotationStart  ""
-752 Text  "Heartland"
-753 QuotationEnd  ""
-754 Text  ". This experience convinced Johnson to put a band together once again."
-755 RefStart ref5 ""
-756 WebLinkStart http://www.interzone23.com/thethe/albums.html ""
-757 Text  " The The Discography – Albums"
-758 WebLinkEnd  ""
-759 Text  " "
-760 CitationLink cit9 ""
-761 RefEnd  ""
-762 CitationStart cit9 ""
-763 AttributeStart class "webarchive"
-764 AttributeEnd  ""
-765 AttributeStart url ""
-766 WebLinkStart https://web.archive.org/web/20100107023657/http://www.interzone23.com/thethe/albums.html ""
-767 WebLinkEnd  ""
-768 AttributeEnd  ""
-769 AttributeStart date "7 January 2010 "
-770 AttributeEnd  ""
-771 CitationEnd  ""
-772 HeadingStart h2 ""
-773 Text  "Return to a full band (1988–2002)"
-774 HeadingEnd  ""
-775 Text  "By 1988, the The was an actual band again, Johnson having recruited ex-"
-776 PageLinkStart The Smiths ""
-777 Text  "Smiths"
-778 PageLinkEnd  ""
-779 Text  " guitarist "
-780 PageLinkStart Johnny Marr "Johnny Marr"
-781 PageLinkEnd  ""
-782 Text  ", ex-"
-783 PageLinkStart Nick Lowe "Nick Lowe"
-784 PageLinkEnd  ""
-785 Text  " bassist "
-786 PageLinkStart James Eller "James Eller"
-787 PageLinkEnd  ""
-788 Text  " and ex-"
-789 PageLinkStart ABC (band) ""
-790 Text  "ABC"
-791 PageLinkEnd  ""
-792 Text  " drummer "
-793 PageLinkStart David Palmer (drummer) ""
-794 Text  "David Palmer"
-795 PageLinkEnd  ""
-796 Text  " as fully-fledged members. This line-up, plus guest singer "
-797 PageLinkStart Sinéad O'Connor "Sinéad O'Connor"
-798 PageLinkEnd  ""
-799 Text  ", recorded the album "
-800 MultiQuoteStart 2 ""
-801 PageLinkStart Mind Bomb "Mind Bomb"
-802 PageLinkEnd  ""
-803 MultiQuoteEnd  ""
-804 Text  ", which debuted at No. 4 in the "
-805 PageLinkStart UK Albums Chart "UK Albums Chart"
-806 PageLinkEnd  ""
-807 Text  " and featured the band's highest charting single to that time, "
-808 QuotationStart  ""
-809 Text  "The Beat(en) Generation"
-810 QuotationEnd  ""
-811 Text  ", which peaked at No. 18 in the "
-812 PageLinkStart UK Singles Chart "UK Singles Chart"
-813 PageLinkEnd  ""
-814 Text  ". The first single from "
-815 MultiQuoteStart 2 ""
-816 PageLinkStart Mind Bomb "Mind Bomb"
-817 PageLinkEnd  ""
-818 MultiQuoteEnd  ""
-819 Text  " was actually scheduled to be "
-820 QuotationStart  ""
-821 Text  "Armageddon Days Are Here (again)"
-822 QuotationEnd  ""
-823 Text  " but with its chorus of "
-824 QuotationStart  ""
-825 Text  "Islam is rising, the Christians mobilising"
-826 QuotationEnd  ""
-827 Text  " and sensitivities over the "
-828 PageLinkStart Salman Rushdie "Salman Rushdie"
+682 Text  " and "
+683 PageLinkStart J. G. Thirlwell "J. G. Thirlwell"
+684 PageLinkEnd  ""
+685 Text  " (aka "
+686 PageLinkStart Foetus (band) ""
+687 Text  "Foetus"
+688 PageLinkEnd  ""
+689 Text  "). "
+690 Break  ""
+691 Text  "During the The's more prolific period of releases, from "
+692 MultiQuoteStart 2 ""
+693 Text  "Soul Mining"
+694 MultiQuoteEnd  ""
+695 Text  " (1983) to "
+696 MultiQuoteStart 2 ""
+697 Text  "Dusk"
+698 MultiQuoteEnd  ""
+699 Text  " (1992), most artwork used on the albums and single releases was produced by Johnson's brother "
+700 PageLinkStart Andy Dog Johnson ""
+701 Text  "Andrew Johnson"
+702 PageLinkEnd  ""
+703 Text  ", using the pseudonym Andy Dog. The artwork has a distinctive style, and sometimes courted controversy, most notably the initial release of the 1986 single "
+704 QuotationStart  ""
+705 Text  "Infected"
+706 QuotationEnd  ""
+707 Text  " which featured a masturbating devil and was withdrawn from sale and re-issued with an edited version of the same drawing. "
+708 Break  ""
+709 Text  "For the 1986 album "
+710 MultiQuoteStart 2 ""
+711 PageLinkStart Infected (The The album) ""
+712 Text  "Infected"
+713 PageLinkEnd  ""
+714 MultiQuoteEnd  ""
+715 Text  ", the The still consisted only of Johnson, but was augmented by session musicians and featured friends such as Manyika and "
+716 PageLinkStart Rip Rig + Panic "Rip Rig + Panic"
+717 PageLinkEnd  ""
+718 Text  " singer "
+719 PageLinkStart Neneh Cherry "Neneh Cherry"
+720 PageLinkEnd  ""
+721 Text  " and "
+722 PageLinkStart Anna Domino "Anna Domino"
+723 PageLinkEnd  ""
+724 Text  ". This album spawned four charting singles in the UK, notably "
+725 QuotationStart  ""
+726 Text  "Heartland"
+727 QuotationEnd  ""
+728 Text  ", which made the UK Top 30. It was also unusual for having a full-length accompanying film. Costing hundreds of thousands of pounds, "
+729 MultiQuoteStart 2 ""
+730 Text  "Infected: The Movie"
+731 MultiQuoteEnd  ""
+732 Text  " was shot on locations in Bolivia, Peru and New York. Different songs were directed by different directors, mainly "
+733 PageLinkStart Tim Pope "Tim Pope"
+734 PageLinkEnd  ""
+735 Text  " and "
+736 PageLinkStart Peter Christopherson ""
+737 Text  "Peter 'Sleazy' Christopherson"
+738 PageLinkEnd  ""
+739 Text  " (of "
+740 PageLinkStart Throbbing Gristle "Throbbing Gristle"
+741 PageLinkEnd  ""
+742 Text  "). "
+743 Break  ""
+744 Text  "Throughout 1986-1987 Johnson toured the world extensively with "
+745 MultiQuoteStart 2 ""
+746 Text  "Infected: The Movie"
+747 MultiQuoteEnd  ""
+748 Text  ", showing the film in cinemas in place of performing live concerts. The film was also shown twice in its entirety on "
+749 PageLinkStart Channel 4 "Channel 4"
+750 PageLinkEnd  ""
+751 Text  " in the UK and on "
+752 PageLinkStart MTV "MTV"
+753 PageLinkEnd  ""
+754 Text  "'s "
+755 PageLinkStart 120 Minutes "120 Minutes"
+756 PageLinkEnd  ""
+757 Text  " in the "
+758 PageLinkStart United States ""
+759 Text  "US"
+760 PageLinkEnd  ""
+761 Text  ". "
+762 Break  ""
+763 Text  "In 1987 Johnson also took some tentative steps back into live performance. Whilst promoting "
+764 MultiQuoteStart 2 ""
+765 Text  "Infected: The Movie"
+766 MultiQuoteEnd  ""
+767 Text  " in Australia he had a chance encounter with "
+768 PageLinkStart Billy Bragg "Billy Bragg"
+769 PageLinkEnd  ""
+770 Text  " who persuaded him to return to Britain and support "
+771 PageLinkStart Red Wedge "Red Wedge"
+772 PageLinkEnd  ""
+773 Text  ", a coalition of like-minded musicians supporting the British "
+774 PageLinkStart Labour Party (UK) ""
+775 Text  "Labour Party"
+776 PageLinkEnd  ""
+777 Text  " in its election campaign. Johnson agreed and enrolled longtime friend and collaborator Manyika to join him in performing shows in London featuring stripped down versions of political The the songs such as "
+778 QuotationStart  ""
+779 Text  "Heartland"
+780 QuotationEnd  ""
+781 Text  ". This experience convinced Johnson to put a band together once again."
+782 RefStart ref5 ""
+783 WebLinkStart http://www.interzone23.com/thethe/albums.html ""
+784 Text  " The The Discography – Albums"
+785 WebLinkEnd  ""
+786 Text  " "
+787 CitationLink cit9 ""
+788 RefEnd  ""
+789 CitationStart cit9 ""
+790 AttributeStart class "webarchive"
+791 AttributeEnd  ""
+792 AttributeStart url ""
+793 WebLinkStart https://web.archive.org/web/20100107023657/http://www.interzone23.com/thethe/albums.html ""
+794 WebLinkEnd  ""
+795 AttributeEnd  ""
+796 AttributeStart date "7 January 2010 "
+797 AttributeEnd  ""
+798 CitationEnd  ""
+799 HeadingStart h2 ""
+800 Text  "Return to a full band (1988–2002)"
+801 HeadingEnd  ""
+802 Text  "By 1988, the The was an actual band again, Johnson having recruited ex-"
+803 PageLinkStart The Smiths ""
+804 Text  "Smiths"
+805 PageLinkEnd  ""
+806 Text  " guitarist "
+807 PageLinkStart Johnny Marr "Johnny Marr"
+808 PageLinkEnd  ""
+809 Text  ", ex-"
+810 PageLinkStart Nick Lowe "Nick Lowe"
+811 PageLinkEnd  ""
+812 Text  " bassist "
+813 PageLinkStart James Eller "James Eller"
+814 PageLinkEnd  ""
+815 Text  " and ex-"
+816 PageLinkStart ABC (band) ""
+817 Text  "ABC"
+818 PageLinkEnd  ""
+819 Text  " drummer "
+820 PageLinkStart David Palmer (drummer) ""
+821 Text  "David Palmer"
+822 PageLinkEnd  ""
+823 Text  " as fully-fledged members. This line-up, plus guest singer "
+824 PageLinkStart Sinéad O'Connor "Sinéad O'Connor"
+825 PageLinkEnd  ""
+826 Text  ", recorded the album "
+827 MultiQuoteStart 2 ""
+828 PageLinkStart Mind Bomb "Mind Bomb"
 829 PageLinkEnd  ""
-830 Text  " affair that had recently erupted, this song was deemed unsuitable for release by "
-831 WebLinkStart file:Epic/CBS. ""
-832 WebLinkEnd  ""
-833 Break  ""
-834 Text  "Keyboardist "
-835 PageLinkStart D.C. Collard "D.C. Collard"
-836 PageLinkEnd  ""
-837 Text  " was added to the official line-up in 1989 (keyboard player "
-838 PageLinkStart Steve Hogarth "Steve Hogarth"
-839 PageLinkEnd  ""
-840 Text  ", who'd played on "
-841 MultiQuoteStart 2 ""
-842 PageLinkStart Infected (The The album) ""
-843 Text  "Infected"
+830 MultiQuoteEnd  ""
+831 Text  ", which debuted at No. 4 in the "
+832 PageLinkStart UK Albums Chart "UK Albums Chart"
+833 PageLinkEnd  ""
+834 Text  " and featured the band's highest charting single to that time, "
+835 QuotationStart  ""
+836 Text  "The Beat(en) Generation"
+837 QuotationEnd  ""
+838 Text  ", which peaked at No. 18 in the "
+839 PageLinkStart UK Singles Chart "UK Singles Chart"
+840 PageLinkEnd  ""
+841 Text  ". The first single from "
+842 MultiQuoteStart 2 ""
+843 PageLinkStart Mind Bomb "Mind Bomb"
 844 PageLinkEnd  ""
 845 MultiQuoteEnd  ""
-846 Text  ", had initially been asked to join but opted instead to become the new lead vocalist of "
-847 PageLinkStart Marillion "Marillion"
-848 PageLinkEnd  ""
-849 Text  "). The band embarked on a lengthy world tour in 1989–90 called "
-850 MultiQuoteStart 2 ""
-851 Text  "The The Versus The World"
-852 MultiQuoteEnd  ""
-853 Text  ". The live film of the same name, directed by "
-854 PageLinkStart Tim Pope "Tim Pope"
-855 PageLinkEnd  ""
-856 Text  ", was filmed during the three nights The The performed at London's "
-857 PageLinkStart Royal Albert Hall "Royal Albert Hall"
-858 PageLinkEnd  ""
-859 Text  " at the end of the tour. Vocalist Melanie Redmond, who had just completed a world tour with Duran Duran, joined the tour during the European leg as a session musician. The studio EP "
-860 MultiQuoteStart 2 ""
-861 Text  "Shades of Blue"
-862 MultiQuoteEnd  ""
-863 Text  " was released in 1990. This included cover versions of "
-864 PageLinkStart Fred Neil "Fred Neil"
-865 PageLinkEnd  ""
-866 Text  "'s "
-867 QuotationStart  ""
-868 Text  "Dolphins"
-869 QuotationEnd  ""
-870 Text  " and "
-871 PageLinkStart Duke Ellington "Duke Ellington"
-872 PageLinkEnd  ""
-873 Text  "'s "
-874 QuotationStart  ""
-875 Text  "Solitude"
-876 QuotationEnd  ""
-877 Text  " as well as a new original song "
-878 QuotationStart  ""
-879 Text  "Jealous of Youth"
-880 QuotationEnd  ""
-881 Text  " and a live version of "
-882 QuotationStart  ""
-883 Text  "Another Boy Drowning"
-884 QuotationEnd  ""
-885 Text  " from "
-886 MultiQuoteStart 2 ""
-887 Text  "Burning Blue Soul"
-888 MultiQuoteEnd  ""
-889 Text  ". This and a later EP of remixes, 1993's "
-890 MultiQuoteStart 2 ""
-891 Text  "Dis-infected"
-892 MultiQuoteEnd  ""
-893 Text  ", were compiled into a 1994 full-length album for the North American market called "
-894 MultiQuoteStart 2 ""
-895 Text  "Solitude"
-896 MultiQuoteEnd  ""
-897 Text  ". In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album "
-898 MultiQuoteStart 2 ""
-899 MultiQuoteEnd  ""
-900 MultiQuoteStart 2 ""
-901 Text  ", which debuted at No. 2 in the UK and spun off three Top 40 singles in the UK, led by "
-902 MultiQuoteEnd  ""
+846 Text  " was actually scheduled to be "
+847 QuotationStart  ""
+848 Text  "Armageddon Days Are Here (again)"
+849 QuotationEnd  ""
+850 Text  " but with its chorus of "
+851 QuotationStart  ""
+852 Text  "Islam is rising, the Christians mobilising"
+853 QuotationEnd  ""
+854 Text  " and sensitivities over the "
+855 PageLinkStart Salman Rushdie "Salman Rushdie"
+856 PageLinkEnd  ""
+857 Text  " affair that had recently erupted, this song was deemed unsuitable for release by "
+858 WebLinkStart file:Epic/CBS. ""
+859 WebLinkEnd  ""
+860 Break  ""
+861 Text  "Keyboardist "
+862 PageLinkStart D.C. Collard "D.C. Collard"
+863 PageLinkEnd  ""
+864 Text  " was added to the official line-up in 1989 (keyboard player "
+865 PageLinkStart Steve Hogarth "Steve Hogarth"
+866 PageLinkEnd  ""
+867 Text  ", who'd played on "
+868 MultiQuoteStart 2 ""
+869 PageLinkStart Infected (The The album) ""
+870 Text  "Infected"
+871 PageLinkEnd  ""
+872 MultiQuoteEnd  ""
+873 Text  ", had initially been asked to join but opted instead to become the new lead vocalist of "
+874 PageLinkStart Marillion "Marillion"
+875 PageLinkEnd  ""
+876 Text  "). The band embarked on a lengthy world tour in 1989–90 called "
+877 MultiQuoteStart 2 ""
+878 Text  "The The Versus The World"
+879 MultiQuoteEnd  ""
+880 Text  ". The live film of the same name, directed by "
+881 PageLinkStart Tim Pope "Tim Pope"
+882 PageLinkEnd  ""
+883 Text  ", was filmed during the three nights The The performed at London's "
+884 PageLinkStart Royal Albert Hall "Royal Albert Hall"
+885 PageLinkEnd  ""
+886 Text  " at the end of the tour. Vocalist Melanie Redmond, who had just completed a world tour with Duran Duran, joined the tour during the European leg as a session musician. "
+887 Break  ""
+888 Text  "The studio EP "
+889 MultiQuoteStart 2 ""
+890 Text  "Shades of Blue"
+891 MultiQuoteEnd  ""
+892 Text  " was released in 1990. This included cover versions of "
+893 PageLinkStart Fred Neil "Fred Neil"
+894 PageLinkEnd  ""
+895 Text  "'s "
+896 QuotationStart  ""
+897 Text  "Dolphins"
+898 QuotationEnd  ""
+899 Text  " and "
+900 PageLinkStart Duke Ellington "Duke Ellington"
+901 PageLinkEnd  ""
+902 Text  "'s "
 903 QuotationStart  ""
-904 Text  "Dogs of Lust"
+904 Text  "Solitude"
 905 QuotationEnd  ""
-906 Text  ". Another world tour followed, the "
-907 MultiQuoteStart 2 ""
-908 Text  "Lonely Planet"
-909 MultiQuoteEnd  ""
-910 Text  " tour, at which point the band's line-up was reshuffled; Marr and Eller left, and were replaced by Atlanta-based guitarist "
-911 PageLinkStart Keith Joyner "Keith Joyner"
-912 PageLinkEnd  ""
-913 Text  " and New York bassist "
-914 PageLinkStart Jared Michael Nickerson "Jared Michael Nickerson"
-915 PageLinkEnd  ""
-916 Text  ", respectively after Johnson relocated the band to America. Also added was Boston harmonica player "
-917 PageLinkStart Jim Fitting "Jim Fitting"
-918 PageLinkEnd  ""
-919 Text  " (formerly of "
-920 PageLinkStart Treat Her Right "Treat Her Right"
-921 PageLinkEnd  ""
-922 Text  "), who auditioned in New York in early 1993. The version of their hit "
-923 QuotationStart  ""
-924 Text  "This Is The Day"
-925 QuotationEnd  ""
-926 Text  " featuring Jim Fitting was often dubbed "
-927 QuotationStart  ""
-928 MultiQuoteStart 2 ""
-929 Text  "That Was"
+906 Text  " as well as a new original song "
+907 QuotationStart  ""
+908 Text  "Jealous of Youth"
+909 QuotationEnd  ""
+910 Text  " and a live version of "
+911 QuotationStart  ""
+912 Text  "Another Boy Drowning"
+913 QuotationEnd  ""
+914 Text  " from "
+915 MultiQuoteStart 2 ""
+916 Text  "Burning Blue Soul"
+917 MultiQuoteEnd  ""
+918 Text  ". This and a later EP of remixes, 1993's "
+919 MultiQuoteStart 2 ""
+920 Text  "Dis-infected"
+921 MultiQuoteEnd  ""
+922 Text  ", were compiled into a 1994 full-length album for the North American market called "
+923 MultiQuoteStart 2 ""
+924 Text  "Solitude"
+925 MultiQuoteEnd  ""
+926 Text  ". "
+927 Break  ""
+928 Text  "In 1993, the five-piece line-up (Johnson/Marr/Collard/Eller/Palmer) Some Bizzare Label / Epic issued the album "
+929 MultiQuoteStart 2 ""
 930 MultiQuoteEnd  ""
-931 Text  " The Day"
-932 QuotationEnd  ""
-933 Text  ". Palmer bowed out partway through the tour and was replaced by ex "
-934 PageLinkStart Stabbing Westward "Stabbing Westward"
-935 PageLinkEnd  ""
-936 Text  " drummer "
-937 PageLinkStart Andy Kubiszewski "Andy Kubiszewski"
-938 PageLinkEnd  ""
-939 Text  ". The band headlined the main stage at the 1993 "
-940 PageLinkStart Reading Festival "Reading Festival"
-941 PageLinkEnd  ""
-942 Text  ". Another full-length film, directed by longtime collaborator "
-943 PageLinkStart Tim Pope "Tim Pope"
-944 PageLinkEnd  ""
-945 Text  ", was made for this album. "
-946 MultiQuoteStart 2 ""
-947 Text  "From Dusk Til Dawn"
-948 MultiQuoteEnd  ""
-949 Text  " was shot in New Orleans and New York, and along with Johnson and Johnny Marr also featured various characters from the New York underground scene such as sexologist "
-950 PageLinkStart Annie Sprinkle "Annie Sprinkle"
-951 PageLinkEnd  ""
-952 Text  ", writer and raconteur "
-953 PageLinkStart Quentin Crisp "Quentin Crisp"
-954 PageLinkEnd  ""
-955 Text  ", "
-956 PageLinkStart Guardian Angels "Guardian Angels"
-957 PageLinkEnd  ""
-958 Text  " founder "
-959 PageLinkStart Curtis Sliwa "Curtis Sliwa"
-960 PageLinkEnd  ""
-961 Text  ", and porn star Rick Savage amongst many other carnival characters. Now permanently relocated to New York, The The's next project was 1995's "
-962 MultiQuoteStart 2 ""
-963 MultiQuoteEnd  ""
-964 MultiQuoteStart 2 ""
-965 Text  ", an album that consisted entirely of "
-966 PageLinkStart Hank Williams "Hank Williams"
-967 PageLinkEnd  ""
-968 Text  " cover tunes. Hanky"
-969 MultiQuoteEnd  ""
-970 Text  " Panky"
-971 MultiQuoteStart 2 ""
-972 Text  " was recorded by a new group consisting of Johnson, Collard, Fitting, ex "
-973 PageLinkStart Iggy Pop "Iggy Pop"
-974 PageLinkEnd  ""
-975 Text  " guitarist "
-976 PageLinkStart Eric Schermerhorn "Eric Schermerhorn"
+931 MultiQuoteStart 2 ""
+932 Text  ", which debuted at No. 2 in the UK and spun off three Top 40 singles in the UK, led by "
+933 MultiQuoteEnd  ""
+934 QuotationStart  ""
+935 Text  "Dogs of Lust"
+936 QuotationEnd  ""
+937 Text  ". Another world tour followed, the "
+938 MultiQuoteStart 2 ""
+939 Text  "Lonely Planet"
+940 MultiQuoteEnd  ""
+941 Text  " tour, at which point the band's line-up was reshuffled; Marr and Eller left, and were replaced by Atlanta-based guitarist "
+942 PageLinkStart Keith Joyner "Keith Joyner"
+943 PageLinkEnd  ""
+944 Text  " and New York bassist "
+945 PageLinkStart Jared Michael Nickerson "Jared Michael Nickerson"
+946 PageLinkEnd  ""
+947 Text  ", respectively after Johnson relocated the band to America. Also added was Boston harmonica player "
+948 PageLinkStart Jim Fitting "Jim Fitting"
+949 PageLinkEnd  ""
+950 Text  " (formerly of "
+951 PageLinkStart Treat Her Right "Treat Her Right"
+952 PageLinkEnd  ""
+953 Text  "), who auditioned in New York in early 1993. The version of their hit "
+954 QuotationStart  ""
+955 Text  "This Is The Day"
+956 QuotationEnd  ""
+957 Text  " featuring Jim Fitting was often dubbed "
+958 QuotationStart  ""
+959 MultiQuoteStart 2 ""
+960 Text  "That Was"
+961 MultiQuoteEnd  ""
+962 Text  " The Day"
+963 QuotationEnd  ""
+964 Text  ". Palmer bowed out partway through the tour and was replaced by ex "
+965 PageLinkStart Stabbing Westward "Stabbing Westward"
+966 PageLinkEnd  ""
+967 Text  " drummer "
+968 PageLinkStart Andy Kubiszewski "Andy Kubiszewski"
+969 PageLinkEnd  ""
+970 Text  ". The band headlined the main stage at the 1993 "
+971 PageLinkStart Reading Festival "Reading Festival"
+972 PageLinkEnd  ""
+973 Text  ". "
+974 Break  ""
+975 Text  "Another full-length film, directed by longtime collaborator "
+976 PageLinkStart Tim Pope "Tim Pope"
 977 PageLinkEnd  ""
-978 Text  ", ex "
-979 PageLinkStart David Bowie "David Bowie"
-980 PageLinkEnd  ""
-981 Text  " bass guitarist "
-982 PageLinkStart Gail Ann Dorsey "Gail Ann Dorsey"
-983 PageLinkEnd  ""
-984 Text  " (billed as "
-985 MultiQuoteEnd  ""
-986 QuotationStart  ""
-987 Text  "Hollywood"
-988 QuotationEnd  ""
-989 Text  " Dorsey), and drummer the "
-990 QuotationStart  ""
-991 Text  "Reverend"
-992 QuotationEnd  ""
-993 Text  " "
-994 PageLinkStart Brian MacLeod (U.S. musician) ""
-995 Text  "Brian MacLeod"
-996 PageLinkEnd  ""
-997 Text  ". Their cover version of "
-998 QuotationStart  ""
-999 Text  "I Saw The Light"
-1000 QuotationEnd  ""
-1001 Text  " hit No. 31 UK.Released by Some Bizzare Label / Epic  An experimental album called "
-1002 MultiQuoteStart 2 ""
-1003 Text  "Gun Sluts"
+978 Text  ", was made for this album. "
+979 MultiQuoteStart 2 ""
+980 Text  "From Dusk Til Dawn"
+981 MultiQuoteEnd  ""
+982 Text  " was shot in New Orleans and New York, and along with Johnson and Johnny Marr also featured various characters from the New York underground scene such as sexologist "
+983 PageLinkStart Annie Sprinkle "Annie Sprinkle"
+984 PageLinkEnd  ""
+985 Text  ", writer and raconteur "
+986 PageLinkStart Quentin Crisp "Quentin Crisp"
+987 PageLinkEnd  ""
+988 Text  ", "
+989 PageLinkStart Guardian Angels "Guardian Angels"
+990 PageLinkEnd  ""
+991 Text  " founder "
+992 PageLinkStart Curtis Sliwa "Curtis Sliwa"
+993 PageLinkEnd  ""
+994 Text  ", and porn star Rick Savage amongst many other carnival characters. "
+995 Break  ""
+996 Text  "Now permanently relocated to New York, The The's next project was 1995's "
+997 MultiQuoteStart 2 ""
+998 MultiQuoteEnd  ""
+999 MultiQuoteStart 2 ""
+1000 Text  ", an album that consisted entirely of "
+1001 PageLinkStart Hank Williams "Hank Williams"
+1002 PageLinkEnd  ""
+1003 Text  " cover tunes. Hanky"
 1004 MultiQuoteEnd  ""
-1005 Text  " was recorded in 1997, but left unreleased by the band after it was rejected for being too uncommercial by their label. The The severed their eighteen-year relationship with Sony and moved to "
-1006 PageLinkStart Interscope Records ""
-1007 Text  "Interscope"
-1008 PageLinkEnd  ""
-1009 Text  ", on "
-1010 PageLinkStart Trent Reznor "Trent Reznor"
-1011 PageLinkEnd  ""
-1012 Text  "'s "
-1013 PageLinkStart Nothing Records "Nothing Records"
-1014 PageLinkEnd  ""
-1015 Text  " imprint. In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released "
-1016 MultiQuoteStart 2 ""
-1017 PageLinkStart NakedSelf "NakedSelf"
+1005 Text  " Panky"
+1006 MultiQuoteStart 2 ""
+1007 Text  " was recorded by a new group consisting of Johnson, Collard, Fitting, ex "
+1008 PageLinkStart Iggy Pop "Iggy Pop"
+1009 PageLinkEnd  ""
+1010 Text  " guitarist "
+1011 PageLinkStart Eric Schermerhorn "Eric Schermerhorn"
+1012 PageLinkEnd  ""
+1013 Text  ", ex "
+1014 PageLinkStart David Bowie "David Bowie"
+1015 PageLinkEnd  ""
+1016 Text  " bass guitarist "
+1017 PageLinkStart Gail Ann Dorsey "Gail Ann Dorsey"
 1018 PageLinkEnd  ""
-1019 MultiQuoteEnd  ""
-1020 Text  " and embarked on yet another lengthy world tour, the "
-1021 MultiQuoteStart 2 ""
-1022 Text  "Naked Tour"
-1023 MultiQuoteEnd  ""
-1024 Text  ", this one lasting 14 months. Not counting soundtrack albums, "
-1025 MultiQuoteStart 2 ""
-1026 PageLinkStart NakedSelf "NakedSelf"
-1027 PageLinkEnd  ""
-1028 MultiQuoteEnd  ""
-1029 Text  " remains The The's final released studio album to date. This same line-up also recorded two new tracks, "
-1030 QuotationStart  ""
-1031 Text  "Deep Down Truth"
-1032 QuotationEnd  ""
-1033 Text  ", featuring "
-1034 PageLinkStart Angela McCluskey "Angela McCluskey"
-1035 PageLinkEnd  ""
-1036 Text  " on vocals and "
-1037 QuotationStart  ""
-1038 Text  "Pillar Box Red"
-1039 QuotationEnd  ""
-1040 Text  ". Both songs were produced by "
-1041 PageLinkStart Clive Langer "Clive Langer"
-1042 PageLinkEnd  ""
-1043 Text  " and "
-1044 PageLinkStart Alan Winstanley "Alan Winstanley"
+1019 Text  " (billed as "
+1020 MultiQuoteEnd  ""
+1021 QuotationStart  ""
+1022 Text  "Hollywood"
+1023 QuotationEnd  ""
+1024 Text  " Dorsey), and drummer the "
+1025 QuotationStart  ""
+1026 Text  "Reverend"
+1027 QuotationEnd  ""
+1028 Text  " "
+1029 PageLinkStart Brian MacLeod (U.S. musician) ""
+1030 Text  "Brian MacLeod"
+1031 PageLinkEnd  ""
+1032 Text  ". Their cover version of "
+1033 QuotationStart  ""
+1034 Text  "I Saw The Light"
+1035 QuotationEnd  ""
+1036 Text  " hit No. 31 UK.Released by Some Bizzare Label / Epic  "
+1037 Break  ""
+1038 Text  "An experimental album called "
+1039 MultiQuoteStart 2 ""
+1040 Text  "Gun Sluts"
+1041 MultiQuoteEnd  ""
+1042 Text  " was recorded in 1997, but left unreleased by the band after it was rejected for being too uncommercial by their label. The The severed their eighteen-year relationship with Sony and moved to "
+1043 PageLinkStart Interscope Records ""
+1044 Text  "Interscope"
 1045 PageLinkEnd  ""
-1046 Text  " for the 2002 compilation album "
-1047 MultiQuoteStart 2 ""
-1048 MultiQuoteEnd  ""
-1049 MultiQuoteStart 2 ""
-1050 MultiQuoteEnd  ""
-1051 Break  ""
-1052 Text  "In June 2002 The The made a sole live appearance at the "
-1053 PageLinkStart Meltdown Festival "Meltdown Festival"
-1054 PageLinkEnd  ""
-1055 Text  " at London's Royal Festival Hall as guests of "
-1056 PageLinkStart David Bowie "David Bowie"
+1046 Text  ", on "
+1047 PageLinkStart Trent Reznor "Trent Reznor"
+1048 PageLinkEnd  ""
+1049 Text  "'s "
+1050 PageLinkStart Nothing Records "Nothing Records"
+1051 PageLinkEnd  ""
+1052 Text  " imprint. "
+1053 Break  ""
+1054 Text  "In 2000, The The, now consisting of Johnson, Schermerhorn, Nashville bassist Spencer Campbell and New Jersey drummer Earl Harvin, released "
+1055 MultiQuoteStart 2 ""
+1056 PageLinkStart NakedSelf "NakedSelf"
 1057 PageLinkEnd  ""
-1058 Text  ". At this point, the band consisted solely of Johnson and longtime friend and collaborator "
-1059 PageLinkStart J. G. Thirlwell "J. G. Thirlwell"
-1060 PageLinkEnd  ""
-1061 Text  " aka "
-1062 PageLinkStart Foetus (band) ""
-1063 Text  "Foetus"
-1064 PageLinkEnd  ""
-1065 Text  " on tapes and loops, and young film director "
-1066 PageLinkStart Benn Northover "Benn Northover"
-1067 PageLinkEnd  ""
-1068 Text  " on film and video. This was the last live performance by The The for sixteen years; Johnson had stated on the official The The web site in the FAQ section that "
-1069 QuotationStart  ""
-1070 Text  "There are no plans for one-off shows or tours in the near future but there will undoubtedly be another The The tour at some point."
-1071 QuotationEnd  ""
-1072 CitationLink cit10 ""
-1073 CitationStart cit10 ""
-1074 TableStart table5 ""
-1075 TableTitleStart  ""
-1076 Text  "cite web"
-1077 TableTitleEnd  ""
-1078 TableHeadStart  ""
-1079 TableCellReference id "C0"
-1080 Text  "url"
-1081 TableHeadEnd  ""
-1082 TableCellStart  ""
-1083 TableCellReference id "C0"
-1084 WebLinkStart http://www.thethe.com/forum/showthread.php?t=10 ""
-1085 WebLinkEnd  ""
-1086 TableCellEnd  ""
-1087 TableHeadStart  ""
-1088 TableCellReference id "C1"
-1089 Text  "title"
-1090 TableHeadEnd  ""
-1091 TableCellStart  ""
-1092 TableCellReference id "C1"
-1093 Text  "Thethe.com"
-1094 TableCellEnd  ""
-1095 TableHeadStart  ""
-1096 TableCellReference id "C2"
-1097 Text  "publisher"
-1098 TableHeadEnd  ""
-1099 TableCellStart  ""
-1100 TableCellReference id "C2"
-1101 Text  "Thethe.com"
-1102 TableCellEnd  ""
-1103 TableHeadStart  ""
-1104 TableCellReference id "C3"
-1105 Text  "accessdate"
-1106 TableHeadEnd  ""
-1107 TableCellStart  ""
-1108 TableCellReference id "C3"
-1109 Text  "2011-04-02"
-1110 TableCellEnd  ""
-1111 TableHeadStart  ""
-1112 TableCellReference id "C4"
-1113 Text  "deadurl"
-1114 TableHeadEnd  ""
-1115 TableCellStart  ""
-1116 TableCellReference id "C4"
-1117 Text  "yes"
-1118 TableCellEnd  ""
-1119 TableHeadStart  ""
-1120 TableCellReference id "C5"
-1121 Text  "archiveurl"
-1122 TableHeadEnd  ""
-1123 TableCellStart  ""
-1124 TableCellReference id "C5"
-1125 WebLinkStart https://web.archive.org/web/20110717043314/http://www.thethe.com/forum/showthread.php?t=10 ""
-1126 WebLinkEnd  ""
-1127 TableCellEnd  ""
-1128 TableHeadStart  ""
-1129 TableCellReference id "C6"
-1130 Text  "archivedate"
-1131 TableHeadEnd  ""
-1132 TableCellStart  ""
-1133 TableCellReference id "C6"
-1134 Text  "17 July 2011"
-1135 TableCellEnd  ""
-1136 TableEnd  ""
-1137 CitationEnd  ""
-1138 HeadingStart h2 ""
-1139 Text  "Hiatus (2003–2017)"
-1140 HeadingEnd  ""
-1141 Text  "Since 2003 the reclusive Johnson has kept well away from the public eye and has concentrated primarily on soundtrack work, scoring numerous documentaries, films and art installations. For Swedish filmmaker Johanna St Michaels this has included "
-1142 MultiQuoteStart 2 ""
-1143 Text  "Best Wishes Bernhard"
-1144 MultiQuoteEnd  ""
-1145 Text  " (prize winning film of Dokumentär Films Premien Nordic Panorama 2003), "
-1146 MultiQuoteStart 2 ""
-1147 Text  "Snapshots From Reality"
-1148 MultiQuoteEnd  ""
-1149 Text  " (Nominated for Best International Short at the "
-1150 PageLinkStart Birds Eye View "Birds Eye View"
-1151 PageLinkEnd  ""
-1152 Text  " Film festival at London's "
-1153 PageLinkStart Institute of Contemporary Arts ""
-1154 Text  "ICA"
-1155 PageLinkEnd  ""
-1156 Text  " 2007) "
-1157 MultiQuoteStart 2 ""
-1158 Text  "The Track"
-1159 MultiQuoteEnd  ""
-1160 Text  " (2007), "
-1161 MultiQuoteStart 2 ""
-1162 Text  "Going Live"
-1163 MultiQuoteEnd  ""
-1164 Text  " (2008), "
-1165 MultiQuoteStart 2 ""
-1166 Text  "The Island Amid the Worlds"
-1167 MultiQuoteEnd  ""
-1168 Text  " (2010) and "
-1169 MultiQuoteStart 2 ""
-1170 Text  "Bilder av Dina"
-1171 MultiQuoteEnd  ""
-1172 Text  " (2010). The latest collaboration between Johnson and St Michaels, "
-1173 MultiQuoteStart 2 ""
-1174 Text  "Penthouse North"
-1175 MultiQuoteEnd  ""
-1176 Text  " premiered at the "
-1177 PageLinkStart Hot Docs Canadian International Documentary Festival "Hot Docs Canadian International Documentary Festival"
-1178 PageLinkEnd  ""
-1179 Text  " in May 2014. In June 2009 it was announced that The The had created an original soundtrack to the "
-1180 MultiQuoteStart 2 ""
-1181 PageLinkStart Gerard Johnson (director) ""
-1182 Text  "Gerard Johnson"
-1183 PageLinkEnd  ""
-1184 MultiQuoteEnd  ""
-1185 Text  " debut feature film "
-1186 MultiQuoteStart 2 ""
-1187 PageLinkStart Tony (2009 film) ""
-1188 Text  "Tony"
-1189 PageLinkEnd  ""
-1190 MultiQuoteEnd  ""
-1191 Text  ". The film was released in February 2010 to critical acclaim; "
-1192 PageLinkStart Sight &amp; Sound "Sight &amp; Sound"
-1193 PageLinkEnd  ""
-1194 Text  " said “If Mike Leigh remade Henry: Portrait of a Serial Killer... Remarkable"
-1195 QuotationStart  ""
-1196 Text  ", "
-1197 PageLinkStart The Guardian "The Guardian"
-1198 PageLinkEnd  ""
-1199 Text  " "
-1200 QuotationEnd  ""
-1201 QuotationStart  ""
-1202 Text  "The perfect marriage of genre and style"
-1203 QuotationEnd  ""
-1204 Text  " and "
-1205 PageLinkStart The Independent "The Independent"
-1206 PageLinkEnd  ""
-1207 Text  " “Grim, painful and uncomfortably funny”. The "
-1208 PageLinkStart soundtrack "soundtrack"
-1209 PageLinkEnd  ""
-1210 Text  " was released on The The's Cineola imprint in March 2010, as volume one of several upcoming soundtrack and instrumental albums. In May 2014 The The completed an original soundtrack for "
-1211 PageLinkStart Gerard Johnson (director) ""
-1212 Text  "Gerard Johnson"
-1213 PageLinkEnd  ""
-1214 Text  "'s latest film, Hyena. Starring "
-1215 PageLinkStart Peter Ferdinando "Peter Ferdinando"
-1216 PageLinkEnd  ""
-1217 Text  ", "
-1218 PageLinkStart Stephen Graham (actor) ""
-1219 Text  "Stephen Graham"
-1220 PageLinkEnd  ""
-1221 Text  " and "
-1222 PageLinkStart Neil Maskell "Neil Maskell"
+1058 MultiQuoteEnd  ""
+1059 Text  " and embarked on yet another lengthy world tour, the "
+1060 MultiQuoteStart 2 ""
+1061 Text  "Naked Tour"
+1062 MultiQuoteEnd  ""
+1063 Text  ", this one lasting 14 months. Not counting soundtrack albums, "
+1064 MultiQuoteStart 2 ""
+1065 PageLinkStart NakedSelf "NakedSelf"
+1066 PageLinkEnd  ""
+1067 MultiQuoteEnd  ""
+1068 Text  " remains The The's final released studio album to date. "
+1069 Break  ""
+1070 Text  "This same line-up also recorded two new tracks, "
+1071 QuotationStart  ""
+1072 Text  "Deep Down Truth"
+1073 QuotationEnd  ""
+1074 Text  ", featuring "
+1075 PageLinkStart Angela McCluskey "Angela McCluskey"
+1076 PageLinkEnd  ""
+1077 Text  " on vocals and "
+1078 QuotationStart  ""
+1079 Text  "Pillar Box Red"
+1080 QuotationEnd  ""
+1081 Text  ". Both songs were produced by "
+1082 PageLinkStart Clive Langer "Clive Langer"
+1083 PageLinkEnd  ""
+1084 Text  " and "
+1085 PageLinkStart Alan Winstanley "Alan Winstanley"
+1086 PageLinkEnd  ""
+1087 Text  " for the 2002 compilation album "
+1088 MultiQuoteStart 2 ""
+1089 MultiQuoteEnd  ""
+1090 MultiQuoteStart 2 ""
+1091 MultiQuoteEnd  ""
+1092 Break  ""
+1093 Text  "In June 2002 The The made a sole live appearance at the "
+1094 PageLinkStart Meltdown Festival "Meltdown Festival"
+1095 PageLinkEnd  ""
+1096 Text  " at London's Royal Festival Hall as guests of "
+1097 PageLinkStart David Bowie "David Bowie"
+1098 PageLinkEnd  ""
+1099 Text  ". At this point, the band consisted solely of Johnson and longtime friend and collaborator "
+1100 PageLinkStart J. G. Thirlwell "J. G. Thirlwell"
+1101 PageLinkEnd  ""
+1102 Text  " aka "
+1103 PageLinkStart Foetus (band) ""
+1104 Text  "Foetus"
+1105 PageLinkEnd  ""
+1106 Text  " on tapes and loops, and young film director "
+1107 PageLinkStart Benn Northover "Benn Northover"
+1108 PageLinkEnd  ""
+1109 Text  " on film and video. "
+1110 Break  ""
+1111 Text  "This was the last live performance by The The for sixteen years; Johnson had stated on the official The The web site in the FAQ section that "
+1112 QuotationStart  ""
+1113 Text  "There are no plans for one-off shows or tours in the near future but there will undoubtedly be another The The tour at some point."
+1114 QuotationEnd  ""
+1115 CitationLink cit10 ""
+1116 CitationStart cit10 ""
+1117 TableStart table5 ""
+1118 TableTitleStart  ""
+1119 Text  "cite web"
+1120 TableTitleEnd  ""
+1121 TableHeadStart  ""
+1122 TableCellReference id "C0"
+1123 Text  "url"
+1124 TableHeadEnd  ""
+1125 TableCellStart  ""
+1126 TableCellReference id "C0"
+1127 WebLinkStart http://www.thethe.com/forum/showthread.php?t=10 ""
+1128 WebLinkEnd  ""
+1129 TableCellEnd  ""
+1130 TableHeadStart  ""
+1131 TableCellReference id "C1"
+1132 Text  "title"
+1133 TableHeadEnd  ""
+1134 TableCellStart  ""
+1135 TableCellReference id "C1"
+1136 Text  "Thethe.com"
+1137 TableCellEnd  ""
+1138 TableHeadStart  ""
+1139 TableCellReference id "C2"
+1140 Text  "publisher"
+1141 TableHeadEnd  ""
+1142 TableCellStart  ""
+1143 TableCellReference id "C2"
+1144 Text  "Thethe.com"
+1145 TableCellEnd  ""
+1146 TableHeadStart  ""
+1147 TableCellReference id "C3"
+1148 Text  "accessdate"
+1149 TableHeadEnd  ""
+1150 TableCellStart  ""
+1151 TableCellReference id "C3"
+1152 Text  "2011-04-02"
+1153 TableCellEnd  ""
+1154 TableHeadStart  ""
+1155 TableCellReference id "C4"
+1156 Text  "deadurl"
+1157 TableHeadEnd  ""
+1158 TableCellStart  ""
+1159 TableCellReference id "C4"
+1160 Text  "yes"
+1161 TableCellEnd  ""
+1162 TableHeadStart  ""
+1163 TableCellReference id "C5"
+1164 Text  "archiveurl"
+1165 TableHeadEnd  ""
+1166 TableCellStart  ""
+1167 TableCellReference id "C5"
+1168 WebLinkStart https://web.archive.org/web/20110717043314/http://www.thethe.com/forum/showthread.php?t=10 ""
+1169 WebLinkEnd  ""
+1170 TableCellEnd  ""
+1171 TableHeadStart  ""
+1172 TableCellReference id "C6"
+1173 Text  "archivedate"
+1174 TableHeadEnd  ""
+1175 TableCellStart  ""
+1176 TableCellReference id "C6"
+1177 Text  "17 July 2011"
+1178 TableCellEnd  ""
+1179 TableEnd  ""
+1180 CitationEnd  ""
+1181 HeadingStart h2 ""
+1182 Text  "Hiatus (2003–2017)"
+1183 HeadingEnd  ""
+1184 Text  "Since 2003 the reclusive Johnson has kept well away from the public eye and has concentrated primarily on soundtrack work, scoring numerous documentaries, films and art installations. "
+1185 Break  ""
+1186 Text  "For Swedish filmmaker Johanna St Michaels this has included "
+1187 MultiQuoteStart 2 ""
+1188 Text  "Best Wishes Bernhard"
+1189 MultiQuoteEnd  ""
+1190 Text  " (prize winning film of Dokumentär Films Premien Nordic Panorama 2003), "
+1191 MultiQuoteStart 2 ""
+1192 Text  "Snapshots From Reality"
+1193 MultiQuoteEnd  ""
+1194 Text  " (Nominated for Best International Short at the "
+1195 PageLinkStart Birds Eye View "Birds Eye View"
+1196 PageLinkEnd  ""
+1197 Text  " Film festival at London's "
+1198 PageLinkStart Institute of Contemporary Arts ""
+1199 Text  "ICA"
+1200 PageLinkEnd  ""
+1201 Text  " 2007) "
+1202 MultiQuoteStart 2 ""
+1203 Text  "The Track"
+1204 MultiQuoteEnd  ""
+1205 Text  " (2007), "
+1206 MultiQuoteStart 2 ""
+1207 Text  "Going Live"
+1208 MultiQuoteEnd  ""
+1209 Text  " (2008), "
+1210 MultiQuoteStart 2 ""
+1211 Text  "The Island Amid the Worlds"
+1212 MultiQuoteEnd  ""
+1213 Text  " (2010) and "
+1214 MultiQuoteStart 2 ""
+1215 Text  "Bilder av Dina"
+1216 MultiQuoteEnd  ""
+1217 Text  " (2010). The latest collaboration between Johnson and St Michaels, "
+1218 MultiQuoteStart 2 ""
+1219 Text  "Penthouse North"
+1220 MultiQuoteEnd  ""
+1221 Text  " premiered at the "
+1222 PageLinkStart Hot Docs Canadian International Documentary Festival "Hot Docs Canadian International Documentary Festival"
 1223 PageLinkEnd  ""
-1224 Text  ", this controversial crime thriller about people trafficking and corrupt elements within the UK police opens up 2014's "
-1225 PageLinkStart Edinburgh International Film Festival "Edinburgh International Film Festival"
-1226 PageLinkEnd  ""
-1227 Text  ". The album was released on 6 March 2015 as the third part in the Cinéola series. For English director "
-1228 PageLinkStart Nichola Bruce "Nichola Bruce"
-1229 PageLinkEnd  ""
-1230 Text  " it has included the documentary "
-1231 MultiQuoteStart 2 ""
-1232 Text  "One Man Show: Dramatic Art of Steven Berkoff"
-1233 MultiQuoteEnd  ""
-1234 Text  " (1995) and a documentary feature film about the "
-1235 PageLinkStart Apollo program ""
-1236 Text  "Apollo moon landings"
-1237 PageLinkEnd  ""
-1238 Text  ", "
-1239 MultiQuoteStart 2 ""
-1240 Text  "Moonbug"
-1241 MultiQuoteEnd  ""
-1242 Text  ","
-1243 CitationLink cit11 ""
-1244 Text  " which was completed in autumn 2010 and won the Special Jury Remi Award for Theatrical Feature Documentary at the 2011 Houston International Film Festival. The soundtrack was released in 2012 as volume 2 in the series of original soundtrack albums produced through Johnson's Cineola imprint. "
-1245 CitationStart cit11 ""
-1246 TableStart table6 ""
-1247 TableTitleStart  ""
-1248 Text  "cite web"
-1249 TableTitleEnd  ""
-1250 TableHeadStart  ""
-1251 TableCellReference id "C0"
-1252 Text  "url"
-1253 TableHeadEnd  ""
-1254 TableCellStart  ""
-1255 TableCellReference id "C0"
-1256 WebLinkStart http://nicholabruce.com/moonbug.html ""
-1257 WebLinkEnd  ""
-1258 TableCellEnd  ""
-1259 TableHeadStart  ""
-1260 TableCellReference id "C1"
-1261 Text  "title"
-1262 TableHeadEnd  ""
-1263 TableCellStart  ""
-1264 TableCellReference id "C1"
-1265 Text  "Nicholabruce.com"
-1266 TableCellEnd  ""
-1267 TableHeadStart  ""
-1268 TableCellReference id "C2"
-1269 Text  "publisher"
-1270 TableHeadEnd  ""
-1271 TableCellStart  ""
-1272 TableCellReference id "C2"
-1273 Text  "Nicholabruce.com"
-1274 TableCellEnd  ""
-1275 TableHeadStart  ""
-1276 TableCellReference id "C3"
-1277 Text  "accessdate"
-1278 TableHeadEnd  ""
-1279 TableCellStart  ""
-1280 TableCellReference id "C3"
-1281 Text  "2011-04-02"
-1282 TableCellEnd  ""
-1283 TableHeadStart  ""
-1284 TableCellReference id "C4"
-1285 Text  "deadurl"
-1286 TableHeadEnd  ""
-1287 TableCellStart  ""
-1288 TableCellReference id "C4"
-1289 Text  "yes"
-1290 TableCellEnd  ""
-1291 TableHeadStart  ""
-1292 TableCellReference id "C5"
-1293 Text  "archiveurl"
-1294 TableHeadEnd  ""
-1295 TableCellStart  ""
-1296 TableCellReference id "C5"
-1297 WebLinkStart https://web.archive.org/web/20100512163859/http://nicholabruce.com/moonbug.html ""
-1298 WebLinkEnd  ""
-1299 TableCellEnd  ""
-1300 TableHeadStart  ""
-1301 TableCellReference id "C6"
-1302 Text  "archivedate"
-1303 TableHeadEnd  ""
-1304 TableCellStart  ""
-1305 TableCellReference id "C6"
-1306 Text  "12 May 2010"
-1307 TableCellEnd  ""
-1308 TableEnd  ""
-1309 CitationEnd  ""
+1224 Text  " in May 2014. "
+1225 Break  ""
+1226 Text  "In June 2009 it was announced that The The had created an original soundtrack to the "
+1227 MultiQuoteStart 2 ""
+1228 PageLinkStart Gerard Johnson (director) ""
+1229 Text  "Gerard Johnson"
+1230 PageLinkEnd  ""
+1231 MultiQuoteEnd  ""
+1232 Text  " debut feature film "
+1233 MultiQuoteStart 2 ""
+1234 PageLinkStart Tony (2009 film) ""
+1235 Text  "Tony"
+1236 PageLinkEnd  ""
+1237 MultiQuoteEnd  ""
+1238 Text  ". The film was released in February 2010 to critical acclaim; "
+1239 PageLinkStart Sight &amp; Sound "Sight &amp; Sound"
+1240 PageLinkEnd  ""
+1241 Text  " said “If Mike Leigh remade Henry: Portrait of a Serial Killer... Remarkable"
+1242 QuotationStart  ""
+1243 Text  ", "
+1244 PageLinkStart The Guardian "The Guardian"
+1245 PageLinkEnd  ""
+1246 Text  " "
+1247 QuotationEnd  ""
+1248 QuotationStart  ""
+1249 Text  "The perfect marriage of genre and style"
+1250 QuotationEnd  ""
+1251 Text  " and "
+1252 PageLinkStart The Independent "The Independent"
+1253 PageLinkEnd  ""
+1254 Text  " “Grim, painful and uncomfortably funny”. The "
+1255 PageLinkStart soundtrack "soundtrack"
+1256 PageLinkEnd  ""
+1257 Text  " was released on The The's Cineola imprint in March 2010, as volume one of several upcoming soundtrack and instrumental albums. "
+1258 Break  ""
+1259 Text  "In May 2014 The The completed an original soundtrack for "
+1260 PageLinkStart Gerard Johnson (director) ""
+1261 Text  "Gerard Johnson"
+1262 PageLinkEnd  ""
+1263 Text  "'s latest film, Hyena. Starring "
+1264 PageLinkStart Peter Ferdinando "Peter Ferdinando"
+1265 PageLinkEnd  ""
+1266 Text  ", "
+1267 PageLinkStart Stephen Graham (actor) ""
+1268 Text  "Stephen Graham"
+1269 PageLinkEnd  ""
+1270 Text  " and "
+1271 PageLinkStart Neil Maskell "Neil Maskell"
+1272 PageLinkEnd  ""
+1273 Text  ", this controversial crime thriller about people trafficking and corrupt elements within the UK police opens up 2014's "
+1274 PageLinkStart Edinburgh International Film Festival "Edinburgh International Film Festival"
+1275 PageLinkEnd  ""
+1276 Text  ". The album was released on 6 March 2015 as the third part in the Cinéola series. "
+1277 Break  ""
+1278 Text  "For English director "
+1279 PageLinkStart Nichola Bruce "Nichola Bruce"
+1280 PageLinkEnd  ""
+1281 Text  " it has included the documentary "
+1282 MultiQuoteStart 2 ""
+1283 Text  "One Man Show: Dramatic Art of Steven Berkoff"
+1284 MultiQuoteEnd  ""
+1285 Text  " (1995) and a documentary feature film about the "
+1286 PageLinkStart Apollo program ""
+1287 Text  "Apollo moon landings"
+1288 PageLinkEnd  ""
+1289 Text  ", "
+1290 MultiQuoteStart 2 ""
+1291 Text  "Moonbug"
+1292 MultiQuoteEnd  ""
+1293 Text  ","
+1294 CitationLink cit11 ""
+1295 Text  " which was completed in autumn 2010 and won the Special Jury Remi Award for Theatrical Feature Documentary at the 2011 Houston International Film Festival. The soundtrack was released in 2012 as volume 2 in the series of original soundtrack albums produced through Johnson's Cineola imprint. "
+1296 Break  ""
+1297 CitationStart cit11 ""
+1298 TableStart table6 ""
+1299 TableTitleStart  ""
+1300 Text  "cite web"
+1301 TableTitleEnd  ""
+1302 TableHeadStart  ""
+1303 TableCellReference id "C0"
+1304 Text  "url"
+1305 TableHeadEnd  ""
+1306 TableCellStart  ""
+1307 TableCellReference id "C0"
+1308 WebLinkStart http://nicholabruce.com/moonbug.html ""
+1309 WebLinkEnd  ""
+1310 TableCellEnd  ""
+1311 TableHeadStart  ""
+1312 TableCellReference id "C1"
+1313 Text  "title"
+1314 TableHeadEnd  ""
+1315 TableCellStart  ""
+1316 TableCellReference id "C1"
+1317 Text  "Nicholabruce.com"
+1318 TableCellEnd  ""
+1319 TableHeadStart  ""
+1320 TableCellReference id "C2"
+1321 Text  "publisher"
+1322 TableHeadEnd  ""
+1323 TableCellStart  ""
+1324 TableCellReference id "C2"
+1325 Text  "Nicholabruce.com"
+1326 TableCellEnd  ""
+1327 TableHeadStart  ""
+1328 TableCellReference id "C3"
+1329 Text  "accessdate"
+1330 TableHeadEnd  ""
+1331 TableCellStart  ""
+1332 TableCellReference id "C3"
+1333 Text  "2011-04-02"
+1334 TableCellEnd  ""
+1335 TableHeadStart  ""
+1336 TableCellReference id "C4"
+1337 Text  "deadurl"
+1338 TableHeadEnd  ""
+1339 TableCellStart  ""
+1340 TableCellReference id "C4"
+1341 Text  "yes"
+1342 TableCellEnd  ""
+1343 TableHeadStart  ""
+1344 TableCellReference id "C5"
+1345 Text  "archiveurl"
+1346 TableHeadEnd  ""
+1347 TableCellStart  ""
+1348 TableCellReference id "C5"
+1349 WebLinkStart https://web.archive.org/web/20100512163859/http://nicholabruce.com/moonbug.html ""
+1350 WebLinkEnd  ""
+1351 TableCellEnd  ""
+1352 TableHeadStart  ""
+1353 TableCellReference id "C6"
+1354 Text  "archivedate"
+1355 TableHeadEnd  ""
+1356 TableCellStart  ""
+1357 TableCellReference id "C6"
+1358 Text  "12 May 2010"
+1359 TableCellEnd  ""
+1360 TableEnd  ""
+1361 CitationEnd  ""
 
 
 ## 0000/The_The.org

@@ -1664,7 +1664,7 @@ WikimediaLexem WikimediaLexer::next()
 			if (m_si+1 < m_se && m_si[1] == '\n')
 			{
 				m_si += 1;
-				return WikimediaLexem( WikimediaLexem::Break, 0, "\n");
+				return WikimediaLexem( WikimediaLexem::TextBreak, 0, "\n");
 			}
 			while (m_si < m_se && isSpace(*m_si)) ++m_si;
 			if (m_si == m_se)
@@ -1736,6 +1736,12 @@ WikimediaLexem WikimediaLexer::next()
 					std::string name = tryParseIdentifier( '=');
 					return WikimediaLexem( WikimediaLexem::TableColDelim, 0, name, attributes);
 				}
+			}
+			else if (m_si+2 < m_se && m_si[0] == (char)0xE2 && m_si[1] == (char)0x80 && m_si[2] >= (char)0xA2 && m_si[2] <= (char)0xA7)
+			{
+				// "•" and friends
+				m_si += 3;
+				return WikimediaLexem( WikimediaLexem::ListItem, 1, "");
 			}
 			else if (*m_si == '*')
 			{

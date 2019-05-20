@@ -82,6 +82,7 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 	strus::WikimediaLexer lexer(src,size);
 	int lexemidx = 0;
 	int lastHeading = 1;
+	bool pendingTextBreak = false;
 	bool verboseOutput = (g_verbosity >= 2);
 
 	for (strus::WikimediaLexem lexem = lexer.next(); lexem.id != strus::WikimediaLexem::EoF; lexem = lexer.next(),++lexemidx)
@@ -94,13 +95,14 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 			std::cout << std::endl;
 		}
 		switch (lexem.id)
-		{			
+		{
 			case strus::WikimediaLexem::EoF:
 				break;
 			case strus::WikimediaLexem::Error:
 				doc.addError( std::string("syntax error in document: ") + strus::outputLineString( lexem.value.c_str()));
 				break;
 			case strus::WikimediaLexem::Text:
+				if (pendingTextBreak) doc.addTextBreak();
 				doc.addText( lexem.value);
 				break;
 			case strus::WikimediaLexem::String:
@@ -446,10 +448,17 @@ static void parseDocumentText( strus::DocumentStructure& doc, const char* src, s
 				{
 					doc.addError( "unexpected token '||'");
 				}
+				break;
 			}
+			case strus::WikimediaLexem::TextBreak:
+				// ... text break only splits text.
+				pendingTextBreak = true;
+				continue;
 			case strus::WikimediaLexem::Break:
 				doc.addBreak();
+				break;
 		}
+		pendingTextBreak = false;
 		if (doc.hasNewErrors())
 		{
 			doc.setErrorsSourceInfo( lexer.currentSourceExtract( 60));

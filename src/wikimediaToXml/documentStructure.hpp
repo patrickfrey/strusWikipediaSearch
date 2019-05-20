@@ -408,6 +408,14 @@ public:
 	{
 		addSingleItem( Paragraph::BibRef, "", text, false/*joinText*/);
 	}
+	void addTextBreak()
+	{
+		if (isParagraphType( Paragraph::Text))
+		{
+			addText( "\n");
+			addSingleItem( Paragraph::Break, "", "", false/*joinText*/);
+		}
+	}
 	void addBreak()
 	{
 		if (isParagraphType( Paragraph::Break)
