@@ -16,24 +16,26 @@ call()
 	if [ $? -ne 0 ]; then
 		exit 1;
 	fi
-	cd -
+	cd - > /dev/null
 }
 
 getFeatures()
 {
 	for line in `cat $1`; do
-		DIR=`echo $line | perl -pe 's@/data/wikipedia/nlpxml/([0-9]*).*@$1@'`
-		DOCID=`echo $line | perl -pe 's@/data/wikipedia/nlpxml/[0-9]*/(.*).xml$@$1@'`
-		SRV=`expr $DIR % 4`
-		if [ "x$SRV" = "x0" ]; then
-			PORT=`expr $SRV + 7184`
-			call ./getStorageDocumentFeatures.pl "http://127.0.0.1:$PORT/storage/istorage" "$DOCID" word
+		if [ "x$line" != "x" ]; then
+			DIR=`echo $line | perl -pe 's@/data/wikipedia/nlpxml/([0-9]*).*@$1@'`
+			DOCID=`echo $line | perl -pe 's@/data/wikipedia/nlpxml/[0-9]*/(.*).xml$@$1@'`
+			SRV=`expr $DIR % 4`
+			if [ "x$SRV" = "x0" ]; then
+				PORT=`expr $SRV + 7184`
+				call ./getStorageDocumentFeatures.pl "http://127.0.0.1:$PORT/storage/istorage" "$DOCID" word
+			fi
 		fi
 	done
 }
 
-mkdir -p doc
-getFeatures $1 | sort | uniq > doc/features.txt
-# call ./getStorageDocumentFeatures.pl "$VSERVER1/vstorage/vstorage" doc/features.txt
+mkdir -p build/doc
+getFeatures $1 | sort | uniq > build/doc/features.txt
+# call ./getStorageDocumentFeatures.pl "$VSERVER1/vstorage/vstorage" build/doc/features.txt
 
 
