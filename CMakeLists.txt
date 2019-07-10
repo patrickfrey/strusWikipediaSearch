@@ -42,6 +42,10 @@ MESSAGE( STATUS  "Strus module path: ${STRUS_MODULE_PATH}" )
 set( STRUS_GETTEXT_PACKAGE "strus-dom" )	#... 1st parameter of bindtextdomain(...)
 set( STRUS_GETTEXT_LOCALEDIR "" )			#... 2nd parameter of bindtextdomain(...)
 
+set( STRUS_SERVER_PORT 7183 )
+set( STRUS_SERVER_ID  "stat1" )
+configure_file( "${PROJECT_SOURCE_DIR}/config/config.js.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/config_${STRUS_SERVER_ID}.js"  @ONLY )
+
 set( STRUS_SERVER_PORT 7184 )
 set( STRUS_SERVER_ID  "isrv1" )
 configure_file( "${PROJECT_SOURCE_DIR}/config/config.js.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/config_${STRUS_SERVER_ID}.js"  @ONLY )
@@ -54,10 +58,12 @@ configure_file( "${PROJECT_SOURCE_DIR}/config/config.js.in"  "${CMAKE_CURRENT_BI
 set( STRUS_SERVER_PORT 7187 )
 set( STRUS_SERVER_ID  "isrv4" )
 configure_file( "${PROJECT_SOURCE_DIR}/config/config.js.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/config_${STRUS_SERVER_ID}.js"  @ONLY )
+
 set( STRUS_SERVER_PORT 7191 )
 set( STRUS_SERVER_ID  "vsrv1" )
 configure_file( "${PROJECT_SOURCE_DIR}/config/config.js.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/config_${STRUS_SERVER_ID}.js"  @ONLY )
 
+configure_file( "${PROJECT_SOURCE_DIR}/config/statserver.json.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/statserver.json"  @ONLY )
 set( STRUS_STORAGE_ID 1 )
 configure_file( "${PROJECT_SOURCE_DIR}/config/istorage.json.in"  "${CMAKE_CURRENT_BINARY_DIR}/config/istorage${STRUS_STORAGE_ID}.json"  @ONLY )
 set( STRUS_STORAGE_ID 2 )
