@@ -25,6 +25,7 @@ curl -d "@build/config/istorage4.json" -i -H "Accept: text/plain" -H "Content-Ty
 
 echo "--- Link vector storage ---"
 curl -d "@build/config/vstorage.json" -i -H "Accept: text/plain" -H "Content-Type: application/json; charset=UTF-8" -X PUT "$VSERVER1/vstorage/vstorage"
+
 echo "--- Define query analyzer ---"
 curl -d "@build/config/qryanalyzer.json" -i -H "Accept: text/plain" -H "Content-Type: application/json; charset=UTF-8" -X PUT "$VSERVER1/qryanalyzer/qryanalyzer"
 
