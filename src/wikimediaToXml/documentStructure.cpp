@@ -1456,7 +1456,8 @@ static bool isLastItemJoinableText( const std::vector<Paragraph>& parar, Paragra
 {
 	return (parar.size() >= 2
 	&& parar[ parar.size()-1].type() == endtype
-	&& (parar[ parar.size()-2].type() == Paragraph::Text || parar[ parar.size()-2].type() == starttype));
+	&& (parar[ parar.size()-2].type() == Paragraph::Text || parar[ parar.size()-2].type() == starttype))
+	&& !parar[ parar.size()-2].text().empty();
 }
 
 void DocumentStructure::addSingleItem( Paragraph::Type type, const std::string& id, const std::string& text, bool joinText)
@@ -1792,7 +1793,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::HeadingStart:
 				stk.push_back( Paragraph::StructHeading);
-				printTagOpenA( output, rt, "heading", "lv", pi->id(), pi->text());
+				printTagOpenA( output, rt, "heading", "lv", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::HeadingEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1800,7 +1801,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::ListItemStart:
 				stk.push_back( Paragraph::StructList);
-				printTagOpenA( output, rt, "list", "lv", pi->id(), pi->text());
+				printTagOpenA( output, rt, "list", "lv", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::ListItemEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1883,11 +1884,11 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				if (cc) prefix.append( pi->id().c_str(), cc - pi->id().c_str());
 				if (strus::caseInsensitiveEquals( prefix, "file"))
 				{
-					printTagOpen( output, rt, "filelink", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), pi->text());
+					printTagOpen( output, rt, "filelink", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), string_conv::trim( pi->text()));
 				}
 				else if (strus::caseInsensitiveEquals( prefix, "image"))
 				{
-					printTagOpen( output, rt, "imglink", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), pi->text());
+					printTagOpen( output, rt, "imglink", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), string_conv::trim( pi->text()));
 				}
 				else if (strus::caseInsensitiveEquals( prefix, "category"))
 				{
@@ -1897,12 +1898,12 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 					}
 					else
 					{
-						printTagOpen( output, rt, "category", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), pi->text());
+						printTagOpen( output, rt, "category", strus::string_conv::trim( pi->id().c_str() + prefix.size() + 1), string_conv::trim( pi->text()));
 					}
 				}
 				else
 				{
-					printTagOpen( output, rt, "pagelink", pi->id(), pi->text());
+					printTagOpen( output, rt, "pagelink", pi->id(), string_conv::trim( pi->text()));
 				}
 				break;
 			}
@@ -1912,7 +1913,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::WebLinkStart:
 				stk.push_back( Paragraph::StructWebLink);
-				printTagOpen( output, rt, "weblink", pi->id(), pi->text());
+				printTagOpen( output, rt, "weblink", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::WebLinkEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1920,7 +1921,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::TableStart:
 				stk.push_back( Paragraph::StructTable);
-				printTagOpen( output, rt, "table", pi->id(), pi->text());
+				printTagOpen( output, rt, "table", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::TableEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1928,7 +1929,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				break;
 			case Paragraph::TableTitleStart:
 				stk.push_back( Paragraph::StructTableTitle);
-				printTagOpen( output, rt, "tabtitle", pi->id(), pi->text());
+				printTagOpen( output, rt, "tabtitle", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::TableTitleEnd:
 				stack_pop_back( stk, pi->typeName());
@@ -1953,7 +1954,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 			case Paragraph::TableCellReference:
 				if (output.isInTagDeclaration() && singleIdAttribute)
 				{
-					std::string attrtext = pi->text();
+					std::string attrtext = string_conv::trim( pi->text());
 					std::string attrid = pi->id();
 					for (++pi,++pidx; pi->type() == Paragraph::TableCellReference && attrid == pi->id(); ++pi,++pidx)
 					{
@@ -1967,18 +1968,21 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				else
 				{
 					output.printAttribute( pi->id(), rt);
-					output.printValue( pi->text(), rt);
+					output.printValue( string_conv::trim( pi->text()), rt);
 				}
 				break;
 			case Paragraph::WebLink:
-				printTagOpen( output, rt, "weblink", pi->id(), pi->text());
+				printTagOpen( output, rt, "weblink", pi->id(), string_conv::trim( pi->text()));
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::Markup:
-				printTagContent( output, rt, "mark", pi->id(), pi->text());
+				printTagContent( output, rt, "mark", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::Text:
-				printTagContent( output, rt, "text", pi->id(), pi->text());
+				if (!pi->id().empty() || !isSpaceOnlyText( pi->text()))
+				{
+					printTagContent( output, rt, "text", pi->id(), string_conv::trim( pi->text()));
+				}
 				break;
 			case Paragraph::Break:
 				printTagContent( output, rt, "br", "", "");
@@ -2002,13 +2006,13 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				printTagContent( output, rt, "time", pi->id(), pi->text());
 				break;
 			case Paragraph::CitationLink:
-				printTagContent( output, rt, "citlink", pi->id(), pi->text());
+				printTagContent( output, rt, "citlink", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::RefLink:
-				printTagContent( output, rt, "reflink", pi->id(), pi->text());
+				printTagContent( output, rt, "reflink", pi->id(), string_conv::trim( pi->text()));
 				break;
 			case Paragraph::TableLink:
-				printTagContent( output, rt, "tablink", pi->id(), pi->text());
+				printTagContent( output, rt, "tablink", pi->id(), string_conv::trim( pi->text()));
 				break;
 		}
 	}

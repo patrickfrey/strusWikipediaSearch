@@ -73,8 +73,8 @@
 	orig = orig content //time();
 
 [SearchIndex]
-	word = lc:entityid regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
-	word = lc:entityid regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
+	word = lc:entityid regex("^[a-z]{3,5}[:][/][/]([^ ?/]{1,32})") //weblink@id;
+	word = lc:entityid regex("^([a-z\.]{6,24}[^ ?/]{1,20})") //weblink@id;
 	word = lc:entityid content //bibref();
 	categoryid = lc content //category@cid;
 	headid = lc content //title@id;

@@ -51,6 +51,11 @@ static bool isSpace( char ch)
 	return ((unsigned char)ch <= 32);
 }
 
+static bool isUrlPathChar( char ch)
+{
+	return (isIdentifierChar( ch, true/*withDash*/) || ch == '/' || ch == '%' || ch == '#' || ch == '?' || ch == '+' || ch == '&' || ch == '=' || ch == '.' || ch == ';' || ch == ',');
+}
+
 static bool isEqual( const char* id, const char* src, std::size_t size)
 {
 	std::size_t ii=0;
@@ -522,7 +527,7 @@ std::string WikimediaLexer::tryParseLinkId()
 std::string WikimediaLexer::tryParseURLPath()
 {
 	char const* ti = m_si;
-	while (ti < m_se && !isSpace(*ti) && !isTokenDelimiter(*ti)) ++ti;
+	while (ti < m_se && !isSpace(*ti) && !isTokenDelimiter(*ti) && *ti != ';' && *ti != ',') ++ti;
 	std::string linkid( m_si, ti-m_si);
 	m_si = ti;
 	if (m_si < m_se && isSpace(*m_si))
@@ -538,6 +543,80 @@ static bool isUrlCandidate( char const* si, const char* se)
 	int pcnt = 0;
 	for (; pcnt < 6 && si < se && isAlpha(*si); ++si, ++pcnt){}
 	return (si+3 < se && si[0] == ':' && si[1] == '/' && si[2] == '/');
+}
+
+std::string WikimediaLexer::tryParsePlainURL()
+{
+	bool hasProtocolPrefix = false;
+	int prtlen = 0;
+	char const* start = m_si;
+	char const* ti = m_si;
+	while (ti < m_se && isSpace(*ti)) ++ti;
+	char const* pi = ti;
+	while (pi < m_se && isAlpha(*pi)) {++pi;++prtlen;}
+	if (0==std::memcmp( pi, "://", 3))
+	{
+		ti = pi + 3;
+		hasProtocolPrefix = true;
+		if (prtlen < 3) return std::string();
+	}
+	int hostnamlen = 0;
+	while (ti < m_se && isAlpha(*ti))
+	{
+		++ti;
+		++hostnamlen;
+	}
+	if (ti == m_se || hostnamlen == 0 || *ti != '.') return std::string();
+	++ti;
+	int domnamlen = 0;
+	while (ti < m_se && isAlpha(*ti))
+	{
+		++ti;
+		++domnamlen;
+	}
+	if (domnamlen == 0) return std::string();
+	if (ti == m_se)
+	{
+		if (hasProtocolPrefix) {m_si=ti; return std::string( start, ti-start);}
+		return std::string();
+	}
+	int sufnamlen = 0;
+	while (*ti == '.')
+	{
+		int sn = 0;
+		++ti;
+		while (ti < m_se && isAlpha(*ti))
+		{
+			++ti;
+			++sn;
+		}
+		sufnamlen += sn;
+		if (sufnamlen > 8) return std::string();
+		if (sn == 0)
+		{
+			--ti;
+			break;
+		}
+	}
+	int pathlen = 0;
+	if (ti < m_se && (*ti == '/' || *ti == '?'))
+	{
+		while (ti < m_se && isUrlPathChar(*ti))
+		{
+			++ti;
+			++pathlen;
+		}
+	}
+	if (ti == m_se || isSpace( *ti) || isTokenDelimiter(*ti) || *ti == '.')
+	{
+		if (hasProtocolPrefix) {m_si=ti; return std::string( start, ti-start);}
+		if (hostnamlen > 0 && domnamlen > 1)
+		{
+			if (sufnamlen > 1 && (hostnamlen + domnamlen + sufnamlen) > 7) {m_si=ti; return std::string( start, ti-start);}
+			if (pathlen > 7) {m_si=ti; return std::string( start, ti-start);}
+		}
+	}
+	return std::string();
 }
 
 std::string WikimediaLexer::tryParseURL()
@@ -1996,6 +2075,30 @@ WikimediaLexem WikimediaLexer::next()
 		}
 		else
 		{
+			if (isAlpha( *m_si))
+			{
+				if (0==std::memcmp( m_si, "atmos.washington.edu", 20))
+				{
+					std::cerr << "HALLY GALLY" << std::endl;
+				}
+				if (start == m_si)
+				{
+					std::string url = tryParsePlainURL();
+					if (!url.empty())
+					{
+						return WikimediaLexem( WikimediaLexem::Url, 0, url);
+					}
+				}
+				else if (!isUrlPathChar(*(m_si-1)) && (unsigned char)*(m_si-1) < 127)
+				{
+					char const* si = m_si;
+					if (!tryParsePlainURL().empty())
+					{
+						m_si = si;
+						return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, si - start));
+					}
+				}
+			}
 			++m_si;
 		}
 	}
