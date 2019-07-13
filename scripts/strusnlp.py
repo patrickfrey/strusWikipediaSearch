@@ -520,6 +520,16 @@ def listIsTitle( tokens):
         return False
     return True
 
+regex_checkCardinal = re.compile('^[0-9]+(th|nd|st|)$')
+regex_checkContainsNumber = re.compile('^.*[0-9].*$')
+
+def mapWordClassByRegex( value, nlptag):
+    if regex_checkCardinal.match( value):
+        return "CD"
+    if nlptag[0] in ["V","M","T","A","P","W","D"] and regex_checkContainsNumber.match( value):
+        return ""
+    return nlptag
+
 def outvoteTagging( tokens):
     tidx = 0
     while tidx+2 < len(tokens):
@@ -534,6 +544,7 @@ def outvoteTagging( tokens):
                     tokens[tidx].nlptag = "NN"
                 else:
                     tokens[tidx].nlptag = "NNP"
+        tokens[tidx].nlptag = mapWordClassByRegex( tokens[tidx].value, tokens[tidx].nlptag)
         tidx += 1
 
 def getSentence( tokens):

@@ -37,6 +37,5 @@ getFeatures()
 
 mkdir -p build/doc/xml
 getFeatures $1 | sort | uniq > build/doc/features.txt
-# call ./getStorageDocumentFeatures.pl "$VSERVER1/vstorage/vstorage" build/doc/features.txt
-
+call ./getFeatureVectors.pl "$VSERVER1/vstorage/vstorage" @`pwd`/build/doc/features.txt
 

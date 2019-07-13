@@ -160,7 +160,7 @@ dumpVectorInput() {
 }
 
 calcWord2vec() {
-    word2vec -size 256 -window 8 -sample 1e-5 -negative 16 -threads 12 -type-prefix-delim '#' -type-min-count 'H=1,V=50,E=3,N=10,A=50,C=100,X=50,M=50,U=2,R=50,W=50,T=50' -min-count 5 -alpha 0.025 -classes 0 -debug 2 -binary 1 -portable 1 -save-vocab $DATAPATH/vocab.txt -cbow 0 -train $DATAPATH/vec.txt -output $DATAPATH/vec.bin
+    word2vec -size 256 -window 8 -sample 1e-5 -negative 16 -threads 12 -type-prefix-delim '#' -type-min-count 'H=1,V=100,E=3,N=20,A=100,C=100,X=100,M=100,U=2,R=100,W=100,T=100' -min-count 5 -alpha 0.025 -classes 0 -debug 2 -binary 1 -portable 1 -save-vocab $DATAPATH/vocab.txt -cbow 0 -train $DATAPATH/vec.txt -output $DATAPATH/vec.bin
 }
 
 insertVectors() {
