@@ -2073,6 +2073,44 @@ WikimediaLexem WikimediaLexer::next()
 				++m_si;
 			}
 		}
+		else if (m_si+3 < m_se && m_si[0] == 0xe2 && m_si[1] == 0x80)
+		{
+			if (start != m_si)
+			{
+				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+			}
+			else
+			{
+				unsigned char lch = m_si[2];
+				m_si += 3;
+				if (lch >= 0x90 && lch <= 0x95)
+				{
+					//... character is a sort of dash '-'
+					return WikimediaLexem( WikimediaLexem::Text, 0, "-");
+				}
+				else if ((lch >= 0x98 && lch <= 0x9b) || lch == 0xb2 || lch == 0xb5)
+				{
+					//... character is a sort of single quote '\''
+					return WikimediaLexem( WikimediaLexem::Text, 0, "\'");
+				}
+				else if ((lch >= 0x9c && lch <= 0x9f) || (lch >= 0xb3 && lch <= 0xb7))
+				{
+					//... character is a sort of double quote '"'
+					m_si += 3;
+					return WikimediaLexem( WikimediaLexem::Text, 0, "\"");
+				}
+				else if (lch >= 0x80 && lch <= 0x8f)
+				{
+					//... character is a sort of space ' '
+					m_si += 3;
+					return WikimediaLexem( WikimediaLexem::Text, 0, " ");
+				}
+				else
+				{
+					return WikimediaLexem( WikimediaLexem::Text, 0, std::string( m_si-3, 3));
+				}
+			}
+		}
 		else
 		{
 			if (isAlpha( *m_si))
