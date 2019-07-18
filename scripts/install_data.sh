@@ -156,7 +156,7 @@ dumpVectorInput() {
     DID=$1
     CFG=$PROJECTPATH/config/word2vecInput.ana
     FILTER=$SCRIPTPATH/filtervectok.py
-    strusAnalyze --dump "eod='\n. . . . . . . .\n',punct=' , ',eos=' .\n',refid,word" --unique -C XML -m normalizer_entityid $CFG $DATAPATH/nlpxml/$DID/ | $FILTER >> $DATAPATH/vec.txt
+    strusAnalyze --dump "eod='\n. . . . . . . .\n',punct=' , ',eos=' .\n',refid,word" --unique -C XML $CFG $DATAPATH/nlpxml/$DID/ | $FILTER >> $DATAPATH/vec.txt
 }
 
 calcWord2vec() {
@@ -236,7 +236,7 @@ insertDocuments() {
         cd $DATAPATH/nlpxml
         if [ "_$PATHLIST" != "_" ]; then
             echo "inserting documents of $PATHLIST ..."
-            strusInsert -s "path=$STORAGEPATH/$STORAGEID" -x xml -C XML -m normalizer_entityid -t 3 -c 5000 $CFG $PATHLIST 
+            strusInsert -s "path=$STORAGEPATH/$STORAGEID" -x xml -C XML -t 3 -c 5000 $CFG $PATHLIST 
         fi
         LASTJOB=$PATHLIST
         cd -

@@ -2,4 +2,3 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR )
 
 add_subdirectory( storage )
 add_subdirectory( wikimediaToXml )
-add_subdirectory( modules )
