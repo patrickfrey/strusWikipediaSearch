@@ -15,8 +15,8 @@
 #	-W determiner
 #
 [ForwardIndex]
-	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?]*)") //weblink@id;
-	url = lc regex("^([a-z]{1,32}[.][^ ?]*)") //weblink@id;
+	url = lc regex("^[a-z]{3,6}[:][/][/]([^ ?/]*)") //weblink@id;
+	url = lc regex("^([a-z]{1,32}[.][^ ?/]*)") //weblink@id;
 	pageref = orig content //pagelink@id;
 	bibref = orig content //bibref();
 	time = orig content //time();
@@ -85,7 +85,7 @@
 	entity = lc:entityid content {position=succ} //N@id;
 	entity = lc:entityid content {position=succ} //E@id;
 	entity = lc:entityid content {position=succ} //R@id;
-	entity = lc:entityid content //E();
+	entity = lc:entityid content {position=succ} //E();
 
 	word = empty content //T;
 	word = empty content //P;
