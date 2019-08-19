@@ -1,20 +1,4 @@
 #!/bin/sh
-# Prerequisites:
-#	Strus projects installed:
-#		strusBase
-#		strus strusAnalyzer
-#		strusTrace strusModule strusRpc
-#		strusPattern strusVector
-#		strusUtilities strusBindings
-#		strusWebService strusWikipediaSearch
-#	SyntaxNet:
-#		cuda 9.0 (https://yangcha.github.io/CUDA90)
-#	Tensorflow (for SyntaxNet):
-#		https://github.com/tensorflow/tensorflow
-#	Bazel (for Tensorflow):
-#		https://docs.bazel.build/versions/master/install-ubuntu.html
-#	Python:
-#		numpy
 
 export PYTHONHASHSEED=123
 export SCRIPT=$(readlink -f "$0")
