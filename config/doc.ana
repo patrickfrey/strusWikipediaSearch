@@ -79,6 +79,7 @@
 	categoryid = lc content //category@cid;
 	headid = lc content //title@id;
 	headid = lc content //heading@id;
+	cithead= empty content //citlink@id;
 
 	title = lc word /doc/title();
 
@@ -117,6 +118,40 @@
 	word = lc word //math();
 	word = lc word //char();
 	word = lc word //code();
+
+[Field]
+	tabtitle= //table /tabtitle;
+	table   = //table /;
+	tabhead = //table /head /head@id;
+	tabcell = //table /cell /cell@id;
+	title   = /doc /title;
+	body    = /doc /;
+	start_h1= /doc /heading[@lv="h1"];
+	end_h1  = /doc /heading[@lv="h1"];
+	start_h2= /doc /heading[@lv="h2"];
+	end_h2  = /doc /heading[@lv="h2"];
+	end_h2  = /doc /heading[@lv="h1"];
+	start_h3= /doc /heading[@lv="h3"];
+	end_h3  = /doc /heading[@lv="h3"];
+	end_h3  = /doc /heading[@lv="h2"];
+	end_h3  = /doc /heading[@lv="h1"];
+	start_h4= /doc /heading[@lv="h4"];
+	end_h4  = /doc /heading[@lv="h4"];
+	end_h4  = /doc /heading[@lv="h3"];
+	end_h4  = /doc /heading[@lv="h2"];
+	end_h4  = /doc /heading[@lv="h1"];
+	cithead = /doc //citlink //citlink@id;
+	citbody = /doc //citation //citation@id;
+
+[Structure]
+	table   = tabtitle table label;
+	tabrel  = tabhead tabcell associative;
+	doc     = title body label;
+	section = title start_h1 span;
+	section = start_h1 end_h1 span;
+	section = start_h2 end_h2 span;
+	section = start_h3 end_h3 span;
+	section = start_h4 end_h4 span;
 
 [Attribute]
 	title = orig content /doc/title();
