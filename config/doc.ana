@@ -26,8 +26,8 @@
 	entityref = orig content {position=succ} //E@id;
 	entityref = orig content {position=succ} //R@id;
 
-	wordtype = const("T") content //T();
-	wordtype = const("P") content //P();
+	wordtype = const("T") content //T;
+	wordtype = const("P") content //P;
 	wordtype = const("C") content //C();
 	wordtype = const("X") content //X();
 	wordtype = const("A") content //A();
@@ -53,17 +53,16 @@
 	headid = lc content {position=succ} //heading@id;
 	cithead= empty content //citlink@id;
 
-	punct = empty content //T();
+	sent = empty content //T;
 	title = lc word /doc/title();
 
 	entity = lc:entityid content {position=succ} //N@id;
 	entity = lc:entityid content {position=succ} //E@id;
 	entity = lc:entityid content {position=succ} //R@id;
-	entity = lc:entityid content {position=succ} //E();
 
 	word = lc word //{C,X,A,V,M,N,E,U,R,W}();
-	word = lc:entityid content {position=succ} //N();
-	word = lc:entityid content {position=succ} //E();
+	word = lc:entityid content //N();
+	word = lc:entityid content //E();
 
 	word = lc word //{heading,tabtitle,head,cell}();
 	word = lc word //{citation,ref,list,text,attr}();

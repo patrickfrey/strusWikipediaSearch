@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export PYTHONHASHSEED=123
 export SCRIPT=$(readlink -f "$0")
+export PYTHONHASHSEED=123
 export SCRIPTPATH=$(dirname "$SCRIPT")
 export PROJECTPATH=$(dirname "$SCRIPTPATH")
 export DATAPATH=/data/wikipedia
@@ -181,7 +181,8 @@ createStorage() {
     if [ -d "$STORAGEPATH/$STORAGEID" ]; then
         strusDestroy -s "path=$STORAGEPATH/$STORAGEID"
     fi
-    strusCreate -s "path=$STORAGEPATH/$STORAGEID; metadata=doclen UINT32"
+    strusCreate -s "path=$STORAGEPATH/$STORAGEID"
+    strusAlterMetaData -s "path=$STORAGEPATH/$STORAGEID" "add doclen UINT32"
 }
 
 insertDocuments() {
