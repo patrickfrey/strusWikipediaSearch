@@ -2046,9 +2046,21 @@ std::string DocumentStructure::reportStrangeFeatures() const
 				std::string feat( featptr, 8);
 				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
 			}
+			else if (0!=std::strstr( si, "bgcolor:"))
+			{
+				const char* featptr = std::strstr( si, "bgcolor:");
+				std::string feat( featptr, 8);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
 			else if (0!=std::strstr( si, "align="))
 			{
 				const char* featptr = std::strstr( si, "align=");
+				std::string feat( featptr, 6);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
+			else if (0!=std::strstr( si, "align:"))
+			{
+				const char* featptr = std::strstr( si, "align:");
 				std::string feat( featptr, 6);
 				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
 			}
@@ -2058,15 +2070,33 @@ std::string DocumentStructure::reportStrangeFeatures() const
 				std::string feat( featptr, 6);
 				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
 			}
+			else if (0!=std::strstr( si, "width:"))
+			{
+				const char* featptr = std::strstr( si, "width:");
+				std::string feat( featptr, 6);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
 			else if (0!=std::strstr( si, "style="))
 			{
 				const char* featptr = std::strstr( si, "style=");
 				std::string feat( featptr, 6);
 				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
 			}
+			else if (0!=std::strstr( si, "style:"))
+			{
+				const char* featptr = std::strstr( si, "style:");
+				std::string feat( featptr, 6);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
 			else if (0!=std::strstr( si, "class="))
 			{
 				const char* featptr = std::strstr( si, "class=");
+				std::string feat( featptr, 6);
+				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
+			}
+			else if (0!=std::strstr( si, "class:"))
+			{
+				const char* featptr = std::strstr( si, "class:");
 				std::string feat( featptr, 6);
 				out << pidx << " " << pi->typeName() << " " << feat << " [" << encodeXmlContentString( pi->text(), true) << "]\n";
 			}

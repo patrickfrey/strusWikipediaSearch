@@ -10,18 +10,20 @@ export STORAGEPATH=/srv/wikipedia/storage
 mkdir -p $DATAPATH
 mkdir -p $STORAGEPATH
 
-cd $DATAPATH
-wget http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
-bunzip2 enwiki-latest-pages-articles.xml.bz2
-
-mkdir -p xml
-mkdir -p nlpxml
-mkdir -p storage
-
-strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml
-strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
-
-for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
+createData() {
+	cd $DATAPATH
+	wget http://dumps.wikimedia.your.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
+	bunzip2 enwiki-latest-pages-articles.xml.bz2
+	
+	mkdir -p xml
+	mkdir -p nlpxml
+	mkdir -p storage
+	
+	strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml
+	strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
+	
+	for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
+}
 
 processPosTagging() {
     DID=$1
