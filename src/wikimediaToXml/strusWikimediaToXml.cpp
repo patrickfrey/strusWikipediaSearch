@@ -1097,7 +1097,7 @@ int main( int argc, const char* argv[])
 			switch (itr->type())
 			{
 				case XmlScanner::None: break;
-				case XmlScanner::ErrorOccurred: throw std::runtime_error( itr->content());
+				case XmlScanner::ErrorOccurred: throw std::runtime_error( "xml error");
 				case XmlScanner::HeaderStart:/*no break!*/
 				case XmlScanner::HeaderAttribName:/*no break!*/
 				case XmlScanner::HeaderAttribValue:/*no break!*/

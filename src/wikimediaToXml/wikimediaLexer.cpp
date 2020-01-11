@@ -1395,8 +1395,7 @@ WikimediaLexem WikimediaLexer::next()
 					case TagDivClose:
 						return WikimediaLexem( WikimediaLexem::CloseDiv);
 					case TagComment:
-						start = m_si;
-						break;
+						return WikimediaLexem( WikimediaLexem::TextBreak, 0, " ");
 					case TagBr:
 						return WikimediaLexem( WikimediaLexem::Break, 0, "\n");
 				}
@@ -2115,10 +2114,6 @@ WikimediaLexem WikimediaLexer::next()
 		{
 			if (isAlpha( *m_si))
 			{
-				if (0==std::memcmp( m_si, "atmos.washington.edu", 20))
-				{
-					std::cerr << "HALLY GALLY" << std::endl;
-				}
 				if (start == m_si)
 				{
 					std::string url = tryParsePlainURL();

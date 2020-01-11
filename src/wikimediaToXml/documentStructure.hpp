@@ -424,7 +424,9 @@ public:
 		||  isParagraphType( Paragraph::TableEnd))
 		{}
 		else if (backStructType() != Paragraph::StructNone)
-		{}
+		{
+			addText( " ");
+		}
 		else if (isParagraphType( Paragraph::Text))
 		{
 			addText( "\n");
@@ -432,6 +434,7 @@ public:
 		}
 		else
 		{
+			addText( " ");
 			addSingleItem( Paragraph::Break, "", "", false/*joinText*/);
 		}
 	}

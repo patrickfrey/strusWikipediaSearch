@@ -1,0 +1,828 @@
+<mediawiki>
+  <page>
+    <title>1852 United States presidential election</title>
+    <ns>0</ns>
+    <id>40516</id>
+    <revision>
+      <id>871349842</id>
+      <parentid>864896410</parentid>
+      <timestamp>2018-11-30T13:35:14Z</timestamp>
+      <contributor>
+        <username>Bneu2013</username>
+        <id>32478849</id>
+      </contributor>
+      <minor />
+      <comment>Bneu2013 moved page [[United States presidential election, 1852]] to [[1852 United States presidential election]] over redirect: Per RfC</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">{{For|related races|United States elections, 1852}}
+{{Use mdy dates|date=November 2013}}
+{{Infobox Election
+| election_name = United States presidential election, 1852
+| country = United States
+| flag_year = 1851
+| type = presidential
+| ongoing = no
+| previous_election = United States presidential election, 1848
+| previous_year = 1848
+| next_election = United States presidential election, 1856
+| next_year = 1856
+| votes_for_election = All 296 electoral votes of the [[Electoral College (United States)|Electoral College]]
+| needed_votes = 149 electoral
+| turnout= 69.6%&lt;ref&gt;{{cite web|url=http://www.presidency.ucsb.edu/data/turnout.php|title=Voter Turnout in Presidential Elections|work=The American Presidency Project|publisher=[[UC Santa Barbara]]}}&lt;/ref&gt; {{decrease}} 3.1 [[percentage point|pp]]
+| election_date = November 2, 1852
+&lt;!-- Franklin Pierce --&gt;
+| image1 = [[File:Franklin Pierce by Brady.jpg|x200px]]
+| nominee1 = '''[[Franklin Pierce]]'''
+| party1 = Democratic Party (United States)
+| home_state1 = [[New Hampshire]]
+| running_mate1 = '''[[William R. King]]'''
+| electoral_vote1 = '''254'''
+| states_carried1 = '''27'''
+| popular_vote1 = '''1,607,510'''
+| percentage1 = '''50.8%'''
+&lt;!-- Winfield Scott --&gt;
+| image2 = [[File:Winfield Scott by Fredricks, 1862.jpg|x200px]]
+| nominee2 = [[Winfield Scott]]
+| party2 = Whig Party (United States)
+| home_state2 = [[New Jersey]]
+| running_mate2 = [[William Alexander Graham|William A. Graham]]
+| electoral_vote2 = 42
+| states_carried2 = 4
+| popular_vote2 = 1,386,942
+| percentage2 = 43.9%
+| map_size = 350px
+| map_caption = Presidential election results map. &lt;span style=&quot;color:blue;&quot;&gt;Blue&lt;/span&gt; denotes states won by Pierce/King, &lt;span style=&quot;color:#e3af2a;&quot;&gt;buff&lt;/span&gt; denotes those won by Scott/Graham. Numbers indicate the number of electoral votes allotted to each state.
+| title = President
+| before_election = [[Millard Fillmore]]
+| before_party = Whig Party (United States)
+| after_election = [[Franklin Pierce]]
+| after_party = Democratic Party (United States)
+|map={{United States presidential election, 1852 imagemap}}}}
+
+The '''United States presidential election of 1852''' was the seventeenth quadrennial [[United States presidential election|presidential election]], held on Tuesday, November 2, 1852. [[Democratic Party (United States)|Democrat]] [[Franklin Pierce]], a former Senator from [[New Hampshire]], defeated General [[Winfield Scott]], the [[United States Whig Party|Whig]] nominee. This was the last election in which the Whigs served as the principal opposition to the Democrats.
+
+Incumbent Whig President [[Millard Fillmore]] had acceded to the presidency after the death of President [[Zachary Taylor]] in 1850. Due to Fillmore's support of the [[Compromise of 1850]] and his enforcement of the [[Fugitive Slave Act of 1850|Fugitive Slave Law]], he was popular in the South but opposed by many Northern Whigs. On the 53rd ballot of the [[1852 Whig National Convention]], Scott defeated Fillmore to clinch the party's nomination. The Democrats were divided among four major candidates, who traded leads through the first 48 ballots of the [[1852 Democratic National Convention]]. On the 49th ballot, [[dark horse]] candidate [[Franklin Pierce]] won his party's nomination. The [[Free Soil Party]], a [[third party (United States)|third party]] opposed to the extension of [[slavery in the United States|slavery]] into the [[United States territories|territories]], nominated Senator [[John P. Hale]] of New Hampshire.
+
+With no major policy differences between the two major candidates, the election became a contest of personalities. Though Scott had been the top U.S. general in the [[Mexican–American War]] and had had a long and distinguished military career, Pierce had also served in the Mexican–American War. The Whigs were badly divided between their Northern and Southern wings, and Scott's anti-slavery reputation further damaged his campaign in the South. A group of Southern Whigs and a separate group of Southern Democrats each nominated their own tickets, but both efforts failed to attract support.
+
+Pierce and his running mate [[William R. King]] won by a comfortable majority in the popular vote and carried 27 of the 31 states, while Scott won 43.9% of the popular vote. Pierce won the [[List of United States presidential elections by Electoral College margin|highest share of the electoral vote]] since [[James Monroe]]'s uncontested [[United States presidential election, 1820|1820 re-election]]. In the aftermath of this overwhelming defeat the Whig Party rapidly collapsed as a national political force as internal tensions regarding the issue of slavery caused mass abandonment of the party.
+
+== Nominations ==
+The 1852 presidential election conventions of the parties are considered below in order of the party's popular vote.
+
+=== Democratic Party nomination ===
+{{Main|1852 Democratic National Convention}}
+
+{| class=&quot;wikitable&quot; style=&quot;font-size:90%; text-align:center;&quot;
+|-
+| style=&quot;background:#f1f1f1;&quot; colspan=&quot;30&quot;|[[File:US Democratic Party Logo.svg|65px|center|link=Democratic Party (United States)|Democratic Party (United States)]]&lt;big&gt;'''Democratic Party Ticket, 1852'''&lt;/big&gt;
+|-
+! style=&quot;width:3em; font-size:135%; background:#34AAE0; width:200px;&quot;| [[Franklin Pierce|{{color|black|Franklin Pierce}}]]
+! style=&quot;width:3em; font-size:135%; background:#34AAE0; width:200px;&quot;| [[William R. King|{{color|black|William R. King}}]]
+|-
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightblue; width:200px;&quot;|'''''for President'''''
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightblue; width:200px;&quot;|'''''for Vice President'''''
+|-
+| [[File:Franklin Pierce by Brady.jpg|center|200x200px]]
+| [[File:King the Vice President.jpg|center|200x200px]]
+|-
+| Former [[United States Senate|U.S. Senator]] from [[New Hampshire]]&lt;br&gt;&lt;small&gt;(1837–1842)&lt;/small&gt;
+| [[United States Senate|U.S. Senator]] from [[Alabama]]&lt;br&gt;&lt;small&gt;(1819–1844 &amp; 1848–1852)&lt;/small&gt;
+|-
+| colspan=2 |[[Franklin Pierce presidential campaign, 1852|'''Campaign''']]
+|-
+|}
+
+[[File:1852DemocraticCampaignPoster.png|thumb|right|300px|Pierce/King campaign poster]]
+* [[Franklin Pierce]], former [[United States Senate|U.S. Senator]] from [[New Hampshire]]
+* [[Lewis Cass]], [[United States Senate|U.S. Senator]] from [[Michigan]]
+* [[James Buchanan]], former [[United States Secretary of State|U.S. Secretary of State]] from [[Pennsylvania]]
+* [[William L. Marcy]], former [[United States Secretary of War|U.S. Secretary of War]] from [[New York (state)|New York]]
+* [[Stephen Douglas]], [[United States Senate|U.S. Senator]] from [[Illinois]]
+
+&lt;gallery mode=&quot;packed&quot; heights=&quot;120&quot;&gt;
+File:Mathew Brady - Franklin Pierce - alternate crop.jpg|Former Senator &lt;br&gt; '''[[Franklin Pierce]]''' &lt;br&gt; from [[New Hampshire]]
+File:LewisCassCrop.jpg|Senator &lt;br&gt; '''[[Lewis Cass]]''' &lt;br&gt; from [[Michigan]]
+File:Hon. James Buchanan - NARA - 528318-crop.jpg|Former Secretary of State &lt;br&gt; '''[[James Buchanan]]'''
+Image:WilliamLMarcy.png|Former Secretary of War &lt;br&gt; '''[[William L. Marcy]]'''
+File:BradyHandy-StephenADouglas.jpg|Senator &lt;br&gt; '''[[Stephen A. Douglas]]''' &lt;br&gt; from [[Illinois]]
+&lt;/gallery&gt;
+
+As Democrats convened in Baltimore in June 1852, four major candidates vied for the nomination: [[Lewis Cass]] of Michigan, the nominee in [[United States presidential election, 1848|1848]], who had the backing of northerners in support of the [[Compromise of 1850]]; [[James Buchanan]] of Pennsylvania, popular in the [[Southern United States|South]] as well as in his home state; [[Stephen A. Douglas]] of Illinois, candidate of the expansionists and the railroad interests; and [[William L. Marcy]] of New York, whose strength was centered in his home state. Throughout the balloting, numerous favorite son candidates received a few votes.
+
+Cass led on the first nineteen ballots, with Buchanan second, and Douglas and Marcy exchanging third and fourth places. Buchanan took the lead on the 20th ballot and retained it on each of the next nine tallies. Douglas managed a narrow lead on the 30th and 31st ballots. Cass then recaptured first place through the 44th ballot. Marcy carried the next four ballots. Franklin Pierce of New Hampshire, a former Congressman and Senator, did not get on the board until the 35th ballot, when the Virginia delegation brought him forward as a compromise choice. He consolidated his support in subsequent voting and was nominated nearly unanimously on the 49th ballot.&lt;ref&gt;William DeGregorio, ''The Complete Book of U.S. Presidents'', Gramercy 1997&lt;/ref&gt;
+
+In a peace gesture to the Buchanan wing of the party, Pierce's supporters allowed Buchanan's allies to fill the second position, knowing that they would select Alabama Senator William R. King. On the second ballot, with only minor opposition, King finally obtained the Democratic vice-presidential nomination. During the ensuing campaign, King's [[tuberculosis]], which he believed he had contracted while in [[Paris]], France, denied him the active behind-the-scenes role that he might otherwise have played, although he worked hard to assure his region's voters that New Hampshire's Pierce was a &quot;northern man with southern principles.&quot; King died shortly after his inauguration on April 18, 1853.
+
+=== Whig Party nomination ===
+{{Main|1852 Whig National Convention}}
+
+{| class=&quot;wikitable&quot; style=&quot;font-size:90%; text-align:center;&quot;
+|-
+| style=&quot;background:#f1f1f1;&quot; colspan=&quot;30&quot;|&lt;big&gt;'''Whig Party Ticket, 1852'''&lt;/big&gt;
+|-
+! style=&quot;width:3em; font-size:135%; background:#F0DC82; width:200px;&quot;| [[Winfield Scott|{{color|black|Winfield Scott}}]]
+! style=&quot;width:3em; font-size:135%; background:#F0DC82; width:200px;&quot;| [[William Alexander Graham|{{color|black|William A. Graham}}]]
+|-  style=&quot;color:#000000; font-size:100%; background:#F0DC82;&quot;
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightyellow; width:200px;&quot;|'''''for President'''''
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightyellow; width:200px;&quot;|'''''for Vice President'''''
+|-
+| [[File:Winfield Scott by Fredricks, 1862.jpg|center|200x200px]]
+| [[File:William Alexander Graham - Brady-Handy.jpg|center|200x200px]]
+|-
+| 3rd&lt;br&gt;[[Commanding General of the United States Army|Commanding General of the U.S. Army]]&lt;br /&gt;&lt;small&gt;(1841–1861)&lt;/small&gt;
+| 20th&lt;br&gt;[[United States Secretary of the Navy|U.S. Secretary of the Navy]]&lt;br&gt;&lt;small&gt;(1850–1852)&lt;/small&gt;
+|-
+| colspan=2 |[[Winfield Scott presidential campaign, 1852|'''Campaign''']]
+|-
+|}
+
+[[File:Scott Graham.png|thumb|350px|Scott/Graham campaign poster]]
+* Winfield Scott, Commanding General of the [[United States Army|U.S. Army]] from [[New Jersey]]
+* Millard Fillmore, [[President of the United States]] from [[New York (state)|New York]]
+* Daniel Webster,  [[United States Secretary of State|U.S. Secretary of State]] from [[Massachusetts]]
+
+&lt;gallery mode=&quot;packed&quot; heights=&quot;120&quot;&gt;
+File:Winfield Scott by Fredricks, 1862.jpg|Commanding General&lt;br&gt; '''[[Winfield Scott]]'''
+File:Millard Fillmore by Brady Studio 1855-65-crop.jpg|President&lt;br&gt; '''[[Millard Fillmore]]'''
+File:Daniel Webster.jpg|U.S. Secretary of State&lt;br&gt; '''[[Daniel Webster]]'''
+&lt;/gallery&gt;
+
+The 1852 Whig National Convention, held in [[Baltimore, Maryland]], was bitterly divided. Supporters of President Fillmore pointed to the successful [[Compromise of 1850]] and the failure of a nascent secession movement in the Southern states in 1850–1851. The northern Whigs believed that the Compromise of 1850 favored the slaveholding South over the North. Northern Whigs favored heroic [[Mexican–American War]] General [[Winfield Scott]] of New Jersey. Scott had earned the nickname of &quot;Old Fuss and Feathers&quot; in the military due to his insistence on appearance and discipline, and while respected, was also seen by the people as somewhat [[foppish]]. A deadlock occurred because most New England delegates supported [[Daniel Webster]]. On the first ballot, Fillmore received all delegate votes from the South save four, but only received eighteen northern delegate votes. The vote was 133 for Fillmore, 131 for Scott, and 29 for Webster. Scott was nominated on the 53rd ballot by a margin of 159–112 (with 21 for Webster), again with a highly sectional vote; Scott won the North by a 142–11 vote (with 21 for Webster) while Fillmore won the South by a margin of 101–17.
+
+[[William Alexander Graham]] was chosen as the vice-presidential nominee. 1852 would be the last time the Whig Party would nominate a candidate for president. Within the decade, the party fell apart and ceased to exist, principally due to regional divisions caused by the slavery issue.
+
+=== Free Soil Party nomination ===
+{{Main|Free Soil Party}}
+* [[John P. Hale]], [[United States Senate|U.S. Senator]] from [[New Hampshire]]
+
+&lt;gallery perrow=&quot;5&quot;&gt;
+File:JP-Hale.jpg|Senator '''[[John P. Hale]]''' &lt;br&gt;from [[New Hampshire]]
+&lt;/gallery&gt;The [[Free Soil Party]] was still the strongest [[Third party (United States)|third party]] in 1852. However, following the Compromise of 1850, most of the &quot;[[Barnburner]]s&quot; who supported it in 1848 had returned to the Democratic Party while most of the [[Conscience Whigs]] rejoined the Whig Party.  The second Free Soil National Convention assembled in the Masonic Hall in [[Pittsburgh, Pennsylvania]]. New Hampshire Senator [[John P. Hale]] was nominated for president with 192 delegate votes (sixteen votes were cast for a smattering of candidates). [[George Washington Julian]] of Indiana was nominated for vice-president over [[Samuel Lewis (politician)|Samuel Lewis]] of Ohio and [[Joshua R. Giddings]] of Ohio.&lt;!-- ISBN 0-674-63821-2, Pgs (495 – 500 or so) --&gt;
+
+=== Union Party nomination ===
+&lt;!-- ISBN 0-674-63821-2, Pgs (495 – 500 or so) --&gt;
+The Union party was formed in 1851, an offshoot of the Whig party in several Southern states, including Georgia. As the 1852 presidential election approached, Union party leaders decided to wait and see who was nominated by the two major parties. The movement to nominate Daniel Webster as a third-party candidate began in earnest following the Whig Convention, largely driven by those who had been strenuously opposed to Winfield Scott's nomination, among them [[Alexander H. Stephens|Alexander Stephens]], [[Robert Toombs]], and [[George Ticknor Curtis|George Curtis]]. While Webster was against what he perceived as a &quot;revolt&quot; from the Whig Party and preferred not to be nominated, he let Americans vote for him should the party choose to nominate him.
+
+The Union Party held its Georgia state convention on August 7, 1852 and nominated Webster for president and [[Charles J. Jenkins]] of Georgia for vice-president. A formal convention was held at [[Faneuil Hall]] in [[Boston]], [[Massachusetts]] on September 15, affirming the nominations made at the state convention in Georgia and rejecting Winfield Scott as nothing more than a military figure. The Webster/Jenkins ticket received nationwide support, particularly among Southern Whigs, but also in Massachusetts and New York, but it was largely perceived by many as nothing more than getting voters who would, in different circumstances, support Scott.
+
+Webster had no real chance of winning the election, but even the new [[Know-Nothing movement|Know-Nothing party]] endorsed Webster, nominating him without even his own permission. However, Webster died nine days before the election of a [[cerebral hemorrhage]] on October 24, 1852.
+
+=== Native American (Know-Nothing) Party nomination ===
+Around the mid-1840s, [[Nativism (politics)|nativists]] were present in New York politics, under the aegis of the American Republican Party. The American Republican party was formed in 1843 in major opposition to [[immigration]] and [[Catholicism]]. In 1845, the party changed its name to the Native American Party. Their opponents nicknamed them the &quot;[[Know Nothing]]s&quot; and the party liked the name and it became the nickname of the party after that until it collapsed in 1860. In 1852, the original candidate planned by the Native American Party was Daniel Webster, the nominee of the Union party as well as Secretary of State. They nominated Webster without his permission, with [[George Corbin Washington]] (grandnephew of [[George Washington]]) as his running mate. Webster died of natural causes nine days before the election, and the Know Nothings quickly replaced Webster by nominating [[Jacob Broom (congressman)|Jacob Broom]] as president and replaced Washington with [[Reynell Coates]]. With Webster collecting a few thousand votes, Broom received too few, and lost the election. In the future, former president [[Millard Fillmore]] would be their candidate in [[United States presidential election, 1856|1856]].
+
+=== Southern Rights Party nomination ===
+* [[George Troup]], former [[United States Senate|U.S. Senator]] from [[Georgia (U.S. State)|Georgia]]
+
+&lt;gallery perrow=&quot;5&quot;&gt;
+File:George M. Troup.jpg|Former Senator '''[[George Troup]]''' &lt;br&gt;from [[Georgia (U.S. State)|Georgia]]
+&lt;/gallery&gt;
+The Southern Rights Party was an offshoot of the Democratic party in several Southern states which advocated secession from the Union, electing a number of Congressmen and holding referendums on secession in a number of southern states, none of which were successful.
+
+It was unclear in early 1852 if the Party would contest the presidential election. When the Alabama state convention was held in early March, only nine counties were represented. The party decided to see who was nominated by the two major national parties and support one of them if possible.&lt;!--[NYT March 20, 1852]--&gt; When Georgia held its state convention, it acted as the state Democratic Party and sent delegates to the national convention.&lt;!--[NYT 4/3/1852]--&gt;
+
+After the Democratic National Convention, the Party was not sure that it wanted to support Franklin Pierce, the Democratic nominee. Alabama held a state convention from July 13–15 and discussed at length the options of running a separate ticket or supporting Pierce. The convention was unable to arrive at a decision, deciding to appoint a committee to review the positions of Scott and Pierce with the option of calling a &quot;national&quot; convention if the two major party candidates appeared deficient. &lt;!--[NYT 7/15-16/1852]--&gt;The committee took its time reviewing the positions of Pierce and Scott, finally deciding on August 25 to call a convention for a Southern Rights Party ticket.&lt;!--[NYT August 27, 1852]--&gt;
+
+The convention assembled in Montgomery, Alabama, with 62 delegates present, a committee to recommend a ticket being appointed while the delegates listened to speeches in the interim. The committee eventually recommended former Senator [[George Troup]] of Georgia for President, and former Governor [[John A. Quitman|John Quitman]] of Mississippi for Vice-President; they were unanimously nominated.
+
+The two nominees accepted their nominations soon after the convention, which was held rather late in the season. Troup stated in a letter, dated September 27 and printed in the New York Times on October 16, that he had planned to vote for Pierce and had always wholeheartedly supported William R.D. King. He indicated in the letter that he preferred to decline the honor, as he was rather ill at the time and feared that he would die before the election. The Party's executive committee edited the letter to excise those portions which indicated that Troup preferred to decline, a fact which was revealed after the election. &lt;!--[NYT November 22, 1852]--&gt;
+
+=== Liberty Party nomination ===
+The [[Liberty Party (1840s)|Liberty Party]] had ceased to become a significant political force after most of its members joined the Free Soil Party in 1848.  Nonetheless, some of those who rejected the fusion strategy held a Liberty Party National Convention in [[Buffalo, New York]]. There were few delegates present, so a ticket was recommended and a later convention called. The Convention recommended [[Gerrit Smith]] of New York for president and [[Charles Durkee]] of Wisconsin for vice-president. A second convention was held in [[Syracuse, New York]], in early September 1852, but it too failed to draw enough delegates to select a nominee. Yet a third convention gathered in Syracuse later that month and nominated [[William Goodell (abolitionist)|William Goodell]] of New York for president and [[S.M. Bell (politican)|S.M. Bell]]  of Virginia for vice-president.
+
+== General election ==
+=== Fall campaign ===
+[[File:Scott vs Pierce campaign.jpg|thumb|Political cartoon favoring Winfield Scott]]
+The Whigs' platform was almost indistinguishable from that of the Democrats, reducing the campaign to a contest between the personalities of the two candidates. The lack of clearcut issues between the two parties helped drive voter turnout down to its lowest level since 1836. The decline was further exacerbated by Scott's antislavery reputation, which decimated the Southern Whig vote at the same time as the pro-slavery Whig platform undermined the Northern Whig vote. After the Compromise of 1850 was passed, many of the southern Whig Party members broke with the party's key figure, [[Henry Clay]].&lt;ref&gt;{{cite web|url=http://www.whitehouse.gov/history/presidents/fp14.html|title=Franklin Pierce|date=December 29, 2014|publisher=}}&lt;/ref&gt;
+
+Finally, Scott's status as a war hero was somewhat offset by the fact that Pierce was himself a [[Mexican–American War]] [[brigadier general (United States)|brigadier general]].
+
+The Democrats adopted the slogan: ''The Whigs we Polked in forty-four, We'll Pierce in fifty-two'', playing on the names of Pierce and former President [[James K. Polk]].&lt;ref&gt;{{cite journal |work=The Mountain Sentinel |location=Ebensburg, PA |page=1 |title=Democratic Rallying Song for 1852 |date=1852-10-07 |url=https://www.newspapers.com/clip/18537841/the_whigs_we_polked_in/}}&lt;/ref&gt;
+
+Just nine days before the election, Webster died, causing many Union state parties to remove their slates of electors. The Union ticket appeared on the ballot in Georgia and Massachusetts, however.
+
+=== Results ===
+[[File:PresidentialCounty1852Colorbrewer.gif|right|thumb|400px|Results by county explicitly indicating the percentage of the winning candidate in each county. Shades of blue are for Pierce (Democratic), shades of yellow are for Scott (Whig), shades of red are for Hale (Free Soil), shades of orange are for Webster (Union), shades of green are for (Independent Democrats), and shades of purple are for Troup (Southern Rights).]]
+When American voters went to the polls, Pierce won in a landslide; Scott won only the states of [[Kentucky]], [[Tennessee]], [[Massachusetts]], and [[Vermont]], while the Free Soil vote collapsed to less than half of what [[Martin Van Buren]] had earned in the previous election, with the party taking no states. The fact that Daniel Webster received a substantial share of the vote in Georgia and Massachusetts, even though he was dead, shows how disenchanted voters were with the two main candidates.
+
+As a result of the devastating defeat and the growing tensions within the party between pro-slavery Southerners and anti-slavery Northerners, the Whig Party quickly fell apart after the 1852 election and ceased to exist. Some Southern Whigs would join the Democratic Party, and many Northern Whigs would help to form the new [[Republican Party (United States)|Republican Party]] in 1854.
+
+Some Whigs in both sections would support the so-called &quot;[[Know-Nothing]]&quot; party in the 1856 presidential election. Similarly, the Free Soil Party rapidly fell away into obscurity after the election, and the remaining members mostly opted to join the former Northern Whigs in forming the Republican Party.
+
+The Southern Rights Party effectively collapsed following the election, attaining only five percent of the vote in Alabama, and a few hundred in its nominee's home state of Georgia. It would elect a number of Congressmen in 1853, but they would shortly after rejoin the Democratic Party upon taking their seats in Congress.
+
+This was the last election in which the Democrats won Michigan until 1932,{{efn|In 1892 Democrat [[Grover Cleveland]] did win one electoral vote from each of five Michigan congressional districts he carried despite losing the state}} the last in which the Democrats won Iowa, Maine, New Hampshire, Ohio{{efn|In 1892 the direct election of Presidential electors meant Grover Cleveland received one Ohio electoral vote}} or Rhode Island until 1912, the last in which the Democrats won Wisconsin until 1892, the last in which the Democrats won Connecticut until 1876 and the last in which the Democrats won New York until 1868. It was, however, the last election in which the Democrats' chief opponent won Kentucky until 1896,{{efn|[[Constitutional Union Party (United States)|Constitutional Union Party]] candidate [[John Bell (Tennessee politician)|John Bell]] won Kentucky in 1860; however, Bell was surpassed in the popular vote by two Democratic factions and Republican [[Abraham Lincoln]]. Apart from this, the Democrats won Kentucky in all ten elections between 1856 and 1892.}}&lt;ref&gt;Counting the Votes; [http://www.countingthevotes.com/kentucky Kentucky]&lt;/ref&gt; and indeed the last until 1928 in which the Democrats' opponent obtained an absolute majority in the Bluegrass State.
+
+{{start U.S. presidential ticket box|pv_footnote={{efn|The popular vote figures exclude [[South Carolina]] where the Electors were chosen by the state legislature rather than by popular vote.}}|ev_footnote=}}
+{{U.S. presidential ticket box row|name=[[Franklin Pierce]]|vp_name=[[William R. King]]|party=[[United States Democratic Party|Democratic]]|state=[[New Hampshire]]|vp_state=[[Alabama]]|pv=1,607,510|pv_pct=50.84%|ev=254}}
+{{U.S. presidential ticket box row|name=[[Winfield Scott]]|vp_name=[[William Alexander Graham]]|party=[[United States Whig Party|Whig]]|state=[[New Jersey]]|vp_state=[[North Carolina]]|pv=1,386,942|pv_pct=43.87%|ev=42}}
+{{U.S. presidential ticket box row|name=[[John P. Hale]]|vp_name=[[George Washington Julian]]|party=[[United States Free Soil Party|Free Soil]]|state=[[New Hampshire]]|vp_state=[[Indiana]]|pv=155,210|pv_pct=4.91%|ev=0}}
+{{U.S. presidential ticket box row| name=[[Daniel Webster]]{{efn|Daniel Webster died on October 24, 1852, one week before the election.  However, his name remained on the ballot in Massachusetts and Georgia, and he still managed to poll nearly seven thousand votes. He was also the original candidate of the [[Native American Party]] but was replaced on his death by [[Jacob Broom (congressman)|Jacob Broom]].}}|vp_name=[[Charles J. Jenkins]]|party=Union{{efn|For a detailed discussion of the Union Party formed by Pro-Union Whigs, see Michael F. Holt, ''The Rise and Fall of the Whig Party: Jacksonian Politics and the Onset of the Civil War'' (New York: Oxford University Press, 1999), Chapters 19 and 20.}}|state=[[Massachusetts]]|vp_state=[[Georgia (U.S. state)|Georgia]]|pv=6,994|pv_pct=0.22%|ev=0}}
+{{U.S. presidential ticket box row|name=[[Jacob Broom (congressman)|Jacob Broom]]|state=[[Pennsylvania]]|vp_name=[[Reynell Coates]]|vp_state=[[New Jersey]]|party=[[Native American Party|Native American]]|pv=2,566|pv_pct=0.08%| ev=0}}
+{{U.S. presidential ticket box row|name=[[George Troup]]|state=[[Georgia (U.S. state)|Georgia]]|vp_name=[[John A. Quitman]]|vp_state=[[Mississippi]]|party=[[United States Southern Rights Party|Southern Rights]]|pv=2,331|pv_pct=0.07%| ev=0}}
+{{U.S. presidential ticket box other|footnote=|pv=277|pv_pct=0.01%}}
+{{end U.S. presidential ticket box|pv=3,161,830|ev=296|to_win=149}}
+'''Source (Popular Vote):''' {{Leip PV source| year=1852| as of=July 27, 2005}}&lt;br /&gt;
+'''Source (Electoral Vote):''' {{National Archives EV source| year=1852| as of=July 31, 2005}}
+* The leading candidates for Vice President were both born in [[North Carolina]] and in fact both attended the [[University of North Carolina at Chapel Hill]], albeit two decades apart. While there, they were members of opposing debate societies: the Dialectic and Philanthropic Societies. Both also served in North Carolina politics: King was a representative from North Carolina before he moved to Alabama, and Graham was a governor of North Carolina.
+
+{{bar box
+|title=Popular vote
+|titlebar=#ddd
+|width=600px
+|barwidth=410px
+|bars=
+{{bar percent|'''Pierce'''|{{Democratic Party (US)/meta/color}}|50.84}}
+{{bar percent|Scott|{{Whig Party (United States)/meta/color}}|43.87}}
+{{bar percent|Hale|{{Free Soil Party/meta/color}}|4.91}}
+{{bar percent|Others|#777777|0.38}}
+}}
+{{bar box
+|title=Electoral vote
+|titlebar=#ddd
+|width=600px
+|barwidth=410px
+|bars=
+{{bar percent|'''Pierce'''|{{Democratic Party (US)/meta/color}}|85.81}}
+{{bar percent|Scott|{{Whig Party (United States)/meta/color}}|14.19}}
+}}
+
+=== Geography of results ===
+
+==== Cartographic gallery ====
+&lt;gallery mode=&quot;packed&quot; heights=&quot;200&quot;&gt;
+PresidentialCounty1852Colorbrewer.gif|Map of presidential election results by county
+DemocraticPresidentialCounty1852Colorbrewer.png|Map of Democratic presidential election results by county
+WhigPresidentialCounty1852Colorbrewer.png|Map of Whig presidential election results by county
+FreeSoilPresidentialCounty1852Colorbrewer.png|Map of Free Soil presidential election results by county
+OtherPresidentialCounty1852Colorbrewer.png|Map of &quot;Other&quot; presidential election results by county
+&lt;/gallery&gt;
+
+== Results by state ==
+Source: Data from [[Walter Dean Burnham]], ''Presidential ballots, 1836–1892'' (Johns Hopkins University Press, 1955) pp 247–57.
+{| class=&quot;wikitable sortable&quot; style=&quot;text-align:right&quot;
+|-
+! colspan=2 |
+! align=center colspan=3 | Franklin Pierce&lt;br /&gt;Democratic
+! align=center colspan=3 | Winfield Scott&lt;br /&gt;Whig
+! align=center colspan=3 | John P. Hale&lt;br /&gt;Free Soil
+! colspan=&quot;2&quot; |Margin
+! align=center colspan=2 | State Total
+|-
+! align=center | State
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+! align=center | #
+! align=center | %
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+! align=center | #
+! align=center | %
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+! align=center | #
+! align=center | %
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+!#
+!%
+! align=center | #
+!
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Alabama, 1852|Alabama]]
+! 9
+| &lt;span style=&quot;display:none&quot;&gt;00013618&lt;/span&gt;26,881
+| 60.89
+| 9
+| &lt;span style=&quot;display:none&quot;&gt;00048669&lt;/span&gt;15,061
+| 34.12
+| -
+| colspan=3 align=center | ''no ballots''
+|11,280
+|26.77
+| 44,147
+! AL
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Arkansas, 1852|Arkansas]]
+! 4
+| 12,173
+| 62.18
+| 4
+| 7,404
+| 37.82
+| -
+| colspan=3 align=center | ''no ballots''
+|4,769
+|24.36
+| 19,577
+! AR
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in California, 1852|California]]
+! 4
+| 40,721
+| 53.02
+| 4
+| 35,972
+| 46.83
+| -
+| 61
+| 0.08
+| -
+|4,749
+|6.19
+| 76,810
+! CA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Connecticut, 1852|Connecticut]]
+! 6
+| 33,249
+| 49.79
+| 6
+| 30,359
+| 45.56
+| -
+| 3,161
+| 4.73
+| -
+|2,890
+|4.23
+| 66,781
+! CT
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Delaware, 1852|Delaware]]
+! 3
+| 6,318
+| 49.85
+| 3
+| 6,293
+| 49.66
+| -
+| 62
+| 0.49
+| -
+|25
+|0.19
+| 12,673
+! DE
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Florida, 1852|Florida]]
+! 3
+| 4,318
+| 60.03
+| 3
+| 2,875
+| 39.97
+| -
+| colspan=3 align=center | ''no ballots''
+|1,443
+|20.06
+| 7,193
+! FL
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Georgia, 1852|Georgia]]
+! 10
+| 40,516
+| 64.70
+| 10
+| 16,660
+| 26.60
+| -
+| colspan=3 align=center | ''no ballots''
+|23,856
+|38.10
+| 62,626
+! GA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Illinois, 1852|Illinois]]
+! 11
+| 80,378
+| 51.87
+| 11
+| 64,733
+| 41.77
+| -
+| 9,863
+| 6.36
+| -
+|15,645
+|10.10
+| 154,974
+! IL
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Indiana, 1852|Indiana]]
+! 13
+| 95,340
+| 52.05
+| 13
+| 80,901
+| 44.17
+| -
+| 6,929
+| 3.78
+| -
+|14,439
+|7.88
+| 183,170
+! IN
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Iowa, 1852|Iowa]]
+! 4
+| 17,763
+| 50.23
+| 4
+| 15,856
+| 44.84
+| -
+| 1,606
+| 4.54
+| -
+|1,907
+|5.39
+| 35,364
+! IA
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Kentucky, 1852|Kentucky]]
+! 12
+| 53,494
+| 48.32
+| -
+| 57,428
+| 51.44
+| 12
+| 266
+| 0.24
+| -
+| -3,934
+| -3.12
+| 111,148
+! KY
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Louisiana, 1852|Louisiana]]
+! 6
+| 18,647
+| 51.94
+| 6
+| 17,255
+| 48.06
+| -
+| colspan=3 align=center | ''no ballots''
+|1,392
+|3.88
+| 42,873
+! LA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Maine, 1852|Maine]]
+! 8
+| 41,609
+| 50.63
+| 8
+| 32,543
+| 39.60
+| -
+| 8,030
+| 9.77
+| -
+|9,066
+|11.03
+| 82,182
+! ME
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Maryland, 1852|Maryland]]
+! 8
+| 40,022
+| 53.28
+| 8
+| 35,077
+| 46.69
+| -
+| 21
+| 0.03
+| -
+|4,945
+|6.59
+| 75,120
+! MD
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Massachusetts, 1852|Massachusetts]]
+! 13
+| 44,569
+| 35.07
+| -
+| 52,683
+| 41.45
+| 13
+| 28,203
+| 22.19
+| -
+| -8,114
+| -6.38
+| 127,103
+! MA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Michigan, 1852|Michigan]]
+! 6
+| 41,842
+| 50.45
+| 6
+| 33,860
+| 40.83
+| -
+| 7,237
+| 8.73
+| -
+|7,982
+|9.62
+| 82,939
+! MI
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Mississippi, 1852|Mississippi]]
+! 7
+| 26,896
+| 60.50
+| 7
+| 17,558
+| 39.50
+| -
+| colspan=3 align=center | ''no ballots''
+|9,338
+|21.00
+| 44,454
+! MS
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Missouri, 1852|Missouri]]
+! 9
+| 38,817
+| 56.42
+| 9
+| 29,984
+| 43.58
+| -
+| colspan=3 align=center | ''no ballots''
+|8,833
+|12.84
+| 68,801
+! MO
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in New Hampshire, 1852|New Hampshire]]
+! 5
+| 28,503
+| 56.40
+| 5
+| 15,486
+| 30.64
+| -
+| 6,546
+| 12.95
+| -
+|13,017
+|25.76
+| 50,535
+! NH
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in New Jersey, 1852|New Jersey]]
+! 7
+| 44,305
+| 53.24
+| 7
+| 38,556
+| 46.33
+| -
+| 359
+| 0.43
+| -
+|5,749
+|6.91
+| 83,220
+! NJ
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in New York, 1852|New York]]
+! 35
+| 262,083
+| 50.18
+| 35
+| 234,882
+| 44.97
+| -
+| 25,329
+| 4.85
+| -
+|27,201
+|5.21
+| 522,294
+! NY
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in North Carolina, 1852|North Carolina]]
+! 10
+| 39,778
+| 50.43
+| 10
+| 39,043
+| 49.49
+| -
+| colspan=3 align=center | ''no ballots''
+|735
+|0.94
+| 78,881
+! NC
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Ohio, 1852|Ohio]]
+! 23
+| 168,933
+| 47.83
+| 23
+| 152,523
+| 43.18
+| -
+| 31,732
+| 8.98
+| -
+|16,410
+|4.65
+| 353,188
+! OH
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Pennsylvania, 1852|Pennsylvania]]
+! 27
+| 198,562
+| 51.20
+| 27
+| 179,104
+| 46.18
+| -
+| 8,495
+| 2.19
+| -
+|19,458
+|5.02
+| 387,389
+! PA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Rhode Island, 1852|Rhode Island]]
+! 4
+| 8,735
+| 51.37
+| 4
+| 7,626
+| 44.85
+| -
+| 644
+| 3.79
+| -
+|1,109
+|6.52
+| 17,005
+! RI
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in South Carolina, 1852|South Carolina]]
+! 8
+| colspan=2 align=center | ''no popular vote''
+| 8
+| colspan=3 align=center | ''no popular vote''
+| colspan=3 align=center | ''no popular vote''
+| -
+| -
+| -
+! SC
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Tennessee, 1852|Tennessee]]
+! 12
+| 56,900
+| 49.27
+| -
+| 58,586
+| 50.73
+| 12
+| colspan=3 align=center | ''no ballots''
+| -1,686
+| -1.46
+| 115,486
+! TN
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Texas, 1852|Texas]]
+! 4
+| 13,552
+| 73.07
+| 4
+| 4,995
+| 26.93
+| -
+| colspan=3 align=center | ''no ballots''
+|8,557
+|46.14
+| 18,547
+! TX
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Vermont, 1852|Vermont]]
+! 5
+| 13,044
+| 29.72
+| -
+| 22,173
+| 50.52
+| 5
+| 8,621
+| 19.64
+| -
+| -9,129
+| -20.80
+| 43,890
+! VT
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Virginia, 1852|Virginia]]
+! 15
+| 73,872
+| 55.71
+| 15
+| 58,732
+| 44.29
+| -
+| colspan=3 align=center | ''no ballots''
+|15,140
+|11.42
+| 132,604
+! VA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Wisconsin, 1852|Wisconsin]]
+! 5
+| 33,658
+| 52.04
+| 5
+| 22,210
+| 34.34
+| -
+| 8,814
+| 13.63
+| -
+|11,448
+|17.70
+| 64,682
+! WI
+|-
+! TOTALS:
+! 296
+! 1,605,943
+! 50.83
+! 254
+! 1,386,418
+! 43.88
+! 42
+! 155,799
+! 4.93
+! -
+!
+!
+! 3,159,640
+! US
+|-
+! TO WIN:
+! 149
+! colspan=&quot;17&quot; |
+|}
+
+== Electoral college selection ==
+{{start electoral college selection}}
+{{electoral college selection row|method=Each Elector appointed by state legislature|states=[[South Carolina]]}}
+{{electoral college selection row|method=Each Elector chosen by voters statewide|states=''(all other States)''}}
+{{end electoral college selection}}
+
+== See also ==
+* [[History of the United States (1849–65)]]
+* [[Inauguration of Franklin Pierce]]
+* [[Second Party System]]
+* [[United States House of Representatives elections, 1852]]
+* [[United States Senate elections, 1852]]
+
+==Notes==
+{{notelist}}
+
+== References ==
+{{Reflist|30em}}
+
+;Books
+:* Holt, Michael F. ''The Rise and Fall of the American Whig Party: Jacksonian Politics and the Onset of the Civil War.'' Oxford University Press, [[New York City|New York, New York]]: 1999.
+
+;Web sites
+:* {{cite web |title=A Historical Analysis of the Electoral College |work=The Green Papers |url=http://www.thegreenpapers.com/Hx/ElectoralCollege.html |accessdate=September 17, 2005}}
+
+== External links ==
+{{Commons category}}
+* {{Britannica|1771610|United States presidential election of 1852}}
+* [https://www.loc.gov/rr/program/bib/elections/election1852.html Presidential Election of 1852: A Resource Guide] from the Library of Congress
+* [http://geoelections.free.fr/USA/elec_comtes/1852.htm 1852 popular vote by counties]
+* [http://www.multied.com/elections/1852Pop.html 1852 state-by-state popular vote]
+* [http://www.ourcampaigns.com/RaceDetail.html?RaceID=58094 Democratic National Convention overview]
+* [http://www.ourcampaigns.com/RaceDetail.html?RaceID=58513 Whig National Convention overview]
+* [http://www.ourcampaigns.com/RaceDetail.html?RaceID=178091 Native American National Convention overview]
+* [https://web.archive.org/web/20120825102042/http://www.mit.edu/~mi22295/elections.html#1852 How close was the 1852 election?]&amp;nbsp;— Michael Sheppard, Massachusetts Institute of Technology
+* [http://www.countingthevotes.com/1852/ Election of 1852 in Counting the Votes]
+
+{{United States presidential election, 1852}}
+{{USPresidentialElections}}
+{{State Results of the 1852 U.S. presidential election}}
+
+[[Category:History of the United States (1849–65)]]
+[[Category:United States presidential election, 1852| ]]
+[[Category:Presidency of Franklin Pierce]]
+[[Category:November 1852 events]]</text>
+      <sha1>aszigdqpdknrdqx7t26lew1d1e67jqs</sha1>
+    </revision>
+  </page>
+</mediawiki>
+
