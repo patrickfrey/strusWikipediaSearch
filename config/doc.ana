@@ -95,8 +95,8 @@
 
 [Structure]
 	section = tabtitle table label;
-	tabrel  = tabhead tabcell associative;
-	citrel  = cithead citbody associative;
+#	tabrel  = tabhead tabcell associative;
+#	citrel  = cithead citbody associative;
 	doc     = title body label;
 	section = title start_h1 span;
 	section = start_h1 end_h1 span;
