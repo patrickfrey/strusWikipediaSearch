@@ -413,9 +413,16 @@ static TagType parseTagType( char const*& si, const char* se)
 		{
 			if (*(sn-2) == '/')
 			{
-				si = sn;
-				return TagComment;
-				//.... immediate close tags not encolsing any content are considered unimportant for text retrieval and thus marked as comments.
+				if (tryParseTag( "br", si, se))
+				{
+					return TagBr;
+				}
+				else
+				{
+					si = sn;
+					return TagComment;
+					//.... immediate close tags not encolsing any content are considered unimportant for text retrieval and thus marked as comments.
+				}
 			}
 		}
 		if (tryParseTag( "nowiki", si, se)) return open ? TagNoWikiOpen : TagNoWikiClose;
@@ -1097,41 +1104,53 @@ static void parseAttributes( char const*& si, char const* se, char endMarker, ch
 		std::string value;
 
 		if (!parseIdentifier( name, si, se, true/*with dash*/)) goto REWIND;
-		si = skipSpaces( si, se);
-
-		if (si < se && (*si == '=' || *si == ':'))
+		if (si != se && *si == '"')
 		{
-			++si;
+			if (parseString( value, si, se, false/*tolerant*/))
+			{
+				attributes[ name] = value;
+				si = skipSpacesAndComments( si, se);
+				if (si == se || *si == endMarker || *si == altEndMarker) return;
+			}
+		}
+		else
+		{
 			si = skipSpaces( si, se);
-			if (si < se && (*si == '"' || *si == '\''))
+	
+			if (si < se && (*si == '=' || *si == ':'))
 			{
-				while (si < se && (*si == '"' || *si == '\''))
+				++si;
+				si = skipSpaces( si, se);
+				if (si < se && (*si == '"' || *si == '\''))
 				{
-					if (!value.empty()) value.push_back(' ');
-					if (!parseString( value, si, se, true/*tolerant*/)) goto REWIND;
-					si = skipSpaces( si, se);
+					while (si < se && (*si == '"' || *si == '\''))
+					{
+						if (!value.empty()) value.push_back(' ');
+						if (!parseString( value, si, se, true/*tolerant*/)) goto REWIND;
+						si = skipSpaces( si, se);
+					}
 				}
-			}
-			else if (si < se && (*si == '#' || isIdentifierChar(*si, true/*with dash*/)))
-			{
-				if (!parseToken( value, si, se)) goto REWIND;
-			}
-			else if (si < se && (*si == endMarker || *si == altEndMarker))
-			{
-				return;
+				else if (si < se && (*si == '#' || isIdentifierChar(*si, true/*with dash*/)))
+				{
+					if (!parseToken( value, si, se)) goto REWIND;
+				}
+				else if (si < se && (*si == endMarker || *si == altEndMarker))
+				{
+					return;
+				}
+				else
+				{
+					goto REWIND;
+				}
+				attributes[ name] = value;
+	
+				si = skipSpacesAndComments( si, se);
+				if (si == se || *si == endMarker || *si == altEndMarker) return;
 			}
 			else
 			{
 				goto REWIND;
 			}
-			attributes[ name] = value;
-
-			si = skipSpacesAndComments( si, se);
-			if (si == se || *si == endMarker || *si == altEndMarker) return;
-		}
-		else
-		{
-			goto REWIND;
 		}
 	}
 	return;
@@ -1734,6 +1753,11 @@ WikimediaLexem WikimediaLexer::next()
 		}
 		else if (*m_si == '\n')
 		{
+			/*[-]*/std::string bla( m_si, m_se-m_si > 200 ? 200 : (m_se-m_si));
+			/*[-]*/if (std::strstr( bla.c_str(), "text-align:left"))
+			/*[-]*/{
+			/*[-]*/	std::cerr << "";
+			/*[-]*/}
 			m_curHeading = 0;
 			if (start != m_si)
 			{
