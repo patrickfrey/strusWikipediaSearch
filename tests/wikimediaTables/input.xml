@@ -1,0 +1,309 @@
+<wikimedia>
+  <page>
+    <title>Tables</title>
+    <ns>0</ns>
+    <id>1</id>
+    <revision>
+      <id>1</id>
+      <comment>Tests in https://www.mediawiki.org/wiki/Help:Tables</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text>
+      == Basics ==
+      === Example 1 ===
+      {|
+      |Orange
+      |Apple
+      |-
+      |Bread
+      |Pie
+      |-
+      |Butter
+      |Ice cream 
+      |}
+      === Example 2 ===
+      {|
+      |Orange||Apple||more
+      |-
+      |Bread||Pie||more
+      |-
+      |Butter||Ice&lt;br/&gt;cream||and&lt;br/&gt;more
+      |}
+      === Example 3 ===
+      {|
+      |  Orange || Apple || more
+      |-
+      |   Bread || Pie || more
+      |-
+      |   Butter || Ice cream || and more
+      |}
+      === Example 4 ===
+      {|
+      |Lorem ipsum dolor sit amet, 
+      consetetur sadipscing elitr, 
+      sed diam nonumy eirmod tempor invidunt
+      ut labore et dolore magna aliquyam erat, 
+      sed diam voluptua. 
+      
+      At vero eos et accusam et justo duo dolores
+      et ea rebum. Stet clita kasd gubergren,
+      no sea takimata sanctus est Lorem ipsum
+      dolor sit amet. 
+      |
+      * Lorem ipsum dolor sit amet
+      * consetetur sadipscing elitr
+      * sed diam nonumy eirmod tempor invidunt
+      |}
+      === Table headers ===
+      {|
+      ! style=&quot;text-align:left;&quot;| Item
+      ! Amount
+      ! Cost
+      |-
+      |Orange
+      |10
+      |7.00
+      |-
+      |Bread
+      |4
+      |3.00
+      |-
+      |Butter
+      |1
+      |5.00
+      |-
+      !Total
+      |
+      |15.00
+      |}
+      === Caption ===
+      {|
+      |+Food complements
+      |-
+      |Orange
+      |Apple
+      |-
+      |Bread
+      |Pie
+      |-
+      |Butter
+      |Ice cream 
+      |}
+      === Caption (Basic Styling) ===
+      {| class=&quot;wikitable&quot;
+      |+Food complements
+      |-
+      |Orange
+      |Apple
+      |-
+      |Bread
+      |Pie
+      |-
+      |Butter
+      |Ice cream 
+      |}
+      === Colspan, rowspan ===
+      {| class=&quot;wikitable&quot;
+      !colspan=&quot;6&quot;|Shopping List
+      |-
+      |rowspan=&quot;2&quot;|Bread &amp; Butter
+      |Pie
+      |Buns
+      |Danish
+      |colspan=&quot;2&quot;|Croissant
+      |-
+      |Cheese
+      |colspan=&quot;2&quot;|Ice cream
+      |Butter
+      |Yogurt
+      |}
+      === HTML attributes ===
+      {| class=&quot;wikitable&quot; style=&quot;text-align: center; color: green;&quot;
+      |Orange
+      |Apple
+      |12,333.00
+      |-
+      |Bread
+      |Pie
+      |500.00
+      |-
+      |Butter
+      |Ice cream
+      |1.00
+      |}
+      === Attributes on cells ===
+      {| class=&quot;wikitable&quot;
+      | Orange
+      | Apple
+      | style=&quot;text-align:right;&quot; | 12,333.00
+      |-
+      | Bread
+      | Pie
+      | style=&quot;text-align:right;&quot; | 500.00
+      |-
+      | Butter
+      | Ice cream
+      | style=&quot;text-align:right;&quot; | 1.00
+      |}
+      === Attributes on multiple cells ===
+      {| class=&quot;wikitable&quot;
+      | Orange || Apple     || style=&quot;text-align:right;&quot; | 12,333.00
+      |-
+      | Bread || Pie       || style=&quot;text-align:right;&quot; | 500.00
+      |-
+      | Butter || Ice cream || style=&quot;text-align:right;&quot; | 1.00
+      |}
+      === Attributes on rows ===
+      {| class=&quot;wikitable&quot;
+      | Orange
+      | Apple
+      | style=&quot;text-align:right;&quot;| 12,333.00
+      |-
+      | Bread
+      | Pie
+      | style=&quot;text-align:right;&quot;| 500.00
+      |- style=&quot;font-style: italic; color: green;&quot;
+      | Butter
+      | Ice cream
+      | style=&quot;text-align:right;&quot;| 1.00
+      |}
+      === Simple one pixel table border ===
+      {| border=&quot;1&quot; style=&quot;border-collapse:collapse&quot;
+      | Orange
+      | Apple
+      |-
+      | Bread
+      | Pie
+      |}
+      === Border width ===
+      {|style=&quot;border-style: solid; border-width: 20px&quot;
+      |
+      Hello
+      |}
+
+      {|style=&quot;border-style: solid; border-width: 10px 20px 100px 0&quot;
+      |
+      Hello
+      |}
+      === CSS styles ===
+      {| class=&quot;wikitable&quot; style=&quot;color:green; background-color:#ffffcc;&quot; cellpadding=&quot;10&quot;
+      |Orange
+      |Apple
+      |-
+      |Bread
+      |Pie
+      |-
+      |Butter
+      |Ice cream 
+      |}
+      === Padding ===
+      {|class=wikitable 
+      | style=&quot;padding: 10px&quot; | Example of style=&quot;padding:10px&quot;
+      |-
+      | style=&quot;padding: 50px&quot; | Example of style=&quot;padding:50px&quot;&lt;br/&gt;&lt;br/&gt;Specify the padding on '''EACH CELL'''
+      |-
+      | style=&quot;padding:100px&quot; | Example of style=&quot;padding:100px&quot;
+      |}
+      === Attributes ===
+      {| class=&quot;wikitable&quot;
+      |+ style=&quot;caption-side:bottom; color:#e76700;&quot;|''Food complements''
+      |-
+      |Orange
+      |Apple
+      |-
+      |Bread
+      |Pie
+      |-
+      |Butter
+      |Ice cream 
+      |}
+      === Column width ===
+      {| class=&quot;wikitable&quot; style=&quot;width: 85%;&quot;
+      | colspan=&quot;2&quot; | This column width is 85% of the screen width
+      |-
+      | style=&quot;width: 30%&quot;| '''This column is 30% counted from 85% of the screen width'''
+      | style=&quot;width: 70%&quot;| '''This column is 70% counted from 85% of the screen width'''
+      |}
+      === Accessibility of table header cells === 
+      {| class=&quot;wikitable&quot;
+      |-
+      ! scope=&quot;col&quot;| Item
+      ! scope=&quot;col&quot;| Quantity
+      ! scope=&quot;col&quot;| Price
+      |-
+      ! scope=&quot;row&quot;| Bread
+      | 0.3 kg
+      | $0.65
+      |-
+      ! scope=&quot;row&quot;| Butter
+      | 0.125 kg
+      | $1.25
+      |-
+      ! scope=&quot;row&quot; colspan=&quot;2&quot;| Total
+      | $1.90
+      |}
+      === Table alignment ===
+      {| class=&quot;wikitable&quot; style=&quot;margin-left: auto; margin-right: 0px;&quot;
+      | Orange
+      | Apple
+      |-
+      | Bread
+      | Pie
+      |-
+      | Butter
+      | Ice cream 
+      |}
+      === Table alignment to center ===
+      {| class=&quot;wikitable&quot; style=&quot;margin: auto;&quot;
+      | Orange
+      | Apple
+      |-
+      | Bread
+      | Pie
+      |-
+      | Butter
+      | Ice cream 
+      |}
+      === Table floating around text ===
+      {| class=&quot;wikitable&quot; style=&quot;float:right; margin-left: 10px;&quot;
+      | Orange
+      | Apple
+      |-
+      | Bread
+      | Pie
+      |-
+      | Butter
+      | Ice cream 
+      |}
+
+      Lorem ipsum dolor sit amet, consectetuer adipiscing 
+      elit, sed diam nonummy nibh euismod tincidunt ut 
+      laoreet dolore magna aliquam erat volutpat. Ut wisi 
+      enim ad minim veniam, quis nostrud exerci tation 
+      ullamcorper suscipit lobortis nisl ut aliquip ex ea 
+      commodo consequat. Duis autem vel eum iriure dolor 
+      in hendrerit in vulputate velit esse molestie consequat, 
+      vel illum dolore eu feugiat nulla facilisis at vero 
+      eros et accumsan et iusto odio dignissim qui blandit 
+      praesent luptatum zzril delenit augue duis dolore te 
+      feugait nulla facilisi.
+
+      === Cell contents alignment ===
+      {| class=&quot;wikitable&quot;
+      |- style=&quot;vertical-align:top;&quot;
+      | style=&quot;height:100px; width:100px; text-align:left;&quot; | A
+      | style=&quot;height:100px; width:100px; text-align:center;&quot; | B
+      | style=&quot;height:100px; width:100px; text-align:right;&quot; | C
+      |- style=&quot;vertical-align:middle;&quot;
+      | style=&quot;height:100px; width:100px; text-align:left;&quot; | D
+      | style=&quot;height:100px; width:100px; text-align:center;&quot; | E
+      | style=&quot;height:100px; width:100px; text-align:right;&quot; | F
+      |- style=&quot;vertical-align:bottom;&quot;
+      | style=&quot;height:100px; width:100px; text-align:left;&quot; | G
+      | style=&quot;height:100px; width:100px; text-align:center;&quot; | H
+      | style=&quot;height:100px; width:100px; text-align:right;&quot; | I
+      |}
+      </text>
+    </revision>
+  </page>
+</wikimedia>

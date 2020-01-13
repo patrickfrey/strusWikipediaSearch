@@ -1,0 +1,494 @@
+## 0000/Tables.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doc><docid>Tables</docid>
+<title>Tables</title>
+<heading lv="h1"><text>Basics</text>
+  </heading>
+<heading lv="h2"><text>Example 1</text>
+  </heading>
+<tablink id="table1"/>
+<table id="table1"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Example 2</text>
+  </heading>
+<tablink id="table2"/>
+<table id="table2"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C2,R0"><text>more</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>more</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice</text>
+    <br/>
+    <text>cream</text>
+    </cell>
+  <cell id="C2,R2"><text>and</text>
+    <br/>
+    <text>more</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Example 3</text>
+  </heading>
+<tablink id="table3"/>
+<table id="table3"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C2,R0"><text>more</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>more</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  <cell id="C2,R2"><text>and more</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Example 4</text>
+  </heading>
+<tablink id="table4"/>
+<table id="table4"><cell id="C0,R0"><text>Lorem ipsum dolor sit amet,</text>
+    <br/>
+    <text>consetetur sadipscing elitr,</text>
+    <br/>
+    <text>sed diam nonumy eirmod tempor invidunt</text>
+    <br/>
+    <text>ut labore et dolore magna aliquyam erat,</text>
+    <br/>
+    <text>sed diam voluptua.</text>
+    <br/>
+    <text>At vero eos et accusam et justo duo dolores</text>
+    <br/>
+    <text>et ea rebum. Stet clita kasd gubergren,</text>
+    <br/>
+    <text>no sea takimata sanctus est Lorem ipsum</text>
+    <br/>
+    <text>dolor sit amet.</text>
+    </cell>
+  <cell id="C1,R0"><list lv="l1"><text>Lorem ipsum dolor sit amet</text>
+      </list>
+    <list lv="l1"><text>consetetur sadipscing elitr</text>
+      </list>
+    <list lv="l1"><text>sed diam nonumy eirmod tempor invidunt</text>
+      </list>
+    </cell>
+  </table>
+<heading lv="h2"><text>Table headers</text>
+  </heading>
+<tablink id="table5"/>
+<table id="table5"><head id="C0"><text>Item</text>
+    </head>
+  <head id="C1"><text>Amount</text>
+    </head>
+  <head id="C2"><text>Cost</text>
+    </head>
+  <head id="R4"><text>Total</text>
+    </head>
+  <cell id="C0,R1"><text>Orange</text>
+    </cell>
+  <cell id="C1,R1"><text>10</text>
+    </cell>
+  <cell id="C2,R1"><text>7.00</text>
+    </cell>
+  <cell id="C0,R2"><text>Bread</text>
+    </cell>
+  <cell id="C1,R2"><text>4</text>
+    </cell>
+  <cell id="C2,R2"><text>3.00</text>
+    </cell>
+  <cell id="C0,R3"><text>Butter</text>
+    </cell>
+  <cell id="C1,R3"><text>1</text>
+    </cell>
+  <cell id="C2,R3"><text>5.00</text>
+    </cell>
+  <cell id="C1,R4"/>
+  <cell id="C2,R4"><text>15.00</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Caption</text>
+  </heading>
+<tablink id="table6"/>
+<table id="table6"><tabtitle id="title"><text>Food complements</text>
+    </tabtitle>
+  <cell id="C0,R1"><text>Orange</text>
+    </cell>
+  <cell id="C1,R1"><text>Apple</text>
+    </cell>
+  <cell id="C0,R2"><text>Bread</text>
+    </cell>
+  <cell id="C1,R2"><text>Pie</text>
+    </cell>
+  <cell id="C0,R3"><text>Butter</text>
+    </cell>
+  <cell id="C1,R3"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Caption (Basic Styling)</text>
+  </heading>
+<tablink id="table7"/>
+<table id="table7"><tabtitle id="title"><text>Food complements</text>
+    </tabtitle>
+  <cell id="C0,R1"><text>Orange</text>
+    </cell>
+  <cell id="C1,R1"><text>Apple</text>
+    </cell>
+  <cell id="C0,R2"><text>Bread</text>
+    </cell>
+  <cell id="C1,R2"><text>Pie</text>
+    </cell>
+  <cell id="C0,R3"><text>Butter</text>
+    </cell>
+  <cell id="C1,R3"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Colspan, rowspan</text>
+  </heading>
+<tablink id="table8"/>
+<table id="table8"><head id="C0,C1,C2,C3,C4,C5"><text>Shopping List</text>
+    </head>
+  <cell id="C0,R1,R2"><text>Bread &amp; Butter</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>Buns</text>
+    </cell>
+  <cell id="C3,R1"><text>Danish</text>
+    </cell>
+  <cell id="C4,C5,R1"><text>Croissant</text>
+    </cell>
+  <cell id="C1,R2"><text>Cheese</text>
+    </cell>
+  <cell id="C2,C3,R2"><text>Ice cream</text>
+    </cell>
+  <cell id="C4,R2"><text>Butter</text>
+    </cell>
+  <cell id="C5,R2"><text>Yogurt</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>HTML attributes</text>
+  </heading>
+<tablink id="table9"/>
+<table id="table9"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C2,R0"><text>12,333.00</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>500.00</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  <cell id="C2,R2"><text>1.00</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Attributes on cells</text>
+  </heading>
+<tablink id="table10"/>
+<table id="table10"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C2,R0"><text>12,333.00</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>500.00</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  <cell id="C2,R2"><text>1.00</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Attributes on multiple cells</text>
+  </heading>
+<tablink id="table11"/>
+<table id="table11"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C2,R0"><text>12,333.00</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>500.00</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  <cell id="C2,R2"><text>1.00</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Attributes on rows</text>
+  </heading>
+<tablink id="table12"/>
+<table id="table12"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C2,R0"><text>12,333.00</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C2,R1"><text>500.00</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  <cell id="C2,R2"><text>1.00</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Simple one pixel table border</text>
+  </heading>
+<tablink id="table13"/>
+<table id="table13"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Border width</text>
+  </heading>
+<tablink id="table14"/>
+
+<br/>
+<tablink id="table15"/>
+<table id="table14"><cell id="C0,R0"><text>Hello</text>
+    </cell>
+  </table>
+<table id="table15"><cell id="C0,R0"><text>Hello</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>CSS styles</text>
+  </heading>
+<tablink id="table16"/>
+<table id="table16"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Padding</text>
+  </heading>
+<tablink id="table17"/>
+<table id="table17"><cell id="C0,R0"><quot><text>padding:10px</text>
+      </quot>
+    </cell>
+  <cell id="C0,R1"><quot><text>padding:50px</text>
+      </quot>
+    
+    <br/>
+    <text>Specify the padding on</text>
+    <entity lv="3"><text>EACH CELL</text>
+      </entity>
+    </cell>
+  <cell id="C0,R2"><quot><text>padding:100px</text>
+      </quot>
+    </cell>
+  </table>
+<heading lv="h2"><text>Attributes</text>
+  </heading>
+<tablink id="table18"/>
+<table id="table18"><tabtitle id="title"><entity lv="2"><text>Food complements</text>
+      </entity>
+    </tabtitle>
+  <cell id="C0,R1"><text>Orange</text>
+    </cell>
+  <cell id="C1,R1"><text>Apple</text>
+    </cell>
+  <cell id="C0,R2"><text>Bread</text>
+    </cell>
+  <cell id="C1,R2"><text>Pie</text>
+    </cell>
+  <cell id="C0,R3"><text>Butter</text>
+    </cell>
+  <cell id="C1,R3"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Column width</text>
+  </heading>
+<tablink id="table19"/>
+<table id="table19"><cell id="C0,C1,R0"><text>This column width is 85% of the screen width</text>
+    </cell>
+  <cell id="C0,R1"><entity lv="3"><text>This column is 30% counted from 85% of the screen width</text>
+      </entity>
+    </cell>
+  <cell id="C1,R1"><entity lv="3"><text>This column is 70% counted from 85% of the screen width</text>
+      </entity>
+    </cell>
+  </table>
+<heading lv="h2"><text>Accessibility of table header cells</text>
+  </heading>
+
+<br/>
+<tablink id="table20"/>
+<table id="table20"><head id="C0"><text>Item</text>
+    </head>
+  <head id="C1"><text>Quantity</text>
+    </head>
+  <head id="C2"><text>Price</text>
+    </head>
+  <head id="R2"><text>Bread</text>
+    </head>
+  <head id="R3"><text>Butter</text>
+    </head>
+  <head id="R4"><text>Total</text>
+    </head>
+  <cell id="C1,R2"><text>0.3 kg</text>
+    </cell>
+  <cell id="C2,R2"><text>$0.65</text>
+    </cell>
+  <cell id="C1,R3"><text>0.125 kg</text>
+    </cell>
+  <cell id="C2,R3"><text>$1.25</text>
+    </cell>
+  <cell id="C2,R4"><text>$1.90</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Table alignment</text>
+  </heading>
+<tablink id="table21"/>
+<table id="table21"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Table alignment to center</text>
+  </heading>
+<tablink id="table22"/>
+<table id="table22"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Table floating around text</text>
+  </heading>
+<tablink id="table23"/>
+
+<br/>
+<text>Lorem ipsum dolor sit amet, consectetuer adipiscing</text>
+<br/>
+<text>elit, sed diam nonummy nibh euismod tincidunt ut</text>
+<br/>
+<text>laoreet dolore magna aliquam erat volutpat. Ut wisi</text>
+<br/>
+<text>enim ad minim veniam, quis nostrud exerci tation</text>
+<br/>
+<text>ullamcorper suscipit lobortis nisl ut aliquip ex ea</text>
+<br/>
+<text>commodo consequat. Duis autem vel eum iriure dolor</text>
+<br/>
+<text>in hendrerit in vulputate velit esse molestie consequat,</text>
+<br/>
+<text>vel illum dolore eu feugiat nulla facilisis at vero</text>
+<br/>
+<text>eros et accumsan et iusto odio dignissim qui blandit</text>
+<br/>
+<text>praesent luptatum zzril delenit augue duis dolore te</text>
+<br/>
+<text>feugait nulla facilisi.</text>
+<table id="table23"><cell id="C0,R0"><text>Orange</text>
+    </cell>
+  <cell id="C1,R0"><text>Apple</text>
+    </cell>
+  <cell id="C0,R1"><text>Bread</text>
+    </cell>
+  <cell id="C1,R1"><text>Pie</text>
+    </cell>
+  <cell id="C0,R2"><text>Butter</text>
+    </cell>
+  <cell id="C1,R2"><text>Ice cream</text>
+    </cell>
+  </table>
+<heading lv="h2"><text>Cell contents alignment</text>
+  </heading>
+<tablink id="table24"/>
+
+<br/>
+<table id="table24"><cell id="C0,R1"><text>A</text>
+    </cell>
+  <cell id="C1,R1"><text>B</text>
+    </cell>
+  <cell id="C2,R1"><text>C</text>
+    </cell>
+  <cell id="C0,R2"><text>D</text>
+    </cell>
+  <cell id="C1,R2"><text>E</text>
+    </cell>
+  <cell id="C2,R2"><text>F</text>
+    </cell>
+  <cell id="C0,R3"><text>G</text>
+    </cell>
+  <cell id="C1,R3"><text>H</text>
+    </cell>
+  <cell id="C2,R3"><text>I</text>
+    </cell>
+  </table></doc>
+
+
