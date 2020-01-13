@@ -1778,7 +1778,7 @@ WikimediaLexem WikimediaLexer::next()
 			}
 			else if (*m_si == '|')
 			{
-				m_si = skipSpaces( m_si+1, m_se);
+				m_si++;
 				if (m_si == m_se) break;
 
 				if (*m_si == '-')

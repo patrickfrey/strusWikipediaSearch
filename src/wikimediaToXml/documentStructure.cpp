@@ -1722,6 +1722,7 @@ static void stack_pop_back( std::vector<Paragraph::StructType>& stk, const char*
 std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) const
 {
 	std::string rt;
+	std::string lastMark;
 	std::vector<Paragraph::StructType> stk;
 	XmlPrinter output;
 	output.printHeader( rt);
@@ -1736,6 +1737,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 		switch (pi->type())
 		{
 			case Paragraph::Title:
+				lastMark.clear();
 				printTagContent( output, rt, "docid", "", pi->id());
 				if (beautified) output.printValue( std::string("\n") + std::string( 2*stk.size(), ' '), rt);
 				printTagContent( output, rt, "title", "", pi->text());
@@ -1792,6 +1794,7 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				stack_pop_back( stk, pi->typeName());
 				break;
 			case Paragraph::HeadingStart:
+				lastMark.clear();
 				stk.push_back( Paragraph::StructHeading);
 				printTagOpenA( output, rt, "heading", "lv", pi->id(), string_conv::trim( pi->text()));
 				break;
@@ -1976,8 +1979,15 @@ std::string DocumentStructure::toxml( bool beautified, bool singleIdAttribute) c
 				output.printCloseTag( rt);
 				break;
 			case Paragraph::Markup:
-				printTagContent( output, rt, "mark", pi->id(), string_conv::trim( pi->text()));
+			{
+				std::string mrk = string_conv::trim( pi->text());
+				if (mrk != lastMark)
+				{
+					printTagContent( output, rt, "mark", pi->id(), mrk);
+					lastMark = mrk;
+				}
 				break;
+			}
 			case Paragraph::Text:
 				if (!pi->id().empty() || !isSpaceOnlyText( pi->text()))
 				{

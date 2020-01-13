@@ -1402,40 +1402,36 @@
 <br/>
 <tablink id="table20"/>
 <mark>Party shading/Democratic</mark>
+
+
+
+
+
+
+
+
+
+<mark>Party shading/Whig</mark>
 <mark>Party shading/Democratic</mark>
+
+
+<mark>Party shading/Whig</mark>
 <mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
+
+
+
+
+
+
+
+
+
+
+<mark>Party shading/Whig</mark>
 <mark>Party shading/Democratic</mark>
 <mark>Party shading/Whig</mark>
-<text>3,9343.12</text>
 <mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Whig</mark>
-<text>8,1146.38</text>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Whig</mark>
-<text>1,6861.46</text>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Whig</mark>
-<text>9,12920.80</text>
-<mark>Party shading/Democratic</mark>
-<mark>Party shading/Democratic</mark>
+
 <table id="table20"><head id="C0,C1"/>
   <head id="C2,C3,C4"><text>Franklin Pierce</text>
     <br/>
@@ -1495,217 +1491,217 @@
     </head>
   <head id="R3"><text>9</text>
     </head>
-  <head id="R4"><text>AL</text>
+  <head id="R3"><text>AL</text>
     </head>
-  <head id="R5"><pagelink id="United States presidential election in Arkansas, 1852"><text>Arkansas</text>
+  <head id="R4"><pagelink id="United States presidential election in Arkansas, 1852"><text>Arkansas</text>
+      </pagelink>
+    </head>
+  <head id="R4"><text>4</text>
+    </head>
+  <head id="R4"><text>AR</text>
+    </head>
+  <head id="R5"><pagelink id="United States presidential election in California, 1852"><text>California</text>
       </pagelink>
     </head>
   <head id="R5"><text>4</text>
     </head>
-  <head id="R6"><text>AR</text>
+  <head id="R5"><text>CA</text>
     </head>
-  <head id="R7"><pagelink id="United States presidential election in California, 1852"><text>California</text>
+  <head id="R6"><pagelink id="United States presidential election in Connecticut, 1852"><text>Connecticut</text>
       </pagelink>
     </head>
-  <head id="R7"><text>4</text>
+  <head id="R6"><text>6</text>
     </head>
-  <head id="R9"><text>CA</text>
+  <head id="R6"><text>CT</text>
     </head>
-  <head id="R10"><pagelink id="United States presidential election in Connecticut, 1852"><text>Connecticut</text>
+  <head id="R7"><pagelink id="United States presidential election in Delaware, 1852"><text>Delaware</text>
       </pagelink>
     </head>
-  <head id="R10"><text>6</text>
+  <head id="R7"><text>3</text>
     </head>
-  <head id="R12"><text>CT</text>
+  <head id="R7"><text>DE</text>
     </head>
-  <head id="R13"><pagelink id="United States presidential election in Delaware, 1852"><text>Delaware</text>
+  <head id="R8"><pagelink id="United States presidential election in Florida, 1852"><text>Florida</text>
       </pagelink>
     </head>
-  <head id="R13"><text>3</text>
+  <head id="R8"><text>3</text>
     </head>
-  <head id="R15"><text>DE</text>
+  <head id="R8"><text>FL</text>
     </head>
-  <head id="R16"><pagelink id="United States presidential election in Florida, 1852"><text>Florida</text>
+  <head id="R9"><pagelink id="United States presidential election in Georgia, 1852"><text>Georgia</text>
       </pagelink>
     </head>
-  <head id="R16"><text>3</text>
+  <head id="R9"><text>10</text>
     </head>
-  <head id="R17"><text>FL</text>
+  <head id="R9"><text>GA</text>
     </head>
-  <head id="R18"><pagelink id="United States presidential election in Georgia, 1852"><text>Georgia</text>
+  <head id="R10"><pagelink id="United States presidential election in Illinois, 1852"><text>Illinois</text>
       </pagelink>
     </head>
-  <head id="R18"><text>10</text>
+  <head id="R10"><text>11</text>
     </head>
-  <head id="R19"><text>GA</text>
+  <head id="R10"><text>IL</text>
     </head>
-  <head id="R20"><pagelink id="United States presidential election in Illinois, 1852"><text>Illinois</text>
+  <head id="R11"><pagelink id="United States presidential election in Indiana, 1852"><text>Indiana</text>
       </pagelink>
     </head>
-  <head id="R20"><text>11</text>
+  <head id="R11"><text>13</text>
     </head>
-  <head id="R22"><text>IL</text>
+  <head id="R11"><text>IN</text>
     </head>
-  <head id="R23"><pagelink id="United States presidential election in Indiana, 1852"><text>Indiana</text>
+  <head id="R12"><pagelink id="United States presidential election in Iowa, 1852"><text>Iowa</text>
       </pagelink>
     </head>
-  <head id="R23"><text>13</text>
+  <head id="R12"><text>4</text>
     </head>
-  <head id="R25"><text>IN</text>
+  <head id="R12"><text>IA</text>
     </head>
-  <head id="R26"><pagelink id="United States presidential election in Iowa, 1852"><text>Iowa</text>
+  <head id="R13"><pagelink id="United States presidential election in Kentucky, 1852"><text>Kentucky</text>
       </pagelink>
     </head>
-  <head id="R26"><text>4</text>
+  <head id="R13"><text>12</text>
     </head>
-  <head id="R28"><text>IA</text>
+  <head id="R13"><text>KY</text>
     </head>
-  <head id="R29"><pagelink id="United States presidential election in Kentucky, 1852"><text>Kentucky</text>
+  <head id="R14"><pagelink id="United States presidential election in Louisiana, 1852"><text>Louisiana</text>
+      </pagelink>
+    </head>
+  <head id="R14"><text>6</text>
+    </head>
+  <head id="R14"><text>LA</text>
+    </head>
+  <head id="R15"><pagelink id="United States presidential election in Maine, 1852"><text>Maine</text>
+      </pagelink>
+    </head>
+  <head id="R15"><text>8</text>
+    </head>
+  <head id="R15"><text>ME</text>
+    </head>
+  <head id="R16"><pagelink id="United States presidential election in Maryland, 1852"><text>Maryland</text>
+      </pagelink>
+    </head>
+  <head id="R16"><text>8</text>
+    </head>
+  <head id="R16"><text>MD</text>
+    </head>
+  <head id="R17"><pagelink id="United States presidential election in Massachusetts, 1852"><text>Massachusetts</text>
+      </pagelink>
+    </head>
+  <head id="R17"><text>13</text>
+    </head>
+  <head id="R17"><text>MA</text>
+    </head>
+  <head id="R18"><pagelink id="United States presidential election in Michigan, 1852"><text>Michigan</text>
+      </pagelink>
+    </head>
+  <head id="R18"><text>6</text>
+    </head>
+  <head id="R18"><text>MI</text>
+    </head>
+  <head id="R19"><pagelink id="United States presidential election in Mississippi, 1852"><text>Mississippi</text>
+      </pagelink>
+    </head>
+  <head id="R19"><text>7</text>
+    </head>
+  <head id="R19"><text>MS</text>
+    </head>
+  <head id="R20"><pagelink id="United States presidential election in Missouri, 1852"><text>Missouri</text>
+      </pagelink>
+    </head>
+  <head id="R20"><text>9</text>
+    </head>
+  <head id="R20"><text>MO</text>
+    </head>
+  <head id="R21"><pagelink id="United States presidential election in New Hampshire, 1852"><text>New Hampshire</text>
+      </pagelink>
+    </head>
+  <head id="R21"><text>5</text>
+    </head>
+  <head id="R21"><text>NH</text>
+    </head>
+  <head id="R22"><pagelink id="United States presidential election in New Jersey, 1852"><text>New Jersey</text>
+      </pagelink>
+    </head>
+  <head id="R22"><text>7</text>
+    </head>
+  <head id="R22"><text>NJ</text>
+    </head>
+  <head id="R23"><pagelink id="United States presidential election in New York, 1852"><text>New York</text>
+      </pagelink>
+    </head>
+  <head id="R23"><text>35</text>
+    </head>
+  <head id="R23"><text>NY</text>
+    </head>
+  <head id="R24"><pagelink id="United States presidential election in North Carolina, 1852"><text>North Carolina</text>
+      </pagelink>
+    </head>
+  <head id="R24"><text>10</text>
+    </head>
+  <head id="R24"><text>NC</text>
+    </head>
+  <head id="R25"><pagelink id="United States presidential election in Ohio, 1852"><text>Ohio</text>
+      </pagelink>
+    </head>
+  <head id="R25"><text>23</text>
+    </head>
+  <head id="R25"><text>OH</text>
+    </head>
+  <head id="R26"><pagelink id="United States presidential election in Pennsylvania, 1852"><text>Pennsylvania</text>
+      </pagelink>
+    </head>
+  <head id="R26"><text>27</text>
+    </head>
+  <head id="R26"><text>PA</text>
+    </head>
+  <head id="R27"><pagelink id="United States presidential election in Rhode Island, 1852"><text>Rhode Island</text>
+      </pagelink>
+    </head>
+  <head id="R27"><text>4</text>
+    </head>
+  <head id="R27"><text>RI</text>
+    </head>
+  <head id="R28"><pagelink id="United States presidential election in South Carolina, 1852"><text>South Carolina</text>
+      </pagelink>
+    </head>
+  <head id="R28"><text>8</text>
+    </head>
+  <head id="R28"><text>SC</text>
+    </head>
+  <head id="R29"><pagelink id="United States presidential election in Tennessee, 1852"><text>Tennessee</text>
       </pagelink>
     </head>
   <head id="R29"><text>12</text>
     </head>
-  <head id="R33"><text>KY</text>
+  <head id="R29"><text>TN</text>
     </head>
-  <head id="R34"><pagelink id="United States presidential election in Louisiana, 1852"><text>Louisiana</text>
+  <head id="R30"><pagelink id="United States presidential election in Texas, 1852"><text>Texas</text>
       </pagelink>
     </head>
-  <head id="R34"><text>6</text>
+  <head id="R30"><text>4</text>
     </head>
-  <head id="R35"><text>LA</text>
+  <head id="R30"><text>TX</text>
     </head>
-  <head id="R36"><pagelink id="United States presidential election in Maine, 1852"><text>Maine</text>
+  <head id="R31"><pagelink id="United States presidential election in Vermont, 1852"><text>Vermont</text>
       </pagelink>
     </head>
-  <head id="R36"><text>8</text>
+  <head id="R31"><text>5</text>
     </head>
-  <head id="R38"><text>ME</text>
+  <head id="R31"><text>VT</text>
     </head>
-  <head id="R39"><pagelink id="United States presidential election in Maryland, 1852"><text>Maryland</text>
+  <head id="R32"><pagelink id="United States presidential election in Virginia, 1852"><text>Virginia</text>
       </pagelink>
     </head>
-  <head id="R39"><text>8</text>
+  <head id="R32"><text>15</text>
     </head>
-  <head id="R41"><text>MD</text>
+  <head id="R32"><text>VA</text>
     </head>
-  <head id="R42"><pagelink id="United States presidential election in Massachusetts, 1852"><text>Massachusetts</text>
+  <head id="R33"><pagelink id="United States presidential election in Wisconsin, 1852"><text>Wisconsin</text>
       </pagelink>
     </head>
-  <head id="R42"><text>13</text>
+  <head id="R33"><text>5</text>
     </head>
-  <head id="R46"><text>MA</text>
-    </head>
-  <head id="R47"><pagelink id="United States presidential election in Michigan, 1852"><text>Michigan</text>
-      </pagelink>
-    </head>
-  <head id="R47"><text>6</text>
-    </head>
-  <head id="R49"><text>MI</text>
-    </head>
-  <head id="R50"><pagelink id="United States presidential election in Mississippi, 1852"><text>Mississippi</text>
-      </pagelink>
-    </head>
-  <head id="R50"><text>7</text>
-    </head>
-  <head id="R51"><text>MS</text>
-    </head>
-  <head id="R52"><pagelink id="United States presidential election in Missouri, 1852"><text>Missouri</text>
-      </pagelink>
-    </head>
-  <head id="R52"><text>9</text>
-    </head>
-  <head id="R53"><text>MO</text>
-    </head>
-  <head id="R54"><pagelink id="United States presidential election in New Hampshire, 1852"><text>New Hampshire</text>
-      </pagelink>
-    </head>
-  <head id="R54"><text>5</text>
-    </head>
-  <head id="R56"><text>NH</text>
-    </head>
-  <head id="R57"><pagelink id="United States presidential election in New Jersey, 1852"><text>New Jersey</text>
-      </pagelink>
-    </head>
-  <head id="R57"><text>7</text>
-    </head>
-  <head id="R59"><text>NJ</text>
-    </head>
-  <head id="R60"><pagelink id="United States presidential election in New York, 1852"><text>New York</text>
-      </pagelink>
-    </head>
-  <head id="R60"><text>35</text>
-    </head>
-  <head id="R62"><text>NY</text>
-    </head>
-  <head id="R63"><pagelink id="United States presidential election in North Carolina, 1852"><text>North Carolina</text>
-      </pagelink>
-    </head>
-  <head id="R63"><text>10</text>
-    </head>
-  <head id="R64"><text>NC</text>
-    </head>
-  <head id="R65"><pagelink id="United States presidential election in Ohio, 1852"><text>Ohio</text>
-      </pagelink>
-    </head>
-  <head id="R65"><text>23</text>
-    </head>
-  <head id="R67"><text>OH</text>
-    </head>
-  <head id="R68"><pagelink id="United States presidential election in Pennsylvania, 1852"><text>Pennsylvania</text>
-      </pagelink>
-    </head>
-  <head id="R68"><text>27</text>
-    </head>
-  <head id="R70"><text>PA</text>
-    </head>
-  <head id="R71"><pagelink id="United States presidential election in Rhode Island, 1852"><text>Rhode Island</text>
-      </pagelink>
-    </head>
-  <head id="R71"><text>4</text>
-    </head>
-  <head id="R73"><text>RI</text>
-    </head>
-  <head id="R74"><pagelink id="United States presidential election in South Carolina, 1852"><text>South Carolina</text>
-      </pagelink>
-    </head>
-  <head id="R74"><text>8</text>
-    </head>
-  <head id="C0"><text>SC</text>
-    </head>
-  <head id="R78"><pagelink id="United States presidential election in Tennessee, 1852"><text>Tennessee</text>
-      </pagelink>
-    </head>
-  <head id="R78"><text>12</text>
-    </head>
-  <head id="R81"><text>TN</text>
-    </head>
-  <head id="R82"><pagelink id="United States presidential election in Texas, 1852"><text>Texas</text>
-      </pagelink>
-    </head>
-  <head id="R82"><text>4</text>
-    </head>
-  <head id="R83"><text>TX</text>
-    </head>
-  <head id="R84"><pagelink id="United States presidential election in Vermont, 1852"><text>Vermont</text>
-      </pagelink>
-    </head>
-  <head id="R84"><text>5</text>
-    </head>
-  <head id="R88"><text>VT</text>
-    </head>
-  <head id="R89"><pagelink id="United States presidential election in Virginia, 1852"><text>Virginia</text>
-      </pagelink>
-    </head>
-  <head id="R89"><text>15</text>
-    </head>
-  <head id="R90"><text>VA</text>
-    </head>
-  <head id="R91"><pagelink id="United States presidential election in Wisconsin, 1852"><text>Wisconsin</text>
-      </pagelink>
-    </head>
-  <head id="R91"><text>5</text>
-    </head>
-  <head id="R93"><text>WI</text>
+  <head id="R33"><text>WI</text>
     </head>
   <head id="C0"/>
   <head id="C1"><text>296</text>
@@ -1753,579 +1749,699 @@
     </cell>
   <cell id="C6,R3"><text>34.12</text>
     </cell>
-  <cell id="C0,C1,C2,R4"><entity lv="2"><text>no ballots</text>
+  <cell id="C7,R3"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R3"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R4"><text>11,280</text>
+  <cell id="C11,R3"><text>11,280</text>
     </cell>
-  <cell id="C4,R4"><text>26.77</text>
+  <cell id="C12,R3"><text>26.77</text>
     </cell>
-  <cell id="C5,R4"><text>44,147</text>
+  <cell id="C13,R3"><text>44,147</text>
     </cell>
-  <cell id="C2,R5"><text>12,173</text>
+  <cell id="C2,R4"><text>12,173</text>
     </cell>
-  <cell id="C3,R5"><text>62.18</text>
+  <cell id="C3,R4"><text>62.18</text>
+    </cell>
+  <cell id="C4,R4"><text>4</text>
+    </cell>
+  <cell id="C5,R4"><text>7,404</text>
+    </cell>
+  <cell id="C6,R4"><text>37.82</text>
+    </cell>
+  <cell id="C7,R4"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R4"><entity lv="2"><text>no ballots</text>
+      </entity>
+    </cell>
+  <cell id="C11,R4"><text>4,769</text>
+    </cell>
+  <cell id="C12,R4"><text>24.36</text>
+    </cell>
+  <cell id="C13,R4"><text>19,577</text>
+    </cell>
+  <cell id="C2,R5"><text>40,721</text>
+    </cell>
+  <cell id="C3,R5"><text>53.02</text>
     </cell>
   <cell id="C4,R5"><text>4</text>
     </cell>
-  <cell id="C5,R5"><text>7,404</text>
+  <cell id="C5,R5"><text>35,972</text>
     </cell>
-  <cell id="C6,R5"><text>37.82</text>
+  <cell id="C6,R5"><text>46.83</text>
     </cell>
-  <cell id="C0,C1,C2,R6"><entity lv="2"><text>no ballots</text>
+  <cell id="C7,R5"><text>-</text>
+    </cell>
+  <cell id="C8,R5"><text>61</text>
+    </cell>
+  <cell id="C9,R5"><text>0.08</text>
+    </cell>
+  <cell id="C10,R5"><text>-</text>
+    </cell>
+  <cell id="C11,R5"><text>4,749</text>
+    </cell>
+  <cell id="C12,R5"><text>6.19</text>
+    </cell>
+  <cell id="C13,R5"><text>76,810</text>
+    </cell>
+  <cell id="C2,R6"><text>33,249</text>
+    </cell>
+  <cell id="C3,R6"><text>49.79</text>
+    </cell>
+  <cell id="C4,R6"><text>6</text>
+    </cell>
+  <cell id="C5,R6"><text>30,359</text>
+    </cell>
+  <cell id="C6,R6"><text>45.56</text>
+    </cell>
+  <cell id="C7,R6"><text>-</text>
+    </cell>
+  <cell id="C8,R6"><text>3,161</text>
+    </cell>
+  <cell id="C9,R6"><text>4.73</text>
+    </cell>
+  <cell id="C10,R6"><text>-</text>
+    </cell>
+  <cell id="C11,R6"><text>2,890</text>
+    </cell>
+  <cell id="C12,R6"><text>4.23</text>
+    </cell>
+  <cell id="C13,R6"><text>66,781</text>
+    </cell>
+  <cell id="C2,R7"><text>6,318</text>
+    </cell>
+  <cell id="C3,R7"><text>49.85</text>
+    </cell>
+  <cell id="C4,R7"><text>3</text>
+    </cell>
+  <cell id="C5,R7"><text>6,293</text>
+    </cell>
+  <cell id="C6,R7"><text>49.66</text>
+    </cell>
+  <cell id="C7,R7"><text>-</text>
+    </cell>
+  <cell id="C8,R7"><text>62</text>
+    </cell>
+  <cell id="C9,R7"><text>0.49</text>
+    </cell>
+  <cell id="C10,R7"><text>-</text>
+    </cell>
+  <cell id="C11,R7"><text>25</text>
+    </cell>
+  <cell id="C12,R7"><text>0.19</text>
+    </cell>
+  <cell id="C13,R7"><text>12,673</text>
+    </cell>
+  <cell id="C2,R8"><text>4,318</text>
+    </cell>
+  <cell id="C3,R8"><text>60.03</text>
+    </cell>
+  <cell id="C4,R8"><text>3</text>
+    </cell>
+  <cell id="C5,R8"><text>2,875</text>
+    </cell>
+  <cell id="C6,R8"><text>39.97</text>
+    </cell>
+  <cell id="C7,R8"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R8"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R6"><text>4,769</text>
+  <cell id="C11,R8"><text>1,443</text>
     </cell>
-  <cell id="C4,R6"><text>24.36</text>
+  <cell id="C12,R8"><text>20.06</text>
     </cell>
-  <cell id="C5,R6"><text>19,577</text>
+  <cell id="C13,R8"><text>7,193</text>
     </cell>
-  <cell id="C2,R7"><text>40,721</text>
+  <cell id="C2,R9"><text>40,516</text>
     </cell>
-  <cell id="C3,R7"><text>53.02</text>
+  <cell id="C3,R9"><text>64.70</text>
     </cell>
-  <cell id="C4,R7"><text>4</text>
+  <cell id="C4,R9"><text>10</text>
     </cell>
-  <cell id="C5,R7"><text>35,972</text>
+  <cell id="C5,R9"><text>16,660</text>
     </cell>
-  <cell id="C6,R7"><text>46.83</text>
+  <cell id="C6,R9"><text>26.60</text>
     </cell>
-  <cell id="C0,R8"><text>61</text>
+  <cell id="C7,R9"><text>-</text>
     </cell>
-  <cell id="C1,R8"><text>0.08</text>
-    </cell>
-  <cell id="C0,R9"><text>4,749</text>
-    </cell>
-  <cell id="C1,R9"><text>6.19</text>
-    </cell>
-  <cell id="C2,R9"><text>76,810</text>
-    </cell>
-  <cell id="C2,R10"><text>33,249</text>
-    </cell>
-  <cell id="C3,R10"><text>49.79</text>
-    </cell>
-  <cell id="C4,R10"><text>6</text>
-    </cell>
-  <cell id="C5,R10"><text>30,359</text>
-    </cell>
-  <cell id="C6,R10"><text>45.56</text>
-    </cell>
-  <cell id="C0,R11"><text>3,161</text>
-    </cell>
-  <cell id="C1,R11"><text>4.73</text>
-    </cell>
-  <cell id="C0,R12"><text>2,890</text>
-    </cell>
-  <cell id="C1,R12"><text>4.23</text>
-    </cell>
-  <cell id="C2,R12"><text>66,781</text>
-    </cell>
-  <cell id="C2,R13"><text>6,318</text>
-    </cell>
-  <cell id="C3,R13"><text>49.85</text>
-    </cell>
-  <cell id="C4,R13"><text>3</text>
-    </cell>
-  <cell id="C5,R13"><text>6,293</text>
-    </cell>
-  <cell id="C6,R13"><text>49.66</text>
-    </cell>
-  <cell id="C0,R14"><text>62</text>
-    </cell>
-  <cell id="C1,R14"><text>0.49</text>
-    </cell>
-  <cell id="C0,R15"><text>25</text>
-    </cell>
-  <cell id="C1,R15"><text>0.19</text>
-    </cell>
-  <cell id="C2,R15"><text>12,673</text>
-    </cell>
-  <cell id="C2,R16"><text>4,318</text>
-    </cell>
-  <cell id="C3,R16"><text>60.03</text>
-    </cell>
-  <cell id="C4,R16"><text>3</text>
-    </cell>
-  <cell id="C5,R16"><text>2,875</text>
-    </cell>
-  <cell id="C6,R16"><text>39.97</text>
-    </cell>
-  <cell id="C0,C1,C2,R17"><entity lv="2"><text>no ballots</text>
+  <cell id="C8,C9,C10,R9"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R17"><text>1,443</text>
+  <cell id="C11,R9"><text>23,856</text>
     </cell>
-  <cell id="C4,R17"><text>20.06</text>
+  <cell id="C12,R9"><text>38.10</text>
     </cell>
-  <cell id="C5,R17"><text>7,193</text>
+  <cell id="C13,R9"><text>62,626</text>
     </cell>
-  <cell id="C2,R18"><text>40,516</text>
+  <cell id="C2,R10"><text>80,378</text>
     </cell>
-  <cell id="C3,R18"><text>64.70</text>
+  <cell id="C3,R10"><text>51.87</text>
     </cell>
-  <cell id="C4,R18"><text>10</text>
+  <cell id="C4,R10"><text>11</text>
     </cell>
-  <cell id="C5,R18"><text>16,660</text>
+  <cell id="C5,R10"><text>64,733</text>
     </cell>
-  <cell id="C6,R18"><text>26.60</text>
+  <cell id="C6,R10"><text>41.77</text>
     </cell>
-  <cell id="C0,C1,C2,R19"><entity lv="2"><text>no ballots</text>
+  <cell id="C7,R10"><text>-</text>
+    </cell>
+  <cell id="C8,R10"><text>9,863</text>
+    </cell>
+  <cell id="C9,R10"><text>6.36</text>
+    </cell>
+  <cell id="C10,R10"><text>-</text>
+    </cell>
+  <cell id="C11,R10"><text>15,645</text>
+    </cell>
+  <cell id="C12,R10"><text>10.10</text>
+    </cell>
+  <cell id="C13,R10"><text>154,974</text>
+    </cell>
+  <cell id="C2,R11"><text>95,340</text>
+    </cell>
+  <cell id="C3,R11"><text>52.05</text>
+    </cell>
+  <cell id="C4,R11"><text>13</text>
+    </cell>
+  <cell id="C5,R11"><text>80,901</text>
+    </cell>
+  <cell id="C6,R11"><text>44.17</text>
+    </cell>
+  <cell id="C7,R11"><text>-</text>
+    </cell>
+  <cell id="C8,R11"><text>6,929</text>
+    </cell>
+  <cell id="C9,R11"><text>3.78</text>
+    </cell>
+  <cell id="C10,R11"><text>-</text>
+    </cell>
+  <cell id="C11,R11"><text>14,439</text>
+    </cell>
+  <cell id="C12,R11"><text>7.88</text>
+    </cell>
+  <cell id="C13,R11"><text>183,170</text>
+    </cell>
+  <cell id="C2,R12"><text>17,763</text>
+    </cell>
+  <cell id="C3,R12"><text>50.23</text>
+    </cell>
+  <cell id="C4,R12"><text>4</text>
+    </cell>
+  <cell id="C5,R12"><text>15,856</text>
+    </cell>
+  <cell id="C6,R12"><text>44.84</text>
+    </cell>
+  <cell id="C7,R12"><text>-</text>
+    </cell>
+  <cell id="C8,R12"><text>1,606</text>
+    </cell>
+  <cell id="C9,R12"><text>4.54</text>
+    </cell>
+  <cell id="C10,R12"><text>-</text>
+    </cell>
+  <cell id="C11,R12"><text>1,907</text>
+    </cell>
+  <cell id="C12,R12"><text>5.39</text>
+    </cell>
+  <cell id="C13,R12"><text>35,364</text>
+    </cell>
+  <cell id="C2,R13"><text>53,494</text>
+    </cell>
+  <cell id="C3,R13"><text>48.32</text>
+    </cell>
+  <cell id="C4,R13"><text>-</text>
+    </cell>
+  <cell id="C5,R13"><text>57,428</text>
+    </cell>
+  <cell id="C6,R13"><text>51.44</text>
+    </cell>
+  <cell id="C7,R13"><text>12</text>
+    </cell>
+  <cell id="C8,R13"><text>266</text>
+    </cell>
+  <cell id="C9,R13"><text>0.24</text>
+    </cell>
+  <cell id="C10,R13"><text>-</text>
+    </cell>
+  <cell id="C11,R13"><text>-3,934</text>
+    </cell>
+  <cell id="C12,R13"><text>-3.12</text>
+    </cell>
+  <cell id="C13,R13"><text>111,148</text>
+    </cell>
+  <cell id="C2,R14"><text>18,647</text>
+    </cell>
+  <cell id="C3,R14"><text>51.94</text>
+    </cell>
+  <cell id="C4,R14"><text>6</text>
+    </cell>
+  <cell id="C5,R14"><text>17,255</text>
+    </cell>
+  <cell id="C6,R14"><text>48.06</text>
+    </cell>
+  <cell id="C7,R14"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R14"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R19"><text>23,856</text>
+  <cell id="C11,R14"><text>1,392</text>
     </cell>
-  <cell id="C4,R19"><text>38.10</text>
+  <cell id="C12,R14"><text>3.88</text>
     </cell>
-  <cell id="C5,R19"><text>62,626</text>
+  <cell id="C13,R14"><text>42,873</text>
     </cell>
-  <cell id="C2,R20"><text>80,378</text>
+  <cell id="C2,R15"><text>41,609</text>
     </cell>
-  <cell id="C3,R20"><text>51.87</text>
+  <cell id="C3,R15"><text>50.63</text>
     </cell>
-  <cell id="C4,R20"><text>11</text>
+  <cell id="C4,R15"><text>8</text>
     </cell>
-  <cell id="C5,R20"><text>64,733</text>
+  <cell id="C5,R15"><text>32,543</text>
     </cell>
-  <cell id="C6,R20"><text>41.77</text>
+  <cell id="C6,R15"><text>39.60</text>
     </cell>
-  <cell id="C0,R21"><text>9,863</text>
+  <cell id="C7,R15"><text>-</text>
     </cell>
-  <cell id="C1,R21"><text>6.36</text>
+  <cell id="C8,R15"><text>8,030</text>
     </cell>
-  <cell id="C0,R22"><text>15,645</text>
+  <cell id="C9,R15"><text>9.77</text>
     </cell>
-  <cell id="C1,R22"><text>10.10</text>
+  <cell id="C10,R15"><text>-</text>
     </cell>
-  <cell id="C2,R22"><text>154,974</text>
+  <cell id="C11,R15"><text>9,066</text>
     </cell>
-  <cell id="C2,R23"><text>95,340</text>
+  <cell id="C12,R15"><text>11.03</text>
     </cell>
-  <cell id="C3,R23"><text>52.05</text>
+  <cell id="C13,R15"><text>82,182</text>
     </cell>
-  <cell id="C4,R23"><text>13</text>
+  <cell id="C2,R16"><text>40,022</text>
     </cell>
-  <cell id="C5,R23"><text>80,901</text>
+  <cell id="C3,R16"><text>53.28</text>
     </cell>
-  <cell id="C6,R23"><text>44.17</text>
+  <cell id="C4,R16"><text>8</text>
     </cell>
-  <cell id="C0,R24"><text>6,929</text>
+  <cell id="C5,R16"><text>35,077</text>
     </cell>
-  <cell id="C1,R24"><text>3.78</text>
+  <cell id="C6,R16"><text>46.69</text>
     </cell>
-  <cell id="C0,R25"><text>14,439</text>
+  <cell id="C7,R16"><text>-</text>
     </cell>
-  <cell id="C1,R25"><text>7.88</text>
+  <cell id="C8,R16"><text>21</text>
     </cell>
-  <cell id="C2,R25"><text>183,170</text>
+  <cell id="C9,R16"><text>0.03</text>
     </cell>
-  <cell id="C2,R26"><text>17,763</text>
+  <cell id="C10,R16"><text>-</text>
     </cell>
-  <cell id="C3,R26"><text>50.23</text>
+  <cell id="C11,R16"><text>4,945</text>
     </cell>
-  <cell id="C4,R26"><text>4</text>
+  <cell id="C12,R16"><text>6.59</text>
     </cell>
-  <cell id="C5,R26"><text>15,856</text>
+  <cell id="C13,R16"><text>75,120</text>
     </cell>
-  <cell id="C6,R26"><text>44.84</text>
+  <cell id="C2,R17"><text>44,569</text>
     </cell>
-  <cell id="C0,R27"><text>1,606</text>
+  <cell id="C3,R17"><text>35.07</text>
     </cell>
-  <cell id="C1,R27"><text>4.54</text>
+  <cell id="C4,R17"><text>-</text>
     </cell>
-  <cell id="C0,R28"><text>1,907</text>
+  <cell id="C5,R17"><text>52,683</text>
     </cell>
-  <cell id="C1,R28"><text>5.39</text>
+  <cell id="C6,R17"><text>41.45</text>
     </cell>
-  <cell id="C2,R28"><text>35,364</text>
+  <cell id="C7,R17"><text>13</text>
     </cell>
-  <cell id="C2,R29"><text>53,494</text>
+  <cell id="C8,R17"><text>28,203</text>
     </cell>
-  <cell id="C3,R29"><text>48.32</text>
+  <cell id="C9,R17"><text>22.19</text>
     </cell>
-  <cell id="C0,R30"><text>57,428</text>
+  <cell id="C10,R17"><text>-</text>
     </cell>
-  <cell id="C1,R30"><text>51.44</text>
+  <cell id="C11,R17"><text>-8,114</text>
     </cell>
-  <cell id="C2,R30"><text>12</text>
+  <cell id="C12,R17"><text>-6.38</text>
     </cell>
-  <cell id="C3,R30"><text>266</text>
+  <cell id="C13,R17"><text>127,103</text>
     </cell>
-  <cell id="C4,R30"><text>0.24</text>
+  <cell id="C2,R18"><text>41,842</text>
     </cell>
-  <cell id="C0,R33"><text>111,148</text>
+  <cell id="C3,R18"><text>50.45</text>
     </cell>
-  <cell id="C2,R34"><text>18,647</text>
+  <cell id="C4,R18"><text>6</text>
     </cell>
-  <cell id="C3,R34"><text>51.94</text>
+  <cell id="C5,R18"><text>33,860</text>
     </cell>
-  <cell id="C4,R34"><text>6</text>
+  <cell id="C6,R18"><text>40.83</text>
     </cell>
-  <cell id="C5,R34"><text>17,255</text>
+  <cell id="C7,R18"><text>-</text>
     </cell>
-  <cell id="C6,R34"><text>48.06</text>
+  <cell id="C8,R18"><text>7,237</text>
     </cell>
-  <cell id="C0,C1,C2,R35"><entity lv="2"><text>no ballots</text>
+  <cell id="C9,R18"><text>8.73</text>
+    </cell>
+  <cell id="C10,R18"><text>-</text>
+    </cell>
+  <cell id="C11,R18"><text>7,982</text>
+    </cell>
+  <cell id="C12,R18"><text>9.62</text>
+    </cell>
+  <cell id="C13,R18"><text>82,939</text>
+    </cell>
+  <cell id="C2,R19"><text>26,896</text>
+    </cell>
+  <cell id="C3,R19"><text>60.50</text>
+    </cell>
+  <cell id="C4,R19"><text>7</text>
+    </cell>
+  <cell id="C5,R19"><text>17,558</text>
+    </cell>
+  <cell id="C6,R19"><text>39.50</text>
+    </cell>
+  <cell id="C7,R19"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R19"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R35"><text>1,392</text>
+  <cell id="C11,R19"><text>9,338</text>
     </cell>
-  <cell id="C4,R35"><text>3.88</text>
+  <cell id="C12,R19"><text>21.00</text>
     </cell>
-  <cell id="C5,R35"><text>42,873</text>
+  <cell id="C13,R19"><text>44,454</text>
     </cell>
-  <cell id="C2,R36"><text>41,609</text>
+  <cell id="C2,R20"><text>38,817</text>
     </cell>
-  <cell id="C3,R36"><text>50.63</text>
+  <cell id="C3,R20"><text>56.42</text>
     </cell>
-  <cell id="C4,R36"><text>8</text>
+  <cell id="C4,R20"><text>9</text>
     </cell>
-  <cell id="C5,R36"><text>32,543</text>
+  <cell id="C5,R20"><text>29,984</text>
     </cell>
-  <cell id="C6,R36"><text>39.60</text>
+  <cell id="C6,R20"><text>43.58</text>
     </cell>
-  <cell id="C0,R37"><text>8,030</text>
+  <cell id="C7,R20"><text>-</text>
     </cell>
-  <cell id="C1,R37"><text>9.77</text>
-    </cell>
-  <cell id="C0,R38"><text>9,066</text>
-    </cell>
-  <cell id="C1,R38"><text>11.03</text>
-    </cell>
-  <cell id="C2,R38"><text>82,182</text>
-    </cell>
-  <cell id="C2,R39"><text>40,022</text>
-    </cell>
-  <cell id="C3,R39"><text>53.28</text>
-    </cell>
-  <cell id="C4,R39"><text>8</text>
-    </cell>
-  <cell id="C5,R39"><text>35,077</text>
-    </cell>
-  <cell id="C6,R39"><text>46.69</text>
-    </cell>
-  <cell id="C0,R40"><text>21</text>
-    </cell>
-  <cell id="C1,R40"><text>0.03</text>
-    </cell>
-  <cell id="C0,R41"><text>4,945</text>
-    </cell>
-  <cell id="C1,R41"><text>6.59</text>
-    </cell>
-  <cell id="C2,R41"><text>75,120</text>
-    </cell>
-  <cell id="C2,R42"><text>44,569</text>
-    </cell>
-  <cell id="C3,R42"><text>35.07</text>
-    </cell>
-  <cell id="C0,R43"><text>52,683</text>
-    </cell>
-  <cell id="C1,R43"><text>41.45</text>
-    </cell>
-  <cell id="C2,R43"><text>13</text>
-    </cell>
-  <cell id="C3,R43"><text>28,203</text>
-    </cell>
-  <cell id="C4,R43"><text>22.19</text>
-    </cell>
-  <cell id="C0,R46"><text>127,103</text>
-    </cell>
-  <cell id="C2,R47"><text>41,842</text>
-    </cell>
-  <cell id="C3,R47"><text>50.45</text>
-    </cell>
-  <cell id="C4,R47"><text>6</text>
-    </cell>
-  <cell id="C5,R47"><text>33,860</text>
-    </cell>
-  <cell id="C6,R47"><text>40.83</text>
-    </cell>
-  <cell id="C0,R48"><text>7,237</text>
-    </cell>
-  <cell id="C1,R48"><text>8.73</text>
-    </cell>
-  <cell id="C0,R49"><text>7,982</text>
-    </cell>
-  <cell id="C1,R49"><text>9.62</text>
-    </cell>
-  <cell id="C2,R49"><text>82,939</text>
-    </cell>
-  <cell id="C2,R50"><text>26,896</text>
-    </cell>
-  <cell id="C3,R50"><text>60.50</text>
-    </cell>
-  <cell id="C4,R50"><text>7</text>
-    </cell>
-  <cell id="C5,R50"><text>17,558</text>
-    </cell>
-  <cell id="C6,R50"><text>39.50</text>
-    </cell>
-  <cell id="C0,C1,C2,R51"><entity lv="2"><text>no ballots</text>
+  <cell id="C8,C9,C10,R20"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R51"><text>9,338</text>
+  <cell id="C11,R20"><text>8,833</text>
     </cell>
-  <cell id="C4,R51"><text>21.00</text>
+  <cell id="C12,R20"><text>12.84</text>
     </cell>
-  <cell id="C5,R51"><text>44,454</text>
+  <cell id="C13,R20"><text>68,801</text>
     </cell>
-  <cell id="C2,R52"><text>38,817</text>
+  <cell id="C2,R21"><text>28,503</text>
     </cell>
-  <cell id="C3,R52"><text>56.42</text>
+  <cell id="C3,R21"><text>56.40</text>
     </cell>
-  <cell id="C4,R52"><text>9</text>
+  <cell id="C4,R21"><text>5</text>
     </cell>
-  <cell id="C5,R52"><text>29,984</text>
+  <cell id="C5,R21"><text>15,486</text>
     </cell>
-  <cell id="C6,R52"><text>43.58</text>
+  <cell id="C6,R21"><text>30.64</text>
     </cell>
-  <cell id="C0,C1,C2,R53"><entity lv="2"><text>no ballots</text>
+  <cell id="C7,R21"><text>-</text>
+    </cell>
+  <cell id="C8,R21"><text>6,546</text>
+    </cell>
+  <cell id="C9,R21"><text>12.95</text>
+    </cell>
+  <cell id="C10,R21"><text>-</text>
+    </cell>
+  <cell id="C11,R21"><text>13,017</text>
+    </cell>
+  <cell id="C12,R21"><text>25.76</text>
+    </cell>
+  <cell id="C13,R21"><text>50,535</text>
+    </cell>
+  <cell id="C2,R22"><text>44,305</text>
+    </cell>
+  <cell id="C3,R22"><text>53.24</text>
+    </cell>
+  <cell id="C4,R22"><text>7</text>
+    </cell>
+  <cell id="C5,R22"><text>38,556</text>
+    </cell>
+  <cell id="C6,R22"><text>46.33</text>
+    </cell>
+  <cell id="C7,R22"><text>-</text>
+    </cell>
+  <cell id="C8,R22"><text>359</text>
+    </cell>
+  <cell id="C9,R22"><text>0.43</text>
+    </cell>
+  <cell id="C10,R22"><text>-</text>
+    </cell>
+  <cell id="C11,R22"><text>5,749</text>
+    </cell>
+  <cell id="C12,R22"><text>6.91</text>
+    </cell>
+  <cell id="C13,R22"><text>83,220</text>
+    </cell>
+  <cell id="C2,R23"><text>262,083</text>
+    </cell>
+  <cell id="C3,R23"><text>50.18</text>
+    </cell>
+  <cell id="C4,R23"><text>35</text>
+    </cell>
+  <cell id="C5,R23"><text>234,882</text>
+    </cell>
+  <cell id="C6,R23"><text>44.97</text>
+    </cell>
+  <cell id="C7,R23"><text>-</text>
+    </cell>
+  <cell id="C8,R23"><text>25,329</text>
+    </cell>
+  <cell id="C9,R23"><text>4.85</text>
+    </cell>
+  <cell id="C10,R23"><text>-</text>
+    </cell>
+  <cell id="C11,R23"><text>27,201</text>
+    </cell>
+  <cell id="C12,R23"><text>5.21</text>
+    </cell>
+  <cell id="C13,R23"><text>522,294</text>
+    </cell>
+  <cell id="C2,R24"><text>39,778</text>
+    </cell>
+  <cell id="C3,R24"><text>50.43</text>
+    </cell>
+  <cell id="C4,R24"><text>10</text>
+    </cell>
+  <cell id="C5,R24"><text>39,043</text>
+    </cell>
+  <cell id="C6,R24"><text>49.49</text>
+    </cell>
+  <cell id="C7,R24"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R24"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R53"><text>8,833</text>
+  <cell id="C11,R24"><text>735</text>
     </cell>
-  <cell id="C4,R53"><text>12.84</text>
+  <cell id="C12,R24"><text>0.94</text>
     </cell>
-  <cell id="C5,R53"><text>68,801</text>
+  <cell id="C13,R24"><text>78,881</text>
     </cell>
-  <cell id="C2,R54"><text>28,503</text>
+  <cell id="C2,R25"><text>168,933</text>
     </cell>
-  <cell id="C3,R54"><text>56.40</text>
+  <cell id="C3,R25"><text>47.83</text>
     </cell>
-  <cell id="C4,R54"><text>5</text>
+  <cell id="C4,R25"><text>23</text>
     </cell>
-  <cell id="C5,R54"><text>15,486</text>
+  <cell id="C5,R25"><text>152,523</text>
     </cell>
-  <cell id="C6,R54"><text>30.64</text>
+  <cell id="C6,R25"><text>43.18</text>
     </cell>
-  <cell id="C0,R55"><text>6,546</text>
+  <cell id="C7,R25"><text>-</text>
     </cell>
-  <cell id="C1,R55"><text>12.95</text>
+  <cell id="C8,R25"><text>31,732</text>
     </cell>
-  <cell id="C0,R56"><text>13,017</text>
+  <cell id="C9,R25"><text>8.98</text>
     </cell>
-  <cell id="C1,R56"><text>25.76</text>
+  <cell id="C10,R25"><text>-</text>
     </cell>
-  <cell id="C2,R56"><text>50,535</text>
+  <cell id="C11,R25"><text>16,410</text>
     </cell>
-  <cell id="C2,R57"><text>44,305</text>
+  <cell id="C12,R25"><text>4.65</text>
     </cell>
-  <cell id="C3,R57"><text>53.24</text>
+  <cell id="C13,R25"><text>353,188</text>
     </cell>
-  <cell id="C4,R57"><text>7</text>
+  <cell id="C2,R26"><text>198,562</text>
     </cell>
-  <cell id="C5,R57"><text>38,556</text>
+  <cell id="C3,R26"><text>51.20</text>
     </cell>
-  <cell id="C6,R57"><text>46.33</text>
+  <cell id="C4,R26"><text>27</text>
     </cell>
-  <cell id="C0,R58"><text>359</text>
+  <cell id="C5,R26"><text>179,104</text>
     </cell>
-  <cell id="C1,R58"><text>0.43</text>
+  <cell id="C6,R26"><text>46.18</text>
     </cell>
-  <cell id="C0,R59"><text>5,749</text>
+  <cell id="C7,R26"><text>-</text>
     </cell>
-  <cell id="C1,R59"><text>6.91</text>
+  <cell id="C8,R26"><text>8,495</text>
     </cell>
-  <cell id="C2,R59"><text>83,220</text>
+  <cell id="C9,R26"><text>2.19</text>
     </cell>
-  <cell id="C2,R60"><text>262,083</text>
+  <cell id="C10,R26"><text>-</text>
     </cell>
-  <cell id="C3,R60"><text>50.18</text>
+  <cell id="C11,R26"><text>19,458</text>
     </cell>
-  <cell id="C4,R60"><text>35</text>
+  <cell id="C12,R26"><text>5.02</text>
     </cell>
-  <cell id="C5,R60"><text>234,882</text>
+  <cell id="C13,R26"><text>387,389</text>
     </cell>
-  <cell id="C6,R60"><text>44.97</text>
+  <cell id="C2,R27"><text>8,735</text>
     </cell>
-  <cell id="C0,R61"><text>25,329</text>
+  <cell id="C3,R27"><text>51.37</text>
     </cell>
-  <cell id="C1,R61"><text>4.85</text>
+  <cell id="C4,R27"><text>4</text>
     </cell>
-  <cell id="C0,R62"><text>27,201</text>
+  <cell id="C5,R27"><text>7,626</text>
     </cell>
-  <cell id="C1,R62"><text>5.21</text>
+  <cell id="C6,R27"><text>44.85</text>
     </cell>
-  <cell id="C2,R62"><text>522,294</text>
+  <cell id="C7,R27"><text>-</text>
     </cell>
-  <cell id="C2,R63"><text>39,778</text>
+  <cell id="C8,R27"><text>644</text>
     </cell>
-  <cell id="C3,R63"><text>50.43</text>
+  <cell id="C9,R27"><text>3.79</text>
     </cell>
-  <cell id="C4,R63"><text>10</text>
+  <cell id="C10,R27"><text>-</text>
     </cell>
-  <cell id="C5,R63"><text>39,043</text>
+  <cell id="C11,R27"><text>1,109</text>
     </cell>
-  <cell id="C6,R63"><text>49.49</text>
+  <cell id="C12,R27"><text>6.52</text>
     </cell>
-  <cell id="C0,C1,C2,R64"><entity lv="2"><text>no ballots</text>
+  <cell id="C13,R27"><text>17,005</text>
+    </cell>
+  <cell id="C2,C3,R28"><entity lv="2"><text>no popular vote</text>
       </entity>
     </cell>
-  <cell id="C3,R64"><text>735</text>
+  <cell id="C4,R28"><text>8</text>
     </cell>
-  <cell id="C4,R64"><text>0.94</text>
-    </cell>
-  <cell id="C5,R64"><text>78,881</text>
-    </cell>
-  <cell id="C2,R65"><text>168,933</text>
-    </cell>
-  <cell id="C3,R65"><text>47.83</text>
-    </cell>
-  <cell id="C4,R65"><text>23</text>
-    </cell>
-  <cell id="C5,R65"><text>152,523</text>
-    </cell>
-  <cell id="C6,R65"><text>43.18</text>
-    </cell>
-  <cell id="C0,R66"><text>31,732</text>
-    </cell>
-  <cell id="C1,R66"><text>8.98</text>
-    </cell>
-  <cell id="C0,R67"><text>16,410</text>
-    </cell>
-  <cell id="C1,R67"><text>4.65</text>
-    </cell>
-  <cell id="C2,R67"><text>353,188</text>
-    </cell>
-  <cell id="C2,R68"><text>198,562</text>
-    </cell>
-  <cell id="C3,R68"><text>51.20</text>
-    </cell>
-  <cell id="C4,R68"><text>27</text>
-    </cell>
-  <cell id="C5,R68"><text>179,104</text>
-    </cell>
-  <cell id="C6,R68"><text>46.18</text>
-    </cell>
-  <cell id="C0,R69"><text>8,495</text>
-    </cell>
-  <cell id="C1,R69"><text>2.19</text>
-    </cell>
-  <cell id="C0,R70"><text>19,458</text>
-    </cell>
-  <cell id="C1,R70"><text>5.02</text>
-    </cell>
-  <cell id="C2,R70"><text>387,389</text>
-    </cell>
-  <cell id="C2,R71"><text>8,735</text>
-    </cell>
-  <cell id="C3,R71"><text>51.37</text>
-    </cell>
-  <cell id="C4,R71"><text>4</text>
-    </cell>
-  <cell id="C5,R71"><text>7,626</text>
-    </cell>
-  <cell id="C6,R71"><text>44.85</text>
-    </cell>
-  <cell id="C0,R72"><text>644</text>
-    </cell>
-  <cell id="C1,R72"><text>3.79</text>
-    </cell>
-  <cell id="C0,R73"><text>1,109</text>
-    </cell>
-  <cell id="C1,R73"><text>6.52</text>
-    </cell>
-  <cell id="C2,R73"><text>17,005</text>
-    </cell>
-  <cell id="C2,C3,R74"><entity lv="2"><text>no popular vote</text>
+  <cell id="C5,C6,C7,R28"><entity lv="2"><text>no popular vote</text>
       </entity>
     </cell>
-  <cell id="C4,R74"><text>8</text>
-    </cell>
-  <cell id="C5,C6,C7,R74"><entity lv="2"><text>no popular vote</text>
+  <cell id="C8,C9,C10,R28"><entity lv="2"><text>no popular vote</text>
       </entity>
     </cell>
-  <cell id="C8,C9,C10,R74"><entity lv="2"><text>no popular vote</text>
+  <cell id="C11,R28"><text>-</text>
+    </cell>
+  <cell id="C12,R28"><text>-</text>
+    </cell>
+  <cell id="C13,R28"><text>-</text>
+    </cell>
+  <cell id="C2,R29"><text>56,900</text>
+    </cell>
+  <cell id="C3,R29"><text>49.27</text>
+    </cell>
+  <cell id="C4,R29"><text>-</text>
+    </cell>
+  <cell id="C5,R29"><text>58,586</text>
+    </cell>
+  <cell id="C6,R29"><text>50.73</text>
+    </cell>
+  <cell id="C7,R29"><text>12</text>
+    </cell>
+  <cell id="C8,C9,C10,R29"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C2,R78"><text>56,900</text>
+  <cell id="C11,R29"><text>-1,686</text>
     </cell>
-  <cell id="C3,R78"><text>49.27</text>
+  <cell id="C12,R29"><text>-1.46</text>
     </cell>
-  <cell id="C0,R79"><text>58,586</text>
+  <cell id="C13,R29"><text>115,486</text>
     </cell>
-  <cell id="C1,R79"><text>50.73</text>
+  <cell id="C2,R30"><text>13,552</text>
     </cell>
-  <cell id="C2,R79"><text>12</text>
+  <cell id="C3,R30"><text>73.07</text>
     </cell>
-  <cell id="C3,C4,C5,R79"><entity lv="2"><text>no ballots</text>
+  <cell id="C4,R30"><text>4</text>
+    </cell>
+  <cell id="C5,R30"><text>4,995</text>
+    </cell>
+  <cell id="C6,R30"><text>26.93</text>
+    </cell>
+  <cell id="C7,R30"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R30"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C0,R81"><text>115,486</text>
+  <cell id="C11,R30"><text>8,557</text>
     </cell>
-  <cell id="C2,R82"><text>13,552</text>
+  <cell id="C12,R30"><text>46.14</text>
     </cell>
-  <cell id="C3,R82"><text>73.07</text>
+  <cell id="C13,R30"><text>18,547</text>
     </cell>
-  <cell id="C4,R82"><text>4</text>
+  <cell id="C2,R31"><text>13,044</text>
     </cell>
-  <cell id="C5,R82"><text>4,995</text>
+  <cell id="C3,R31"><text>29.72</text>
     </cell>
-  <cell id="C6,R82"><text>26.93</text>
+  <cell id="C4,R31"><text>-</text>
     </cell>
-  <cell id="C0,C1,C2,R83"><entity lv="2"><text>no ballots</text>
+  <cell id="C5,R31"><text>22,173</text>
+    </cell>
+  <cell id="C6,R31"><text>50.52</text>
+    </cell>
+  <cell id="C7,R31"><text>5</text>
+    </cell>
+  <cell id="C8,R31"><text>8,621</text>
+    </cell>
+  <cell id="C9,R31"><text>19.64</text>
+    </cell>
+  <cell id="C10,R31"><text>-</text>
+    </cell>
+  <cell id="C11,R31"><text>-9,129</text>
+    </cell>
+  <cell id="C12,R31"><text>-20.80</text>
+    </cell>
+  <cell id="C13,R31"><text>43,890</text>
+    </cell>
+  <cell id="C2,R32"><text>73,872</text>
+    </cell>
+  <cell id="C3,R32"><text>55.71</text>
+    </cell>
+  <cell id="C4,R32"><text>15</text>
+    </cell>
+  <cell id="C5,R32"><text>58,732</text>
+    </cell>
+  <cell id="C6,R32"><text>44.29</text>
+    </cell>
+  <cell id="C7,R32"><text>-</text>
+    </cell>
+  <cell id="C8,C9,C10,R32"><entity lv="2"><text>no ballots</text>
       </entity>
     </cell>
-  <cell id="C3,R83"><text>8,557</text>
+  <cell id="C11,R32"><text>15,140</text>
     </cell>
-  <cell id="C4,R83"><text>46.14</text>
+  <cell id="C12,R32"><text>11.42</text>
     </cell>
-  <cell id="C5,R83"><text>18,547</text>
+  <cell id="C13,R32"><text>132,604</text>
     </cell>
-  <cell id="C2,R84"><text>13,044</text>
+  <cell id="C2,R33"><text>33,658</text>
     </cell>
-  <cell id="C3,R84"><text>29.72</text>
+  <cell id="C3,R33"><text>52.04</text>
     </cell>
-  <cell id="C0,R85"><text>22,173</text>
+  <cell id="C4,R33"><text>5</text>
     </cell>
-  <cell id="C1,R85"><text>50.52</text>
+  <cell id="C5,R33"><text>22,210</text>
     </cell>
-  <cell id="C2,R85"><text>5</text>
+  <cell id="C6,R33"><text>34.34</text>
     </cell>
-  <cell id="C3,R85"><text>8,621</text>
+  <cell id="C7,R33"><text>-</text>
     </cell>
-  <cell id="C4,R85"><text>19.64</text>
+  <cell id="C8,R33"><text>8,814</text>
     </cell>
-  <cell id="C0,R88"><text>43,890</text>
+  <cell id="C9,R33"><text>13.63</text>
     </cell>
-  <cell id="C2,R89"><text>73,872</text>
+  <cell id="C10,R33"><text>-</text>
     </cell>
-  <cell id="C3,R89"><text>55.71</text>
+  <cell id="C11,R33"><text>11,448</text>
     </cell>
-  <cell id="C4,R89"><text>15</text>
+  <cell id="C12,R33"><text>17.70</text>
     </cell>
-  <cell id="C5,R89"><text>58,732</text>
-    </cell>
-  <cell id="C6,R89"><text>44.29</text>
-    </cell>
-  <cell id="C0,C1,C2,R90"><entity lv="2"><text>no ballots</text>
-      </entity>
-    </cell>
-  <cell id="C3,R90"><text>15,140</text>
-    </cell>
-  <cell id="C4,R90"><text>11.42</text>
-    </cell>
-  <cell id="C5,R90"><text>132,604</text>
-    </cell>
-  <cell id="C2,R91"><text>33,658</text>
-    </cell>
-  <cell id="C3,R91"><text>52.04</text>
-    </cell>
-  <cell id="C4,R91"><text>5</text>
-    </cell>
-  <cell id="C5,R91"><text>22,210</text>
-    </cell>
-  <cell id="C6,R91"><text>34.34</text>
-    </cell>
-  <cell id="C0,R92"><text>8,814</text>
-    </cell>
-  <cell id="C1,R92"><text>13.63</text>
-    </cell>
-  <cell id="C0,R93"><text>11,448</text>
-    </cell>
-  <cell id="C1,R93"><text>17.70</text>
-    </cell>
-  <cell id="C2,R93"><text>64,682</text>
+  <cell id="C13,R33"><text>64,682</text>
     </cell>
   </table>
 <heading lv="h1"><text>Electoral college selection</text>
@@ -2486,6 +2602,6 @@
 
 
 ## 0000/1852_United_States_presidential_election.wtf
-2192 Text PresidentialCounty1852Colorbrewer [ PresidentialCounty1852Colorbrewer.gif]
+2197 Text PresidentialCounty1852Colorbrewer [ PresidentialCounty1852Colorbrewer.gif]
 
 

@@ -443,7 +443,6 @@ public:
 		closeWebLinkIfOpen();
 		closeOpenQuoteItems();
 		closeAutoCloseItem( Paragraph::RefStart);
-		//closeDanglingStructures( Paragraph::RefStart);
 		openStructure( Paragraph::RefStart, "ref", ++m_refCnt);
 	}
 	void closeRef()
