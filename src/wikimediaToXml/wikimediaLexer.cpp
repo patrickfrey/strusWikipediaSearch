@@ -1753,11 +1753,6 @@ WikimediaLexem WikimediaLexer::next()
 		}
 		else if (*m_si == '\n')
 		{
-			/*[-]*/std::string bla( m_si, m_se-m_si > 200 ? 200 : (m_se-m_si));
-			/*[-]*/if (std::strstr( bla.c_str(), "text-align:left"))
-			/*[-]*/{
-			/*[-]*/	std::cerr << "";
-			/*[-]*/}
 			m_curHeading = 0;
 			if (start != m_si)
 			{
