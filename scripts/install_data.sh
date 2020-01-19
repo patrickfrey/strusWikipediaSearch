@@ -20,7 +20,7 @@ createData() {
 	mkdir -p storage
 	
 	strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml
-	strusWikimediaToXml -I -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
+	strusWikimediaToXml -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
 	
 	for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 }
@@ -231,6 +231,8 @@ insertDocuments() {
     done
     done
 }
+
+createData
 
 processPosTaggingDumpSlice 0 3 0000 5762
 processPosTaggingDumpSlice 1 3 0000 5762
