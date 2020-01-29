@@ -25,6 +25,12 @@ createData() {
 	for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 }
 
+mergePosTagging()
+{
+	cd $DATAPATH
+	strusMergeMarkup -x ".xml" -k "T,P,C,X,A,V,M,N,E,U,R,W" -o nlpxml2/ -F errout/ nlpxml/ xml/
+}
+
 processPosTagging() {
     DID=$1
     NLPCONV=$SCRIPTPATH/strusnlp.py
