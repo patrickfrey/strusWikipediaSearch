@@ -1014,6 +1014,27 @@ std::string WikimediaLexer::tryParseBigHexNum()
 	return std::string();
 }
 
+static bool isXmlEntity( char const* si, const char* se)
+{
+	if (*si == '&')
+	{
+		++si;
+		if (si < se && *si == '#')
+		{
+			++si;
+			while (si < se && isDigit( *si)) {++si;}
+			if (si < se && *si == ';') return true;
+		}
+		else if (si < se && isAlpha( *si))
+		{
+			int cnt = 0;
+			while (cnt < 6 && si < se && isAlpha( *si)) {++si;++cnt;}
+			if (si < se && *si == ';') return true;
+		}
+	}
+	return false;
+}
+
 static bool isTimestampCandidate( char const* si, const char* se)
 {
 	int dlen = decNumCount( si, se);
@@ -1214,6 +1235,11 @@ static bool compareFollowString( const char* si, const char* se, const char* str
 
 WikimediaLexem WikimediaLexer::next()
 {
+	/*[-]*/std::string xxx( m_si, m_se - m_si > 20 ? 20 : m_se - m_si);
+	/*[-]*/if (0!=std::strstr( xxx.c_str(), "mesmerizing"))
+	/*[-]*/{
+	/*[-]*/	std::cerr << "HALLY GALLY" << std::endl;
+	/*[-]*/}
 	m_prev_si = m_si;
 	const char* start = m_si;
 	try
@@ -1437,7 +1463,7 @@ WikimediaLexem WikimediaLexer::next()
 			{}
 			if (xi < m_se && *xi == eb)
 			{
-				std::string value( m_si, xi-m_si);
+				std::string value = strus::string_conv::decodeXmlEntities( std::string( m_si, xi-m_si));
 				m_si = xi+1;
 				if (charClassChangeCount( value.c_str(), value.c_str() + value.size()) >= 4)
 				{
@@ -1462,14 +1488,35 @@ WikimediaLexem WikimediaLexer::next()
 			m_si += 6;
 			return WikimediaLexem( WikimediaLexem::QuotationMarker);
 		}
-		else if (m_si[0] == '&' && (m_se - m_si) >= 6 && compareFollowString( m_si, m_se, "&nbsp;"))
+		else if (m_si[0] == '&' && isXmlEntity( m_si, m_se))
 		{
-			if (start != m_si)
+			char const* si = m_si+1;
+			for (; si != m_se && *si != ';' && si-m_si < 10; ++si){}
+			if (si != m_se && *si == ';')
 			{
-				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+				++si;
+				std::string entity_src( m_si, si-m_si);
+				std::string entity_cnv = strus::string_conv::decodeXmlEntities( entity_src);
+				if (entity_src != entity_cnv)
+				{
+					if (start != m_si)
+					{
+						return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+					}
+					m_si = si;
+					return WikimediaLexem( WikimediaLexem::Text, 0, entity_cnv);
+				}
+				else
+				{
+					if (start != m_si)
+					{
+						return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
+					}
+					m_si = si;
+					return WikimediaLexem( WikimediaLexem::Text, 0, " - "/*unknown entity translated to a dash*/);
+				}
 			}
-			m_si += 6;
-			return WikimediaLexem( WikimediaLexem::Text, 0, " ");
+			++m_si;
 		}
 		else if (*m_si == '#')
 		{
@@ -1661,7 +1708,7 @@ WikimediaLexem WikimediaLexer::next()
 						for (ti++; ti < m_se && !isTokenDelimiter( *ti); ++ti){}
 						if (ti+1 < m_se && ti[0] == '}' && ti[1] == '}')
 						{
-							std::string text( m_si+1, ti-m_si-1);
+							std::string text = strus::string_conv::decodeXmlEntities( std::string( m_si+1, ti-m_si-1));
 							m_si = ti+2;
 							return WikimediaLexem( WikimediaLexem::Text, 0, text);
 						}
@@ -1669,7 +1716,7 @@ WikimediaLexem WikimediaLexer::next()
 				}
 				if (m_si +1 < m_se && m_si[0] == '}' && m_si[1] == '}')
 				{
-					std::string title( strus::string_conv::trim( std::string( start, m_si - start)));
+					std::string title( strus::string_conv::decodeXmlEntities( strus::string_conv::trim( std::string( start, m_si - start))));
 					m_si += 2;
 					if (title.size() > 300)
 					{
@@ -2019,7 +2066,7 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
-			std::string code = tryParseCode();
+			std::string code = strus::string_conv::decodeXmlEntities( tryParseCode());
 			if (!code.empty())
 			{
 				return WikimediaLexem( WikimediaLexem::Code, 0, code);
