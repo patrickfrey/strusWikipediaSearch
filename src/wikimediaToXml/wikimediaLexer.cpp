@@ -1245,11 +1245,6 @@ static bool compareFollowString( const char* si, const char* se, const char* str
 
 WikimediaLexem WikimediaLexer::next()
 {
-	/*[-]*/std::string xxx( m_si, m_se - m_si > 20 ? 20 : m_se - m_si);
-	/*[-]*/if (0!=std::strstr( xxx.c_str(), "mesmerizing"))
-	/*[-]*/{
-	/*[-]*/	std::cerr << "HALLY GALLY" << std::endl;
-	/*[-]*/}
 	m_prev_si = m_si;
 	const char* start = m_si;
 	try
