@@ -61,14 +61,14 @@
 	entity = lc:entityid content {position=succ} //E@id;
 	entity = lc:entityid content {position=succ} //R@id;
 
-	word = lc word //{C,X,A,V,M,N,E,U,R,W}();
+	word = lc:entityid word //{C,X,A,V,M,N,E,U,R,W}();
 	word = lc:entityid content //N();
 	word = lc:entityid content //E();
 
-	word = lc word //{heading,tabtitle,head,cell}();
-	word = lc word //{citation,ref,list,text,attr}();
-	word = lc word //{pagelink,weblink,entity,quot}();
-	word = lc word //{math,char,code}();
+	word = lc:entityid word //{heading,tabtitle,head,cell}();
+	word = lc:entityid word //{citation,ref,list,text,attr}();
+	word = lc:entityid word //{pagelink,weblink,entity,quot}();
+	word = lc:entityid word //{math,char,code}();
 
 [Field]
 	tabtitle= //table /tabtitle;
