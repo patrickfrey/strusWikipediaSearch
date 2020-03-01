@@ -665,6 +665,23 @@ std::string WikimediaLexer::tryParseFilePath()
 	return std::string();
 }
 
+std::string WikimediaLexer::tryParseExplicitFilePath( char eb)
+{
+	char const* start = m_si;
+	int countSlashes = 0;
+	for (; m_si != m_se && (isAlpha(*m_si) || *m_si == '%' || *m_si == ':' || *m_si == '.' || *m_si == '/' || *m_si == '_' || *m_si == '-'|| isDigit(*m_si)); ++m_si)
+	{
+		if (*m_si == '/') ++countSlashes;
+	}
+	if (countSlashes >= 3 && (m_si-start >= 18)
+		&& (m_si == m_se || *m_si == eb || isSpace(*m_si) || isTokenDelimiter(*m_si)))
+	{
+		return std::string( start, m_si);
+	}
+	m_si = start;
+	return std::string();
+}
+
 static int hexNumCount( char const* si, const char* se)
 {
 	int rt = 0;
@@ -1468,7 +1485,7 @@ WikimediaLexem WikimediaLexer::next()
 			{}
 			if (xi < m_se && *xi == eb)
 			{
-				std::string value = strus::string_conv::decodeUrlEntities( strus::string_conv::decodeXmlEntities( std::string( m_si, xi-m_si)));
+				std::string value = strus::string_conv::decodeXmlEntities( std::string( m_si, xi-m_si));
 				m_si = xi+1;
 				if (charClassChangeCount( value.c_str(), value.c_str() + value.size()) >= 4)
 				{

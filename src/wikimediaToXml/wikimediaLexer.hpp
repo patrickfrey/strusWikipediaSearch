@@ -144,6 +144,7 @@ private:
 	std::string tryParseURL();
 	std::string tryParsePlainURL();
 	std::string tryParseFilePath();
+	std::string tryParseExplicitFilePath( char eb);//... currently not used
 	std::string tryParseLinkId();
 	std::string tryParseBibRef();
 	std::string tryParseBookRef();
