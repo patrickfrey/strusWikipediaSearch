@@ -1,0 +1,773 @@
+<wikimedia>
+  <page>
+    <title>1844 United States presidential election</title>
+    <ns>0</ns>
+    <id>40514</id>
+    <revision>
+      <id>871350064</id>
+      <parentid>868186991</parentid>
+      <timestamp>2018-11-30T13:37:31Z</timestamp>
+      <contributor>
+        <username>Bneu2013</username>
+        <id>32478849</id>
+      </contributor>
+      <minor />
+      <comment>Bneu2013 moved page [[United States presidential election, 1844]] to [[1844 United States presidential election]] over redirect: Per RfC</comment>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text xml:space="preserve">{{Use mdy dates|date=November 2013}}
+{{For|related races|United States elections, 1844}}
+{{Infobox election
+|election_name      = United States presidential election, 1844
+|country            = United States
+|flag_year          = 1837
+|type               = presidential
+|ongoing            = no
+|previous_election  = United States presidential election, 1840
+|previous_year      = 1840
+|election_date      = November 1 – December 4, 1844
+|next_election      = United States presidential election, 1848
+|next_year          = 1848
+|votes_for_election = All 275 electoral votes of the [[Electoral College (United States)|Electoral College]]
+|needed_votes       = 138 electoral
+|turnout            = 78.9%&lt;ref&gt;{{cite web|url=http://www.presidency.ucsb.edu/data/turnout.php|title=Voter Turnout in Presidential Elections|work=The American Presidency Project|publisher=[[UC Santa Barbara]]}}&lt;/ref&gt; {{decrease}} 1.3 [[percentage point|pp]]
+
+|image1             = [[File:JamesKnoxPolk.jpg|x200px]]
+|nominee1           = '''[[James K. Polk]]'''
+|running_mate1      = '''[[George M. Dallas]]'''
+|party1             = Democratic Party (United States)
+|home_state1        = [[Tennessee]]
+|electoral_vote1    = '''170'''
+|states_carried1    = '''15'''
+|popular_vote1      = '''1,339,494'''
+|percentage1        = '''49.5%'''
+
+|image2             = [[File:Clay portrait.jpg|x200px]]
+|nominee2           = [[Henry Clay]]
+|running_mate2      = [[Theodore Frelinghuysen]]
+|party2             = Whig Party (United States)
+|home_state2        = [[Kentucky]]
+|electoral_vote2    = 105
+|states_carried2    = 11
+|popular_vote2      = 1,300,004
+|percentage2        = 48.1%
+
+|map                = {{United States presidential election, 1844 imagemap}}
+|map_caption        = Presidential election results map. &lt;span style=&quot;color:blue;&quot;&gt;Blue&lt;/span&gt; denotes states won by Polk/Dallas, &lt;span style=&quot;color:#e3af2a;&quot;&gt;buff&lt;/span&gt; denotes those won by Clay/Frelinghuysen. Numbers indicate the number of electoral votes allotted to each state.
+|title              = President
+|before_election    = [[John Tyler]]
+|before_party       = Independent politician
+|after_election     = [[James K. Polk]]
+|after_party        = Democratic Party (United States)
+}}
+The '''United States presidential election of 1844''' was the 15th quadrennial presidential election, held from November 1, to December 4, 1844. [[Democratic Party (United States)|Democrat]] [[James K. Polk]] defeated [[Whig Party (United States)|Whig]] [[Henry Clay]] in a close contest that turned on the controversial issues of [[slavery in the United States|slavery]] and the [[Texas annexation|annexation]] of the [[Republic of Texas]].
+
+Incumbent President [[John Tyler]]'s pursuit of Texas annexation threatened to undermine the unity of both the Whig and the Democratic parties, as the annexation of Texas would expand the institution of slavery in the United States. At the time, the two major parties each had wings in the [[Northern United States]] and the [[Southern United States]], but the possibility of the expansion of slavery threatened the ability of both parties to reach inter-sectional compromises. Expelled by the Whig Party after clashing with their domestic policies, Tyler hoped to use the annexation of Texas to propel him to a second term despite the controversial nature of the issue.
+
+The early front-runner for the Democratic nomination was former President [[Martin Van Buren]], but his rejection of Texas annexation damaged his candidacy. Due to opposition from former President [[Andrew Jackson]] and most Southern delegations, Van Buren was unable to win the necessary two-thirds vote at the [[1844 Democratic National Convention]]. The convention instead settled on former Governor [[James K. Polk]] of [[Tennessee]], who emerged as the first [[dark horse]] nominee. Polk ran on a platform that embraced America's popular commitment to territorial expansionism, often referred to as [[Manifest Destiny]]. With the nomination of the pro-annexation Polk, Tyler dropped out of the race and supported the Democratic candidate. The Whigs nominated [[Henry Clay]], a long-time party leader who adopted an anti-annexation platform. Though a slave owner himself, Clay denounced annexation as a threat to North-South sectional unity, as well as a potential cause of war between the United States and Mexico. His attempts during the campaign to finesse his anti-annexation position on Texas alienated many voters.
+
+Polk successfully linked the United States–British boundary [[Oregon boundary dispute|dispute]] over the partition of the [[Oregon Territory]] with the Texas annexation debate. In doing so, the Democratic Party nominee united the anti-slavery Northern expansionists, who demanded Oregon as free-soil, with pro-slavery Southern expansionists, who insisted on acquiring Texas as a slave state. In the national popular vote, Polk beat Clay by less than 40,000 votes, a margin of 1.4%. [[James G. Birney]] of the anti-slavery [[Liberty Party (United States, 1840)|Liberty Party]] took 2.3% of the vote. Polk won the [[Electoral College (United States)|electoral vote]] 170–105, but the flip of several thousand votes in closely contested [[New York (state)|New York]] would have delivered the election to Clay. In the aftermath of the election, Polk presided over the annexation of Texas, which triggered the [[Mexican–American War]].
+
+==Background==
+===Gag rule and Texas annexation controversies===
+Whigs and Democrats embarked upon their campaigns during the climax of the congressional [[gag rule]] controversies in 1844, which prompted Southern congressmen to suppress northern petitions to end the slave trade in the [[District of Columbia]].&lt;ref&gt;Freehling, 1991, p. 352: &quot;The Gag Rule Controversy had sketched the battle lines&quot; in the approaching crisis over slavery expansion in America and &quot;hardened contestants for the worse crisis looming over expansion in America – and slavery – in the Southwest [i.e. Texas.&quot; &lt;br&gt; Wilentz, 2008, p. 558: With &quot;the repeal of the gage rule, the conflict&quot; – i.e. whether American republicanism could tolerate American slavery – &quot;moved closer to becoming a permanent issue in national politics.&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 410: &quot;Artificially segregating Whigs' response to gag and Texas crises…hinders awareness that the two issues came to a climax at the same time. The same Congress of 1844-45 which abolished the gag rule admitted Texas.&quot;&lt;/ref&gt; Anti-annexation petitions to Congress sent from northern anti-slavery forces, including state legislatures, were similarly suppressed.&lt;ref&gt;May 2008, p. 97: &quot;…eight [northern] state legislatures sent Congress petitions warning against [Texas annexation].&quot;&lt;/ref&gt;&lt;ref&gt;Miller, 1998, p. 285: &quot;There had already been…resolutions by state legislatures that were summarily dismissed on the subject of Texas [annexation'.&quot;&lt;/ref&gt; Intra-party sectional compromises and maneuvering on slavery politics during these divisive debates placed significant strain on the northern and southern wings that comprised each political organization.&lt;ref&gt;Wilentz, 2008, p. 558: The Gag Rule debates caused &quot;the heightening of sectional tensions in Congress [making] it imperative that [Whigs] find some compromise middle ground in the 1844 campaign…The same was true for Democrats…&quot; Due to the Gag Rule controversies, &quot;Agitation over slavery on both sides was now fair play&quot; and the question arose: &quot;Could American democracy coexist with American slavery?&quot;&lt;/ref&gt; The question as to whether the institution of slavery and its aristocratic principles of social authority were compatible with democratic republicanism was becoming &quot;a permanent issue in national politics&quot;.&lt;ref&gt;Miller, 1998, p. 285: &quot;[I]f the annexation of Texas were to be discussed on the House floor it would certainly lead to a discussion of slavery – exactly the subject slaveholding congressmen wanted to avoid.&quot;&lt;/ref&gt;&lt;ref&gt;Widmer, 2005, p. 15: In the early 1840s &quot;it had become clear that an apocalyptic battle was looming between… Union and Slavery…&quot;&lt;/ref&gt;
+
+In 1836, a portion of the Mexican state of [[Coahuila y Tejas]] declared its independence to form the [[Republic of Texas]]. Texans, mostly white immigrants from the Deep South, many of whom owned slaves, sought to bring their republic into the Union as a state. At first, the subject of annexing Texas to the United States was shunned by both major American political parties.&lt;ref&gt;Wilentz, 2008, p. 561: &quot;Texas annexation had long been a taboo subject for Whigs and Democrats alike.&quot;&lt;/ref&gt; Although they recognized Texas sovereignty, Presidents Andrew Jackson (1829–1837) and Martin Van Buren (1837 – 1841) declined to pursue annexation.&lt;ref&gt;Wilentz, 2008, p. 560: Jackson was &quot;happy to recognize the new Texas republic but refused to annex it because it could well lead to war with Mexico.&quot; An event &quot;both Jackson and Van Buren wanted to avoid&lt;/ref&gt;&lt;ref&gt;Meacham, 2008 p. 324: &quot;[[Stephen F. Austin|Stephen Austin]] implored Jackson to militarily support Texas independence 1836. The president commented: &quot;[Austin] does not reflect that we have a treaty with Mexico and our national faith is pledged to support it.&quot;&lt;/ref&gt; The prospect of bringing another slave state into the Union was fraught with problems.&lt;ref&gt;Widmer, 2005, p. 148: &quot;There were a number of very good reasons to oppose taking Texas…&quot;&lt;/ref&gt; Both major parties – the Democrats and Whigs – viewed Texas statehood as something &quot;not worth a foreign war [with Mexico]&quot; or the &quot;sectional combat&quot; that annexation would provoke in the United States.&lt;ref&gt;Wilentz, 2008, p. 560: &quot;…both Jackson and Van Buren would avoid…war with Mexico.&quot; &lt;br /&gt; Freehling, 1991, p. 367: &quot;Jackson was a partisan of annexation…but…delayed…&quot; &lt;br /&gt; May, 2008, p. 97: &quot;As much as [US President] Jackson wanted Texas, he would not pay the price of a war abroad or at home.&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 367-368: During his presidency, Van Buren considered Texas annexation &quot;potentially poisonous to American Union…&quot;&lt;/ref&gt;
+
+===Tyler–Texas treaty===
+The incumbent President [[John Tyler]], formerly vice-president, had assumed the presidency upon the death of [[William Henry Harrison]] in 1841. Tyler, a Whig in name only,&lt;ref&gt;Finkelman. 2011, p. 28: &quot;Never truly a Whig, Tyler opposed almost every policy the party stood for.&quot;&lt;/ref&gt; emerged as a states' rights advocate committed to slavery expansion in defiance of his party's principles.&lt;ref&gt;Holt, 2005, p. 10: Tyler was &quot;…deeply devoted to the perpetuation of slavery…&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 410: &quot;…Northern Whigs had warned that Texas would be the Slavepower's next outsized demand after the gag rule…Whigs Northern and Southern had loathed Tyler as a slayer of their popular mandate.&quot;&lt;/ref&gt; After he vetoed the Whig domestic legislative agenda, he was expelled from his own party on September 13, 1841.&lt;ref&gt;Holt, 2005, p. 10: In response to Tyler's vetoes &quot;Whig congressmen and most state Whig organizations formally read Tyler out of the Whig Party.&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 364: Tyler was &quot;almost unanimously excommunicated…from the [Whig] party.&quot;&lt;/ref&gt; Politically isolated, but unencumbered by party restraints,&lt;ref&gt;Merry, 2009, p. 67 &quot;[Tyler], refusing to embrace the Whig agenda…had essentially become a president without a party, and a president without a party couldn’t govern effectively.&quot;&lt;br&gt;Finkelman. 2011, p. 28: &quot;The knowledge that he would never gain the Whig presidential nomination liberated Tyler to move forward on annexation…&quot;&lt;/ref&gt; Tyler aligned himself with a small faction of Texas annexationists&lt;ref&gt;Freehling, 1991, p. 355-356: &quot;Tyler and his southern advisers &quot;were composed of a few states' rights Whigs and fewer disgruntled Democrats…These alarmists controlled the presidency. They dominated nothing else.&quot;&lt;/ref&gt; in a bid for election to a full term in 1844.&lt;ref&gt;Freehling, 1991, p.402: &quot;Sam Houston's movement away from [annexation by] the United States left the American establishment [i.e. Whigs and Democrats] to avoid the problem. The Tyler administration had to [secure an annexation treaty with Texas] before debate could be compelled in America.&quot;&lt;/ref&gt;&lt;ref&gt;Holt, 2005, p. 10: &quot;…Tyler hit upon the annexation of Texas as an issue on which he might win the presidency in 1844.&quot;&lt;/ref&gt;&lt;ref&gt;May 2008, p. 99: &quot;Tyler desperately wanted to win election in 1844 and believed that acquiring Texas would earn him favor.&quot;&lt;/ref&gt;
+
+Tyler became convinced that Great Britain was encouraging a Texas–Mexico rapprochement that might lead to slave emancipation in the Texas republic.&lt;ref&gt;Finkelman, 2011, p. 30: &quot;Some southerners argued that Britain would end slavery in Texas and this would lead to slaves fleeing [from US slave states] to the Republic of Texas. The predictions helped the lame-duck Tyler convince a lame-duck Congress to annex Texas.&quot;&lt;/ref&gt;&lt;ref&gt;Holt, 2005, p. 10: &quot;England's repeated attempts to persuade authorities in the Republic of Texas to abolish slavery…influenced him [Tyler]&quot; to seek annexation.&lt;/ref&gt; Accordingly, he directed Secretary of State [[Abel P. Upshur]] of Virginia to initiate, then relentlessly pursue, secret annexation talks&lt;ref&gt;Finkelman, 2001, p. 28-29: &quot;…in 1843 [Tyler] began secret negotiations with Texas.&quot;&lt;/ref&gt;&lt;ref&gt;May 2008, p. 112:&quot;Tyler's furtive negotiations with the Texans…&quot; on the annexation treaty.&lt;/ref&gt; with Texas minister to the United States [[Isaac Van Zandt]], beginning on October 16, 1843.&lt;ref&gt;Freehling, 1991, p. 398: &quot;On October 16 Upshur met with Texas Minister Van Zandt and urged immediate negotiations towards an annexation treaty.&quot;&lt;/ref&gt;
+
+Tyler submitted his Texas-US treaty for annexation to the US Senate, delivered April 22, 1844, where a two-thirds majority was required for ratification.&lt;ref&gt;Freehling, 1991, p. 408: &quot;On April 22, 1844, the Senate received the pre-treaty correspondence [and] the [Tyler] treaty…&quot;&lt;/ref&gt;&lt;ref&gt;Finkelman, 2011, p. 29: &quot;A treaty required a two-thirds majority [in the Senate] for ratification.&quot;&lt;/ref&gt; The newly appointed Secretary of State [[John C. Calhoun]] of South Carolina (assuming his post March 29, 1844)&lt;ref&gt;Freehling, 1991, p. 407: &quot;The new Secretary of State [Calhoun] reached Washington March 29, 1844.&quot;&lt;/ref&gt; included a document known as the Packenham Letter with the Tyler bill that was calculated to inject a sense of crisis in Southern Democrats of the Deep South.&lt;ref&gt;Freehling, 1991, p. 415: &quot;…Calhoun could only begin to provoke a 'sense of crisis' with southern Democrats&quot;, and &quot;The Packenham Letter could rally southern Democrats against the party's northern establishment…&quot; &lt;br /&gt; May, 2008, p. 113: &quot;The Packenham Letter proved the claims of anit-annexationists and abolitionists that the Texas question was only about slavery - its expansion and preservation - despite Tyler's protestations to the contrary.&quot;&lt;/ref&gt; In it, he characterized slavery as a social blessing and the acquisition of Texas as an emergency measure necessary to safeguard the &quot;peculiar institution&quot; in the United States.&lt;ref&gt;Freehling, 1991, p. 408: The Packenham Letter &quot;declared the national [Texas] treaty a sectional weapon, designed to protect slavery's blessings from England's documented interference&quot; and &quot;aimed at driving southerners to see England's soft threat in a hard-headed way.&quot;&lt;/ref&gt;&lt;ref&gt;May 2008, p. 112-113: &quot;Calhoun…insisted that the'peculiar institution' was, in fact, 'a political institution necessary to peace, safety and prosperity.&quot;&lt;/ref&gt; In doing so, Tyler and Calhoun sought to unite the South in a crusade that would present the North with an ultimatum: support Texas annexation or lose the South.&lt;ref&gt;Freehling, 2008, p. 409-410: &quot;Nothing would have made Northern Whigs tolerate the [Packenham] document, and Northern Democrats would have to be forced to swallow their distaste for the accord. Calhoun's scenario of rallying enough slaveholders to push enough Northern Democrats to stop evading the issue was exactly the way the election of 1844 and annexation aftermath transpired.&quot;&lt;/ref&gt; Anti-slavery Whigs considered Texas annexation particularly egregious, since Mexico had outlawed slavery in Coahuila y Tejas in 1829, before Texas independence had been declared.
+
+The 1844 presidential campaigns evolved within the context of this struggle over Texas annexation, which was tied to the question of slavery expansion and national security.&lt;ref&gt;Finkelman. 2011, p. 26: &quot;James K. Polk's victory over Henry Clay in 1844 was directly tied to the Texas annexation question.&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 424: Texas &quot;was politically and economically sublime for slavery; and annexationists demanded the soil…&quot;&lt;/ref&gt; All candidates in the 1844 presidential election had to declare a position on this explosive issue.&lt;ref&gt;Widmer, 2005, p. 148: &quot;Texas…forced all candidates to declare whether they were for or against annexation&quot;&lt;/ref&gt;&lt;ref&gt;Wilentz, 2008: &quot;Instantly, the letter became a public litmus test&quot; for both national parties: &quot;support Texas and it pro-slavery rationale and alienate the North, or oppose it and forever lose the South.&quot;&lt;/ref&gt;
+
+==Nominations==
+===Whig Party convention and campaign===
+{{main|1844 Whig National Convention}}
+{| class=&quot;wikitable&quot; style=&quot;font-size:90%; text-align:center;&quot;
+|-
+| style=&quot;background:#f1f1f1;&quot; colspan=&quot;30&quot;|&lt;big&gt;'''Whig Party Ticket, 1844'''&lt;/big&gt;
+|-
+! style=&quot;width:3em; font-size:135%; background:#F0DC82; width:200px;&quot;| [[Henry Clay|{{color|black|Henry Clay}}]]
+! style=&quot;width:3em; font-size:135%; background:#F0DC82; width:200px;&quot;| [[Theodore Frelinghuysen|{{color|black|Theodore Frelinghuysen}}]]
+|-  style=&quot;color:#000000; font-size:100%; background:#F0DC82;&quot;
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightyellow; width:200px;&quot;|'''''for President'''''
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightyellow; width:200px;&quot;|'''''for Vice President'''''
+|-
+| [[File:Clay 1848.jpg|center|x200px]]
+| [[File:Frelinghuysen.jpg|center|x200px]]
+|-
+| [[List of Speakers of the United States House of Representatives|7th]]&lt;br&gt;[[Speaker of the United States House of Representatives|Speaker of the House]]&lt;br&gt;&lt;small&gt;(1811–1814, 1815–1820, 1823–1825)&lt;/small&gt;
+| Former [[United States Senate|U.S. Senator]]&lt;br&gt;from [[New Jersey]]&lt;br&gt;&lt;small&gt;(1829–1835)&lt;/small&gt;
+|-
+| colspan=2 |[[Henry Clay presidential campaign, 1844|'''Campaign''']]
+|-
+|}
+[[File:Clay vs Polk campaign.jpg|200px|thumb|left|Political cartoon predicting Polk's defeat by Clay]]
+[[File:Clay Frelinghuysen 2.png|230px|thumb|right|Grand National Whig banner]]
+Former Senator Henry Clay of Kentucky, effectively the leader of the Whig Party since its inception in 1834,&lt;ref&gt;Holt, 2005, p. 10: &quot;Clay had engineered the formation of the Whig Party in 1834…&quot;&lt;/ref&gt; was selected as the Whig presidential nominee at the party's convention in Baltimore, Maryland, on May 1, 1844.&lt;ref&gt;Wilentz, 2008, p. 569: The Whig convention &quot;unanimously approved Clay's nomination&quot;…&quot;a thoroughly joyous and exciting affair.&quot;&lt;/ref&gt;&lt;ref&gt;Wilentz, 2008, p. 569: The Whig convention [of 1844] in Baltimore, which assembled on May 1…&quot;&lt;/ref&gt; Clay, a slaveholder, presided over a party in which its Southern wing was sufficiently committed to the national platform to put partisan loyalties above slavery expansionist proposals that might undermine its North-South alliance.&lt;ref&gt;Finkelman. 2011, p. 18: &quot;In Congress, the Whigs had blocked Texas annexation, with southern Whigs joining their northern colleagues…who opposed Texas annexation because of slavery.&quot;&lt;/ref&gt;&lt;ref&gt;Wilentz, 2008, p. 569: The Whig platform &quot;did not even mention Texas…&quot;&lt;/ref&gt; Whigs felt confident that Clay could duplicate Harrison's landslide victory of 1840 against any opposition candidate.&lt;ref&gt;Finkelmn, 2011, p. 21: Whigs regarded the election as a &quot;cakewalk&quot;, believing Clay would swamp Polk.&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 360:&quot;…Southern Whigs used the same electioneering hoopla in 1844…&quot; as in 1840.&lt;/ref&gt;
+
+Southern Whigs feared that the acquisition of the fertile lands in Texas would produce a huge market for slave labor, inflating the price of slaves and deflating land values in their home states.&lt;ref&gt;Finkelman. 2011, p. 18: &quot;In the South, Whigs argued that annexation would harm slavery because a large migration to Texas would raise the price of slaves and lower price of land in the rest of the South.&quot;&lt;/ref&gt;
+Northern Whigs feared that Texas statehood would initiate the opening of a vast &quot;Empire for Slavery&quot;.&lt;ref&gt;Finkelman. 2011, p. 18: &quot;Northern Whigs, joined by some northern Democrats, saw Texas as a great &quot;Empire for Slavery&quot;.&lt;/ref&gt;
+
+Two weeks before the Whig convention in Baltimore, in reaction to Calhoun's Packenham Letter, Clay issued a document known as the Raleigh Letter (issued April 17, 1844)&lt;ref&gt;Freeling, 1991, p. 427: The &quot;so-called Raleigh letter of April 17, 1844.&quot;&lt;/ref&gt; that presented his views on Texas to his fellow southern Whigs.&lt;ref&gt;Holt, 2005, p 10: Clay declared Texas annexation &quot;fraught with danger to the nation&quot; and would &quot;erode national comity&quot; and &quot;produce a war with Mexico.&quot;&lt;/ref&gt; In it, he flatly denounced the Tyler annexation bill and predicted that its passage would provoke a war with Mexico, whose government had never recognized Texas independence.&lt;ref&gt;Freehling, 1991, p. 427: &quot;While Clay concurred with Van Buren on opposing the Calhoun-Tyler [Texas] treaty, the two opponents differed on post-treaty annexation policy.&quot; &lt;br /&gt; Finkelman, 2011, p. 26: &quot;When the 1844 campaign began, Henry Clay was unalterably opposed to annexation.&quot;&lt;/ref&gt; Clay underlined his position, warning that even with Mexico's consent, he would block annexation in the event that substantial sectional opposition existed anywhere in the United States.&lt;ref&gt;Freehling, 1991, p. 427: &quot;Clay…would halt annexation unless Mexico assented. He would also deny Texas entrance in the Union, no matter whether Mexico agreed, should 'a considerable and respectable portion' of the American people &quot;express 'decided opposition'&quot;&lt;/ref&gt;
+
+The Whig party leadership was acutely aware that any proslavery legislation advanced by its southern wing would alienate its anti-slavery northern wing and cripple the party in the general election.&lt;ref&gt;Freehling, 1991, p. 426–427: &quot;Southern Whigs thus had to weigh the possibility that Texas might be abolitionized [by Great Britain] against the certainty that campaigning for [Texas] annexation would split their party.&quot;&lt;/ref&gt; In order to preserve their party, Whigs would need to stand squarely against acquiring a new slave state. As such, Whigs were content to restrict their 1844 campaign platform to less divisive issues such as [[internal improvements]] and national finance.&lt;ref&gt;Wilentz, 2008, p. 568-569: &quot;The Texas issue struck [Clay] as a giant distraction from the real issues…internal improvements, the tariff and the rest of the American System…&quot; and &quot;ratified a four-part unity platform&quot; based on the &quot;American System.&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 353, p. 355, p. 436&lt;/ref&gt;&lt;ref&gt;Finkelman. 2011, p. 22: &quot;The Whigs wanted to talk about the tariff and currency, which were no longer exciting issues.&quot;&lt;/ref&gt;
+
+Whigs picked [[Theodore Frelinghuysen]] of New Jersey – &quot;the Christian Statesman&quot; – as Clay's running mate. An advocate of the [[American Colonization Society|colonization]] of emancipated slaves, he was acceptable to southern Whigs as an opponent of the abolitionists.&lt;ref&gt;Finkelman, 2008, p. 21: &quot;…as an avid colonizationist [Freylinghuysen's] conservative views on slavery made him acceptable to southerners, and at the convention, almost all southern delegates voted for him.&quot; And p. 19-20: &quot;…he was clearly an opponest of the abolitionists.&quot;&lt;/ref&gt; His pious reputation balanced Clay's image as a slave-holding, hard-drinking duelist.&lt;ref&gt;Finkelman. 2011, p. 17, p. 21: Freylinghuysen &quot;the perfect northerner to balance the somewhat sordid reputation of the slaveowning, dueling, hard-drinking Clay.&quot;&lt;/ref&gt;&lt;ref&gt;Wilentz, 2008, p. 569: Freylinghuysen served to &quot;offset Clay's reputation for moral laxity…&quot;&lt;/ref&gt;
+Their party slogan was the bland &quot;Hurray, Hurray, the Country's Risin' – Vote for Clay and Frelinghuysen!&quot;&lt;ref&gt;Finkelman. 2011, p. 22: The &quot;less than snappy slogan…&quot;&lt;/ref&gt;
+
+====Henry Clay's Alabama letter====
+On July 27, 1844, Henry Clay, in the midst of his campaign against James K. Polk, released a position statement, the so-called Alabama Letter. In it, he counseled his Whig constituency to regard Texas annexation and statehood as merely a short phase in the decline of slavery in the United States, rather than a long term advance for the [[Slave Power]].&lt;ref&gt;Freehling, 1991, p. 435: &quot;Even anti-slavery American should consent to annexation counseled Clay&quot; because diffusion of slavery south into the tropics would &quot;doom slavery in Texas.&quot;&lt;/ref&gt; Clay qualified his stance on Texas annexation, declaring &quot;no personal objection to the annexation&quot; of the republic. He would move back to his original orientation in September 1844.&lt;ref&gt;Freehling, 1991, p. 435: &quot;Clay admitted he would be glad to see [Texas annexation], without dishonor, without war [and] with the common consent of the American people.&quot; And p. 436: &quot;In September…he re-emphasised opposition to annexation…&quot;&lt;/ref&gt; Northern Whigs expressed outrage at any détente with the Slave Power and accused him of equivocating on Texas annexation.&lt;ref&gt;Freehling, 1991, p. 435: &quot;Northern Whigs, enraged by Clays' newly announced personal preference for Texas, accused Clay of waffling…&quot;&lt;/ref&gt;
+
+Clay's central position, however, had not altered: no annexation without northern acquiescence. Clay's commitment brought Southern Whigs under extreme pressure in their home states and congressional districts, threatening to tarnish their credentials as supporters of slavery.&lt;ref&gt;Freehling, 1991, p. 437: &quot;In 1844, Whigs stood damned as soft on Texas, therefore soft on slavery.&quot;&lt;/ref&gt;&lt;ref&gt;Holt, 2008, p. 12-13: Fearing to be cast as &quot;soft on slavery&quot; (see Freehling, 1991, p. 437), &quot;southern Whigs could be portrayed as even more ardent champions of slavery in the South than the southern Democrats. As would happen in the future, slavery extension became a political weapon [which] rival parties used to exploit for political reasons…&quot;&lt;/ref&gt;
+
+====Whig Party campaign tactics====
+Historian Sean Wilentz describes some of the Whig campaign tactics:
+{{quote|&quot;The Whigs countered Democratic attacks by revving up the Log Cabin electioneering machinery and redeploying it on behalf of the man they now celebrated as 'Ol'Coon' Clay. They also attacked former House Speaker Polk as nobody who deep down was a dangerous [[Locofocos|Loco Foco]] radical…With greater success, the Whigs linked up with resurgent [[Nativism (politics)|nativist]] anti-Catholic movement strongest in New York and Pennsylvania, and planted stories that as president, Clay would tighten up immigration and naturalization laws. (Too late, Clay tried to distance himself from the nativists.)&quot;
+
+&quot;The Liberty Party added to the confusion…Clay became the object of nasty abolitionist attacks. One notorious handbill, widely reprinted, by an abolitionist minister [[Abel J. Brown|Abel Brown]], denounced Clay as a &quot;''Man Stealer, Slaveholder, and Murdurer,''&quot; and accused him of &quot;Selling Jesus Christ!&quot; because he dealt in slaves. With the campaign to be decided at the electoral margins, Whig managers grew so concerned that, late in the campaign, they concocted a fraudulent letter that supposedly proved that James Birney was secretly working in league with the Democrats, and circulated it in New York and Ohio.&quot;&lt;ref&gt;Wilentz, 2008, p. 573&lt;/ref&gt;}}
+
+===Democratic Party convention campaign===
+{{main|1844 Democratic National Convention}}
+{| class=&quot;wikitable&quot; style=&quot;font-size:90%; text-align:center;&quot;
+|-
+| style=&quot;background:#f1f1f1;&quot; colspan=&quot;30&quot;|[[File:US Democratic Party Logo.svg|65px|center|link=Democratic Party (United States)|Democratic Party (United States)]]&lt;big&gt;'''Democratic Party Ticket, 1844'''&lt;/big&gt;
+|-
+! style=&quot;width:3em; font-size:135%; background:#34AAE0; width:200px;&quot;| [[James K. Polk|{{color|black|James K. Polk}}]]
+! style=&quot;width:3em; font-size:135%; background:#34AAE0; width:200px;&quot;| [[George M. Dallas|{{color|black|George M. Dallas}}]]
+|-
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightblue; width:200px;&quot;|'''''for President'''''
+| style=&quot;width:3em; font-size:100%; color:#000; background:lightblue; width:200px;&quot;|'''''for Vice President'''''
+|-
+| [[File:Polk crop.jpg|center|x200px]]
+| [[File:George Mifflin Dallas 1848 crop.jpg|center|x200px]]
+|-
+| Former [[Governor]] of [[Tennessee]]
+(1839-1841)
+| Former [[United States Senate|U.S. Senator]] from [[Pennsylvania]]&lt;br&gt;&lt;small&gt;(1831–1833)&lt;/small&gt;
+|-
+| colspan=2 |[[James Polk presidential campaign, 1844|'''Campaign''']]
+|-
+|}
+[[File:Polk Dallas campaign banner.jpg|thumb|230px|Grand National Democratic banner]]
+Martin Van Buren, President of the United States between 1837 and 1841, and chief architect of  [[Jacksonian democracy]],&lt;ref&gt;Holt, 2005, p. 7: &quot;…Martin Van Buren took the lead in constructing the Democratic Party…&quot;&lt;/ref&gt;&lt;ref&gt;Widmer, 2005, p. 58: &quot;[Van Buren's] vision was indispensable to the rise of the phenomenon we call Jacksonian Democracy.&quot;&lt;/ref&gt; was the presumptive Democratic presidential contender in the spring of 1844.&lt;ref&gt;Freehling, 1991, p. 369: Van Buren &quot;seemingly had the Democratic Party's nomination secured&quot; and p. 411: &quot;…cruising towards the nomination…&quot;&lt;/ref&gt;&lt;ref&gt;Wilentz, 2008, p. 558: &quot;By early 1844, Martin Van Buren and the Radical Democrats controlled the party's nominating machinery.&quot;&lt;/ref&gt; With Secretary of State [[John C. Calhoun]] withdrawing his bid for the presidency in January 1844, the campaign was expected to focus on domestic issues. All this changed with the Tyler treaty.&lt;ref&gt;Wilentz, 2008, p. 558-559: &quot;Calhoun's departure from the presidential race in January 1844 appeared to seal Van Buren's nomination&quot; and &quot;The key question&quot; was whether &quot;banking and internal improvement&quot; would suffice as issues to heal party divisions.&lt;/ref&gt; Van Buren regarded the Tyler annexation measure as an attempt to sabotage his bid for the White House by exacerbating the already strained North-South Democratic alliance regarding slavery expansion.&lt;ref&gt;Freehling, 1991, p. 411 &quot;…a southern roadblock…&quot; to Van Buren's nomination.&lt;/ref&gt; Calhoun's Packenham Letter would serve to spur Democrats of the South to the task of forcing the Northern wing of the party to submit to Texas annexation,&lt;ref&gt;Freehling, 1991, p. 413:  A test to determine &quot;whether southern extremists could pressure moderate Southern Democrats to [in turn] pressure Northern Democrats&quot; into voting for Texas annexation legislation.&lt;br&gt; Merry, 2009, p. 787: Van Buren &quot;faced considerable opposition within his own party&quot; to any rejection of Texas annexation, &quot;particularly from southern slaveholders and western entrepreneurs…Now the rupture of the party was unavoidable.&quot;&lt;/ref&gt; despite the high risk of &quot;aggressively injecting slavery into their political campaign over Texas.&quot;&lt;ref&gt;Miller, 1998, p. 484: Italics in original&lt;/ref&gt;
+
+The annexation of Texas was the chief political issue of the day. Van Buren, initially the leading candidate, opposed immediate annexation because it might lead to a sectional crisis over the status of slavery in the West and lead to war with Mexico. This position cost Van Buren the support of southern and expansionist Democrats; as a result, he failed to win the nomination.  The delegates likewise could not settle on [[Lewis Cass]], the former Secretary of War, whose credentials also included past service as a U.S. minister to France.
+
+On the eighth ballot, the historian [[George Bancroft]], a delegate from Massachusetts, proposed former [[Speaker of the United States House of Representatives|House Speaker]] [[James K. Polk]] as a compromise candidate. Polk argued that Texas and Oregon had always belonged to the United States by right. He called for &quot;the immediate re-annexation of Texas&quot; and for the &quot;re-occupation&quot; of the [[Oregon boundary dispute|disputed Oregon territory]].
+
+On the next roll call, the convention unanimously accepted Polk, who became the first [[dark horse]], or little-known, presidential candidate.&lt;ref&gt;Widmer, 2005, p. 150 &quot;…the original 'dark horse' candidate.&quot;&lt;/ref&gt; The delegates selected Senator [[Silas Wright]] of New York for [[Vice President of the United States|Vice President]], but Wright, an admirer of Van Buren, declined the nomination to become the first person to decline a vice presidential nomination. The Democrats then nominated [[George M. Dallas]], a Pennsylvania lawyer.&lt;ref&gt;[[World Book]]&lt;/ref&gt;
+
+====Martin Van Buren's Hammet letter====
+[[File:&quot;No Annexation of Texas&quot; 1844.jpg|175px|thumb|right|Anti-annexation poster, New York City, April 1844. [[Albert Gallatin]] (signature on poster), [[Thomas Jefferson]]'s Treasury Secretary presided over the event.&lt;ref&gt;Crapol, 2006, p. 215: &quot;The capacity crowd in the auditorium listened attentively as the eighty-three-year-old [[Albert Gallatin|Gallatin]] spoke passionately against Texas annexation.&quot;&lt;/ref&gt;]]
+[[File:&quot;The Little Magician Invoked&quot; Martin Van Buren, US Presidential Election, 1844.jpg|270px|thumb|right|Martin Van Buren summons spirits to divine the Democratic or [[Locofocos|Loco Foco]] prospects for election in 1844.]]
+Van Buren realized that accommodating slavery expansionists in the South would open the Northern Democrats to charges of appeasement to the [[Slave power]] from the strongly anti-annexation Northern Whigs and some Democrats.&lt;ref&gt;Freehling, 1991, p. 412: Van Buren &quot;filled his Hammet letter with conditions&quot; obstructing the road to annexation &quot;because Northern Whigs anti-annexationist fury made unconditional annexation too politically risky.&quot; p. 429 &quot;Northern Whigs had, by [placating the] South, turned the southern minority into a national majority. Van Buren now urged that the northern majority must rule&quot; the Democratic national party.&lt;/ref&gt; He crafted an emphatically anti-Texas position that temporized with expansionist southern Democrats, laying out a highly conditional scenario that delayed Texas annexation indefinitely.&lt;ref&gt;Widmer, 2005, p.149: Van Buren stated &quot;in no uncertain terms he was opposed to Texas annexation…He did not foreclose on the future possibility…under the right circumstances…&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 413: &quot;Van Buren…offered Southerners a delay [on annexation] that would be tolerable to the North.&quot;&lt;/ref&gt; In the Hammett Letter, published April 27, 1844 (penned April 20),&lt;ref&gt;Widmer, 2005, p. 149: &quot;Van Buren wrote out a reply on April 20 that reshaped the campaign…&quot;&lt;/ref&gt; he counseled his party to reject Texas under a Tyler administration. Furthermore, annexation of Texas as a territory would proceed, tentatively, under a Van Buren administration, only when the American public had been consulted on the matter and Mexico's cooperation had been pursued to avoid an unnecessary war.&lt;ref&gt;Freehling, 1991, p.412: Van Buren's letter &quot;came fused with a pledge to administer annexation…assuming the American majority wanted to risk war&quot;, but &quot;repudiated&quot; altogether Tyler's Texas treaty.&lt;/ref&gt;&lt;ref&gt;Wilentz, 2008, p. 568: &quot;…the letters thrust was strongly annexation&quot; but he included &quot;a vague concession to the South&quot;, whereby mass support for annexation – North and South – might open the door to Texas statehood.&lt;/ref&gt; A military option might be advanced if a groundswell of popular support arose for Texas, certified with a congressional mandate.&lt;ref&gt;Widmer, 2005, p. 149: Van Buren &quot;did not foreclose on the future possibility of accepting Texas under the right circumstances&quot; including military means.&lt;/ref&gt;&lt;ref&gt;May 2008, p. 113: Van Buren agreed to &quot;accept Texas annexation if it did not mean a war with Mexico, did not exacerbate sectional tensions, and had the clear support of the whole nation.&quot;&lt;/ref&gt; In these respects, Martin Van Buren differed from Henry Clay, who would never tolerate annexation without Mexico's assent.&lt;ref&gt;Freehling, 1991, p. 427: &quot;Clay, in contrast [to Van Buren] would halt annexation unless Mexico assented.&quot;&lt;/ref&gt;
+
+With the publication of Clay's Raleigh Letter and Van Buren's Hammett Letter, Van Burenite Democrats hoped that their candidate's posture on Texas would leave southern pro-annexationists with exactly one choice for president: Martin Van Buren. In this, they misjudged the political situation.&lt;ref&gt;Freehling, 1991, p. 428: &quot;Van Buren erred…in thinking that delay [in annexation] was tolerable&quot; to Southern Democrats…&quot; &quot;The more threatening foe might be President Tyler, who promoted [immediate annexation].&quot; &quot;[He] also miscalculated later…in thinking that Southern Democrats most dangerous opponent was necessarily Clay, who admittedly offered less on annexation. The more threatening foe might be President Tyler, who offered far more [than Van Buren]&quot;&lt;/ref&gt; Tyler and the southern pro-annexationists posed a potentially far greater threat then Clay, in that the Tyler-Calhoun treaty would put immense pressure on the northern Democrats to comply with southern Democrats demands for Texas.&lt;ref&gt;Freehling, 1991, p. 426: &quot;Southern Democrats had long since discovered, particularly in gag rule politics, that enough Northern Democrats would probably cave in, however begrudgingly and resentfully, to southern demands.&quot;&lt;/ref&gt;
+
+The Hammett Letter utterly failed to reassure Middle and Deep South extremists who had responded favorably to Calhoun's Pakenham Letter.&lt;ref&gt;Freehling, 1991, p. 428: Van Buren's response to Calhoun's Packenham letter &quot;produced a special fury when Southern Democrats scorned his clever stall .&lt;/ref&gt;&lt;ref&gt;Widmer, 2005, p. 149: &quot;Immediately after the publication of the Hammett Letter, southerners let loose a howl of 'fever and fury' and claimed that it proved he had never been one of them.&quot;&lt;/ref&gt; A minority of the southern Democrat leadership remained obdurate that Northern Democratic legislators would ignore their constituents' opposition to slavery expansion and unite in support of Texas annexation once exposed to sufficient southern pressure.
+
+The extent to which Southern Democrat support for Martin Van Buren had eroded over Texas annexation crisis became evident when Van Buren's southern counterpart in the rise of the Democratic Party, [[Thomas Ritchie (journalist)|Thomas Ritchie]] of the ''Richmond Enquirer'', terminated their 20-year political alliance in favor of immediate annexation.&lt;ref&gt;Freehling, 1991, p. 428: Van Buren &quot;was finished as a candidate in their section.&quot;&lt;/ref&gt;&lt;ref&gt;Brown, 1966, p. 33: &quot;Ritchie and Van Buren, after nearly a quarter century of fruitful political teamwork, would part company…&quot;&lt;/ref&gt;
+
+====Andrew Jackson====
+Calhoun gained significant credibility when his former nemesis, ex-President [[Andrew Jackson]], publicly announced his support for immediate Texas annexation in May 1844.&lt;ref&gt;Freehling, 1991, p. 415: Jackson's support for immediate Texas annexation &quot;lent enormous credibility to Calhoun&quot; after the issuance of the Packenham Letter.&lt;/ref&gt; Jackson had facilitated Tyler's Texas negotiations in February 1844 by reassuring President of the Texas Republic [[Sam Houston]] that the US Senate ratification of the Tyler treaty was likely.&lt;ref&gt;Freehling, 1991, p. 404: &quot;Jackson would assure Texas President [Sam Houston] that…annexation could now become a reality.&quot; and p. 418: &quot;that a treaty would be ratified.&quot;&lt;/ref&gt; As the Senate debated the Tyler treaty, Jackson declared that the popular support among Texans for annexation should be respected, and any delay would result in a British dominated Texas Republic that would promote slave emancipation and pose a foreign military threat to the southwest United States.&lt;ref&gt;Freehling,1991, p. 416, p. 417: &quot;Jackson joined Calhoun and Tyler in seeing Texas's vulnerability as England's opportunity&quot; and &quot;if America rejected annexation&quot; Great Britain would preside over the emancipation of Texas slavery and &quot;soon English soldiers&quot; would be occupying the western frontier.&lt;/ref&gt;
+
+The former military hero went further, urging all [[Jacksonian democracy|Jacksonian Democrats]] to block Martin Van Buren from the party ticket and seek a Democratic presidential candidate fully committed to the immediate annexation of Texas.&lt;ref&gt;Freehling, 1991, p. 415: &quot;Now the old general [Jackson] urged…his supporters to nominate someone other than Van Buren&quot;because he had &quot;failed to see the Texas situation as an immediate crisis.&quot;&lt;/ref&gt; In doing so, Jackson abandoned the traditional Jeffersonian-Jacksonian formula that had required its Northern and Southern wings to compromise on constitutional slavery disputes.
+
+Texas was fracturing Van Buren's support among Democrats and would &quot;derail&quot; his bid for President of the United States.&lt;ref&gt;Merry, 2009, p. 78: &quot;Van Buren’s position within the Democratic Party was unraveling.&quot;&lt;/ref&gt;&lt;ref&gt;Holt, 2008, p. 11: Van Buren's supporters &quot;raged that Texas annexation had been used to derail Van Buren's nomination.&quot;&lt;/ref&gt;
+
+====Democratic Party campaign tactics====
+Historian Sean Wilentz describes some the Democrat campaign tactics:
+{{quote|In the South, Democrats played racist politics and smeared Clay as a dark skin-loving abolitionist, while in the North, they defamed him as a debauched, dueling, gambling, womanizing, irreligious hypocrite whose reversal on the bank issue proved he had no principles. They also pitched their nominees to particular local followings, having Polk hint preposterously, in a letter to a Philadelphian, that he favored &quot;reasonable&quot; tariff protection for domestic manufactures, while they attacked the pious humanitarian Frelinghuysen as an anti-Catholic bigot and crypto-nativist enemy of the separation of church and state. To ensure the success of their southern strategy, the Democrats also muffled John Tyler.&lt;ref&gt;Wilentz, 2008, p. 573&lt;/ref&gt;}}Beyond his actual platform, Polk pledged to serve only one term as President. He would keep this promise, and would die less than three months after leaving office.&lt;ref&gt;{{Cite news|url=https://www.history.com/topics/us-presidents/james-polk|title=James K. Polk|work=HISTORY|access-date=2018-10-18|language=en}}&lt;/ref&gt;
+
+===Senate vote on the Tyler-Texas treaty===
+The Tyler-Texas annexation treaty, submitted to the Senate in April 1844, was defeated in the Whig controlled Senate, largely along partisan lines, 16 to 35 – a two-thirds majority against passage – on June 8, 1844.&lt;ref&gt;May 2008, p. 115: The US Senate &quot;voted thirty-five to sixteen to defeat the treaty.&quot;&lt;/ref&gt; Whigs voted 27-1 against the treaty: all northern Whig Senators voted nay, and fourteen of fifteen southern Whig Senators had joined them.&lt;ref&gt;Freehling, 1991, p. 431&lt;/ref&gt; Democrats voted for the treaty 15-8, with a slight majority of Northern Democrats opposing. Southern Democrats affirmed the treaty 10-1, with only one slave state Senator, [[Thomas Hart Benton (senator)|Thomas Hart Benton]], voting against.&lt;ref&gt;Freehling, 1991, p. 431: &quot;…the Senate rejected the treaty by over two-thirds, 35-16, on June 8, 1844. Whigs voted 27-1 against ratification, Demorcrats 15-8 for approval. Northern Democrats barely managed a majority against the Slaver power, 7-5, with one abstention; Northern Whigs opposed annexation, 13-0. Southern Democrats affirmed the treaty, 10-1: Southern Whigs said no to Tyler, 14-1&lt;/ref&gt;
+
+Three days later, Tyler and his supporters in Congress began exploring means to bypass the [[supermajority]] requirement for Senate treaty approval. Substituting the constitutional protocols for admitting regions of the United States into the Union as states, Tyler proposed that alternative, yet constitutional, means be used to bring the Republic of Texas – a foreign country – into the Union.&lt;ref&gt;Freehling, 1991, p. 431: &quot;…three days after the treaty was defeated…Tyler urged Congress to admit Texas by simple majorites&quot; in each house.&lt;/ref&gt;
+
+Tyler and Calhoun, formerly staunch supporters of minority safeguards based on the supermajority requirements for national legislation, now altered their position to facilitate passage of the Tyler treaty.&lt;ref&gt;Finkelman, 2011, p. 29: &quot;…Tyler abandoned his strict constructionist constitutional scruples, which dictated that annexation was possible only by [a Senate approved] treaty.&quot;&lt;/ref&gt; Tyler's attempt to evade the Senate vote launched a spirited congressional debate.&lt;ref&gt;Freehling, 1991, p. 432: &quot;The resulting bitter senatorial confrontation on Tyler's proposed evasion of the two-thirds roadblock was the first public congressional explossion over Texas, the treaty having [initially] been considered in secret session.&quot;&lt;/ref&gt;
+
+===National Democratic-Republican Party campaign and convention===
+====&quot;Tyler and Texas&quot;====
+[[File:John Tyler.png|thumb|right|180px|Incumbent President John Tyler, the [[Democratic-Republican Party (1844)|Democratic-Republican Party]] presidential nominee]]
+After the closed session Senate debates on the Tyler-Texas treaty were leaked to the public on April 27, 1844, President Tyler's only hope of success in influencing passage of his treaty was to intervene directly as candidate in the 1844 election as [[Kingmaker]].&lt;ref&gt;May 2008, p. 113: &quot;Tyler, all hope of success nearly gone, had only one option left – to launch his own party and attempt to act as spoiler in the November presidential contest.&quot;&lt;/ref&gt; His [[Democratic-Republican Party (1844)|&quot;Democratic-Republican Party&quot;]], a recycling of the name of [[Thomas Jefferson]]'s party,&lt;ref&gt;May, 2008, p. 113: &quot;…so-called Democratic-Republican Party; the name a tribute to [Tyler's] beloved Jefferson…&quot;&lt;/ref&gt; held its convention on May 27, 1844, in Baltimore, Maryland, a short distance from the unfolding Democratic Party convention that would select James K. Polk as nominee. Tyler was nominated the same day without challenge, accepting the honor on May 30, 1844. He designated no vice-presidential running mate.&lt;ref&gt;May 2008, p. 114: Tyler &quot;did not select a running mate.&quot;&lt;/ref&gt;
+
+Democratic Party nominee James K. Polk was faced with the possibility that a Tyler ticket might shift votes away from the Democrats and provide Clay with the margin of victory in a close race. Tyler made clear in his convention acceptance speech that his overriding concern was the ratification of his Texas annexation treaty. Moreover, he hinted that he would drop out of the race once that end was assured, informing Polk, through Senator [[Robert J. Walker]] of Mississippi, that his campaign efforts were simply a vehicle to mobilize support for Texas annexation.&lt;ref&gt;May 2008, p. 119: &quot;The more Tyler could challenge Polk's chances the more certain he was that Polk would deliver on annexation…&quot;&lt;/ref&gt; Tyler concentrated his resources in the states of New York, Pennsylvania and New Jersey, all highly contested states in the election. Securing enough Democratic support, his withdrawal might prove indispensable to Polk.
+
+Polk was receptive as long as Tyler could withdraw without raising suspicion of a secret bargain.&lt;ref&gt;May 2008, p. 119-120: &quot;All that Polk needed was a mechanism that would allow Tyler to gracefully drop out of the race without reviving suspicions of a corrupt bargain.&quot;&lt;/ref&gt; To solidify Tyler's cooperation, Polk enlisted Andrew Jackson to reassure Tyler that Texas annexation would be consummated under a Polk administration. On August 20, 1844, Tyler dropped out of the presidential race, and Tylerites moved quickly to support the Democratic Party nominee.&lt;ref&gt;May 2008, p. 120: &quot;Tyler supporters easily switched their allegiance to Polk…&quot;&lt;/ref&gt;
+
+===Other nominations===
+{{main|Joseph Smith presidential campaign, 1844}}
+The abolitionist lawyer and publisher [[James G. Birney|James Birney]] ran as the candidate of the [[abolitionism in the United States|anti-slavery]] [[Liberty Party (1840s)|Liberty Party]] and garnered 2.3% of the popular vote overall, but over 8% of the vote in Massachusetts, New Hampshire and Vermont. The votes he won were more than the difference in votes between Henry Clay and James K. Polk; some scholars have argued that Birney's support among anti-slavery Whigs in New York [[Spoiler effect|swung]] that decisive state in favor of Polk (see below).
+
+[[Joseph Smith]], the mayor of [[Nauvoo, Illinois]], and founder of the [[Latter Day Saint movement]], ran as an independent with [[Sidney Rigdon]] as his running mate. He proposed the redemption of [[slavery|slaves]] by selling public lands and decreasing the size and salary of Congress; the closure of prisons; the annexation of Texas, Oregon, and parts of Canada; the securing of international rights on high seas; [[free trade]]; and the re-establishment of a [[national bank]].&lt;ref&gt;{{Cite web|last=Smith|first=Joseph, Jr.|author-link=Joseph Smith|year=1844|title=General Smith's Views on the Powers and Policy of the Government of the United States|url=http://contentdm.lib.byu.edu/u?/NCMP1820-1846,2597|postscript=&lt;!-- Bot inserted parameter. Either remove it; or change its value to &quot;.&quot; for the cite to end in a &quot;.&quot;, as necessary. --&gt;&amp;#123;&amp;#123;inconsistent citations&amp;#125;&amp;#125;}}.&lt;/ref&gt;  His top aide [[Brigham Young]] campaigned for Smith saying, &quot;He it is that God of Heaven designs to save this nation from destruction and preserve the Constitution.&quot;&lt;ref&gt;{{cite book|author=Kenneth H. Winn|title=Exiles in a Land of Liberty: Mormons in America, 1830-1846|url=https://books.google.com/books?id=ESwIEefhOWwC&amp;pg=PA203|year=1990|page=203}}, quote on p 203&lt;/ref&gt; The campaign ended when he was [[Death of Joseph Smith|attacked and killed by a mob]] while in the Carthage, Illinois, jail on June 27, 1844.&lt;ref&gt;[[Carthage Jail]]&lt;/ref&gt;
+
+==Election results==
+Polk's adoption of Manifest Destiny paid dividends at the polls. No longer identified with the Tyler-Calhoun &quot;southern crusade for slavery&quot;, the western Democrats could embrace Texas annexation.&lt;ref&gt;Freehling, 1991, p.437- 438: &quot;Polk partisans called acquisition of Texas and Oregon not a southern but a western concern&quot; and &quot;A presidential campaign for national imperialism divorced from a southern crusade for slavery…&quot;&lt;/ref&gt; The Democrats enjoyed a huge upsurge in voter turnout, up to 20% over the figures from 1840, especially in the Northwest and Mid-Atlantic regions. The Whigs showed only a 4% increase.&lt;ref&gt;Freehling, 1991, p. 438: &quot;Throughout… Midwestern states, Democrats total popular vote rose 20% between 1840 and 1844, while Whigs rose only 4%&quot;&lt;/ref&gt;
+
+The Democrats won Michigan, Illinois and Indiana and nearly took Ohio, where the concept of Manifest Destiny was most admired.&lt;ref&gt;Freehling, 1991, p. 438: &quot;In this northwest [region], Democratic campaigners truly were the Manifest Destiny spokesmen, unfortunately painted as everywhere, omnipresent in latter-day history textbooks.&quot; P. 439: However, &quot;northern voters had nothing like demanded Manifest Destiny.&quot;&lt;/ref&gt;
+
+In the Deep South, Clay lost every state to Polk, a huge reversal from the 1840 race, but carried most of the Middle and Border South.&lt;ref&gt;Freehling, 1991, p. 438: &quot;Clay lost every state in the Deep South… but manage to hang on to the five states Harrison had captured in 1840… in the Border and Middle South.&quot;&lt;/ref&gt;
+
+Clay's &quot;waffling&quot; on Texas may have cost him the 41 electoral votes of New York and Michigan. The former slaveholder, now abolitionist, James Birney of the Liberty Party, received 15,812 and 3,632 votes, respectively, on the basis of his unwavering stand against Texas annexation.
+
+Polk won by a mere 5,106 out of 470,062 cast in New York, and only 3,422 out of 52,096 votes in Michigan.&lt;ref&gt;Finkelman, 2011, p. 19: &quot;The northern Democrats could on the explicitly anti-slavery Liberty Party to…possibly siphon off anti-slavery Whig votes.&quot;&lt;/ref&gt; Had enough of these voting blocks cast their ballots for the anti-annexationist Clay in either state, he would have defeated Polk.&lt;ref&gt;Wilentz, 2008, p. 574: &quot;Had only a modest proportion of the Liberty Party's New York vote…gone instead to the Whigs, Henry Clay would have been elected president.&quot;&lt;/ref&gt;&lt;ref&gt;Freehling, 1991, p. 438: &quot;The shift of [either] of these states' 41 electoral votes would have transformed a 170-105 Polk Electoral victory into a 146-129 Clay triumph.&quot;&lt;/ref&gt; Still, Clay's opposition to annexation and western slavery expansion served him well among Northern Whigs and nearly secured him the election.&lt;ref&gt;Holt, 2005, p. 11-12&lt;/ref&gt;
+
+This was the last election in which Ohio voted for the Whigs and the last time that voted against the Democrats until it voted Republican in 1856. It was also the only presidential election in which the winner, Polk, lost both his birth state of North Carolina and his state of residence, Tennessee, (which he lost by only 123 votes) prior to [[Donald Trump|Donald Trump's]] victory in the [[United States presidential election, 2016|2016 presidential election]]. It is the only presidential election in which both major party nominees were former [[Speaker of the United States House of Representatives|Speakers of the House]].
+
+{{start U.S. presidential ticket box|pv_footnote=&lt;sup&gt;(a)&lt;/sup&gt;|ev_footnote=}}
+{{U.S. presidential ticket box row|name=[[James K. Polk]]|vp_name=[[George M. Dallas]]|party=[[United States Democratic Party|Democratic]]|state=[[Tennessee]]|vp_state=[[Pennsylvania]]|pv=1,339,494|pv_pct=49.54%|ev=170}}
+{{U.S. presidential ticket box row|name=[[Henry Clay]]|vp_name=[[Theodore Frelinghuysen]]|party=[[United States Whig Party|Whig]]|state=[[Kentucky]]|vp_state=[[New York (state)|New York]]&lt;ref&gt;Frelinghuysen's home state was apparently New York in 1844. See [http://memory.loc.gov/cgi-bin/ampage?collId=llsj&amp;fileName=036/llsj036.db&amp;recNum=162&amp;itemLink=D?hlaw:1:./temp/~ammem_GDSi::%230360163&amp;linkText=1 The Journal of the Senate] for February 12, 1845. Also note that Frelinghuysen was President of [[New York University]] in 1844. There is some contradictory evidence in favor of a New Jersey residency: the [https://www.archives.gov/federal-register/electoral-college/votes/1837_1853.html#1844 National Archives] gives his home state as New Jersey and the Journal of the Senate notes that Vermont's electors believed Frelinghuysen to be a New Jersey resident. Frelinghuysen was a New Jersey native and his political career had largely been conducted in New Jersey.&lt;/ref&gt;|pv=1,300,004|pv_pct=48.08%|ev=105}}
+{{U.S. presidential ticket box row|name=[[James G. Birney]]|vp_name=[[Thomas Morris (Ohio politician)|Thomas Morris]]|party=[[Liberty Party (1840s)|Liberty]]|state=[[Michigan]]|vp_state=[[Ohio]]|pv=62,103|pv_pct=2.30%|ev=0}}
+{{U.S. presidential ticket box other|pv=2,058|pv_pct=0.08%}}
+{{end U.S. presidential ticket box|pv=2,703,659|ev=275|to_win=138}}
+'''Source (Popular vote):''' {{Leip PV source| year=1844| as of=July 27, 2005}}&lt;br&gt;
+'''Source (Electoral vote):''' {{National Archives EV source| year=1844| as of=July 31, 2005}}&lt;br&gt;
+&lt;sup&gt;(a)&lt;/sup&gt; ''The popular vote figures exclude [[South Carolina]] where the Electors were chosen by the state legislature rather than by popular vote.''
+
+{{bar box
+|title=Popular vote
+|titlebar=#ddd
+|width=600px
+|barwidth=410px
+|bars=
+{{bar percent|'''Polk'''|{{Democratic Party (US)/meta/color}}|49.54}}
+{{bar percent|Clay|{{Whig Party (United States)/meta/color}}|48.08}}
+{{bar percent|Birney|{{Liberty Party (United States)/meta/color}}|2.30}}
+{{bar percent|Others|#777777|0.08}}
+}}
+{{bar box
+|title=Electoral vote
+|titlebar=#ddd
+|width=600px
+|barwidth=410px
+|bars=
+{{bar percent|'''Polk'''|{{Democratic Party (US)/meta/color}}|61.81}}
+{{bar percent|Clay|{{Whig Party (United States)/meta/color}}|38.18}}
+}}
+
+===Cartographic gallery===
+&lt;gallery mode=&quot;packed&quot; heights=&quot;200&quot;&gt;
+PresidentialCounty1844Colorbrewer.gif|Results by county, shaded according to winning candidate's percentage of the vote
+DemocraticPresidentialCounty1844Colorbrewer.png|Results by county, shaded according to percentage of the vote for '''Polk'''
+WhigPresidentialCounty1844Colorbrewer.png|Results by county, shaded according to percentage of the vote for '''Clay'''
+LibertyPresidentialCounty1844Colorbrewer.png|Results by county, shaded according to percentage of the vote for '''Birney'''
+OtherPresidentialCounty1844Colorbrewer.png|Results by county, shaded according to percentage of the vote for other candidates
+&lt;/gallery&gt;
+
+==Results by state==
+'''Source:''' Data from Walter Dean Burnham, ''Presidential ballots, 1836-1892'' (Johns Hopkins University Press, 1955) pp 247–57.
+{| class=&quot;wikitable sortable&quot; style=&quot;text-align:right&quot;
+|-
+! colspan=2 |
+! align=center colspan=3 | James K. Polk&lt;br /&gt;Democratic
+! align=center colspan=3 | Henry Clay&lt;br /&gt;Whig
+! align=center colspan=3 | James G. Birney&lt;br /&gt;Liberty
+! colspan=&quot;2&quot; |Margin
+! align=center colspan=2 | State Total
+|-
+! align=center | State
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+! align=center | #
+! align=center | %
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+! align=center | #
+! align=center | %
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+! align=center | #
+! align=center | %
+! style=&quot;text-align:center; font-size: 60%&quot; | electoral&lt;br /&gt;votes
+!#
+!%
+! align=center | #
+!
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Alabama, 1844|Alabama]]
+! 9
+| &lt;span style=&quot;display:none&quot;&gt;00013618&lt;/span&gt;37,401
+| 58.99
+| 9
+| &lt;span style=&quot;display:none&quot;&gt;00048669&lt;/span&gt;26,002
+| 41.01
+| -
+| colspan=3 align=center | ''no ballots''
+|11,399
+|17.98
+| 63,403
+! AL
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Arkansas, 1844|Arkansas]]
+! 3
+| 9,546
+| 63.01
+| 3
+| 5,604
+| 36.99
+| -
+| colspan=3 align=center | ''no ballots''
+|3,942
+|26.02
+| 15,150
+! AR
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Connecticut, 1844|Connecticut]]
+! 6
+| 29,841
+| 46.18
+| -
+| 32,832
+| 50.81
+| 6
+| 1,943
+| 3.01
+| -
+| -2,991
+| -4.63
+| 64,616
+! CT
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Delaware, 1844|Delaware]]
+! 3
+| 5,970
+| 48.75
+| -
+| 6,271
+| 51.20
+| 3
+| colspan=3 align=center | ''no ballots''
+| -301
+| -2.45
+| 12,247
+! DE
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Georgia, 1844|Georgia]]
+! 10
+| 44,147
+| 51.19
+| 10
+| 42,100
+| 48.81
+| -
+| colspan=3 align=center | ''no ballots''
+|2,047
+|2.38
+| 86,247
+! GA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Illinois, 1844|Illinois]]
+! 9
+| 58,795
+| 53.91
+| 9
+| 45,854
+| 42.05
+| -
+| 3,469
+| 3.18
+| -
+|12,941
+|11.86
+| 109,057
+! IL
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Indiana, 1844|Indiana]]
+! 12
+| 70,181
+| 50.07
+| 12
+| 67,867
+| 48.42
+| -
+| 2,106
+| 1.50
+| -
+|2,314
+|1.65
+| 140,154
+! IN
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Kentucky, 1844|Kentucky]]
+! 12
+| 51,988
+| 45.91
+| -
+| 61,249
+| 54.09
+| 12
+| colspan=3 align=center | ''no ballots''
+|9,261
+| -8.18
+| 116,865
+! KY
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Louisiana, 1844|Louisiana]]
+! 6
+| 13,782
+| 51.30
+| 6
+| 13,083
+| 48.70
+| -
+| colspan=3 align=center | ''no ballots''
+|699
+|2.60
+| 26,865
+! LA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Maine, 1844|Maine]]
+! 9
+| 45,719
+| 53.83
+| 9
+| 34,378
+| 40.48
+| -
+| 4,836
+| 5.69
+| -
+|11,341
+|13.35
+| 84,933
+! ME
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Maryland, 1844|Maryland]]
+! 8
+| 32,706
+| 47.61
+| -
+| 35,984
+| 52.39
+| 8
+| colspan=3 align=center | ''no ballots''
+| -3,278
+| -4.78
+| 68,690
+! MD
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Massachusetts, 1844|Massachusetts]]
+! 12
+| 53,039
+| 40.17
+| -
+| 67,062
+| 50.79
+| 12
+| 10,830
+| 8.20
+| -
+| -14,023
+| -10.62
+| 132,037
+! MA
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Michigan, 1844|Michigan]]
+! 5
+| 27,737
+| 49.75
+| 5
+| 24,375
+| 43.72
+| -
+| 3,639
+| 6.53
+| -
+|3,362
+|6.03
+| 55,751
+! MI
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Mississippi, 1844|Mississippi]]
+! 6
+| 25,846
+| 57.43
+| 6
+| 19,158
+| 42.57
+| -
+| colspan=3 align=center | ''no ballots''
+|6,688
+|14.85
+| 45,004
+! MS
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Missouri, 1844|Missouri]]
+! 7
+| 41,322
+| 56.98
+| 7
+| 31,200
+| 43.02
+| -
+| colspan=3 align=center | ''no ballots''
+|10,122
+|13.96
+| 72,522
+! MO
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in New Hampshire, 1844|New Hampshire]]
+! 6
+| 27,160
+| 55.22
+| 6
+| 17,866
+| 36.32
+| -
+| 4,161
+| 8.46
+| -
+|9,294
+|18.90
+| 49,187
+! NH
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in New Jersey, 1844|New Jersey]]
+! 7
+| 37,495
+| 49.37
+| -
+| 38,318
+| 50.46
+| 7
+| 131
+| 0.17
+| -
+| -823
+| -1.09
+| 75,944
+! NJ
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in New York, 1844|New York]]
+! 36
+| 237,588
+| 48.90
+| 36
+| 232,482
+| 47.85
+| -
+| 15,812
+| 3.25
+| -
+|5,106
+|1.05
+| 485,882
+! NY
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in North Carolina, 1844|North Carolina]]
+! 11
+| 39,287
+| 47.61
+| -
+| 43,232
+| 52.39
+| 11
+| colspan=3 align=center | ''no ballots''
+| -3,945
+| -4.78
+| 82,521
+! NC
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Ohio, 1844|Ohio]]
+! 23
+| 149,061
+| 47.74
+| -
+| 155,113
+| 49.68
+| 23
+| 8,050
+| 2.58
+| -
+| -6,052
+| -1.94
+| 312,224
+! OH
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Pennsylvania, 1844|Pennsylvania]]
+! 26
+| 167,447
+| 50.50
+| 26
+| 161,125
+| 48.59
+| -
+| 3,000
+| 0.90
+| -
+|6,322
+|1.91
+| 331,572
+! PA
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Rhode Island, 1844|Rhode Island]]
+! 4
+| 4,867
+| 39.58
+| -
+| 7,322
+| 59.55
+| 4
+| 107
+| 0.87
+| -
+| -2,455
+| -19.97
+| 12,296
+! RI
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in South Carolina, 1844|South Carolina]]
+! 9
+| colspan=2 align=center | ''no popular vote''
+| 9
+| colspan=3 align=center | ''no popular vote''
+| colspan=3 align=center | ''no popular vote''
+| -
+| -
+| -
+! SC
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Tennessee, 1844|Tennessee]]
+! 13
+| 59,917
+| 49.95
+| -
+| 60,040
+| 50.05
+| 13
+| colspan=3 align=center | ''no ballots''
+| -123
+| -0.10
+| 119,957
+! TN
+|-{{Party shading/Whig}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Vermont, 1844|Vermont]]
+! 6
+| 18,049
+| 36.96
+| -
+| 26,780
+| 54.84
+| 6
+| 3,970
+| 8.13
+| -
+| -8,731
+| -17.88
+| 48,829
+! VT
+|-{{Party shading/Democratic}}
+! style&quot;text-align:left&quot; | [[United States presidential election in Virginia, 1844|Virginia]]
+! 17
+| 50,679
+| 53.05
+| 17
+| 44,860
+| 46.95
+| -
+| colspan=3 align=center | ''no ballots''
+|5,819
+|6.10
+| 95,539
+! VA
+|-
+! TOTALS:
+! 275
+! 1,339,570
+! 49.54
+! 170
+! 1,300,157
+! 48.09
+! 105
+! 62,054
+! 2.30
+! -
+!39,413
+!1.45
+! 2,703,864
+! US
+|-
+! TO WIN:
+! 138
+! colspan=&quot;17&quot; |
+|}
+
+==Electoral College selection==
+{{start electoral college selection}}
+{{electoral college selection row|method=Each Elector appointed by state legislature|states=[[South Carolina]]}}
+{{electoral college selection row|method=Each Elector chosen by voters statewide|states=''(all other States)''}}
+{{end electoral college selection}}
+
+==Consequences==
+[[File:JamesKPolkLocalVictoryParadeLancasterPA11261844.jpg|thumb|right|200px|Broadside announcing torchlight victory parade in [[Lancaster, Pennsylvania]]]]
+Polk's election confirmed the American public's desire for westward expansion. The annexation of Texas was formalized on March 1, 1845, before Polk even took office. As feared, Mexico refused to accept the annexation and the [[Mexican–American War]] broke out in 1846. With Polk's main issue of Texas settled, instead of demanding all of Oregon, he compromised and the United States and United Kingdom negotiated the [[Oregon Treaty|Buchanan–Pakenham Treaty]], which divided up the Oregon Territory between the two countries.{{citation needed|date=April 2014}}
+
+==See also==
+*[[History of the United States (1789–1849)]]
+*[[Inauguration of James K. Polk]]
+*[[Second Party System]]
+*[[United States House of Representatives elections, 1844]]
+*[[United States Senate elections, 1844]]
+
+==References==
+{{reflist|30em}}
+
+===Bibliography===
+{{refbegin}}
+*Bicknell, John. ''America 1844: Religious Fervor, Westward Expansion and the Presidential Election That Transformed the Nation''. Chicago Review Press, 2014.
+*Brown, Richard H. 1966. ''The Missouri Crisis, Slavery, and the Politics of Jacksonianism''. South Atlantic Quarterly. pp.&amp;nbsp;55–72 in Essays on Jacksonian America, Ed. Frank Otto Gatell. Holt, Rinehart and Winston, Inc. New York . 1970.
+*Crapol, Edward P. 2006. ''John Tyler: the accidental president.'' The University of North Carolina Press. Chapel Hill. {{ISBN|978-0-8078-3041-3}}
+*[[Paul Finkelman|Finkelman, Paul]]. 2011. ''Millard Fillmore''. New York: Times Books
+*[[William W. Freehling|Freehling, William W.]] 1991. ''The Road to Disunion: Volume I: Secessionists at Bay, 1776-1854''. Oxford University Press. 1991. {{ISBN|978-0-19-507259-4}}.
+*Henderson, Timothy S. 2007. ''A Glorious Defeat&quot; Mexico and its war with the United States''. Hill and Wang, New York. {{ISBN|978-0-8090-6120-4}}
+*Holt, Michael F. 2005. ''The fate of their country: politicians, slavery extension, and the coming of the Civil War.'' New York: Hill and Wang.
+*May, Gary. 2008. ''John Tyler''. New York: Times Books/Henry Holt and Co.
+*[[Frederick Merk|Merk, Frederick]]. 1978. ''History of the Westward Movement''. Alfred A. Knopf. New York. {{ISBN|978-0-394-41175-0}}
+*[[Jon Meacham|Meacham, Jon]]. 2008. ''American Lion: Andrew Jackson in the White House''. Random House, New York.
+*[[William Lee Miller|Miller, William Lee]]. 1996. ''Arguing about slavery: the great battle in the United States Congress''. New York : A.A. Knopf, 1996.
+*Widmer, Edward L. 2005. ''Martin Van Buren''. New York: Times Books
+*[[Sean Wilentz|Wilentz, Sean]]. 2008. ''The Rise of American Democracy: Jefferson to Lincoln.'' W.W. Horton and Company. New York.
+{{Refend}}
+
+==Further reading==
+{{refbegin}}
+;Books
+*{{cite book |first=Oliver Perry |last=Chitwood |title=John Tyler, Champion of the Old South |year=1939}}
+*Davies, Gareth, and Julian E. Zelizer, eds. ''America at the Ballot Box: Elections and Political History'' (2015) pp.&amp;nbsp;36–58.
+*{{cite book |last=Harris |first=J. George |title=Polk's Campaign Biography |year=1990 |editor=Wayne Cutler (ed.) |publisher=University of Tennessee Press}}
+*{{cite book |last=Holt |first=Michael F. |year=1999 |title=The Rise and Fall of the American Whig Party: Jacksonian Politics and the Onset of the Civil War |publisher=Oxford University Press |isbn=0-19-505544-6}}
+*{{cite book |last=McCormac |first=Eugene I. |title=James K. Polk: A Political Biography |year=1922}}
+*{{cite book |first=James C. N. |last=Paul |title=Rift in the Democracy |year=1951}}
+*{{cite book |last=Remini |first=Robert V. | authorlink = Robert V. Remini |title=Henry Clay: Statesman for the Union |year=1991}}
+**Roach, George W. &quot;The Presidential Campaign of 1844 in New York State.&quot; ''New York History''  (1938) 19#2 pp: 153-172.
+*{{cite book |last=Sellers |first=Charles Grier, Jr. | authorlink = Charles Grier Sellers |title=James K. Polk, Continentalist, 1843–1846 |year=1966 |others=vol 2 of biography}}
+*{{cite book |last=Wilentz |first=Sean |title=The Rise of American Democracy: Jefferson to Lincoln |edition=1st |year=2005 |publisher=W.W. Norton &amp; Company, Inc. |location=New York |isbn=0-393-32921-6 |pages=566–575 |chapter=Divided Democrats and the Election of 1844}}
+
+;Web sites
+*{{cite web |title=A Historical Analysis of the Electoral College |work=The Green Papers |url=http://www.thegreenpapers.com/Hx/ElectoralCollege.html |accessdate=September 17, 2005}}
+*{{cite web |url=http://www.ohiohistorycentral.org/entry.php?rec=37 |title=Ohio History Central |accessdate=November 8, 2006 |work=Ohio History Central Online Encyclopedia}}
+{{refend}}
+
+==External links==
+{{commons}}
+*{{britannica|1767460|United States presidential election of 1844}}
+*[https://www.loc.gov/rr/program/bib/elections/election1844.html Presidential Election of 1844: A Resource Guide] from the Library of Congress
+*[http://geoelections.free.fr/USA/elec_comtes/1844.htm 1844 popular vote by counties]
+*[http://www.ourcampaigns.com/RaceDetail.html?RaceID=58091 Overview of Democratic National Convention 1844]
+*[https://web.archive.org/web/20120825102042/http://www.mit.edu/~mi22295/elections.html#1844 How close was the 1844 election?], Michael Sheppard, Massachusetts Institute of Technology
+*[http://www.countingthevotes.com/1844/ Election of 1844 in Counting the Votes]
+
+{{United States presidential election, 1844}}
+{{State Results of the 1844 U.S. presidential election}}
+{{USPresidentialElections}}
+
+{{DEFAULTSORT:United States Presidential Election, 1844}}
+[[Category:Henry Clay|Election, 1844]]
+[[Category:History of the United States (1789–1849)]]
+[[Category:Presidency of James K. Polk|Election, 1844]]
+[[Category:United States presidential election, 1844| ]]</text>
+      <sha1>buob7bcgbeywxxyo8zlvta8pt0ckooy</sha1>
+    </revision>
+  </page>
+</wikimedia>

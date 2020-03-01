@@ -38,7 +38,7 @@ static bool isDigit( char ch)
 
 static bool isHexDigit( char ch)
 {
-	return isDigit(ch) || ((ch|32) >= 'a' && (ch|32) <= 'z');
+	return isDigit(ch) || ((ch|32) >= 'a' && (ch|32) <= 'f');
 }
 
 static bool isAlphaNum( char ch)
@@ -1529,7 +1529,7 @@ WikimediaLexem WikimediaLexer::next()
 			{
 				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 			}
-			std::string value = strus::string_conv::decodeXmlEntities( std::string( m_si, 3));
+			std::string value = strus::string_conv::decodeUrlEntities( std::string( m_si, 3));
 			m_si += 3;
 			return WikimediaLexem( WikimediaLexem::Text, 0, value);
 		}
