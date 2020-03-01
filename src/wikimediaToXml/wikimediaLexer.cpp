@@ -1518,7 +1518,7 @@ WikimediaLexem WikimediaLexer::next()
 						return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
 					}
 					m_si = si;
-					return WikimediaLexem( WikimediaLexem::Text, 0, " - "/*unknown entity translated to a dash*/);
+					return WikimediaLexem( WikimediaLexem::Text, 0, "-"/*unknown entity translated to a dash*/);
 				}
 			}
 			++m_si;
