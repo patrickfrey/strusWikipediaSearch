@@ -28,7 +28,7 @@ createData() {
 mergePosTagging()
 {
 	cd $DATAPATH
-	strusMergeMarkup -x ".xml" -k "T,P,C,X,A,V,M,N,E,U,R,W" -o nlpxml2/ -F errout/ nlpxml/ xml/
+	strusMergeMarkup -x ".xml" -t 12 -k "T,P,C,X,A,V,M,N,E,U,R,W" -o nlpxml/ -F errout/ nlpxml.old/ xml/
 }
 
 processPosTagging() {
@@ -105,7 +105,7 @@ processHeadingTagMarkup() {
         if [ $DID -ge $START ]; then
             if [ $DID -le $END ]; then
                 echo "processing title/heading tag markup of $DID ..."
-                strusTagMarkup -x xml -e '/doc/title' -e '//heading' -d '//br' -P $DID"_1" $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID
+                strusTagMarkup -t 12 -x xml -e '/doc/title' -e '//heading' -d '//br' -P $DID"_1" $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID
             fi
         fi
     done
@@ -245,6 +245,9 @@ processPosTaggingDumpSlice 1 3 0000 5762
 processPosTaggingDumpSlice 2 3 0000 5762
 
 processHeadingTagMarkup 0000 5762
+
+processDocumentCheck 0000 5762
+
 processCategoryTagMarkup 
 dumpVectorInputAll 0000 5762
 calcWord2vec
