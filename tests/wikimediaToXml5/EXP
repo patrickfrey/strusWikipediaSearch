@@ -1,0 +1,497 @@
+## 0000/Faraday_cage.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doc><docid>Faraday_cage</docid>
+<title>Faraday cage</title>
+<filelink id="Cage de Faraday.jpg"><text>Faraday cage demonstration on volunteers in the</text>
+  <pagelink id="Palais de la Découverte">Palais de la Découverte
+    </pagelink>
+  <text>in Paris</text>
+  </filelink>
+
+<br/>
+<filelink id="British Help American Wounded- Rehabilitation and Treatment, UK, 1944 D21558.jpg"><text>An American soldier in 1944 being treated with a</text>
+  <pagelink id="diathermy">diathermy
+    </pagelink>
+  <text>machine. The machine produces radio waves, so to keep it from causing interference with other electronic equipment in the hospital, the procedure was conducted inside a Faraday cage</text>
+  </filelink>
+
+<br/>
+<imglink id="Heimbach - power plant 07 ies.jpg"><text>Faraday shield at a power plant in Heimbach, Germany</text>
+  </imglink>
+
+<br/>
+<filelink id="Faraday bag.jpg"><text>Faraday bags are a type of Faraday cage made of flexible metallic fabric. They are typically used to block remote wiping or alteration of wireless devices recovered in criminal investigations, but may also be used by the general public to protect against data theft or to enhance</text>
+  <pagelink id="digital privacy">digital privacy
+    </pagelink>
+  <text>.</text>
+  </filelink>
+
+<br/>
+<text>A</text>
+<entity lv="3"><text>Faraday cage</text>
+  </entity>
+<text>or</text>
+<entity lv="3"><text>Faraday shield</text>
+  </entity>
+<text>is an enclosure used to block</text>
+<pagelink id="electromagnetic field">electromagnetic fields
+  </pagelink>
+<text>. A Faraday shield may be formed by a continuous covering of</text>
+<pagelink id="electrical conductor"><text>conductive material</text>
+  </pagelink>
+<text>or in the case of a Faraday cage, by a mesh of such materials. Faraday cages are named after the English scientist</text>
+<pagelink id="Michael Faraday">Michael Faraday
+  </pagelink>
+<text>, who invented them in 1836.</text>
+<citlink id="cit1"/>
+
+<br/>
+<filelink id="Faraday cage - FISL 14 - 2013-07-03.ogv"><text>Video of a Faraday cage shielding a man from electricity</text>
+  </filelink>
+
+<br/>
+<text>A Faraday cage operates because an external electrical field causes the</text>
+<pagelink id="electric charge">electric charges
+  </pagelink>
+<text>within the cage's conducting material to be distributed such that they cancel the field's effect in the cage's interior. This phenomenon is used to protect sensitive</text>
+<pagelink id="electronic equipment">electronic equipment
+  </pagelink>
+<text>from external</text>
+<pagelink id="radio frequency interference">radio frequency interference
+  </pagelink>
+<text>(RFI).  Faraday cages are also used to enclose devices that produce RFI, such as</text>
+<pagelink id="radio transmitter">radio transmitters
+  </pagelink>
+<text>, to prevent their radio waves from interfering with other nearby equipment.  They are also used to protect people and equipment against actual electric currents such as</text>
+<pagelink id="lightning">lightning
+  </pagelink>
+<text>strikes and</text>
+<pagelink id="electrostatic discharge">electrostatic discharges
+  </pagelink>
+<text>, since the enclosing cage conducts current around the outside of the enclosed space and none passes through the interior.</text>
+<br/>
+<text>Faraday cages cannot block stable or slowly varying magnetic fields, such as the</text>
+<pagelink id="Earth&apos;s magnetic field">Earth's magnetic field
+  </pagelink>
+<text>(a</text>
+<pagelink id="compass">compass
+  </pagelink>
+<text>will still work inside). To a large degree, though, they shield the interior from external</text>
+<pagelink id="electromagnetic radiation">electromagnetic radiation
+  </pagelink>
+<text>if the conductor is thick enough and any holes are significantly smaller than the</text>
+<pagelink id="wavelength">wavelength
+  </pagelink>
+<text>of the radiation. For example, certain</text>
+<pagelink id="computer forensics"><text>computer forensic</text>
+  </pagelink>
+<text>test procedures of electronic systems that require an environment free of</text>
+<pagelink id="electromagnetic interference">electromagnetic interference
+  </pagelink>
+<text>can be carried out within a screened room. These rooms are spaces that are completely enclosed by one or more layers of a fine metal mesh or perforated sheet metal. The metal layers are grounded to dissipate any electric currents generated from external or internal electromagnetic fields, and thus they block a large amount of the electromagnetic interference. See also</text>
+<pagelink id="electromagnetic shielding">electromagnetic shielding
+  </pagelink>
+<text>. They provide less attenuation from outgoing transmissions versus incoming: they can shield EMP waves from natural phenomena very effectively, but a tracking device, especially in upper frequencies, may be able to penetrate from within the cage (e.g., some cell phones operate at various radio frequencies so while one cell phone may not work, another one will).</text>
+<br/>
+<text>A common misconception is that a Faraday cage provides full blockage or attenuation; this is not true. The reception or transmission of</text>
+<pagelink id="radio waves">radio waves
+  </pagelink>
+<text>, a form of</text>
+<pagelink id="electromagnetic radiation">electromagnetic radiation
+  </pagelink>
+<text>, to or from an</text>
+<pagelink id="antenna (radio)"><text>antenna</text>
+  </pagelink>
+<text>within a Faraday cage is heavily attenuated or blocked by the cage; however, a Faraday cage has varied attenuation depending on wave form, frequency or distance from receiver/transmitter, and receiver/transmitter power. Near-field high-powered frequency transmissions like HF RFID are more likely to penetrate. Solid cages generally attenuate fields over a broader range of frequencies than mesh cages.</text>
+<citation id="cit1"><table id="table1"><tabtitle><text>cite web</text>
+      </tabtitle>
+    <head id="C0"><text>title</text>
+      </head>
+    <cell id="C0"><text>Michael Faraday</text>
+      </cell>
+    <head id="C1"><text>work</text>
+      </head>
+    <cell id="C1"><text>Encarta</text>
+      </cell>
+    <head id="C2"><text>url</text>
+      </head>
+    <cell id="C2"><weblink id="http://au.encarta.msn.com/encyclopedia_761577227/faraday_michael.html"/>
+      
+      </cell>
+    <head id="C3"><text>accessdate</text>
+      </head>
+    <cell id="C3"><text>20 November 2008</text>
+      </cell>
+    <head id="C4"><text>archiveurl</text>
+      </head>
+    <cell id="C4"><weblink id="https://www.webcitation.org/5kwc3quLs?url=http://au.encarta.msn.com/encyclopedia_761577227/faraday_michael.html"/>
+      </cell>
+    <head id="C5"><text>archivedate</text>
+      </head>
+    <cell id="C5"><text>31 October 2009</text>
+      </cell>
+    <head id="C6"><text>deadurl</text>
+      </head>
+    <cell id="C6"><text>yes</text>
+      </cell>
+    </table>
+  </citation>
+<heading lv="h1"><text>History</text>
+  </heading>
+<text>In 1836, Michael Faraday observed that the excess charge on a charged conductor resided only on its exterior and had no influence on anything enclosed within it. To demonstrate this fact, he built a room coated with metal foil and allowed high-voltage discharges from an electrostatic generator to strike the outside of the room. He used an</text>
+<pagelink id="electroscope">electroscope
+  </pagelink>
+<text>to show that there was no electric charge present on the inside of the room's walls.</text>
+<br/>
+<text>Although this cage effect has been attributed to</text>
+<pagelink id="Faraday&apos;s ice pail experiment"><text>Michael Faraday's famous ice pail experiments</text>
+  </pagelink>
+<text>performed in 1843, it was</text>
+<pagelink id="Benjamin Franklin">Benjamin Franklin
+  </pagelink>
+<text>in 1755 who observed the effect by lowering an uncharged cork ball suspended on a silk thread through an opening in an electrically charged metal can. In his words,</text>
+<quot><text>the cork was not attracted to the inside of the can as it would have been to the outside, and though it touched the bottom, yet when drawn out it was not found to be electrified (charged) by that touch, as it would have been by touching the outside. The fact is singular.</text>
+  </quot>
+<text>Franklin had discovered the behavior of what we now refer to as a Faraday cage or shield (based on Faraday's later experiments which duplicated Franklin's cork and can).</text>
+<reflink id="ref2"/>
+<ref id="ref2"><text>J. D. Krauss,</text>
+  <entity lv="2"><text>Electromagnetics</text>
+    </entity>
+  <text>, 4Ed, McGraw-Hill, 1992,</text>
+  <citlink id="cit2"/>
+  </ref>
+<citation id="cit2" class="ISBN"><attr>0-07-035621-1</attr>
+  </citation>
+<heading lv="h1"><text>Operation</text>
+  </heading>
+<imglink id="Faraday cage.gif"><text>Animation showing how a Faraday cage</text>
+  <entity lv="2"><text>(box)</text>
+    </entity>
+  <text>works. When an external electrical field</text>
+  <entity lv="2"><text>(arrows)</text>
+    </entity>
+  <text>is applied, the</text>
+  <pagelink id="electron">electrons
+    </pagelink>
+  
+  <entity lv="2"><text>(little balls)</text>
+    </entity>
+  <text>in the metal move to the left side of the cage, giving it a negative charge, while the remaining unbalanced charge of the nuclei give the right side a positive charge.  These induced charges create an opposing electric field that cancels the external electric field throughout the box.</text>
+  </imglink>
+<heading lv="h2"><text>Continuous</text>
+  </heading>
+<text>A continuous Faraday shield is a hollow conductor. Externally or internally applied electromagnetic fields produce forces on the</text>
+<pagelink id="charge carrier">charge carriers
+  </pagelink>
+<text>(usually electrons) within the conductor; the charges are redistributed accordingly due to</text>
+<pagelink id="electrostatic induction">electrostatic induction
+  </pagelink>
+<text>. The redistributed charges greatly reduce the voltage within the surface, to an extent depending on the capacitance, however, full cancellation does not occur.</text>
+<reflink id="ref3"/>
+<ref id="ref3"><weblink id="https://people.maths.ox.ac.uk/trefethen/chapman_hewett_trefethen.pdf"/>
+  <text>Mathematics of the</text>
+  <br/>
+  <text>Faraday Cage- S. Jonathan Chapman David P. Hewett Lloyd N. Trefethen</text>
+  </ref>
+<heading lv="h3"><text>Interior charges</text>
+  </heading>
+<text>If a charge is placed inside an ungrounded Faraday cage, the internal face of the cage becomes charged (in the same manner described for an external charge) to prevent the existence of a field inside the body of the cage, however, this charging of the inner face re-distributes the charges in the body of the cage. This charges the outer face of the cage with a charge equal in sign and magnitude to the one placed inside the cage. Since the internal charge and the inner face cancel each other out, the spread of charges on the outer face is not affected by the position of the internal charge inside the cage. So for all intents and purposes, the cage generates the same</text>
+<pagelink id="direct current"><text>DC</text>
+  </pagelink>
+<text>electric field that it would generate if it were simply affected by the charge placed inside. The same is not true for electromagnetic waves.</text>
+<br/>
+<text>If the cage is</text>
+<pagelink id="ground (electricity)"><text>grounded</text>
+  </pagelink>
+<text>, the excess charges will go to the ground instead of the outer face, so the inner face and the inner charge will cancel each other out and the rest of the cage will retain a neutral charge.</text>
+<heading lv="h3"><text>Exterior fields</text>
+  </heading>
+<filelink id="Skin depth by Zureks.png"><text>Skin depth vs. frequency for some materials at room temperature, red vertical line denotes 50 Hz frequency:</text>
+  <citlink id="cit3"/>
+  
+  <br/>
+  </filelink>
+
+<br/>
+<text>Effectiveness of shielding of a static electric field is largely independent of the geometry of the conductive material, however, static magnetic fields can penetrate the shield completely.</text>
+<br/>
+<text>In the case of a varying electromagnetic fields, the faster the variations are (i.e., the higher the frequencies), the better the material resists magnetic field penetration. In this case the shielding also depends on the</text>
+<pagelink id="electrical conductivity">electrical conductivity
+  </pagelink>
+<text>, the magnetic properties of the conductive materials used in the cages, as well as their thicknesses.</text>
+<br/>
+<text>A good idea of the effectiveness of a Faraday shield can be obtained from considerations of</text>
+<pagelink id="skin depth">skin depth
+  </pagelink>
+<text>. With skin depth, the current flowing is mostly in the surface, and decays exponentially with depth through the material. Because a Faraday shield has finite thickness, this determines how well the shield works; a thicker shield can attenuate electromagnetic fields better, and to a lower frequency.</text>
+<citation id="cit3" class="ubl"><list lv="l1"><attr><text>Mn-Zn – magnetically soft </text>
+      <pagelink id="Ferrite (magnet)"><text>ferrite</text>
+        </pagelink>
+      </attr>
+    </list>
+  <list lv="l1"><attr><text>Al – metallic </text>
+      <pagelink id="aluminum">aluminum
+        </pagelink>
+      </attr>
+    </list>
+  <list lv="l1"><attr><text>Cu – metallic </text>
+      <pagelink id="copper">copper
+        </pagelink>
+      </attr>
+    </list>
+  <list lv="l1"><attr><text>steel 410 – magnetic </text>
+      <pagelink id="stainless steel">stainless steel
+        </pagelink>
+      </attr>
+    </list>
+  <list lv="l1"><attr><text>Fe-Si – </text>
+      <pagelink id="grain-oriented electrical steel">grain-oriented electrical steel
+        </pagelink>
+      </attr>
+    </list>
+  <list lv="l1"><attr><text>Fe-Ni – high-permeability </text>
+      <pagelink id="permalloy">permalloy
+        </pagelink>
+      <text>(80%Ni-20%Fe)</text>
+      <br/>
+      </attr>
+    </list>
+  </citation>
+<heading lv="h2"><text>Faraday cage</text>
+  </heading>
+<text>Faraday cages are Faraday shields which have holes in them and are therefore more complex to analyze. Whereas continuous shields essentially attenuate all wavelengths shorter than the skin depth, the holes in a cage may permit shorter wavelengths to pass through or set up</text>
+<quot><pagelink id="evanescent field">evanescent fields
+    </pagelink>
+  
+  </quot>
+<text>(oscillating fields that do not propagate as EM waves) just beneath the surface. The shorter the wavelength, the better it passes through a mesh of given size. Thus to work well at short wavelengths (i.e., high frequencies), the holes in the cage must be smaller than the wavelength of the incident wave. Faraday cages may therefore be thought of as</text>
+<pagelink id="high pass filter">high pass filters
+  </pagelink>
+<text>.</text>
+<heading lv="h1"><text>Examples</text>
+  </heading>
+<list lv="l1"><text>Faraday cages are routinely used in</text>
+  <pagelink id="analytical chemistry">analytical chemistry
+    </pagelink>
+  <text>to reduce noise while making sensitive measurements.</text>
+  </list>
+<list lv="l1"><text>Faraday cages, more specifically dual paired seam Faraday bags, are often used in digital forensics to prevent remote wiping and alteration of criminal digital evidence.</text>
+  </list>
+<list lv="l1"><text>The U.S. and NATO</text>
+  <pagelink id="Tempest_(codename)"><text>Tempest</text>
+    </pagelink>
+  <text>standards, and similar standards in other countries, include Faraday cages as part of a broader effort to provide</text>
+  <pagelink id="emission security">emission security
+    </pagelink>
+  <text>for computers.</text>
+  </list>
+<list lv="l1"><text>Automobile and airplane passenger compartments are essentially Faraday cages, protecting passengers from electric charges, such as lightning</text>
+  </list>
+<list lv="l1"><text>A</text>
+  <pagelink id="booster bag">booster bag
+    </pagelink>
+  <text>(shopping bag lined with</text>
+  <pagelink id="aluminium foil">aluminium foil
+    </pagelink>
+  <text>) acts as a Faraday cage. It is often used by shoplifters to steal</text>
+  <pagelink id="radio-frequency identification"><text>RFID</text>
+    </pagelink>
+  <text>-tagged items.</text>
+  <citlink id="cit4"/>
+  </list>
+<list lv="l2"><text>Similar containers are used to resist</text>
+  <pagelink id="RFID skimming">RFID skimming
+    </pagelink>
+  <text>.</text>
+  </list>
+<list lv="l1"><pagelink id="Elevator">Elevators
+    </pagelink>
+  <text>and other rooms with metallic conducting frames and walls simulate a Faraday cage effect, leading to a loss of signal and</text>
+  <quot><text>dead zones</text>
+    </quot>
+  <text>for users of</text>
+  <pagelink id="cellular phone">cellular phones
+    </pagelink>
+  <text>,</text>
+  <pagelink id="radio">radios
+    </pagelink>
+  <text>, and other electronic devices that require external electromagnetic signals. During training, firefighters, and other first responders are cautioned that their two-way radios will probably not work inside elevators and to make allowances for that.  Small, physical Faraday cages are used by electronics engineers during equipment testing to simulate such an environment to make sure that the device gracefully handles these conditions.</text>
+  <citlink id="cit5"/>
+  </list>
+<list lv="l1"><text>Properly designed conductive clothing can also form a protective Faraday cage. Some electrical</text>
+  <pagelink id="lineman (technician)"><text>linemen</text>
+    </pagelink>
+  <text>wear Faraday suits, which allow them to work on live, high-voltage power lines without risk of electrocution. The suit prevents electric current from flowing through the body, and has no theoretical voltage limit. Linemen have successfully worked even the highest voltage (</text>
+  <pagelink id="Ekibastuz–Kokshetau high-voltage line"><text>Kazakhstan's Ekibastuz–Kokshetau line</text>
+    </pagelink>
+  <text>1150 kV) lines safely.</text>
+  <citlink id="cit6"/>
+  </list>
+<list lv="l2"><text>Austin Richards, a physicist in California, created a metal Faraday suit in 1997 that protects him from tesla coil discharges. In 1998, he named the character in the suit Doctor MegaVolt and has performed all over the world and at</text>
+  <pagelink id="Burning Man">Burning Man
+    </pagelink>
+  <text>nine different years.</text>
+  </list>
+<list lv="l1"><text>The scan room of a</text>
+  <pagelink id="magnetic resonance imaging">magnetic resonance imaging
+    </pagelink>
+  <text>(MRI) machine is designed as a Faraday cage. This prevents external RF (radio frequency) signals from being added to data collected from the patient, which would affect the resulting image.  Radiographers are trained to identify the characteristic artifacts created on images should the Faraday cage be damaged during a</text>
+  <pagelink id="thunderstorm">thunderstorm
+    </pagelink>
+  <text>.</text>
+  </list>
+<list lv="l1"><text>A</text>
+  <pagelink id="microwave oven">microwave oven
+    </pagelink>
+  <text>utilizes a Faraday cage, which can be partly seen covering the transparent window, to contain the electromagnetic energy within the oven and to shield the exterior from radiation.</text>
+  </list>
+
+<br/>
+<list lv="l1"><text>Plastic bags that are impregnated with metal are used to enclose</text>
+  <pagelink id="electronic toll collection">electronic toll collection
+    </pagelink>
+  <text>devices whenever tolls should not be charged to those devices, such as during transit or when the user is paying cash.</text>
+  <citlink id="cit7"/>
+  </list>
+<list lv="l1"><text>The shield of a</text>
+  <pagelink id="shielded cable"><text>screened cable</text>
+    </pagelink>
+  <text>, such as</text>
+  <pagelink id="universal serial bus"><text>USB</text>
+    </pagelink>
+  <text>cables or the</text>
+  <pagelink id="coaxial cable">coaxial cable
+    </pagelink>
+  <text>used for cable television, protects the internal conductors from external electrical noise and prevents the RF signals from leaking out.</text>
+  </list>
+<citation id="cit4"><table id="table2"><tabtitle><text>Cite news</text>
+      </tabtitle>
+    <head id="C0"><text>last</text>
+      </head>
+    <cell id="C0"><text>Hamill</text>
+      </cell>
+    <head id="C1"><text>first</text>
+      </head>
+    <cell id="C1"><text>Sean</text>
+      </cell>
+    <head id="C2"><text>title</text>
+      </head>
+    <cell id="C2"><text>As Economy Dips, Arrests for Shoplifting Soar</text>
+      </cell>
+    <head id="C3"><text>date</text>
+      </head>
+    <cell id="C3"><text>22 December 2008</text>
+      </cell>
+    <head id="C4"><text>newspaper</text>
+      </head>
+    <cell id="C4"><pagelink id="The New York Times">The New York Times
+        </pagelink>
+      
+      </cell>
+    <head id="C5"><text>url</text>
+      </head>
+    <cell id="C5"><weblink id="https://www.nytimes.com/2008/12/23/us/23shoplift.html"/>
+      
+      </cell>
+    <head id="C6"><text>accessdate</text>
+      </head>
+    <cell id="C6"><text>12 August 2009</text>
+      </cell>
+    </table>
+  </citation>
+<citation id="cit5" class="cn" date="August 2018"/>
+<citation id="cit6" class="citation needed" date="March 2014"/>
+<citation id="cit7" class="fact" date="December 2017"/>
+<heading lv="h1"><text>See also</text>
+  </heading>
+<list lv="l1"><pagelink id="Anechoic chamber">Anechoic chamber
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Anti-static bag">Anti-static bag
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Conductive textile">Conductive textile
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Electromagnetic field">Electromagnetic field
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Electromagnetic interference">Electromagnetic interference
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Foil hat">Foil hat
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Gauss&apos;s law">Gauss's law
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Mu-metal">Mu-metal
+    </pagelink>
+  </list>
+<list lv="l1"><pagelink id="Mylar blanket">Mylar blanket
+    </pagelink>
+  </list>
+<heading lv="h1"><text>References</text>
+  </heading>
+<mark>Reflist</mark>
+<heading lv="h1"><text>External links</text>
+  </heading>
+<citlink id="cit8"/>
+<list lv="l1"><weblink id="https://www.youtube.com/watch?v=mUWxYesR5Wo"><text>Faraday Cage Protects from 100,000 V :: Physikshow Uni Bonn</text>
+    </weblink>
+  </list>
+<list lv="l1"><weblink id="http://www.pa.msu.edu/~duxbury/courses/phy294H/lectures/lecture6/lecture6.html"><text>Notes from physics lecture on Faraday cages</text>
+    </weblink>
+  <text>from Michigan State University</text>
+  </list>
+<list lv="l1"><weblink id="http://www.juliantrubin.com/bigten/faradaycageexperiments.html"><text>Michael Faraday: The Invention of Faraday Cage</text>
+    </weblink>
+  <text>background and related experiment</text>
+  </list>
+<list lv="l1"><weblink id="http://www.topgear.com/uk/videos/car-lightning"><text>Top Gear's Richard Hammond is protected from 600,000 V by a car (a Faraday Cage).</text>
+    </weblink>
+  </list>
+<list lv="l1"><weblink id="https://www.youtube.com/watch?v=SSV1ocCEOdY"><text>Top Gear's Richard Hammond as a human lightning rod - protected by a Voltrex Suit</text>
+    </weblink>
+  </list>
+<list lv="l1"><weblink id="http://www.gamry.com/application-notes/instrumentation/faraday-cage"><text>The Faraday Cage: What Is It? How Does It Work?</text>
+    </weblink>
+  </list>
+
+<br/>
+<mark>Authority control</mark>
+
+<br/>
+<mark>DEFAULTSORT:Faraday Cage</mark>
+
+<br/>
+<category id="1836 introductions">1836 introductions
+  </category>
+
+<br/>
+<category id="Electrical power control">Electrical power control
+  </category>
+
+<br/>
+<category id="Electrostatics">Electrostatics
+  </category>
+
+<br/>
+<category id="English inventions">English inventions
+  </category>
+
+<br/>
+<category id="Michael Faraday">Michael Faraday
+  </category>
+
+<br/>
+<category id="Safety equipment">Safety equipment
+  </category>
+
+<br/>
+<category id="Articles containing video clips">Articles containing video clips
+  </category>
+<citation id="cit8" class="commons category"><attr>Faraday cages</attr>
+  </citation></doc>
+
+

@@ -36,11 +36,6 @@ static bool isDigit( char ch)
 	return (ch) >= '0' && (ch) <= '9';
 }
 
-static bool isHexDigit( char ch)
-{
-	return isDigit(ch) || ((ch|32) >= 'a' && (ch|32) <= 'f');
-}
-
 static bool isAlphaNum( char ch)
 {
 	return isAlpha(ch) || isDigit(ch);
@@ -1057,11 +1052,6 @@ static bool isXmlEntity( char const* si, const char* se)
 	return false;
 }
 
-static bool isUrlEntity( char const* si, const char* se)
-{
-	return (si + 3 <= se && si[0] == '%' && isHexDigit(si[1]) && isHexDigit(si[2]));
-}
-
 static bool isTimestampCandidate( char const* si, const char* se)
 {
 	int dlen = decNumCount( si, se);
@@ -1539,16 +1529,6 @@ WikimediaLexem WikimediaLexer::next()
 				}
 			}
 			++m_si;
-		}
-		else if (*m_si == '%' && isUrlEntity( m_si, m_se))
-		{
-			if (start != m_si)
-			{
-				return WikimediaLexem( WikimediaLexem::Text, 0, std::string( start, m_si - start));
-			}
-			std::string value = strus::string_conv::decodeUrlEntities( std::string( m_si, 3));
-			m_si += 3;
-			return WikimediaLexem( WikimediaLexem::Text, 0, value);
 		}
 		else if (*m_si == '#')
 		{
