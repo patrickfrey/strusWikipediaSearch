@@ -6,6 +6,7 @@ export SCRIPTPATH=$(dirname "$SCRIPT")
 export PROJECTPATH=$(dirname "$SCRIPTPATH")
 export DATAPATH=/data/wikipedia
 export STORAGEPATH=/srv/wikipedia/storage
+export MAXNOFHTREADS=14
 
 mkdir -p $DATAPATH
 mkdir -p $STORAGEPATH
@@ -20,15 +21,15 @@ createData() {
 	mkdir -p storage
 	
 	strusWikimediaToXml -n 0 -P 10000 -R ./redirects.txt enwiki-latest-pages-articles.xml
-	strusWikimediaToXml -B -n 0 -P 10000 -t 12 -L ./redirects.txt enwiki-latest-pages-articles.xml xml
-	
+	strusWikimediaToXml -B -n 0 -P 10000 -t "$MAXNOFHTREADS" -L ./redirects.txt enwiki-latest-pages-articles.xml xml
+
 	for ext in err mis wtf org txt; do find xml -name "*.$ext" | xargs rm; done
 }
 
 mergePosTagging()
 {
 	cd $DATAPATH
-	strusMergeMarkup -x ".xml" -t 12 -k "T,P,C,X,A,V,M,N,E,U,R,W" -o nlpxml/ -F errout/ nlpxml.old/ xml/
+	strusMergeMarkup -x ".xml" -t "$MAXNOFHTREADS" -k "T,P,C,X,A,V,M,N,E,U,R,W" -o nlpxml/ -F errout/ nlpxml.old/ xml/
 }
 
 processPosTagging() {
@@ -105,7 +106,7 @@ processHeadingTagMarkup() {
         if [ $DID -ge $START ]; then
             if [ $DID -le $END ]; then
                 echo "processing title/heading tag markup of $DID ..."
-                strusTagMarkup -t 12 -x xml -e '/doc/title' -e '//heading' -d '//br' -P $DID"_1" $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID
+                strusTagMarkup -t "$MAXNOFHTREADS" -x xml -e '/doc/title' -e '//heading' -d '//br' -P $DID"_1" $DATAPATH/nlpxml/$DID $DATAPATH/nlpxml/$DID
             fi
         fi
     done
@@ -152,7 +153,7 @@ dumpVectorInput() {
 }
 
 calcWord2vec() {
-    word2vec -size 256 -window 8 -sample 1e-5 -negative 16 -threads 12 -type-prefix-delim '#' -type-min-count 'H=1,V=100,E=3,N=20,A=100,C=100,X=100,M=100,U=2,R=100,W=100,T=100' -min-count 5 -alpha 0.025 -classes 0 -debug 2 -binary 1 -portable 1 -save-vocab $DATAPATH/vocab.txt -cbow 0 -train $DATAPATH/vec.txt -output $DATAPATH/vec.bin
+    word2vec -size 256 -window 8 -sample 1e-5 -negative 16 -threads "$MAXNOFHTREADS" -type-prefix-delim '#' -type-min-count 'H=1,V=100,E=3,N=20,A=100,C=100,X=100,M=100,U=2,R=100,W=100,T=100' -min-count 5 -alpha 0.025 -classes 0 -debug 2 -binary 1 -portable 1 -save-vocab $DATAPATH/vocab.txt -cbow 0 -train $DATAPATH/vec.txt -output $DATAPATH/vec.bin
 }
 
 insertVectors() {
