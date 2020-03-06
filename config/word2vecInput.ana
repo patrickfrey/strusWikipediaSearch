@@ -16,18 +16,18 @@ word = prefix("C#"):lc:entityid word //C();
 word = prefix("X#"):lc:entityid word //X();
 word = prefix("A#"):lc:entityid word //A();
 word = prefix("M#"):lc:entityid word //M();
-word = prefix("N#"):lc:entityid content //N();
-word = prefix("E#"):lc:entityid content //E();
+word = prefix("N#"):lc:entityid:decode_url:decode_url content //N();
+word = prefix("E#"):lc:entityid:decode_url:decode_url content //E();
 word = prefix("R#"):lc:entityid word //R();
 word = prefix("V#"):lc:entityid word //V();
 word = prefix("W#"):lc:entityid word //W();
-word = prefix("T#"):lc:entityid word //text();
-word = prefix("T#"):lc:entityid word //attr();
-word = prefix("T#"):lc:entityid word //quot();
-word = prefix("T#"):lc:entityid word //char();
+word = prefix("T#"):lc:entityid:decode_url:decode_url word //text();
+word = prefix("T#"):lc:entityid:decode_url:decode_url word //attr();
+word = prefix("T#"):lc:entityid:decode_url:decode_url word //quot();
+word = prefix("T#"):lc:entityid:decode_url:decode_url word //char();
 
-refid = prefix("E#"):lc:entityid content {position=succ} //N@id;
-refid = prefix("E#"):lc:entityid content {position=succ} //E@id;
-refid = prefix("E#"):lc:entityid content {position=succ} //R@id;
+refid = prefix("E#"):lc:entityid:decode_url:decode_url content {position=succ} //N@id;
+refid = prefix("E#"):lc:entityid:decode_url:decode_url content {position=succ} //E@id;
+refid = prefix("E#"):lc:entityid:decode_url:decode_url content {position=succ} //R@id;
 
 
