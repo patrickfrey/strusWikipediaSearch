@@ -1,9 +1,3 @@
-Patch index title: Take only vectfeat for titles with minimal length (calculate minimal length in advance)
-Group similar features (cosine similarity) in selection features of query by OR
-
-
-
-
-
+Improve PRP resolving in NLP. Quality not sufficient by far.
 
 
