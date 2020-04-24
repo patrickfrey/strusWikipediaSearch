@@ -47,8 +47,8 @@
 	orig = orig content //{char,code,bibref,time}();
 
 [SearchIndex]
-	word = lc:entityid regex("^[a-z]{3,5}[:][/][/]([^ ?/]{1,32})") {position=succ} //weblink@id;
-	word = lc:entityid regex("^([a-z\.]{6,24}[^ ?/]{1,20})") {position=succ} //weblink@id;
+	word   = lc:entityid regex("^[a-z]{3,5}[:][/][/]([^ ?/]{1,32})") {position=succ} //weblink@id;
+	word   = lc:entityid regex("^([a-z\.]{6,24}[^ ?/]{1,20})") {position=succ} //weblink@id;
 	headid = lc content {position=succ} //title@id;
 	headid = lc content {position=succ} //heading@id;
 	cithead= empty content //citlink@id;
