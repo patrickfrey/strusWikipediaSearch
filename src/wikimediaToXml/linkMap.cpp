@@ -119,36 +119,39 @@ static bool isUnimportantWord( const char* start)
 std::string LinkMap::normalizeValue( const std::string& vv)
 {
 	std::string rt;
-	char const* vi = vv.c_str();
-
-	for (; *vi; ++vi)
+	if (!vv.empty())
 	{
-		char back = rt.empty() ? ' ' : rt[ rt.size()-1];
-		if ((unsigned char)*vi <= 32)
+		char const* vi = vv.c_str();
+
+		for (; *vi; ++vi)
 		{
-			if (back != ' ') rt.push_back(' ');
-		}
-		else if (back == ' ' && *vi >= 'a' && *vi <= 'z')
-		{
-			if (isUnimportantWord( vi))
+			char back = rt.empty() ? ' ' : rt[ rt.size()-1];
+			if ((unsigned char)*vi <= 32)
 			{
-				rt.push_back( *vi);
+				if (back != ' ') rt.push_back(' ');
+			}
+			else if (back == ' ' && *vi >= 'a' && *vi <= 'z')
+			{
+				if (isUnimportantWord( vi))
+				{
+					rt.push_back( *vi);
+				}
+				else
+				{
+					rt.push_back( *vi ^ 32);
+				}
 			}
 			else
 			{
-				rt.push_back( *vi ^ 32);
+				rt.push_back( *vi);
 			}
 		}
-		else
+		char back = rt.empty() ? '\0' : rt[ rt.size()-1];
+		while (back == ' ')
 		{
-			rt.push_back( *vi);
+			rt.resize( rt.size()-1);
+			back = rt.empty() ? '\0' : rt[ rt.size()-1];
 		}
-	}
-	char back = rt.empty() ? '\0' : rt[ rt.size()-1];
-	while (back == ' ')
-	{
-		rt.resize( rt.size()-1);
-		back = rt.empty() ? '\0' : rt[ rt.size()-1];
 	}
 	return rt;
 }
