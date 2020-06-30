@@ -104,7 +104,7 @@ static bool isEqualWord( const char* start, const char* word)
 {
 	char const* si = start;
 	char const* wi = word;
-	while (*si == *wi) {++si;++wi;}
+	while (*si && *si == *wi) {++si;++wi;}
 	return *wi == '\0' && ((unsigned char)*si <= 32);
 }
 
