@@ -116,34 +116,43 @@ static bool isUnimportantWord( const char* start)
 	return !!ar[ai];
 }
 
+static char nextNormalizeChar( const char* vi, char back)
+{
+	if ((unsigned char)*vi <= 32)
+	{
+		if (back != ' ') return ' ';
+	}
+	else if (back == ' ' && *vi >= 'a' && *vi <= 'z')
+	{
+		if (isUnimportantWord( vi))
+		{
+			return *vi;
+		}
+		else
+		{
+			return *vi ^ 32;
+		}
+	}
+	else
+	{
+		return *vi;
+	}
+	return '\0';
+}
+
 std::string LinkMap::normalizeValue( const std::string& vv)
 {
 	std::string rt;
 	if (!vv.empty())
 	{
 		char const* vi = vv.c_str();
-
 		for (; *vi; ++vi)
 		{
 			char back = rt.empty() ? ' ' : rt[ rt.size()-1];
-			if ((unsigned char)*vi <= 32)
+			char next = nextNormalizeChar( vi, back);
+			if (next)
 			{
-				if (back != ' ') rt.push_back(' ');
-			}
-			else if (back == ' ' && *vi >= 'a' && *vi <= 'z')
-			{
-				if (isUnimportantWord( vi))
-				{
-					rt.push_back( *vi);
-				}
-				else
-				{
-					rt.push_back( *vi ^ 32);
-				}
-			}
-			else
-			{
-				rt.push_back( *vi);
+				rt.push_back( next);
 			}
 		}
 		char back = rt.empty() ? '\0' : rt[ rt.size()-1];
