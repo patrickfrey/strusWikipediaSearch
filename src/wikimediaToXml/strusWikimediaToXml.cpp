@@ -19,6 +19,7 @@
 #include "strus/base/atomic.hpp"
 #include "strus/base/local_ptr.hpp"
 #include "strus/base/string_conv.hpp"
+#include "strus/base/sleep.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "linkMap.hpp"
 #include "documentStructure.hpp"
@@ -665,6 +666,8 @@ private:
 class Worker
 {
 public:
+	enum {MaxQueueSize = 4000};
+
 	Worker()
 		:m_thread(0),m_threadid(0),m_terminated(false),m_eof(false),m_writeDumpsAlways(g_dumps){}
 	~Worker()
@@ -676,7 +679,11 @@ public:
 	{
 		strus::unique_lock lock( m_queue_mutex);
 		m_queue.push( Work( filecounter, title, content, m_writeDumpsAlways));
-		m_cv.notify_one();
+		if (m_queue.size() > MaxQueueSize)
+		{
+			strus::usleep( 100);
+		}
+		m_cv.notify_all();
 	}
 	void terminate()
 	{
