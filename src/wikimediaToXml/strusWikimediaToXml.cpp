@@ -1302,7 +1302,7 @@ int main( int argc, const char* argv[])
 		{
 			workers.ar[ wi].waitTermination();
 		}
-		if (collectRedirects && g_verbosity == 0)
+		if (g_verbosity == 0)
 		{
 			std::cerr << "processed " << docCounter << " documents" << std::endl;
 		}
