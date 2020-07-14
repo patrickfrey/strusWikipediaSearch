@@ -957,8 +957,6 @@ int main( int argc, const char* argv[])
 			std::cerr << "    -n <ns>      :Reduce output to namespace <ns> (0=article)" << std::endl;
 			std::cerr << "    -I           :Produce one 'id' attribute per table cell reference," << std::endl;
 			std::cerr << "                  instead of one with the ids separated by commas (e.g. id='C1,R2')." << std::endl;
-			std::cerr << "                  One 'id' attribute per table cell reference is non valid XML," << std::endl;
-			std::cerr << "                  but you should use this format if you process the XML with strus." << std::endl;
 			std::cerr << "    -R <lnkfile> :Collect redirects only and write them to <lnkfile>" << std::endl;
 			std::cerr << "    -L <lnkfile> :Load link file <lnkfile> for verifying page links" << std::endl;
 			std::cerr << "    --stdout     :Write all output to stdout" << std::endl;
