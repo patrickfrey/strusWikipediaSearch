@@ -131,9 +131,7 @@ processDocumentCheck() {
         if [ $DID -ge $START ]; then
         if [ $DID -le $END ]; then
             echo "checking $DID ..."
-            for ff in `ls $DATAPATH/nlpxml/$DID/*.xml`; do xmllint --noout $ff; done > $DATAPATH/err/xmllint.$DID.xml 2>&1
-            sed -e '/parser error [:] Attribute id redefined/,+2d' $DATAPATH/err/xmllint.$DID.xml > $DATAPATH/err/xmlerr.$DID.xml
-            rm $DATAPATH/err/xmllint.$DID.xml
+            for ff in `ls $DATAPATH/xml/$DID/*.xml`; do xmllint --noout $ff; done > $DATAPATH/err/xmlerr.$DID.xml 2>&1
             [ -s $DATAPATH/err/xmlerr.$DID.xml ] || rm $DATAPATH/err/xmlerr.$DID.xml # ... delete empty files
             [ -e $DATAPATH/err/xmlerr.$DID.xml ] && echo "$DID has errors, see $DATAPATH/err/xmlerr.$DID.xml"
         fi

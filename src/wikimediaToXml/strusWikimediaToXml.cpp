@@ -675,14 +675,12 @@ public:
 		waitTermination();
 	}
 
-	void push( int filecounter, const std::string& title, const std::string& content)
+	void push( int filecounter, const std::string& title, const std::string& content, bool& do_sleep)
 	{
+		do_sleep = false;
 		strus::unique_lock lock( m_queue_mutex);
 		m_queue.push( Work( filecounter, title, content, m_writeDumpsAlways));
-		if (m_queue.size() > MaxQueueSize)
-		{
-			strus::usleep( 100);
-		}
+		do_sleep = (m_queue.size() > MaxQueueSize);
 		m_cv.notify_all();
 	}
 	void terminate()
@@ -1225,7 +1223,9 @@ int main( int argc, const char* argv[])
 								if (nofThreads)
 								{
 									workeridx = docIndex % nofThreads;
-									workers.ar[ workeridx].push( docIndex, docAttributes.title, docAttributes.content);
+									bool do_sleep;
+									workers.ar[ workeridx].push( docIndex, docAttributes.title, docAttributes.content, do_sleep);
+									if (do_sleep) strus::usleep( 100);
 								}
 								else
 								{
