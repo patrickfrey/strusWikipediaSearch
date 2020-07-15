@@ -677,7 +677,6 @@ public:
 
 	void push( int filecounter, const std::string& title, const std::string& content, bool& do_sleep)
 	{
-		do_sleep = false;
 		strus::unique_lock lock( m_queue_mutex);
 		m_queue.push( Work( filecounter, title, content, m_writeDumpsAlways));
 		do_sleep = (m_queue.size() > MaxQueueSize);
